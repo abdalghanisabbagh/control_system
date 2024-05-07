@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/routes/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,8 +7,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp.router(
       debugShowCheckedModeBanner: false,
+      routerDelegate: AppGoRouter.router.routerDelegate,
+      routeInformationProvider: AppGoRouter.router.routeInformationProvider,
+      routeInformationParser: AppGoRouter.router.routeInformationParser,
     );
   }
 }
