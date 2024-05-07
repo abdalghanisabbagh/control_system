@@ -7,6 +7,7 @@ import '../../views/home/home_screen.dart';
 
 class AppGoRouter {
   static final router = GoRouter(
+    debugLogDiagnostics: true,
     initialLocation: AppRoutesNamesAndPaths.homeScreenPath,
     routes: [
       GoRoute(
