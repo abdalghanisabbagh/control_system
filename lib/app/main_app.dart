@@ -2,6 +2,8 @@ import 'package:control_system/presentation/resource_manager/routes/go_router.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../presentation/resource_manager/theme_manager.dart';
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -12,6 +14,7 @@ class MainApp extends StatelessWidget {
       routerDelegate: AppGoRouter.router.routerDelegate,
       routeInformationProvider: AppGoRouter.router.routeInformationProvider,
       routeInformationParser: AppGoRouter.router.routeInformationParser,
+      theme: getApplicationTheme(),
     );
   }
 }
