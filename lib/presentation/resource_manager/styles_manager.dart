@@ -1,21 +1,22 @@
-import 'font_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'font_manager.dart';
+
 TextStyle _getMainFont(double fontSize, FontWeight fontWeight, Color color) {
-  return Get.locale!.languageCode == 'en'
-      ? GoogleFonts.poppins(
-          fontSize: fontSize.sp,
-          color: color,
-          fontWeight: fontWeight,
-        )
-      : GoogleFonts.tajawal(
-          fontSize: fontSize.sp,
-          color: color,
-          fontWeight: fontWeight,
-        );
+  return
+      // Get.locale!.languageCode == 'en'?
+      GoogleFonts.poppins(
+    fontSize: fontSize.sp,
+    color: color,
+    fontWeight: fontWeight,
+  );
+  // : GoogleFonts.tajawal(
+  //     fontSize: fontSize.sp,
+  //     color: color,
+  //     fontWeight: fontWeight,
+  //   );
 }
 /*
 TextStyle _getMyPoppinsFont(
