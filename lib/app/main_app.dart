@@ -11,6 +11,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
       debugShowCheckedModeBanner: false,
+      key: Get.key,
       routerDelegate: AppGoRouter.router.routerDelegate,
       routeInformationProvider: AppGoRouter.router.routeInformationProvider,
       routeInformationParser: AppGoRouter.router.routeInformationParser,
