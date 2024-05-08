@@ -1,7 +1,11 @@
+import 'package:control_system/app/extensions/change_app_locale_extension.dart';
+import 'package:control_system/app/generated/keys.dart';
 import 'package:control_system/domain/controllers/home_controller.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
+import 'package:control_system/presentation/resource_manager/constants/supported_locales.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
@@ -10,7 +14,7 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('title').tr(),
+        title: const Text(LocaleKeys.title).tr(),
         centerTitle: true,
       ),
       body: Center(
@@ -18,7 +22,7 @@ class HomeScreen extends GetView<HomeController> {
           children: [
             TextButton(
               onPressed: () {
-                context.setLocale(const Locale('ar', 'EG'));
+                context.changeAppLocale(SupportedLocales.arabicEG);
               },
               child: const Text(
                 'العربية',
@@ -26,12 +30,13 @@ class HomeScreen extends GetView<HomeController> {
             ),
             TextButton(
               onPressed: () {
-                context.setLocale(const Locale('en', 'US'));
+                context.changeAppLocale(SupportedLocales.englishUS);
               },
               child: const Text(
                 'English',
               ),
             ),
+            DropDownWidget(),
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'color_manager.dart';
 import 'font_manager.dart';
 
 TextStyle _getMainFont(double fontSize, FontWeight fontWeight, Color color) {
@@ -30,28 +31,48 @@ TextStyle _getMyPoppinsFont(
 */
 
 // light Style
-TextStyle poppinsLightStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.light, color);
+TextStyle poppinsLightStyle({double? fontSize, Color? color}) {
+  return _getMainFont(
+    fontSize ?? FontSize.s16,
+    FontWeightManager.light,
+    color ?? ColorManager.caption,
+  );
 }
 
 // reguler Style
-TextStyle poppinsRegulerStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.reguler, color);
+TextStyle poppinsRegulerStyle({double? fontSize, Color? color}) {
+  return _getMainFont(
+    fontSize ?? FontSize.s12,
+    FontWeightManager.reguler,
+    color ?? ColorManager.black,
+  );
 }
 
 // meduim Style
-TextStyle poppinsMeduimStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.meduim, color);
+TextStyle poppinsMeduimStyle({double? fontSize, Color? color}) {
+  return _getMainFont(
+    fontSize ?? FontSize.s14,
+    FontWeightManager.meduim,
+    color ?? ColorManager.textFormFieldLabelStyle,
+  );
 }
 
 // bold Style
-TextStyle poppinsBoldStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.bold, color);
+TextStyle poppinsBoldStyle({double? fontSize, Color? color}) {
+  return _getMainFont(
+    fontSize ?? FontSize.s30,
+    FontWeightManager.bold,
+    color ?? ColorManager.displayLargeText,
+  );
 }
 
 // semiBold Style
-TextStyle poppinsSemiBoldStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.semiBold, color);
+TextStyle poppinsSemiBoldStyle({double? fontSize, Color? color}) {
+  return _getMainFont(
+    fontSize ?? FontSize.s24,
+    FontWeightManager.semiBold,
+    color ?? ColorManager.bodyMedium,
+  );
 }
 
 ///********************************************Tajawl ***********************/
