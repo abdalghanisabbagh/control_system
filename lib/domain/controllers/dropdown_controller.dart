@@ -5,10 +5,10 @@ class DropDownButtonController extends GetxController {
     'مشويات',
     'اسماك',
     'بخاري',
-    'item',
+    'لاشيى',
   ];
   Rx<List<String>> selctedOptionList = Rx<List<String>>([]);
-  final selectedOption = 'item'.obs;
+  final selectedOption = 'لاشيى'.obs;
   void setSelected(value) {
     selectedOption.value = value;
   }
