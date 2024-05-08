@@ -29,8 +29,10 @@ ThemeData getApplicationTheme() {
       color: ColorManager.appbarColor,
       elevation: AppSize.s5,
       shadowColor: ColorManager.appbarColorShadow,
-      titleTextStyle:
-          poppinsRegulerStyle(FontSize.s16, ColorManager.appBarTextColor),
+      titleTextStyle: poppinsRegulerStyle(
+        fontSize: FontSize.s16,
+        color: ColorManager.appBarTextColor,
+      ),
     ),
 
     ///button theme
@@ -46,7 +48,8 @@ ThemeData getApplicationTheme() {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: poppinsRegulerStyle(
-            FontSize.s18, ColorManager.elevatedButtonTextColor),
+            fontSize: FontSize.s18,
+            color: ColorManager.elevatedButtonTextColor),
         backgroundColor: ColorManager.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s4.r),
@@ -57,14 +60,34 @@ ThemeData getApplicationTheme() {
     ///text theme
 
     textTheme: TextTheme(
-      displayLarge:
-          poppinsBoldStyle(FontSize.s30, ColorManager.displayLargeText),
-      headlineLarge: poppinsLightStyle(FontSize.s20, ColorManager.headline1),
-      titleMedium: poppinsLightStyle(FontSize.s16, ColorManager.subtitle1),
-      titleLarge: poppinsLightStyle(FontSize.s14, ColorManager.subtitle2),
-      bodyLarge: poppinsLightStyle(FontSize.s20, ColorManager.caption),
-      bodySmall: poppinsLightStyle(FontSize.s12, ColorManager.bodyText1),
-      bodyMedium: poppinsLightStyle(FontSize.s16, ColorManager.bodyMedium),
+      displayLarge: poppinsBoldStyle(
+        fontSize: FontSize.s30,
+        color: ColorManager.displayLargeText,
+      ),
+      headlineLarge: poppinsLightStyle(
+        fontSize: FontSize.s20,
+        color: ColorManager.headline1,
+      ),
+      titleMedium: poppinsLightStyle(
+        fontSize: FontSize.s16,
+        color: ColorManager.subtitle1,
+      ),
+      titleLarge: poppinsLightStyle(
+        fontSize: FontSize.s14,
+        color: ColorManager.subtitle2,
+      ),
+      bodyLarge: poppinsLightStyle(
+        fontSize: FontSize.s20,
+        color: ColorManager.caption,
+      ),
+      bodySmall: poppinsLightStyle(
+        fontSize: FontSize.s12,
+        color: ColorManager.bodyText1,
+      ),
+      bodyMedium: poppinsLightStyle(
+        fontSize: FontSize.s16,
+        color: ColorManager.bodyMedium,
+      ),
     ),
 
     ///inputDecoration theme (TextFormField)
@@ -73,10 +96,17 @@ ThemeData getApplicationTheme() {
       contentPadding: const EdgeInsets.all(AppPading.p12),
 
       hintStyle: poppinsRegulerStyle(
-          FontSize.s10, ColorManager.textFormFieldHintStyle),
+        fontSize: FontSize.s10,
+        color: ColorManager.textFormFieldHintStyle,
+      ),
       labelStyle: poppinsMeduimStyle(
-          FontSize.s14, ColorManager.textFormFieldLabelStyle),
-      errorStyle: poppinsRegulerStyle(FontSize.s10, ColorManager.error),
+        fontSize: FontSize.s14,
+        color: ColorManager.textFormFieldLabelStyle,
+      ),
+      errorStyle: poppinsRegulerStyle(
+        fontSize: FontSize.s10,
+        color: ColorManager.error,
+      ),
 
       /// enabled border style
       enabledBorder: OutlineInputBorder(
