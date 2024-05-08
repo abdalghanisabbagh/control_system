@@ -1,6 +1,7 @@
 import 'package:control_system/app/extensions/change_app_locale_extension.dart';
 import 'package:control_system/app/generated/keys.dart';
 import 'package:control_system/domain/controllers/home_controller.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
 import 'package:control_system/presentation/resource_manager/constants/supported_locales.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class HomeScreen extends GetView<HomeController> {
                 'English',
               ),
             ),
+            DropDownWidget(),
           ],
         ),
       ),

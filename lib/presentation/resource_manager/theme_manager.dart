@@ -11,13 +11,13 @@ ThemeData getApplicationTheme() {
     primaryColorDark: ColorManager.darkPrimary,
     disabledColor: ColorManager.grey,
 
-    /// cardView Theme
+    // cardView Theme
     cardTheme: CardTheme(
       color: ColorManager.white,
       shadowColor: ColorManager.lightGrey,
       elevation: AppSize.s5,
 
-      margin: const EdgeInsets.all(AppSize.s5),
+      // margin: const EdgeInsets.all(AppSize.s5),
       // shape:
     ),
 
@@ -113,14 +113,12 @@ ThemeData getApplicationTheme() {
           borderSide: BorderSide(
               color: ColorManager.outlineInputBorderColor, width: AppSize.s1_5),
           borderRadius: const BorderRadius.all(Radius.circular(AppSize.s4))),
-
-      /// disabled border style
+      // disabled border style
       disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
               color: ColorManager.outlineInputBorderColor, width: AppSize.s1_5),
           borderRadius: const BorderRadius.all(Radius.circular(AppSize.s4))),
-
-      /// foucsed border style
+      // foucsed border style
       focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5),
           borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),
