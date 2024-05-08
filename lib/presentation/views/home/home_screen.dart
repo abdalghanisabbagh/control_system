@@ -13,6 +13,26 @@ class HomeScreen extends GetView<HomeController> {
         title: const Text('title').tr(),
         centerTitle: true,
       ),
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: () {
+                context.setLocale(const Locale('ar', 'EG'));
+              },
+              child: const Text(
+                'العربية',
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                context.setLocale(const Locale('en', 'US'));
+              },
+              child: const Text(
+                'English',
+              ),
+            ),
+          ],
       body: const Center(
         child: Text(
           'HomeScreenn',
