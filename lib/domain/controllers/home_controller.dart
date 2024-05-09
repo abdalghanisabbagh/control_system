@@ -1,3 +1,19 @@
 import 'package:get/get.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 
-class HomeController extends GetxController {}
+class HomeController extends GetxController {
+  RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
+
+  void onOptionSelected(List<ValueItem> selectedOptions) {
+    this.selectedOptions.value = selectedOptions;
+  }
+
+  final List<ValueItem> options = const <ValueItem>[
+    ValueItem(label: 'Option 1', value: 1),
+    ValueItem(label: 'Option 2', value: 2),
+    ValueItem(label: 'Option 3', value: 3),
+    ValueItem(label: 'Option 4', value: 4),
+    ValueItem(label: 'Option 5', value: 5),
+    ValueItem(label: 'Option 6', value: 6),
+  ];
+}
