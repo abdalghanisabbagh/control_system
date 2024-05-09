@@ -1,17 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
-import '../../../domain/controllers/dropdown_controller.dart';
+class MultiSelectDropDownView extends StatelessWidget {
+  const MultiSelectDropDownView({
+    super.key,
+    this.onOptionSelected,
+    required this.options,
+  });
 
-class MultiSelectDropDownView extends GetView<MultiSelectDropDownController> {
-  const MultiSelectDropDownView({super.key});
-
+  final void Function(List<ValueItem<dynamic>>)? onOptionSelected;
+  final List<ValueItem<dynamic>> options;
   @override
   Widget build(BuildContext context) {
     return MultiSelectDropDown(
-      onOptionSelected: controller.onOptionSelected,
-      options: controller.options,
+      onOptionSelected: onOptionSelected,
+      options: options,
       selectionType: SelectionType.multi,
       chipConfig: const ChipConfig(
         wrapType: WrapType.wrap,

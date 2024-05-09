@@ -13,10 +13,13 @@ class HomeScreen extends GetView<HomeController> {
         title: const Text('title'),
         centerTitle: true,
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           children: [
-            MultiSelectDropDownView(),
+            MultiSelectDropDownView(
+              options: controller.options,
+              onOptionSelected: controller.onOptionSelected,
+            ),
           ],
         ),
       ),
