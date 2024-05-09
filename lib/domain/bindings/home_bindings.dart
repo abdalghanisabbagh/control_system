@@ -7,6 +7,6 @@ class HomeBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<HomeController>(() => HomeController());
-    Get.lazyPut<DropDownButtonController>(() => DropDownButtonController());
+    Get.lazyPut<MultiSelectDropDownController>(() => MultiSelectDropDownController());
   }
 }

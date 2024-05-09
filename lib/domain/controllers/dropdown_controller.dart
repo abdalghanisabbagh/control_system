@@ -1,15 +1,19 @@
 import 'package:get/get.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
-class DropDownButtonController extends GetxController {
-  List<String> items = [
-    'مشويات',
-    'اسماك',
-    'بخاري',
-    'item',
-  ];
-  Rx<List<String>> selctedOptionList = Rx<List<String>>([]);
-  final selectedOption = 'item'.obs;
-  void setSelected(value) {
-    selectedOption.value = value;
+class MultiSelectDropDownController extends GetxController {
+  RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
+
+  void onOptionSelected(List<ValueItem> selectedOptions) {
+    this.selectedOptions.value = selectedOptions;
   }
+
+  final List<ValueItem> options = const <ValueItem>[
+    ValueItem(label: 'Option 1', value: 1),
+    ValueItem(label: 'Option 2', value: 2),
+    ValueItem(label: 'Option 3', value: 3),
+    ValueItem(label: 'Option 4', value: 4),
+    ValueItem(label: 'Option 5', value: 5),
+    ValueItem(label: 'Option 6', value: 6),
+  ];
 }

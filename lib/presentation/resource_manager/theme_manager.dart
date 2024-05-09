@@ -77,7 +77,7 @@ ThemeData getApplicationTheme() {
         color: ColorManager.subtitle2,
       ),
       bodyLarge: poppinsLightStyle(
-        fontSize: FontSize.s20,
+        fontSize: FontSize.s7,
         color: ColorManager.caption,
       ),
       bodySmall: poppinsLightStyle(
@@ -96,11 +96,11 @@ ThemeData getApplicationTheme() {
       contentPadding: const EdgeInsets.all(AppPading.p12),
 
       hintStyle: poppinsRegulerStyle(
-        fontSize: FontSize.s10,
+        fontSize: FontSize.s7,
         color: ColorManager.textFormFieldHintStyle,
       ),
       labelStyle: poppinsMeduimStyle(
-        fontSize: FontSize.s14,
+        fontSize: FontSize.s10,
         color: ColorManager.textFormFieldLabelStyle,
       ),
       errorStyle: poppinsRegulerStyle(

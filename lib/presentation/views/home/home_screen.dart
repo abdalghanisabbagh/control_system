@@ -17,7 +17,7 @@ class HomeScreen extends GetView<HomeController> {
       body: const Center(
         child: Column(
           children: [
-            DropDownWidget(),
+            MultiSelectDropDownView(),
           ],
         ),
       ),
