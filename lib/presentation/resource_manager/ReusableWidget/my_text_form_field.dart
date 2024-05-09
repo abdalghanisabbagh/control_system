@@ -39,9 +39,6 @@ class MytextFormFiled extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // late intialize later not recomended
-          // ? ?data:null
-
           if (title != null)
             Text(
               title!,
@@ -56,7 +53,7 @@ class MytextFormFiled extends StatelessWidget {
             ),
           TextFormField(
             keyboardType: isPrice != null ? TextInputType.number : null,
-            inputFormatters: textInputs == null ? [] : textInputs!,
+            inputFormatters: textInputs ?? [],
             decoration: InputDecoration(
               suffixIcon: suffixIcon,
               hintText: title,
