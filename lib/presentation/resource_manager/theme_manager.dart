@@ -69,7 +69,7 @@ ThemeData getApplicationTheme() {
         color: ColorManager.headline1,
       ),
       titleMedium: poppinsLightStyle(
-        fontSize: FontSize.s16,
+        fontSize: FontSize.s9,
         color: ColorManager.subtitle1,
       ),
       titleLarge: poppinsLightStyle(

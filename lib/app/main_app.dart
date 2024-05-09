@@ -1,5 +1,4 @@
 import 'package:control_system/presentation/resource_manager/routes/app_go_router.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,10 +23,6 @@ class MainApp extends StatelessWidget {
           routeInformationProvider: AppGoRouter.router.routeInformationProvider,
           routeInformationParser: AppGoRouter.router.routeInformationParser,
           theme: getApplicationTheme(),
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          fallbackLocale: context.fallbackLocale,
-          localizationsDelegates: context.localizationDelegates,
         );
       },
     );

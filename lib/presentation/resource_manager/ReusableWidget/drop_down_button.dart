@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DropDownWidget extends GetView<DropDownButtonController> {
-  DropDownWidget({Key? key}) : super(key: key);
+  const DropDownWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
