@@ -23,11 +23,23 @@ class HomeScreen extends GetView<HomeController> {
               onOptionSelected: controller.onOptionSelected,
             ),
             CustomizedButton(
-              buttonTitle: "lkjhgfds",
+              buttonTitle: "Success",
               onPressed: () {
-                MyReusbleWidget.show(context, "content","dsad");
+                MyFlashBar.showSuccess("hi", "hello").show(context);
               },
-            )
+            ),
+            CustomizedButton(
+              buttonTitle: "error",
+              onPressed: () {
+                MyFlashBar.showError("hi", "hello").show(context);
+              },
+            ),
+            CustomizedButton(
+              buttonTitle: "info",
+              onPressed: () {
+                MyFlashBar.showInfo("hi", "hello").show(context);
+              },
+            ),
           ],
         ),
       ),
