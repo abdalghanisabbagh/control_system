@@ -10,8 +10,12 @@ class MyAwesomeDialogue {
   VoidCallback? btnOkOnPressed;
   VoidCallback? btnCancelOnPressed;
   Widget? customBody;
-  AnimType? animType;
-  bool? useRootNavigator;
+  final AnimType animType;
+  final bool useRootNavigator;
+  Duration? autoHideTimer;
+  final bool dismissOnBackKeyPress;
+  final bool dismissOnTouchOutside;
+  final bool showCloseIcon;
 
   MyAwesomeDialogue({
     required this.title,
@@ -20,19 +24,29 @@ class MyAwesomeDialogue {
     this.btnOkOnPressed,
     this.btnCancelOnPressed,
     this.customBody,
-    this.animType,
-    this.useRootNavigator,
+    this.animType = AnimType.scale,
+    this.useRootNavigator = true,
+    this.autoHideTimer,
+    this.dismissOnBackKeyPress = true,
+    this.dismissOnTouchOutside = true,
+    this.showCloseIcon = true,
   });
 
   void showDialogue(BuildContext context) {
     AwesomeDialog(
-      context: context,
-      dialogType: dialogType,
-      title: title,
-      desc: desc,
-      btnCancelOnPress: btnCancelOnPressed,
-      btnOkOnPress: btnOkOnPressed,
-      animType: animType ?? AnimType.scale,
-    ).show();
+            context: context,
+            dialogType: dialogType,
+            title: title,
+            desc: desc,
+            btnCancelOnPress: btnCancelOnPressed,
+            btnOkOnPress: btnOkOnPressed,
+            animType: animType,
+            body: customBody,
+            useRootNavigator: useRootNavigator,
+            dismissOnBackKeyPress: dismissOnBackKeyPress,
+            dismissOnTouchOutside: dismissOnTouchOutside,
+            showCloseIcon: showCloseIcon,
+            autoHide: autoHideTimer)
+        .show();
   }
 }
