@@ -1,4 +1,4 @@
-import 'package:control_system/app/generated/assets.dart';
+import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -23,19 +23,19 @@ class LoginScreen extends StatelessWidget {
                     Image.asset(
                       width: size.width,
                       height: size.height,
-                      Assets.assetsImagesNis1,
+                      AssetsManager.assetsImagesNis1,
                       fit: BoxFit.fill,
                     ),
                     Image.asset(
                       width: size.width,
                       height: size.height,
-                      Assets.assetsImagesNis2,
+                      AssetsManager.assetsImagesNis2,
                       fit: BoxFit.fill,
                     ),
                     Image.asset(
                       width: size.width,
                       height: size.height,
-                      Assets.assetsImagesNis3,
+                      AssetsManager.assetsImagesNis3,
                       fit: BoxFit.fill,
                     )
                   ],
@@ -54,7 +54,7 @@ class LoginScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(32),
                 child: Text("Welcome Admin",
-                    style:poppinsLightStyle(color: ColorManager.bgColor,fontSize: 24)
+                    style:nunitoRegulerStyle(color: ColorManager.bgColor,fontSize: 24)
                     
                      ),
               ),
