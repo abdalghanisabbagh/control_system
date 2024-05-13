@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'index.dart';
 
 ThemeData getApplicationTheme() {
@@ -52,7 +50,7 @@ ThemeData getApplicationTheme() {
             color: ColorManager.elevatedButtonTextColor),
         backgroundColor: ColorManager.primary,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSize.s4.r),
+          borderRadius: BorderRadius.circular(AppSize.s4),
         ),
       ),
     ),

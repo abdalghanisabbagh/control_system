@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'color_manager.dart';
@@ -9,7 +8,7 @@ TextStyle _getMainFont(double fontSize, FontWeight fontWeight, Color color) {
   return
       // Get.locale!.languageCode == 'en'?
       GoogleFonts.poppins(
-    fontSize: fontSize.sp,
+    fontSize: fontSize,
     color: color,
     fontWeight: fontWeight,
   );

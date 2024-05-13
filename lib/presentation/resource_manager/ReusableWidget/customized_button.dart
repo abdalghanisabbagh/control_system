@@ -1,7 +1,4 @@
-// import 'package:/resources_manager/styles_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../color_manager.dart';
 import '../font_manager.dart';
 import '../styles_manager.dart';
@@ -28,9 +25,9 @@ class CustomizedButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        height: responsiveHeight.h,
-        width: responsiveWidth.w,
-        margin: EdgeInsets.symmetric(vertical: AppPading.p12.r),
+        height: responsiveHeight,
+        width: responsiveWidth,
+        margin:const EdgeInsets.symmetric(vertical: AppPading.p12),
         decoration: BoxDecoration(
             border: whiteButtonWithColoredBorder
                 ? Border.all(color: ColorManager.background)
@@ -38,7 +35,7 @@ class CustomizedButton extends StatelessWidget {
             color: whiteButtonWithColoredBorder
                 ? Colors.white
                 : ColorManager.background,
-            borderRadius: BorderRadius.circular(4.r)),
+            borderRadius: BorderRadius.circular(4)),
         child: Padding(
           padding: const EdgeInsets.all(
             AppPading.p5,
