@@ -1,10 +1,10 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/Login/widgets/login_form.dart';
 import 'package:control_system/presentation/views/Login/widgets/select_school_form.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends GetView<AuthController> {
@@ -89,14 +89,19 @@ class LoginScreen extends GetView<AuthController> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.all(size.height > 770
+              padding: EdgeInsets.all(
+                size.height > 770
                     ? 64
                     : size.height > 670
                         ? 32
-                        : 16),
-                child: Obx(() => controller.isLogin.value
+                        : 16,
+              ),
+              child: Obx(
+                () => controller.isLogin.value
                     ? const SelectSchoolForm()
-                    : LoginForm()))
+                    : LoginForm(),
+              ),
+            )
           ],
         ),
       ),
