@@ -1,12 +1,11 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/home_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/customized_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'package:control_system/presentation/resource_manager/constants/app_constatnts.dart';
+import 'package:control_system/presentation/resource_manager/assets_manager.dart';
+import 'package:control_system/presentation/views/home/widgets/home_screen_test.dart';
+import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'widgets/main_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
@@ -18,76 +17,67 @@ class HomeScreen extends GetView<HomeController> {
         title: const Text('title'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            MultiSelectDropDownView(
-              options: controller.options,
-              onOptionSelected: controller.onOptionSelected,
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SideMenu(
+            items: [
+              SideMenuItem(
+                title: 'Dashboard',
+                onTap: (index, _) {
+                  controller.sideMenu.changePage(index);
+                },
+                icon: const Icon(Icons.home),
+                tooltipContent: "This is a tooltip for Dashboard item",
+              ),
+              SideMenuItem(
+                title: 'test',
+                onTap: (index, _) {
+                  //sideMenu.changePage(index);
+                  controller.sideMenu.changePage(index);
+                },
+                icon: const Icon(Icons.ac_unit_rounded),
+                tooltipContent: "This is a tooltip for Dashboard item",
+              ),
+            ],
+            controller: controller.sideMenu,
+            style: SideMenuStyle(
+              //  showHamburger: true,
+              showTooltip: true,
+              displayMode: SideMenuDisplayMode.open,
+              hoverColor: Colors.blue[100],
+              selectedHoverColor: Colors.blue[100],
+              selectedColor: Colors.lightBlue,
+              selectedTitleTextStyle: const TextStyle(color: Colors.white),
+              selectedIconColor: Colors.white,
             ),
-            CustomizedButton(
-              buttonTitle: "Success",
-              onPressed: () {
-                MyFlashBar.showSuccess("hi", "hello").show(context);
-              },
+            title: Column(
+              children: [
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxHeight: 150,
+                    maxWidth: 150,
+                  ),
+                  child: Image.asset(AssetsManager.assetsIconsAdmin),
+                ),
+                const Divider(
+                  indent: 8.0,
+                  endIndent: 8.0,
+                ),
+              ],
             ),
-            CustomizedButton(
-              buttonTitle: "error",
-              onPressed: () {
-                MyFlashBar.showError("hi", "hello").show(context);
-              },
+          ),
+          Expanded(
+            child: PageView(
+              controller: controller.pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: const [
+                HomeScreenTest(),
+                MainWidget(),
+              ],
             ),
-            CustomizedButton(
-              buttonTitle: "info",
-              onPressed: () {
-                MyFlashBar.showInfo("hi", "hello").show(context);
-              },
-            ),
-            CustomizedButton(
-              buttonTitle: "show info dialog",
-              onPressed: () {
-                MyAwesomeDialogue(
-                  title: "hi",
-                  desc: "hello",
-                  dialogType: DialogType.info,
-                ).showDialogue(context);
-              },
-            ),
-            CustomizedButton(
-              buttonTitle: "show success dialog",
-              onPressed: () {
-                MyAwesomeDialogue(
-                  title: "hi",
-                  desc: "hello",
-                  dialogType: DialogType.success,
-                  autoHideTimer: AppConstants.durationTwoSeconds,
-                ).showDialogue(context);
-              },
-            ),
-            CustomizedButton(
-              buttonTitle: "show error dialog",
-              onPressed: () {
-                MyAwesomeDialogue(
-                  title: "hi",
-                  desc: "hello",
-                  dialogType: DialogType.error,
-                ).showDialogue(context);
-              },
-            ),
-            CustomizedButton(
-              buttonTitle: "show warning dialog",
-              onPressed: () {
-                MyAwesomeDialogue(
-                  title: "hi",
-                  desc: "hello",
-                  dialogType: DialogType.warning,
-                  btnOkOnPressed: () => Get.back(),
-                  btnCancelOnPressed: () => Get.back(),
-                ).showDialogue(context);
-              },
-            ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

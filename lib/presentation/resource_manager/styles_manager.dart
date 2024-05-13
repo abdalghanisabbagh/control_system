@@ -1,37 +1,32 @@
+import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'color_manager.dart';
 import 'font_manager.dart';
 
-TextStyle _getMainFont(double fontSize, FontWeight fontWeight, Color color) {
-  return
-      // Get.locale!.languageCode == 'en'?
-      GoogleFonts.poppins(
+
+TextStyle _getMainFont(
+  double fontSize,
+  FontWeight fontWeight,
+  Color color, {
+  String fontFamily = AssetsManager.assetsFontsNunitoBlack,
+}) {
+  return TextStyle(
     fontSize: fontSize,
     color: color,
-    fontWeight: fontWeight,
-  );
-  // : GoogleFonts.tajawal(
-  //     fontSize: fontSize.sp,
-  //     color: color,
-  //     fontWeight: fontWeight,
-  //   );
-}
-/*
-TextStyle _getMyPoppinsFont(
-    double fontSize, FontWeight fontWeight, Color color) {
-  return GoogleFonts.poppins().copyWith(
-    fontSize: fontSize.sp,
-    color: color,
+    fontFamily: fontFamily,
     fontWeight: fontWeight,
   );
 }
-*/
+
+//////////////////////////Nunito Font Styles////////////////////////////////////
 
 // light Style
-TextStyle poppinsLightStyle({double? fontSize, Color? color}) {
+TextStyle nunitoLightStyle({
+  double? fontSize,
+  Color? color,
+}) {
   return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsNunitoLight,
     fontSize ?? FontSize.s16,
     FontWeightManager.light,
     color ?? ColorManager.caption,
@@ -39,8 +34,12 @@ TextStyle poppinsLightStyle({double? fontSize, Color? color}) {
 }
 
 // reguler Style
-TextStyle poppinsRegulerStyle({double? fontSize, Color? color}) {
+TextStyle nunitoRegulerStyle({
+  double? fontSize,
+  Color? color,
+}) {
   return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsNunitoRegular,
     fontSize ?? FontSize.s12,
     FontWeightManager.reguler,
     color ?? ColorManager.black,
@@ -48,8 +47,12 @@ TextStyle poppinsRegulerStyle({double? fontSize, Color? color}) {
 }
 
 // meduim Style
-TextStyle poppinsMeduimStyle({double? fontSize, Color? color}) {
+TextStyle nunitoBlackStyle({
+  double? fontSize,
+  Color? color,
+}) {
   return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsNunitoBlack,
     fontSize ?? FontSize.s14,
     FontWeightManager.meduim,
     color ?? ColorManager.textFormFieldLabelStyle,
@@ -57,8 +60,12 @@ TextStyle poppinsMeduimStyle({double? fontSize, Color? color}) {
 }
 
 // bold Style
-TextStyle poppinsBoldStyle({double? fontSize, Color? color}) {
+TextStyle nunitoBoldStyle({
+  double? fontSize,
+  Color? color,
+}) {
   return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsNunitoBold,
     fontSize ?? FontSize.s30,
     FontWeightManager.bold,
     color ?? ColorManager.displayLargeText,
@@ -66,37 +73,68 @@ TextStyle poppinsBoldStyle({double? fontSize, Color? color}) {
 }
 
 // semiBold Style
-TextStyle poppinsSemiBoldStyle({double? fontSize, Color? color}) {
+TextStyle nunitoSemiBoldStyle({
+  double? fontSize,
+  Color? color,
+}) {
   return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsNunitoSemiBold,
     fontSize ?? FontSize.s24,
     FontWeightManager.semiBold,
     color ?? ColorManager.bodyMedium,
   );
 }
 
-///********************************************Tajawl ***********************/
+//////////////////////////PlayfairDisplay Font Styles////////////////////////////////////
 
-// light Style
-TextStyle tajawalLightStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.light, color);
+//reguler Style
+TextStyle playfairDisplayRegulerStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsPlayfairDisplayRegular,
+    fontSize ?? FontSize.s12,
+    FontWeightManager.reguler,
+    color ?? ColorManager.black,
+  );
 }
 
-// reguler Style
-TextStyle tajawalRegulerStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.reguler, color);
+//meduim Style
+TextStyle playfairDisplayMeduimStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsPlayfairDisplayMedium,
+    fontSize ?? FontSize.s14,
+    FontWeightManager.meduim,
+    color ?? ColorManager.black,
+  );
 }
 
-// meduim Style
-TextStyle tajawalMeduimStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.meduim, color);
+//semiBold Style
+TextStyle playfairDisplaySemiBoldStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsPlayfairDisplaySemiBold,
+    fontSize ?? FontSize.s16,
+    FontWeightManager.semiBold,
+    color ?? ColorManager.black,
+  );
 }
 
-// bold Style
-TextStyle tajawalBoldStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.bold, color);
-}
-
-// semiBold Style
-TextStyle tajawalSemiBoldStyle(double fontSize, Color color) {
-  return _getMainFont(fontSize, FontWeightManager.semiBold, color);
+//bold Style
+TextStyle playfairDisplayBoldStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsPlayfairDisplayBold,
+    fontSize ?? FontSize.s18,
+    FontWeightManager.bold,
+    color ?? ColorManager.black,
+  );
 }

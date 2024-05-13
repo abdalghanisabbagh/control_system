@@ -41,7 +41,7 @@ class MytextFormFiled extends StatelessWidget {
           if (title != null)
             Text(
               title!,
-              style: poppinsMeduimStyle(
+              style: nunitoBlackStyle(
                 fontSize: FontSize.s12,
                 color: ColorManager.darkGrey2,
               ),
@@ -56,7 +56,7 @@ class MytextFormFiled extends StatelessWidget {
             decoration: InputDecoration(
               suffixIcon: suffixIcon,
               hintText: title,
-              hintStyle: poppinsRegulerStyle(
+              hintStyle: nunitoRegulerStyle(
                 fontSize: FontSize.s12,
                 color: ColorManager.grey,
               ),

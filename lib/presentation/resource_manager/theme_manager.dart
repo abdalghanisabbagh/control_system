@@ -27,7 +27,7 @@ ThemeData getApplicationTheme() {
       color: ColorManager.appbarColor,
       elevation: AppSize.s5,
       shadowColor: ColorManager.appbarColorShadow,
-      titleTextStyle: poppinsRegulerStyle(
+      titleTextStyle: nunitoRegulerStyle(
         fontSize: FontSize.s16,
         color: ColorManager.appBarTextColor,
       ),
@@ -45,7 +45,7 @@ ThemeData getApplicationTheme() {
     /// elevated button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: poppinsRegulerStyle(
+        textStyle: nunitoRegulerStyle(
             fontSize: FontSize.s18,
             color: ColorManager.elevatedButtonTextColor),
         backgroundColor: ColorManager.primary,
@@ -58,31 +58,31 @@ ThemeData getApplicationTheme() {
     ///text theme
 
     textTheme: TextTheme(
-      displayLarge: poppinsBoldStyle(
+      displayLarge: nunitoBoldStyle(
         fontSize: FontSize.s30,
         color: ColorManager.displayLargeText,
       ),
-      headlineLarge: poppinsLightStyle(
+      headlineLarge: nunitoLightStyle(
         fontSize: FontSize.s20,
         color: ColorManager.headline1,
       ),
-      titleMedium: poppinsLightStyle(
+      titleMedium: nunitoLightStyle(
         fontSize: FontSize.s9,
         color: ColorManager.subtitle1,
       ),
-      titleLarge: poppinsLightStyle(
+      titleLarge: nunitoLightStyle(
         fontSize: FontSize.s14,
         color: ColorManager.subtitle2,
       ),
-      bodyLarge: poppinsLightStyle(
+      bodyLarge: nunitoLightStyle(
         fontSize: FontSize.s7,
         color: ColorManager.caption,
       ),
-      bodySmall: poppinsLightStyle(
+      bodySmall: nunitoLightStyle(
         fontSize: FontSize.s12,
         color: ColorManager.bodyText1,
       ),
-      bodyMedium: poppinsLightStyle(
+      bodyMedium: nunitoLightStyle(
         fontSize: FontSize.s16,
         color: ColorManager.bodyMedium,
       ),
@@ -93,15 +93,15 @@ ThemeData getApplicationTheme() {
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.all(AppPading.p12),
 
-      hintStyle: poppinsRegulerStyle(
+      hintStyle: nunitoRegulerStyle(
         fontSize: FontSize.s7,
         color: ColorManager.textFormFieldHintStyle,
       ),
-      labelStyle: poppinsMeduimStyle(
+      labelStyle: nunitoBlackStyle(
         fontSize: FontSize.s10,
         color: ColorManager.textFormFieldLabelStyle,
       ),
-      errorStyle: poppinsRegulerStyle(
+      errorStyle: nunitoRegulerStyle(
         fontSize: FontSize.s10,
         color: ColorManager.error,
       ),

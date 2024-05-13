@@ -45,7 +45,7 @@ class CustomizedButton extends StatelessWidget {
               fit: BoxFit.contain,
               child: Text(
                 buttonTitle,
-                style: poppinsRegulerStyle(
+                style: nunitoRegulerStyle(
                   fontSize: FontSize.s14,
                   color: whiteButtonWithColoredBorder
                       ? ColorManager.background
