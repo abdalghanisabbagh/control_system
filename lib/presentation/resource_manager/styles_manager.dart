@@ -1,9 +1,8 @@
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'color_manager.dart';
 import 'font_manager.dart';
+
 
 TextStyle _getMainFont(
   double fontSize,
@@ -12,7 +11,7 @@ TextStyle _getMainFont(
   String fontFamily = AssetsManager.assetsFontsNunitoBlack,
 }) {
   return TextStyle(
-    fontSize: fontSize.sp,
+    fontSize: fontSize,
     color: color,
     fontFamily: fontFamily,
     fontWeight: fontWeight,
@@ -134,6 +133,60 @@ TextStyle playfairDisplayBoldStyle({
 }) {
   return _getMainFont(
     fontFamily: AssetsManager.assetsFontsPlayfairDisplayBold,
+    fontSize ?? FontSize.s18,
+    FontWeightManager.bold,
+    color ?? ColorManager.black,
+  );
+}
+
+//////////////////////////Open-Sans Font Styles////////////////////////////////////
+
+//reguler Style
+TextStyle openSansRegulerStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsOpenSans,
+    fontSize ?? FontSize.s12,
+    FontWeightManager.reguler,
+    color ?? ColorManager.black,
+  );
+}
+
+//meduim Style
+TextStyle openSansMeduimStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsOpenSans,
+    fontSize ?? FontSize.s14,
+    FontWeightManager.meduim,
+    color ?? ColorManager.black,
+  );
+}
+
+//semiBold Style
+TextStyle openSansSemiBoldStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsOpenSans,
+    fontSize ?? FontSize.s16,
+    FontWeightManager.semiBold,
+    color ?? ColorManager.black,
+  );
+}
+
+//bold Style
+TextStyle openSansBoldStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsOpenSans,
     fontSize ?? FontSize.s18,
     FontWeightManager.bold,
     color ?? ColorManager.black,

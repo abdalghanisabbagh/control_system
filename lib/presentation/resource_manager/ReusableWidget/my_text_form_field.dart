@@ -4,7 +4,6 @@ import 'package:control_system/presentation/resource_manager/styles_manager.dart
 import 'package:control_system/presentation/resource_manager/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MytextFormFiled extends StatelessWidget {
   final String? title;
@@ -32,8 +31,8 @@ class MytextFormFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: AppPading.p12.w, vertical: AppPading.p12.h),
+      padding:const EdgeInsets.symmetric(
+          horizontal: AppPading.p12, vertical: AppPading.p12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -48,8 +47,8 @@ class MytextFormFiled extends StatelessWidget {
               ),
             ),
           if (title != null)
-            SizedBox(
-              height: 5.h,
+          const  SizedBox(
+              height: 5,
             ),
           TextFormField(
             keyboardType: isPrice != null ? TextInputType.number : null,

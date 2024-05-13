@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:hive_flutter/hive_flutter.dart';
 import 'app/main_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await ScreenUtil.ensureScreenSize();
+  await Hive.initFlutter();
+  await Hive.openBox('Token');
+  await Hive.openBox('School'); // Id   --- Name
+  await Hive.openBox('profile'); // Id   --- profile
 
-  runApp(const MainApp());
+  runApp( MyApp());
 }
