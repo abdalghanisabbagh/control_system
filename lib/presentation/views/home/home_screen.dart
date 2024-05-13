@@ -146,7 +146,7 @@ class HomeScreen extends GetView<HomeController> {
                   ),
                   child: Image.asset(AssetsManager.assetsLogosNisLogo22),
                 ),
-                Text(
+                const Text(
                   "Control System",
                   style: TextStyle(fontSize: AppSize.s25),
                 ),
