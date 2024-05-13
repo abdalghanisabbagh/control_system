@@ -5,32 +5,30 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/drop
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
-import 'package:control_system/presentation/views/home/home_screen_test.dart';
+import 'package:control_system/presentation/views/home/widgets/home_screen_test.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'widgets/main_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    SideMenuController sideMenu = SideMenuController();
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('title'),
-        centerTitle: true,
-      ),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        appBar: AppBar(
+          title: const Text('title'),
+          centerTitle: true,
+        ),
+        body: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SideMenu(
             items: [
               SideMenuItem(
                 title: 'Dashboard',
                 onTap: (index, _) {
-                  sideMenu.changePage(index);
+                  controller.sideMenu.changePage(index);
                 },
                 icon: const Icon(Icons.home),
                 tooltipContent: "This is a tooltip for Dashboard item",
@@ -40,14 +38,13 @@ class HomeScreen extends GetView<HomeController> {
                 onTap: (index, _) {
                   //sideMenu.changePage(index);
                   print("object");
-                  
+                  controller.sideMenu.changePage(index);
                 },
                 icon: const Icon(Icons.ac_unit_rounded),
                 tooltipContent: "This is a tooltip for Dashboard item",
               ),
-            
             ],
-            controller: sideMenu,
+            controller: controller.sideMenu,
             style: SideMenuStyle(
               //  showHamburger: true,
               showTooltip: true,
@@ -75,48 +72,11 @@ class HomeScreen extends GetView<HomeController> {
             ),
           ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MultiSelectDropDownView(
-                  options: controller.options,
-                  onOptionSelected: controller.onOptionSelected,
-                ),
-                CustomizedButton(
-                  buttonTitle: "Success",
-                  onPressed: () {
-                    MyFlashBar.showSuccess("hi", "hello").show(context);
-                  },
-                ),
-                CustomizedButton(
-                  buttonTitle: "error",
-                  onPressed: () {
-                    MyFlashBar.showError("hi", "hello").show(context);
-                  },
-                ),
-                CustomizedButton(
-                  buttonTitle: "info",
-                  onPressed: () {
-                    MyFlashBar.showInfo("hi", "hello").show(context);
-                  },
-                ),
-                CustomizedButton(
-                  buttonTitle: "show info dialog",
-                  onPressed: () {
-                    MyAwesomeDialogue(
-                      title: "hi",
-                      desc: "hello",
-                      dialogType: DialogType.info,
-                      btnCancelOnPressed: () => Get.back(),
-                      btnOkOnPressed: () => Get.back(),
-                    ).showDialogue(context);
-                  },
-                ),
-              ],
+            child: PageView(
+              controller: controller.pageController,
+              children: [HomeScreenTest(), MainWidget()],
             ),
-          ),
-        ],
-      ),
-    );
+          )
+        ]));
   }
 }

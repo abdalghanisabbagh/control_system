@@ -1,7 +1,20 @@
+import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class HomeController extends GetxController {
+@override
+void onInit() {
+    sideMenu.addListener((index) {
+      pageController.jumpToPage(index);
+    });
+    super.onInit();
+  }
+
+    SideMenuController sideMenu = SideMenuController();
+    PageController pageController = PageController();
+
   RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
 
   void onOptionSelected(List<ValueItem> selectedOptions) {
