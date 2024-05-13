@@ -1,22 +1,26 @@
+import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:control_system/presentation/views/Login/widgets/login_form.dart';
+import 'package:control_system/presentation/views/Login/widgets/select_school_form.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends GetView<AuthController> {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return  Scaffold(
+    return Scaffold(
       body: SizedBox(
         width: size.width,
         height: size.height,
         child: Stack(
           children: [
-              Opacity(
+            Opacity(
                 opacity: .5,
                 child: CarouselSlider(
                   items: [
@@ -49,23 +53,22 @@ class LoginScreen extends StatelessWidget {
                     reverse: false,
                   ),
                 )),
-             Align(
+            Align(
               alignment: Alignment.topLeft,
               child: Padding(
                 padding: const EdgeInsets.all(32),
                 child: Text("Welcome Admin",
-                    style:nunitoRegulerStyle(color: ColorManager.bgColor,fontSize: 24)
-                    
-                     ),
+                    style: nunitoRegulerStyle(
+                        color: ColorManager.bgColor, fontSize: 24)),
               ),
             ),
-           const Align(
+            const Align(
               alignment: Alignment.bottomRight,
               child: Padding(
-                padding:  EdgeInsets.all(32),
+                padding: EdgeInsets.all(32),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children:  [
+                  children: [
                     Icon(
                       Icons.copyright,
                       color: Colors.grey,
@@ -75,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                       width: 8,
                     ),
                     Text(
-                      "Copyright 2022",
+                      "Copyright 2024",
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 14,
@@ -85,8 +88,16 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-          
-
+            
+              Padding(
+                padding: EdgeInsets.all(size.height > 770
+                    ? 64
+                    : size.height > 670
+                        ? 32
+                        : 16),
+                child: Obx(() => controller.isLogin.value
+                    ? const SelectSchoolForm()
+                    : LoginForm()))
           ],
         ),
       ),

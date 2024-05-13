@@ -1,0 +1,114 @@
+import 'package:control_system/domain/controllers/auth_controller.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
+import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+class SelectSchoolForm extends GetView<AuthController> {
+  const SelectSchoolForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Center(
+      child: Card(
+        elevation: 10,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(15)),
+          height: size.height *
+              (size.height > 770
+                  ? 0.7
+                  : size.height > 670
+                      ? 0.8
+                      : 0.9),
+          width: 500,
+          child: Padding(
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Select Your School",
+                    style: nunitoBoldStyle(
+                      color: ColorManager.black,
+                      fontSize: 24,
+                    )),
+                const Divider(),
+                Expanded(
+                  child: Obx(
+                    () => controller.schools.isEmpty
+                        ? const Center(child: Text("No School"))
+                        : Center(
+                            child: ListView.builder(
+                                itemCount: controller.schools.length,
+                                itemBuilder: (context, index) {
+                                  var currentSchool = controller.schools[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: ColorManager.bgSideMenu,
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(25),
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: ColorManager.white
+                                                .withOpacity(0.2),
+                                            spreadRadius: 4,
+                                            blurRadius: 7,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ),
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.school,
+                                          color: ColorManager.white,
+                                        ),
+                                        focusColor: ColorManager.bgSideMenu,
+                                        hoverColor: ColorManager.bgSideMenu,
+                                        onTap: () {
+                                          if (kDebugMode) {
+                                            print(currentSchool.education!.id
+                                                .toString());
+                                          }
+                                          Hive.box('School')
+                                              .put('Id', currentSchool.id);
+                                          Hive.box('School')
+                                              .put('Name', currentSchool.name);
+
+                                          MyFlashBar.showSuccess(
+                                              "Select School",
+                                              currentSchool.name);
+
+                                          // Get.offAndToNamed(
+                                          //   Routes.dashboard,
+                                          // );
+                                        },
+                                        title: Text(currentSchool.name,
+                                            style: nunitoRegulerStyle(
+                                              color: ColorManager.white,
+                                              fontSize: 16,
+                                            )),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
