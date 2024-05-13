@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../presentation/resource_manager/theme_manager.dart';
 import '../presentation/views/home/home_screen.dart';
+import 'configurations/scroll_configurations.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -17,6 +18,7 @@ class MainApp extends StatelessWidget {
       ),
       builder: (context, __) {
         return GetMaterialApp.router(
+          scrollBehavior: AppScrollBehavior(),
           debugShowCheckedModeBanner: false,
           key: Get.key,
           routerDelegate: AppGoRouter.router.routerDelegate,
