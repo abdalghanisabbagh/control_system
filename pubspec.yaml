@@ -62,6 +62,6 @@ flutter:
 
 flutter_assets:
   assets_path: assets/
-  output_path: lib/app/generated/
-  filename: assets.dart
-  class_name: Assets
+  output_path: lib/presentation/resource_manager/
+  filename: assets_manager.dart
+  class_name: AssetsManager

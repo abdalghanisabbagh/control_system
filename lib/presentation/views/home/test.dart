@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 
@@ -13,16 +14,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'easy_sidemenu Demo',
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: false),
-      home: const MyHomePage(title: 'easy_sidemenu Demo'),
+      home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -44,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("ghjk"),
         centerTitle: true,
       ),
       body: Row(
@@ -73,9 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     maxHeight: 150,
                     maxWidth: 150,
                   ),
-                  child: Image.asset(
-                    'assets/images/admin.png',
-                  ),
+                  child: Image.asset(AssetsManager.assetsIconsAdmin),
                 ),
                 const Divider(
                   indent: 8.0,
@@ -104,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: 'Dashboard',
                 onTap: (index, _) {
                   sideMenu.changePage(index);
+                  // HomeScreen();
                 },
                 icon: const Icon(Icons.home),
                 badgeContent: const Text(
