@@ -1,5 +1,6 @@
 import 'package:control_system/Data/Network/tools/dio_factry.dart';
 import 'package:control_system/app/configurations/app_links.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
@@ -16,9 +17,9 @@ class AuthController extends GetxController {
         "password": password,
       });
       isLogin.value = true;
-      print(response.data);
+      debugPrint(response.data);
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
 
     isLoading.value = false;
