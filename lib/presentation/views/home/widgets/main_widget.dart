@@ -13,46 +13,44 @@ class MainWidget extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MultiSelectDropDownView(
-            options: controller.options,
-            onOptionSelected: controller.onOptionSelected,
-          ),
-          CustomizedButton(
-            buttonTitle: "Success",
-            onPressed: () {
-              MyFlashBar.showSuccess("hi", "hello").show(context);
-            },
-          ),
-          CustomizedButton(
-            buttonTitle: "error",
-            onPressed: () {
-              MyFlashBar.showError("hi", "hello").show(context);
-            },
-          ),
-          CustomizedButton(
-            buttonTitle: "info",
-            onPressed: () {
-              MyFlashBar.showInfo("hi", "hello").show(context);
-            },
-          ),
-          CustomizedButton(
-            buttonTitle: "show info dialog",
-            onPressed: () {
-              MyAwesomeDialogue(
-                title: "hi",
-                desc: "hello",
-                dialogType: DialogType.info,
-                btnCancelOnPressed: () => Get.back(),
-                btnOkOnPressed: () => Get.back(),
-              ).showDialogue(context);
-            },
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MultiSelectDropDownView(
+          options: controller.options,
+          onOptionSelected: controller.onOptionSelected,
+        ),
+        CustomizedButton(
+          buttonTitle: "Success",
+          onPressed: () {
+            MyFlashBar.showSuccess("hi", "hello").show(context);
+          },
+        ),
+        CustomizedButton(
+          buttonTitle: "error",
+          onPressed: () {
+            MyFlashBar.showError("hi", "hello").show(context);
+          },
+        ),
+        CustomizedButton(
+          buttonTitle: "info",
+          onPressed: () {
+            MyFlashBar.showInfo("hi", "hello").show(context);
+          },
+        ),
+        CustomizedButton(
+          buttonTitle: "show info dialog",
+          onPressed: () {
+            MyAwesomeDialogue(
+              title: "hi",
+              desc: "hello",
+              dialogType: DialogType.info,
+              btnCancelOnPressed: () => Get.back(),
+              btnOkOnPressed: () => Get.back(),
+            ).showDialogue(context);
+          },
+        ),
+      ],
     );
   }
 }
