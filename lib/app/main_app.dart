@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:control_system/presentation/resource_manager/routes/app_go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../presentation/resource_manager/theme_manager.dart';
+import 'configurations/scroll_configurations.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp._internal();
@@ -38,12 +37,4 @@ class _MyAppState extends State<MyApp> {
       theme: getApplicationTheme(),
     );
   }
-}
-
-class AppScrollBehavior extends MaterialScrollBehavior {
-  @override
-  Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-      };
 }
