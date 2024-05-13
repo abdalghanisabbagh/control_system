@@ -34,19 +34,19 @@ class MyAwesomeDialogue {
 
   void showDialogue(BuildContext context) {
     AwesomeDialog(
-            context: context,
-            dialogType: dialogType,
-            title: title,
-            desc: desc,
-            btnCancelOnPress: btnCancelOnPressed,
-            btnOkOnPress: btnOkOnPressed,
-            animType: animType,
-            body: customBody,
-            useRootNavigator: useRootNavigator,
-            dismissOnBackKeyPress: dismissOnBackKeyPress,
-            dismissOnTouchOutside: dismissOnTouchOutside,
-            showCloseIcon: showCloseIcon,
-            autoHide: autoHideTimer)
-        .show();
+      context: context,
+      dialogType: dialogType,
+      title: title,
+      desc: desc,
+      btnCancelOnPress: btnCancelOnPressed,
+      btnOkOnPress: btnOkOnPressed,
+      animType: animType,
+      body: customBody,
+      useRootNavigator: useRootNavigator,
+      dismissOnBackKeyPress: dismissOnBackKeyPress,
+      dismissOnTouchOutside: dismissOnTouchOutside,
+      showCloseIcon: showCloseIcon,
+      autoHide: autoHideTimer,
+    ).show();
   }
 }
