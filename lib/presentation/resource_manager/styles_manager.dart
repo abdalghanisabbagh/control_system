@@ -139,3 +139,57 @@ TextStyle playfairDisplayBoldStyle({
     color ?? ColorManager.black,
   );
 }
+
+//////////////////////////Open-Sans Font Styles////////////////////////////////////
+
+//reguler Style
+TextStyle openSansRegulerStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsOpenSans,
+    fontSize ?? FontSize.s12,
+    FontWeightManager.reguler,
+    color ?? ColorManager.black,
+  );
+}
+
+//meduim Style
+TextStyle openSansMeduimStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsOpenSans,
+    fontSize ?? FontSize.s14,
+    FontWeightManager.meduim,
+    color ?? ColorManager.black,
+  );
+}
+
+//semiBold Style
+TextStyle openSansSemiBoldStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsOpenSans,
+    fontSize ?? FontSize.s16,
+    FontWeightManager.semiBold,
+    color ?? ColorManager.black,
+  );
+}
+
+//bold Style
+TextStyle openSansBoldStyle({
+  double? fontSize,
+  Color? color,
+}) {
+  return _getMainFont(
+    fontFamily: AssetsManager.assetsFontsOpenSans,
+    fontSize ?? FontSize.s18,
+    FontWeightManager.bold,
+    color ?? ColorManager.black,
+  );
+}
