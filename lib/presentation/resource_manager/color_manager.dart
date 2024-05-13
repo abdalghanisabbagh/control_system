@@ -19,7 +19,7 @@ class ColorManager {
 
   static Color yellow = const Color(0xffFFD400);
   static Color notifications = const Color(0xffFFC107);
-  static Color background = const Color(0xffB5191A); // ff=>CC opactiy 80%
+  static Color background =Colors.white; // ff=>CC opactiy 80%
   static Color appBackground = const Color(0xffFCFCFC); // ff=>CC opactiy 80%
   static Color redWith10opc = const Color(0x9AB5191A); // ff=>CC opactiy 80%
 

@@ -16,7 +16,6 @@ class DioFactory {
     Dio dio = Dio();
 
     token = Hive.box('Token').get('aToken');
-    String? lang = Hive.box('lang').get('lang');
     /*
     String dtoken = Hive.box('Token').get('dToken');
     DateTime? tokenTime = DateTime.tryParse(dtoken);
@@ -34,7 +33,6 @@ class DioFactory {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
       if (token != null) AUTHORIZATION: "Bearer $token",
-      'lang': lang ?? 'en'
     };
 
     dio.options = BaseOptions(

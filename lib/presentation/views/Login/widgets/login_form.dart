@@ -101,14 +101,16 @@ class LoginForm extends GetView<AuthController> {
                                 controller.isLoading.value
                                     ? const CircularProgressIndicator()
                                     : ElevatedButton(
-                                        onPressed: () {
-                                          context.goNamed(
+                                        onPressed: () async {
+                                        await  controller.login(emailController.text,
+                                              passwordController.text);
+                                           context.goNamed(
                                             AppRoutesNamesAndPaths
                                                 .schoolsScreenName,
                                           );
                                         },
                                         child: const Text("Login"),
-                              ),
+                                      ),
                               ],
                             ),
                           )
