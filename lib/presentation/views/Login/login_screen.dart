@@ -88,8 +88,7 @@ class LoginScreen extends GetView<AuthController> {
                 ),
               ),
             ),
-            
-              Padding(
+            Padding(
                 padding: EdgeInsets.all(size.height > 770
                     ? 64
                     : size.height > 670
