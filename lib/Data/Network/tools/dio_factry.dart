@@ -1,7 +1,7 @@
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 const String APPLICATION_JSON = "application/json";
