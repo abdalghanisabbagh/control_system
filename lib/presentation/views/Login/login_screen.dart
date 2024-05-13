@@ -1,0 +1,95 @@
+import 'package:control_system/app/generated/assets.dart';
+import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return  Scaffold(
+      body: SizedBox(
+        width: size.width,
+        height: size.height,
+        child: Stack(
+          children: [
+              Opacity(
+                opacity: .5,
+                child: CarouselSlider(
+                  items: [
+                    Image.asset(
+                      width: size.width,
+                      height: size.height,
+                      Assets.assetsImagesNis1,
+                      fit: BoxFit.fill,
+                    ),
+                    Image.asset(
+                      width: size.width,
+                      height: size.height,
+                      Assets.assetsImagesNis2,
+                      fit: BoxFit.fill,
+                    ),
+                    Image.asset(
+                      width: size.width,
+                      height: size.height,
+                      Assets.assetsImagesNis3,
+                      fit: BoxFit.fill,
+                    )
+                  ],
+                  options: CarouselOptions(
+                    height: size.height,
+                    viewportFraction: 1.0,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    enlargeCenterPage: false,
+                    scrollPhysics: const NeverScrollableScrollPhysics(),
+                    autoPlay: true,
+                    reverse: false,
+                  ),
+                )),
+             Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Text("Welcome Admin",
+                    style:poppinsLightStyle(color: ColorManager.bgColor,fontSize: 24)
+                    
+                     ),
+              ),
+            ),
+           const Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding:  EdgeInsets.all(32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children:  [
+                    Icon(
+                      Icons.copyright,
+                      color: Colors.grey,
+                      size: 24,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      "Copyright 2022",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          
+
+          ],
+        ),
+      ),
+    );
+  }
+}

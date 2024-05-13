@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       scrollBehavior: AppScrollBehavior(),
       debugShowCheckedModeBanner: false,
       key: Get.key,
-      title: 'Controll App',
+      title: 'NIS Control System',
       defaultTransition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 200),
       routerDelegate: AppGoRouter.router.routerDelegate,
