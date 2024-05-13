@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
