@@ -1,9 +1,5 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/home_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/customized_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/views/home/widgets/home_screen_test.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -37,7 +33,6 @@ class HomeScreen extends GetView<HomeController> {
                 title: 'test',
                 onTap: (index, _) {
                   //sideMenu.changePage(index);
-                  print("object");
                   controller.sideMenu.changePage(index);
                 },
                 icon: const Icon(Icons.ac_unit_rounded),
@@ -74,7 +69,7 @@ class HomeScreen extends GetView<HomeController> {
           Expanded(
             child: PageView(
               controller: controller.pageController,
-              children: [HomeScreenTest(), MainWidget()],
+              children: const [HomeScreenTest(), MainWidget()],
             ),
           )
         ]));
