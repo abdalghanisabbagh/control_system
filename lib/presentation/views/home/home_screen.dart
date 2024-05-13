@@ -70,6 +70,7 @@ class HomeScreen extends GetView<HomeController> {
           Expanded(
             child: PageView(
               controller: controller.pageController,
+              physics: const NeverScrollableScrollPhysics(),
               children: const [
                 HomeScreenTest(),
                 MainWidget(),
