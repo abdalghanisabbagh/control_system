@@ -122,11 +122,7 @@ class SideMenueWidget extends StatelessWidget {
       ],
       controller: sideMenu,
       style: SideMenuStyle(
-          //  showHamburger: false,
-          // showTooltip: true,
-          // displayMode: isMobile
-          //     ? SideMenuDisplayMode.open
-          //     : SideMenuDisplayMode.compact,
+          showTooltip: true,
           hoverColor: Colors.blue[100],
           selectedHoverColor: Colors.blue[100],
           selectedColor: Colors.lightBlue,
@@ -137,13 +133,13 @@ class SideMenueWidget extends StatelessWidget {
       title: Row(
         children: [
           Image.asset(
-            AssetsManager.assetsLogosNisLogo22,
+            AssetsManager.assetsLogosNIS5,
             width: 100,
           ),
-           Text(
+          Text(
             "Control System",
-            style:
-              nunitoRegulerStyle(color: ColorManager.white,fontSize: AppSize.s18),
+            style: nunitoRegulerStyle(
+                color: ColorManager.white, fontSize: AppSize.s18),
           ),
           const Divider(
             indent: 8.0,

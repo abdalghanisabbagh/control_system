@@ -2,7 +2,6 @@ import 'package:control_system/presentation/resource_manager/app_responsive.dart
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/side_menue/side_menue.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
