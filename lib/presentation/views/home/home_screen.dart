@@ -70,11 +70,11 @@ class HomeScreen extends GetView<HomeController> {
               buttonTitle: "show success dialog",
               onPressed: () {
                 MyAwesomeDialogue(
-                        title: "hi",
-                        desc: "hello",
-                        dialogType: DialogType.success,
-                        autoHideTimer: AppConstants.durationTwoSeconds)
-                    .showDialogue(context);
+                  title: "hi",
+                  desc: "hello",
+                  dialogType: DialogType.success,
+                  autoHideTimer: AppConstants.durationTwoSeconds,
+                ).showDialogue(context);
               },
             ),
             CustomizedButton(
