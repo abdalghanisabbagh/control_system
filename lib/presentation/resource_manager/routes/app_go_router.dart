@@ -1,5 +1,6 @@
 import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
 import 'package:control_system/presentation/views/Login/login_screen.dart';
+import 'package:control_system/presentation/views/schools/school_screen.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,6 +33,16 @@ class AppGoRouter {
         },
         onExit: (context, state) {
           Get.delete<AuthController>();
+          return true;
+        },
+      ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.schoolsScreenPath,
+        name: AppRoutesNamesAndPaths.schoolsScreenName,
+        builder: (context, state) {
+          return const SchoolsScreen();
+        },
+        onExit: (context, state) {
           return true;
         },
       ),

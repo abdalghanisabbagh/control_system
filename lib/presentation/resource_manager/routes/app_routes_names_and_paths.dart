@@ -6,4 +6,8 @@ class AppRoutesNamesAndPaths {
   // loginScreen
   static const String loginScreenPath = '/login';
   static const String loginScreenName = 'login';
+
+  // schoolsScreen
+  static const String schoolsScreenPath = '/schools';
+  static const String schoolsScreenName = 'schools';
 }
