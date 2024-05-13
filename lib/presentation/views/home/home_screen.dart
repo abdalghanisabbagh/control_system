@@ -1,5 +1,4 @@
 import 'package:control_system/domain/controllers/home_controller.dart';
-
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/views/home/widgets/home_screen_test.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -14,11 +13,13 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('title'),
-          centerTitle: true,
-        ),
-        body: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      appBar: AppBar(
+        title: const Text('title'),
+        centerTitle: true,
+      ),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           SideMenu(
             items: [
               SideMenuItem(
@@ -69,9 +70,14 @@ class HomeScreen extends GetView<HomeController> {
           Expanded(
             child: PageView(
               controller: controller.pageController,
-              children: const [HomeScreenTest(), MainWidget()],
+              children: const [
+                HomeScreenTest(),
+                MainWidget(),
+              ],
             ),
           )
-        ]));
+        ],
+      ),
+    );
   }
 }
