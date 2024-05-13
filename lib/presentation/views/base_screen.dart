@@ -1,4 +1,3 @@
-
 import 'package:control_system/presentation/resource_manager/app_responsive.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/side_menue/side_menue.dart';
@@ -23,26 +22,25 @@ class BaseScreen extends StatelessWidget {
       backgroundColor: ColorManager.background,
       appBar: appbar,
       body: SafeArea(
-          child: Row(
-        children: [
-          if (AppResponsive.isDesktop(context))
-            const Expanded(
+        child: Row(
+          children: [
+            if (AppResponsive.isDesktop(context))
+              const Expanded(
                 flex: 1,
                 child: SideMenueWidget(
                   isMobile: false,
                 ),
               ),
-          Expanded(
+            Expanded(
               flex: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-               
                   Expanded(child: body),
                 ],
               ),
             ),
-        ],
+          ],
         ),
       ),
       drawer: AppResponsive.isMobile(context)

@@ -8,7 +8,7 @@ class SchoolsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScreen(
       key: key,
-      body: Center(
+      body: const Center(
         child: Text("Schools Sreen"),
       ),
     );
