@@ -9,7 +9,7 @@ class SchoolsScreen extends StatelessWidget {
     return BaseScreen(
       key: key,
       body: const Center(
-        child: Text("Schools Sreen"),
+        child: Text("Schools Screen"),
       ),
     );
   }
