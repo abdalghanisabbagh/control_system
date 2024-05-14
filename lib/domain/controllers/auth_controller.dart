@@ -25,4 +25,9 @@ class AuthController extends GetxController {
     isLoading.value = false;
     return true;
   }
+
+  Future refreshToken() async {
+    ///TODO: refresh token
+    
+  }
 }
