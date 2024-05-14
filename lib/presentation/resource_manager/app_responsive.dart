@@ -1,33 +1,25 @@
+import 'package:control_system/app/extensions/device_type_extension.dart';
 import 'package:flutter/material.dart';
+
+import 'enums/device_type_enum.dart';
 
 class AppResponsive extends StatelessWidget {
   final Widget mobile;
   final Widget tablet;
   final Widget desktop;
 
-  const AppResponsive(
-      {super.key,
-      required this.mobile,
-      required this.tablet,
+  const AppResponsive({
+    super.key,
+    required this.mobile,
+    required this.tablet,
     required this.desktop,
   });
-
-  /// This size work for my design, maybe you need some changes depend on your design
-  /// make function that can help us later
-  static bool isMobile(context) => MediaQuery.of(context).size.width < 900;
-  static bool isTablet(context) =>
-      MediaQuery.of(context).size.width < 1100 &&
-      MediaQuery.of(context).size.width >= 900;
-  static bool isDesktop(context) => MediaQuery.of(context).size.width >= 1100;
-
   @override
   Widget build(BuildContext context) {
-    if (isDesktop(context)) {
-      return desktop;
-    } else if (isTablet(context)) {
-      return tablet;
-    } else {
-      return mobile;
-    }
+    return switch (context.getDeviceType) {
+      DeviceTypeEnum.mobile => mobile,
+      DeviceTypeEnum.tablet => tablet,
+      DeviceTypeEnum.desktop => desktop,
+    };
   }
 }
