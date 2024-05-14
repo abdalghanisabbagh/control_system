@@ -1,5 +1,6 @@
 export 'Login/login_screen.dart';
 export 'admin_screen/admin_screen.dart';
+export 'batch_documents/batch_documents_screen.dart';
 export 'certificates/certificates_screen.dart';
 export 'class_rooms/class_rooms_screen.dart';
 export 'cohort_settings/cohort_settings_screen.dart';
