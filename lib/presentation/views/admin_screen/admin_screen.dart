@@ -20,7 +20,7 @@ class AdminScreen extends StatelessWidget {
               },
               child: Text(
                 "Add New User",
-                style: nunitoBoldStyle(color: Colors.black),
+                style: nunitoLightStyle(),
               ),
             )
           ],
