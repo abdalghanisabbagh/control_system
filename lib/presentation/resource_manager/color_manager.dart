@@ -57,7 +57,7 @@ class ColorManager {
   static Color headline1 = Colors.white;
   static Color subtitle1 = Colors.white;
   static Color subtitle2 = Colors.white;
-  static Color caption = Colors.black;
+  static Color caption = Colors.white;
   static Color bodyText1 = Colors.white;
   static Color bodyMedium = Colors.white;
 
