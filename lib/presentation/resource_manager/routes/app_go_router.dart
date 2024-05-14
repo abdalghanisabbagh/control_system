@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/indices/index.dart';
+import '../../../domain/services/side_menue_get_controller.dart';
 import '../../views/index.dart';
 
 class AppGoRouter {
@@ -15,6 +16,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.homeScreenPath,
         name: AppRoutesNamesAndPaths.homeScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           HomeBindings().dependencies();
           return const HomeScreen();
         },
@@ -27,6 +29,8 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.loginScreenPath,
         name: AppRoutesNamesAndPaths.loginScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+
           AuthBindings().dependencies();
           return const LoginScreen();
         },
@@ -39,6 +43,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.certificateScreenPath,
         name: AppRoutesNamesAndPaths.certificateScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const CertificatesScreen();
         },
         onExit: (context, state) {
@@ -49,6 +54,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.schoolsScreenPath,
         name: AppRoutesNamesAndPaths.schoolsScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const SchoolsScreen();
         },
         onExit: (context, state) {
@@ -59,6 +65,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.classRoomScreenPath,
         name: AppRoutesNamesAndPaths.classRoomScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const ClassRoomsScreen();
         },
         onExit: (context, state) {
@@ -69,6 +76,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.cohortSettingScreenPath,
         name: AppRoutesNamesAndPaths.cohortSettingScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const CohortSettingsScreen();
         },
         onExit: (context, state) {
@@ -79,6 +87,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.controlMissionScreenPath,
         name: AppRoutesNamesAndPaths.controlMissionScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const ControlMessionScreen();
         },
         onExit: (context, state) {
@@ -89,6 +98,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.dashBoardScreenPath,
         name: AppRoutesNamesAndPaths.dashBoardScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const DashBoardScreen();
         },
         onExit: (context, state) {
@@ -99,6 +109,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.proctorScreenPath,
         name: AppRoutesNamesAndPaths.proctorScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const ProctorScreen();
         },
         onExit: (context, state) {
@@ -109,6 +120,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.seatingNumbersScreenPath,
         name: AppRoutesNamesAndPaths.seatingNumbersScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const SeatingNumbersScreen();
         },
         onExit: (context, state) {
@@ -119,6 +131,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.setDegreesScreenPath,
         name: AppRoutesNamesAndPaths.setDegreesScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const SetDegreesScreen();
         },
         onExit: (context, state) {
@@ -129,6 +142,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.studentScreenPath,
         name: AppRoutesNamesAndPaths.studentScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const StudentScreen();
         },
         onExit: (context, state) {
@@ -139,6 +153,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.subjectSettingScreenPath,
         name: AppRoutesNamesAndPaths.subjectSettingScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const SubjectSettingScreen();
         },
         onExit: (context, state) {
@@ -149,6 +164,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.userScreenPath,
         name: AppRoutesNamesAndPaths.userScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const AdminScreen();
         },
         onExit: (context, state) {
@@ -159,6 +175,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.batchDocumentsScreenPath,
         name: AppRoutesNamesAndPaths.batchDocumentsScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const BatchDocumentsScreen();
         },
         onExit: (context, state) {
@@ -169,6 +186,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.rolesScreenPath,
         name: AppRoutesNamesAndPaths.rolesScreenName,
         builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const RolesScreen();
         },
         onExit: (context, state) {

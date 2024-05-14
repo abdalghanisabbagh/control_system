@@ -15,7 +15,7 @@ class SideMenueGetController extends GetxController {
     // TODO :: Cheke roles
     final List<SideMenuItem> sideMenueItems = [
       SideMenuItem(
-        title: 'Dashboard',
+        title: AppRoutesNamesAndPaths.dashBoardScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.dashBoardScreenName);
           changePage(index);
@@ -24,7 +24,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Students',
+        title: AppRoutesNamesAndPaths.studentScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.studentScreenName);
           changePage(index);
@@ -33,7 +33,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Control Mission',
+        title: AppRoutesNamesAndPaths.controlMissionScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.controlMissionScreenName);
           changePage(index);
@@ -42,7 +42,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Batch Documents',
+        title: AppRoutesNamesAndPaths.batchDocumentsScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.batchDocumentsScreenName);
           changePage(index);
@@ -51,7 +51,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Certificates',
+        title: AppRoutesNamesAndPaths.certificateScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.certificateScreenName);
           changePage(index);
@@ -60,7 +60,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Set Degrees',
+        title: AppRoutesNamesAndPaths.setDegreesScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.setDegreesScreenName);
           changePage(index);
@@ -69,7 +69,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'School',
+        title: AppRoutesNamesAndPaths.schoolsScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.schoolsScreenName);
           changePage(index);
@@ -78,7 +78,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Class Rooms',
+        title: AppRoutesNamesAndPaths.classRoomScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.classRoomScreenName);
           changePage(index);
@@ -87,7 +87,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Subject',
+        title: AppRoutesNamesAndPaths.subjectSettingScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.subjectSettingScreenName);
           changePage(index);
@@ -96,7 +96,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Cohorts',
+        title: AppRoutesNamesAndPaths.cohortSettingScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.cohortSettingScreenName);
           changePage(index);
@@ -105,7 +105,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Admins',
+        title: AppRoutesNamesAndPaths.userScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.userScreenName);
           changePage(index);
@@ -114,7 +114,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Proctors',
+        title: AppRoutesNamesAndPaths.proctorScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.proctorScreenName);
           changePage(index);
@@ -123,7 +123,7 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Roles',
+        title: AppRoutesNamesAndPaths.rolesScreenName,
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.rolesScreenName);
           changePage(index);
@@ -152,6 +152,13 @@ class SideMenueGetController extends GetxController {
 
   changePage(int currentIndex) {
     sideMenuController.changePage(currentIndex);
+  }
+
+  onRouteChange(String name) {
+    final index = userMenue.indexWhere((element) => element.title == name);
+    if (index != -1) {
+      sideMenuController.changePage(index);
+    }
   }
 
   @override
