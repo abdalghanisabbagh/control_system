@@ -5,8 +5,14 @@ import 'package:get/get.dart';
 
 class AuthController extends GetxController {
   RxBool isLogin = false.obs;
+  bool showPass = true;
+
   RxBool isLoading = false.obs;
   List schools = [];
+  setShowPass() {
+    showPass = !showPass;
+    update();
+  }
 
   Future login(String username, String password) async {
     isLoading.value = true;
@@ -28,6 +34,5 @@ class AuthController extends GetxController {
 
   Future refreshToken() async {
     ///TODO: refresh token
-    
   }
 }

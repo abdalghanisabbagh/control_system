@@ -4,7 +4,6 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/my_t
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/resource_manager/routes/index.dart';
-import 'package:control_system/presentation/resource_manager/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +31,7 @@ class LoginForm extends GetView<AuthController> {
               (size.height > 770
                   ? 0.7
                   : size.height > 670
-                      ? 0.8
+                      ? 0.7
                       : 0.9),
           width: 500,
           child: Center(
@@ -87,12 +86,29 @@ class LoginForm extends GetView<AuthController> {
                           const SizedBox(
                             height: 32,
                           ),
-                          MytextFormFiled(controller: emailController),
-                          const SizedBox(
-                            height: 32,
+                          MytextFormFiled(
+                            controller: emailController,
+                            title: "Email",
+                            suffixIcon: Icon(
+                              Icons.mail_outline,
+                              color: ColorManager.glodenColor,
+                            ),
                           ),
                           MytextFormFiled(
+                            obscureText: controller.showPass,
                             controller: passwordController,
+                            title: "Password",
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                controller.showPass
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: ColorManager.glodenColor,
+                              ),
+                              onPressed: () {
+                                controller.setShowPass();
+                              },
+                            ),
                           ),
                           const SizedBox(
                             height: 32,
@@ -102,23 +118,24 @@ class LoginForm extends GetView<AuthController> {
                               children: [
                                 controller.isLoading.value
                                     ? const CircularProgressIndicator()
-                                    : ElevatedButton(
-                                        onPressed: () async {
-                                          await controller.login(
-                                            emailController.text,
-                                            passwordController.text,
-                                          );
+                                    : SizedBox(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            await controller.login(
+                                              emailController.text,
+                                              passwordController.text,
+                                            );
 
-                                          !context.mounted
-                                              ? null
-                                              : context.goNamed(
-                                                  AppRoutesNamesAndPaths
-                                                      .schoolsScreenName,
-                                                );
-                                        },
-                                        child: Text(
-                                          "Login",
-                                          style: nunitoLightStyle(),
+                                            !context.mounted
+                                                ? null
+                                                : context.goNamed(
+                                                    AppRoutesNamesAndPaths
+                                                        .schoolsScreenName,
+                                                  );
+                                          },
+                                          child: const Text("Login"),
                                         ),
                                       ),
                               ],

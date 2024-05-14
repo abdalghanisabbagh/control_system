@@ -46,9 +46,7 @@ ThemeData getApplicationTheme() {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: nunitoRegulerStyle(
-        
             fontSize: FontSize.s18,
-          
             color: ColorManager.elevatedButtonTextColor),
         backgroundColor: ColorManager.primary,
         shape: RoundedRectangleBorder(
@@ -77,7 +75,7 @@ ThemeData getApplicationTheme() {
         color: ColorManager.subtitle2,
       ),
       bodyLarge: nunitoLightStyle(
-        fontSize: FontSize.s7,
+        fontSize: FontSize.s12,
         color: ColorManager.caption,
       ),
       bodySmall: nunitoLightStyle(

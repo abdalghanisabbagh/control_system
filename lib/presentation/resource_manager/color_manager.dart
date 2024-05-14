@@ -53,11 +53,11 @@ class ColorManager {
   static Color elevatedButtonColor = Colors.black;
   static Color elevatedButtonTextColor = Colors.black;
 
-  static Color displayLargeText = Colors.white;
+  static Color displayLargeText = Colors.black;
   static Color headline1 = Colors.white;
   static Color subtitle1 = Colors.white;
   static Color subtitle2 = Colors.white;
-  static Color caption = Colors.white;
+  static Color caption = Colors.black;
   static Color bodyText1 = Colors.white;
   static Color bodyMedium = Colors.white;
 
