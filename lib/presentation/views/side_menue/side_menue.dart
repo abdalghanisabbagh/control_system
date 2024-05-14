@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:control_system/domain/services/side_menue_get_controller_service.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
@@ -14,6 +13,7 @@ class SideMenueWidget extends GetView<SideMenueGetControllerService> {
   final bool isMobile;
   @override
   Widget build(BuildContext context) {
+    
     return SideMenu(
       showToggle: true,
       controller: controller.sideMenuController,
@@ -62,7 +62,7 @@ class SideMenueWidget extends GetView<SideMenueGetControllerService> {
           ),
         ],
       ),
-      items: controller.getUserMenue(context),
+      items: controller.generateUserMenue(context),
     );
   }
 }

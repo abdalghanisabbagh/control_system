@@ -1,5 +1,7 @@
 import 'package:control_system/presentation/views/base_screen.dart';
+import 'package:control_system/presentation/views/schools/Widgets/add_new_school_type.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SchoolsScreen extends StatelessWidget {
   const SchoolsScreen({super.key});
@@ -8,8 +10,25 @@ class SchoolsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScreen(
       key: key,
-      body: const Center(
-        child: Text("Schools Screen"),
+      body: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Get.defaultDialog(
+                  title: 'Add New School Type',
+                  content: AddNewSchoolTypeWidget(),
+                );
+              },
+              child: Text('add New school Type')),
+          ElevatedButton(
+              onPressed: () {
+                Get.defaultDialog(
+                  title: 'Add New School',
+                  content: AddNewSchoolTypeWidget(),
+                );
+              },
+              child: Text('add New school')),
+        ],
       ),
     );
   }

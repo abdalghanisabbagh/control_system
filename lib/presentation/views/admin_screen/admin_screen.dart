@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
 import 'package:control_system/presentation/resource_manager/styles_manager.dart';
 import 'package:control_system/presentation/views/admin_screen/widgets/add_new_user.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
@@ -22,7 +23,8 @@ class AdminScreen extends StatelessWidget {
                 "Add New User",
                 style: nunitoBoldStyle(color: Colors.black),
               ),
-            )
+            ),
+            MyBackButton()
           ],
         ));
   }

@@ -32,7 +32,7 @@ class MytextFormFiled extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:const EdgeInsets.symmetric(
-          horizontal: AppPading.p12, vertical: AppPading.p12),
+          horizontal: AppPading.p8, vertical: AppPading.p8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

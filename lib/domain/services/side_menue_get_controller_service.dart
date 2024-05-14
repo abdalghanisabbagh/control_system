@@ -8,9 +8,10 @@ import 'package:go_router/go_router.dart';
 class SideMenueGetControllerService extends GetxController {
   late final SideMenuController sideMenuController;
   int nowIndex = 0;
-  
-  List<SideMenuItem> getUserMenue(BuildContext context) {
-    // TODO :: Cheke roles
+
+  List<SideMenuItem> userMenue = [];
+
+  List<SideMenuItem> generateUserMenue(BuildContext context) {
     final List<SideMenuItem> sideMenueItems = [
       SideMenuItem(
         title: 'Dashboard',
@@ -130,10 +131,13 @@ class SideMenueGetControllerService extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
     ];
-
-    return sideMenueItems;
+    // TODO :: Cheke roles
     // .where((element) => element.title!.toLowerCase().contains('s'))
     // .toList();
+    userMenue = sideMenueItems;
+
+    print(userMenue);
+    return userMenue;
   }
 
   changePage(int currentIndex) {
@@ -143,7 +147,6 @@ class SideMenueGetControllerService extends GetxController {
   @override
   void onInit() {
     sideMenuController = SideMenuController();
-
     super.onInit();
   }
 

@@ -8,6 +8,13 @@ abstract class Validations {
     return null;
   }
 
+  static String? requiredValidator(String? value) {
+    if (value!.isEmpty) {
+      return 'Field  Is Required';
+    }
+    return null;
+  }
+
   static String? validatePassword(String? value) {
     if (value!.isEmpty) {
       return 'Please enter password';
