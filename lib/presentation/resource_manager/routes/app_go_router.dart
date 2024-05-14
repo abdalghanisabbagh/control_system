@@ -16,7 +16,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/indices/index.dart';
-import '../../views/home/home_screen.dart';
+import '../../views/index.dart';
 
 class AppGoRouter {
   static final router = GoRouter(
