@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 class SideMenueGetControllerService extends GetxController {
   late final SideMenuController sideMenuController;
   int nowIndex = 0;
-  @override
+  
   List<SideMenuItem> getUserMenue(BuildContext context) {
     // TODO :: Cheke roles
     final List<SideMenuItem> sideMenueItems = [
@@ -33,7 +33,7 @@ class SideMenueGetControllerService extends GetxController {
       SideMenuItem(
         title: 'Control Batch',
         onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.classRoomScreenName);
+          context.goNamed(AppRoutesNamesAndPaths.controlMissionScreenName);
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsExam),
@@ -131,9 +131,9 @@ class SideMenueGetControllerService extends GetxController {
       ),
     ];
 
-    return sideMenueItems
-        .where((element) => element.title!.toLowerCase().contains('s'))
-        .toList();
+    return sideMenueItems;
+    // .where((element) => element.title!.toLowerCase().contains('s'))
+    // .toList();
   }
 
   changePage(int currentIndex) {
