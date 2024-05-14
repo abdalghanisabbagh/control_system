@@ -1,4 +1,5 @@
 export 'Login/login_screen.dart';
+export 'admin_screen/admin_screen.dart';
 export 'certificates/certificates_screen.dart';
 export 'class_rooms/class_rooms_screen.dart';
 export 'cohort_settings/cohort_settings_screen.dart';
@@ -11,4 +12,3 @@ export 'seating_numbers/seating_numbers_screen.dart';
 export 'set_degrees/set_degrees_screen.dart';
 export 'student/student_screen.dart';
 export 'subject_setting/subject_setting_screen.dart';
-export 'user_screen/user_screen.dart';
