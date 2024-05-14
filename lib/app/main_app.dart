@@ -38,11 +38,11 @@ class _MyAppState extends State<MyApp> {
       defaultTransition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 200),
       routerDelegate: AppGoRouter.router.routerDelegate,
+      backButtonDispatcher: AppGoRouter.router.backButtonDispatcher,
       routeInformationProvider: AppGoRouter.router.routeInformationProvider,
       routeInformationParser: AppGoRouter.router.routeInformationParser,
       theme: getApplicationTheme(),
       initialBinding: SideMenuBindings(),
-      
     );
   }
 }

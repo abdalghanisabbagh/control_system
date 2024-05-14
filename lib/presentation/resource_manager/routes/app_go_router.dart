@@ -6,10 +6,12 @@ import '../../../domain/indices/index.dart';
 import '../../views/index.dart';
 
 class AppGoRouter {
-  static final router = GoRouter(
+  static final router = GoRouter(  
+    navigatorKey: Get.key,
     debugLogDiagnostics: true,
     initialLocation: AppRoutesNamesAndPaths.loginScreenPath,
     routes: [
+      
       GoRoute(
         path: AppRoutesNamesAndPaths.homeScreenPath,
         name: AppRoutesNamesAndPaths.homeScreenName,
