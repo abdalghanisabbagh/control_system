@@ -3,8 +3,9 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddNewUserWIdget extends StatelessWidget {
-  AddNewUserWIdget({
+// ignore: must_be_immutable
+class AddNewUserWidget extends StatelessWidget {
+  AddNewUserWidget({
     super.key,
   });
 

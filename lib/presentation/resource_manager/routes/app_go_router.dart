@@ -148,7 +148,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.userScreenPath,
         name: AppRoutesNamesAndPaths.userScreenName,
         builder: (context, state) {
-          return const UserScreen();
+          return const AdminScreen();
         },
         onExit: (context, state) {
           return true;
