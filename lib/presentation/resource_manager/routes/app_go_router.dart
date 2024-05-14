@@ -48,16 +48,6 @@ class AppGoRouter {
         },
       ),
       GoRoute(
-        path: AppRoutesNamesAndPaths.schoolsScreenPath,
-        name: AppRoutesNamesAndPaths.schoolsScreenName,
-        builder: (context, state) {
-          return const SchoolsScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
-      GoRoute(
         path: AppRoutesNamesAndPaths.certificateScreenPath,
         name: AppRoutesNamesAndPaths.certificateScreenName,
         builder: (context, state) {
@@ -169,7 +159,7 @@ class AppGoRouter {
       ),
       GoRoute(
         path: AppRoutesNamesAndPaths.userScreenPath,
-        name: AppRoutesNamesAndPaths.userScreenPath,
+        name: AppRoutesNamesAndPaths.userScreenName,
         builder: (context, state) {
           return const UserScreen();
         },
