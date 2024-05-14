@@ -1,6 +1,6 @@
 class AssetsManager {
   AssetsManager._();
-  
+
   /// Assets for assetsFontsNunitoBlack
   /// assets/fonts/Nunito-Black.ttf
   static const String assetsFontsNunitoBlack = "assets/fonts/Nunito-Black.ttf";
@@ -15,11 +15,13 @@ class AssetsManager {
 
   /// Assets for assetsFontsNunitoRegular
   /// assets/fonts/Nunito-Regular.ttf
-  static const String assetsFontsNunitoRegular = "assets/fonts/Nunito-Regular.ttf";
+  static const String assetsFontsNunitoRegular =
+      "assets/fonts/Nunito-Regular.ttf";
 
   /// Assets for assetsFontsNunitoSemiBold
   /// assets/fonts/Nunito-SemiBold.ttf
-  static const String assetsFontsNunitoSemiBold = "assets/fonts/Nunito-SemiBold.ttf";
+  static const String assetsFontsNunitoSemiBold =
+      "assets/fonts/Nunito-SemiBold.ttf";
 
   /// Assets for assetsFontsOpenSans
   /// assets/fonts/open-sans.ttf
@@ -27,19 +29,23 @@ class AssetsManager {
 
   /// Assets for assetsFontsPlayfairDisplayBold
   /// assets/fonts/PlayfairDisplay-Bold.ttf
-  static const String assetsFontsPlayfairDisplayBold = "assets/fonts/PlayfairDisplay-Bold.ttf";
+  static const String assetsFontsPlayfairDisplayBold =
+      "assets/fonts/PlayfairDisplay-Bold.ttf";
 
   /// Assets for assetsFontsPlayfairDisplayMedium
   /// assets/fonts/PlayfairDisplay-Medium.ttf
-  static const String assetsFontsPlayfairDisplayMedium = "assets/fonts/PlayfairDisplay-Medium.ttf";
+  static const String assetsFontsPlayfairDisplayMedium =
+      "assets/fonts/PlayfairDisplay-Medium.ttf";
 
   /// Assets for assetsFontsPlayfairDisplayRegular
   /// assets/fonts/PlayfairDisplay-Regular.ttf
-  static const String assetsFontsPlayfairDisplayRegular = "assets/fonts/PlayfairDisplay-Regular.ttf";
+  static const String assetsFontsPlayfairDisplayRegular =
+      "assets/fonts/PlayfairDisplay-Regular.ttf";
 
   /// Assets for assetsFontsPlayfairDisplaySemiBold
   /// assets/fonts/PlayfairDisplay-SemiBold.ttf
-  static const String assetsFontsPlayfairDisplaySemiBold = "assets/fonts/PlayfairDisplay-SemiBold.ttf";
+  static const String assetsFontsPlayfairDisplaySemiBold =
+      "assets/fonts/PlayfairDisplay-SemiBold.ttf";
 
   /// Assets for assetsIconsAdmin
   /// assets/icons/admin.png
@@ -87,7 +93,8 @@ class AssetsManager {
 
   /// Assets for assetsIconsNotificationImage
   /// assets/icons/notification_image.png
-  static const String assetsIconsNotificationImage = "assets/icons/notification_image.png";
+  static const String assetsIconsNotificationImage =
+      "assets/icons/notification_image.png";
 
   /// Assets for assetsIconsPatchDoc
   /// assets/icons/patchDoc.png
@@ -104,6 +111,10 @@ class AssetsManager {
   /// Assets for assetsIconsSupject
   /// assets/icons/supject.png
   static const String assetsIconsSupject = "assets/icons/supject.png";
+
+  /// Assets for assetsIconsRoles
+  /// assets/icons/roles.png
+  static const String assetsIconsRoles = "assets/icons/roles.png";
 
   /// Assets for assetsImagesNis1
   /// assets/images/nis1.jpg
@@ -129,4 +140,3 @@ class AssetsManager {
   /// assets/logos/nis_logo22.png
   static const String assetsLogosNisLogo22 = "assets/logos/nis_logo22.png";
 }
-
