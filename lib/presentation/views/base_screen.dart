@@ -1,4 +1,4 @@
-import 'package:control_system/presentation/resource_manager/app_responsive.dart';
+import 'package:control_system/app/extensions/device_type_extension.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/side_menue/side_menue.dart';
@@ -25,12 +25,12 @@ class BaseScreen extends StatelessWidget {
       body: SafeArea(
         child: Row(
           children: [
-            if (AppResponsive.isDesktop(context))
-               Expanded(
+            if (context.isDesktop)
+              Expanded(
                 flex: 1,
                 child: Container(
                   color: ColorManager.bgSideMenu,
-                  child:const SideMenueWidget(
+                  child: const SideMenueWidget(
                     isMobile: false,
                   ),
                 ),
@@ -47,7 +47,7 @@ class BaseScreen extends StatelessWidget {
           ],
         ),
       ),
-      drawer: AppResponsive.isMobile(context)
+      drawer: context.isMobile
           ? const SideMenueWidget(
               isMobile: true,
             )
