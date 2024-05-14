@@ -33,7 +33,6 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp.router(
       scrollBehavior: AppScrollBehavior(),
       debugShowCheckedModeBanner: false,
-      key: Get.key,
       title: 'NIS Control System',
       defaultTransition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 200),

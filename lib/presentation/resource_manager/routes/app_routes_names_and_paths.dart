@@ -58,4 +58,8 @@ class AppRoutesNamesAndPaths {
   // batchDocumentsScreen
   static const String batchDocumentsScreenPath = '/batch-documents';
   static const String batchDocumentsScreenName = 'batch-documents';
+
+  // rolesScreen
+  static const String rolesScreenPath = '/roles';
+  static const String rolesScreenName = 'roles';
 }

@@ -9,6 +9,8 @@ class SideMenueGetController extends GetxController {
   late final SideMenuController sideMenuController;
   int nowIndex = 0;
 
+  List<SideMenuItem> userMenue = [];
+
   List<SideMenuItem> getUserMenue(BuildContext context) {
     // TODO :: Cheke roles
     final List<SideMenuItem> sideMenueItems = [
@@ -121,6 +123,15 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
+        title: 'Roles',
+        onTap: (index, _) {
+          context.goNamed(AppRoutesNamesAndPaths.rolesScreenName);
+          changePage(index);
+        },
+        iconWidget: Image.asset(AssetsManager.assetsIconsRoles),
+        tooltipContent: "This is a tooltip for Dashboard item",
+      ),
+      SideMenuItem(
         title: 'Sign Out',
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.loginScreenName);
@@ -130,10 +141,13 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
     ];
-
-    return sideMenueItems;
+    // TODO :: Cheke roles
     // .where((element) => element.title!.toLowerCase().contains('s'))
     // .toList();
+    userMenue = sideMenueItems;
+
+    print(userMenue);
+    return userMenue;
   }
 
   changePage(int currentIndex) {
@@ -143,7 +157,6 @@ class SideMenueGetController extends GetxController {
   @override
   void onInit() {
     sideMenuController = SideMenuController();
-
     super.onInit();
   }
 
