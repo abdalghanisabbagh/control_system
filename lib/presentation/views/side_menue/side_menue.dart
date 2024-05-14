@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:control_system/domain/services/side_menue_get_controller_service.dart';
+import 'package:control_system/domain/services/side_menue_get_controller.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SideMenueWidget extends GetView<SideMenueGetControllerService> {
+class SideMenueWidget extends GetView<SideMenueGetController> {
   const SideMenueWidget({
     super.key,
     required this.isMobile,
