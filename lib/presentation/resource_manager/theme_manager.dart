@@ -3,6 +3,8 @@ import 'index.dart';
 
 ThemeData getApplicationTheme() {
   return ThemeData(
+    useMaterial3: true,
+
     /// main colors
     primaryColor: ColorManager.primary,
     primaryColorLight: ColorManager.lightPrimary,
@@ -45,14 +47,13 @@ ThemeData getApplicationTheme() {
     /// elevated button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: nunitoRegulerStyle(
-            fontSize: FontSize.s18,
-            color: ColorManager.elevatedButtonTextColor),
-        backgroundColor: ColorManager.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSize.s40),
-        ),
-      ),
+          foregroundColor: ColorManager.white,
+          backgroundColor: ColorManager.primary,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          //side: const BorderSide(color: Colors.red, width: 2),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          textStyle: nunitoLightStyle()),
     ),
 
     ///text theme
