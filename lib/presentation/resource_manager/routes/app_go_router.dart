@@ -1,17 +1,4 @@
 import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
-import 'package:control_system/presentation/views/Login/login_screen.dart';
-import 'package:control_system/presentation/views/certificates/certificates_screen.dart';
-import 'package:control_system/presentation/views/class_rooms/class_rooms_screen.dart';
-import 'package:control_system/presentation/views/cohort_settings/cohort_settings_screen.dart';
-import 'package:control_system/presentation/views/control_mission/control_mession_screen.dart';
-import 'package:control_system/presentation/views/dashboard/dash_board_screen.dart';
-import 'package:control_system/presentation/views/proctor/proctor_screen.dart';
-import 'package:control_system/presentation/views/schools/school_screen.dart';
-import 'package:control_system/presentation/views/seating_numbers/seating_numbers_screen.dart';
-import 'package:control_system/presentation/views/set_degrees/set_degrees_screen.dart';
-import 'package:control_system/presentation/views/student/student_screen.dart';
-import 'package:control_system/presentation/views/subject_setting/subject_setting_screen.dart';
-import 'package:control_system/presentation/views/user_screen/user_screen.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
