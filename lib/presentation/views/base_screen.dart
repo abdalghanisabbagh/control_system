@@ -40,7 +40,9 @@ class BaseScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: body),
+                  Expanded(
+                    child: body,
+                  ),
                 ],
               ),
             ),
