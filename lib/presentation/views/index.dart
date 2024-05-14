@@ -2,7 +2,7 @@ export 'Login/login_screen.dart';
 export 'certificates/certificates_screen.dart';
 export 'class_rooms/class_rooms_screen.dart';
 export 'cohort_settings/cohort_settings_screen.dart';
-export 'control_mession/control_mession_screen.dart';
+export 'control_mission/control_mession_screen.dart';
 export 'dashboard/dash_board_screen.dart';
 export 'home/home_screen.dart';
 export 'proctor/proctor_screen.dart';
