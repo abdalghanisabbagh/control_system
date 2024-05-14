@@ -6,12 +6,11 @@ import '../../../domain/indices/index.dart';
 import '../../views/index.dart';
 
 class AppGoRouter {
-  static final router = GoRouter(  
+  static final router = GoRouter(
     navigatorKey: Get.key,
     debugLogDiagnostics: true,
     initialLocation: AppRoutesNamesAndPaths.loginScreenPath,
     routes: [
-      
       GoRoute(
         path: AppRoutesNamesAndPaths.homeScreenPath,
         name: AppRoutesNamesAndPaths.homeScreenName,
@@ -161,6 +160,16 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.batchDocumentsScreenName,
         builder: (context, state) {
           return const BatchDocumentsScreen();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+      ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.rolesScreenPath,
+        name: AppRoutesNamesAndPaths.rolesScreenName,
+        builder: (context, state) {
+          return const RolesScreen();
         },
         onExit: (context, state) {
           return true;
