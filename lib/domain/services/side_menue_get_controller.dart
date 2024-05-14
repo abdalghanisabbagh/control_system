@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-class SideMenueGetControllerService extends GetxController {
+class SideMenueGetController extends GetxController {
   late final SideMenuController sideMenuController;
   int nowIndex = 0;
-  
+
   List<SideMenuItem> getUserMenue(BuildContext context) {
     // TODO :: Cheke roles
     final List<SideMenuItem> sideMenueItems = [
@@ -42,7 +42,7 @@ class SideMenueGetControllerService extends GetxController {
       SideMenuItem(
         title: 'Batch Documents',
         onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.classRoomScreenName);
+          context.goNamed(AppRoutesNamesAndPaths.batchDocumentsScreenName);
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
