@@ -156,6 +156,16 @@ class AppGoRouter {
           return true;
         },
       ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.batchDocumentsScreenPath,
+        name: AppRoutesNamesAndPaths.batchDocumentsScreenName,
+        builder: (context, state) {
+          return const BatchDocumentsScreen();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+      ),
     ],
   );
 }

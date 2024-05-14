@@ -4,6 +4,7 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/my_t
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/resource_manager/routes/index.dart';
+import 'package:control_system/presentation/resource_manager/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -107,7 +108,7 @@ class LoginForm extends GetView<AuthController> {
                                             emailController.text,
                                             passwordController.text,
                                           );
-                                          
+
                                           !context.mounted
                                               ? null
                                               : context.goNamed(
@@ -115,7 +116,10 @@ class LoginForm extends GetView<AuthController> {
                                                       .schoolsScreenName,
                                                 );
                                         },
-                                        child: const Text("Login"),
+                                        child: Text(
+                                          "Login",
+                                          style: nunitoLightStyle(),
+                                        ),
                                       ),
                               ],
                             ),

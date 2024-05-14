@@ -46,11 +46,13 @@ ThemeData getApplicationTheme() {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: nunitoRegulerStyle(
+        
             fontSize: FontSize.s18,
+          
             color: ColorManager.elevatedButtonTextColor),
         backgroundColor: ColorManager.primary,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSize.s4),
+          borderRadius: BorderRadius.circular(AppSize.s40),
         ),
       ),
     ),

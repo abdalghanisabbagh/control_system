@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'color_manager.dart';
 import 'font_manager.dart';
 
-
 TextStyle _getMainFont(
   double fontSize,
   FontWeight fontWeight,
@@ -27,7 +26,7 @@ TextStyle nunitoLightStyle({
 }) {
   return _getMainFont(
     fontFamily: AssetsManager.assetsFontsNunitoLight,
-    fontSize ?? FontSize.s16,
+    fontSize ?? FontSize.s18,
     FontWeightManager.light,
     color ?? ColorManager.caption,
   );
