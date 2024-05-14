@@ -13,6 +13,52 @@ class SideMenueWidget extends StatelessWidget {
     // PageController pageController = PageController();
     return SideMenu(
       showToggle: true,
+      controller: sideMenu,
+      style: SideMenuStyle(
+        showTooltip: true,
+        hoverColor: ColorManager.darkGrey,
+        selectedHoverColor: ColorManager.darkGrey,
+        selectedColor: ColorManager.darkPrimary,
+        selectedTitleTextStyle: nunitoBoldStyle(
+          color: ColorManager.white,
+          fontSize: AppSize.s16,
+        ),
+        selectedIconColor: ColorManager.white,
+        selectedTitleTextStyleExpandable: nunitoBoldStyle(
+          color: ColorManager.white,
+          fontSize: AppSize.s16,
+        ),
+        unselectedTitleTextStyleExpandable: nunitoBoldStyle(
+          color: ColorManager.white,
+          fontSize: AppSize.s16,
+        ),
+        unselectedTitleTextStyle: nunitoBoldStyle(
+          color: ColorManager.white,
+          fontSize: AppSize.s16,
+        ),
+      ),
+      title: Row(
+        children: [
+          Expanded(
+            child: Image.asset(
+              AssetsManager.assetsLogosNIS5,
+            ),
+          ),
+          FittedBox(
+            fit: BoxFit.contain,
+            child: Text(
+              "Control System",
+              style: nunitoRegulerStyle(
+                  color: ColorManager.white, fontSize: AppSize.s18),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const Divider(
+            indent: 8.0,
+            endIndent: 8.0,
+          ),
+        ],
+      ),
       items: [
         SideMenuItem(
           title: 'Dashboard',
@@ -119,33 +165,6 @@ class SideMenueWidget extends StatelessWidget {
           tooltipContent: "This is a tooltip for Dashboard item",
         ),
       ],
-      controller: sideMenu,
-      style: SideMenuStyle(
-          showTooltip: true,
-          hoverColor: Colors.blue[100],
-          selectedHoverColor: Colors.blue[100],
-          selectedColor: Colors.lightBlue,
-          selectedTitleTextStyle: const TextStyle(color: Colors.white),
-          selectedIconColor: Colors.white,
-          unselectedTitleTextStyle:
-              nunitoRegulerStyle(color: ColorManager.white)),
-      title: Row(
-        children: [
-          Image.asset(
-            AssetsManager.assetsLogosNIS5,
-            width: 100,
-          ),
-          Text(
-            "Control System",
-            style: nunitoRegulerStyle(
-                color: ColorManager.white, fontSize: AppSize.s18),
-          ),
-          const Divider(
-            indent: 8.0,
-            endIndent: 8.0,
-          ),
-        ],
-      ),
     );
   }
 }
