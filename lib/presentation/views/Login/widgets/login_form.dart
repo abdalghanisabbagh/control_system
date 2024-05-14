@@ -132,7 +132,7 @@ class LoginForm extends GetView<AuthController> {
                                                 ? null
                                                 : context.goNamed(
                                                     AppRoutesNamesAndPaths
-                                                        .schoolsScreenName,
+                                                        .dashBoardScreenName,
                                                   );
                                           },
                                           child: const Text("Login"),
