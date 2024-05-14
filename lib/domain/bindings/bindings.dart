@@ -1,4 +1,5 @@
 import 'package:control_system/domain/controllers/auth_controller.dart';
+import 'package:control_system/domain/services/side_menue_get_controller_service.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
@@ -13,6 +14,16 @@ class HomeBindings extends Bindings {
 class AuthBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AuthController>(() => AuthController(),fenix: true);
+    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
+  }
+}
+
+class SideMenuBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SideMenueGetControllerService>(
+      () => SideMenueGetControllerService(),
+      fenix: true,
+    );
   }
 }

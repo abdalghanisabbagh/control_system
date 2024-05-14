@@ -1,3 +1,4 @@
+import 'package:control_system/domain/indices/index.dart';
 import 'package:control_system/presentation/resource_manager/routes/app_go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    SideMenuBindings().dependencies();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([

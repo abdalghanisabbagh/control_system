@@ -1,19 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:control_system/domain/services/side_menue_get_controller_service.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class SideMenueWidget extends StatelessWidget {
-  const SideMenueWidget({super.key, required this.isMobile});
+class SideMenueWidget extends GetView<SideMenueGetControllerService> {
+  const SideMenueWidget({
+    super.key,
+    required this.isMobile,
+  });
   final bool isMobile;
 
   @override
   Widget build(BuildContext context) {
-    SideMenuController sideMenu = SideMenuController();
-    // PageController pageController = PageController();
     return SideMenu(
       showToggle: true,
-      controller: sideMenu,
+      controller: controller.sideMenuController,
       style: SideMenuStyle(
         showTooltip: true,
         hoverColor: ColorManager.darkGrey,
@@ -63,7 +67,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Dashboard',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsDashboard),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -71,7 +75,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Students',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsStudent),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -79,7 +83,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Control Batch',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsExam),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -87,7 +91,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Batch Documents',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -95,7 +99,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Certificates',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsCertificates),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -103,7 +107,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Scanning Grades',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsProccess),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -111,7 +115,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'School',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsCampus),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -119,7 +123,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Classrooms',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsClassRooms),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -127,7 +131,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Subject',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsSupject),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -135,7 +139,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Chorts',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsCohort),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -143,7 +147,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Admins',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsAdmin),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -151,7 +155,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Proctors',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
           tooltipContent: "This is a tooltip for Dashboard item",
@@ -159,7 +163,7 @@ class SideMenueWidget extends StatelessWidget {
         SideMenuItem(
           title: 'Sign Out',
           onTap: (index, _) {
-            sideMenu.changePage(index);
+            controller.sideMenuController.changePage(index);
           },
           iconWidget: Image.asset(AssetsManager.assetsIconsLogout),
           tooltipContent: "This is a tooltip for Dashboard item",
