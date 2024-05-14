@@ -31,7 +31,7 @@ class SideMenueGetControllerService extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Control Batch',
+        title: 'Control Mission',
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.controlMissionScreenName);
           changePage(index);
@@ -58,7 +58,7 @@ class SideMenueGetControllerService extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Scanning Grades',
+        title: 'Set Degrees',
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.setDegreesScreenName);
           changePage(index);
@@ -76,7 +76,7 @@ class SideMenueGetControllerService extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
-        title: 'Classrooms',
+        title: 'Class Rooms',
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.classRoomScreenName);
           changePage(index);
