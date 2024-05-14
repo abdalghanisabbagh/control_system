@@ -21,7 +21,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    SideMenuBindings().dependencies();
     super.initState();
   }
 
@@ -42,6 +41,8 @@ class _MyAppState extends State<MyApp> {
       routeInformationProvider: AppGoRouter.router.routeInformationProvider,
       routeInformationParser: AppGoRouter.router.routeInformationParser,
       theme: getApplicationTheme(),
+      initialBinding: SideMenuBindings(),
+      
     );
   }
 }

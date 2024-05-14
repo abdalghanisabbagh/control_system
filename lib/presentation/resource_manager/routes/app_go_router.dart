@@ -157,3 +157,13 @@ class AppGoRouter {
     ],
   );
 }
+
+// final pagess = [
+//   GetPage(
+//     name: 'test',
+//     page: () => HomeScreen(),
+//     bindings: [],
+//     title: 'test',
+//     children: []
+//   ),
+// ];

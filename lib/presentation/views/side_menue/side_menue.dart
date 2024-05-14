@@ -12,7 +12,6 @@ class SideMenueWidget extends GetView<SideMenueGetControllerService> {
     required this.isMobile,
   });
   final bool isMobile;
-
   @override
   Widget build(BuildContext context) {
     return SideMenu(
@@ -63,112 +62,7 @@ class SideMenueWidget extends GetView<SideMenueGetControllerService> {
           ),
         ],
       ),
-      items: [
-        SideMenuItem(
-          title: 'Dashboard',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsDashboard),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Students',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsStudent),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Control Batch',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsExam),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Batch Documents',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Certificates',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsCertificates),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Scanning Grades',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsProccess),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'School',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsCampus),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Classrooms',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsClassRooms),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Subject',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsSupject),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Chorts',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsCohort),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Admins',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsAdmin),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Proctors',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-        SideMenuItem(
-          title: 'Sign Out',
-          onTap: (index, _) {
-            controller.sideMenuController.changePage(index);
-          },
-          iconWidget: Image.asset(AssetsManager.assetsIconsLogout),
-          tooltipContent: "This is a tooltip for Dashboard item",
-        ),
-      ],
+      items: controller.getUserMenue(context),
     );
   }
 }
