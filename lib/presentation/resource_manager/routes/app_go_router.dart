@@ -3,7 +3,7 @@ import 'package:control_system/presentation/views/Login/login_screen.dart';
 import 'package:control_system/presentation/views/certificates/certificates_screen.dart';
 import 'package:control_system/presentation/views/class_rooms/class_rooms_screen.dart';
 import 'package:control_system/presentation/views/cohort_settings/cohort_settings_screen.dart';
-import 'package:control_system/presentation/views/control_mession/control_mession_screen.dart';
+import 'package:control_system/presentation/views/control_mission/control_mession_screen.dart';
 import 'package:control_system/presentation/views/dashboard/dash_board_screen.dart';
 import 'package:control_system/presentation/views/proctor/proctor_screen.dart';
 import 'package:control_system/presentation/views/schools/school_screen.dart';
