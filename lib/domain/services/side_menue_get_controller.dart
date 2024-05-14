@@ -123,6 +123,15 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Dashboard item",
       ),
       SideMenuItem(
+        title: 'Roles',
+        onTap: (index, _) {
+          context.goNamed(AppRoutesNamesAndPaths.rolesScreenName);
+          changePage(index);
+        },
+        iconWidget: Image.asset(AssetsManager.assetsIconsRoles),
+        tooltipContent: "This is a tooltip for Dashboard item",
+      ),
+      SideMenuItem(
         title: 'Sign Out',
         onTap: (index, _) {
           context.goNamed(AppRoutesNamesAndPaths.loginScreenName);
