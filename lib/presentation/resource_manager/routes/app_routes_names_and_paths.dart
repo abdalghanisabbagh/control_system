@@ -52,6 +52,6 @@ class AppRoutesNamesAndPaths {
   static const String subjectSettingScreenName = 'subject-setting';
 
   // userScreen
-  static const String userScreenPath = '/user';
-  static const String userScreenName = 'user';
+  static const String userScreenPath = '/admin';
+  static const String userScreenName = 'admin';
 }
