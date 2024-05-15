@@ -29,7 +29,7 @@ class LoginForm extends GetView<AuthController> {
               color: Colors.white, borderRadius: BorderRadius.circular(15)),
           height: size.height *
               (size.height > 770
-                  ? 0.7
+                  ? 0.8
                   : size.height > 670
                       ? 0.7
                       : 0.9),
