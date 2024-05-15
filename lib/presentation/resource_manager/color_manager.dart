@@ -40,7 +40,7 @@ class ColorManager {
 
   static Color white = const Color(0xffffffff);
 
-  static Color black = Colors.white;
+  static Color black = Colors.black;
 
   static Color appbarColor = Colors.white;
   static Color appbarColorShadow = Colors.black;
