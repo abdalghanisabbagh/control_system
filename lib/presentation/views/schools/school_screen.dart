@@ -16,18 +16,18 @@ class SchoolsScreen extends StatelessWidget {
               onPressed: () {
                 Get.defaultDialog(
                   title: 'Add New School Type',
-                  content: AddNewSchoolTypeWidget(),
+                  content: const AddNewSchoolTypeWidget(),
                 );
               },
-              child: Text('add New school Type')),
+              child: const Text('add New school Type')),
           ElevatedButton(
               onPressed: () {
                 Get.defaultDialog(
                   title: 'Add New School',
-                  content: AddNewSchoolTypeWidget(),
+                  content: const AddNewSchoolTypeWidget(),
                 );
               },
-              child: Text('add New school')),
+              child: const Text('add New school')),
         ],
       ),
     );
