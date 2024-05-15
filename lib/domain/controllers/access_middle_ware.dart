@@ -2,7 +2,7 @@ import 'package:control_system/Data/Models/User/login_response/login_response.da
 import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AuthMiddleWare extends GetMiddleware {
   LoginResponse? loginObject;
