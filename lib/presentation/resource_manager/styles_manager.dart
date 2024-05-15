@@ -36,7 +36,7 @@ TextStyle nunitoLightStyle({
 TextStyle get nunitoLight => nunitoLightStyle();
 
 // reguler Style
-TextStyle nunitoRegulerStyle({
+TextStyle nunitoRegularStyle({
   double? fontSize,
   Color? color,
 }) {
@@ -48,7 +48,7 @@ TextStyle nunitoRegulerStyle({
   );
 }
 
-TextStyle get nunitoReguler => nunitoRegulerStyle();
+TextStyle get nunitoRegular => nunitoRegularStyle();
 
 // meduim Style
 TextStyle nunitoBlackStyle({
@@ -98,7 +98,7 @@ TextStyle get nunitoSemiBold => nunitoSemiBoldStyle();
 //////////////////////////PlayfairDisplay Font Styles////////////////////////////////////
 
 //reguler Style
-TextStyle playfairDisplayRegulerStyle({
+TextStyle playfairDisplayRegularStyle({
   double? fontSize,
   Color? color,
 }) {
@@ -110,7 +110,7 @@ TextStyle playfairDisplayRegulerStyle({
   );
 }
 
-TextStyle get playfairDisplayReguler => playfairDisplayRegulerStyle();
+TextStyle get playfairDisplayRegular => playfairDisplayRegularStyle();
 
 //meduim Style
 TextStyle playfairDisplayMeduimStyle({
@@ -160,7 +160,7 @@ TextStyle get playfairDisplayBold => playfairDisplayBoldStyle();
 //////////////////////////Open-Sans Font Styles////////////////////////////////////
 
 //reguler Style
-TextStyle openSansRegulerStyle({
+TextStyle openSansRegularStyle({
   double? fontSize,
   Color? color,
 }) {
@@ -172,7 +172,7 @@ TextStyle openSansRegulerStyle({
   );
 }
 
-TextStyle get openSansReguler => openSansRegulerStyle();
+TextStyle get openSansRegular => openSansRegularStyle();
 
 //meduim Style
 TextStyle openSansMeduimStyle({
