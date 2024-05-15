@@ -107,9 +107,9 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Cohort Settings item",
       ),
       SideMenuItem(
-        title: AppRoutesNamesAndPaths.userScreenName,
+        title: AppRoutesNamesAndPaths.adminScreenName,
         onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.userScreenName);
+          context.goNamed(AppRoutesNamesAndPaths.adminScreenName);
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsAdmin),
