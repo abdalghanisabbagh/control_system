@@ -22,6 +22,7 @@ class ColorManager {
   static Color background = Colors.white; // ff=>CC opactiy 80%
   static Color appBackground = const Color(0xffFCFCFC); // ff=>CC opactiy 80%
   static Color redWith10opc = const Color(0x9AB5191A); // ff=>CC opactiy 80%
+  static Color ligthBlue = Colors.white;
 
   ///********************* statud colors******* */
 

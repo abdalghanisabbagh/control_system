@@ -43,10 +43,19 @@ class SideMenueGetController extends GetxController {
         iconWidget: Image.asset(AssetsManager.assetsIconsExam),
         tooltipContent: "This is a tooltip for Control Mission item",
       ),
+      // SideMenuItem(
+      //   title: AppRoutesNamesAndPaths.batchDocumentsScreenName,
+      //   onTap: (index, _) {
+      //     context.goNamed(AppRoutesNamesAndPaths.batchDocumentsScreenName);
+      //     changePage(index);
+      //   },
+      //   iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
+      //   tooltipContent: "This is a tooltip for Batch Documents item",
+      // ),
       SideMenuItem(
-        title: AppRoutesNamesAndPaths.batchDocumentsScreenName,
+        title: AppRoutesNamesAndPaths.seatingNumbersScreenName,
         onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.batchDocumentsScreenName);
+          context.goNamed(AppRoutesNamesAndPaths.seatingNumbersScreenName);
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
