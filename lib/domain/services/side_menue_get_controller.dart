@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/routes/index.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -134,8 +136,14 @@ class SideMenueGetController extends GetxController {
       SideMenuItem(
         title: 'Sign Out',
         onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.loginScreenName);
-          changePage(index);
+          MyAwesomeDialogue(
+            title: "You are about to sign out",
+            desc: "Are you sure you want to sign out?",
+            dialogType: DialogType.warning,
+            btnOkOnPressed: () =>
+                context.goNamed(AppRoutesNamesAndPaths.loginScreenName),
+            btnCancelOnPressed: () {},
+          ).showDialogue(context);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsLogout),
         tooltipContent: "This is a tooltip for Dashboard item",
