@@ -193,6 +193,16 @@ class AppGoRouter {
           return true;
         },
       ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.renderSeatScreenPath,
+        name: AppRoutesNamesAndPaths.renderSeatScreenName,
+        builder: (context, state) {
+          return const RenderSeats();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+      ),
     ],
   );
 }

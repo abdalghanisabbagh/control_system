@@ -3,6 +3,7 @@ export 'admin_screen/admin_screen.dart';
 export 'batch_documents/batch_documents_screen.dart';
 export 'certificates/certificates_screen.dart';
 export 'class_rooms/class_rooms_screen.dart';
+export 'class_rooms/widgets/render_seat.dart';
 export 'cohort_settings/cohort_settings_screen.dart';
 export 'control_mission/control_mession_screen.dart';
 export 'dashboard/dash_board_screen.dart';
