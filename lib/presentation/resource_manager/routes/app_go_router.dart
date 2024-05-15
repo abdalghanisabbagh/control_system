@@ -1,4 +1,5 @@
 import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
+import 'package:control_system/presentation/views/class_rooms/widgets/exam_room.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -198,6 +199,16 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.renderSeatScreenName,
         builder: (context, state) {
           return const RenderSeats();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+      ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.examRoomScreenPath,
+        name: AppRoutesNamesAndPaths.examRoomScreenName,
+        builder: (context, state) {
+          return const ExamRoom();
         },
         onExit: (context, state) {
           return true;
