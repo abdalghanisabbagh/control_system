@@ -1,7 +1,7 @@
 import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/resource_manager/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class MytextFormFiled extends StatelessWidget {
   final String? title;
@@ -15,7 +15,7 @@ class MytextFormFiled extends StatelessWidget {
   final String? Function(String? value)? onChange;
   final bool obscureText; // إضافة وسيطة للتحكم في إخفاء النص
   const MytextFormFiled({
-    Key? key,
+    super.key,
     this.title,
     required this.controller,
     this.maxlines = 1,
@@ -26,50 +26,38 @@ class MytextFormFiled extends StatelessWidget {
     this.onChange,
     this.suffixIcon,
     this.obscureText = false, // تعيين قيمة افتراضية لوسيطة الإخفاء
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppPading.p12, vertical: AppPading.p12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (title != null)
-            Text(
-              title!,
-              style: nunitoBlackStyle(
-                fontSize: FontSize.s12,
-                color: ColorManager.darkGrey2,
-              ),
-            ),
-          if (title != null)
-            const SizedBox(
-              height: 5,
-            ),
-          TextFormField(
-            keyboardType: isPrice != null ? TextInputType.number : null,
-            inputFormatters: textInputs ?? [],
-            decoration: InputDecoration(
-              suffixIcon: suffixIcon,
-              hintText: title,
-              hintStyle: nunitoRegulerStyle(
-                fontSize: FontSize.s12,
-                color: ColorManager.grey,
-              ),
-            ),
-            controller: controller,
-            maxLines: maxlines,
-            enabled: isEnable,
-            validator: myValidation,
-            onChanged: onChange,
-            obscureText: obscureText,
-          )
-        ],
+    return TextFormField(
+      keyboardType: isPrice != null ? TextInputType.number : null,
+      inputFormatters: textInputs ?? [],
+      style: nunitoRegulerStyle(
+        fontSize: FontSize.s12,
+        color: ColorManager.black,
       ),
+      decoration: InputDecoration(
+        suffixIcon: suffixIcon,
+        labelText: title,
+        labelStyle: nunitoRegulerStyle(
+          fontSize: FontSize.s12,
+          color: ColorManager.black,
+        ),
+        hintText: title,
+        hintStyle: nunitoRegulerStyle(
+          fontSize: FontSize.s12,
+          color: ColorManager.grey,
+        ),
+      ),
+      controller: controller,
+      maxLines: maxlines,
+      enabled: isEnable,
+      validator: myValidation,
+      onChanged: onChange,
+      obscureText: obscureText,
+    ).paddingOnly(
+      top: AppPading.p25,
     );
   }
 }
