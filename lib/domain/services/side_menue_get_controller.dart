@@ -146,7 +146,7 @@ class SideMenueGetController extends GetxController {
     // .toList();
     userMenue = sideMenueItems;
 
-    print(userMenue);
+    debugPrint(userMenue.toString());
     return userMenue;
   }
 
