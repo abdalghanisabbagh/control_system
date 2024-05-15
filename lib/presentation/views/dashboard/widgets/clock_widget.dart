@@ -1,6 +1,5 @@
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ClockWidget extends StatelessWidget {
   const ClockWidget({super.key});
@@ -21,62 +20,60 @@ class ClockWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       padding: const EdgeInsets.all(10),
-      child: GetBuilder(
-        builder: (dashboardControllers) => Column(
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Text(
-                //   "${dashboardControllers.timeOfDay.hourOfPeriod > 9 ? dashboardControllers.timeOfDay.hourOfPeriod : "0${dashboardControllers.timeOfDay.hourOfPeriod}"}:${dashboardControllers.timeOfDay.minute > 9 ? dashboardControllers.timeOfDay.minute : "0${dashboardControllers.timeOfDay.minute}"}",
-                //   style: nunitoBold
-                //       .copyWith(color: ColorManager.bgSideMenu, fontSize: 35),
-                // ),
-                SizedBox(width: 5),
-                // RotatedBox(
-                //   quarterTurns: 3,
-                //   child: Text(
-                //     dashboardControllers.period!,
-                //     style: const TextStyle(fontSize: 12),
-                //   ),
-                // ),
-              ],
-            ),
-            Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
-                  ),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: ColorManager.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 0),
-                            color: ColorManager.bgSideMenu.withOpacity(0.14),
-                            blurRadius: 20,
-                          ),
-                        ],
-                      ),
-                      // child: Transform.rotate(
-                      //   angle: -pi / 2,
-                      //   child: CustomPaint(
-                      //     painter: ClockPainter(
-                      //         context, dashboardControllers.dateTime),
-                      //   ),
-                      // ),
+      child: Column(
+        children: [
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Text(
+              //   "${dashboardControllers.timeOfDay.hourOfPeriod > 9 ? dashboardControllers.timeOfDay.hourOfPeriod : "0${dashboardControllers.timeOfDay.hourOfPeriod}"}:${dashboardControllers.timeOfDay.minute > 9 ? dashboardControllers.timeOfDay.minute : "0${dashboardControllers.timeOfDay.minute}"}",
+              //   style: nunitoBold
+              //       .copyWith(color: ColorManager.bgSideMenu, fontSize: 35),
+              // ),
+              SizedBox(width: 5),
+              // RotatedBox(
+              //   quarterTurns: 3,
+              //   child: Text(
+              //     dashboardControllers.period!,
+              //     style: const TextStyle(fontSize: 12),
+              //   ),
+              // ),
+            ],
+          ),
+          Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorManager.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(0, 0),
+                          color: ColorManager.bgSideMenu.withOpacity(0.14),
+                          blurRadius: 20,
+                        ),
+                      ],
                     ),
+                    // child: Transform.rotate(
+                    //   angle: -pi / 2,
+                    //   child: CustomPaint(
+                    //     painter: ClockPainter(
+                    //         context, dashboardControllers.dateTime,),
+                    //   ),
+                    // ),
                   ),
                 ),
-              ],
-            )
-          ],
-        ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
