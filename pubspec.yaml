@@ -1,5 +1,5 @@
 name: control_system
-description: "A new Flutter project."
+description: "control_System_Web"
 publish_to: "none"
 version: 0.1.0
 
@@ -11,20 +11,68 @@ dependencies:
     sdk: flutter
   get: ^4.6.6
   go_router: ^14.0.2
-  google_fonts: ^6.2.1
-  flutter_screenutil: ^5.9.0
-  easy_localization: ^3.0.6
-  easy_localization_loader: ^2.0.1
+  multi_dropdown: ^2.1.4
+  another_flushbar: ^1.12.30
+  easy_sidemenu: ^0.6.0
+  hive_multiisolate: ^1.3.2
+  hive_flutter: ^1.1.0
+  pluto_grid: ^8.0.0
+  dio_http_formatter: ^3.2.1
+  hive_generator: ^2.0.1
+  uuid: ^4.4.0
+  carousel_slider: ^4.2.1
+  awesome_dialog: ^3.2.1
+  dio: ^5.4.3+1
+  pretty_dio_logger: ^1.3.1
+  universal_html: ^2.2.4
+  dropdown_search: ^5.0.6
+  dartz: ^0.10.1
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  easy_localization_generator: ^0.3.2
   build_runner: ^2.4.9
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/translations/
+    - assets/images/
+    - assets/icons/
+    - assets/logos/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Nunito-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-Black.ttf
+          weight: 900
+    - family: PlayfairDisplay
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/PlayfairDisplay-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/PlayfairDisplay-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/PlayfairDisplay-Bold.ttf
+          weight: 700
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/open-sans.ttf
+          weight: 700
+
+flutter_assets:
+  assets_path: assets/
+  output_path: lib/presentation/resource_manager/
+  filename: assets_manager.dart
+  class_name: AssetsManager

@@ -14,7 +14,6 @@ class AppResponsive extends StatelessWidget {
     required this.tablet,
     required this.desktop,
   });
-
   @override
   Widget build(BuildContext context) {
     return switch (context.getDeviceType) {

@@ -1,24 +1,30 @@
-import 'package:control_system/domain/controllers/dropdown_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 
-class DropDownWidget extends GetView<DropDownButtonController> {
-  DropDownWidget({Key? key}) : super(key: key);
+class MultiSelectDropDownView extends StatelessWidget {
+  const MultiSelectDropDownView({
+    super.key,
+    this.onOptionSelected,
+    required this.options,
+  });
 
+  final void Function(List<ValueItem<dynamic>>)? onOptionSelected;
+  final List<ValueItem<dynamic>> options;
   @override
   Widget build(BuildContext context) {
-    return Obx(() => DropdownButton(
-          onChanged: (newValue) {
-            controller.setSelected(newValue);
-          },
-          value: controller.selectedOption.value,
-          items: controller.items
-              .map((selectedType) => DropdownMenuItem(
-                    value: selectedType,
-                    child: Text(selectedType),
-                  ))
-              .toList(),
-        ));
+    return MultiSelectDropDown(
+      onOptionSelected: onOptionSelected,
+      options: options,
+      selectionType: SelectionType.multi,
+      chipConfig: const ChipConfig(
+        wrapType: WrapType.wrap,
+        autoScroll: true,
+      ),
+      optionTextStyle: const TextStyle(fontSize: 16),
+      selectedOptionIcon: const Icon(Icons.check_circle),
+      searchEnabled: true,
+      searchLabel: "Search",
+      showChipInSingleSelectMode: true,
+    );
   }
 }

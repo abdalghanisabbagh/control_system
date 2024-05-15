@@ -4,7 +4,7 @@ class ColorManager {
   // background: #BE7B4A;
 // background: #8063BD;
 // #FCFCFC
-  static Color primary = const Color(0xffB5191A);
+  static Color primary = const Color(0xff001F44);
   static Color darkGrey = const Color(0xaa858585);
   static Color cardBackgroundColor = const Color(0xffFBFBFB);
   static Color darkGrey2 = const Color(0xff252525);
@@ -19,7 +19,7 @@ class ColorManager {
 
   static Color yellow = const Color(0xffFFD400);
   static Color notifications = const Color(0xffFFC107);
-  static Color background = const Color(0xffB5191A); // ff=>CC opactiy 80%
+  static Color background = Colors.white; // ff=>CC opactiy 80%
   static Color appBackground = const Color(0xffFCFCFC); // ff=>CC opactiy 80%
   static Color redWith10opc = const Color(0x9AB5191A); // ff=>CC opactiy 80%
 
@@ -40,7 +40,7 @@ class ColorManager {
 
   static Color white = const Color(0xffffffff);
 
-  static Color black = const Color(0xff000000);
+  static Color black = Colors.black;
 
   static Color appbarColor = Colors.white;
   static Color appbarColorShadow = Colors.black;
@@ -54,12 +54,12 @@ class ColorManager {
   static Color elevatedButtonTextColor = Colors.black;
 
   static Color displayLargeText = Colors.black;
-  static Color headline1 = Colors.black;
-  static Color subtitle1 = Colors.black;
-  static Color subtitle2 = Colors.black;
-  static Color caption = Colors.black;
-  static Color bodyText1 = Colors.black;
-  static Color bodyMedium = Colors.black;
+  static Color headline1 = Colors.white;
+  static Color subtitle1 = Colors.white;
+  static Color subtitle2 = Colors.white;
+  static Color caption = Colors.white;
+  static Color bodyText1 = Colors.white;
+  static Color bodyMedium = Colors.white;
 
   static Color textFormFieldHintStyle = Colors.black;
   static Color textFormFieldLabelStyle = Colors.black;

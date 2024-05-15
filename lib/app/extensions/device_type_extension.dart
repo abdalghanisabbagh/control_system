@@ -15,4 +15,10 @@ extension DeviceTypeExtension on BuildContext {
       return DeviceTypeEnum.mobile;
     }
   }
+
+  bool get isMobile => getDeviceType == DeviceTypeEnum.mobile;
+
+  bool get isTablet => getDeviceType == DeviceTypeEnum.tablet;
+
+  bool get isDesktop => getDeviceType == DeviceTypeEnum.desktop;
 }
