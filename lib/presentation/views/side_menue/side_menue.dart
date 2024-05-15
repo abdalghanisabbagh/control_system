@@ -1,4 +1,3 @@
-
 import 'package:control_system/domain/services/side_menue_get_controller.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
@@ -14,7 +13,6 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
   final bool isMobile;
   @override
   Widget build(BuildContext context) {
-    
     return SideMenu(
       showToggle: true,
       controller: controller.sideMenuController,
@@ -52,7 +50,7 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
             fit: BoxFit.contain,
             child: Text(
               "Control System",
-              style: nunitoRegulerStyle(
+              style: nunitoRegularStyle(
                   color: ColorManager.white, fontSize: AppSize.s18),
               overflow: TextOverflow.ellipsis,
             ),

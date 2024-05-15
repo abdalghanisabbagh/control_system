@@ -33,19 +33,19 @@ class MytextFormFiled extends StatelessWidget {
     return TextFormField(
       keyboardType: isPrice != null ? TextInputType.number : null,
       inputFormatters: textInputs ?? [],
-      style: nunitoRegulerStyle(
+      style: nunitoRegularStyle(
         fontSize: FontSize.s12,
         color: ColorManager.black,
       ),
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         labelText: title,
-        labelStyle: nunitoRegulerStyle(
+        labelStyle: nunitoRegularStyle(
           fontSize: FontSize.s12,
           color: ColorManager.black,
         ),
         hintText: title,
-        hintStyle: nunitoRegulerStyle(
+        hintStyle: nunitoRegularStyle(
           fontSize: FontSize.s12,
           color: ColorManager.grey,
         ),
