@@ -32,7 +32,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsStudent),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Student item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.controlMissionScreenName,
@@ -41,7 +41,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsExam),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Control Mission item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.batchDocumentsScreenName,
@@ -50,7 +50,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Batch Documents item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.certificateScreenName,
@@ -59,7 +59,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsCertificates),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Certificates item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.setDegreesScreenName,
@@ -68,7 +68,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsProccess),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Set Degrees item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.schoolsScreenName,
@@ -77,7 +77,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsCampus),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Schools item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.classRoomScreenName,
@@ -86,7 +86,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsClassRooms),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Class Rooms item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.subjectSettingScreenName,
@@ -95,7 +95,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsSupject),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Subjects item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.cohortSettingScreenName,
@@ -104,7 +104,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsCohort),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Cohort Settings item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.userScreenName,
@@ -113,7 +113,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsAdmin),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Admin item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.proctorScreenName,
@@ -122,7 +122,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Proctor item",
       ),
       SideMenuItem(
         title: AppRoutesNamesAndPaths.rolesScreenName,
@@ -131,7 +131,7 @@ class SideMenueGetController extends GetxController {
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsRoles),
-        tooltipContent: "This is a tooltip for Dashboard item",
+        tooltipContent: "This is a tooltip for Roles item",
       ),
       SideMenuItem(
         title: 'Sign Out',
