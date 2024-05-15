@@ -1,5 +1,6 @@
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'color_manager.dart';
 import 'font_manager.dart';
 
@@ -32,6 +33,8 @@ TextStyle nunitoLightStyle({
   );
 }
 
+TextStyle get nunitoLight => nunitoLightStyle();
+
 // reguler Style
 TextStyle nunitoRegulerStyle({
   double? fontSize,
@@ -44,6 +47,8 @@ TextStyle nunitoRegulerStyle({
     color ?? ColorManager.black,
   );
 }
+
+TextStyle get nunitoReguler => nunitoRegulerStyle();
 
 // meduim Style
 TextStyle nunitoBlackStyle({
@@ -58,6 +63,8 @@ TextStyle nunitoBlackStyle({
   );
 }
 
+TextStyle get nunitoBlack => nunitoBlackStyle();
+
 // bold Style
 TextStyle nunitoBoldStyle({
   double? fontSize,
@@ -71,6 +78,8 @@ TextStyle nunitoBoldStyle({
   );
 }
 
+TextStyle get nunitoBold => nunitoBoldStyle();
+
 // semiBold Style
 TextStyle nunitoSemiBoldStyle({
   double? fontSize,
@@ -83,6 +92,8 @@ TextStyle nunitoSemiBoldStyle({
     color ?? ColorManager.bodyMedium,
   );
 }
+
+TextStyle get nunitoSemiBold => nunitoSemiBoldStyle();
 
 //////////////////////////PlayfairDisplay Font Styles////////////////////////////////////
 
@@ -99,6 +110,8 @@ TextStyle playfairDisplayRegulerStyle({
   );
 }
 
+TextStyle get playfairDisplayReguler => playfairDisplayRegulerStyle();
+
 //meduim Style
 TextStyle playfairDisplayMeduimStyle({
   double? fontSize,
@@ -111,6 +124,8 @@ TextStyle playfairDisplayMeduimStyle({
     color ?? ColorManager.black,
   );
 }
+
+TextStyle get playfairDisplayMeduim => playfairDisplayMeduimStyle();
 
 //semiBold Style
 TextStyle playfairDisplaySemiBoldStyle({
@@ -125,6 +140,8 @@ TextStyle playfairDisplaySemiBoldStyle({
   );
 }
 
+TextStyle get playfairDisplaySemiBold => playfairDisplaySemiBoldStyle();
+
 //bold Style
 TextStyle playfairDisplayBoldStyle({
   double? fontSize,
@@ -137,6 +154,8 @@ TextStyle playfairDisplayBoldStyle({
     color ?? ColorManager.black,
   );
 }
+
+TextStyle get playfairDisplayBold => playfairDisplayBoldStyle();
 
 //////////////////////////Open-Sans Font Styles////////////////////////////////////
 
@@ -153,6 +172,8 @@ TextStyle openSansRegulerStyle({
   );
 }
 
+TextStyle get openSansReguler => openSansRegulerStyle();
+
 //meduim Style
 TextStyle openSansMeduimStyle({
   double? fontSize,
@@ -165,6 +186,8 @@ TextStyle openSansMeduimStyle({
     color ?? ColorManager.black,
   );
 }
+
+TextStyle get openSansMeduim => openSansMeduimStyle();
 
 //semiBold Style
 TextStyle openSansSemiBoldStyle({
@@ -179,6 +202,8 @@ TextStyle openSansSemiBoldStyle({
   );
 }
 
+TextStyle get openSansSemiBold => openSansSemiBoldStyle();
+
 //bold Style
 TextStyle openSansBoldStyle({
   double? fontSize,
@@ -191,3 +216,5 @@ TextStyle openSansBoldStyle({
     color ?? ColorManager.black,
   );
 }
+
+TextStyle get openSansBold => openSansBoldStyle();
