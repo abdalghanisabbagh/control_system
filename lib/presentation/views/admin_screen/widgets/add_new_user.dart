@@ -128,14 +128,14 @@ class AddNewUserWidget extends StatelessWidget {
                     title: 'NIS ID',
                     myValidation: Validations.requiredValidator,
                   ),
+                  // MytextFormFiled(
+                  //   controller: egyptionId,
+                  //   title: 'Egyptian ID',
+                  //   myValidation: Validations.requiredValidator,
+                  // ),
                   MytextFormFiled(
                     controller: egyptionId,
-                    title: 'Egyption ID',
-                    myValidation: Validations.requiredValidator,
-                  ),
-                  MytextFormFiled(
-                    controller: egyptionId,
-                    title: 'Egyption ID',
+                    title: 'Egyptian ID',
                     myValidation: Validations.requiredValidator,
                   ),
                   MytextFormFiled(
@@ -173,13 +173,15 @@ class AddNewUserWidget extends StatelessWidget {
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(
-                      color: ColorManager.bgSideMenu,
-                      borderRadius: BorderRadius.circular(11)),
+                    color: ColorManager.bgSideMenu,
+                    borderRadius: BorderRadius.circular(11),
+                  ),
                   child: Center(
-                      child: Text(
-                    "Back",
-                    style: nunitoRegulerStyle(color: Colors.white),
-                  )),
+                    child: Text(
+                      "Back",
+                      style: nunitoRegulerStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -199,10 +201,11 @@ class AddNewUserWidget extends StatelessWidget {
                       color: ColorManager.glodenColor,
                       borderRadius: BorderRadius.circular(11)),
                   child: Center(
-                      child: Text(
-                    "Add",
-                    style: nunitoRegulerStyle(color: Colors.white),
-                  )),
+                    child: Text(
+                      "Add",
+                      style: nunitoRegulerStyle(color: Colors.white),
+                    ),
+                  ),
                 ),
               ),
             ),
