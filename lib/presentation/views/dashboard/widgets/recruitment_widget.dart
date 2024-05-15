@@ -2,7 +2,6 @@ import 'package:control_system/app/extensions/device_type_extension.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class RecruitmentDataWidget extends StatefulWidget {
   const RecruitmentDataWidget({super.key});
@@ -64,48 +63,46 @@ class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
             thickness: 0.5,
             color: Colors.grey,
           ),
-          GetBuilder(builder: (userController) {
-            return SingleChildScrollView(
-              child: Table(
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children: [
-                  /// Table Header
-                  TableRow(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey,
-                          width: 0.5,
-                        ),
+          SingleChildScrollView(
+            child: Table(
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              children: [
+                /// Table Header
+                TableRow(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.grey,
+                        width: 0.5,
                       ),
                     ),
-                    children: [
-                      tableHeader("Full Name"),
-                      if (!context.isMobile) tableHeader("NIS Id"),
-                      tableHeader("Status"),
-                      if (!context.isMobile) tableHeader(""),
-                    ],
                   ),
+                  children: [
+                    tableHeader("Full Name"),
+                    if (!context.isMobile) tableHeader("NIS Id"),
+                    tableHeader("Status"),
+                    if (!context.isMobile) tableHeader(""),
+                  ],
+                ),
 
-                  // ...List.generate(
-                  //   userController.dashboardUsers.length,
-                  //   (index) => tableRow(
-                  //     context,
-                  //     name: userController.dashboardUsers[index].userFullName,
-                  //     color: userController.dashboardUsers[index].active == 1
-                  //         ? Colors.green
-                  //         : Colors.red,
-                  //     //image: "assets/user1.jpg",
-                  //     designation: userController.dashboardUsers[index].nISID,
-                  //     status: userController.dashboardUsers[index].active == 1
-                  //         ? "Active"
-                  //         : "Disable",
-                  //   ),
-                  // )
-                ],
-              ),
-            );
-          }),
+                // ...List.generate(
+                //   userController.dashboardUsers.length,
+                //   (index) => tableRow(
+                //     context,
+                //     name: userController.dashboardUsers[index].userFullName,
+                //     color: userController.dashboardUsers[index].active == 1
+                //         ? Colors.green
+                //         : Colors.red,
+                //     //image: "assets/user1.jpg",
+                //     designation: userController.dashboardUsers[index].nISID,
+                //     status: userController.dashboardUsers[index].active == 1
+                //         ? "Active"
+                //         : "Disable",
+                //   ),
+                // )
+              ],
+            ),
+          ),
         ],
       ),
     );
