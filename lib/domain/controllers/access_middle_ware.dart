@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/User/LoginResponse/LoginResponse.dart';
+import 'package:control_system/Data/Models/User/login_response/login_response.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
