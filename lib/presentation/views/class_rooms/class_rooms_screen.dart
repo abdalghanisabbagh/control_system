@@ -1,6 +1,8 @@
 import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:control_system/presentation/resource_manager/routes/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 
@@ -20,7 +22,8 @@ class ClassRoomsScreen extends StatelessWidget {
                 const Expanded(child: HeaderWidget(text: "Class Rooms")),
                 InkWell(
                   onTap: () {
-                    // Get.toNamed(Routes.classRoomSeats);
+                    context
+                        .goNamed(AppRoutesNamesAndPaths.renderSeatScreenName);
                   },
                   child: Container(
                     decoration: BoxDecoration(
