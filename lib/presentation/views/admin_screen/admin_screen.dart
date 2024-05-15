@@ -11,21 +11,22 @@ class AdminScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-        key: key,
-        body: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Get.defaultDialog(
-                    title: "Add New User", content: AddNewUserWidget());
-              },
-              child: Text(
-                "Add New User",
-                style: nunitoLightStyle(),
-              ),
+      key: key,
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Get.defaultDialog(
+                  title: "Add New User", content: AddNewUserWidget());
+            },
+            child: Text(
+              "Add New User",
+              style: nunitoLightStyle(),
             ),
-            MyBackButton()
-          ],
-        ));
+          ),
+          const MyBackButton()
+        ],
+      ),
+    );
   }
 }
