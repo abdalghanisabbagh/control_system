@@ -122,6 +122,8 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.seatingNumbersScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          SeatingNumberBindings().dependencies();
+
           return const SeatingNumbersScreen();
         },
         onExit: (context, state) {
