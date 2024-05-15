@@ -92,7 +92,7 @@ class SelectSchoolForm extends GetView<AuthController> {
                                           // );
                                         },
                                         title: Text(currentSchool.name,
-                                            style: nunitoRegulerStyle(
+                                            style: nunitoRegularStyle(
                                               color: ColorManager.white,
                                               fontSize: 16,
                                             )),
@@ -111,4 +111,3 @@ class SelectSchoolForm extends GetView<AuthController> {
     );
   }
 }
-

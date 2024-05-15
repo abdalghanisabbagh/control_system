@@ -77,7 +77,7 @@ class AddNewUserWidget extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.circular(10)),
                           hintText: "Select Role",
-                          hintStyle: nunitoRegulerStyle(
+                          hintStyle: nunitoRegularStyle(
                               fontSize: 16, color: ColorManager.bgSideMenu)),
                     ),
                     onChanged: ((value) {
@@ -114,7 +114,7 @@ class AddNewUserWidget extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(10)),
                             hintText: "Select Division",
-                            hintStyle: nunitoRegulerStyle(
+                            hintStyle: nunitoRegularStyle(
                                 fontSize: 16, color: ColorManager.bgSideMenu)),
                       ),
                       onChanged: ((value) {
@@ -179,7 +179,7 @@ class AddNewUserWidget extends StatelessWidget {
                   child: Center(
                     child: Text(
                       "Back",
-                      style: nunitoRegulerStyle(color: Colors.white),
+                      style: nunitoRegularStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -203,7 +203,7 @@ class AddNewUserWidget extends StatelessWidget {
                   child: Center(
                     child: Text(
                       "Add",
-                      style: nunitoRegulerStyle(color: Colors.white),
+                      style: nunitoRegularStyle(color: Colors.white),
                     ),
                   ),
                 ),

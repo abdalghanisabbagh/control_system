@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'index.dart';
 
 ThemeData getApplicationTheme() {
@@ -29,7 +30,7 @@ ThemeData getApplicationTheme() {
       color: ColorManager.appbarColor,
       elevation: AppSize.s5,
       shadowColor: ColorManager.appbarColorShadow,
-      titleTextStyle: nunitoRegulerStyle(
+      titleTextStyle: nunitoRegularStyle(
         fontSize: FontSize.s16,
         color: ColorManager.appBarTextColor,
       ),
@@ -94,7 +95,7 @@ ThemeData getApplicationTheme() {
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.all(AppPading.p12),
 
-      hintStyle: nunitoRegulerStyle(
+      hintStyle: nunitoRegularStyle(
         fontSize: FontSize.s7,
         color: ColorManager.textFormFieldHintStyle,
       ),
@@ -102,7 +103,7 @@ ThemeData getApplicationTheme() {
         fontSize: FontSize.s10,
         color: ColorManager.textFormFieldLabelStyle,
       ),
-      errorStyle: nunitoRegulerStyle(
+      errorStyle: nunitoRegularStyle(
         fontSize: FontSize.s10,
         color: ColorManager.error,
       ),
