@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../color_manager.dart';
 import '../font_manager.dart';
 import '../styles_manager.dart';
@@ -27,7 +28,7 @@ class CustomizedButton extends StatelessWidget {
       child: Container(
         height: responsiveHeight,
         width: responsiveWidth,
-        margin:const EdgeInsets.symmetric(vertical: AppPading.p12),
+        margin: const EdgeInsets.symmetric(vertical: AppPading.p12),
         decoration: BoxDecoration(
             border: whiteButtonWithColoredBorder
                 ? Border.all(color: ColorManager.background)
@@ -45,7 +46,7 @@ class CustomizedButton extends StatelessWidget {
               fit: BoxFit.contain,
               child: Text(
                 buttonTitle,
-                style: nunitoRegulerStyle(
+                style: nunitoRegularStyle(
                   fontSize: FontSize.s14,
                   color: whiteButtonWithColoredBorder
                       ? ColorManager.background

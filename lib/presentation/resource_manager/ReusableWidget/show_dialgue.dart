@@ -42,7 +42,7 @@ class MyAwesomeDialogue {
       title: title,
       titleTextStyle: nunitoBoldStyle(fontSize: FontSize.s18),
       desc: desc,
-      descTextStyle: nunitoRegulerStyle(fontSize: FontSize.s16),
+      descTextStyle: nunitoRegularStyle(fontSize: FontSize.s16),
       width: Get.width * 0.5,
       btnCancelOnPress: btnCancelOnPressed,
       btnOkOnPress: btnOkOnPressed,

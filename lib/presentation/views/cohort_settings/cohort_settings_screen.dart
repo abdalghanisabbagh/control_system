@@ -35,7 +35,7 @@ class CohortSettingsScreen extends StatelessWidget {
                         children: [
                           Text(
                             "Add new Cohort",
-                            style: nunitoReguler.copyWith(
+                            style: nunitoRegular.copyWith(
                               color: ColorManager.bgSideMenu,
                               fontSize: 25,
                             ),
@@ -45,11 +45,11 @@ class CohortSettingsScreen extends StatelessWidget {
                           ),
                           TextFormField(
                             cursorColor: ColorManager.bgSideMenu,
-                            style: nunitoReguler.copyWith(
+                            style: nunitoRegular.copyWith(
                                 fontSize: 14, color: ColorManager.bgSideMenu),
                             decoration: InputDecoration(
                               hintText: "Cohort name",
-                              hintStyle: nunitoReguler.copyWith(
+                              hintStyle: nunitoRegular.copyWith(
                                 fontSize: 14,
                                 color: ColorManager.bgSideMenu,
                               ),
