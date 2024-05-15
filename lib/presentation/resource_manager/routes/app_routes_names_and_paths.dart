@@ -12,8 +12,8 @@ class AppRoutesNamesAndPaths {
   static const String schoolsScreenName = 'Schools';
 
   // certificateScreen
-  static const String certificateScreenPath = '/certificate';
-  static const String certificateScreenName = 'Certificate';
+  static const String certificateScreenPath = '/certificates';
+  static const String certificateScreenName = 'Certificates';
 
   // classRoomScreen
   static const String classRoomScreenPath = '/class-rooms';
@@ -25,7 +25,7 @@ class AppRoutesNamesAndPaths {
 
   // controlMissionScreen
   static const String controlMissionScreenPath = '/control-mission';
-  static const String controlMissionScreenName = 'control-mission';
+  static const String controlMissionScreenName = 'Control Mission';
 
   // dashBoardScreen
   static const String dashBoardScreenPath = '/dashboard';
@@ -45,7 +45,7 @@ class AppRoutesNamesAndPaths {
 
   // studentScreen
   static const String studentScreenPath = '/student';
-  static const String studentScreenName = 'Student';
+  static const String studentScreenName = 'Students';
 
   // subjectSettingScreen
   static const String subjectSettingScreenPath = '/subject-settings';
