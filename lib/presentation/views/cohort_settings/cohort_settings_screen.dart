@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/add_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,119 +26,119 @@ class CohortSettingsScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    // TextEditingController editingController =
-                    //     TextEditingController();
-                    // AddDialogs(
-                    //   curve: 0.0,
-                    //   content: Column(
-                    //     mainAxisSize: MainAxisSize.min,
-                    //     children: [
-                    //       Text(
-                    //         "Add new Cohort",
-                    //         style: nunitoReguler.copyWith(
-                    //           color: ColorManager.bgSideMenu,
-                    //           fontSize: 25,
-                    //         ),
-                    //       ),
-                    //       const SizedBox(
-                    //         height: 10,
-                    //       ),
-                    //       TextFormField(
-                    //         cursorColor: ColorManager.bgSideMenu,
-                    //         style: nunitoReguler.copyWith(
-                    //             fontSize: 14, color: ColorManager.bgSideMenu),
-                    //         decoration: InputDecoration(
-                    //           hintText: "Cohort name",
-                    //           hintStyle: nunitoReguler.copyWith(
-                    //             fontSize: 14,
-                    //             color: ColorManager.bgSideMenu,
-                    //           ),
-                    //           focusedBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.circular(5),
-                    //           ),
-                    //           enabledBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.circular(5),
-                    //           ),
-                    //           errorBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.circular(5),
-                    //           ),
-                    //           disabledBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.circular(5),
-                    //           ),
-                    //         ),
-                    //         controller: editingController,
-                    //         onChanged: (value) {
-                    //           // int found =
-                    //           //     controller.cohorts.indexWhere(
-                    //           //   (p0) => p0.name == value,
-                    //           // );
-                    //           // if (found > -1) {
-                    //           //   log('founded');
-                    //           // }
-                    //         },
-                    //       ),
-                    //       const SizedBox(
-                    //         width: 10,
-                    //       ),
-                    //       Expanded(
-                    //         child: InkWell(
-                    //           onTap: () async {
-                    //             // if (editingController.text !=
-                    //             //     "") {
-                    //             //   int found = controller.cohorts
-                    //             //       .indexWhere(
-                    //             //     (p0) =>
-                    //             //         p0.name ==
-                    //             //         editingController.text,
-                    //             //   );
-                    //             //   if (found > -1) {
-                    //             //     log('founded');
-                    //             //   } else {
-                    //             //     try {
-                    //             //       await controller
-                    //             //           .addNewCohotFromServer(
-                    //             //               editingController
-                    //             //                   .text);
-                    //             //       // ignore: use_build_context_synchronously
-                    //             //       Navigator.pop(context);
-                    //             //       MyReusbleWidget.mySnackBarGood(
-                    //             //           "Cohort Create",
-                    //             //           "Cohort has been created");
-                    //             //     } catch (e) {
-                    //             //       if (kDebugMode) {
-                    //             //         print(e);
-                    //             //       }
-                    //             //     }
-                    //             //   }
-                    //             // } else {
-                    //             //   MyReusbleWidget.mySnackBarError(
-                    //             //       "Cohort Create",
-                    //             //       "enter cohort name");
-                    //             // }
-                    //           },
-                    //           // child: Container(
-                    //           //   height: 45,
-                    //           //   decoration: BoxDecoration(
-                    //           //     borderRadius: const BorderRadius.only(
-                    //           //       bottomRight: Radius.circular(11),
-                    //           //     ),
-                    //           //     color: ColorManager.glodenColor,
-                    //           //   ),
-                    //           //   child: Center(
-                    //           //     child: Text(
-                    //           //       "Yes",
-                    //           //       style: nunitoReguler.copyWith(
-                    //           //         color: Colors.white,
-                    //           //         fontSize: 18,
-                    //           //       ),
-                    //           //     ),
-                    //           //   ),
-                    //           // ),
-                    //         ),
-                    //       )
-                    //     ],
-                    //   ),
-                    // );
+                    TextEditingController editingController =
+                        TextEditingController();
+                    MyDialogs.showAddDialog(
+                      context,
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Add new Cohort",
+                            style: nunitoReguler.copyWith(
+                              color: ColorManager.bgSideMenu,
+                              fontSize: 25,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            cursorColor: ColorManager.bgSideMenu,
+                            style: nunitoReguler.copyWith(
+                                fontSize: 14, color: ColorManager.bgSideMenu),
+                            decoration: InputDecoration(
+                              hintText: "Cohort name",
+                              hintStyle: nunitoReguler.copyWith(
+                                fontSize: 14,
+                                color: ColorManager.bgSideMenu,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            controller: editingController,
+                            onChanged: (value) {
+                              // int found =
+                              //     controller.cohorts.indexWhere(
+                              //   (p0) => p0.name == value,
+                              // );
+                              // if (found > -1) {
+                              //   log('founded');
+                              // }
+                            },
+                          ),
+                          // const SizedBox(
+                          //   width: 10,
+                          // ),
+                          // Expanded(
+                          //   child: InkWell(
+                          //     onTap: () async {
+                          // if (editingController.text !=
+                          //     "") {
+                          //   int found = controller.cohorts
+                          //       .indexWhere(
+                          //     (p0) =>
+                          //         p0.name ==
+                          //         editingController.text,
+                          //   );
+                          //   if (found > -1) {
+                          //     log('founded');
+                          //   } else {
+                          //     try {
+                          //       await controller
+                          //           .addNewCohotFromServer(
+                          //               editingController
+                          //                   .text);
+                          //       // ignore: use_build_context_synchronously
+                          //       Navigator.pop(context);
+                          //       MyReusbleWidget.mySnackBarGood(
+                          //           "Cohort Create",
+                          //           "Cohort has been created");
+                          //     } catch (e) {
+                          //       if (kDebugMode) {
+                          //         print(e);
+                          //       }
+                          //     }
+                          //   }
+                          // } else {
+                          //   MyReusbleWidget.mySnackBarError(
+                          //       "Cohort Create",
+                          //       "enter cohort name");
+                          // }
+                          // },
+                          // child: Container(
+                          //   height: 45,
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: const BorderRadius.only(
+                          //       bottomRight: Radius.circular(11),
+                          //     ),
+                          //     color: ColorManager.glodenColor,
+                          //   ),
+                          //   child: Center(
+                          //     child: Text(
+                          //       "Yes",
+                          //       style: nunitoReguler.copyWith(
+                          //         color: Colors.white,
+                          //         fontSize: 18,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          //   ),
+                          // )
+                        ],
+                      ),
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
