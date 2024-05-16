@@ -51,6 +51,13 @@ class AddNewUserWidget extends StatelessWidget {
               key: formkey,
               child: Column(
                 children: [
+                  Text(
+                    "Add new Cohort",
+                    style: nunitoRegular.copyWith(
+                      color: ColorManager.bgSideMenu,
+                      fontSize: 25,
+                    ),
+                  ),
                   DropdownSearch<String>(
                     selectedItem: roleType,
                     items: roleTypes,
