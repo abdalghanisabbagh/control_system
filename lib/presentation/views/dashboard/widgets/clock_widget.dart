@@ -1,11 +1,18 @@
+import 'dart:math' show pi;
+
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../../domain/controllers/dashboard_controller.dart';
+import 'clock_painter.dart';
 
 class ClockWidget extends StatelessWidget {
   const ClockWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // final dashboardControllers = Get.find<DashboardController>();
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -22,23 +29,27 @@ class ClockWidget extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Text(
-              //   "${dashboardControllers.timeOfDay.hourOfPeriod > 9 ? dashboardControllers.timeOfDay.hourOfPeriod : "0${dashboardControllers.timeOfDay.hourOfPeriod}"}:${dashboardControllers.timeOfDay.minute > 9 ? dashboardControllers.timeOfDay.minute : "0${dashboardControllers.timeOfDay.minute}"}",
-              //   style: nunitoBold
-              //       .copyWith(color: ColorManager.bgSideMenu, fontSize: 35),
-              // ),
-              SizedBox(width: 5),
-              // RotatedBox(
-              //   quarterTurns: 3,
-              //   child: Text(
-              //     dashboardControllers.period!,
-              //     style: const TextStyle(fontSize: 12),
-              //   ),
-              // ),
-            ],
+          GetBuilder<DashboardController>(
+            builder: (dashboardControllers) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "${dashboardControllers.timeOfDay.hourOfPeriod > 9 ? dashboardControllers.timeOfDay.hourOfPeriod : "0${dashboardControllers.timeOfDay.hourOfPeriod}"}:${dashboardControllers.timeOfDay.minute > 9 ? dashboardControllers.timeOfDay.minute : "0${dashboardControllers.timeOfDay.minute}"}",
+                    style: nunitoBold.copyWith(
+                        color: ColorManager.bgSideMenu, fontSize: 35),
+                  ),
+                  const SizedBox(width: 5),
+                  RotatedBox(
+                    quarterTurns: 3,
+                    child: Text(
+                      dashboardControllers.period!,
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
           Stack(
             children: [
@@ -61,13 +72,19 @@ class ClockWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // child: Transform.rotate(
-                    //   angle: -pi / 2,
-                    //   child: CustomPaint(
-                    //     painter: ClockPainter(
-                    //         context, dashboardControllers.dateTime,),
-                    //   ),
-                    // ),
+                    child: GetBuilder<DashboardController>(
+                      builder: (dashboardControllers) {
+                        return Transform.rotate(
+                          angle: -pi / 2,
+                          child: CustomPaint(
+                            painter: ClockPainter(
+                              context,
+                              dashboardControllers.dateTime,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
