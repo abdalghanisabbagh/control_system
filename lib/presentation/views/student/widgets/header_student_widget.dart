@@ -1,4 +1,5 @@
 import 'package:control_system/app/extensions/device_type_extension.dart';
+import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -14,6 +15,13 @@ class HeaderStudentWidget extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         child: Row(
           children: [
+            Text(
+              'Students',
+              style: nunitoBlack.copyWith(
+                color: ColorManager.bgSideMenu,
+                fontSize: 30,
+              ),
+            ),
             if (context.isDesktop) ...{
               const Spacer(),
               IconButton(
