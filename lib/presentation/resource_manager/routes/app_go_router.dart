@@ -89,7 +89,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.controlMissionScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
-          return const ControlMessionScreen();
+          return const ControlMissionScreen();
         },
         onExit: (context, state) {
           return true;
