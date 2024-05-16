@@ -14,10 +14,10 @@ class ElevatedBackButton extends StatelessWidget {
         Get.back();
       },
       child: Container(
-        height: 45,
+        height: 50,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(11),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(11),
           ),
           color: ColorManager.bgSideMenu,
         ),
