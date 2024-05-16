@@ -1,8 +1,8 @@
 import 'package:control_system/presentation/resource_manager/ReusableWidget/add_dialogs.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_back_button.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SubjectSettingScreen extends StatelessWidget {
   const SubjectSettingScreen({super.key});
@@ -220,34 +220,12 @@ class SubjectSettingScreen extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          Row(
+                          const Row(
                             children: [
                               Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    height: 45,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(11),
-                                      ),
-                                      color: ColorManager.bgSideMenu,
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Back",
-                                        style: nunitoRegular.copyWith(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                child: ElevatedBackButton(),
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 width: 10,
                               ),
                               // Expanded(
