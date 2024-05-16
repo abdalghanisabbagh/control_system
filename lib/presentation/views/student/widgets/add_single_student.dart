@@ -3,8 +3,8 @@ import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddNewStudent extends StatelessWidget {
-  AddNewStudent({super.key});
+class AddSingleStudent extends StatelessWidget {
+  AddSingleStudent({super.key});
 
   final TextEditingController blbIdController = TextEditingController();
   final TextEditingController fnameController = TextEditingController();
