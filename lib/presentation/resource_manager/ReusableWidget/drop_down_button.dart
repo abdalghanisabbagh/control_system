@@ -6,10 +6,12 @@ class MultiSelectDropDownView extends StatelessWidget {
     super.key,
     this.onOptionSelected,
     required this.options,
+    this.searchEnabled = false,
   });
 
   final void Function(List<ValueItem<dynamic>>)? onOptionSelected;
   final List<ValueItem<dynamic>> options;
+  final bool searchEnabled;
   @override
   Widget build(BuildContext context) {
     return MultiSelectDropDown(
@@ -22,7 +24,7 @@ class MultiSelectDropDownView extends StatelessWidget {
       ),
       optionTextStyle: const TextStyle(fontSize: 16),
       selectedOptionIcon: const Icon(Icons.check_circle),
-      searchEnabled: true,
+      searchEnabled: searchEnabled,
       searchLabel: "Search",
       showChipInSingleSelectMode: true,
     );
