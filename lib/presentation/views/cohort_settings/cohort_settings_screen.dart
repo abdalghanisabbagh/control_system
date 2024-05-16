@@ -297,7 +297,7 @@ class CohortSettingsScreen extends StatelessWidget {
                   //                                   subjCont =
                   //                                   Get.find();
 
-                  //                               ASHTARTDialogs
+                  //                               MyDialogs
                   //                                   .showAddDialog(
                   //                                       context,
                   //                                       Column(
