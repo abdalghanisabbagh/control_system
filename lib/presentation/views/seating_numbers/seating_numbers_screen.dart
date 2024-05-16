@@ -1,4 +1,4 @@
-import 'package:control_system/domain/controllers/SeatingNumbersControllers/SeatingNumberTabViewController.dart';
+import 'package:control_system/domain/controllers/seating_numbers_controllers/seating_number_tab_view_controller.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:control_system/presentation/views/seating_numbers/widgets/attendance_screen.dart';
