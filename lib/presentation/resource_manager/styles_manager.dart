@@ -42,7 +42,7 @@ TextStyle nunitoRegularStyle({
 }) {
   return _getMainFont(
     fontFamily: AssetsManager.assetsFontsNunitoRegular,
-    fontSize ?? FontSize.s12,
+    fontSize ?? FontSize.s18,
     FontWeightManager.reguler,
     color ?? ColorManager.black,
   );
