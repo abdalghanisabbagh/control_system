@@ -1,4 +1,5 @@
 import 'package:control_system/presentation/resource_manager/ReusableWidget/add_dialogs.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_back_button.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +137,10 @@ class CohortSettingsScreen extends StatelessWidget {
                           // ),
                           //   ),
                           // )
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const ElevatedBackButton(),
                         ],
                       ),
                     );

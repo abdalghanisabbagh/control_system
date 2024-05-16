@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_back_button.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/resource_manager/validations.dart';
@@ -55,30 +56,33 @@ class AddNewUserWidget extends StatelessWidget {
                     items: roleTypes,
                     dropdownDecoratorProps: DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorManager.bgSideMenu),
-                              borderRadius: BorderRadius.circular(10)),
-                          border: OutlineInputBorder(
+                        focusedBorder: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: ColorManager.bgSideMenu),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10)),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: ColorManager.bgSideMenu),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: ColorManager.bgSideMenu,
+                            width: 2,
                           ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10)),
-                          disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: "Select Role",
-                          hintStyle: nunitoRegularStyle(
-                              fontSize: 16, color: ColorManager.bgSideMenu)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: ColorManager.bgSideMenu,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintText: "Select Role",
+                        hintStyle: nunitoRegularStyle(
+                            fontSize: 16, color: ColorManager.bgSideMenu),
+                      ),
                     ),
                     onChanged: ((value) {
                       roleType = value;
@@ -92,30 +96,34 @@ class AddNewUserWidget extends StatelessWidget {
                       items: schoolDivision,
                       dropdownDecoratorProps: DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: ColorManager.bgSideMenu),
-                                borderRadius: BorderRadius.circular(10)),
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorManager.bgSideMenu),
-                              borderRadius: BorderRadius.circular(10),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: ColorManager.bgSideMenu),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: ColorManager.bgSideMenu),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: ColorManager.bgSideMenu,
+                              width: 2,
                             ),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: ColorManager.bgSideMenu,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10)),
-                            disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: ColorManager.bgSideMenu,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: "Select Division",
-                            hintStyle: nunitoRegularStyle(
-                                fontSize: 16, color: ColorManager.bgSideMenu)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: ColorManager.bgSideMenu,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          hintText: "Select Division",
+                          hintStyle: nunitoRegularStyle(
+                              fontSize: 16, color: ColorManager.bgSideMenu),
+                        ),
                       ),
                       onChanged: ((value) {
                         selectedDivision = value;
@@ -165,25 +173,8 @@ class AddNewUserWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: ColorManager.bgSideMenu,
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Back",
-                      style: nunitoRegularStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
+            const Expanded(
+              child: ElevatedBackButton(),
             ),
             const SizedBox(
               width: 20,
@@ -198,8 +189,9 @@ class AddNewUserWidget extends StatelessWidget {
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(
-                      color: ColorManager.glodenColor,
-                      borderRadius: BorderRadius.circular(11)),
+                    color: ColorManager.glodenColor,
+                    borderRadius: BorderRadius.circular(11),
+                  ),
                   child: Center(
                     child: Text(
                       "Add",

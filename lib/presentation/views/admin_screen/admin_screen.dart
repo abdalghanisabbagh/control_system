@@ -17,7 +17,9 @@ class AdminScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Get.defaultDialog(
-                  title: "Add New User", content: AddNewUserWidget());
+                title: "Add New User",
+                content: AddNewUserWidget(),
+              );
             },
             child: Text(
               "Add New User",
