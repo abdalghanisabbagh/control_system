@@ -1,8 +1,9 @@
 import 'package:control_system/domain/controllers/auth_controller.dart';
-import 'package:control_system/domain/controllers/seating_numbers_controllers/seating_number_tab_view_controller.dart';
+import 'package:control_system/domain/controllers/seating_number_tab_view_controller.dart';
 import 'package:control_system/domain/services/side_menue_get_controller.dart';
 import 'package:get/get.dart';
 
+import '../controllers/dashboard_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeBindings extends Bindings {
@@ -34,6 +35,16 @@ class SeatingNumberBindings extends Bindings {
   void dependencies() {
     Get.lazyPut<SeatingNumberController>(
       () => SeatingNumberController(),
+      fenix: true,
+    );
+  }
+}
+
+class DashBoardBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<DashboardController>(
+      () => DashboardController(),
       fenix: true,
     );
   }
