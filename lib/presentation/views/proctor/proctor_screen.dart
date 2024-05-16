@@ -1,5 +1,8 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/add_dialogs.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'widgets/add_new_proctor.dart';
 
 class ProctorScreen extends StatelessWidget {
   const ProctorScreen({super.key});
@@ -34,7 +37,10 @@ class ProctorScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // newProctorDilog();
+                    MyDialogs.showAddDialog(
+                      context,
+                      const AddNewProctor(),
+                    );
                   },
                   child: const Text("Create new proctor"),
                 )
