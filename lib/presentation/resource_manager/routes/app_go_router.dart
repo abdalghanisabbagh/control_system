@@ -100,6 +100,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.dashBoardScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          DashBoardBindings().dependencies();
           return const DashboardScreen();
         },
         onExit: (context, state) {
