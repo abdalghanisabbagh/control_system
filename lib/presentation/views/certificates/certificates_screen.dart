@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +8,12 @@ class CertificatesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      key: key,
-      body: const Center(
-        child: Text("Certificates Screen"),
+      body: Expanded(
+        flex: 12,
+        child: Container(
+          color: ColorManager.bgColor,
+          padding: const EdgeInsets.all(20),
+        ),
       ),
     );
   }
