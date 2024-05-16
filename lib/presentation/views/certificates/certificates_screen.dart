@@ -8,12 +8,9 @@ class CertificatesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      body: Expanded(
-        flex: 12,
-        child: Container(
-          color: ColorManager.bgColor,
-          padding: const EdgeInsets.all(20),
-        ),
+      body: Container(
+        color: ColorManager.bgColor,
+        padding: const EdgeInsets.all(20),
       ),
     );
   }
