@@ -7,17 +7,19 @@ class MultiSelectDropDownView extends StatelessWidget {
     this.onOptionSelected,
     required this.options,
     this.searchEnabled = false,
+    this.multiSelect = false,
   });
 
   final void Function(List<ValueItem<dynamic>>)? onOptionSelected;
   final List<ValueItem<dynamic>> options;
   final bool searchEnabled;
+  final bool multiSelect;
   @override
   Widget build(BuildContext context) {
     return MultiSelectDropDown(
       onOptionSelected: onOptionSelected,
       options: options,
-      selectionType: SelectionType.multi,
+      selectionType: multiSelect ? SelectionType.multi : SelectionType.single,
       chipConfig: const ChipConfig(
         wrapType: WrapType.wrap,
         autoScroll: true,
