@@ -19,7 +19,7 @@ class DashboardController extends GetxController {
     period = timeOfDay.period == DayPeriod.am ? "AM" : "PM";
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (timeOfDay.minute != TimeOfDay.now().minute) {
-        update();
+        update(['clock']);
         timeOfDay = TimeOfDay.now();
       }
     });
@@ -27,7 +27,7 @@ class DashboardController extends GetxController {
 
   updateClock() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      update();
+      update(['clock']);
       dateTime = DateTime.now();
     });
   }

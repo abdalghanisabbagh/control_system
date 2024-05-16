@@ -12,7 +12,6 @@ class ClockWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final dashboardControllers = Get.find<DashboardController>();
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -30,6 +29,7 @@ class ClockWidget extends StatelessWidget {
       child: Column(
         children: [
           GetBuilder<DashboardController>(
+            id: 'clock',
             builder: (dashboardControllers) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,6 +73,7 @@ class ClockWidget extends StatelessWidget {
                       ],
                     ),
                     child: GetBuilder<DashboardController>(
+                      id: 'clock',
                       builder: (dashboardControllers) {
                         return Transform.rotate(
                           angle: -pi / 2,
@@ -89,7 +90,7 @@ class ClockWidget extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
