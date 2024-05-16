@@ -1,5 +1,6 @@
+import 'package:control_system/domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
-import 'package:control_system/domain/controllers/seating_number_tab_view_controller.dart';
+import 'package:control_system/domain/controllers/SeatingNumbersControllers/seating_number_tab_view_controller.dart';
 import 'package:control_system/domain/services/side_menue_get_controller.dart';
 import 'package:get/get.dart';
 
@@ -35,6 +36,10 @@ class SeatingNumberBindings extends Bindings {
   void dependencies() {
     Get.lazyPut<SeatingNumberController>(
       () => SeatingNumberController(),
+      fenix: true,
+    );
+    Get.lazyPut<CreateCoversSheetsController>(
+      () => CreateCoversSheetsController(),
       fenix: true,
     );
   }

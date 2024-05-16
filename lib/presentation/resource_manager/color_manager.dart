@@ -14,7 +14,7 @@ class ColorManager {
   static Color lightGrey = const Color(0xffD6D7D9);
   static Color lightGrey2 = const Color(0xffD4D4D4);
 
-  static Color darkPrimary = const Color(0xff8063BD); // ff=>CC opactiy 80%
+ // static Color darkPrimary = const Color(0xff8063BD); // ff=>CC opactiy 80%
   static Color lightPrimary = const Color.fromARGB(255, 242, 239, 247);
 
   static Color yellow = const Color(0xffFFD400);
@@ -30,7 +30,7 @@ class ColorManager {
 
   static Color processingStatus = const Color(0xffFFDD00);
 
-  static Color shippedStatus = const Color(0xffAC2E9F);
+ // static Color shippedStatus = const Color(0xffAC2E9F);
 
   static Color deliverdStatus = const Color(0xff07CC66);
 
@@ -68,7 +68,7 @@ class ColorManager {
   static Color error = const Color(0xffff0000);
 
   static Color outlineInputBorderColor = const Color(0x25252533);
-  static Color textFormFiledIcon = const Color(0xff956fd6);
+  //static Color textFormFiledIcon = const Color(0xff956fd6);
 
   static Color bgColor = const Color(0xfff8f7f3);
   static Color bgSideMenu = const Color(0xff131e29);

@@ -20,7 +20,7 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
         showTooltip: true,
         hoverColor: ColorManager.darkGrey,
         selectedHoverColor: ColorManager.darkGrey,
-        selectedColor: ColorManager.darkPrimary,
+        selectedColor: ColorManager.primary,
         selectedTitleTextStyle: nunitoBoldStyle(
           color: ColorManager.white,
           fontSize: AppSize.s16,
