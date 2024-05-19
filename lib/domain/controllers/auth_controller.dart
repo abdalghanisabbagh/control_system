@@ -1,4 +1,5 @@
-import 'package:control_system/Data/Network/tools/dio_factry.dart';
+import 'package:control_system/Data/Models/user/login_response/login_response.dart';
+import 'package:control_system/Data/Network/tools/dio_factory.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class AuthController extends GetxController {
     update();
   }
 
-  Future login(String username, String password) async {
+  Future<bool> login(String username, String password) async {
     isLoading.value = true;
     var dio = await DioFactory().getDio();
     try {
@@ -26,13 +27,30 @@ class AuthController extends GetxController {
       isLogin.value = true;
       debugPrint(response.data);
 
+      LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+      if (loginResponse.userProfile != null) {
+        Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
+        Hive.box('Profile')
+            .put("Full_Name", loginResponse.userProfile!.fullName);
+        Hive.box('Profile')
+            .put("User_Name", loginResponse.userProfile!.userName);
+        // Hive.box('Profile').put("Created_By", loginResponse.userProfile!.createdBy);
+        // Hive.box('Profile').put("Created_At", loginResponse.userProfile!.createdAt);
+      }
+
+      Hive.box('Token').put("aToken", response.data['accessToken']);
+      Hive.box('Token').put("dToken", DateTime.now().toIso8601String());
+      Hive.box('Token').put("rToken", response.data['refreshToken']);
+
+      return true;
+
       //// TODO: save all user Data
     } catch (e) {
       debugPrint(e.toString());
     }
 
     isLoading.value = false;
-    return true;
+    return false;
   }
 
   Future refreshToken() async {
@@ -42,8 +60,10 @@ class AuthController extends GetxController {
     var response =
         await dio.post(AuthLinks.refresh, data: {'refreshToken': refresh});
 
-    /// if response is good we get new access token need to replace 
+    /// if response is good we get new access token need to replace
     ///  update refresh token in local storage and profile controller
+    Hive.box('Token').put("aToken", response.data['accessToken']);
+    Hive.box('Token').put("dToken", DateTime.now().toIso8601String());
   }
 
   checkLogin() {

@@ -18,19 +18,15 @@ class DioFactory {
     Dio dio = Dio();
 
     token = Hive.box('Token').get('aToken');
-    /*
+
     String dtoken = Hive.box('Token').get('dToken');
     DateTime? tokenTime = DateTime.tryParse(dtoken);
     if (tokenTime!.difference(DateTime.now()).inMinutes > 55) {
       /// TODO: get new access token
-      /*
-      Hive.box('Token').put("aToken", result.data.accessToken);
-      Hive.box('Token').put("dToken", DateTime.now().toIso8601String());
-      */
     } else {
       token = Hive.box('Token').get('aToken');
     }
-*/
+
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,

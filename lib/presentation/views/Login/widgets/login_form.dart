@@ -123,17 +123,17 @@ class LoginForm extends GetView<AuthController> {
                                         height: 50,
                                         child: ElevatedButton(
                                           onPressed: () async {
-                                            await controller.login(
-                                              emailController.text,
-                                              passwordController.text,
-                                            );
-
-                                            !context.mounted
-                                                ? null
-                                                : context.goNamed(
-                                                    AppRoutesNamesAndPaths
-                                                        .dashBoardScreenName,
-                                                  );
+                                            await controller
+                                                .login(
+                                                  emailController.text,
+                                                  passwordController.text,
+                                                )
+                                                .then((value) => value
+                                                    ? context.goNamed(
+                                                        AppRoutesNamesAndPaths
+                                                            .dashBoardScreenName,
+                                                      )
+                                                    : null);
                                           },
                                           child: const Text("Login"),
                                         ),
