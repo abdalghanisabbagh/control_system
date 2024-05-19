@@ -14,7 +14,6 @@ export 'home/home_screen.dart';
 export 'proctor/proctor_screen.dart';
 export 'roles/roles_screen.dart';
 export 'schools/school_screen.dart';
-export 'seating_numbers/seating_numbers_screen.dart';
 export 'set_degrees/set_degrees_screen.dart';
 export 'student/student_screen.dart';
 export 'subject_setting/subject_setting_screen.dart';

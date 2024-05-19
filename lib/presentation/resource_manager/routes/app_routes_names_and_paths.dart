@@ -35,10 +35,6 @@ class AppRoutesNamesAndPaths {
   static const String proctorScreenPath = '/proctor';
   static const String proctorScreenName = 'Proctor';
 
-  // seatingNumbersScreen
-  static const String seatingNumbersScreenPath = '/seating-numbers';
-  static const String seatingNumbersScreenName = 'Seating Numbers';
-
   // setDegreesScreen
   static const String setDegreesScreenPath = '/set-degrees';
   static const String setDegreesScreenName = 'Set Degrees';

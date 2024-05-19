@@ -53,9 +53,9 @@ class SideMenueGetController extends GetxController {
       //   tooltipContent: "This is a tooltip for Batch Documents item",
       // ),
       SideMenuItem(
-        title: AppRoutesNamesAndPaths.seatingNumbersScreenName,
+        title: AppRoutesNamesAndPaths.batchDocumentsScreenName,
         onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.seatingNumbersScreenName);
+          context.goNamed(AppRoutesNamesAndPaths.batchDocumentsScreenName);
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
