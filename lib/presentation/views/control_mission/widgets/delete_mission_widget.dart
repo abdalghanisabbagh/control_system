@@ -2,8 +2,8 @@ import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DeleteMissionDialog extends StatelessWidget {
-  const DeleteMissionDialog({super.key, required this.curve});
+class DeleteMissionWidget extends StatelessWidget {
+  const DeleteMissionWidget({super.key, required this.curve});
   final double? curve;
   @override
   Widget build(BuildContext context) {
