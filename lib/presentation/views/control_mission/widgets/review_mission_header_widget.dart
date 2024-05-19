@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class ReviewMissionHeaderWidget extends StatelessWidget {
@@ -7,11 +8,10 @@ class ReviewMissionHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
-      child: const Text(
+      child: Text(
         'Review Mission',
-        style: TextStyle(
+        style: nunitoBold.copyWith(
           fontSize: 30,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );
