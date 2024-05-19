@@ -19,12 +19,15 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-                child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text("Cover Sheet",
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  "Cover Sheet",
                   style: nunitoBoldStyle()
-                      .copyWith(fontSize: 30, color: ColorManager.bgSideMenu)),
-            )),
+                      .copyWith(fontSize: 30, color: ColorManager.bgSideMenu),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
