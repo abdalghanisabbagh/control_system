@@ -1,6 +1,7 @@
 import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
-import 'package:control_system/presentation/views/class_rooms/widgets/exam_room.dart';
 import 'package:control_system/presentation/views/distribution/distribution_screen.dart';
+import 'package:control_system/presentation/views/exam_screen/exam_room_screen.dart';
+import 'package:control_system/presentation/views/exam_screen/widgets/render_seat.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 

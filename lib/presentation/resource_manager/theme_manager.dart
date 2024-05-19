@@ -76,8 +76,9 @@ ThemeData getApplicationTheme() {
         fontSize: FontSize.s14,
         color: ColorManager.subtitle2,
       ),
+      //text in showDatePicker
       bodyLarge: nunitoLightStyle(
-        fontSize: FontSize.s12,
+        fontSize: FontSize.s16,
         color: ColorManager.caption,
       ),
       bodySmall: nunitoLightStyle(

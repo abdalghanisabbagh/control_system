@@ -14,7 +14,7 @@ class ColorManager {
   static Color lightGrey = const Color(0xffD6D7D9);
   static Color lightGrey2 = const Color(0xffD4D4D4);
 
- // static Color darkPrimary = const Color(0xff8063BD); // ff=>CC opactiy 80%
+  // static Color darkPrimary = const Color(0xff8063BD); // ff=>CC opactiy 80%
   static Color lightPrimary = const Color.fromARGB(255, 242, 239, 247);
 
   static Color yellow = const Color(0xffFFD400);
@@ -30,7 +30,7 @@ class ColorManager {
 
   static Color processingStatus = const Color(0xffFFDD00);
 
- // static Color shippedStatus = const Color(0xffAC2E9F);
+  // static Color shippedStatus = const Color(0xffAC2E9F);
 
   static Color deliverdStatus = const Color(0xff07CC66);
 
@@ -58,7 +58,7 @@ class ColorManager {
   static Color headline1 = Colors.white;
   static Color subtitle1 = Colors.white;
   static Color subtitle2 = Colors.white;
-  static Color caption = Colors.white;
+  static Color caption = Colors.black;
   static Color bodyText1 = Colors.white;
   static Color bodyMedium = Colors.white;
 
