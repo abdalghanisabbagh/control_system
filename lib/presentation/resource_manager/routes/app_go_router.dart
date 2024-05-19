@@ -212,7 +212,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.examRoomScreenPath,
         name: AppRoutesNamesAndPaths.examRoomScreenName,
         builder: (context, state) {
-          return const ExamRoom();
+          return const ExamRoomScreen();
         },
         onExit: (context, state) {
           return true;
