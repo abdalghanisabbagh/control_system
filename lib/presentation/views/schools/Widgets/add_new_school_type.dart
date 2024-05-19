@@ -1,10 +1,17 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class AddNewSchoolTypeWidget extends StatelessWidget {
-  const AddNewSchoolTypeWidget({super.key});
+  AddNewSchoolTypeWidget({super.key});
+  TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return const Column();
+    return Column(
+      children: [
+        MytextFormFiled(controller: nameController),
+        ElevatedButton(onPressed: () {}, child: const Text("Add New Type"))
+      ],
+    );
   }
 }

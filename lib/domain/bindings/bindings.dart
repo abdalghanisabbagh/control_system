@@ -1,6 +1,7 @@
 import 'package:control_system/domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:control_system/domain/controllers/SeatingNumbersControllers/seating_number_tab_view_controller.dart';
+import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:control_system/domain/services/side_menue_get_controller.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ class HomeBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }
 }
 
@@ -18,6 +20,7 @@ class AuthBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }
 }
 
@@ -28,6 +31,7 @@ class SideMenuBindings extends Bindings {
       () => SideMenueGetController(),
       fenix: true,
     );
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }
 }
 
@@ -42,6 +46,7 @@ class SeatingNumberBindings extends Bindings {
       () => CreateCoversSheetsController(),
       fenix: true,
     );
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }
 }
 
@@ -52,5 +57,6 @@ class DashBoardBindings extends Bindings {
       () => DashboardController(),
       fenix: true,
     );
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }
 }
