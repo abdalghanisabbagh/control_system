@@ -118,19 +118,6 @@ class AppGoRouter {
         },
       ),
       GoRoute(
-        path: AppRoutesNamesAndPaths.seatingNumbersScreenPath,
-        name: AppRoutesNamesAndPaths.seatingNumbersScreenName,
-        builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
-          SeatingNumberBindings().dependencies();
-
-          return const SeatingNumbersScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
-      GoRoute(
         path: AppRoutesNamesAndPaths.setDegreesScreenPath,
         name: AppRoutesNamesAndPaths.setDegreesScreenName,
         builder: (context, state) {
@@ -179,6 +166,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.batchDocumentsScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          BatchDocumentsBindings().dependencies();
           return const BatchDocumentsScreen();
         },
         onExit: (context, state) {
@@ -200,7 +188,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.renderSeatScreenPath,
         name: AppRoutesNamesAndPaths.renderSeatScreenName,
         builder: (context, state) {
-          return RenderSeatsExam();
+          return const RenderSeatsExam();
         },
         onExit: (context, state) {
           return true;
