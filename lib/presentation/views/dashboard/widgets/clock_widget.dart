@@ -35,7 +35,7 @@ class ClockWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${dashboardControllers.timeOfDay.hourOfPeriod > 9 ? dashboardControllers.timeOfDay.hourOfPeriod : "0${dashboardControllers.timeOfDay.hourOfPeriod}"}:${dashboardControllers.timeOfDay.minute > 9 ? dashboardControllers.timeOfDay.minute : "0${dashboardControllers.timeOfDay.minute}"}",
+                    "${dashboardControllers.timeOfDay.hourOfPeriod > 9 ? dashboardControllers.timeOfDay.hourOfPeriod : "0${dashboardControllers.timeOfDay.hourOfPeriod}"}:${dashboardControllers.timeOfDay.minute > 9 ? dashboardControllers.timeOfDay.minute : "0${dashboardControllers.timeOfDay.minute}"} ${dashboardControllers.timeOfDay.period.name.toUpperCase()}",
                     style: nunitoBold.copyWith(
                         color: ColorManager.bgSideMenu, fontSize: 35),
                   ),
