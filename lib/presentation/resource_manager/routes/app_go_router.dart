@@ -1,5 +1,6 @@
 import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
 import 'package:control_system/presentation/views/class_rooms/widgets/exam_room.dart';
+import 'package:control_system/presentation/views/distribution/distribution_screen.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -212,6 +213,16 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.examRoomScreenName,
         builder: (context, state) {
           return const ExamRoom();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+      ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.distributionScreenPath,
+        name: AppRoutesNamesAndPaths.distributionScreenName,
+        builder: (context, state) {
+          return const DistributionScreen();
         },
         onExit: (context, state) {
           return true;
