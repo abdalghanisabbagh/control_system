@@ -200,7 +200,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.renderSeatScreenPath,
         name: AppRoutesNamesAndPaths.renderSeatScreenName,
         builder: (context, state) {
-          return const RenderSeats();
+          return RenderSeatsExam();
         },
         onExit: (context, state) {
           return true;
