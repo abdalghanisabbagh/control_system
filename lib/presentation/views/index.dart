@@ -9,7 +9,7 @@ export 'control_mission/control_mission_screen.dart';
 export 'dashboard/dash_board_screen.dart';
 export 'distribution/distribution_screen.dart';
 export 'exam_screen/exam_room_screen.dart';
-export 'exam_screen/widgets/render_seat.dart';
+export 'exam_screen/widgets/render_seat_exam.dart';
 export 'home/home_screen.dart';
 export 'proctor/proctor_screen.dart';
 export 'roles/roles_screen.dart';
