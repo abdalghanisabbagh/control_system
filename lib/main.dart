@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 import 'app/main_app.dart';
 
 Future<void> main() async {
@@ -8,7 +9,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   await Hive.openBox('Token');
   await Hive.openBox('School'); // Id   --- Name
-  await Hive.openBox('profile'); // Id   --- profile
+  await Hive.openBox('Profile'); // Id   --- profile
 
-  runApp( MyApp());
+  runApp(MyApp());
 }

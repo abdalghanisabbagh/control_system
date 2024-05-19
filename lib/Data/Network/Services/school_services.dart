@@ -1,5 +1,5 @@
 import 'package:control_system/Data/Network/tools/app_error_handler.dart';
-import 'package:control_system/Data/Network/tools/dio_factry.dart';
+import 'package:control_system/Data/Network/tools/dio_factory.dart';
 import 'package:control_system/Data/Network/tools/failure_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:dartz/dartz.dart';

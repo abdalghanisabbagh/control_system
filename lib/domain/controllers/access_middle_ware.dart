@@ -1,8 +1,9 @@
-import 'package:control_system/Data/Models/User/login_response/login_response.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import '../../Data/Models/user/login_response/login_response.dart';
 
 class AuthMiddleWare extends GetMiddleware {
   LoginResponse? loginObject;
