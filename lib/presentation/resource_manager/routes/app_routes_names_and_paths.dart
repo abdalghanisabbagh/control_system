@@ -70,4 +70,8 @@ class AppRoutesNamesAndPaths {
   // examRoomScreen
   static const String examRoomScreenPath = '/exam-room';
   static const String examRoomScreenName = 'Exam Room';
+
+  // distributionScreen
+  static const String distributionScreenPath = '/distribution';
+  static const String distributionScreenName = 'Distribution';
 }
