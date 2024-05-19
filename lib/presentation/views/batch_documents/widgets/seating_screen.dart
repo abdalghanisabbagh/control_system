@@ -1,6 +1,5 @@
 import 'package:control_system/domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

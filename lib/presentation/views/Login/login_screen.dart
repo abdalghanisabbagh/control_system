@@ -59,31 +59,27 @@ class LoginScreen extends GetView<AuthController> {
                 padding: const EdgeInsets.all(32),
                 child: Text("Welcome Admin",
                     style: nunitoBoldStyle(
-                        color: ColorManager.bgColor, fontSize: 24)),
+                        color: ColorManager.primary, fontSize: 24)),
               ),
             ),
-            const Align(
+            Align(
               alignment: Alignment.bottomRight,
               child: Padding(
-                padding: EdgeInsets.all(32),
+                padding: const EdgeInsets.all(32),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Icon(
                       Icons.copyright,
-                      color: Colors.grey,
+                      color: ColorManager.primary,
                       size: 24,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
-                    Text(
-                      "Copyright 2024",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                      ),
-                    ),
+                    Text("Copyright 2024",
+                        style: nunitoBoldStyle().copyWith(
+                            fontSize: 22, color: ColorManager.primary)),
                   ],
                 ),
               ),
