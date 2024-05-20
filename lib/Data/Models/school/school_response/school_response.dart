@@ -5,7 +5,11 @@ class SchoolResponseModel extends BaseModel {
   int? schoolTypeID;
   String? name;
 
-  SchoolResponseModel({this.iD, this.schoolTypeID, this.name});
+  SchoolResponseModel({
+    this.iD,
+    this.schoolTypeID,
+    this.name,
+  });
 
   SchoolResponseModel.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
