@@ -1,13 +1,18 @@
+import 'package:control_system/Data/Models/token/token_model.dart';
+import 'package:control_system/Data/Models/user/login_response/user_profile.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
+import 'package:control_system/domain/services/token_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/user/login_response/login_response.dart';
+import 'profile_controller.dart';
 
 class AuthMiddleWare extends GetMiddleware {
   LoginResponse? loginObject;
   String? expireTime;
+  String? aToken;
+  String? rToken;
   @override
   int? get priority => 1;
 
@@ -23,13 +28,16 @@ class AuthMiddleWare extends GetMiddleware {
 
   checktoken() async {
     if (loginObject == null) {
-      String? atoken = Hive.box('Token').get('token');
-      String? rtoken = Hive.box('Token').get('refresh');
-      expireTime = Hive.box('Token').get("time");
-      if (atoken != null && rtoken != null) {
+      TokenModel? tokenModel = Get.find<TokenService>().tokenModel;
+      UserProfile? userProfile =
+          Get.find<ProfileController>().getProfileFromHiveBox();
+      aToken = tokenModel?.aToken;
+      expireTime = tokenModel?.dToken;
+      if (aToken != null && rToken != null && userProfile != null) {
         loginObject = LoginResponse(
-          accessToken: atoken,
-          refreshToken: rtoken,
+          accessToken: aToken,
+          refreshToken: rToken,
+          userProfile: userProfile,
         );
 
         return isAuthenticated = await validateor();

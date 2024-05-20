@@ -1,12 +1,13 @@
 import 'package:control_system/domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
 import 'package:control_system/domain/controllers/SeatingNumbersControllers/seating_number_tab_view_controller.dart';
-import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
+import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:control_system/domain/services/side_menue_get_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/dashboard_controller.dart';
 import '../controllers/home_controller.dart';
+import '../services/token_service.dart';
 
 class HomeBindings extends Bindings {
   @override
@@ -58,5 +59,12 @@ class DashBoardBindings extends Bindings {
       fenix: true,
     );
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+  }
+}
+
+class TokenBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(TokenService(), permanent: true);
   }
 }

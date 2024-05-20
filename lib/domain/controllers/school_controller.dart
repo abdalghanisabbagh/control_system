@@ -9,17 +9,12 @@ class SchoolController extends GetxController {
   addNewSchoolType({
     required String schoolType,
   }) async {
-    var response = await SchoolServices.addNewSchoolType(
-        token: "token", schoolType: schoolType);
+    var response =
+        await SchoolServices.addNewSchoolType(schoolType: schoolType);
   }
 
   getSchoolTypes() async {}
 
   addNewSchool() async {}
   getSchool() async {}
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 }
