@@ -39,7 +39,6 @@ class AuthController extends GetxController {
           ResponseHandler(data: LoginResponseImplementationHandler());
       Either<Failure, LoginResponse> result =
           responseHandler.getResponse(response);
-      debugPrint(result.toString());
       if (result.isRight()) {
         LoginResponseImplementationHandler loginResponse = result.foldRight(
             LoginResponseImplementationHandler(), (r, previous) => previous);
