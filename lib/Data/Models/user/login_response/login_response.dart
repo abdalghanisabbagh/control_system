@@ -1,14 +1,14 @@
 import '../../base_model.dart';
 import 'user_profile.dart';
 
-class LoginResponse extends BaseModel {
+class LoginResponseModel extends BaseModel {
   String? refreshToken;
   String? accessToken;
   UserProfile? userProfile;
 
-  LoginResponse({this.refreshToken, this.accessToken, this.userProfile});
+  LoginResponseModel({this.refreshToken, this.accessToken, this.userProfile});
 
-  LoginResponse.fromJson(Map<String, dynamic> json) {
+  LoginResponseModel.fromJson(Map<String, dynamic> json) {
     refreshToken = json['refreshToken'];
     accessToken = json['accessToken'];
     userProfile = json['userProfile'] != null
