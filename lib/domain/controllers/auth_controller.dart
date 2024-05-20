@@ -1,9 +1,13 @@
 import 'package:control_system/Data/Models/token/token_model.dart';
+import 'package:control_system/Data/Models/user/login_response/login_response.dart';
 import 'package:control_system/Data/Network/tools/dio_factory.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/domain/services/token_service.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import '../../Data/Models/user/login_response/user_profile.dart';
 
 class AuthController extends GetxController {
   TokenService tokenService = Get.find<TokenService>();
@@ -22,34 +26,40 @@ class AuthController extends GetxController {
     isLoading.value = true;
     var dio = await DioFactory().getDio();
     try {
+      var response = await dio.post(AuthLinks.login, data: {
+        "userName": username,
+        "password": password,
+      });
+
+      // ResponseHandler responseHandler =
       // var response = await dio.post(AuthLinks.login, data: {
       //   "userName": username,
       //   "password": password,
       // });
       isLogin.value = true;
-      // debugPrint(response.data);
+      debugPrint(response.data);
 
-      // LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-      // if (loginResponse.userProfile != null) {
-      //   UserProfile userProfile =
-      //       UserProfile.fromJson(response.data['userProfile']);
-      //   Hive.box('Profile').put("CachedUserProfile", userProfile.toJson());
+      LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+      if (loginResponse.userProfile != null) {
+        UserProfile userProfile =
+            UserProfile.fromJson(response.data['userProfile']);
+        Hive.box('Profile').put("CachedUserProfile", userProfile.toJson());
 
-      // Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
-      // Hive.box('Profile')
-      //     .put("Full_Name", loginResponse.userProfile!.fullName);
-      // Hive.box('Profile')
-      //     .put("User_Name", loginResponse.userProfile!.userName);
-      // Hive.box('Profile').put("Created_By", loginResponse.userProfile!.createdBy);
-      // Hive.box('Profile').put("Created_At", loginResponse.userProfile!.createdAt);
-      // }
+        // Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
+        // Hive.box('Profile')
+        //     .put("Full_Name", loginResponse.userProfile!.fullName);
+        // Hive.box('Profile')
+        //     .put("User_Name", loginResponse.userProfile!.userName);
+        // Hive.box('Profile').put("Created_By", loginResponse.userProfile!.createdBy);
+        // Hive.box('Profile').put("Created_At", loginResponse.userProfile!.createdAt);
+      }
 
-      // TokenModel tokenModel = TokenModel(
-      //   aToken: response.data['accessToken'],
-      //   rToken: response.data['refreshToken'],
-      //   dToken: DateTime.now().toIso8601String(),
-      // );
-      // tokenService.saveTokenModelToHiveBox(tokenModel);
+      TokenModel tokenModel = TokenModel(
+        aToken: response.data['accessToken'],
+        rToken: response.data['refreshToken'],
+        dToken: DateTime.now().toIso8601String(),
+      );
+      tokenService.saveTokenModelToHiveBox(tokenModel);
 
       return true;
 

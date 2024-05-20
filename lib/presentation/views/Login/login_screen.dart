@@ -92,8 +92,8 @@ class LoginScreen extends GetView<AuthController> {
                         ? 32
                         : 16,
               ),
-              child: Obx(
-                () => controller.isLogin.value
+              child: GetBuilder<AuthController>(
+                builder: (_) => controller.isLogin.value
                     ? const SelectSchoolForm()
                     : LoginForm(),
               ),

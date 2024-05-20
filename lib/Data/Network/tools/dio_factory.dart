@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:control_system/app/configurations/app_links.dart';
-import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -31,7 +30,7 @@ class DioFactory {
     if (tokenTime!.difference(DateTime.now()).inMinutes > 55) {
       /// TODO: get new access token
 
-      Get.find<AuthController>().refreshToken();
+      // Get.find<AuthController>().refreshToken();
     }
 
     Map<String, String> headers = {
@@ -41,7 +40,7 @@ class DioFactory {
     };
 
     dio.options = BaseOptions(
-      baseUrl: AppLinks.baseUrl,
+      baseUrl: AppLinks.baseUrlDev,
       headers: headers,
       receiveTimeout: timeOut,
       sendTimeout: timeOut,
