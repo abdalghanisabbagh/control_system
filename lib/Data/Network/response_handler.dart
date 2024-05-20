@@ -1,10 +1,11 @@
+import 'package:control_system/Data/Models/base_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../handlers/interfaces/response_interface.dart';
 import 'tools/failure_model.dart';
 
-class ResponseHandler<T extends ResponseInterface, R> {
+class ResponseHandler<T extends ResponseInterface, R extends BaseModel> {
   T data;
 
   ResponseHandler({required this.data});
