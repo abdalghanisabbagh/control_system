@@ -24,7 +24,7 @@ class AuthController extends GetxController {
 
   Future<bool> login(String username, String password) async {
     isLoading.value = true;
-    // var dio = await DioFactory().getDio();
+    var dio = await DioFactory().getDio();
     try {
       var response = await dio.post(AuthLinks.login, data: {
         "userName": username,
@@ -40,9 +40,10 @@ class AuthController extends GetxController {
       // debugPrint(response.data);
 
       LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+
       if (loginResponse.userProfile != null) {
         UserProfile userProfile =
-            UserProfile.fromJson(response.data['userProfile']);
+            UserProfile.fromJson(response.data['data']['userProfile']);
         Hive.box('Profile').put("CachedUserProfile", userProfile.toJson());
 
         // Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
@@ -55,11 +56,13 @@ class AuthController extends GetxController {
       }
 
       TokenModel tokenModel = TokenModel(
-        aToken: response.data['accessToken'],
-        rToken: response.data['refreshToken'],
+        aToken: response.data['data']['accessToken'],
+        rToken: response.data['data']['refreshToken'],
         dToken: DateTime.now().toIso8601String(),
       );
       tokenService.saveTokenModelToHiveBox(tokenModel);
+
+      print('token is ${tokenModel.aToken}');
 
       return true;
 
