@@ -5,7 +5,6 @@ import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../../domain/services/token_service.dart';
@@ -33,8 +32,6 @@ class DioFactory {
       /// TODO: get new access token
 
       Get.find<AuthController>().refreshToken();
-    } else {
-      token = Hive.box('Token').get('aToken');
     }
 
     Map<String, String> headers = {
