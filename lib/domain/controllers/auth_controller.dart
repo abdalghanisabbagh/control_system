@@ -1,13 +1,15 @@
 import 'package:control_system/Data/Models/token/token_model.dart';
 import 'package:control_system/Data/Models/user/login_response/login_response.dart';
 import 'package:control_system/Data/Network/tools/dio_factory.dart';
+import 'package:control_system/Data/handlers/implementation/login_response_implemantation_handler.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/domain/services/token_service.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../Data/Models/user/login_response/user_profile.dart';
+import '../../Data/Network/response_handler.dart';
+import '../../Data/Network/tools/failure_model.dart';
 
 class AuthController extends GetxController {
   TokenService tokenService = Get.find<TokenService>();
@@ -31,38 +33,50 @@ class AuthController extends GetxController {
         "password": password,
       });
 
-      // ResponseHandler responseHandler =
-      // var response = await dio.post(AuthLinks.login, data: {
-      //   "userName": username,
-      //   "password": password,
-      // });
+      ResponseHandler<LoginResponseImplementationHandler> responseHandler =
+          ResponseHandler<LoginResponseImplementationHandler>();
+      Either<Failure, LoginResponseImplementationHandler> result =
+          responseHandler.getResponse(response.data['data']);
+      if (result.isRight()) {
+        LoginResponseImplementationHandler loginResponse = result.foldRight(
+            LoginResponseImplementationHandler(), (r, previous) => previous);
+        LoginResponse data = loginResponse.fromJson(response.data);
+        TokenModel tokenModel = TokenModel(
+          aToken: data.accessToken!,
+          rToken: data.refreshToken!,
+          dToken: DateTime.now().toIso8601String(),
+        );
+        tokenService.saveTokenModelToHiveBox(tokenModel);
+      } else {
+        isLoading.value = false;
+
+        throw result.leftMap((l) => l);
+      }
+
       isLogin.value = true;
       // debugPrint(response.data);
 
-      LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+      // LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+      // if (loginResponse.userProfile != null) {
+      //   UserProfile userProfile =
+      //       UserProfile.fromJson(response.data['userProfile']);
+      //   Hive.box('Profile').put("CachedUserProfile", userProfile.toJson());
 
-      if (loginResponse.userProfile != null) {
-        UserProfile userProfile =
-            UserProfile.fromJson(response.data['data']['userProfile']);
-        Hive.box('Profile').put("CachedUserProfile", userProfile.toJson());
+      // Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
+      // Hive.box('Profile')
+      //     .put("Full_Name", loginResponse.userProfile!.fullName);
+      // Hive.box('Profile')
+      //     .put("User_Name", loginResponse.userProfile!.userName);
+      // Hive.box('Profile').put("Created_By", loginResponse.userProfile!.createdBy);
+      // Hive.box('Profile').put("Created_At", loginResponse.userProfile!.createdAt);
+      // }
 
-        // Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
-        // Hive.box('Profile')
-        //     .put("Full_Name", loginResponse.userProfile!.fullName);
-        // Hive.box('Profile')
-        //     .put("User_Name", loginResponse.userProfile!.userName);
-        // Hive.box('Profile').put("Created_By", loginResponse.userProfile!.createdBy);
-        // Hive.box('Profile').put("Created_At", loginResponse.userProfile!.createdAt);
-      }
-
-      TokenModel tokenModel = TokenModel(
-        aToken: response.data['data']['accessToken'],
-        rToken: response.data['data']['refreshToken'],
-        dToken: DateTime.now().toIso8601String(),
-      );
-      tokenService.saveTokenModelToHiveBox(tokenModel);
-
-      print('token is ${tokenModel.aToken}');
+      // TokenModel tokenModel = TokenModel(
+      //   aToken: response.data['accessToken'],
+      //   rToken: response.data['refreshToken'],
+      //   dToken: DateTime.now().toIso8601String(),
+      // );
+      // tokenService.saveTokenModelToHiveBox(tokenModel);
 
       return true;
 
