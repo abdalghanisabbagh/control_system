@@ -6,7 +6,11 @@ class LoginResponseModel extends BaseModel {
   String? accessToken;
   UserProfile? userProfile;
 
-  LoginResponseModel({this.refreshToken, this.accessToken, this.userProfile});
+  LoginResponseModel({
+    this.refreshToken,
+    this.accessToken,
+    this.userProfile,
+  });
 
   LoginResponseModel.fromJson(Map<String, dynamic> json) {
     refreshToken = json['refreshToken'];
