@@ -7,6 +7,7 @@ import 'package:control_system/domain/services/token_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
@@ -15,13 +16,13 @@ class AuthController extends GetxController {
   TokenService tokenService = Get.find<TokenService>();
 
   RxBool isLogin = false.obs;
-  bool showPass = true;
+  RxBool showPass = true.obs;
 
   RxBool isLoading = false.obs;
   List schools = [];
   setShowPass() {
-    showPass = !showPass;
-    update();
+    showPass.value = !showPass.value;
+    // update();
   }
 
   Future<bool> login(String username, String password) async {

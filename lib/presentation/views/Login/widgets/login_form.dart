@@ -94,22 +94,24 @@ class LoginForm extends GetView<AuthController> {
                               color: ColorManager.glodenColor,
                             ),
                           ),
-                          MytextFormFiled(
-                            obscureText: controller.showPass,
-                            controller: passwordController,
-                            title: "Password",
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                controller.showPass
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: ColorManager.glodenColor,
+                          Obx(() {
+                            return MytextFormFiled(
+                              obscureText: controller.showPass.value,
+                              controller: passwordController,
+                              title: "Password",
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  controller.showPass.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: ColorManager.glodenColor,
+                                ),
+                                onPressed: () {
+                                  controller.setShowPass();
+                                },
                               ),
-                              onPressed: () {
-                                controller.setShowPass();
-                              },
-                            ),
-                          ),
+                            );
+                          }),
                           const SizedBox(
                             height: 32,
                           ),
