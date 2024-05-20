@@ -17,15 +17,15 @@ class DioFactory {
   Future<Dio> getDio({String? token}) async {
     Dio dio = Dio();
 
-    token = Hive.box('Token').get('aToken');
+    // token = Hive.box('Token').get('aToken');
 
-    String dtoken = Hive.box('Token').get('dToken');
-    DateTime? tokenTime = DateTime.tryParse(dtoken);
-    if (tokenTime!.difference(DateTime.now()).inMinutes > 55) {
-      /// TODO: get new access token
-    } else {
-      token = Hive.box('Token').get('aToken');
-    }
+    // String dtoken = Hive.box('Token').get('dToken');
+    // DateTime? tokenTime = DateTime.tryParse(dtoken);
+    // if (tokenTime!.difference(DateTime.now()).inMinutes > 55) {
+    //   /// TODO: get new access token
+    // } else {
+    //   token = Hive.box('Token').get('aToken');
+    // }
 
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,

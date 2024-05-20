@@ -18,29 +18,29 @@ class AuthController extends GetxController {
 
   Future<bool> login(String username, String password) async {
     isLoading.value = true;
-    var dio = await DioFactory().getDio();
+    // var dio = await DioFactory().getDio();
     try {
-      var response = await dio.post(AuthLinks.login, data: {
-        "userName": username,
-        "password": password,
-      });
+      // var response = await dio.post(AuthLinks.login, data: {
+      //   "userName": username,
+      //   "password": password,
+      // });
       isLogin.value = true;
-      debugPrint(response.data);
+      // debugPrint(response.data);
 
-      LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-      if (loginResponse.userProfile != null) {
-        Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
-        Hive.box('Profile')
-            .put("Full_Name", loginResponse.userProfile!.fullName);
-        Hive.box('Profile')
-            .put("User_Name", loginResponse.userProfile!.userName);
-        // Hive.box('Profile').put("Created_By", loginResponse.userProfile!.createdBy);
-        // Hive.box('Profile').put("Created_At", loginResponse.userProfile!.createdAt);
-      }
+      // LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+      // if (loginResponse.userProfile != null) {
+      //   Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
+      //   Hive.box('Profile')
+      //       .put("Full_Name", loginResponse.userProfile!.fullName);
+      //   Hive.box('Profile')
+      //       .put("User_Name", loginResponse.userProfile!.userName);
+      //   // Hive.box('Profile').put("Created_By", loginResponse.userProfile!.createdBy);
+      //   // Hive.box('Profile').put("Created_At", loginResponse.userProfile!.createdAt);
+      // }
 
-      Hive.box('Token').put("aToken", response.data['accessToken']);
-      Hive.box('Token').put("dToken", DateTime.now().toIso8601String());
-      Hive.box('Token').put("rToken", response.data['refreshToken']);
+      // Hive.box('Token').put("aToken", response.data['accessToken']);
+      // Hive.box('Token').put("dToken", DateTime.now().toIso8601String());
+      // Hive.box('Token').put("rToken", response.data['refreshToken']);
 
       return true;
 
