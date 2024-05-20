@@ -5,7 +5,11 @@ class ControlMessionModel extends BaseModel {
   int? schoolsID;
   String? name;
 
-  ControlMessionModel({this.educationYearID, this.schoolsID, this.name});
+  ControlMessionModel({
+    this.educationYearID,
+    this.schoolsID,
+    this.name,
+  });
 
   ControlMessionModel.fromJson(Map<String, dynamic> json) {
     educationYearID = json['Education_year_ID'];
