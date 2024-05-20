@@ -9,7 +9,7 @@ import '../../Data/Models/user/login_response/login_response.dart';
 import 'profile_controller.dart';
 
 class AuthMiddleWare extends GetMiddleware {
-  LoginResponse? loginObject;
+  LoginResponseModel? loginObject;
   String? expireTime;
   String? aToken;
   String? rToken;
@@ -34,7 +34,7 @@ class AuthMiddleWare extends GetMiddleware {
       aToken = tokenModel?.aToken;
       expireTime = tokenModel?.dToken;
       if (aToken != null && rToken != null && userProfile != null) {
-        loginObject = LoginResponse(
+        loginObject = LoginResponseModel(
           accessToken: aToken,
           refreshToken: rToken,
           userProfile: userProfile,

@@ -33,15 +33,15 @@ class AuthController extends GetxController {
         "password": password,
       });
 
-      ResponseHandler<LoginResponseImplementationHandler, LoginResponse>
+      ResponseHandler<LoginResponseImplementationHandler, LoginResponseModel>
           responseHandler =
           ResponseHandler(data: LoginResponseImplementationHandler());
-      Either<Failure, LoginResponse> result =
+      Either<Failure, LoginResponseModel> result =
           responseHandler.getResponse(response);
       if (result.isRight()) {
         LoginResponseImplementationHandler loginResponse = result.foldRight(
             LoginResponseImplementationHandler(), (r, previous) => previous);
-        LoginResponse data = loginResponse.fromJson(response.data['data']);
+        LoginResponseModel data = loginResponse.fromJson(response.data['data']);
         TokenModel tokenModel = TokenModel(
           aToken: data.accessToken!,
           rToken: data.refreshToken!,
