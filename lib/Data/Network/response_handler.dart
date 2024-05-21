@@ -11,13 +11,13 @@ class ResponseHandler<T> {
 
   final Dio _dio;
 
-  Future<Either<Failure, T>> getResponse(
-    String path,
-    T Function(Map<String, dynamic>) converter,
-    ReqTypeEnum type,
+  Future<Either<Failure, T>> getResponse({
+    required String path,
+    required T Function(Map<String, dynamic>) converter,
+    required ReqTypeEnum type,
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
-  ) async {
+  }) async {
     switch (type) {
       case ReqTypeEnum.GET:
         return await _get(path, converter, params, body);

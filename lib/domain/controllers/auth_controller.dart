@@ -59,10 +59,14 @@ class AuthController extends GetxController {
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
     Either<Failure, LoginResModel> response = await responseHandler.getResponse(
-        AuthLinks.login, LoginResModel.fromJson, ReqTypeEnum.POST, {
-      "userName": username,
-      "password": password,
-    });
+      path: AuthLinks.login,
+      converter: LoginResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: {
+        "userName": username,
+        "password": password,
+      },
+    );
 
     response.fold(
         (l) => MyAwesomeDialogue(
