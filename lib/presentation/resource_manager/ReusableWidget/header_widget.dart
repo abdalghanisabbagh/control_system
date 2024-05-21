@@ -10,13 +10,7 @@ class HeaderWidget extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: Row(
         children: [
-          Text(
-            text,
-            style: nunitoBlack.copyWith(
-              color: ColorManager.bgSideMenu,
-              fontSize: 30,
-            ),
-          ),
+          Text(text, style: nunitoBoldStyle()),
         ],
       ),
     );

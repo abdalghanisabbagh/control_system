@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AddDialogs extends StatelessWidget {
-  const AddDialogs({
+class AppDialogs extends StatelessWidget {
+  const AppDialogs({
     super.key,
     required this.curve,
     required this.content,
@@ -34,7 +34,7 @@ class MyDialogs {
       pageBuilder: (context, animation, secondaryAnimation) => Container(),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         var curve = Curves.easeInOut.transform(animation.value);
-        return AddDialogs(
+        return AppDialogs(
           curve: curve,
           content: content,
         );

@@ -74,7 +74,7 @@ TextStyle nunitoBoldStyle({
     fontFamily: AssetsManager.assetsFontsNunitoBold,
     fontSize ?? FontSize.s30,
     FontWeightManager.bold,
-    color ?? ColorManager.displayLargeText,
+    color ?? ColorManager.primary,
   );
 }
 

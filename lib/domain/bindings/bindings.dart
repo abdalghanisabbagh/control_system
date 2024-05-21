@@ -2,6 +2,7 @@ import 'package:control_system/domain/controllers/SeatingNumbersControllers/Crea
 import 'package:control_system/domain/controllers/SeatingNumbersControllers/seating_number_tab_view_controller.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:control_system/domain/controllers/profile_controller.dart';
+import 'package:control_system/domain/controllers/school_controller.dart';
 import 'package:control_system/domain/services/side_menue_get_controller.dart';
 import 'package:get/get.dart';
 
@@ -66,5 +67,15 @@ class TokenBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(TokenService(), permanent: true);
+  }
+}
+
+class SchoolSettingBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SchoolController>(
+      () => SchoolController(),
+      fenix: true,
+    );
   }
 }

@@ -111,8 +111,7 @@ ThemeData getApplicationTheme() {
 
       /// enabled border style
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: ColorManager.outlineInputBorderColor, width: AppSize.s1_5),
+          borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1),
           borderRadius: const BorderRadius.all(Radius.circular(AppSize.s4))),
       // disabled border style
       disabledBorder: OutlineInputBorder(
@@ -121,7 +120,8 @@ ThemeData getApplicationTheme() {
           borderRadius: const BorderRadius.all(Radius.circular(AppSize.s4))),
       // foucsed border style
       focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5),
+          borderSide:
+              BorderSide(color: ColorManager.black, width: AppSize.s1_5),
           borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),
 
       /// error border style

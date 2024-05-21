@@ -13,7 +13,7 @@ class MytextFormFiled extends StatelessWidget {
   final Widget? suffixIcon;
   final List<TextInputFormatter>? textInputs;
   final String? Function(String? value)? onChange;
-  final bool obscureText; // إضافة وسيطة للتحكم في إخفاء النص
+  final bool obscureText;
   const MytextFormFiled({
     super.key,
     this.title,
@@ -25,7 +25,7 @@ class MytextFormFiled extends StatelessWidget {
     this.textInputs,
     this.onChange,
     this.suffixIcon,
-    this.obscureText = false, // تعيين قيمة افتراضية لوسيطة الإخفاء
+    this.obscureText = false,
   });
 
   @override
@@ -35,7 +35,7 @@ class MytextFormFiled extends StatelessWidget {
       inputFormatters: textInputs ?? [],
       style: nunitoRegularStyle(
         fontSize: FontSize.s12,
-        color: ColorManager.black,
+        color: ColorManager.primary,
       ),
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
@@ -43,6 +43,9 @@ class MytextFormFiled extends StatelessWidget {
         labelStyle: nunitoRegularStyle(
           fontSize: FontSize.s12,
           color: ColorManager.black,
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.black),
         ),
         hintText: title,
         hintStyle: nunitoRegularStyle(

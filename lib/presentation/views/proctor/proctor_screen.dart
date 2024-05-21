@@ -1,4 +1,4 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/add_dialogs.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
 
