@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AddNewSchoolTypeWidget extends StatelessWidget {
   AddNewSchoolTypeWidget({super.key});
-  TextEditingController nameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

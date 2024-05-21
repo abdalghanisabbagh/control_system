@@ -4,7 +4,6 @@ import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/domain/services/token_service.dart';
 import 'package:get/get.dart';
 
-import '../../Data/Models/token/token_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 
 class AuthController extends GetxController {
@@ -64,13 +63,13 @@ class AuthController extends GetxController {
           isLoading.value = false;
           isLogin.value = true;
           if (loginResModel.userProfile != null) {
-            tokenService.saveTokenModelToHiveBox(
-              TokenModel(
-                aToken: loginResModel.accessToken!,
-                dToken: DateTime.now().toIso8601String(),
-                rToken: loginResModel.refreshToken!,
-              ),
-            );
+            // tokenService.saveTokenModelToHiveBox(
+            //   TokenModel(
+            //     aToken: loginResModel.accessToken!,
+            //     dToken: DateTime.now().toIso8601String(),
+            //     rToken: loginResModel.refreshToken!,
+            //   ),
+            // );
             isLoading.value = false;
             isLogin.value = true;
             return true;

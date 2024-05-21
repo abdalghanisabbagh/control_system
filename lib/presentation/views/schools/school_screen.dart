@@ -2,11 +2,8 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/app_
 import 'package:control_system/presentation/resource_manager/ReusableWidget/header_widget.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:control_system/presentation/views/schools/Widgets/add_new_school.dart';
-import 'package:control_system/presentation/views/schools/Widgets/add_new_school_type.dart';
 import 'package:control_system/presentation/views/schools/Widgets/education_system_widget.dart';
-import 'package:control_system/presentation/views/schools/Widgets/school_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'Widgets/grade_system_widget.dart';
 
@@ -22,10 +19,9 @@ class SchoolsScreen extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Expanded(
-                  child: HeaderWidget(text: "School Setting"),
-                ),
+                const HeaderWidget(text: "School Setting"),
                 IconButton(
                   tooltip: "Add new School",
                   onPressed: () {
@@ -42,42 +38,38 @@ class SchoolsScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: EducationSystemWidget(
-                    selectedscool: false,
+
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(child: EducationSystemWidget()),
+                  const SizedBox(
+                    width: 20,
                   ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const Expanded(
-                  child: GradeSystemWidget(
-                    selectedscool: false,
-                  ),
-                ),
-              ],
+                  const Expanded(child: GradeSystemWidget()),
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Get.defaultDialog(
-                    title: 'Add New School Type',
-                    content: AddNewSchoolTypeWidget(),
-                  );
-                },
-                child: const Text('add New school Type')),
-            ElevatedButton(
-                onPressed: () {
-                  Get.defaultDialog(
-                    title: 'Add New School',
-                    content: AddNewSchoolWidget(),
-                  );
-                },
-                child: const Text('add New school')),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Get.defaultDialog(
+            //         title: 'Add New School Type',
+            //         content: AddNewSchoolTypeWidget(),
+            //       );
+            //     },
+            //     child: const Text('add New school Type')),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Get.defaultDialog(
+            //         title: 'Add New School',
+            //         content: AddNewSchoolWidget(),
+            //       );
+            //     },
+            //     child: const Text('add New school')),
           ],
         ),
       ),
