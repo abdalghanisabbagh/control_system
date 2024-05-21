@@ -1,6 +1,7 @@
 import 'package:control_system/Data/Models/user/login_response/login_res_model.dart';
 import 'package:control_system/Data/Network/response_handler.dart';
 import 'package:control_system/app/configurations/app_links.dart';
+import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:control_system/domain/services/token_service.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,7 @@ import '../../Data/enums/req_type_enum.dart';
 
 class AuthController extends GetxController {
   TokenService tokenService = Get.find<TokenService>();
+  ProfileController profileController = Get.find<ProfileController>();
 
   RxBool isLogin = false.obs;
   RxBool showPass = true.obs;
@@ -70,6 +72,10 @@ class AuthController extends GetxController {
                 dToken: DateTime.now().toIso8601String(),
                 rToken: loginResModel.refreshToken!,
               ),
+            );
+
+            profileController.saveProfileToHiveBox(
+              loginResModel.userProfile!,
             );
             isLoading.value = false;
             isLogin.value = true;
