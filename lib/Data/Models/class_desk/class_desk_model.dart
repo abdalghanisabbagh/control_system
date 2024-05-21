@@ -1,6 +1,4 @@
-import '../base_model.dart';
-
-class ClassDeskModel extends BaseModel {
+class ClassDeskModel {
   int? schoolClassID;
   int? cloumnNum;
   int? rowNum;

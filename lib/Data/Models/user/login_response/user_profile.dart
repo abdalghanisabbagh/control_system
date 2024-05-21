@@ -1,6 +1,4 @@
-import 'package:control_system/Data/Models/base_model.dart';
-
-class UserProfile extends BaseModel {
+class UserProfile {
   int? iD;
   String? fullName;
   String? userName;

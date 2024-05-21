@@ -1,7 +1,6 @@
-import '../../base_model.dart';
 import 'user_profile.dart';
 
-class LoginResponseModel extends BaseModel {
+class LoginResponseModel {
   String? refreshToken;
   String? accessToken;
   UserProfile? userProfile;

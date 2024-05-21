@@ -1,6 +1,4 @@
-import 'package:control_system/Data/Models/base_model.dart';
-
-class ControlMessionModel extends BaseModel {
+class ControlMessionModel {
   int? educationYearID;
   int? schoolsID;
   String? name;

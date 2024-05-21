@@ -1,6 +1,4 @@
-import '../base_model.dart';
-
-class StudentMoodel extends BaseModel {
+class StudentMoodel {
   int? gradesID;
   int? schoolsID;
   int? cohortID;
