@@ -7,7 +7,7 @@ import 'tools/dio_factory.dart';
 import 'tools/failure_model.dart';
 
 class ResponseHandler<T> {
-  ResponseHandler() : _dio = DioFactory.dioInstance;
+  ResponseHandler() : _dio = DioFactory().getDio();
 
   final Dio _dio;
 
