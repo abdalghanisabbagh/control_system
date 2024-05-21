@@ -19,11 +19,11 @@ const Duration timeOut = Duration(seconds: 120);
 class DioFactory {
   DioFactory._();
 
-  Dio? _instance;
+  static Dio? _dioInstance;
 
-  Dio get instance => _instance ?? getDio();
+  static Dio get dioInstance => _dioInstance ?? getDio();
 
-  Dio getDio({TokenModel? token}) {
+  static Dio getDio({TokenModel? token}) {
     Dio dio = Dio();
 
     TokenService tokenService = Get.find<TokenService>();
