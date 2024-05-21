@@ -1,15 +1,15 @@
 import 'package:control_system/Data/Models/token/token_model.dart';
-import 'package:control_system/Data/Models/user/login_response/user_profile.dart';
+import 'package:control_system/Data/Models/user/login_response/user_profile_model.dart';
 import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:control_system/domain/services/token_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../Data/Models/user/login_response/login_response.dart';
+import '../../Data/Models/user/login_response/login_res_model.dart';
 import 'profile_controller.dart';
 
 class AuthMiddleWare extends GetMiddleware {
-  LoginResponseModel? loginObject;
+  LoginResModel? loginObject;
   String? expireTime;
   String? aToken;
   String? rToken;
@@ -29,12 +29,12 @@ class AuthMiddleWare extends GetMiddleware {
   checktoken() async {
     if (loginObject == null) {
       TokenModel? tokenModel = Get.find<TokenService>().tokenModel;
-      UserProfile? userProfile =
+      UserProfileModel? userProfile =
           Get.find<ProfileController>().getProfileFromHiveBox();
       aToken = tokenModel?.aToken;
       expireTime = tokenModel?.dToken;
       if (aToken != null && rToken != null && userProfile != null) {
-        loginObject = LoginResponseModel(
+        loginObject = LoginResModel(
           accessToken: aToken,
           refreshToken: rToken,
           userProfile: userProfile,

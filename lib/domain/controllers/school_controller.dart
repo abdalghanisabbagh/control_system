@@ -1,4 +1,3 @@
-import 'package:control_system/Data/Network/Services/school_services.dart';
 import 'package:get/get.dart';
 
 class SchoolController extends GetxController {
@@ -9,8 +8,8 @@ class SchoolController extends GetxController {
   addNewSchoolType({
     required String schoolType,
   }) async {
-    var response =
-        await SchoolServices.addNewSchoolType(schoolType: schoolType);
+    // var response =
+    //     await SchoolServices.addNewSchoolType(schoolType: schoolType);
   }
 
   getSchoolTypes() async {}
