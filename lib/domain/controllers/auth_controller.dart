@@ -8,6 +8,7 @@ import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:control_system/domain/services/token_service.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 import '../../Data/enums/req_type_enum.dart';
@@ -28,34 +29,6 @@ class AuthController extends GetxController {
 
   Future<bool> login(String username, String password) async {
     isLoading.value = true;
-    // var dio = await DioFactory().getDio();
-    // try {
-    //   var response = await dio.post(AuthLinks.login, data: {
-    //     "userName": username,
-    //     "password": password,
-    //   });
-
-    //   ResponseHandler<LoginResponseImplementationHandler, LoginResModel>
-    //       responseHandler =
-    //       ResponseHandler(data: LoginResponseImplementationHandler());
-    //   Either<Failure, LoginResModel> result =
-    //       responseHandler.getResponse(response);
-    //   if (result.isRight()) {
-    //     LoginResponseImplementationHandler loginResponse = result.foldRight(
-    //         LoginResponseImplementationHandler(), (r, previous) => previous);
-    //     LoginResModel data = loginResponse.fromJson(response.data['data']);
-    //     TokenModel tokenModel = TokenModel(
-    //       aToken: data.accessToken!,
-    //       rToken: data.refreshToken!,
-    //       dToken: DateTime.now().toIso8601String(),
-    //     );
-    //     tokenService.saveTokenModelToHiveBox(tokenModel);
-    //   } else {
-    //     isLoading.value = false;
-
-    //     throw result.leftMap((l) => l);
-    //   }
-
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
     Either<Failure, LoginResModel> response = await responseHandler.getResponse(
@@ -94,14 +67,18 @@ class AuthController extends GetxController {
       return;
     }
     String refresh = tokenService.tokenModel!.rToken;
-    // var dio = await DioFactory().getDio();
-    // var response =
-    //     await dio.post(AuthLinks.refresh, data: {'refreshToken': refresh});
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: AppLinks.baseUrlDev,
+      ),
+    );
+    var response =
+        await dio.post(AuthLinks.refresh, data: {'refreshToken': refresh});
 
-    /// if response is good we get new access token need to replace
-    ///  update refresh token in local storage and profile controller
-    // TokenModel tokenModel = TokenModel.fromJson(response.data);
-    // tokenService.saveTokenModelToHiveBox(tokenModel);
+    // if response is good we get new access token need to replace
+    //  update refresh token in local storage and profile controller
+    TokenModel tokenModel = TokenModel.fromJson(response.data);
+    tokenService.saveTokenModelToHiveBox(tokenModel);
   }
 
   checkLogin() {
