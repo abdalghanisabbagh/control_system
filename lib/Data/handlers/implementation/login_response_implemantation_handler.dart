@@ -1,10 +1,10 @@
-import '../../Models/user/login_response/login_response.dart';
+import '../../Models/user/login_response/login_res_model.dart';
 import '../interfaces/response_interface.dart';
 
 class LoginResponseImplementationHandler
-    extends ResponseInterface<LoginResponseModel> {
+    extends ResponseInterface<LoginResModel> {
   @override
-  LoginResponseModel fromJson(Map<String, dynamic> json) {
-    return LoginResponseModel.fromJson(json);
+  LoginResModel fromJson(Map<String, dynamic> json) {
+    return LoginResModel.fromJson(json);
   }
 }
