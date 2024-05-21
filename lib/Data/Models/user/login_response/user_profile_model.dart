@@ -2,7 +2,6 @@ class UserProfileModel {
   int? iD;
   String? fullName;
   String? userName;
-  String? password;
   int? createdBy;
   String? createdAt;
   int? updatedBy;
@@ -19,7 +18,6 @@ class UserProfileModel {
     iD = json['ID'];
     fullName = json['Full_Name'];
     userName = json['User_Name'];
-    password = json['Password'];
     createdBy = json['Created_By'];
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
@@ -32,7 +30,6 @@ class UserProfileModel {
     data['ID'] = iD;
     data['Full_Name'] = fullName;
     data['User_Name'] = userName;
-    data['Password'] = password;
     data['Created_By'] = createdBy;
     data['Created_At'] = createdAt;
     data['Updated_By'] = updatedBy;
