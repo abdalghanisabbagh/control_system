@@ -12,85 +12,102 @@ class ResponseHandler<T> {
   final Dio _dio;
 
   Future<Either<Failure, T>> getResponse(
-      String path,
-      T Function(Map<String, dynamic>) converter,
-      ReqTypeEnum type,
-      Map<String, dynamic>? params) async {
+    String path,
+    T Function(Map<String, dynamic>) converter,
+    ReqTypeEnum type,
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
+  ) async {
     switch (type) {
       case ReqTypeEnum.GET:
-        return await _get(path, converter, params);
+        return await _get(path, converter, params, body);
       case ReqTypeEnum.POST:
-        return await _post(path, converter, params);
+        return await _post(path, converter, params, body);
       case ReqTypeEnum.PUT:
-        return await _put(path, converter, params);
+        return await _put(path, converter, params, body);
       case ReqTypeEnum.DELETE:
-        return await _delete(path, converter, params);
+        return await _delete(path, converter, params, body);
       case ReqTypeEnum.PATCH:
-        return await _patch(path, converter, params);
+        return await _patch(path, converter, params, body);
     }
   }
 
   Future<Either<Failure, T>> _get(
-      String path,
-      T Function(Map<String, dynamic>) converter,
-      Map<String, dynamic>? params) async {
+    String path,
+    T Function(Map<String, dynamic>) converter,
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
+  ) async {
     return await _request(
       converter,
       () => _dio.get(
         path,
         queryParameters: params,
+        data: body,
       ),
     );
   }
 
   Future<Either<Failure, T>> _post(
-      String path,
-      T Function(Map<String, dynamic>) converter,
-      Map<String, dynamic>? params) async {
+    String path,
+    T Function(Map<String, dynamic>) converter,
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
+  ) async {
     return await _request(
       converter,
       () => _dio.post(
         path,
-        data: params,
+        queryParameters: params,
+        data: body,
       ),
     );
   }
 
   Future<Either<Failure, T>> _put(
-      String path,
-      T Function(Map<String, dynamic>) converter,
-      Map<String, dynamic>? params) async {
+    String path,
+    T Function(Map<String, dynamic>) converter,
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
+  ) async {
     return await _request(
       converter,
       () => _dio.put(
         path,
-        data: params,
+        queryParameters: params,
+        data: body,
       ),
     );
   }
 
   Future<Either<Failure, T>> _delete(
-      String path,
-      T Function(Map<String, dynamic>) converter,
-      Map<String, dynamic>? params) async {
+    String path,
+    T Function(Map<String, dynamic>) converter,
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
+  ) async {
     return await _request(
       converter,
       () => _dio.delete(
         path,
-        data: params,
+        queryParameters: params,
+        data: body,
       ),
     );
   }
 
   Future<Either<Failure, T>> _patch(
-      String path,
-      T Function(Map<String, dynamic>) converter,
-      Map<String, dynamic>? params) async {
+    String path,
+    T Function(Map<String, dynamic>) converter,
+    Map<String, dynamic>? params,
+    Map<String, dynamic>? body,
+  ) async {
     return await _request(
       converter,
       () => _dio.patch(
         path,
-        data: params,
+        queryParameters: params,
+        data: body,
       ),
     );
   }
