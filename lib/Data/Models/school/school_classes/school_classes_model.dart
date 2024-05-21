@@ -1,6 +1,4 @@
-import 'package:control_system/Data/Models/base_model.dart';
-
-class SchoolClassesModel extends BaseModel {
+class SchoolClassesModel {
   String? name;
   String? maxCapacity;
   String? floor;

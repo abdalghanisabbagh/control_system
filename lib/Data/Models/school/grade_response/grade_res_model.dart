@@ -1,6 +1,4 @@
-import '../../base_model.dart';
-
-class GradeResModel extends BaseModel {
+class GradeResModel {
   int? iD;
   int? schoolsID;
   String? name;
