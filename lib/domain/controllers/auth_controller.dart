@@ -1,13 +1,21 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/token/token_model.dart';
 import 'package:control_system/Data/Models/user/login_response/login_res_model.dart';
 import 'package:control_system/Data/Network/response_handler.dart';
+import 'package:control_system/Data/Network/tools/failure_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
+import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:control_system/domain/services/token_service.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 import '../../Data/enums/req_type_enum.dart';
 
 class AuthController extends GetxController {
   TokenService tokenService = Get.find<TokenService>();
+  ProfileController profileController = Get.find<ProfileController>();
 
   RxBool isLogin = false.obs;
   RxBool showPass = true.obs;
@@ -21,97 +29,33 @@ class AuthController extends GetxController {
 
   Future<bool> login(String username, String password) async {
     isLoading.value = true;
-    // var dio = await DioFactory().getDio();
-    // try {
-    //   var response = await dio.post(AuthLinks.login, data: {
-    //     "userName": username,
-    //     "password": password,
-    //   });
-
-    //   ResponseHandler<LoginResponseImplementationHandler, LoginResModel>
-    //       responseHandler =
-    //       ResponseHandler(data: LoginResponseImplementationHandler());
-    //   Either<Failure, LoginResModel> result =
-    //       responseHandler.getResponse(response);
-    //   if (result.isRight()) {
-    //     LoginResponseImplementationHandler loginResponse = result.foldRight(
-    //         LoginResponseImplementationHandler(), (r, previous) => previous);
-    //     LoginResModel data = loginResponse.fromJson(response.data['data']);
-    //     TokenModel tokenModel = TokenModel(
-    //       aToken: data.accessToken!,
-    //       rToken: data.refreshToken!,
-    //       dToken: DateTime.now().toIso8601String(),
-    //     );
-    //     tokenService.saveTokenModelToHiveBox(tokenModel);
-    //   } else {
-    //     isLoading.value = false;
-
-    //     throw result.leftMap((l) => l);
-    //   }
-
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
-    await responseHandler.getResponse(
-        AuthLinks.login, LoginResModel.fromJson, ReqTypeEnum.POST, {
-      "userName": username,
-      "password": password,
-    }).then(
-      (value) {
-        if (value.isRight()) {
-          LoginResModel loginResModel =
-              value.foldRight(LoginResModel(), (r, previous) => r);
-          isLoading.value = false;
-          isLogin.value = true;
-          if (loginResModel.userProfile != null) {
-            // tokenService.saveTokenModelToHiveBox(
-            //   TokenModel(
-            //     aToken: loginResModel.accessToken!,
-            //     dToken: DateTime.now().toIso8601String(),
-            //     rToken: loginResModel.refreshToken!,
-            //   ),
-            // );
-            isLoading.value = false;
-            isLogin.value = true;
-            return true;
-          }
-        } else {
-          isLoading.value = false;
-          isLogin.value = false;
-          throw value.leftMap((l) => l);
-        }
+    Either<Failure, LoginResModel> response = await responseHandler.getResponse(
+      path: AuthLinks.login,
+      converter: LoginResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: {
+        "userName": username,
+        "password": password,
       },
     );
 
-    // debugPrint(response.data);
-
-    // LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-    // if (loginResponse.userProfile != null) {
-    //   UserProfile userProfile =
-    //       UserProfile.fromJson(response.data['userProfile']);
-    //   Hive.box('Profile').put("CachedUserProfile", userProfile.toJson());
-
-    // Hive.box('Profile').put("ID", loginResponse.userProfile!.iD);
-    // Hive.box('Profile')
-    //     .put("Full_Name", loginResponse.userProfile!.fullName);
-    // Hive.box('Profile')
-    //     .put("User_Name", loginResponse.userProfile!.userName);
-    // Hive.box('Profile').put("Created_By", loginResponse.userProfile!.createdBy);
-    // Hive.box('Profile').put("Created_At", loginResponse.userProfile!.createdAt);
-    // }
-
-    // TokenModel tokenModel = TokenModel(
-    //   aToken: response.data['accessToken'],
-    //   rToken: response.data['refreshToken'],
-    //   dToken: DateTime.now().toIso8601String(),
-    // );
-    // tokenService.saveTokenModelToHiveBox(tokenModel);
-
-    // return true;
-
-    //   //// TODO: save all user Data
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
+    response.fold(
+        (l) => MyAwesomeDialogue(
+              title: 'Error',
+              desc: l.message,
+              dialogType: DialogType.error,
+            ), (r) {
+      tokenService.saveTokenModelToHiveBox(TokenModel(
+        aToken: r.accessToken!,
+        rToken: r.refreshToken!,
+        dToken: DateTime.now().toIso8601String(),
+      ));
+      profileController.saveProfileToHiveBox(r.userProfile!);
+      isLogin.value = true;
+      isLoading.value = false;
+    });
 
     isLoading.value = false;
     return isLogin.value;
@@ -123,14 +67,18 @@ class AuthController extends GetxController {
       return;
     }
     String refresh = tokenService.tokenModel!.rToken;
-    // var dio = await DioFactory().getDio();
-    // var response =
-    //     await dio.post(AuthLinks.refresh, data: {'refreshToken': refresh});
+    var dio = Dio(
+      BaseOptions(
+        baseUrl: AppLinks.baseUrlDev,
+      ),
+    );
+    var response =
+        await dio.post(AuthLinks.refresh, data: {'refreshToken': refresh});
 
-    /// if response is good we get new access token need to replace
-    ///  update refresh token in local storage and profile controller
-    // TokenModel tokenModel = TokenModel.fromJson(response.data);
-    // tokenService.saveTokenModelToHiveBox(tokenModel);
+    // if response is good we get new access token need to replace
+    //  update refresh token in local storage and profile controller
+    TokenModel tokenModel = TokenModel.fromJson(response.data);
+    tokenService.saveTokenModelToHiveBox(tokenModel);
   }
 
   checkLogin() {
