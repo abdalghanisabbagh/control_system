@@ -61,6 +61,7 @@ class DioFactory {
       ));
     }
 
+    _dioInstance = dio;
     return dio;
   }
 }
