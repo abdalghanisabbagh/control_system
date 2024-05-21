@@ -1,6 +1,6 @@
 import '../../base_model.dart';
 
-class GradeResponseModel extends BaseModel {
+class GradeResModel extends BaseModel {
   int? iD;
   int? schoolsID;
   String? name;
@@ -8,7 +8,7 @@ class GradeResponseModel extends BaseModel {
   int? createdBy;
   String? createdAt;
 
-  GradeResponseModel({
+  GradeResModel({
     this.iD,
     this.schoolsID,
     this.name,
@@ -17,7 +17,7 @@ class GradeResponseModel extends BaseModel {
     this.createdAt,
   });
 
-  GradeResponseModel.fromJson(Map<String, dynamic> json) {
+  GradeResModel.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     schoolsID = json['Schools_ID'];
     name = json['Name'];
