@@ -40,8 +40,8 @@ class SelectSchoolForm extends GetView<AuthController> {
                     )),
                 const Divider(),
                 Expanded(
-                  child: Obx(
-                    () => controller.schools.isEmpty
+                  child: GetBuilder<AuthController>(
+                    builder: (_) => controller.schools.isEmpty
                         ? const Center(child: Text("No School"))
                         : Center(
                             child: ListView.builder(

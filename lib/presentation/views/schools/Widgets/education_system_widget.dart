@@ -9,22 +9,16 @@ class EducationSystemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.amber,
-      child: Column(
+      child: const Column(
         children: [
-          const SizedBox(
+          SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                selectedscool == null
-                    ? "Education system "
-                    : "Education system (${selectedscool!})",
-              ),
-              const Spacer(),
-            ],
-          )
+          Text(
+            "Schools",
+            style: TextStyle(color: Colors.red),
+          ),
+          Spacer(),
         ],
       ),
     );

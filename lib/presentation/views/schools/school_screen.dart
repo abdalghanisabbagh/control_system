@@ -38,7 +38,7 @@ class SchoolsScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const SchoolWidget(),
+            //   const SchoolWidget(),
             const SizedBox(
               height: 10,
             ),

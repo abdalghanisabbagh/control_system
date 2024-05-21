@@ -52,7 +52,7 @@ class AuthController extends GetxController {
 
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
-    responseHandler.getResponse(
+    await responseHandler.getResponse(
         AuthLinks.login, LoginResModel.fromJson, ReqTypeEnum.POST, {
       "userName": username,
       "password": password,
