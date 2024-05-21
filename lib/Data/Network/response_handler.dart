@@ -124,12 +124,23 @@ class ResponseHandler<T> {
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return Right(converter(response.data['data']));
+      if (response.data['status'] == true) {
+        return Right(converter(response.data['data']));
+      } else {
+        return Left(
+          Failure(
+            response.statusCode ?? 0,
+            response.data['message'],
+          ),
+        );
+      }
     } else {
-      return Left(Failure(
-        response.statusCode ?? 0,
-        response.data['message'],
-      ));
+      return Left(
+        Failure(
+          response.statusCode ?? 0,
+          response.data['message'],
+        ),
+      );
     }
   }
 }
