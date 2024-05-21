@@ -17,7 +17,13 @@ const String AUTHORIZATION = "authorization";
 const Duration timeOut = Duration(seconds: 120);
 
 class DioFactory {
-  Future<Dio> getDio({TokenModel? token}) async {
+  DioFactory._();
+
+  static Dio? _dioInstance;
+
+  static Dio get dioInstance => _dioInstance ?? getDio();
+
+  static Dio getDio({TokenModel? token}) {
     Dio dio = Dio();
 
     TokenService tokenService = Get.find<TokenService>();

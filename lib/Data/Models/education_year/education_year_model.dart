@@ -1,6 +1,4 @@
-import '../base_model.dart';
-
-class EducationYearModel extends BaseModel {
+class EducationYearModel {
   String? name;
 
   EducationYearModel({this.name});

@@ -1,6 +1,4 @@
-import 'package:control_system/Data/Models/base_model.dart';
-
-class ExamRoomModel extends BaseModel {
+class ExamRoomModel {
   int? controlMissionID;
   int? schoolClassID;
   String? name;
