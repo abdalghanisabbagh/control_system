@@ -8,12 +8,16 @@ class TokenService extends GetxController {
   TokenModel? get tokenModel => _tokenModel ?? getTokenModelFromHiveBox();
 
   void saveTokenModelToHiveBox(TokenModel tokenModel) {
-    Hive.box('Token').put("JsonTokenModel", tokenModel.toJson());
+    Hive.box('Token').putAll(tokenModel.toJson());
   }
 
   TokenModel? getTokenModelFromHiveBox() {
-    _tokenModel = Hive.box('Token').containsKey('JsonTokenModel')
-        ? TokenModel.fromJson(Hive.box('Token').get('JsonTokenModel'))
+    _tokenModel = Hive.box('Token').containsKey('aToken')
+        ? TokenModel(
+            aToken: Hive.box('Token').get('aToken'),
+            rToken: Hive.box('Token').get('rToken'),
+            dToken: Hive.box('Token').get('dToken'),
+          )
         : null;
     return _tokenModel;
   }

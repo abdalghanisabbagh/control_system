@@ -6,8 +6,12 @@ class SchoolsResModel {
   SchoolsResModel({this.data});
 
   factory SchoolsResModel.fromJson(json) {
-    return SchoolsResModel(
-        data: json.map((e) => SchoolResModel.fromJson(e)).toList());
+    var converter = List<SchoolResModel>.from(
+        json.map((e) => SchoolResModel.fromJson(e)).toList());
+
+    var data = SchoolsResModel(data: converter);
+
+    return data;
   }
 
   Map<String, dynamic> toJson() {

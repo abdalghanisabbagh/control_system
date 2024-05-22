@@ -1,7 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/school/school_response/school_res_model.dart';
 import 'package:control_system/Data/Models/school/school_response/schools_res_model.dart';
-import 'package:control_system/Data/Models/user/login_response/login_res_model.dart';
 import 'package:control_system/Data/enums/req_type_enum.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';

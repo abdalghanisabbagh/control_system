@@ -37,6 +37,7 @@ class EducationSystemWidget extends GetView<SchoolController> {
                       shrinkWrap: true,
                       itemCount: controller.schools.length,
                       itemBuilder: (context, index) {
+                        var school = controller.schools[index];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
@@ -49,9 +50,10 @@ class EducationSystemWidget extends GetView<SchoolController> {
                                 color: ColorManager.bgSideMenu,
                               ),
                               padding: const EdgeInsets.all(10),
-                              child: const Row(
+                              child: Row(
                                 children: [
-                                  Text("fghjkl"),
+                                  Text(
+                                      "${school.schoolType?.name}  ${school.name}"),
                                 ],
                               ),
                             ),

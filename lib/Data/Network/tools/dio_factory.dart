@@ -22,7 +22,7 @@ class DioFactory {
 
     TokenService tokenService = Get.find<TokenService>();
 
-    TokenModel? result = tokenService.tokenModel;
+    TokenModel? tokenModel = tokenService.tokenModel;
 
     String dtoken =
         tokenService.tokenModel?.dToken ?? DateTime.now().toIso8601String();
@@ -36,11 +36,12 @@ class DioFactory {
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
-      if (token != null) AUTHORIZATION: "Bearer $token",
+      if (token != null || tokenModel?.aToken != null)
+        AUTHORIZATION: "Bearer ${token ?? tokenModel?.aToken}",
     };
 
     dio.options = BaseOptions(
-      baseUrl: AppLinks.baseUrlDev,
+      baseUrl: AppLinks.baseUrl,
       headers: headers,
       receiveTimeout: timeOut,
       sendTimeout: timeOut,
