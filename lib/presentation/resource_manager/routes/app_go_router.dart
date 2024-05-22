@@ -1,4 +1,3 @@
-import 'package:control_system/domain/controllers/school_controller.dart';
 import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -148,6 +147,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.subjectSettingScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          SubjectSettingBindings().dependencies();
           return const SubjectSettingScreen();
         },
         onExit: (context, state) {
