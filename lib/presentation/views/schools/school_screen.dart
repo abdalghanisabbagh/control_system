@@ -2,7 +2,7 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/app_
 import 'package:control_system/presentation/resource_manager/ReusableWidget/header_widget.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:control_system/presentation/views/schools/Widgets/add_new_school.dart';
-import 'package:control_system/presentation/views/schools/Widgets/education_system_widget.dart';
+import 'package:control_system/presentation/views/schools/Widgets/school_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'Widgets/grade_system_widget.dart';

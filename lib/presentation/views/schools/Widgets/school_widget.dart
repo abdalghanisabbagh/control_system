@@ -1,24 +1,76 @@
-// import 'package:control_system/domain/controllers/school_controller.dart';
-// import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
+import 'package:control_system/domain/controllers/school_controller.dart';
+import 'package:control_system/presentation/resource_manager/color_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-// class SchoolWidget extends GetView<SchoolController> {
-//   const SchoolWidget({super.key});
+class SchoolWidget extends GetView<SchoolController> {
+  const SchoolWidget({
+    super.key,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetBuilder<SchoolController>(
-//       builder: (controller) => SizedBox(
-//           height: 55,
-//           width: double.infinity,
-//           child: MultiSelectDropDownView(
-//             showChipSelect: true,
-//             multiSelect: false,
-//             searchEnabled: false,
-//             onOptionSelected: controller.onOptionSelected,
-//             options: controller.options,
-//           )),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 20,
+                  offset: const Offset(2, 15), // changes position of shadow
+                ),
+              ],
+              color: ColorManager.ligthBlue,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            width: double.infinity,
+            child: GetBuilder<SchoolController>(builder: (controller) {
+              return controller.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : controller.schools.isEmpty
+                      ? const Center(child: Text("No schools found"))
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.schools.length,
+                          itemBuilder: (context, index) {
+                            var school = controller.schools[index];
+                            bool isSelected =
+                                index == controller.selectedSchoolIndex.value;
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  controller.updateSelectedSchool(
+                                      index, school.iD!);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: isSelected
+                                        ? Colors.blue
+                                        : ColorManager.bgSideMenu,
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                          "${school.schoolType?.name} ${school.name}"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+            }),
+          ),
+        ),
+      ],
+    );
+  }
+}
