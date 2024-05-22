@@ -1,1 +1,1 @@
-export '../controllers/cohorts_settings.dart';
+export '../controllers/cohorts_settings_controller.dart';
