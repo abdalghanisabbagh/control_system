@@ -23,19 +23,19 @@ class SchoolResModel {
     this.schoolType,
   });
 
-  SchoolResModel.fromJson(Map<String, dynamic> json) {
-    iD = json['ID'];
-    schoolTypeID = json['School_Type_ID'];
-    name = json['Name'];
-    createdBy = json['Created_By'];
-    createdAt = json['Created_At'];
-    updatedBy = json['Updated_By'];
-    updatedAt = json['Updated_At'];
-    active = json['Active'];
-    schoolType = json['school_type'] != null
-        ? SchoolType.fromJson(json['school_type'])
-        : null;
-  }
+  factory SchoolResModel.fromJson(Map<dynamic, dynamic> json) => SchoolResModel(
+        iD: json['ID'],
+        schoolTypeID: json['School_Type_ID'],
+        name: json['Name'],
+        createdBy: json['Created_By'],
+        createdAt: json['Created_At'],
+        updatedBy: json['Updated_By'],
+        updatedAt: json['Updated_At'],
+        active: json['Active'],
+        schoolType: json['school_type'] != null
+            ? SchoolType.fromJson(json['school_type'])
+            : null,
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

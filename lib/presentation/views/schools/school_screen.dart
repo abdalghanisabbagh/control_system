@@ -39,15 +39,15 @@ class SchoolsScreen extends StatelessWidget {
               height: 10,
             ),
 
-            Expanded(
+            const Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(child: EducationSystemWidget()),
-                  const SizedBox(
+                  SizedBox(
                     width: 20,
                   ),
-                  const Expanded(child: GradeSystemWidget()),
+                  Expanded(child: GradeSystemWidget()),
                 ],
               ),
             ),

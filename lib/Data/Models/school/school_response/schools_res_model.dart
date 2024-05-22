@@ -5,15 +5,9 @@ class SchoolsResModel {
 
   SchoolsResModel({this.data});
 
-  SchoolsResModel.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      data = <SchoolResModel>[];
-      json['data'].forEach(
-        (v) {
-          data!.add(SchoolResModel.fromJson(v));
-        },
-      );
-    }
+  factory SchoolsResModel.fromJson(json) {
+    return SchoolsResModel(
+        data: json.map((e) => SchoolResModel.fromJson(e)).toList());
   }
 
   Map<String, dynamic> toJson() {

@@ -24,14 +24,13 @@ class AuthController extends GetxController {
   List schools = [];
   setShowPass() {
     showPass.value = !showPass.value;
-    // update();
   }
 
   Future<bool> login(String username, String password) async {
     isLoading.value = true;
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
-    Either<Failure, LoginResModel> response = await responseHandler.getResponse(
+    var response = await responseHandler.getResponse(
       path: AuthLinks.login,
       converter: LoginResModel.fromJson,
       type: ReqTypeEnum.POST,

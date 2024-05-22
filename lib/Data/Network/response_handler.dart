@@ -2,6 +2,7 @@ import 'package:control_system/Data/Network/tools/app_error_handler.dart';
 import 'package:control_system/Data/enums/req_type_enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 
 import 'tools/dio_factory.dart';
 import 'tools/failure_model.dart';
@@ -13,7 +14,7 @@ class ResponseHandler<T> {
 
   Future<Either<Failure, T>> getResponse({
     required String path,
-    required T Function(Map<String, dynamic>) converter,
+    required T Function(dynamic) converter,
     required ReqTypeEnum type,
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
@@ -34,7 +35,7 @@ class ResponseHandler<T> {
 
   Future<Either<Failure, T>> _get(
     String path,
-    T Function(Map<String, dynamic>) converter,
+    T Function(dynamic) converter,
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
   ) async {
@@ -50,7 +51,7 @@ class ResponseHandler<T> {
 
   Future<Either<Failure, T>> _post(
     String path,
-    T Function(Map<String, dynamic>) converter,
+    T Function(dynamic) converter,
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
   ) async {
@@ -66,7 +67,7 @@ class ResponseHandler<T> {
 
   Future<Either<Failure, T>> _put(
     String path,
-    T Function(Map<String, dynamic>) converter,
+    T Function(dynamic) converter,
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
   ) async {
@@ -82,7 +83,7 @@ class ResponseHandler<T> {
 
   Future<Either<Failure, T>> _delete(
     String path,
-    T Function(Map<String, dynamic>) converter,
+    T Function(dynamic) converter,
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
   ) async {
@@ -98,7 +99,7 @@ class ResponseHandler<T> {
 
   Future<Either<Failure, T>> _patch(
     String path,
-    T Function(Map<String, dynamic>) converter,
+    T Function(dynamic) converter,
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
   ) async {
@@ -113,7 +114,7 @@ class ResponseHandler<T> {
   }
 
   Future<Either<Failure, T>> _request(
-    T Function(Map<String, dynamic>) converter,
+    T Function(dynamic) converter,
     Future<Response> Function() request,
   ) async {
     final Response response = await request.call().catchError(
@@ -125,7 +126,11 @@ class ResponseHandler<T> {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       if (response.data['status'] == true) {
-        return Right(converter(response.data['data']));
+        try {
+          return Right(converter(response.data['data']));
+        } catch (e) {
+          return Left(Failure(2025, 'error while convert from json'));
+        }
       } else {
         return Left(
           Failure(

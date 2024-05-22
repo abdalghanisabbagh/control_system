@@ -1,7 +1,9 @@
+import 'package:control_system/domain/controllers/school_controller.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class EducationSystemWidget extends StatelessWidget {
+class EducationSystemWidget extends GetView<SchoolController> {
   const EducationSystemWidget({
     super.key,
   });
@@ -26,50 +28,38 @@ class EducationSystemWidget extends StatelessWidget {
                 color: ColorManager.ligthBlue,
                 borderRadius: BorderRadius.circular(10)),
             width: double.infinity,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: 15,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () {
-                      // controller.updateSelectedGrade(index);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: ColorManager.bgSideMenu,
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: const Row(
-                        children: [
-                          Text("fghjkl"
-                              // controller.grades[index].name,
-                              // style: AppTextStyle.nunitoRegular.copyWith(
-                              //   color: AppColor.white,
+            child: GetBuilder<SchoolController>(builder: (controller) {
+              return controller.schools.isEmpty
+                  ? const Center(
+                      child: Text("No Schools"),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: controller.schools.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              // controller.updateSelectedGrade(index);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: ColorManager.bgSideMenu,
                               ),
-
-                          // const Spacer(),
-                          // IconButton(
-                          //     onPressed: () {},
-                          //     icon: Icon(
-                          //       Icons.edit,
-                          //       color: AppColor.white,
-                          //     )),
-                          // IconButton(
-                          //     onPressed: () {},
-                          //     icon: Icon(
-                          //       Icons.delete,
-                          //       color: AppColor.white,
-                          //     ))
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
+                              padding: const EdgeInsets.all(10),
+                              child: const Row(
+                                children: [
+                                  Text("fghjkl"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+            }),
           ),
         ),
       ],

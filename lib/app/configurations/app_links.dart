@@ -13,6 +13,8 @@ class AuthLinks {
 }
 
 class SchoolsLinks {
+  static const getAllSchools = 'schools/all';
+
   static const schools = 'schools';
   static const grades = 'grades';
   static const gradesSchools = 'grades/schools';

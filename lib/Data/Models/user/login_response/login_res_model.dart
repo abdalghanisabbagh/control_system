@@ -11,7 +11,7 @@ class LoginResModel {
     this.userProfile,
   });
 
-  LoginResModel.fromJson(Map<String, dynamic> json) {
+  LoginResModel.fromJson(json) {
     refreshToken = json['refreshToken'];
     accessToken = json['accessToken'];
     userProfile = json['userProfile'] != null
