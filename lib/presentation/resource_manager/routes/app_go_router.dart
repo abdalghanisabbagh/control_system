@@ -80,6 +80,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.cohortSettingScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          CohortSettingsBindings().dependencies();
           return const CohortSettingsScreen();
         },
         onExit: (context, state) {

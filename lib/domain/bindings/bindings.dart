@@ -5,6 +5,7 @@ import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:control_system/domain/controllers/school_controller.dart';
 import 'package:control_system/domain/controllers/subject_controller.dart';
 import 'package:control_system/domain/services/side_menue_get_controller.dart';
+import 'package:control_system/presentation/views/cohort_settings/cohort_settings_screen.dart';
 import 'package:get/get.dart';
 
 import '../controllers/dashboard_controller.dart';
@@ -86,6 +87,16 @@ class SubjectSettingBindings extends Bindings {
   void dependencies() {
     Get.lazyPut<SubjectsController>(
       () => SubjectsController(),
+      fenix: true,
+    );
+  }
+}
+
+class CohortSettingsBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<CohortSettingsScreen>(
+      () => const CohortSettingsScreen(),
       fenix: true,
     );
   }
