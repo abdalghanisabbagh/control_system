@@ -5,13 +5,9 @@ class GradesResModel {
 
   GradesResModel({this.data});
 
-  GradesResModel.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      data = <GradeResModel>[];
-      json['Grades'].forEach((v) {
-        data!.add(GradeResModel.fromJson(v));
-      });
-    }
+  GradesResModel.fromJson(json) {
+    data = List<GradeResModel>.from(
+        json.map((e) => GradeResModel.fromJson(e)).toList());
   }
 
   Map<String, dynamic> toJson() {
