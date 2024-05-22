@@ -43,7 +43,7 @@ class SchoolsScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(child: EducationSystemWidget()),
+                  Expanded(child: SchoolWidget()),
                   SizedBox(
                     width: 20,
                   ),

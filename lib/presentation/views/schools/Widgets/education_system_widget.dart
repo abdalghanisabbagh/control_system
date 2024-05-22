@@ -3,8 +3,10 @@ import 'package:control_system/presentation/resource_manager/color_manager.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EducationSystemWidget extends GetView<SchoolController> {
-  const EducationSystemWidget({
+class SchoolWidget
+ extends GetView<SchoolController> {
+  const SchoolWidget
+  ({
     super.key,
   });
 
