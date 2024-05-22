@@ -3,7 +3,6 @@ import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/Login/widgets/login_form.dart';
-import 'package:control_system/presentation/views/Login/widgets/select_school_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
