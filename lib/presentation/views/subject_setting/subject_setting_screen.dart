@@ -38,9 +38,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
 
                       MyDialogs.showAddDialog(
                         context,
-                        AddSubjectWidget(
-                          onPressed: controller.addNewSubject,
-                        ),
+                        const AddSubjectWidget(),
                       );
                     },
                     child: Container(
@@ -67,149 +65,162 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
               const SizedBox(
                 height: 20,
               ),
-              controller.subjects.isEmpty
-                  ? Center(
-                      child: Text(
-                        "No Subject",
-                        style: nunitoBold.copyWith(
-                          color: ColorManager.bgSideMenu,
-                          fontSize: 16,
-                        ),
-                      ),
+              controller.getAllLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
                     )
-                  : Expanded(
-                      child: ListView.builder(
-                        itemCount: controller.subjects.length,
-                        itemBuilder: (context, index) {
-                          bool inExam = true;
-                          // bool inExam = controller.subjects[index].inExam == 0
-                          //     ? false
-                          //     : true;
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Stack(
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 50),
-                                  child: Container(
-                                    height: 250,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius: 20,
-                                            offset: const Offset(2,
-                                                15), // changes position of shadow
-                                          ),
-                                        ],
-                                        color: ColorManager.ligthBlue,
-                                        borderRadius:
-                                            BorderRadius.circular(11)),
-                                    padding: const EdgeInsets.all(10),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(20),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                              controller.subjects[index].name ??
-                                                  "Subject Name",
-                                              style: nunitoBold.copyWith(
-                                                  color:
-                                                      ColorManager.bgSideMenu,
-                                                  fontSize: 35)),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          // Text(
-                                          //     controller
-                                          //         .selectedSchool!
-                                          //         .name,
-                                          //     style:                                                     nunitoRegular
-                                          //         .copyWith(
-                                          //             color: ColorManager
-                                          //                 .bgSideMenu,
-                                          //             fontSize:
-                                          //                 20),),
-                                          Row(
+                  : controller.subjects.isEmpty
+                      ? Center(
+                          child: Text(
+                            "No Subject",
+                            style: nunitoBold.copyWith(
+                              color: ColorManager.bgSideMenu,
+                              fontSize: 16,
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: controller.subjects.length,
+                            itemBuilder: (context, index) {
+                              bool inExam = true;
+                              // bool inExam = controller.subjects[index].inExam == 0
+                              //     ? false
+                              //     : true;
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 50),
+                                      child: Container(
+                                        height: 250,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.5),
+                                                spreadRadius: 5,
+                                                blurRadius: 20,
+                                                offset: const Offset(2,
+                                                    15), // changes position of shadow
+                                              ),
+                                            ],
+                                            color: ColorManager.ligthBlue,
+                                            borderRadius:
+                                                BorderRadius.circular(11)),
+                                        padding: const EdgeInsets.all(10),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(20),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text("Active  ",
-                                                  style: nunitoRegular.copyWith(
+                                              Text(
+                                                  controller.subjects[index]
+                                                          .name ??
+                                                      "Subject Name",
+                                                  style: nunitoBold.copyWith(
                                                       color: ColorManager
                                                           .bgSideMenu,
-                                                      fontSize: 20)),
-                                              GetBuilder<SubjectsController>(
-                                                builder:
-                                                    (subjectsControllers) =>
-                                                        Switch(
-                                                  activeColor:
-                                                      ColorManager.bgSideMenu,
-                                                  value: inExam,
-                                                  onChanged: (value) {
-                                                    if (inExam) {
-                                                      inExam = false;
-                                                      if (kDebugMode) {
-                                                        print(inExam);
-                                                      }
-                                                    } else {
-                                                      inExam = true;
-                                                      if (kDebugMode) {
-                                                        print(inExam);
-                                                      }
-                                                    }
-                                                    subjectsControllers
-                                                        .update();
-                                                  },
+                                                      fontSize: 35)),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              // Text(
+                                              //     controller
+                                              //         .selectedSchool!
+                                              //         .name,
+                                              //     style:                                                     nunitoRegular
+                                              //         .copyWith(
+                                              //             color: ColorManager
+                                              //                 .bgSideMenu,
+                                              //             fontSize:
+                                              //                 20),),
+                                              Row(
+                                                children: [
+                                                  Text("Active  ",
+                                                      style: nunitoRegular
+                                                          .copyWith(
+                                                              color: ColorManager
+                                                                  .bgSideMenu,
+                                                              fontSize: 20)),
+                                                  GetBuilder<
+                                                      SubjectsController>(
+                                                    builder:
+                                                        (subjectsControllers) =>
+                                                            Switch(
+                                                      activeColor: ColorManager
+                                                          .bgSideMenu,
+                                                      value: inExam,
+                                                      onChanged: (value) {
+                                                        if (inExam) {
+                                                          inExam = false;
+                                                          if (kDebugMode) {
+                                                            print(inExam);
+                                                          }
+                                                        } else {
+                                                          inExam = true;
+                                                          if (kDebugMode) {
+                                                            print(inExam);
+                                                          }
+                                                        }
+                                                        subjectsControllers
+                                                            .update();
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                width: 150,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.red,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10),
+                                                    child: Text(
+                                                        "Delete Subject",
+                                                        style:
+                                                            nunitoBold.copyWith(
+                                                          color: ColorManager
+                                                              .white,
+                                                          fontSize: 16,
+                                                        )),
+                                                  ),
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Container(
-                                            width: 150,
-                                            decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: Text("Delete Subject",
-                                                    style: nunitoBold.copyWith(
-                                                      color: ColorManager.white,
-                                                      fontSize: 16,
-                                                    )),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    Positioned(
+                                      right: 100,
+                                      bottom: 150,
+                                      child: Image.asset(
+                                        AssetsManager.assetsIconsArabic,
+                                        fit: BoxFit.fill,
+                                        height: 200,
+                                        width: 200,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Positioned(
-                                  right: 100,
-                                  bottom: 150,
-                                  child: Image.asset(
-                                    AssetsManager.assetsIconsArabic,
-                                    fit: BoxFit.fill,
-                                    height: 200,
-                                    width: 200,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                              );
+                            },
+                          ),
+                        ),
             ],
           ),
 
