@@ -15,7 +15,6 @@ class SubjectsController extends GetxController {
   // RxList<SubjectResModel> subjectsController = <SubjectResModel>[].obs;
   bool addLoading = false;
   bool getAllLoading = false;
-  bool deleteLoading = false;
 
   Future getAllSubjects() async {
     getAllLoading = true;
@@ -89,8 +88,6 @@ class SubjectsController extends GetxController {
   }
 
   Future<bool> deleteSubject({required int id}) async {
-    deleteLoading = true;
-    update();
     bool subjectHasBeenDeleted = false;
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectResModel> response =
@@ -113,8 +110,6 @@ class SubjectsController extends GetxController {
         subjectHasBeenDeleted = true;
       },
     );
-    deleteLoading = false;
-    update();
     return subjectHasBeenDeleted;
   }
 
