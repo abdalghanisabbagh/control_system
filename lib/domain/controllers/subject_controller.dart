@@ -13,9 +13,12 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 class SubjectsController extends GetxController {
   List<SubjectResModel> subjects = <SubjectResModel>[];
   // RxList<SubjectResModel> subjectsController = <SubjectResModel>[].obs;
-  RxBool addLoading = false.obs;
+  bool addLoading = false;
+  bool getAllLoading = false;
 
   Future getAllSubjects() async {
+    getAllLoading = true;
+    update();
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
@@ -24,13 +27,19 @@ class SubjectsController extends GetxController {
       type: ReqTypeEnum.GET,
     );
     response.fold(
-      (l) => MyAwesomeDialogue(
-        title: 'Error',
-        desc: l.message,
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!),
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+
+        getAllLoading = false;
+        update();
+      },
       (r) {
         subjects = r.data!;
+        getAllLoading = false;
         update();
       },
     );
@@ -41,6 +50,8 @@ class SubjectsController extends GetxController {
     // required String title,
     // required bool inExam,
   }) async {
+    addLoading = true;
+    update();
     bool subjectHasBeenAdded = false;
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectResModel> response =
@@ -62,7 +73,6 @@ class SubjectsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-
         subjectHasBeenAdded = false;
       },
       (r) {
@@ -72,6 +82,8 @@ class SubjectsController extends GetxController {
       },
     );
     // getSubjectsFromServerbyGradeId();
+    addLoading = false;
+    update();
     await getAllSubjects();
     return subjectHasBeenAdded;
   }
