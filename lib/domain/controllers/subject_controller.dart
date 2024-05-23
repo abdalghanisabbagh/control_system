@@ -84,7 +84,6 @@ class SubjectsController extends GetxController {
     // getSubjectsFromServerbyGradeId();
     addLoading = false;
     update();
-    await getAllSubjects();
     return subjectHasBeenAdded;
   }
 

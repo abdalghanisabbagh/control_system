@@ -65,22 +65,22 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
               const SizedBox(
                 height: 20,
               ),
-              controller.getAllLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : controller.subjects.isEmpty
-                      ? Center(
-                          child: Text(
-                            "No Subject",
-                            style: nunitoBold.copyWith(
-                              color: ColorManager.bgSideMenu,
-                              fontSize: 16,
+              Expanded(
+                child: controller.getAllLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : controller.subjects.isEmpty
+                        ? Center(
+                            child: Text(
+                              "No Subject",
+                              style: nunitoBold.copyWith(
+                                color: ColorManager.bgSideMenu,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        )
-                      : Expanded(
-                          child: ListView.builder(
+                          )
+                        : ListView.builder(
                             itemCount: controller.subjects.length,
                             itemBuilder: (context, index) {
                               bool inExam = true;
@@ -220,7 +220,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                               );
                             },
                           ),
-                        ),
+              ),
             ],
           ),
 
