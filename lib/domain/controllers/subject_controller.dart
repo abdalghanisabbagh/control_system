@@ -15,6 +15,7 @@ class SubjectsController extends GetxController {
   // RxList<SubjectResModel> subjectsController = <SubjectResModel>[].obs;
   bool addLoading = false;
   bool getAllLoading = false;
+  bool deleteLoading = false;
 
   Future getAllSubjects() async {
     getAllLoading = true;
@@ -85,6 +86,36 @@ class SubjectsController extends GetxController {
     addLoading = false;
     update();
     return subjectHasBeenAdded;
+  }
+
+  Future<bool> deleteSubject({required int id}) async {
+    deleteLoading = true;
+    update();
+    bool subjectHasBeenDeleted = false;
+    ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
+    Either<Failure, SubjectResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.subjects}/$id',
+      converter: SubjectResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        subjectHasBeenDeleted = false;
+      },
+      (r) {
+        subjects.removeWhere((element) => element.iD == id);
+        subjectHasBeenDeleted = true;
+      },
+    );
+    deleteLoading = false;
+    update();
+    return subjectHasBeenDeleted;
   }
 
   @override

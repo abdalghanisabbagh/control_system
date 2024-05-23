@@ -1,5 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/subject_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
@@ -177,26 +180,66 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              Container(
-                                                width: 150,
-                                                decoration: BoxDecoration(
+                                              InkWell(
+                                                onTap: () {
+                                                  MyAwesomeDialogue(
+                                                    title:
+                                                        'You are about to delete this subject',
+                                                    desc: 'Are you sure?',
+                                                    dialogType:
+                                                        DialogType.warning,
+                                                    btnOkOnPressed: () {
+                                                      controller
+                                                          .deleteSubject(
+                                                        id: controller
+                                                            .subjects[index]
+                                                            .iD!,
+                                                      )
+                                                          .then(
+                                                        (value) {
+                                                          value
+                                                              ? {
+                                                                  MyFlashBar
+                                                                      .showSuccess(
+                                                                    "Subject has been deleted successfully",
+                                                                    "Subject Deleted",
+                                                                  ).show(
+                                                                      context),
+                                                                }
+                                                              : null;
+                                                        },
+                                                      );
+                                                    },
+                                                    btnCancelOnPressed: () {
+                                                      Get.back();
+                                                    },
+                                                  ).showDialogue(context);
+                                                },
+                                                child: Container(
+                                                  width: 150,
+                                                  decoration: BoxDecoration(
                                                     color: Colors.red,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            10)),
-                                                child: Center(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10),
-                                                    child: Text(
+                                                      10,
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                        10,
+                                                      ),
+                                                      child: Text(
                                                         "Delete Subject",
                                                         style:
                                                             nunitoBold.copyWith(
                                                           color: ColorManager
                                                               .white,
                                                           fontSize: 16,
-                                                        )),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
