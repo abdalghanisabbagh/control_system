@@ -1,5 +1,7 @@
+import 'package:control_system/domain/controllers/subject_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
@@ -10,14 +12,12 @@ import '../../../resource_manager/styles_manager.dart';
 class AddSubjectWidget extends StatelessWidget {
   const AddSubjectWidget({
     super.key,
-    required this.onPressed,
   });
-
-  final Future<dynamic> Function({required String name}) onPressed;
 
   @override
   Widget build(BuildContext context) {
     TextEditingController subjectNameController = TextEditingController();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -202,34 +202,46 @@ class AddSubjectWidget extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Row(
-          children: [
-            const Expanded(
-              child: ElevatedBackButton(),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: ElevatedAddButton(
-                onPressed: () async {
-                  await onPressed(name: subjectNameController.text).then(
-                    (value) {
-                      value
-                          ? {
-                              context.pop(),
-                              MyFlashBar.showSuccess(
-                                      'The Subject Has Been Added Successfully',
-                                      'Success')
-                                  .show(context)
-                            }
-                          : null;
-                    },
+        GetBuilder<SubjectsController>(
+          builder: (controller) {
+            return controller.addLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Row(
+                    children: [
+                      const Expanded(
+                        child: ElevatedBackButton(),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: ElevatedAddButton(
+                          onPressed: () async {
+                            await controller
+                                .addNewSubject(name: subjectNameController.text)
+                                .then(
+                              (value) {
+                                value
+                                    ? {
+                                        context.pop(),
+                                        MyFlashBar.showSuccess(
+                                                'The Subject Has Been Added Successfully',
+                                                'Success')
+                                            .show(context)
+                                      }
+                                    : MyFlashBar.showSuccess(
+                                            'Something went wrong', 'Error')
+                                        .show(context);
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   );
-                },
-              ),
-            ),
-          ],
+          },
         )
       ],
     );

@@ -13,7 +13,13 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 class CohortsSettingsController extends GetxController {
   List<CohortResModel> cohorts = <CohortResModel>[];
 
+  bool addLoading = false;
+  bool deleteLoading = false;
+  bool getAllLoading = false;
+
   Future getAllCohorts() async {
+    getAllLoading = true;
+    update();
     final response = await ResponseHandler<CohortsResModel>().getResponse(
       path: SchoolsLinks.cohort,
       converter: CohortsResModel.fromJson,
@@ -30,9 +36,13 @@ class CohortsSettingsController extends GetxController {
         update();
       },
     );
+    getAllLoading = false;
+    update();
   }
 
   Future<bool> addnewCohort(String name) async {
+    addLoading = true;
+    update();
     bool cohortHasBeenAdded = false;
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
@@ -62,10 +72,15 @@ class CohortsSettingsController extends GetxController {
         update();
       },
     );
+
+    addLoading = false;
+    update();
     return cohortHasBeenAdded;
   }
 
   Future<bool> deleteCohort(int id) async {
+    deleteLoading = true;
+    update();
     bool cohortHasBeenDeleted = false;
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
@@ -89,6 +104,9 @@ class CohortsSettingsController extends GetxController {
         update();
       },
     );
+
+    deleteLoading = false;
+    update();
     return cohortHasBeenDeleted;
   }
 
