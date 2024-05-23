@@ -49,6 +49,7 @@ class SubjectsController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
+        "Created_By": 1,
         // "title": title,
         // "inExam": inExam,
       },
