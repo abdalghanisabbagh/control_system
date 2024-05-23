@@ -3,7 +3,6 @@ import 'package:control_system/Data/Models/school/grade_response/grade_res_model
 import 'package:control_system/Data/Models/school/grade_response/grades_res_model.dart';
 import 'package:control_system/Data/Models/school/school_response/school_res_model.dart';
 import 'package:control_system/Data/Models/school/school_response/schools_res_model.dart';
-import 'package:control_system/Data/Models/subject/subject_res_model.dart';
 import 'package:control_system/Data/Network/tools/failure_model.dart';
 import 'package:control_system/Data/enums/req_type_enum.dart';
 import 'package:control_system/app/configurations/app_links.dart';
@@ -20,6 +19,9 @@ class SchoolController extends GetxController {
   List schoolType = [];
   bool isLoadingSchools = false;
   bool isLoadingGrades = false;
+  bool isLoadingAddGrades = false;
+  bool gradeHasBeenAdded = false;
+
   RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
   int selectedSchoolIndex = (-1);
   int selectedSchoolId = (-1);
@@ -107,9 +109,11 @@ class SchoolController extends GetxController {
     return true;
   }
 
-  Future addNewGrade({
+  Future<bool> addNewGrade({
     required String name,
   }) async {
+    isLoadingAddGrades = true;
+    bool gradeHasBeenAdded = false;
     ResponseHandler<GradeResModel> responseHandler = ResponseHandler();
     Either<Failure, GradeResModel> response = await responseHandler.getResponse(
       path: SchoolsLinks.grades,
@@ -118,24 +122,27 @@ class SchoolController extends GetxController {
       body: {
         "Schools_ID": selectedSchoolId,
         "Name": name,
-        // "Created_By": 1,
-        // "title": title,
-        // "inExam": inExam,
       },
     );
     response.fold(
-      (l) => MyAwesomeDialogue(
-        title: 'Error',
-        desc: l.message,
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!),
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gradeHasBeenAdded = false;
+      },
       (r) {
+        // spread operator to add new grade
         grades = [...grades, r];
+        gradeHasBeenAdded = true;
+        isLoadingAddGrades = false;
         update();
       },
     );
-    // getSubjectsFromServerbyGradeId();
-    await getGradesBySchoolId();
-    return;
+
+    isLoadingAddGrades = false;
+    return gradeHasBeenAdded;
   }
 }

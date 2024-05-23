@@ -223,9 +223,7 @@ class AddSubjectWidget extends StatelessWidget {
                                       'Success')
                                   .show(context)
                             }
-                          : MyFlashBar.showSuccess(
-                                  'Something went wrong', 'Error')
-                              .show(context);
+                          : null;
                     },
                   );
                 },

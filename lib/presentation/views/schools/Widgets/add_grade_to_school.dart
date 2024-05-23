@@ -1,5 +1,7 @@
+import 'package:control_system/domain/controllers/school_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
@@ -7,17 +9,17 @@ import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
-class AddNewGradeToSchool extends StatelessWidget {
+class AddNewGradeToSchool extends GetView<SchoolController> {
   const AddNewGradeToSchool({
     super.key,
     required this.onPressed,
   });
 
-  final Future<dynamic> Function({required String name}) onPressed;
+  final Future Function({required String name}) onPressed;
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController subjectNameController = TextEditingController();
+    TextEditingController gradeNameController = TextEditingController();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -55,40 +57,43 @@ class AddNewGradeToSchool extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
             ),
           ),
-          controller: subjectNameController,
+          controller: gradeNameController,
         ),
         const SizedBox(
           height: 20,
         ),
-        // Row(
-        //   children: [
-        //     Text(
-        //       "InExam  ",
-        //       style: nunitoRegular.copyWith(
-        //           fontSize: 14, color: ColorManager.bgSideMenu),
-        //     ),
-        //   ],
-        // ),
-        // const SizedBox(
-        //   height: 10,
-        // ),
-        Row(
-          children: [
-            const Expanded(
-              child: ElevatedBackButton(),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: ElevatedAddButton(
-                onPressed: () async {
-                  await onPressed(name: subjectNameController.text);
-                },
-              ),
-            ),
-          ],
-        )
+        controller.isLoadingAddGrades == true
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Row(
+                children: [
+                  const Expanded(
+                    child: ElevatedBackButton(),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: ElevatedAddButton(
+                      onPressed: () async {
+                        await onPressed(name: gradeNameController.text)
+                            .then((value) {
+                          value
+                              ? {
+                                  context.pop(),
+                                  MyFlashBar.showSuccess(
+                                          'The Grade Has Been Added Successfully',
+                                          'Success')
+                                      .show(context)
+                                }
+                              : null;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              )
       ],
     );
   }
