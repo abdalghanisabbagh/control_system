@@ -36,11 +36,12 @@ class SubjectsController extends GetxController {
     );
   }
 
-  Future addNewSubject({
+  Future<bool> addNewSubject({
     required String name,
     // required String title,
     // required bool inExam,
   }) async {
+    bool subjectHasBeenAdded = false;
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectResModel> response =
         await responseHandler.getResponse(
@@ -55,19 +56,24 @@ class SubjectsController extends GetxController {
       },
     );
     response.fold(
-      (l) => MyAwesomeDialogue(
-        title: 'Error',
-        desc: l.message,
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!),
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+
+        subjectHasBeenAdded = false;
+      },
       (r) {
         subjects = [...subjects, r];
+        subjectHasBeenAdded = true;
         update();
       },
     );
     // getSubjectsFromServerbyGradeId();
     await getAllSubjects();
-    return;
+    return subjectHasBeenAdded;
   }
 
   @override

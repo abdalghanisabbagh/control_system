@@ -213,16 +213,21 @@ class AddSubjectWidget extends StatelessWidget {
             Expanded(
               child: ElevatedAddButton(
                 onPressed: () async {
-                  await onPressed(name: subjectNameController.text)
-                      .then(
-                        (value) => context.pop(),
-                      )
-                      .then(
-                        (value) => MyFlashBar.showSuccess(
-                                'The Subject Has Been Added Successfully',
-                                'Success')
-                            .show(context),
-                      );
+                  await onPressed(name: subjectNameController.text).then(
+                    (value) {
+                      value
+                          ? {
+                              context.pop(),
+                              MyFlashBar.showSuccess(
+                                      'The Subject Has Been Added Successfully',
+                                      'Success')
+                                  .show(context)
+                            }
+                          : MyFlashBar.showSuccess(
+                                  'Something went wrong', 'Error')
+                              .show(context);
+                    },
+                  );
                 },
               ),
             ),
