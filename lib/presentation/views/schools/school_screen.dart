@@ -1,13 +1,16 @@
+import 'package:control_system/domain/controllers/school_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/header_widget.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:control_system/presentation/views/schools/Widgets/add_new_school.dart';
 import 'package:control_system/presentation/views/schools/Widgets/school_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import 'Widgets/grade_system_widget.dart';
 
-class SchoolsScreen extends StatelessWidget {
+class SchoolsScreen extends GetView<SchoolController> {
   const SchoolsScreen({super.key});
 
   @override
@@ -25,7 +28,9 @@ class SchoolsScreen extends StatelessWidget {
                 IconButton(
                   tooltip: "Add new School",
                   onPressed: () {
-                    MyDialogs.showAddDialog(context, AddNewSchoolWidget());
+                    controller.getSchoolType();
+                    MyDialogs.showAddDialog(
+                        context, const AddNewSchoolWidget());
                   },
                   icon: const Icon(Icons.school),
                 ),
@@ -34,7 +39,7 @@ class SchoolsScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-
+          
             const Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

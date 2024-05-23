@@ -3,6 +3,8 @@ import 'package:control_system/Data/Models/school/grade_response/grade_res_model
 import 'package:control_system/Data/Models/school/grade_response/grades_res_model.dart';
 import 'package:control_system/Data/Models/school/school_response/school_res_model.dart';
 import 'package:control_system/Data/Models/school/school_response/schools_res_model.dart';
+import 'package:control_system/Data/Models/school/school_type/school_type_model.dart';
+import 'package:control_system/Data/Models/school/school_type/schools_type_res_model.dart';
 import 'package:control_system/Data/Network/tools/failure_model.dart';
 import 'package:control_system/Data/enums/req_type_enum.dart';
 import 'package:control_system/app/configurations/app_links.dart';
@@ -20,9 +22,10 @@ class SchoolController extends GetxController {
   bool isLoadingSchools = false;
   bool isLoadingGrades = false;
   bool isLoadingAddGrades = false;
-  bool gradeHasBeenAdded = false;
+  bool isLoadingAddSchool = false;
 
-  RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
+  List<ValueItem> options = <ValueItem>[];
+
   int selectedSchoolIndex = (-1);
   int selectedSchoolId = (-1);
   String selectedSchoolName = "";
@@ -40,13 +43,6 @@ class SchoolController extends GetxController {
     getAllSchools();
   }
 
-  addNewSchoolType({
-    required String schoolType,
-  }) async {}
-
-  getSchoolTypes() async {}
-
-  addNewSchool() async {}
   getSchool() async {}
 
   Future<bool> getAllSchools() async {
@@ -144,5 +140,82 @@ class SchoolController extends GetxController {
     isLoadingAddGrades = false;
     update();
     return gradeHasBeenAdded;
+  }
+
+  Future<bool> addNewSchool({
+    required String name,
+  }) async {
+    isLoadingAddSchool = true;
+    update();
+    bool schoolHasBeenAdded = false;
+    ResponseHandler<SchoolResModel> responseHandler = ResponseHandler();
+    Either<Failure, SchoolResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.schools,
+      converter: SchoolResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: {
+        "School_Type_ID": 1,
+        "Name": "($name)",
+      },
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        schoolHasBeenAdded = false;
+      },
+      (r) {
+        // spread operator to add new grade
+        // schools = [...schools, r];
+        getAllSchools();
+      },
+    );
+    schoolHasBeenAdded = true;
+    isLoadingAddGrades = false;
+    update();
+    return schoolHasBeenAdded;
+  }
+
+  Future<bool> getSchoolType() async {
+    //  isLoadingAddSchool = true;
+    //update();
+    //  bool schoolHasBeenAdded = false;
+    ResponseHandler<SchoolsTypeResModel> responseHandler = ResponseHandler();
+    Either<Failure, SchoolsTypeResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.schoolsType,
+      converter: SchoolsTypeResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        //   schoolHasBeenAdded = false;
+      },
+      (r) {
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        options = items;
+      },
+    );
+    // schoolHasBeenAdded = true;
+    isLoadingAddGrades = false;
+    update();
+    return true;
+  }
+
+  RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
+
+  void onOptionSelected(List<ValueItem> selectedOptions) {
+    this.selectedOptions.value = selectedOptions;
   }
 }

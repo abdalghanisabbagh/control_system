@@ -37,6 +37,7 @@ class GradeSystemWidget extends GetView<SchoolController> {
               );
             }),
             IconButton(
+              tooltip: "Add New Grade",
               onPressed: () {
                 controller.selectedSchoolIndex == -1
                     ? MyAwesomeDialogue(

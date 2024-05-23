@@ -9,7 +9,7 @@ class SchoolResModel {
   int? updatedBy;
   DateTime? updatedAt;
   int? active;
-  SchoolType? schoolType;
+  SchoolTypeResModel? schoolType;
 
   SchoolResModel({
     this.iD,
@@ -23,7 +23,7 @@ class SchoolResModel {
     this.schoolType,
   });
 
-  factory SchoolResModel.fromJson(Map<dynamic, dynamic> json) => SchoolResModel(
+  factory SchoolResModel.fromJson(json) => SchoolResModel(
         iD: json['ID'],
         schoolTypeID: json['School_Type_ID'],
         name: json['Name'],
@@ -33,7 +33,7 @@ class SchoolResModel {
         updatedAt: json['Updated_At'],
         active: json['Active'],
         schoolType: json['school_type'] != null
-            ? SchoolType.fromJson(json['school_type'])
+            ? SchoolTypeResModel.fromJson(json['school_type'])
             : null,
       );
 

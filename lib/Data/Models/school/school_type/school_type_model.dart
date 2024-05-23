@@ -1,4 +1,4 @@
-class SchoolType {
+class SchoolTypeResModel {
   int? iD;
   String? name;
   int? createdBy;
@@ -7,7 +7,7 @@ class SchoolType {
   DateTime? updatedAt;
   int? active;
 
-  SchoolType({
+  SchoolTypeResModel({
     this.iD,
     this.name,
     this.createdBy,
@@ -17,7 +17,7 @@ class SchoolType {
     this.active,
   });
 
-  SchoolType.fromJson(Map<String, dynamic> json) {
+  SchoolTypeResModel.fromJson(json) {
     iD = json['ID'];
     name = json['Name'];
     createdBy = json['Created_By'];
