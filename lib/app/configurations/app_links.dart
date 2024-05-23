@@ -17,7 +17,7 @@ class SchoolsLinks {
 
   static const schools = 'schools';
   static const grades = 'grades';
-  static const gradesSchools = 'grades/schools';
+  static const gradesSchools = 'grades/school';
   static const cohort = 'cohort';
   static const subject = 'subject';
   static const subjects = 'subjects';

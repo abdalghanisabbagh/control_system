@@ -1,5 +1,6 @@
 import 'package:control_system/domain/controllers/school_controller.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
+import 'package:control_system/presentation/resource_manager/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,19 @@ class SchoolWidget extends GetView<SchoolController> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        GetBuilder<SchoolController>(builder: (_) {
+          return Text(
+            controller.selectedSchoolIndex == -1
+                ? "Choose a school"
+                : "School (${controller.selectedSchoolName})",
+            style: nunitoRegular.copyWith(
+              color: ColorManager.bgSideMenu,
+              fontSize: 25,
+            ),
+          );
+        }),
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(8),
@@ -29,8 +42,8 @@ class SchoolWidget extends GetView<SchoolController> {
               borderRadius: BorderRadius.circular(10),
             ),
             width: double.infinity,
-            child: GetBuilder<SchoolController>(builder: (controller) {
-              return controller.isLoading
+            child: GetBuilder<SchoolController>(builder: (_) {
+              return controller.isLoadingSchools
                   ? const Center(child: CircularProgressIndicator())
                   : controller.schools.isEmpty
                       ? const Center(child: Text("No schools found"))
@@ -40,13 +53,14 @@ class SchoolWidget extends GetView<SchoolController> {
                           itemBuilder: (context, index) {
                             var school = controller.schools[index];
                             bool isSelected =
-                                index == controller.selectedSchoolIndex.value;
+                                index == controller.selectedSchoolIndex;
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
                                 onTap: () {
                                   controller.updateSelectedSchool(
                                       index, school.iD!);
+                                  controller.getGradesBySchoolId();
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(

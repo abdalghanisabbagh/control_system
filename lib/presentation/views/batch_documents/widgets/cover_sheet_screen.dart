@@ -3,6 +3,7 @@ import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import 'add_new_cover_widget.dart';
 
 class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
@@ -32,11 +33,10 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () {
-                  Get.defaultDialog(
-                      title: "Add New Cover",
-                      content: const AddNewCoverWidget());
-                  // MyDialogs.showAddDialog(
-                  //     context, const AddNewCoverWidget());
+                  // Get.defaultDialog(
+                  //     title: "Add New Cover",
+                  //     content: const AddNewCoverWidget());
+                  MyDialogs.showAddDialog(context, const AddNewCoverWidget());
                 },
                 tooltip: "Add New Cover",
                 icon: Icon(

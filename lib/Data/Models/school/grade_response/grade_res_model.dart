@@ -15,7 +15,7 @@ class GradeResModel {
     this.createdAt,
   });
 
-  GradeResModel.fromJson(Map<String, dynamic> json) {
+  GradeResModel.fromJson(json) {
     iD = json['ID'];
     schoolsID = json['Schools_ID'];
     name = json['Name'];

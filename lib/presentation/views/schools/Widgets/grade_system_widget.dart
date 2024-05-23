@@ -1,7 +1,17 @@
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class GradeSystemWidget extends StatelessWidget {
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/controllers/school_controller.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'package:control_system/presentation/resource_manager/color_manager.dart';
+import 'package:control_system/presentation/resource_manager/styles_manager.dart';
+import 'package:control_system/presentation/views/schools/Widgets/add_grade_to_school.dart';
+import 'package:control_system/presentation/views/subject_setting/widgets/add_subject_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class GradeSystemWidget extends GetView<SchoolController> {
   const GradeSystemWidget({
     super.key,
   });
@@ -10,7 +20,41 @@ class GradeSystemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GetBuilder<SchoolController>(builder: (_) {
+              return Text(
+                controller.selectedSchoolIndex == -1
+                    ? "Please select a school"
+                    : "School (${controller.selectedSchoolName})",
+                style: nunitoRegular.copyWith(
+                  color: ColorManager.bgSideMenu,
+                  fontSize: 25,
+                ),
+              );
+            }),
+            IconButton(
+              onPressed: () {
+                controller.selectedSchoolIndex == -1
+                    ? MyAwesomeDialogue(
+                            title: "Error",
+                            desc: "please select a school",
+                            dialogType: DialogType.error)
+                        .showDialogue(context)
+                    : MyDialogs.showAddDialog(
+                        context,
+                        AddNewGradeToSchool(
+                          onPressed: controller.addNewGrade,
+                        ),
+                      );
+              },
+              icon: const Icon(Icons.add),
+            )
+          ],
+        ),
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(8),
@@ -26,50 +70,53 @@ class GradeSystemWidget extends StatelessWidget {
                 color: ColorManager.ligthBlue,
                 borderRadius: BorderRadius.circular(10)),
             width: double.infinity,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: 15,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () {
-                      // controller.updateSelectedGrade(index);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+            child: GetBuilder<SchoolController>(builder: (controller) {
+              return controller.selectedSchoolIndex == -1
+                  ? Center(
+                      child: Text(
+                      "Please select a school",
+                      style: nunitoRegular.copyWith(
                         color: ColorManager.bgSideMenu,
+                        fontSize: 25,
                       ),
-                      padding: const EdgeInsets.all(10),
-                      child: const Row(
-                        children: [
-                          Text("fghjkl"
-                              // controller.grades[index].name,
-                              // style: AppTextStyle.nunitoRegular.copyWith(
-                              //   color: AppColor.white,
+                    ))
+                  : controller.isLoadingGrades
+                      ? const Center(child: CircularProgressIndicator())
+                      : controller.grades.isEmpty
+                          ? Center(
+                              child: Text(
+                              "No grades found",
+                              style: nunitoRegular.copyWith(
+                                color: ColorManager.bgSideMenu,
+                                fontSize: 25,
                               ),
-
-                          // const Spacer(),
-                          // IconButton(
-                          //     onPressed: () {},
-                          //     icon: Icon(
-                          //       Icons.edit,
-                          //       color: AppColor.white,
-                          //     )),
-                          // IconButton(
-                          //     onPressed: () {},
-                          //     icon: Icon(
-                          //       Icons.delete,
-                          //       color: AppColor.white,
-                          //     ))
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
+                            ))
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: controller.grades.length,
+                              itemBuilder: (context, index) {
+                                var grade = controller.grades[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: ColorManager.bgSideMenu,
+                                      ),
+                                      padding: const EdgeInsets.all(10),
+                                      child: Row(
+                                        children: [
+                                          Text(grade.name!),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+            }),
           ),
         ),
       ],
