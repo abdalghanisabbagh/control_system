@@ -4,8 +4,8 @@ class CohortResModel {
   String? name;
   int? createdBy;
   String? createdAt;
-  Null updatedBy;
-  Null updatedAt;
+  int? updatedBy;
+  DateTime? updatedAt;
   int? active;
 
   CohortResModel({
@@ -19,7 +19,7 @@ class CohortResModel {
     this.active,
   });
 
-  CohortResModel.fromJson(Map<String, dynamic> json) {
+  CohortResModel.fromJson(json) {
     iD = json['ID'];
     schoolTypeID = json['School_Type_ID'];
     name = json['Name'];

@@ -6,8 +6,8 @@ class CohortsResModel {
   CohortsResModel({this.data});
 
   CohortsResModel.fromJson(json) {
-    data =
-        List.from(json['data']).map((e) => CohortResModel.fromJson(e)).toList();
+    data = List<CohortResModel>.from(
+        json.map((e) => CohortResModel.fromJson(e)).toList());
   }
 
   Map<String, dynamic> toJson() {
