@@ -1,5 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/cohorts_settings_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
@@ -333,7 +336,43 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                     width: 20,
                                                   ),
                                                   InkWell(
-                                                    onTap: () {},
+                                                    onTap: () {
+                                                      MyAwesomeDialogue(
+                                                        title:
+                                                            'You are bout to delete this cohort',
+                                                        desc: 'Are you sure ?',
+                                                        dialogType:
+                                                            DialogType.warning,
+                                                        btnOkOnPressed: () {
+                                                          controller
+                                                              .deleteCohort(
+                                                                  controller
+                                                                      .cohorts[
+                                                                          index]
+                                                                      .iD!)
+                                                              .then(
+                                                            (value) {
+                                                              if (value) {
+                                                                MyFlashBar.showSuccess(
+                                                                        'Cohort deleted successfully',
+                                                                        'Success')
+                                                                    .show(
+                                                                        context);
+                                                              } else {
+                                                                MyFlashBar.showError(
+                                                                        'Something went wrong',
+                                                                        'Error')
+                                                                    .show(
+                                                                        context);
+                                                              }
+                                                            },
+                                                          );
+                                                        },
+                                                        btnCancelOnPressed: () {
+                                                          Get.back();
+                                                        },
+                                                      ).showDialogue(context);
+                                                    },
                                                     child: Container(
                                                       decoration: BoxDecoration(
                                                         color: Colors.red,

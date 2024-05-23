@@ -65,6 +65,33 @@ class CohortsSettingsController extends GetxController {
     return cohortHasBeenAdded;
   }
 
+  Future<bool> deleteCohort(int id) async {
+    bool cohortHasBeenDeleted = false;
+    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+    Either<Failure, CohortResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.cohort}/$id',
+      converter: CohortResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        cohortHasBeenDeleted = false;
+      },
+      (r) {
+        cohorts.removeWhere((element) => element.iD == id);
+        cohortHasBeenDeleted = true;
+        update();
+      },
+    );
+    return cohortHasBeenDeleted;
+  }
+
   @override
   void onInit() {
     getAllCohorts();
