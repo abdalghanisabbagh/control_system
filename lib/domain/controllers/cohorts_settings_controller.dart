@@ -14,7 +14,6 @@ class CohortsSettingsController extends GetxController {
   List<CohortResModel> cohorts = <CohortResModel>[];
 
   bool addLoading = false;
-  bool deleteLoading = false;
   bool getAllLoading = false;
 
   Future getAllCohorts() async {
@@ -79,8 +78,6 @@ class CohortsSettingsController extends GetxController {
   }
 
   Future<bool> deleteCohort(int id) async {
-    deleteLoading = true;
-    update();
     bool cohortHasBeenDeleted = false;
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
@@ -105,8 +102,6 @@ class CohortsSettingsController extends GetxController {
       },
     );
 
-    deleteLoading = false;
-    update();
     return cohortHasBeenDeleted;
   }
 

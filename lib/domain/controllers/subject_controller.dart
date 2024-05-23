@@ -84,8 +84,33 @@ class SubjectsController extends GetxController {
     // getSubjectsFromServerbyGradeId();
     addLoading = false;
     update();
-    await getAllSubjects();
     return subjectHasBeenAdded;
+  }
+
+  Future<bool> deleteSubject({required int id}) async {
+    bool subjectHasBeenDeleted = false;
+    ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
+    Either<Failure, SubjectResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.subjects}/$id',
+      converter: SubjectResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        subjectHasBeenDeleted = false;
+      },
+      (r) {
+        subjects.removeWhere((element) => element.iD == id);
+        subjectHasBeenDeleted = true;
+      },
+    );
+    return subjectHasBeenDeleted;
   }
 
   @override
