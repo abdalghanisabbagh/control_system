@@ -341,74 +341,70 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                       const SizedBox(
                                                         width: 20,
                                                       ),
-                                                      controller.deleteLoading
-                                                          ? const CircularProgressIndicator()
-                                                          : InkWell(
-                                                              onTap: () {
-                                                                MyAwesomeDialogue(
-                                                                  title:
-                                                                      'You are bout to delete this cohort',
-                                                                  desc:
-                                                                      'Are you sure ?',
-                                                                  dialogType:
-                                                                      DialogType
-                                                                          .warning,
-                                                                  btnOkOnPressed:
-                                                                      () {
-                                                                    controller
-                                                                        .deleteCohort(controller
-                                                                            .cohorts[index]
-                                                                            .iD!)
-                                                                        .then(
-                                                                      (value) {
-                                                                        if (value) {
-                                                                          MyFlashBar.showSuccess('Cohort deleted successfully', 'Success')
-                                                                              .show(context);
-                                                                        } else {
-                                                                          MyFlashBar.showError('Something went wrong', 'Error')
-                                                                              .show(context);
-                                                                        }
-                                                                      },
-                                                                    );
-                                                                  },
-                                                                  btnCancelOnPressed:
-                                                                      () {
-                                                                    Get.back();
-                                                                  },
-                                                                ).showDialogue(
-                                                                    context);
-                                                              },
-                                                              child: Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .red,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                ),
-                                                                child: Center(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        const EdgeInsets
-                                                                            .all(
-                                                                            10),
-                                                                    child: Text(
-                                                                      "Delete Cohort",
-                                                                      style: nunitoBold
-                                                                          .copyWith(
-                                                                        color: ColorManager
-                                                                            .white,
-                                                                        fontSize:
-                                                                            16,
-                                                                      ),
-                                                                    ),
-                                                                  ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          MyAwesomeDialogue(
+                                                            title:
+                                                                'You are bout to delete this cohort',
+                                                            desc:
+                                                                'Are you sure ?',
+                                                            dialogType:
+                                                                DialogType
+                                                                    .warning,
+                                                            btnOkOnPressed: () {
+                                                              controller
+                                                                  .deleteCohort(
+                                                                      controller
+                                                                          .cohorts[
+                                                                              index]
+                                                                          .iD!)
+                                                                  .then(
+                                                                (value) {
+                                                                  value
+                                                                      ? MyFlashBar.showSuccess(
+                                                                              'Cohort deleted successfully',
+                                                                              'Success')
+                                                                          .show(
+                                                                              context)
+                                                                      : null;
+                                                                },
+                                                              );
+                                                            },
+                                                            btnCancelOnPressed:
+                                                                () {
+                                                              Get.back();
+                                                            },
+                                                          ).showDialogue(
+                                                              context);
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.red,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                          child: Center(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Text(
+                                                                "Delete Cohort",
+                                                                style: nunitoBold
+                                                                    .copyWith(
+                                                                  color:
+                                                                      ColorManager
+                                                                          .white,
+                                                                  fontSize: 16,
                                                                 ),
                                                               ),
                                                             ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ],
                                                   )
                                                 ],
