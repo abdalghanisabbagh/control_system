@@ -46,9 +46,7 @@ class GradeSystemWidget extends GetView<SchoolController> {
                         .showDialogue(context)
                     : MyDialogs.showAddDialog(
                         context,
-                        AddNewGradeToSchool(
-                          onPressed: controller.addNewGrade,
-                        ),
+                        const AddNewGradeToSchool(),
                       );
               },
               icon: const Icon(Icons.add),

@@ -12,10 +12,8 @@ import '../../../resource_manager/styles_manager.dart';
 class AddNewGradeToSchool extends GetView<SchoolController> {
   const AddNewGradeToSchool({
     super.key,
-    required this.onPressed,
   });
 
-  final Future Function({required String name}) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -62,38 +60,41 @@ class AddNewGradeToSchool extends GetView<SchoolController> {
         const SizedBox(
           height: 20,
         ),
-        controller.isLoadingAddGrades == true
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Row(
-                children: [
-                  const Expanded(
-                    child: ElevatedBackButton(),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: ElevatedAddButton(
-                      onPressed: () async {
-                        await onPressed(name: gradeNameController.text)
-                            .then((value) {
-                          value
-                              ? {
-                                  context.pop(),
-                                  MyFlashBar.showSuccess(
-                                          'The Grade Has Been Added Successfully',
-                                          'Success')
-                                      .show(context)
-                                }
-                              : null;
-                        });
-                      },
+        GetBuilder<SchoolController>(builder: (_) {
+          return controller.isLoadingAddGrades
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Row(
+                  children: [
+                    const Expanded(
+                      child: ElevatedBackButton(),
                     ),
-                  ),
-                ],
-              )
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: ElevatedAddButton(
+                        onPressed: () async {
+                          await controller
+                              .addNewGrade(name: gradeNameController.text)
+                              .then((value) {
+                            value
+                                ? {
+                                    context.pop(),
+                                    MyFlashBar.showSuccess(
+                                            'The Grade Has Been Added Successfully',
+                                            'Success')
+                                        .show(context)
+                                  }
+                                : null;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                );
+        })
       ],
     );
   }

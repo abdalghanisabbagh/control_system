@@ -113,6 +113,7 @@ class SchoolController extends GetxController {
     required String name,
   }) async {
     isLoadingAddGrades = true;
+    update();
     bool gradeHasBeenAdded = false;
     ResponseHandler<GradeResModel> responseHandler = ResponseHandler();
     Either<Failure, GradeResModel> response = await responseHandler.getResponse(
@@ -136,13 +137,12 @@ class SchoolController extends GetxController {
       (r) {
         // spread operator to add new grade
         grades = [...grades, r];
-        gradeHasBeenAdded = true;
-        isLoadingAddGrades = false;
-        update();
       },
     );
 
+    gradeHasBeenAdded = true;
     isLoadingAddGrades = false;
+    update();
     return gradeHasBeenAdded;
   }
 }
