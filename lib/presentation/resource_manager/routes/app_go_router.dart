@@ -65,18 +65,30 @@ class AppGoRouter {
           return true;
         },
       ),
-      // GoRoute(
-      //   path: AppRoutesNamesAndPaths.classRoomScreenPath,
-      //   name: AppRoutesNamesAndPaths.classRoomScreenName,
-      //   builder: (context, state) {
-      //     Get.find<SideMenueGetController>().onRouteChange(state.name!);
-      //     ClassRoomBindings().dependencies();
-      //     return const ClassRoomsScreen();
-      //   },
-      //   onExit: (context, state) {
-      //     return true;
-      //   },
-      // ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.classRoomScreenPath,
+        name: AppRoutesNamesAndPaths.classRoomScreenName,
+        builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          ClassRoomBindings().dependencies();
+          return const ClassRoomsScreen();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+        routes: [
+          GoRoute(
+            path: AppRoutesNamesAndPaths.classRoomSeatsScreenPath,
+            name: AppRoutesNamesAndPaths.classRoomSeatsScreenName,
+            builder: (context, state) {
+              return ClassRoomSeatsScreen();
+            },
+            onExit: (context, state) {
+              return true;
+            },
+          ),
+        ],
+      ),
       GoRoute(
         path: AppRoutesNamesAndPaths.cohortSettingScreenPath,
         name: AppRoutesNamesAndPaths.cohortSettingScreenName,
@@ -216,16 +228,6 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.distributionScreenName,
         builder: (context, state) {
           return const DistributionScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
-      GoRoute(
-        path: AppRoutesNamesAndPaths.classRoomSeatsScreenPath,
-        name: AppRoutesNamesAndPaths.classRoomSeatsScreenName,
-        builder: (context, state) {
-          return ClassRoomSeatsScreen();
         },
         onExit: (context, state) {
           return true;

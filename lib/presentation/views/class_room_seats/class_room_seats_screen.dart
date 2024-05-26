@@ -92,9 +92,11 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                     controller: columnNumper,
                     title: "Number of Row",
                     onChange: (value) {
-                      controller.numbers.value = int.parse(value!);
+                      controller.numbers.value = int.parse(value ?? '0');
                       controller.classSeats.clear();
-                      controller.classSeats = List.filled(int.parse(value), 0);
+                      controller.classSeats =
+                          List.filled(controller.numbers.value, 0);
+                      return value;
                     },
                   ),
                   GetBuilder<ClassRoomController>(
@@ -128,6 +130,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                         controller.classSeats[index] =
                                             int.parse(value!);
                                       }
+                                      return value;
                                     },
                                     controller: rowNumper,
                                     title: "'numper of ${index + 1} column'",

@@ -72,6 +72,6 @@ class AppRoutesNamesAndPaths {
   static const String distributionScreenName = 'Distribution';
 
   // classRoomSeatsScreen
-  static const String classRoomSeatsScreenPath = '/class-room-seats';
+  static const String classRoomSeatsScreenPath = 'class-room-seats';
   static const String classRoomSeatsScreenName = 'Class Room Seats';
 }
