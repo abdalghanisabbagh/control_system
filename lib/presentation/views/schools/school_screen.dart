@@ -6,7 +6,6 @@ import 'package:control_system/presentation/views/schools/Widgets/add_new_school
 import 'package:control_system/presentation/views/schools/Widgets/school_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import 'Widgets/grade_system_widget.dart';
 
@@ -28,7 +27,6 @@ class SchoolsScreen extends GetView<SchoolController> {
                 IconButton(
                   tooltip: "Add new School",
                   onPressed: () {
-                    controller.getSchoolType();
                     MyDialogs.showAddDialog(
                         context, const AddNewSchoolWidget());
                   },
@@ -39,10 +37,9 @@ class SchoolsScreen extends GetView<SchoolController> {
             const SizedBox(
               height: 20,
             ),
-          
             const Expanded(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,  
                 children: [
                   Expanded(child: SchoolWidget()),
                   SizedBox(
@@ -52,25 +49,6 @@ class SchoolsScreen extends GetView<SchoolController> {
                 ],
               ),
             ),
-            // const SizedBox(
-            //   height: 10,
-            // ),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Get.defaultDialog(
-            //         title: 'Add New School Type',
-            //         content: AddNewSchoolTypeWidget(),
-            //       );
-            //     },
-            //     child: const Text('add New school Type')),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Get.defaultDialog(
-            //         title: 'Add New School',
-            //         content: AddNewSchoolWidget(),
-            //       );
-            //     },
-            //     child: const Text('add New school')),
           ],
         ),
       ),

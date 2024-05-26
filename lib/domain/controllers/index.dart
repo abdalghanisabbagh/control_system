@@ -2,7 +2,7 @@ export 'SeatingNumbersControllers/CreateCoversSheetsController.dart';
 export 'SeatingNumbersControllers/seating_number_tab_view_controller.dart';
 export 'access_middle_ware.dart';
 export 'auth_controller.dart';
-export 'class_room_controller.dart';
+// export 'class_room_controller.dart';
 export 'cohorts_settings_controller.dart';
 export 'dashboard_controller.dart';
 export 'home_controller.dart';

@@ -65,18 +65,18 @@ class AppGoRouter {
           return true;
         },
       ),
-      GoRoute(
-        path: AppRoutesNamesAndPaths.classRoomScreenPath,
-        name: AppRoutesNamesAndPaths.classRoomScreenName,
-        builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
-          ClassRoomBindings().dependencies();
-          return const ClassRoomsScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
+      // GoRoute(
+      //   path: AppRoutesNamesAndPaths.classRoomScreenPath,
+      //   name: AppRoutesNamesAndPaths.classRoomScreenName,
+      //   builder: (context, state) {
+      //     Get.find<SideMenueGetController>().onRouteChange(state.name!);
+      //     ClassRoomBindings().dependencies();
+      //     return const ClassRoomsScreen();
+      //   },
+      //   onExit: (context, state) {
+      //     return true;
+      //   },
+      // ),
       GoRoute(
         path: AppRoutesNamesAndPaths.cohortSettingScreenPath,
         name: AppRoutesNamesAndPaths.cohortSettingScreenName,
