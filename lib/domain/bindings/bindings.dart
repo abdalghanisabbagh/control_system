@@ -94,12 +94,12 @@ class CohortSettingsBindings extends Bindings {
   }
 }
 
-// class ClassRoomBindings extends Bindings {
-//   @override
-//   void dependencies() {
-//     Get.lazyPut<ClassRoomController>(
-//       () => ClassRoomController(),
-//       fenix: true,
-//     );
-//   }
-// }
+class ClassRoomBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<ClassRoomController>(
+      () => ClassRoomController(),
+      fenix: true,
+    );
+  }
+}
