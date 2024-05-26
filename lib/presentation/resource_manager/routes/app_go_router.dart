@@ -65,18 +65,31 @@ class AppGoRouter {
           return true;
         },
       ),
-      // GoRoute(
-      //   path: AppRoutesNamesAndPaths.classRoomScreenPath,
-      //   name: AppRoutesNamesAndPaths.classRoomScreenName,
-      //   builder: (context, state) {
-      //     Get.find<SideMenueGetController>().onRouteChange(state.name!);
-      //     ClassRoomBindings().dependencies();
-      //     return const ClassRoomsScreen();
-      //   },
-      //   onExit: (context, state) {
-      //     return true;
-      //   },
-      // ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.classRoomScreenPath,
+        name: AppRoutesNamesAndPaths.classRoomScreenName,
+        builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          ClassRoomBindings().dependencies();
+          return const ClassRoomsScreen();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+        routes: [
+          GoRoute(
+            path: AppRoutesNamesAndPaths.renderSeatScreenPath,
+            name: AppRoutesNamesAndPaths.renderSeatScreenName,
+            builder: (context, state) {
+              ClassRoomBindings().dependencies();
+              return const RenderSeatsExam();
+            },
+            onExit: (context, state) {
+              return true;
+            },
+          ),
+        ],
+      ),
       GoRoute(
         path: AppRoutesNamesAndPaths.cohortSettingScreenPath,
         name: AppRoutesNamesAndPaths.cohortSettingScreenName,
@@ -186,16 +199,6 @@ class AppGoRouter {
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const RolesScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
-      GoRoute(
-        path: AppRoutesNamesAndPaths.renderSeatScreenPath,
-        name: AppRoutesNamesAndPaths.renderSeatScreenName,
-        builder: (context, state) {
-          return const RenderSeatsExam();
         },
         onExit: (context, state) {
           return true;
