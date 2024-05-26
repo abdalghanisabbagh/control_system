@@ -90,22 +90,24 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                   MytextFormFiled(
                     enableBorderColor: ColorManager.primary,
                     controller: columnNumper,
+                    isPrice: true,
                     title: "Number of Row",
                     onChange: (value) {
-                      controller.numbers.value = int.tryParse(value!) ?? 0;
+                      controller.numbers = int.tryParse(value!) ?? 0;
                       controller.classSeats.clear();
                       controller.classSeats =
-                          List.generate(controller.numbers.value, (int _) => 0);
+                          List.generate(controller.numbers, (int _) => 0);
+                      controller.update();
                       return value;
                     },
                   ),
                   GetBuilder<ClassRoomController>(
-                    builder: (_) => controller.numbers.value < 1
+                    builder: (_) => controller.numbers < 1
                         ? const SizedBox.shrink()
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.numbers.value,
+                            itemCount: controller.numbers,
                             itemBuilder: (context, index) {
                               TextEditingController rowNumper =
                                   TextEditingController();

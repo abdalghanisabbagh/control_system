@@ -36,8 +36,10 @@ class MytextFormFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: isPrice != null ? TextInputType.number : null,
-      inputFormatters: textInputs ?? [],
+      keyboardType: isPrice == true ? TextInputType.number : null,
+      inputFormatters: isPrice == true
+          ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
+          : [],
       style: nunitoRegularStyle(
         fontSize: FontSize.s18,
         color: ColorManager.primary,

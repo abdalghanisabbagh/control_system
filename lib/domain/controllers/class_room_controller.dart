@@ -1,3 +1,4 @@
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class ClassRoomController extends GetxController {
 
   List classSeats = [];
   Map<int, int> allSeatsIds = {};
-  RxInt numbers = 0.obs;
+  int numbers = 0;
 
   bool isLoading = false;
 
