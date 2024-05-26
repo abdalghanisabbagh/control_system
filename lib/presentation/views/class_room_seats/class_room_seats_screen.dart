@@ -84,17 +84,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                   const SizedBox(
                     height: 20,
                   ),
-<<<<<<< ours
-                  TextField(
-                    // onChanged: (value) {
-                    //   controller.numbers.value = int.tryParse(value) ?? 0;
-                    //   controller.classSeats.clear();
-                    //   controller.classSeats =
-                    //       List.filled(controller.numbers.value, 0);
-                    // },
-=======
                   MytextFormFiled(
->>>>>>> theirs
                     controller: columnNumper,
                     title: "Number of Row",
                     onChange: (value) {
@@ -104,13 +94,8 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                     },
                   ),
                   GetBuilder<ClassRoomController>(
-                    id: 'columnNumper',
                     builder: (_) => controller.numbers.value < 1
-                        ? Container(
-                            width: 100,
-                            height: 100,
-                            color: Colors.red,
-                          )
+                        ? const SizedBox.shrink()
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -124,14 +109,14 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                     height: 20,
                                   ),
                                   TextField(
-                                    onChanged: (value) {
-                                      if (value == '') {
-                                        controller.classSeats[index] = 0;
-                                      } else {
-                                        controller.classSeats[index] =
-                                            int.parse(value);
-                                      }
-                                    },
+                                    // onChanged: (value) {
+                                    //   if (value == '') {
+                                    //     controller.classSeats[index] = 0;
+                                    //   } else {
+                                    //     controller.classSeats[index] =
+                                    //         int.parse(value);
+                                    //   }
+                                    // },
                                     controller: rowNumper,
                                     decoration: InputDecoration(
                                       hintText: 'numper of ${index + 1} column',
@@ -179,7 +164,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                   ),
                   InkWell(
                     onTap: () {
-                      // controller.update();
+                      controller.update();
                     },
                     child: Container(
                       height: 50,

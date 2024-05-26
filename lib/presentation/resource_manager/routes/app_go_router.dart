@@ -78,10 +78,11 @@ class AppGoRouter {
         },
         routes: [
           GoRoute(
-            path: AppRoutesNamesAndPaths.classRoomSeatsScreenPath,
-            name: AppRoutesNamesAndPaths.classRoomSeatsScreenName,
+            path: AppRoutesNamesAndPaths.renderSeatScreenPath,
+            name: AppRoutesNamesAndPaths.renderSeatScreenName,
             builder: (context, state) {
-              return ClassRoomSeatsScreen();
+              ClassRoomBindings().dependencies();
+              return const RenderSeatsExam();
             },
             onExit: (context, state) {
               return true;
@@ -224,11 +225,10 @@ class AppGoRouter {
         },
       ),
       GoRoute(
-        path: AppRoutesNamesAndPaths.renderSeatScreenPath,
-        name: AppRoutesNamesAndPaths.renderSeatScreenName,
+        path: AppRoutesNamesAndPaths.classRoomSeatsScreenPath,
+        name: AppRoutesNamesAndPaths.classRoomSeatsScreenName,
         builder: (context, state) {
-          ClassRoomBindings().dependencies();
-          return const RenderSeatsExam();
+          return ClassRoomSeatsScreen();
         },
         onExit: (context, state) {
           return true;

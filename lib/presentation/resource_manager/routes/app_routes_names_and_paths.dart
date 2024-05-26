@@ -60,7 +60,7 @@ class AppRoutesNamesAndPaths {
   static const String rolesScreenName = 'Roles';
 
   // renderSeatScreen
-  static const String renderSeatScreenPath = '/render-seat';
+  static const String renderSeatScreenPath = 'render-seat';
   static const String renderSeatScreenName = 'Render Seat';
 
   // examRoomScreen
@@ -72,6 +72,6 @@ class AppRoutesNamesAndPaths {
   static const String distributionScreenName = 'Distribution';
 
   // classRoomSeatsScreen
-  static const String classRoomSeatsScreenPath = 'class-room-seats';
+  static const String classRoomSeatsScreenPath = '/class-room-seats';
   static const String classRoomSeatsScreenName = 'Class Room Seats';
 }

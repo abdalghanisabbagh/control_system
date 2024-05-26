@@ -56,7 +56,6 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
             ),
             Expanded(
               child: GetBuilder<ClassRoomController>(
-                id: 'classesRooms',
                 builder: (gradesControllers) {
                   return controller.isLoading
                       ? const Center(
