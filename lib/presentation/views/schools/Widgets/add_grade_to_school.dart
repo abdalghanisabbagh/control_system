@@ -14,7 +14,6 @@ class AddNewGradeToSchool extends GetView<SchoolController> {
     super.key,
   });
 
-
   @override
   Widget build(BuildContext context) {
     TextEditingController gradeNameController = TextEditingController();
@@ -29,10 +28,7 @@ class AddNewGradeToSchool extends GetView<SchoolController> {
           ),
         ),
         const SizedBox(
-          height: 20,
-        ),
-        const SizedBox(
-          height: 20,
+          height: 40,
         ),
         TextFormField(
           cursorColor: ColorManager.bgSideMenu,

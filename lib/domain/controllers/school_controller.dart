@@ -3,7 +3,6 @@ import 'package:control_system/Data/Models/school/grade_response/grade_res_model
 import 'package:control_system/Data/Models/school/grade_response/grades_res_model.dart';
 import 'package:control_system/Data/Models/school/school_response/school_res_model.dart';
 import 'package:control_system/Data/Models/school/school_response/schools_res_model.dart';
-import 'package:control_system/Data/Models/school/school_type/school_type_model.dart';
 import 'package:control_system/Data/Models/school/school_type/schools_type_res_model.dart';
 import 'package:control_system/Data/Network/tools/failure_model.dart';
 import 'package:control_system/Data/enums/req_type_enum.dart';
@@ -25,6 +24,7 @@ class SchoolController extends GetxController {
   bool isLoadingAddSchool = false;
 
   List<ValueItem> options = <ValueItem>[];
+  ValueItem? selectedItem;
 
   int selectedSchoolIndex = (-1);
   int selectedSchoolId = (-1);
@@ -40,6 +40,7 @@ class SchoolController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getSchoolType();
     getAllSchools();
   }
 
@@ -143,6 +144,7 @@ class SchoolController extends GetxController {
   }
 
   Future<bool> addNewSchool({
+    required int schoolTypeId,
     required String name,
   }) async {
     isLoadingAddSchool = true;
@@ -155,7 +157,7 @@ class SchoolController extends GetxController {
       converter: SchoolResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
-        "School_Type_ID": 1,
+        "School_Type_ID": schoolTypeId,
         "Name": "($name)",
       },
     );
@@ -169,8 +171,6 @@ class SchoolController extends GetxController {
         schoolHasBeenAdded = false;
       },
       (r) {
-        // spread operator to add new grade
-        // schools = [...schools, r];
         getAllSchools();
       },
     );
@@ -181,9 +181,7 @@ class SchoolController extends GetxController {
   }
 
   Future<bool> getSchoolType() async {
-    //  isLoadingAddSchool = true;
-    //update();
-    //  bool schoolHasBeenAdded = false;
+  
     ResponseHandler<SchoolsTypeResModel> responseHandler = ResponseHandler();
     Either<Failure, SchoolsTypeResModel> response =
         await responseHandler.getResponse(
@@ -198,7 +196,6 @@ class SchoolController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        //   schoolHasBeenAdded = false;
       },
       (r) {
         List<ValueItem> items = r.data!
@@ -207,15 +204,13 @@ class SchoolController extends GetxController {
         options = items;
       },
     );
-    // schoolHasBeenAdded = true;
     isLoadingAddGrades = false;
     update();
     return true;
   }
 
-  RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
-
-  void onOptionSelected(List<ValueItem> selectedOptions) {
-    this.selectedOptions.value = selectedOptions;
+  void setSelectedItem(ValueItem item) {
+    selectedItem = item;
+    update();
   }
 }

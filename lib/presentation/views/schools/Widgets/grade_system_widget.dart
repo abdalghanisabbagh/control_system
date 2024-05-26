@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/school_controller.dart';
@@ -7,7 +6,6 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/show
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/resource_manager/styles_manager.dart';
 import 'package:control_system/presentation/views/schools/Widgets/add_grade_to_school.dart';
-import 'package:control_system/presentation/views/subject_setting/widgets/add_subject_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +21,7 @@ class GradeSystemWidget extends GetView<SchoolController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          // mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GetBuilder<SchoolController>(builder: (_) {

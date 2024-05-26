@@ -1,6 +1,6 @@
 class AppLinks {
   static const baseUrl = 'http://localhost:3333/';
-  static const baseUrlDev = 'http://10.6.71.233:3333/';
+  static const baseUrlDev = 'http://10.6.70.232:3333/';
 }
 
 class AuthLinks {
