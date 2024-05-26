@@ -52,7 +52,7 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
               "Control System",
               style: nunitoRegularStyle(
                   color: ColorManager.white, fontSize: AppSize.s18),
-              overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.ellipsis,
             ),
           ),
           const Divider(

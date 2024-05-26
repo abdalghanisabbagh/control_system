@@ -1,4 +1,3 @@
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/school_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
@@ -16,6 +15,7 @@ class GradeSystemWidget extends GetView<SchoolController> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,13 +25,17 @@ class GradeSystemWidget extends GetView<SchoolController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GetBuilder<SchoolController>(builder: (_) {
-              return Text(
-                controller.selectedSchoolIndex == -1
-                    ? "Please select a school"
-                    : "School (${controller.selectedSchoolName})",
-                style: nunitoRegular.copyWith(
-                  color: ColorManager.bgSideMenu,
-                  fontSize: 25,
+              return SizedBox(
+                width: size.width * 0.3,
+                child: Text(
+                  controller.selectedSchoolIndex == -1
+                      ? "Please select school"
+                      : "School (${controller.selectedSchoolName})",
+                  style: nunitoRegular.copyWith(
+                    color: ColorManager.bgSideMenu,
+                    fontSize: 23,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               );
             }),

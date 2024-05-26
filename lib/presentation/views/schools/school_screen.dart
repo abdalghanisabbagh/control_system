@@ -38,15 +38,18 @@ class SchoolsScreen extends GetView<SchoolController> {
               height: 20,
             ),
             const Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,  
-                children: [
-                  Expanded(child: SchoolWidget()),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(child: GradeSystemWidget()),
-                ],
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: SchoolWidget()),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(child: GradeSystemWidget()),
+                  ],
+                ),
               ),
             ),
           ],

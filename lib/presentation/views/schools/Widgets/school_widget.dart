@@ -70,11 +70,9 @@ class SchoolWidget extends GetView<SchoolController> {
                                         : ColorManager.bgSideMenu,
                                   ),
                                   padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                          "${school.schoolType?.name} ${school.name}"),
-                                    ],
+                                  child: Text(
+                                    "${school.schoolType?.name} ${school.name}",
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ),
