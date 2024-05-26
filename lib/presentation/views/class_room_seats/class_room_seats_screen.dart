@@ -1,5 +1,6 @@
 import 'package:control_system/domain/controllers/class_room_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,100 +42,19 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextFormField(
+                        child: MytextFormFiled(
                           controller: classNameController,
-                          decoration: InputDecoration(
-                            label: Text(
-                              "Class Name",
-                              style: nunitoBold.copyWith(
-                                color: ColorManager.bgSideMenu,
-                                fontSize: 14,
-                              ),
-                            ),
-                            hintText: "Class Name",
-                            hintStyle: nunitoBold.copyWith(
-                              color: ColorManager.bgSideMenu,
-                              fontSize: 14,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                          title: "Class Name",
+                          enableBorderColor: ColorManager.primary,
                         ),
                       ),
                       const SizedBox(
                         width: 20,
                       ),
                       Expanded(
-                        child: TextFormField(
+                        child: MytextFormFiled(
                           controller: buildingNameController,
-                          decoration: InputDecoration(
-                            label: Text(
-                              "Building",
-                              style: nunitoBold.copyWith(
-                                color: ColorManager.bgSideMenu,
-                                fontSize: 14,
-                              ),
-                            ),
-                            hintText: "Building",
-                            hintStyle: nunitoBold.copyWith(
-                              color: ColorManager.bgSideMenu,
-                              fontSize: 14,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                          title: "Building",
                         ),
                       ),
                     ],
@@ -145,100 +65,18 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextFormField(
+                        child: MytextFormFiled(
                           controller: floorNameController,
-                          decoration: InputDecoration(
-                            label: Text(
-                              "FLoor",
-                              style: nunitoBold.copyWith(
-                                color: ColorManager.bgSideMenu,
-                                fontSize: 14,
-                              ),
-                            ),
-                            hintText: "FLoor",
-                            hintStyle: nunitoBold.copyWith(
-                              color: ColorManager.bgSideMenu,
-                              fontSize: 14,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                          title: "FLoor",
                         ),
                       ),
                       const SizedBox(
                         width: 20,
                       ),
                       Expanded(
-                        child: TextFormField(
+                        child: MytextFormFiled(
                           controller: maxCapacityController,
-                          decoration: InputDecoration(
-                            label: Text(
-                              "Max Capacity",
-                              style: nunitoBold.copyWith(
-                                color: ColorManager.bgSideMenu,
-                                fontSize: 14,
-                              ),
-                            ),
-                            hintText: "Max Capacity",
-                            hintStyle: nunitoBold.copyWith(
-                              color: ColorManager.bgSideMenu,
-                              fontSize: 14,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                          title: "Max Capacity",
                         ),
                       ),
                     ],
@@ -246,55 +84,14 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                   const SizedBox(
                     height: 20,
                   ),
-                  TextField(
-                    // onChanged: (value) {
-                    //   controller.numbers.value = int.parse(value);
-                    //   controller.classSeats.clear();
-                    //   controller.classSeats = List.filled(int.parse(value), 0);
-                    // },
+                  MytextFormFiled(
                     controller: columnNumper,
-                    decoration: InputDecoration(
-                      label: Text(
-                        'Number of Row',
-                        style: nunitoBold.copyWith(
-                          color: ColorManager.bgSideMenu,
-                          fontSize: 14,
-                        ),
-                      ),
-                      hintText: 'Number of Row',
-                      hintStyle: nunitoBold.copyWith(
-                        color: ColorManager.bgSideMenu,
-                        fontSize: 14,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorManager.bgSideMenu,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorManager.bgSideMenu,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorManager.bgSideMenu,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: ColorManager.bgSideMenu,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                    title: "Number of Row",
+                    onChange: (value) {
+                      controller.numbers.value = int.parse(value!);
+                      controller.classSeats.clear();
+                      controller.classSeats = List.filled(int.parse(value), 0);
+                    },
                   ),
                   GetBuilder<ClassRoomController>(
                     builder: (_) => controller.numbers.value < 1
