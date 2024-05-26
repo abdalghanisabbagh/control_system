@@ -4,11 +4,11 @@ class ColorManager {
   // background: #BE7B4A;
 // background: #8063BD;
 // #FCFCFC
-  static Color primary = const Color(0xff001F44);
+  static const Color primary = Color(0xff001F44);
   static Color darkGrey = const Color(0xaa858585);
   static Color cardBackgroundColor = const Color(0xffFBFBFB);
   static Color darkGrey2 = const Color(0xff252525);
-  static Color grey = const Color(0x99858585);
+  static const Color grey = const Color(0x99858585);
   static Color greyA8 = const Color(0xffA8A8A8);
   static Color dateGrey = const Color(0xff757575);
   static Color lightGrey = const Color(0xffD6D7D9);
@@ -41,7 +41,7 @@ class ColorManager {
 
   static Color white = const Color(0xffffffff);
 
-  static Color black = Colors.black;
+  static const Color black = Colors.black;
 
   static Color appbarColor = Colors.white;
   static Color appbarColorShadow = Colors.black;

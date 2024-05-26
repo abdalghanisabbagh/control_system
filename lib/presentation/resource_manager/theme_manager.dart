@@ -24,8 +24,8 @@ ThemeData getApplicationTheme() {
 
     ///AppBar Theme
     appBarTheme: AppBarTheme(
-      actionsIconTheme: IconThemeData(color: ColorManager.black),
-      iconTheme: IconThemeData(color: ColorManager.black),
+      actionsIconTheme: const IconThemeData(color: ColorManager.black),
+      iconTheme: const IconThemeData(color: ColorManager.black),
       centerTitle: true,
       color: ColorManager.appbarColor,
       elevation: AppSize.s5,
@@ -119,10 +119,10 @@ ThemeData getApplicationTheme() {
               color: ColorManager.outlineInputBorderColor, width: AppSize.s1_5),
           borderRadius: const BorderRadius.all(Radius.circular(AppSize.s4))),
       // foucsed border style
-      focusedBorder: OutlineInputBorder(
+      focusedBorder: const OutlineInputBorder(
           borderSide:
               BorderSide(color: ColorManager.black, width: AppSize.s1_5),
-          borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),
+          borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
 
       /// error border style
 
@@ -133,10 +133,10 @@ ThemeData getApplicationTheme() {
 
       /// focusedErrorBorder border style
 
-      focusedErrorBorder: OutlineInputBorder(
+      focusedErrorBorder: const OutlineInputBorder(
           borderSide:
               BorderSide(color: ColorManager.primary, width: AppSize.s1_5),
-          borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),
+          borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
       iconColor: ColorManager.grey,
       suffixIconColor: ColorManager.grey,
     ),
