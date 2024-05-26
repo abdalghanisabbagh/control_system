@@ -1,17 +1,13 @@
-<<<<<<< ours
-=======
 import 'package:control_system/domain/controllers/class_room_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
->>>>>>> theirs
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../resource_manager/ReusableWidget/header_widget.dart';
-import 'widgets/render_seat_widget.dart';
 
-class ClassRoomSeatsScreen extends StatelessWidget {
+class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
   final TextEditingController columnNumper = TextEditingController(text: "1");
   final TextEditingController classNameController = TextEditingController();
   final TextEditingController buildingNameController = TextEditingController();
@@ -26,16 +22,11 @@ class ClassRoomSeatsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                ),
-                const HeaderWidget(text: "Add New Class"),
+                MyBackButton(),
+                HeaderWidget(text: "Add New Class"),
               ],
             ),
             const SizedBox(
@@ -99,43 +90,6 @@ class ClassRoomSeatsScreen extends StatelessWidget {
                   MytextFormFiled(
                     enableBorderColor: ColorManager.primary,
                     controller: columnNumper,
-<<<<<<< ours
-                    decoration: InputDecoration(
-                      label: Text(
-                        'Number of Row',
-                        style: nunitoBold.copyWith(
-                          color: ColorManager.bgSideMenu,
-                          fontSize: 14,
-                        ),
-                      ),
-                      hintText: 'Number of Row',
-                      hintStyle: nunitoBold.copyWith(
-                        color: ColorManager.bgSideMenu,
-                        fontSize: 14,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorManager.bgSideMenu,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(10)),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorManager.bgSideMenu,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(10)),
-                      errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorManager.bgSideMenu,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(10)),
-                      disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorManager.bgSideMenu,
-                            width: 2,
-=======
                     title: "Number of Row",
                     onChange: (value) {
                       controller.numbers.value = int.parse(value!);
@@ -181,83 +135,14 @@ class ClassRoomSeatsScreen extends StatelessWidget {
                                 ],
                               );
                             },
->>>>>>> theirs
                           ),
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
                   ),
-                  // Obx(
-                  //   () => controller.numbers.value < 1
-                  //       ? const SizedBox.shrink()
-                  //       : ListView.builder(
-                  //           shrinkWrap: true,
-                  //           physics: const NeverScrollableScrollPhysics(),
-                  //           itemCount: controller.numbers.value,
-                  //           itemBuilder: (context, index) {
-                  //             TextEditingController rowNumper =
-                  //                 TextEditingController();
-                  //             return Column(
-                  //               children: [
-                  //                 const SizedBox(
-                  //                   height: 20,
-                  //                 ),
-                  //                 TextField(
-                  //                   onChanged: (value) {
-                  //                     if (value == '') {
-                  //                       controller.classSeats[index] = 0;
-                  //                     } else {
-                  //                       controller.classSeats[index] =
-                  //                           int.parse(value);
-                  //                     }
-                  //                   },
-                  //                   controller: rowNumper,
-                  //                   decoration: InputDecoration(
-                  //                     hintText: 'numper of ${index + 1} column',
-                  //                     hintStyle: nunitoBold.copyWith(
-                  //                       color: ColorManager.bgSideMenu,
-                  //                       fontSize: 14,
-                  //                     ),
-                  //                     focusedBorder: OutlineInputBorder(
-                  //                       borderSide: BorderSide(
-                  //                         color: ColorManager.bgSideMenu,
-                  //                         width: 2,
-                  //                       ),
-                  //                       borderRadius: BorderRadius.circular(10),
-                  //                     ),
-                  //                     enabledBorder: OutlineInputBorder(
-                  //                       borderSide: BorderSide(
-                  //                         color: ColorManager.bgSideMenu,
-                  //                         width: 2,
-                  //                       ),
-                  //                       borderRadius: BorderRadius.circular(10),
-                  //                     ),
-                  //                     errorBorder: OutlineInputBorder(
-                  //                       borderSide: BorderSide(
-                  //                         color: ColorManager.bgSideMenu,
-                  //                         width: 2,
-                  //                       ),
-                  //                       borderRadius: BorderRadius.circular(10),
-                  //                     ),
-                  //                     disabledBorder: OutlineInputBorder(
-                  //                       borderSide: BorderSide(
-                  //                         color: ColorManager.bgSideMenu,
-                  //                         width: 2,
-                  //                       ),
-                  //                       borderRadius: BorderRadius.circular(10),
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ],
-                  //             );
-                  //           },
-                  //         ),
-                  // ),
                   const SizedBox(
                     height: 30,
                   ),
                   InkWell(
                     onTap: () {
-                      // controller.update();
+                      controller.update();
                     },
                     child: Container(
                       height: 50,
@@ -269,9 +154,8 @@ class ClassRoomSeatsScreen extends StatelessWidget {
                       child: Center(
                         child: Text(
                           "Render Seats and generate seats ID",
-                          style: nunitoRegular.copyWith(
-                            color: ColorManager.white,
-                          ),
+                          style:
+                              nunitoRegular.copyWith(color: ColorManager.white),
                         ),
                       ),
                     ),
@@ -279,7 +163,7 @@ class ClassRoomSeatsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const RendarSeats(),
+            // RendarSeats(),
             const SizedBox(
               height: 30,
             ),
@@ -310,13 +194,13 @@ class ClassRoomSeatsScreen extends StatelessWidget {
               //     // Navigator.pop(context);
 
               //     response
-              //         ? MyFlashBar.showError(
+              //         ? MyReusbleWidget.mySnackBarGood(
               //             "Class Create", "Class has been Added")
-              //         : MyFlashBar.showError(
+              //         : MyReusbleWidget.mySnackBarError(
               //             "Class Create", "Class Not Created");
               //   } else {
               //     // capacity not equal
-              //     MyFlashBar.showError(
+              //     MyReusbleWidget.mySnackBarError(
               //       "Class Create",
               //       "capacity not equal",
               //     );
@@ -338,10 +222,12 @@ class ClassRoomSeatsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(11),
                     ),
                     child: Center(
-                        child: Text(
-                      "Add Class",
-                      style: nunitoRegular.copyWith(color: ColorManager.white),
-                    )),
+                      child: Text(
+                        "Add Class",
+                        style:
+                            nunitoRegular.copyWith(color: ColorManager.white),
+                      ),
+                    ),
                   ),
                 ),
               ),
