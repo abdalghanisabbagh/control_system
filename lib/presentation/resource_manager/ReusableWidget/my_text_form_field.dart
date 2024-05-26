@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,19 +15,23 @@ class MytextFormFiled extends StatelessWidget {
   final List<TextInputFormatter>? textInputs;
   final String? Function(String? value)? onChange;
   final bool obscureText;
-  const MytextFormFiled({
-    super.key,
-    this.title,
-    required this.controller,
-    this.maxlines = 1,
-    this.isEnable,
-    this.myValidation,
-    this.isPrice,
-    this.textInputs,
-    this.onChange,
-    this.suffixIcon,
-    this.obscureText = false,
-  });
+  final Color? enableBorderColor;
+  final Color? foucsBorderColor;
+
+  const MytextFormFiled(
+      {super.key,
+      this.title,
+      required this.controller,
+      this.maxlines = 1,
+      this.isEnable,
+      this.myValidation,
+      this.isPrice,
+      this.textInputs,
+      this.onChange,
+      this.suffixIcon,
+      this.obscureText = false,
+      this.enableBorderColor = ColorManager.grey,
+      this.foucsBorderColor = ColorManager.primary});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +39,7 @@ class MytextFormFiled extends StatelessWidget {
       keyboardType: isPrice != null ? TextInputType.number : null,
       inputFormatters: textInputs ?? [],
       style: nunitoRegularStyle(
-        fontSize: FontSize.s12,
+        fontSize: FontSize.s18,
         color: ColorManager.primary,
       ),
       decoration: InputDecoration(
@@ -44,12 +49,17 @@ class MytextFormFiled extends StatelessWidget {
           fontSize: FontSize.s12,
           color: ColorManager.black,
         ),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorManager.black),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: enableBorderColor!, width: 2.0),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: foucsBorderColor!, width: 3.0),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
         hintText: title,
         hintStyle: nunitoRegularStyle(
-          fontSize: FontSize.s12,
+          fontSize: FontSize.s16,
           color: ColorManager.grey,
         ),
       ),
