@@ -1,5 +1,5 @@
 import 'package:control_system/domain/controllers/auth_controller.dart';
-import 'package:control_system/domain/indices/index.dart';
+import 'package:control_system/domain/controllers/index.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';

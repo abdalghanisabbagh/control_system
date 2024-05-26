@@ -1,8 +1,8 @@
-import 'package:control_system/domain/indices/index.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app/main_app.dart';
+import 'domain/bindings/bindings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

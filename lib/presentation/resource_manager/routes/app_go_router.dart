@@ -2,7 +2,8 @@ import 'package:control_system/presentation/resource_manager/routes/app_routes_n
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../domain/indices/index.dart';
+import '../../../domain/bindings/bindings.dart';
+import '../../../domain/controllers/index.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
 import '../../views/index.dart';
 
@@ -69,6 +70,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.classRoomScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          ClassRoomBindings().dependencies();
           return const ClassRoomsScreen();
         },
         onExit: (context, state) {
