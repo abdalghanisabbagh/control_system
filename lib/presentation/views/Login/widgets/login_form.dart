@@ -98,6 +98,7 @@ class LoginForm extends GetView<AuthController> {
                             return MytextFormFiled(
                               obscureText: controller.showPass.value,
                               controller: passwordController,
+                              enableBorderColor: ColorManager.grey,
                               title: "Password",
                               suffixIcon: IconButton(
                                 icon: Icon(

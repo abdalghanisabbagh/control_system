@@ -13,7 +13,7 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 class ClassRoomController extends GetxController {
   List<ClassRoomResModel> classesRooms = [];
 
-  List classSeats = [];
+  List<int> classSeats = [];
   Map<int, int> allSeatsIds = {};
   RxInt numbers = 0.obs;
 
@@ -22,7 +22,7 @@ class ClassRoomController extends GetxController {
   Future<bool> getClassesRooms() async {
     isLoading = true;
     bool gotData = false;
-    update();
+    update(['classesRooms']);
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassesRoomsResModel> response =
         await responseHandler.getResponse(
@@ -39,13 +39,13 @@ class ClassRoomController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
         isLoading = false;
         gotData = false;
-        update();
+        update(['classesRooms']);
       },
       (r) {
         classesRooms = r.data!;
         isLoading = false;
         gotData = true;
-        update();
+        update(['classesRooms']);
       },
     );
     return gotData;
