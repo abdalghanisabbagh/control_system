@@ -31,42 +31,40 @@ class RendarSeats extends GetView<ClassRoomController> {
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              //       Container(
-                              //         alignment: Alignment.center,
-                              //         width: size.width * 0.1,
-                              //         height: size.height * 0.05,
-                              //         decoration: BoxDecoration(
-                              //           color: const Color(0xffffff00),
-                              //           border: Border.all(
-                              //               color: Colors.black, width: 1.5),
+                              // Container(
+                              //   alignment: Alignment.center,
+                              //   width: size.width * 0.1,
+                              //   height: size.height * 0.05,
+                              //   decoration: BoxDecoration(
+                              //       color: const Color(0xffffff00),
+                              //       border: Border.all(
+                              //           color: Colors.black, width: 1.5),),
+                              //   child: count > seatsNumbers.length - 1
+                              //       ? const Text("")
+                              //       : Text(
+                              //           seatsNumbers[count].seatNumbers!,
+                              //           style: const TextStyle(
+                              //               fontSize: 20,
+                              //               fontWeight: FontWeight.bold),
                               //         ),
-                              //         child: count > seatsNumbers.length - 1
-                              //             ? const Text("")
-                              //             : Text(
-                              //                 seatsNumbers[count].seatNumbers!,
-                              //                 style: const TextStyle(
-                              //                     fontSize: 20,
-                              //                     fontWeight: FontWeight.bold),
-                              //               ),
-                              //       ),
-                              //       Container(
-                              //         alignment: Alignment.center,
-                              //         width: size.width * 0.1,
-                              //         height: size.height * 0.05,
-                              //         decoration: BoxDecoration(
-                              //           color: const Color(0xffD7DBDF),
-                              //           border: Border.all(
-                              //               color: Colors.black, width: 1.5),
-                              //         ),
-                              //         child: count > seatsNumbers.length - 1
-                              //             ? const Text("")
-                              //             : Text(seatsNumbers[count]
-                              //                     .students!
-                              //                     .firstName! +
-                              //                 seatsNumbers[count]
-                              //                     .students!
-                              //                     .lastName!),
-                              //       ),
+                              // ),
+                              // Container(
+                              //   alignment: Alignment.center,
+                              //   width: size.width * 0.1,
+                              //   height: size.height * 0.05,
+                              //   decoration: BoxDecoration(
+                              //       color: const Color(0xffD7DBDF),
+                              //       border: Border.all(
+                              //           color: Colors.black, width: 1.5),),
+                              //   child: count > seatsNumbers.length - 1
+                              //       ? const Text("")
+                              //       : Text(seatsNumbers[count]
+                              //               .students!
+                              //               .firstName! +
+                              //           seatsNumbers[count]
+                              //               .students!
+                              //               .lastName!),
+                              // )
                             ],
                           ),
                         ),
