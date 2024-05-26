@@ -55,6 +55,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                         child: MytextFormFiled(
                           controller: buildingNameController,
                           title: "Building",
+                          enableBorderColor: ColorManager.primary,
                         ),
                       ),
                     ],
@@ -68,6 +69,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                         child: MytextFormFiled(
                           controller: floorNameController,
                           title: "FLoor",
+                          enableBorderColor: ColorManager.primary,
                         ),
                       ),
                       const SizedBox(
@@ -75,6 +77,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                       ),
                       Expanded(
                         child: MytextFormFiled(
+                          enableBorderColor: ColorManager.primary,
                           controller: maxCapacityController,
                           title: "Max Capacity",
                         ),
@@ -85,6 +88,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                     height: 20,
                   ),
                   MytextFormFiled(
+                    enableBorderColor: ColorManager.primary,
                     controller: columnNumper,
                     title: "Number of Row",
                     onChange: (value) {
@@ -108,51 +112,25 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  TextField(
-                                    // onChanged: (value) {
-                                    //   if (value == '') {
-                                    //     controller.classSeats[index] = 0;
-                                    //   } else {
-                                    //     controller.classSeats[index] =
-                                    //         int.parse(value);
-                                    //   }
-                                    // },
+                                  // onChanged: (value) {
+                                  //   if (value == '') {
+                                  //     controller.classSeats[index] = 0;
+                                  //   } else {
+                                  //     controller.classSeats[index] =
+                                  //         int.parse(value);
+                                  //   }
+                                  // },
+                                  MytextFormFiled(
+                                    onChange: (value) {
+                                      if (value == '') {
+                                        controller.classSeats[index] = 0;
+                                      } else {
+                                        controller.classSeats[index] =
+                                            int.parse(value!);
+                                      }
+                                    },
                                     controller: rowNumper,
-                                    decoration: InputDecoration(
-                                      hintText: 'numper of ${index + 1} column',
-                                      hintStyle: nunitoBold.copyWith(
-                                        color: ColorManager.bgSideMenu,
-                                        fontSize: 14,
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: ColorManager.bgSideMenu,
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: ColorManager.bgSideMenu,
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: ColorManager.bgSideMenu,
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      disabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: ColorManager.bgSideMenu,
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
+                                    title: "'numper of ${index + 1} column'",
                                   ),
                                 ],
                               );
