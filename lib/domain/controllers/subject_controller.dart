@@ -108,6 +108,7 @@ class SubjectsController extends GetxController {
       (r) {
         subjects.removeWhere((element) => element.iD == id);
         subjectHasBeenDeleted = true;
+        update();
       },
     );
     return subjectHasBeenDeleted;
