@@ -8,8 +8,8 @@ class ClassRoomResModel {
   int? columns;
   int? createdBy;
   String? createdAt;
-  Null updatedBy;
-  Null updatedAt;
+  int? updatedBy;
+  DateTime? updatedAt;
   int? active;
 
   ClassRoomResModel({
