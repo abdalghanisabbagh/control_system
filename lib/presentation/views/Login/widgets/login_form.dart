@@ -4,6 +4,7 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/my_t
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/resource_manager/routes/index.dart';
+import 'package:control_system/presentation/resource_manager/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -23,18 +24,13 @@ class LoginForm extends GetView<AuthController> {
     return KeyboardListener(
       onKeyEvent: (value) {
         if (value.logicalKey == LogicalKeyboardKey.enter) {
-          if (formKey.currentState!.validate()) {
-            controller
-                .login(
-                  emailController.text,
-                  passwordController.text,
-                )
-                .then((value) => value
-                    ? context.goNamed(
-                        AppRoutesNamesAndPaths.dashBoardScreenName,
-                      )
-                    : null);
-          }
+          _login(
+            controller.login,
+            emailController.text,
+            passwordController.text,
+            formKey,
+            context,
+          );
         }
       },
       focusNode: FocusNode()..requestFocus(),
@@ -111,6 +107,7 @@ class LoginForm extends GetView<AuthController> {
                             ),
                             MytextFormFiled(
                               controller: emailController,
+                              myValidation: Validations.requiredValidator,
                               title: "Email",
                               suffixIcon: Icon(
                                 Icons.mail_outline,
@@ -122,6 +119,7 @@ class LoginForm extends GetView<AuthController> {
                                 return MytextFormFiled(
                                   obscureText: controller.showPass.value,
                                   controller: passwordController,
+                                  myValidation: Validations.requiredValidator,
                                   enableBorderColor: ColorManager.grey,
                                   title: "Password",
                                   suffixIcon: IconButton(
@@ -150,18 +148,14 @@ class LoginForm extends GetView<AuthController> {
                                           width: double.infinity,
                                           height: 50,
                                           child: ElevatedButton(
-                                            onPressed: () async {
-                                              await controller
-                                                  .login(
-                                                    emailController.text,
-                                                    passwordController.text,
-                                                  )
-                                                  .then((value) => value
-                                                      ? context.goNamed(
-                                                          AppRoutesNamesAndPaths
-                                                              .dashBoardScreenName,
-                                                        )
-                                                      : null);
+                                            onPressed: () {
+                                              _login(
+                                                controller.login,
+                                                emailController.text,
+                                                passwordController.text,
+                                                formKey,
+                                                context,
+                                              );
                                             },
                                             child: const Text("Login"),
                                           ),
@@ -181,5 +175,23 @@ class LoginForm extends GetView<AuthController> {
         ),
       ),
     );
+  }
+}
+
+void _login(
+    Future<bool> Function(String email, String password) login,
+    String username,
+    String password,
+    GlobalKey<FormState> formKey,
+    BuildContext context) async {
+  if (formKey.currentState!.validate()) {
+    login(
+      username,
+      password,
+    ).then((value) => value
+        ? context.goNamed(
+            AppRoutesNamesAndPaths.dashBoardScreenName,
+          )
+        : null);
   }
 }
