@@ -1,4 +1,3 @@
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +9,7 @@ class MytextFormFiled extends StatelessWidget {
   final int maxlines;
   final bool? isEnable;
   final String? Function(String? newValue)? myValidation;
-  final bool? isPrice;
+  final bool? isNumber;
   final Widget? suffixIcon;
   final List<TextInputFormatter>? textInputs;
   final String? Function(String? value)? onChange;
@@ -25,7 +24,7 @@ class MytextFormFiled extends StatelessWidget {
       this.maxlines = 1,
       this.isEnable,
       this.myValidation,
-      this.isPrice,
+      this.isNumber,
       this.textInputs,
       this.onChange,
       this.suffixIcon,
@@ -36,8 +35,8 @@ class MytextFormFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: isPrice == true ? TextInputType.number : null,
-      inputFormatters: isPrice == true
+      keyboardType: isNumber == true ? TextInputType.number : null,
+      inputFormatters: isNumber == true
           ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
           : [],
       style: nunitoRegularStyle(

@@ -35,7 +35,7 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                     ),
                     InkWell(
                       onTap: () {
-                        MyDialogs.showAddDialog(
+                        MyDialogs.showDialog(
                           context,
                           const AddCohortWidget(),
                         );

@@ -16,7 +16,7 @@ class AdminScreen extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              MyDialogs.showAddDialog(
+              MyDialogs.showDialog(
                 context,
                 AddNewUserWidget(),
               );
