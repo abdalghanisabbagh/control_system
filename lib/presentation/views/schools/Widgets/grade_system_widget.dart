@@ -48,7 +48,7 @@ class GradeSystemWidget extends GetView<SchoolController> {
                             desc: "please select a school",
                             dialogType: DialogType.error)
                         .showDialogue(context)
-                    : MyDialogs.showAddDialog(
+                    : MyDialogs.showDialog(
                         context,
                         const AddNewGradeToSchool(),
                       );

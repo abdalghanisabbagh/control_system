@@ -1,6 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../Data/Models/class_room/class_room_res_model.dart';
@@ -125,5 +124,50 @@ class ClassRoomController extends GetxController {
     isLoadingAddClassRoom = false;
     update();
     return true;
+  }
+
+  Future<bool> editClassRoom({
+    required int id,
+    required String name,
+    required String floorName,
+    required String maxCapacity,
+    required int columns,
+    required List<int> rows,
+  }) async {
+    bool classRoomHasBeenEdited = false;
+    update();
+    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
+    Either<Failure, ClassRoomResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.schoolsClasses}/$id',
+      converter: ClassRoomResModel.fromJson,
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Name": name,
+        "Max_Capacity": maxCapacity,
+        "Floor": floorName,
+        "Rows": rows.toString(),
+        "Columns": columns,
+        "Schools_ID": 1,
+        "Created_By": 1
+      },
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        classRoomHasBeenEdited = false;
+      },
+      (r) {
+        classesRooms.removeWhere((element) => element.iD == id);
+        classesRooms.add(r);
+        classRoomHasBeenEdited = true;
+        update();
+      },
+    );
+    return classRoomHasBeenEdited;
   }
 }

@@ -28,7 +28,7 @@ class AppDialogs extends StatelessWidget {
 }
 
 class MyDialogs {
-  static showAddDialog(BuildContext context, Widget content) {
+  static showDialog(BuildContext context, Widget content) {
     showGeneralDialog(
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) => Container(),

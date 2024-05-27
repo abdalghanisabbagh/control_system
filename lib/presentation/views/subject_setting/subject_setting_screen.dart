@@ -39,7 +39,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                       // TextEditingController subjectTitleController =
                       //     TextEditingController();
 
-                      MyDialogs.showAddDialog(
+                      MyDialogs.showDialog(
                         context,
                         const AddSubjectWidget(),
                       );

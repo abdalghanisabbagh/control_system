@@ -96,7 +96,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                   MytextFormFiled(
                     enableBorderColor: ColorManager.primary,
                     controller: columnNumper,
-                    isPrice: true,
+                    isNumber: true,
                     title: "Number of Row",
                     onChange: (value) {
                       controller.numbers = int.tryParse(value!) ?? 0;
