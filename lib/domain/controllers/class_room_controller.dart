@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../Data/Models/class_room/class_room_res_model.dart';
@@ -14,9 +15,7 @@ class ClassRoomController extends GetxController {
   List<ClassRoomResModel> classesRooms = [];
 
   List<int> classSeats = [];
-  // Map<int, int> allSeatsIds = {};
   int numbers = 0;
-
   bool isLoading = false;
   bool isLoadingAddClassRoom = false;
   Future<bool> getClassesRooms() async {
@@ -49,18 +48,6 @@ class ClassRoomController extends GetxController {
       },
     );
     return gotData;
-  }
-
-  Future<bool> addNewClassRoom({
-    required String name,
-    required String buildName,
-    required String floorName,
-    required String maxCapacity,
-    required int columns,
-    required List<int> rows,
-  }) async {
-    bool classRoomHasBeenAdded = false;
-    return classRoomHasBeenAdded;
   }
 
   Future<bool> deleteClassRoom({

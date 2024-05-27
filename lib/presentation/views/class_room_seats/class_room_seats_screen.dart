@@ -14,7 +14,7 @@ import '../../resource_manager/ReusableWidget/header_widget.dart';
 import 'widgets/render_seat_widget.dart';
 
 class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
-  final TextEditingController columnNumper = TextEditingController(text: "1");
+  final TextEditingController columnNumper = TextEditingController(text: "0");
   final TextEditingController classNameController = TextEditingController();
   final TextEditingController buildingNameController = TextEditingController();
   final TextEditingController floorNameController = TextEditingController();
@@ -209,19 +209,13 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                               ).show(context),
                       );
                   controller.numbers = 0;
-                  //  controller.update();
-                  // Get.back();
-                  // Navigator.pop(context);
                 } else {
-                  // capacity not equal
                   MyAwesomeDialogue(
                     title: "Class Create",
                     desc: "capacity not equal",
                     dialogType: DialogType.error,
                   ).showDialogue(context);
                   log("$maxCapacity  :: $renderCapacity");
-                  // Get.back();
-                  // Navigator.pop(context);
                 }
               },
               child: Align(

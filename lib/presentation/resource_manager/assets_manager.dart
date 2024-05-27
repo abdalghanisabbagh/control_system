@@ -143,4 +143,8 @@ class AssetsManager {
   /// Assets for assetsImagesClassDesk
   /// assets/images/class_desk.png
   static const String assetsImagesClassDesk = "assets/images/class_desk.png";
+
+  /// Assets for assetsImagesbackground
+  /// assets/images/background.png
+  static const String assetsImagesbackground = "assets/images/background.jpg";
 }
