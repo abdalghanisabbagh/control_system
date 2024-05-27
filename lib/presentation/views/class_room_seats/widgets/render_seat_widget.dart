@@ -12,7 +12,6 @@ import '../../../resource_manager/styles_manager.dart';
 class RendarSeats extends StatelessWidget {
   RendarSeats({super.key, required this.seatsNumbers});
   List<StudentSeatModel> seatsNumbers = [];
-  int count = 1;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -44,7 +43,7 @@ class RendarSeats extends StatelessWidget {
                           children: [
                             for (int i = 0;
                                 i < controller.classSeats[index];
-                                i++, count++)
+                                i++, controller.count++)
                               Stack(children: [
                                 Container(
                                   padding: const EdgeInsets.symmetric(
@@ -59,7 +58,7 @@ class RendarSeats extends StatelessWidget {
                                   //   left: 0,
                                   right: (size.width * 0.1) / 2 - 10,
                                   child: Text(
-                                    count.toString(),
+                                    controller.count.toString(),
                                     style: nunitoRegular.copyWith(
                                       color: ColorManager.bgSideMenu,
                                       fontSize: 35,
