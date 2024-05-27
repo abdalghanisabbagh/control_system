@@ -1,4 +1,6 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/class_room_controller.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/resource_manager/routes/index.dart';
@@ -8,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../resource_manager/ReusableWidget/header_widget.dart';
+import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 
 class ClassRoomsScreen extends GetView<ClassRoomController> {
   const ClassRoomsScreen({super.key});
@@ -209,7 +212,43 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                           width: 20,
                                                         ),
                                                         InkWell(
-                                                          onTap: () {},
+                                                          onTap: () async {
+                                                            MyAwesomeDialogue(
+                                                              title:
+                                                                  'You Are About To Delete This Class',
+                                                              desc:
+                                                                  'Are You Sure?',
+                                                              dialogType:
+                                                                  DialogType
+                                                                      .warning,
+                                                              btnOkOnPressed:
+                                                                  () async {
+                                                                controller
+                                                                    .deleteClassRoom(
+                                                                        id: controller
+                                                                            .classesRooms[index]
+                                                                            .iD!)
+                                                                    .then(
+                                                                  (value) {
+                                                                    value
+                                                                        ? MyFlashBar.showSuccess("Class deleted successfully",
+                                                                                "Success")
+                                                                            .show(
+                                                                                context)
+                                                                        : MyFlashBar.showError("Something went wrong",
+                                                                                "Error")
+                                                                            .show(context);
+                                                                  },
+                                                                );
+                                                              },
+                                                              btnCancelOnPressed:
+                                                                  () {
+                                                                Get.back();
+                                                              },
+                                                            ).showDialogue(
+                                                              context,
+                                                            );
+                                                          },
                                                           child: Container(
                                                             decoration:
                                                                 BoxDecoration(

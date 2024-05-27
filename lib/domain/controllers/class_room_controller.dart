@@ -63,6 +63,37 @@ class ClassRoomController extends GetxController {
     return classRoomHasBeenAdded;
   }
 
+  Future<bool> deleteClassRoom({
+    required int id,
+  }) async {
+    bool classRoomHasBeenDeleted = false;
+
+    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
+
+    Either<Failure, ClassRoomResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.schoolsClasses}/$id',
+      converter: ClassRoomResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        classRoomHasBeenDeleted = false;
+      },
+      (r) {
+        classesRooms.removeWhere((element) => element.iD == id);
+        classRoomHasBeenDeleted = true;
+      },
+    );
+    update();
+    return classRoomHasBeenDeleted;
+  }
+
   @override
   void onInit() {
     getClassesRooms();
