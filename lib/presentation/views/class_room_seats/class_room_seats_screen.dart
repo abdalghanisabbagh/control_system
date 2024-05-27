@@ -1,11 +1,17 @@
+import 'dart:developer';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/class_room_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../resource_manager/ReusableWidget/header_widget.dart';
+import 'widgets/render_seat_widget.dart';
 
 class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
   final TextEditingController columnNumper = TextEditingController(text: "1");
@@ -116,14 +122,6 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  // onChanged: (value) {
-                                  //   if (value == '') {
-                                  //     controller.classSeats[index] = 0;
-                                  //   } else {
-                                  //     controller.classSeats[index] =
-                                  //         int.parse(value);
-                                  //   }
-                                  // },
                                   MytextFormFiled(
                                     onChange: (value) {
                                       if (value == '') {
@@ -168,53 +166,52 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                 ],
               ),
             ),
-            // RendarSeats(),
+            RendarSeats(
+              seatsNumbers: const [],
+            ),
             const SizedBox(
               height: 30,
             ),
             InkWell(
-              // onTap: () async {
-              //   int maxCapacity = int.parse(maxCapacityController.text);
+              onTap: () async {
+                int maxCapacity = int.parse(maxCapacityController.text);
+                int renderCapacity =
+                    controller.classSeats.fold(0, (int p, c) => p + c);
 
-              //   int renderCapacity = 0;
-
-              //   for (var row in controller.classSeats) {
-              //     renderCapacity += row as int;
-              //   }
-
-              //   if (renderCapacity == maxCapacity) {
-              //     bool response = await controller.createNewClass(
-              //       buildName: buildingNameController.text,
-              //       floorName: floorNameController.text,
-              //       className: classNameController.text,
-              //       maxCapacity: maxCapacity,
-              //       columns: int.parse(columnNumper.text),
-              //       rows: controller.classSeats,
-              //     );
-
-              //     controller.numbers.value = 0;
-              //     controller.update();
-
-              //     Get.back();
-              //     // Navigator.pop(context);
-
-              //     response
-              //         ? MyReusbleWidget.mySnackBarGood(
-              //             "Class Create", "Class has been Added")
-              //         : MyReusbleWidget.mySnackBarError(
-              //             "Class Create", "Class Not Created");
-              //   } else {
-              //     // capacity not equal
-              //     MyReusbleWidget.mySnackBarError(
-              //       "Class Create",
-              //       "capacity not equal",
-              //     );
-              //     log("$maxCapacity  :: $renderCapacity");
-
-              //     Get.back();
-              //     // Navigator.pop(context);
-              //   }
-              // },
+                if (renderCapacity == maxCapacity) {
+                  bool response = await controller.addNewClassRoom(
+                    buildName: buildingNameController.text,
+                    floorName: floorNameController.text,
+                    name: classNameController.text,
+                    maxCapacity: maxCapacity,
+                    columns: int.tryParse(columnNumper.text) ?? 0,
+                    rows: controller.classSeats,
+                  );
+                  controller.numbers = 0;
+                  controller.update();
+                  // Get.back();
+                  // Navigator.pop(context);
+                  response
+                      ? MyFlashBar.showSuccess(
+                          "Class has been Added",
+                          "Class Create",
+                        )
+                      : MyFlashBar.showError(
+                          "Class Not Created",
+                          "Class Create",
+                        );
+                } else {
+                  // capacity not equal
+                  MyAwesomeDialogue(
+                    title: "Class Create",
+                    desc: "capacity not equal",
+                    dialogType: DialogType.error,
+                  ).showDialogue(context);
+                  log("$maxCapacity  :: $renderCapacity");
+                  // Get.back();
+                  // Navigator.pop(context);
+                }
+              },
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
