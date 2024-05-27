@@ -18,7 +18,7 @@ class ClassRoomController extends GetxController {
   int numbers = 0;
 
   bool isLoading = false;
-
+  bool isLoadingAddClassRoom = false;
   Future<bool> getClassesRooms() async {
     isLoading = true;
     bool gotData = false;
@@ -55,7 +55,7 @@ class ClassRoomController extends GetxController {
     required String name,
     required String buildName,
     required String floorName,
-    required int maxCapacity,
+    required String maxCapacity,
     required int columns,
     required List<int> rows,
   }) async {
@@ -98,5 +98,45 @@ class ClassRoomController extends GetxController {
   void onInit() {
     getClassesRooms();
     super.onInit();
+  }
+
+  Future<bool> addNewClass({
+    required String name,
+    required String floorName,
+    required String maxCapacity,
+    required int columns,
+    required List<int> rows,
+  }) async {
+    isLoadingAddClassRoom = true;
+    update();
+    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
+    Either<Failure, ClassRoomResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.schoolsClasses,
+      converter: ClassRoomResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: {
+        "Name": name,
+        "Max_Capacity": maxCapacity,
+        "Floor": floorName,
+        "Rows": rows.toString(),
+        "Columns": columns,
+        "Schools_ID": 1,
+        "Created_By": 1
+      },
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {},
+    );
+    isLoadingAddClassRoom = false;
+    update();
+    return true;
   }
 }

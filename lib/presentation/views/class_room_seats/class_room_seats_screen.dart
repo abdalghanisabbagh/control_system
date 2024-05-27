@@ -179,27 +179,39 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                     controller.classSeats.fold(0, (int p, c) => p + c);
 
                 if (renderCapacity == maxCapacity) {
-                  bool response = await controller.addNewClassRoom(
-                    buildName: buildingNameController.text,
-                    floorName: floorNameController.text,
-                    name: classNameController.text,
-                    maxCapacity: maxCapacity,
-                    columns: int.tryParse(columnNumper.text) ?? 0,
-                    rows: controller.classSeats,
-                  );
+                  await controller
+                      .addNewClass(
+                        name: classNameController.text,
+                        maxCapacity: maxCapacity.toString(),
+                        floorName: floorNameController.text,
+                        rows: controller.classSeats,
+                        columns: int.tryParse(columnNumper.text) ?? 0,
+                      )
+                      .then(
+                        (value) => value
+                            ? {
+                                MyFlashBar.showSuccess(
+                                  "Class has been Added",
+                                  "Class Create",
+                                ).show(context),
+                                controller.numbers = 0,
+                                controller.classSeats.clear(),
+                                classNameController.clear(),
+                                floorNameController.clear(),
+                                maxCapacityController.clear(),
+                                columnNumper.clear(),
+                                buildingNameController.clear(),
+                                controller.update(),
+                              }
+                            : MyFlashBar.showError(
+                                "Class Not Created",
+                                "Class Create",
+                              ).show(context),
+                      );
                   controller.numbers = 0;
-                  controller.update();
+                  //  controller.update();
                   // Get.back();
                   // Navigator.pop(context);
-                  response
-                      ? MyFlashBar.showSuccess(
-                          "Class has been Added",
-                          "Class Create",
-                        )
-                      : MyFlashBar.showError(
-                          "Class Not Created",
-                          "Class Create",
-                        );
                 } else {
                   // capacity not equal
                   MyAwesomeDialogue(

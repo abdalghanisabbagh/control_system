@@ -139,4 +139,8 @@ class AssetsManager {
   /// Assets for assetsLogosNisLogo22
   /// assets/logos/nis_logo22.png
   static const String assetsLogosNisLogo22 = "assets/logos/nis_logo22.png";
+
+  /// Assets for assetsImagesClassDesk
+  /// assets/images/class_desk.png
+  static const String assetsImagesClassDesk = "assets/images/class_desk.png";
 }
