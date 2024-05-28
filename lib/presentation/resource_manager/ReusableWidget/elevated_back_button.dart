@@ -5,12 +5,15 @@ import '../color_manager.dart';
 import '../styles_manager.dart';
 
 class ElevatedBackButton extends StatelessWidget {
-  const ElevatedBackButton({super.key});
+  const ElevatedBackButton({super.key, this.onPressed});
+
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        onPressed?.call();
         Get.back();
       },
       child: Container(
