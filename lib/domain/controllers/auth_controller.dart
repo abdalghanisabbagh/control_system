@@ -7,8 +7,10 @@ import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:control_system/domain/services/token_service.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart' hide Response;
 
+import '../../Data/Network/tools/app_error_handler.dart';
 import '../../Data/enums/req_type_enum.dart';
 
 class AuthController extends GetxController {
@@ -58,10 +60,10 @@ class AuthController extends GetxController {
     return isLogin.value;
   }
 
-  Future refreshToken() async {
+  Future<String?> refreshToken() async {
     ///TODO: refresh token
     if (tokenService.tokenModel == null) {
-      return;
+      return null;
     }
     String refresh = tokenService.tokenModel!.rToken;
     var dio = Dio(
@@ -69,13 +71,21 @@ class AuthController extends GetxController {
         baseUrl: AppLinks.baseUrl,
       ),
     );
-    var response =
-        await dio.post(AuthLinks.refresh, data: {'refreshToken': refresh});
 
+    // DioException Error in the networklayer can not be resolved by the library
+    var response = await dio
+        .post(AuthLinks.refresh, data: {'refreshToken': refresh}).onError(
+      (error, stackTrace) {
+        ErrorHandler.handle(error);
+        return Response(requestOptions: RequestOptions(path: 'error'));
+      },
+    );
+    debugPrint('refresh token:${response.data}');
     // if response is good we get new access token need to replace
     //  update refresh token in local storage and profile controller
-    TokenModel tokenModel = TokenModel.fromJson(response.data);
-    tokenService.saveTokenModelToHiveBox(tokenModel);
+
+    tokenService.saveNewAccessToken(response.data['data']);
+    return response.data['data'];
   }
 
   checkLogin() {
@@ -83,9 +93,13 @@ class AuthController extends GetxController {
     ///
     /// then forword to current page
 
+    // debugPrint(DateTime.now()
+    //     .difference(DateTime.tryParse(tokenService.tokenModel!.dToken)!)
+    //     .toString());
+
     if (tokenService.tokenModel != null) {
-      if (DateTime.tryParse(tokenService.tokenModel!.dToken)!
-              .difference(DateTime.now())
+      if (DateTime.now()
+              .difference(DateTime.tryParse(tokenService.tokenModel!.dToken)!)
               .inMinutes >
           55) {
         refreshToken();

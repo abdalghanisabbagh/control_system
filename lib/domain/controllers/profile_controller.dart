@@ -9,13 +9,16 @@ class ProfileController extends GetxController {
       _cachedUserProfile ?? getProfileFromHiveBox();
 
   void saveProfileToHiveBox(UserProfileModel cachedUserProfile) {
-    Hive.box('Profile').put("CachedUserProfile", cachedUserProfile.toJson());
+    Hive.box('Profile').putAll(cachedUserProfile.toJson());
   }
 
   UserProfileModel? getProfileFromHiveBox() {
     _cachedUserProfile = Hive.box('Profile').containsKey("CachedUserProfile")
-        ? UserProfileModel.fromJson(
-            Hive.box('Profile').get("CachedUserProfile"))
+        ? UserProfileModel(
+            iD: Hive.box('Profile').get('ID'),
+            fullName: Hive.box('Profile').get('Full_Name'),
+            userName: Hive.box('Profile').get('User_Name'),
+          )
         : null;
     return _cachedUserProfile;
   }

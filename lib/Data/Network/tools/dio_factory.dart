@@ -24,20 +24,11 @@ class DioFactory {
 
     TokenModel? tokenModel = tokenService.tokenModel;
 
-    String dtoken =
-        tokenService.tokenModel?.dToken ?? DateTime.now().toIso8601String();
-    DateTime? tokenTime = DateTime.tryParse(dtoken);
-    if (tokenTime!.difference(DateTime.now()).inMinutes > 55) {
-      /// TODO: get new access token
-
-      // Get.find<AuthController>().refreshToken();
-    }
-
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
       if (token != null || tokenModel?.aToken != null)
-        AUTHORIZATION: "Bearer ${token ?? tokenModel?.aToken}",
+        AUTHORIZATION: "Bearer ${token?.aToken ?? tokenModel?.aToken}",
     };
 
     dio.options = BaseOptions(
