@@ -214,11 +214,17 @@ class EditClassRoomWidget extends StatelessWidget {
                                     .then(
                                     (value) {
                                       value
-                                          ? MyFlashBar.showSuccess(
-                                              'The class has been updated successfully',
-                                              'Class Room',
-                                            ).show(context)
-                                          : null;
+                                          ? {
+                                              Get.back(),
+                                              MyFlashBar.showSuccess(
+                                                'The class has been updated successfully',
+                                                'Class Room',
+                                              ).show(context),
+                                            }
+                                          : MyFlashBar.showError(
+                                              'Could not update the class room',
+                                              'Something went wrong',
+                                            );
                                     },
                                   )
                                 : null;
