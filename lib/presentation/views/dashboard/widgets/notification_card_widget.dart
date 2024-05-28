@@ -36,7 +36,7 @@ class NotificationCardWidget extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "Today Will Create Exam Path",
                 style: TextStyle(
                   fontSize: 14,
