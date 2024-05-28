@@ -1,4 +1,4 @@
-class ExamMessionModel {
+class ExamMissionModel {
   int? subjectsID;
   int? controlMissionID;
   int? gradesID;
@@ -13,7 +13,7 @@ class ExamMessionModel {
   String? pdf;
   String? pdfV2;
 
-  ExamMessionModel({
+  ExamMissionModel({
     this.subjectsID,
     this.controlMissionID,
     this.gradesID,
@@ -29,7 +29,7 @@ class ExamMessionModel {
     this.pdfV2,
   });
 
-  ExamMessionModel.fromJson(Map<String, dynamic> json) {
+  ExamMissionModel.fromJson(Map<String, dynamic> json) {
     subjectsID = json['Subjects_ID'];
     controlMissionID = json['Control_Mission_ID'];
     gradesID = json['grades_ID'];
