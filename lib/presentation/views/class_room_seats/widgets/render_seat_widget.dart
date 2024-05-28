@@ -54,13 +54,13 @@ class RendarSeats extends StatelessWidget {
                                 ),
                                 Positioned(
                                   //       width: 0,
-                                  top: 25,
+                                  top: 40,
                                   //   left: 0,
-                                  right: (size.width * 0.1) / 2 - 10,
+                                  right: (size.width * 0.085) / 2,
                                   child: Text(
                                     controller.count.toString(),
-                                    style: nunitoRegular.copyWith(
-                                      color: ColorManager.bgSideMenu,
+                                    style: nunitoBold.copyWith(
+                                      color: ColorManager.black,
                                       fontSize: 35,
                                     ),
                                   ),
