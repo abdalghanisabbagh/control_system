@@ -28,7 +28,7 @@ class DioFactory {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
       if (token != null || tokenModel?.aToken != null)
-        AUTHORIZATION: "Bearer ${token ?? tokenModel?.aToken}",
+        AUTHORIZATION: "Bearer ${token?.aToken ?? tokenModel?.aToken}",
     };
 
     dio.options = BaseOptions(

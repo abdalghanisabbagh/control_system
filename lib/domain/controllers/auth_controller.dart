@@ -83,7 +83,9 @@ class AuthController extends GetxController {
     debugPrint('refresh token:${response.data}');
     // if response is good we get new access token need to replace
     //  update refresh token in local storage and profile controller
-    return null;
+
+    tokenService.saveNewAccessToken(response.data['data']);
+    return response.data['data'];
   }
 
   checkLogin() {
