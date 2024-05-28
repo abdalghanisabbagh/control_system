@@ -8,8 +8,9 @@ import 'package:control_system/domain/services/token_service.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 
+import '../../Data/Network/tools/app_error_handler.dart';
 import '../../Data/enums/req_type_enum.dart';
 
 class AuthController extends GetxController {
@@ -70,17 +71,17 @@ class AuthController extends GetxController {
         baseUrl: AppLinks.baseUrl,
       ),
     );
-    try {
-      var response =
-          await dio.post(AuthLinks.refresh, data: {'refreshToken': refresh});
-      debugPrint('refresh token:${response.data}');
-      // if response is good we get new access token need to replace
-      //  update refresh token in local storage and profile controller
-      // await tokenService.saveNewAccessToken(response.data['data']);
-    } catch (e) {
-      debugPrint(e.toString());
-      return null;
-    }
+
+    var response = await dio
+        .post(AuthLinks.refresh, data: {'refreshToken': refresh}).onError(
+      (error, stackTrace) {
+        ErrorHandler.handle(error);
+        return Response(requestOptions: RequestOptions(path: 'error'));
+      },
+    );
+    debugPrint('refresh token:${response.data}');
+    // if response is good we get new access token need to replace
+    //  update refresh token in local storage and profile controller
     return null;
   }
 
@@ -106,10 +107,6 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    debugPrint('auth controller init');
-    debugPrint((tokenService.tokenModel?.dToken).toString());
-    debugPrint((tokenService.tokenModel?.aToken).toString());
-    debugPrint((tokenService.tokenModel?.rToken).toString());
     checkLogin();
     super.onInit();
   }
