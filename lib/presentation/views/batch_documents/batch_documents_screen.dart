@@ -30,7 +30,7 @@ class BatchDocumentsScreen extends GetView<BatchDocumentsController> {
                         color: ColorManager.primary),
                     child: TabBar(
                         overlayColor:
-                            MaterialStateProperty.all(ColorManager.primary),
+                            WidgetStateProperty.all(ColorManager.primary),
                         labelStyle: nunitoLightStyle().copyWith(fontSize: 30),
                         automaticIndicatorColorAdjustment: true,
                         labelColor: ColorManager.primary,

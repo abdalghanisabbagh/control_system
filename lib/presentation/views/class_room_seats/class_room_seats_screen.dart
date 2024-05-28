@@ -2,16 +2,12 @@ import 'dart:developer';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/class_room_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../resource_manager/ReusableWidget/header_widget.dart';
