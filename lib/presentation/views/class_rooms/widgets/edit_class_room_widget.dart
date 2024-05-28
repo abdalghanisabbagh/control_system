@@ -73,6 +73,7 @@ class EditClassRoomWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: MytextFormFiled(
+                    isNumber: true,
                     enableBorderColor: ColorManager.primary,
                     controller: maxCapacityController
                       ..text = classRoom.maxCapacity.toString(),
