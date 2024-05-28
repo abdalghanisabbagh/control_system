@@ -32,7 +32,7 @@ class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "All Admin",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -174,7 +174,7 @@ class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
       child: Text(
         text,
         style:
-            TextStyle(fontWeight: FontWeight.bold, color: ColorManager.black),
+            const TextStyle(fontWeight: FontWeight.bold, color: ColorManager.black),
       ),
     );
   }

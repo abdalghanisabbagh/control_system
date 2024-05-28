@@ -8,7 +8,7 @@ class ColorManager {
   static Color darkGrey = const Color(0xaa858585);
   static Color cardBackgroundColor = const Color(0xffFBFBFB);
   static Color darkGrey2 = const Color(0xff252525);
-  static const Color grey = const Color(0x99858585);
+  static const Color grey = Color(0x99858585);
   static Color greyA8 = const Color(0xffA8A8A8);
   static Color dateGrey = const Color(0xff757575);
   static Color lightGrey = const Color(0xffD6D7D9);

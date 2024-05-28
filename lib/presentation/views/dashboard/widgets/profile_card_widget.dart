@@ -71,7 +71,7 @@ class ProfileCardWidget extends StatelessWidget {
           Text(text),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: ColorManager.black,
             ),

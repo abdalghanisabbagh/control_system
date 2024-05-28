@@ -110,9 +110,9 @@ ThemeData getApplicationTheme() {
       ),
 
       /// enabled border style
-      enabledBorder: OutlineInputBorder(
+      enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1),
-          borderRadius: const BorderRadius.all(Radius.circular(AppSize.s4))),
+          borderRadius: BorderRadius.all(Radius.circular(AppSize.s4))),
       // disabled border style
       disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
