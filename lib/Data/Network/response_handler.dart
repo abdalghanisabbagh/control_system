@@ -1,15 +1,19 @@
+import 'package:control_system/Data/Models/token/token_model.dart';
 import 'package:control_system/Data/Network/tools/app_error_handler.dart';
 import 'package:control_system/Data/enums/req_type_enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response;
 
+import '../../domain/controllers/auth_controller.dart';
+import '../../domain/services/token_service.dart';
 import 'tools/dio_factory.dart';
 import 'tools/failure_model.dart';
 
 class ResponseHandler<T> {
   ResponseHandler() : _dio = DioFactory().getDio();
 
-  final Dio _dio;
+  Dio _dio;
 
   Future<Either<Failure, T>> getResponse({
     required String path,
@@ -18,6 +22,23 @@ class ResponseHandler<T> {
     Map<String, dynamic>? params,
     Map<String, dynamic>? body,
   }) async {
+    TokenService tokenService = Get.find<TokenService>();
+    String dtoken =
+        tokenService.tokenModel?.dToken ?? DateTime.now().toIso8601String();
+    DateTime? tokenTime = DateTime.tryParse(dtoken);
+    if (DateTime.now().difference(tokenTime!).inSeconds > 55) {
+      String? newAccessToken = await Get.find<AuthController>().refreshToken();
+      _dio = DioFactory().getDio(
+        token: newAccessToken != null
+            ? TokenModel(
+                aToken: newAccessToken,
+                dToken: dtoken,
+                rToken: tokenService.tokenModel!.rToken,
+              )
+            : null,
+      );
+    }
+
     switch (type) {
       case ReqTypeEnum.GET:
         return await _get(path, converter, params, body);

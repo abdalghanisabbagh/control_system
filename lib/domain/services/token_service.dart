@@ -7,6 +7,13 @@ class TokenService extends GetxController {
 
   TokenModel? get tokenModel => _tokenModel ?? getTokenModelFromHiveBox();
 
+  Future<void> saveNewAccessToken(String newAccessToken) async {
+    _tokenModel = tokenModel;
+    await Hive.box('Token').put('aToken', newAccessToken);
+    await Hive.box('Token').put('dToken', DateTime.now().toIso8601String());
+    await Hive.box('Token').flush();
+  }
+
   void saveTokenModelToHiveBox(TokenModel tokenModel) {
     Hive.box('Token').putAll(tokenModel.toJson());
   }
