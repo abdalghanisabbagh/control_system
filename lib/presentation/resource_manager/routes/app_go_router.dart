@@ -31,7 +31,6 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.loginScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
-
           AuthBindings().dependencies();
           return const LoginScreen();
         },
