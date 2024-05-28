@@ -68,7 +68,7 @@ class LoginScreen extends GetView<AuthController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.copyright,
                       color: ColorManager.primary,
                       size: 24,

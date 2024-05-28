@@ -37,7 +37,7 @@ class ProctorScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    MyDialogs.showAddDialog(
+                    MyDialogs.showDialog(
                       context,
                       const AddNewProctor(),
                     );

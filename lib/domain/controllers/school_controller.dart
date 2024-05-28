@@ -82,7 +82,7 @@ class SchoolController extends GetxController {
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/${selectedSchoolId}",
+      path: "${SchoolsLinks.gradesSchools}/$selectedSchoolId",
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

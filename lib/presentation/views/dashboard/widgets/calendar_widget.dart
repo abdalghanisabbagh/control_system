@@ -48,7 +48,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                             DateTime(_focusedDay.year, _focusedDay.month - 1);
                       });
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.chevron_left,
                       color: ColorManager.black,
                     ),
@@ -62,7 +62,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         },
                       );
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.chevron_right,
                       color: ColorManager.black,
                     ),

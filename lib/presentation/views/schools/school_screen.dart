@@ -27,8 +27,7 @@ class SchoolsScreen extends GetView<SchoolController> {
                 IconButton(
                   tooltip: "Add new School",
                   onPressed: () {
-                    MyDialogs.showAddDialog(
-                        context, const AddNewSchoolWidget());
+                    MyDialogs.showDialog(context, const AddNewSchoolWidget());
                   },
                   icon: const Icon(Icons.school),
                 ),
