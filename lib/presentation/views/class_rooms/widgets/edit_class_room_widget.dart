@@ -190,8 +190,17 @@ class EditClassRoomWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Expanded(
-                    child: ElevatedBackButton(),
+                  Expanded(
+                    child:
+                        GetBuilder<ClassRoomController>(builder: (controller) {
+                      return ElevatedBackButton(
+                        onPressed: () {
+                          controller.count = 1;
+                          controller.numbers = 0;
+                          controller.classSeats.clear();
+                        },
+                      );
+                    }),
                   ),
                   const SizedBox(
                     width: 20,
@@ -214,7 +223,6 @@ class EditClassRoomWidget extends StatelessWidget {
                                     .then(
                                     (value) {
                                       controller.count = 1;
-
                                       value
                                           ? {
                                               Get.back(),
