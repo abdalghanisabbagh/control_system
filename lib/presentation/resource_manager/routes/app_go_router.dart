@@ -74,6 +74,7 @@ class AppGoRouter {
           return const ClassRoomsScreen();
         },
         onExit: (context, state) {
+          // Get.find<ClassRoomController>().count = 1;
           return true;
         },
         routes: [
@@ -84,6 +85,7 @@ class AppGoRouter {
               return ClassRoomSeatsScreen();
             },
             onExit: (context, state) {
+              Get.find<ClassRoomController>().count = 1;
               return true;
             },
           ),

@@ -17,6 +17,8 @@ class ClassRoomController extends GetxController {
   int numbers = 0;
   bool isLoading = false;
   bool isLoadingAddClassRoom = false;
+  int count = 1;
+
   Future<bool> getClassesRooms() async {
     isLoading = true;
     bool gotData = false;
@@ -121,6 +123,7 @@ class ClassRoomController extends GetxController {
       },
       (r) {},
     );
+    count = 1;
     isLoadingAddClassRoom = false;
     update();
     return true;

@@ -146,5 +146,5 @@ class AssetsManager {
 
   /// Assets for assetsImagesbackground
   /// assets/images/background.png
-  static const String assetsImagesbackground = "assets/images/background.jpg";
+  static const String assetsImagesbackground = "assets/images/background.png";
 }

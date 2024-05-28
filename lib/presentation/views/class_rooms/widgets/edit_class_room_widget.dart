@@ -213,6 +213,8 @@ class EditClassRoomWidget extends StatelessWidget {
                                   )
                                     .then(
                                     (value) {
+                                      controller.count = 1;
+
                                       value
                                           ? {
                                               Get.back(),
