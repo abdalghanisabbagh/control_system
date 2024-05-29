@@ -64,6 +64,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                           return SizedBox(
                             width: 500,
                             child: MultiSelectDropDownView(
+                              hintText: "Select Education Year",
                               onOptionSelected: (selectedItem) {
                                 //  controller.setSelectedItem(selectedItem[0]);
                               },

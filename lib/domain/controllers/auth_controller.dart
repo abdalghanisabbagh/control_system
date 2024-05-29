@@ -21,7 +21,8 @@ class AuthController extends GetxController {
   RxBool showPass = true.obs;
 
   RxBool isLoading = false.obs;
-  List schools = [];
+
+//  List schools = [];
   setShowPass() {
     showPass.value = !showPass.value;
   }
@@ -57,6 +58,7 @@ class AuthController extends GetxController {
     });
 
     isLoading.value = false;
+    update();
     return isLogin.value;
   }
 

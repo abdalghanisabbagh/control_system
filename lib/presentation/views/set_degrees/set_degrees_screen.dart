@@ -1,10 +1,12 @@
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../domain/controllers/barcodeController/barcode_controller.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 
-class SetDegreesScreen extends StatelessWidget {
+class SetDegreesScreen extends GetView<BRCodeController> {
   const SetDegreesScreen({super.key});
   @override
   Widget build(BuildContext context) {

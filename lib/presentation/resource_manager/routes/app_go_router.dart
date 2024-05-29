@@ -152,6 +152,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.studentScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          StudentsBindings().dependencies();
           return const StudentScreen();
         },
         onExit: (context, state) {

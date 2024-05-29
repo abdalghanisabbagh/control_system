@@ -1,3 +1,4 @@
+import 'package:control_system/domain/controllers/studentsController/addNewStudentController.dart';
 import 'package:get/get.dart';
 
 import '../controllers/index.dart';
@@ -97,6 +98,16 @@ class ClassRoomBindings extends Bindings {
   void dependencies() {
     Get.lazyPut<ClassRoomController>(
       () => ClassRoomController(),
+      fenix: true,
+    );
+  }
+}
+
+class StudentsBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<AddNewStudentController>(
+      () => AddNewStudentController(),
       fenix: true,
     );
   }

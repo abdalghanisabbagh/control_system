@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class MultiSelectDropDownView extends StatelessWidget {
-  const MultiSelectDropDownView({
-    super.key,
-    this.onOptionSelected,
-    required this.options,
-    this.searchEnabled = false,
-    this.multiSelect = false,
-    this.showChipSelect = false,
-  });
+  const MultiSelectDropDownView(
+      {super.key,
+      this.onOptionSelected,
+      required this.options,
+      this.searchEnabled = false,
+      this.multiSelect = false,
+      this.showChipSelect = false,
+      this.hintText = "Search"});
 
   final void Function(List<ValueItem<dynamic>>)? onOptionSelected;
   final List<ValueItem<dynamic>> options;
   final bool searchEnabled;
   final bool multiSelect;
   final bool showChipSelect;
+  final String hintText;
   @override
   Widget build(BuildContext context) {
     return MultiSelectDropDown(
@@ -25,7 +26,6 @@ class MultiSelectDropDownView extends StatelessWidget {
       options: options,
       selectionType: multiSelect ? SelectionType.multi : SelectionType.single,
       chipConfig: const ChipConfig(
-        
         wrapType: WrapType.wrap,
         autoScroll: true,
       ),
@@ -34,6 +34,7 @@ class MultiSelectDropDownView extends StatelessWidget {
       searchEnabled: searchEnabled,
       searchLabel: "Search",
       showChipInSingleSelectMode: showChipSelect ? true : false,
+      hint: hintText,
     );
   }
 }

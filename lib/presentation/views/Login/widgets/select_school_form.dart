@@ -1,9 +1,12 @@
 import 'package:control_system/domain/controllers/auth_controller.dart';
+import 'package:control_system/domain/controllers/index.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class SelectSchoolForm extends GetView<AuthController> {
@@ -40,67 +43,72 @@ class SelectSchoolForm extends GetView<AuthController> {
                     )),
                 const Divider(),
                 Expanded(
-                  child: GetBuilder<AuthController>(
-                    builder: (_) => controller.schools.isEmpty
-                        ? const Center(child: Text("No School"))
-                        : Center(
-                            child: ListView.builder(
-                                itemCount: controller.schools.length,
-                                itemBuilder: (context, index) {
-                                  var currentSchool = controller.schools[index];
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: ColorManager.bgSideMenu,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(25),
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: ColorManager.white
-                                                .withOpacity(0.2),
-                                            spreadRadius: 4,
-                                            blurRadius: 7,
-                                            offset: const Offset(0, 3),
+                  child: GetBuilder<SchoolController>(
+                    init: SchoolController(),
+                    builder: (controller) => controller.isLoadingSchools
+                        ? const Center(child: CircularProgressIndicator())
+                        : controller.schools.isEmpty
+                            ? const Center(child: Text('No Schools available'))
+                            : Center(
+                                child: ListView.builder(
+                                    itemCount: controller.schools.length,
+                                    itemBuilder: (context, index) {
+                                      var currentSchool =
+                                          controller.schools[index];
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: ColorManager.bgSideMenu,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(25),
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: ColorManager.white
+                                                    .withOpacity(0.2),
+                                                spreadRadius: 4,
+                                                blurRadius: 7,
+                                                offset: const Offset(0, 3),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      child: ListTile(
-                                        leading: Icon(
-                                          Icons.school,
-                                          color: ColorManager.white,
-                                        ),
-                                        focusColor: ColorManager.bgSideMenu,
-                                        hoverColor: ColorManager.bgSideMenu,
-                                        onTap: () {
-                                          if (kDebugMode) {
-                                            print(currentSchool.education!.id
-                                                .toString());
-                                          }
-                                          Hive.box('School')
-                                              .put('Id', currentSchool.id);
-                                          Hive.box('School')
-                                              .put('Name', currentSchool.name);
-
-                                          MyFlashBar.showSuccess(
-                                              "Select School",
-                                              currentSchool.name);
-
-                                          // Get.offAndToNamed(
-                                          //   Routes.dashboard,
-                                          // );
-                                        },
-                                        title: Text(currentSchool.name,
-                                            style: nunitoRegularStyle(
+                                          child: ListTile(
+                                            leading: Icon(
+                                              Icons.school,
                                               color: ColorManager.white,
-                                              fontSize: 16,
-                                            )),
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          ),
+                                            ),
+                                            focusColor: ColorManager.bgSideMenu,
+                                            hoverColor: ColorManager.bgSideMenu,
+                                            onTap: () {
+                                              if (kDebugMode) {
+                                                // print(currentSchool.education!.id
+                                                //     .toString());
+                                              }
+                                              Hive.box('School')
+                                                  .put('Id', currentSchool.iD);
+                                              Hive.box('School').put(
+                                                  'Name', currentSchool.name);
+
+                                              MyFlashBar.showSuccess(
+                                                  "Select School",
+                                                  currentSchool.name!);
+                                              context.goNamed(
+                                                  AppRoutesNamesAndPaths
+                                                      .dashBoardScreenName);
+                                            },
+                                            title:
+                                                Text(currentSchool.name ?? "",
+                                                    style: nunitoRegularStyle(
+                                                      color: ColorManager.white,
+                                                      fontSize: 16,
+                                                    )),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ),
                   ),
                 ),
               ],

@@ -1,5 +1,7 @@
 import 'package:control_system/app/extensions/device_type_extension.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:control_system/presentation/views/student/widgets/add_single_student_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -46,7 +48,7 @@ class HeaderStudentWidget extends StatelessWidget {
               tooltip: "Add New Student",
               icon: const Icon(FontAwesomeIcons.userPlus),
               onPressed: () {
-                // MyDialogs.showAddDialog(context, AddSinglStudent());
+                MyDialogs.showDialog(context, AddSingleStudentWidget());
               },
             ),
             IconButton(

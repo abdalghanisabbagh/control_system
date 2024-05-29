@@ -24,8 +24,7 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
                   "Cover Sheet",
-                  style: nunitoBoldStyle()
-                      .copyWith(fontSize: 30, color: ColorManager.bgSideMenu),
+                  style: nunitoBoldStyle().copyWith(fontSize: 30),
                 ),
               ),
             ),

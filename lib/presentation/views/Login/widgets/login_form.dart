@@ -188,10 +188,6 @@ void _login(
     login(
       username,
       password,
-    ).then((value) => value
-        ? context.goNamed(
-            AppRoutesNamesAndPaths.dashBoardScreenName,
-          )
-        : null);
+    );
   }
 }

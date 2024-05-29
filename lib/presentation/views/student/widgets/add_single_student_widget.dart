@@ -1,8 +1,10 @@
+import 'package:control_system/domain/controllers/studentsController/addNewStudentController.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddSingleStudentWidget extends StatelessWidget {
+class AddSingleStudentWidget extends GetView<AddNewStudentController> {
   AddSingleStudentWidget({super.key});
 
   final TextEditingController blbIdController = TextEditingController();
@@ -43,38 +45,27 @@ class AddSingleStudentWidget extends StatelessWidget {
               height: 20,
             ),
             // grades
-            // DropdownButtonFormField<GradeResponse>(
-            //   value: selectedGrade,
-            //   decoration: InputDecoration(
-            //     focusedBorder: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(8),
-            //     ),
-            //     enabledBorder: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(8),
-            //     ),
-            //   ),
-            //   hint: Text(
-            //     "Select grade",
-            //     style: nunitoRegular.copyWith(
-            //       color: ColorManager.black,
-            //     ),
-            //   ),
-            //   items: gradesControllers.grades.map(
-            //     (GradeResponse selected) {
-            //       return DropdownMenuItem(
-            //         value: selected,
-            //         child: Row(
-            //           children: [
-            //             Text(selected.name),
-            //           ],
-            //         ),
-            //       );
-            //     },
-            //   ).toList(),
-            //   onChanged: (v) {
-            //     selectedGrade = v!;
-            //   },
-            // ),
+            GetBuilder<AddNewStudentController>(
+              builder: (controller) {
+                if (controller.isLoadingGrades) {
+                  return const CircularProgressIndicator();
+                }
+
+                if (controller.options.isEmpty) {
+                  return const Text('No items available');
+                }
+
+                return SizedBox(
+                  width: 500,
+                  child: MultiSelectDropDownView(
+                    onOptionSelected: (selectedItem) {
+                      // controller.setSelectedItem(selectedItem[0]);
+                    },
+                    options: controller.options,
+                  ),
+                );
+              },
+            ),
             const SizedBox(
               height: 10,
             ),
