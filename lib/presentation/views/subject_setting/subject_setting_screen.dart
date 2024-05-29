@@ -88,6 +88,15 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                             )
                           : SearchableList<SubjectResModel>(
                               initialList: controller.subjects,
+                              emptyWidget: Center(
+                                child: Text(
+                                  "No data found",
+                                  style: nunitoBold.copyWith(
+                                    color: ColorManager.bgSideMenu,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                               filter: (value) => controller.subjects
                                   .where((element) => element.name!
                                       .toLowerCase()
