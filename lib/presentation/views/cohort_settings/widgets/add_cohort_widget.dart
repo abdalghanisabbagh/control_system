@@ -79,38 +79,36 @@ class AddCohortWidget extends StatelessWidget {
                         width: 20,
                       ),
                       Expanded(
-                        child: Expanded(
-                          child: ElevatedAddButton(
-                            onPressed: () async {
-                              if (editingController.text != "") {
-                                int found = controller.cohorts.indexWhere(
-                                  (p0) => p0.name == editingController.text,
-                                );
-                                if (found > -1) {
-                                  log('founded');
-                                } else {
-                                  controller
-                                      .addnewCohort(editingController.text)
-                                      .then(
-                                    (value) {
-                                      value
-                                          ? {
-                                              context.pop(),
-                                              MyFlashBar.showSuccess(
-                                                "The Cohort has been added successfully",
-                                                "Success",
-                                              ).show(context),
-                                            }
-                                          : null;
-                                    },
-                                  );
-                                }
+                        child: ElevatedAddButton(
+                          onPressed: () async {
+                            if (editingController.text != "") {
+                              int found = controller.cohorts.indexWhere(
+                                (p0) => p0.name == editingController.text,
+                              );
+                              if (found > -1) {
+                                log('founded');
                               } else {
-                                MyFlashBar.showError(
-                                    "enter cohort name", "Error");
+                                controller
+                                    .addnewCohort(editingController.text)
+                                    .then(
+                                  (value) {
+                                    value
+                                        ? {
+                                            context.pop(),
+                                            MyFlashBar.showSuccess(
+                                              "The Cohort has been added successfully",
+                                              "Success",
+                                            ).show(context),
+                                          }
+                                        : null;
+                                  },
+                                );
                               }
-                            },
-                          ),
+                            } else {
+                              MyFlashBar.showError(
+                                  "enter cohort name", "Error");
+                            }
+                          },
                         ),
                       ),
                     ],
