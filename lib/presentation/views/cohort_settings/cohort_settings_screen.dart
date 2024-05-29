@@ -89,6 +89,20 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                               )
                             : SearchableList<CohortResModel>(
                                 initialList: controller.cohorts,
+                                emptyWidget: Center(
+                                  child: Text(
+                                    "No data found",
+                                    style: nunitoBold.copyWith(
+                                      color: ColorManager.bgSideMenu,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                filter: (value) => controller.cohorts
+                                    .where((element) => element.name!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()))
+                                    .toList(),
                                 itemBuilder: (CohortResModel item) {
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
