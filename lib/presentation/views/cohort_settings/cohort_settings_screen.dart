@@ -169,38 +169,38 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                                 .width *
                                                             .6,
                                                     height: 50,
-                                                    // child: ListView.builder(
-                                                    //   scrollDirection:
-                                                    //       Axis.horizontal,
-                                                    //   itemCount: controller
-                                                    //       .cohorts[index]
-                                                    //       .subjects!
-                                                    //       .length,
-                                                    //   itemBuilder:
-                                                    //       (context, i) {
-                                                    //     return Padding(
-                                                    //       padding:
-                                                    //           const EdgeInsets
-                                                    //               .symmetric(
-                                                    //               horizontal:
-                                                    //                   5),
-                                                    //       child: Text(
-                                                    //         controller
-                                                    //             .cohorts[
-                                                    //                 index]
-                                                    //             .subjects![
-                                                    //                 i]
-                                                    //             .name,
-                                                    //         style:                                                             nunitoRegular
-                                                    //             .copyWith(
-                                                    //                 color: ColorManager
-                                                    //                     .bgSideMenu,
-                                                    //                 fontSize:
-                                                    //                     14),
-                                                    //       ),
-                                                    //     );
-                                                    //   },
-                                                    // ),
+                                                    child: ListView.builder(
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      itemCount: item
+                                                          .cohortsSubjects!
+                                                          .cohortHasSubjects!
+                                                          .length,
+                                                      itemBuilder:
+                                                          (context, i) {
+                                                        return Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      5),
+                                                          child: Text(
+                                                            item
+                                                                .cohortsSubjects!
+                                                                .cohortHasSubjects![
+                                                                    i]
+                                                                .subjects!
+                                                                .name!,
+                                                            style: nunitoRegular
+                                                                .copyWith(
+                                                                    color: ColorManager
+                                                                        .bgSideMenu,
+                                                                    fontSize:
+                                                                        14),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
                                                   ),
                                                   Row(
                                                     children: [
