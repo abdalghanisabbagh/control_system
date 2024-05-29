@@ -42,7 +42,6 @@ class AddNewSchoolWidget extends GetView<SchoolController> {
               width: 500,
               child: MultiSelectDropDownView(
                 onOptionSelected: (selectedItem) {
-                  // print('Selected item value: ${selectedItem[0].value}');
                   controller.setSelectedItem(selectedItem[0]);
                 },
                 options: controller.options,

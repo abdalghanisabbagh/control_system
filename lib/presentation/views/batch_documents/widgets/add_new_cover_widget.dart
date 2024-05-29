@@ -1,4 +1,5 @@
 import 'package:control_system/domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,6 +50,29 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      GetBuilder<CreateCoversSheetsController>(
+                        builder: (controller) {
+                          if (controller.isLoadingGetEducationYear) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+
+                          if (controller.options.isEmpty) {
+                            return const Text('No items available');
+                          }
+
+                          return SizedBox(
+                            width: 500,
+                            child: MultiSelectDropDownView(
+                              onOptionSelected: (selectedItem) {
+                                //  controller.setSelectedItem(selectedItem[0]);
+                              },
+                              showChipSelect: true,
+                              options: controller.options,
+                            ),
+                          );
+                        },
+                      ),
 //// select Education Year
                       // Obx(() => controller
                       //         .creatMissionController.yearList.isEmpty
@@ -365,7 +389,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                                 color: ColorManager.bgSideMenu,
                                 borderRadius: BorderRadius.circular(11)),
                             child: Center(
-                              child: Text("Add", style: nunitoRegularStyle()),
+                              child: Text("Add", style: nunitoSemiBoldStyle()),
                             )),
                       )
                     ],

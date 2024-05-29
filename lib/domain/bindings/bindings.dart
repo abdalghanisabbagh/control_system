@@ -38,10 +38,8 @@ class BatchDocumentsBindings extends Bindings {
       () => BatchDocumentsController(),
       fenix: true,
     );
-    Get.lazyPut<CreateCoversSheetsController>(
-      () => CreateCoversSheetsController(),
-      fenix: true,
-    );
+    Get.put(CreateCoversSheetsController());
+
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }
 }

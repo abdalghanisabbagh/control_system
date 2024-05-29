@@ -156,6 +156,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                     ),
                     InkWell(
                       onTap: () {
+                        //  controller.count=1;
                         _formKey.currentState!.validate()
                             ? controller.update()
                             : null;
