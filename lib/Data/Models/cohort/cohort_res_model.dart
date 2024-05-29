@@ -1,3 +1,5 @@
+import 'cohorts_subjects_res_model.dart';
+
 class CohortResModel {
   int? iD;
   int? schoolTypeID;
@@ -7,6 +9,7 @@ class CohortResModel {
   int? updatedBy;
   DateTime? updatedAt;
   int? active;
+  CohortsSubjectsResModel? cohortsSubjects;
 
   CohortResModel({
     this.iD,
@@ -16,6 +19,7 @@ class CohortResModel {
     this.createdAt,
     this.updatedBy,
     this.updatedAt,
+    this.cohortsSubjects,
     this.active,
   });
 
@@ -27,6 +31,9 @@ class CohortResModel {
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
+    cohortsSubjects = json['cohort_has_subjects'] != null
+        ? CohortsSubjectsResModel.fromJson(json['cohort_has_subjects'])
+        : null;
     active = json['Active'];
   }
 
