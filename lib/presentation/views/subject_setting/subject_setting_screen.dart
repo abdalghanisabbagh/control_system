@@ -163,7 +163,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      "Active  ",
+                                                      "In Exam ",
                                                       style: nunitoRegular
                                                           .copyWith(
                                                         color: ColorManager
