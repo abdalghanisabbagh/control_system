@@ -67,6 +67,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                               onOptionSelected: (selectedItem) {
                                 //  controller.setSelectedItem(selectedItem[0]);
                               },
+                              showChipSelect: true,
                               options: controller.options,
                             ),
                           );
@@ -388,7 +389,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                                 color: ColorManager.bgSideMenu,
                                 borderRadius: BorderRadius.circular(11)),
                             child: Center(
-                              child: Text("Add", style: nunitoRegularStyle()),
+                              child: Text("Add", style: nunitoSemiBoldStyle()),
                             )),
                       )
                     ],
