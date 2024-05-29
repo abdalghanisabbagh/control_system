@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
-import 'package:control_system/domain/controllers/cohorts_settings_controller.dart';
+import 'package:control_system/Data/Models/subject/subject_res_model.dart';
+import 'package:control_system/domain/controllers/index.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
@@ -8,6 +9,7 @@ import 'package:control_system/presentation/resource_manager/assets_manager.dart
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import "package:control_system/presentation/views/cohort_settings/widgets/add_cohort_widget.dart";
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
@@ -204,154 +206,262 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                   ),
                                                   Row(
                                                     children: [
-                                                      // InkWell(
-                                                      //   onTap: () {
-                                                      //     SubjectsControllers
-                                                      //         subjCont =
-                                                      //         Get.find();
+                                                      InkWell(
+                                                        onTap: () {
+                                                          SubjectsController
+                                                              subjCont =
+                                                              SubjectsController();
 
-                                                      //     MyDialogs
-                                                      //         .showAddDialog(
-                                                      //             context,
-                                                      //             Column(
-                                                      //               mainAxisSize:
-                                                      //                   MainAxisSize.min,
-                                                      //               children: [
-                                                      //                 Text(controller
-                                                      //                     .cohorts[index]
-                                                      //                     .name),
-                                                      //                 const Divider(),
-                                                      //                 DropdownSearch<
-                                                      //                     SubjectResponse>.multiSelection(
-                                                      //                   popupProps:
-                                                      //                       PopupPropsMultiSelection.menu(
-                                                      //                     searchFieldProps: TextFieldProps(decoration: InputDecoration(hintText: "search", hintStyle: nunitoReguler.copyWith(color: Colors.black, fontSize: 16), focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: ColorManager.black), borderRadius: BorderRadius.circular(10)), enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: ColorManager.black), borderRadius: BorderRadius.circular(10),),), cursorColor: ColorManager.black,),
-                                                      //                     showSearchBox: true,
-                                                      //                   ),
-                                                      //                   selectedItems:
-                                                      //                       subjCont.subjectsController,
-                                                      //                   items:
-                                                      //                       subjCont.subjects,
-                                                      //                   itemAsString: (item) =>
-                                                      //                       item.name,
-                                                      //                   dropdownDecoratorProps:
-                                                      //                       DropDownDecoratorProps(
-                                                      //                     dropdownSearchDecoration: InputDecoration(focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: ColorManager.glodenColor), borderRadius: BorderRadius.circular(10)), border: OutlineInputBorder(borderSide: BorderSide(color: ColorManager.glodenColor), borderRadius: BorderRadius.circular(10)), hintText: "Select Subject", hintStyle: nunitoReguler.copyWith(fontSize: 16, color: ColorManager.black),),
-                                                      //                   ),
-                                                      //                   onChanged:
-                                                      //                       ((value) {
-                                                      //                     subjCont.subjectsController.value = value;
-                                                      //                     if (kDebugMode) {
-                                                      //                       print(subjCont.subjectsController);
-                                                      //                     }
-                                                      //                   }),
-                                                      //                 ),
-                                                      //                 const SizedBox(
-                                                      //                   height:
-                                                      //                       20,
-                                                      //                 ),
-                                                      //                 InkWell(
-                                                      //                   onTap:
-                                                      //                       () async {
-                                                      //                     subjCont.addLoading.value = true;
+                                                          MyDialogs.showDialog(
+                                                            context,
+                                                            Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                Text(
+                                                                  item.name!,
+                                                                ),
+                                                                const Divider(),
+                                                                DropdownSearch<
+                                                                    SubjectResModel>.multiSelection(
+                                                                  popupProps:
+                                                                      PopupPropsMultiSelection
+                                                                          .menu(
+                                                                    searchFieldProps:
+                                                                        TextFieldProps(
+                                                                      decoration:
+                                                                          InputDecoration(
+                                                                        hintText:
+                                                                            "search",
+                                                                        hintStyle: nunitoRegular.copyWith(
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize: 16),
+                                                                        focusedBorder:
+                                                                            OutlineInputBorder(
+                                                                          borderSide:
+                                                                              const BorderSide(color: ColorManager.black),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                        ),
+                                                                        enabledBorder:
+                                                                            OutlineInputBorder(
+                                                                          borderSide:
+                                                                              const BorderSide(color: ColorManager.black),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                        ),
+                                                                      ),
+                                                                      cursorColor:
+                                                                          ColorManager
+                                                                              .black,
+                                                                    ),
+                                                                    showSearchBox:
+                                                                        true,
+                                                                  ),
+                                                                  // selectedItems:
+                                                                  //     subjCont
+                                                                  //         .subjectsController,
+                                                                  items: subjCont
+                                                                      .subjects,
+                                                                  itemAsString:
+                                                                      (item) =>
+                                                                          item.name!,
+                                                                  dropdownDecoratorProps:
+                                                                      DropDownDecoratorProps(
+                                                                    dropdownSearchDecoration:
+                                                                        InputDecoration(
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(color: ColorManager.glodenColor),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                      ),
+                                                                      border:
+                                                                          OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(color: ColorManager.glodenColor),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10),
+                                                                      ),
+                                                                      hintText:
+                                                                          "Select Subject",
+                                                                      hintStyle: nunitoRegular.copyWith(
+                                                                          fontSize:
+                                                                              16,
+                                                                          color:
+                                                                              ColorManager.black),
+                                                                    ),
+                                                                  ),
+                                                                  onChanged:
+                                                                      ((value) {
+                                                                    // subjCont
+                                                                    //     .subjectsController
+                                                                    //     .value = value;
+                                                                    // if (kDebugMode) {
+                                                                    //   print(subjCont
+                                                                    // .subjectsController);
+                                                                    // }
+                                                                  }),
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                InkWell(
+                                                                  onTap:
+                                                                      () async {
+                                                                    // subjCont
+                                                                    //     .addLoading
+                                                                    //     .value = true;
 
-                                                      //                     // await controller.addNewsubjectToCohort(subjCont.subjectsController, controller.cohorts[index].id);
-                                                      //                     subjCont.subjectsController.clear();
-                                                      //                     subjCont.addLoading.value = false;
-                                                      //                     // ignore: use_build_context_synchronously
-                                                      //                     Navigator.pop(context);
-                                                      //                   },
-                                                      //                   child: subjCont.addLoading.value == true
-                                                      //                       ? const Center(
-                                                      //                           child: CircularProgressIndicator(),
-                                                      //                         )
-                                                      //                       : Container(
-                                                      //                           height: 50,
-                                                      //                           width: double.infinity,
-                                                      //                           decoration: BoxDecoration(color: ColorManager.bgSideMenu, borderRadius: BorderRadius.circular(10),),
-                                                      //                           child: Center(
-                                                      //                               child: Text(
-                                                      //                             "Add Subjects",
-                                                      //                             style: nunitoRegular.copyWith(color: Colors.white),
-                                                      //                           ),),
-                                                      //                         ),
-                                                      //                 ),
-                                                      //                 SizedBox(
-                                                      //                   height:
-                                                      //                       300,
-                                                      //                   width:
-                                                      //                       200,
-                                                      //                   child:
-                                                      //                       ListView.builder(
-                                                      //                     itemCount: controller.cohorts[index].subjects!.length,
-                                                      //                     itemBuilder: (context, i) {
-                                                      //                       return Padding(
-                                                      //                         padding: const EdgeInsets.symmetric(vertical: 10),
-                                                      //                         child: Row(
-                                                      //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      //                           children: [
-                                                      //                             Text(controller.cohorts[index].subjects![i].name),
-                                                      //                             IconButton(
-                                                      //                                 onPressed: () {
-                                                      //                                   //delete supject from cohort
-                                                      //                                   controller.deleteubjectFromCohort(controller.cohorts[index].subjects![i].id, controller.cohorts[index].id);
-                                                      //                                   Navigator.pop(context);
-                                                      //                                 },
-                                                      //                                 icon: const Icon(Icons.delete))
-                                                      //                           ],
-                                                      //                         ),
-                                                      //                       );
-                                                      //                     },
-                                                      //                   ),
-                                                      //                 ),
-                                                      //                 InkWell(
-                                                      //                   onTap:
-                                                      //                       () {
-                                                      //                     Get.back();
-                                                      //                   },
-                                                      //                   child:
-                                                      //                       Container(
-                                                      //                     width: double.infinity,
-                                                      //                     height: 45,
-                                                      //                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: ColorManager.bgSideMenu),
-                                                      //                     child: Center(
-                                                      //                       child: Text(
-                                                      //                         "Back",
-                                                      //                         style: nunitoRegular.copyWith(color: Colors.white, fontSize: 18),
-                                                      //                       ),
-                                                      //                     ),
-                                                      //                   ),
-                                                      //                 ),
-                                                      //               ],
-                                                      //             ),);
-                                                      //   },
-                                                      //   child: Container(
-                                                      //     decoration: BoxDecoration(
-                                                      //         color: ColorManager
-                                                      //             .glodenColor,
-                                                      //         borderRadius:
-                                                      //             BorderRadius
-                                                      //                 .circular(
-                                                      //                     10,),),
-                                                      //     child: Center(
-                                                      //       child: Padding(
-                                                      //         padding:
-                                                      //             const EdgeInsets
-                                                      //                 .all(
-                                                      //                 10),
-                                                      //         child: Text(
-                                                      //             "Add subjects",
-                                                      //             style:                                                                   nunitoBold
-                                                      //                 .copyWith(
-                                                      //               color: ColorManager
-                                                      //                   .white,
-                                                      //               fontSize:
-                                                      //                   16,
-                                                      //             ),),
-                                                      //       ),
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
+                                                                    // await controller.addNewsubjectToCohort(subjCont.subjectsController, controller.cohorts[index].id);
+                                                                    // subjCont
+                                                                    //     .subjectsController
+                                                                    //     .clear();
+                                                                    // subjCont
+                                                                    //     .addLoading
+                                                                    //     .value = false;
+                                                                    // ignore: use_build_context_synchronously
+                                                                    // Navigator.pop(
+                                                                    //     context);
+                                                                  },
+                                                                  child: /* subjCont
+                                                                              .addLoading
+                                                                              .value ==
+                                                                          true
+                                                                      ? const Center(
+                                                                          child:
+                                                                              CircularProgressIndicator(),
+                                                                        )
+                                                                      : */
+                                                                      Container(
+                                                                    height: 50,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: ColorManager
+                                                                          .bgSideMenu,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                    ),
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          Text(
+                                                                        "Add Subjects",
+                                                                        style: nunitoRegular.copyWith(
+                                                                            color:
+                                                                                Colors.white),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 300,
+                                                                  width: 200,
+                                                                  child: ListView
+                                                                      .builder(
+                                                                    itemCount: item
+                                                                        .cohortsSubjects!
+                                                                        .cohortHasSubjects!
+                                                                        .length,
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                            i) {
+                                                                      return Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                            vertical:
+                                                                                10),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Text(
+                                                                              item.cohortsSubjects!.cohortHasSubjects![i].subjects!.name!,
+                                                                              style: nunitoRegular.copyWith(color: Colors.black),
+                                                                            ),
+                                                                            IconButton(
+                                                                              onPressed: () {
+                                                                                //delete supject from cohort
+                                                                                // controller.deleteubjectFromCohort(controller.cohorts[index].subjects![i].id, controller.cohorts[index].id);
+                                                                                // Navigator.pop(context);
+                                                                              },
+                                                                              icon: const Icon(Icons.delete),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    Get.back();
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    width: double
+                                                                        .infinity,
+                                                                    height: 45,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                10),
+                                                                        color: ColorManager
+                                                                            .bgSideMenu),
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          Text(
+                                                                        "Back",
+                                                                        style: nunitoRegular.copyWith(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize: 18),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: ColorManager
+                                                                .glodenColor,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                              10,
+                                                            ),
+                                                          ),
+                                                          child: Center(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child: Text(
+                                                                "Add subjects",
+                                                                style: nunitoBold
+                                                                    .copyWith(
+                                                                  color:
+                                                                      ColorManager
+                                                                          .white,
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                       const SizedBox(
                                                         width: 20,
                                                       ),
