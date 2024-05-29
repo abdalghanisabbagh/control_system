@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
 import 'package:control_system/domain/controllers/cohorts_settings_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
@@ -9,6 +10,7 @@ import 'package:control_system/presentation/views/base_screen.dart';
 import "package:control_system/presentation/views/cohort_settings/widgets/add_cohort_widget.dart";
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:searchable_listview/searchable_listview.dart';
 
 class CohortSettingsScreen extends GetView<CohortsSettingsController> {
   const CohortSettingsScreen({super.key});
@@ -85,9 +87,9 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                   ),
                                 ),
                               )
-                            : ListView.builder(
-                                itemCount: controller.cohorts.length,
-                                itemBuilder: (context, index) {
+                            : SearchableList<CohortResModel>(
+                                initialList: controller.cohorts,
+                                itemBuilder: (CohortResModel item) {
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Stack(
@@ -126,9 +128,7 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    controller.cohorts[index]
-                                                            .name ??
-                                                        "no name",
+                                                    item.name ?? "no name",
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager
                                                           .bgSideMenu,
@@ -354,10 +354,7 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                             btnOkOnPressed: () {
                                                               controller
                                                                   .deleteCohort(
-                                                                      controller
-                                                                          .cohorts[
-                                                                              index]
-                                                                          .iD!)
+                                                                      item.iD!)
                                                                   .then(
                                                                 (value) {
                                                                   value
