@@ -293,21 +293,26 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                                               width: 200,
                                                                               child: ListView.builder(
                                                                                 itemCount: item.cohortsSubjects!.cohortHasSubjects!.length,
-                                                                                itemBuilder: (context, i) {
+                                                                                itemBuilder: (context, index) {
                                                                                   return Padding(
                                                                                     padding: const EdgeInsets.symmetric(vertical: 10),
                                                                                     child: Row(
                                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                       children: [
                                                                                         Text(
-                                                                                          item.cohortsSubjects!.cohortHasSubjects![i].subjects!.name!,
+                                                                                          item.cohortsSubjects!.cohortHasSubjects![index].subjects!.name!,
                                                                                           style: nunitoRegular.copyWith(color: Colors.black),
                                                                                         ),
                                                                                         IconButton(
-                                                                                          onPressed: () {
-                                                                                            //delete supject from cohort
-                                                                                            // controller.deleteubjectFromCohort(controller.cohorts[index].subjects![i].id, controller.cohorts[index].id);
-                                                                                            // Navigator.pop(context);
+                                                                                          onPressed: () async {
+                                                                                            await controller.deleteSubjectFromCohort(cohortId: item.iD!, subjectId: item.cohortsSubjects!.cohortHasSubjects![index].subjects!.iD!).then(
+                                                                                                  (value) => value
+                                                                                                      ? {
+                                                                                                          Get.back(),
+                                                                                                          MyFlashBar.showSuccess("Subject Deleted Successfully", "Success").show(context)
+                                                                                                        }
+                                                                                                      : null,
+                                                                                                );
                                                                                           },
                                                                                           icon: const Icon(Icons.delete),
                                                                                         )
