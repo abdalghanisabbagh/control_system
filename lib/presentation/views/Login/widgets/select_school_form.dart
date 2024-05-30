@@ -90,6 +90,9 @@ class SelectSchoolForm extends GetView<AuthController> {
                                                   .put('Id', currentSchool.iD);
                                               Hive.box('School').put(
                                                   'Name', currentSchool.name);
+                                              Hive.box('School').put(
+                                                  'SchoolTypeID',
+                                                  currentSchool.schoolTypeID);
 
                                               MyFlashBar.showSuccess(
                                                   "Select School",
@@ -98,12 +101,12 @@ class SelectSchoolForm extends GetView<AuthController> {
                                                   AppRoutesNamesAndPaths
                                                       .dashBoardScreenName);
                                             },
-                                            title:
-                                                Text(currentSchool.name ?? "",
-                                                    style: nunitoRegularStyle(
-                                                      color: ColorManager.white,
-                                                      fontSize: 16,
-                                                    )),
+                                            title: Text(
+                                                "${currentSchool.schoolType!.name ?? ""} ${currentSchool.name ?? ""}",
+                                                style: nunitoRegularStyle(
+                                                  color: ColorManager.white,
+                                                  fontSize: 16,
+                                                )),
                                           ),
                                         ),
                                       );
