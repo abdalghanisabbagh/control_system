@@ -1,5 +1,6 @@
 import 'package:control_system/domain/controllers/studentsController/addNewStudentController.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -118,9 +119,9 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
             //             selectedClass = v!;
             //           }),
             // ),
-            const SizedBox(
-              height: 10,
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             // cohort
             // Obx(
             //   () => cohortController.cohorts.isEmpty
@@ -151,118 +152,32 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
             //           }),
             // ),
 
-            const SizedBox(
-              height: 20,
-            ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            MytextFormFiled(controller: blbIdController, title: "BLB ID"),
 
-            TextFormField(
-              controller: blbIdController,
-              decoration: InputDecoration(
-                label: Text(
-                  "BLB ID",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            MytextFormFiled(controller: fnameController, title: "First Name"),
 
-            TextFormField(
-              controller: fnameController,
-              decoration: InputDecoration(
-                label: Text(
-                  "First Name",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            MytextFormFiled(controller: mnameController, title: "Middle Name"),
 
-            TextFormField(
-              controller: mnameController,
-              decoration: InputDecoration(
-                label: Text(
-                  "Middle Name",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            MytextFormFiled(controller: lnameController, title: "last Name"),
 
-            TextFormField(
-              controller: lnameController,
-              decoration: InputDecoration(
-                label: Text(
-                  "last Name",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            MytextFormFiled(
+                controller: religionController, title: "Religion field"),
 
-            TextFormField(
-              controller: religionController,
-              decoration: InputDecoration(
-                label: Text(
-                  "Religion field",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            MytextFormFiled(
+                controller: citizenshipController, title: "Citizenship"),
 
-            TextFormField(
-              controller: citizenshipController,
-              decoration: InputDecoration(
-                label: Text(
-                  "Citizenship",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            MytextFormFiled(
+                controller: sLangController, title: "Second Language"),
 
-            TextFormField(
-              controller: sLangController,
-              decoration: InputDecoration(
-                label: Text(
-                  "Second Language",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
             const SizedBox(
               height: 20,
             ),
 
             InkWell(
               // onTap: () {
-              //   //TODO  add singl student to server
 
               //   controller.addSinglStudent(
               //     StudentRequest(
