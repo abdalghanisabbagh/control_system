@@ -20,7 +20,7 @@ class ResponseHandler<T> {
     required T Function(dynamic) converter,
     required ReqTypeEnum type,
     Map<String, dynamic>? params,
-    Map<String, dynamic>? body,
+    dynamic body,
   }) async {
     TokenService tokenService = Get.find<TokenService>();
     String dtoken =
@@ -57,7 +57,7 @@ class ResponseHandler<T> {
     String path,
     T Function(dynamic) converter,
     Map<String, dynamic>? params,
-    Map<String, dynamic>? body,
+    dynamic body,
   ) async {
     return await _request(
       converter,
@@ -73,7 +73,7 @@ class ResponseHandler<T> {
     String path,
     T Function(dynamic) converter,
     Map<String, dynamic>? params,
-    Map<String, dynamic>? body,
+    dynamic body,
   ) async {
     return await _request(
       converter,
@@ -89,7 +89,7 @@ class ResponseHandler<T> {
     String path,
     T Function(dynamic) converter,
     Map<String, dynamic>? params,
-    Map<String, dynamic>? body,
+    dynamic body,
   ) async {
     return await _request(
       converter,
@@ -105,7 +105,7 @@ class ResponseHandler<T> {
     String path,
     T Function(dynamic) converter,
     Map<String, dynamic>? params,
-    Map<String, dynamic>? body,
+    dynamic body,
   ) async {
     return await _request(
       converter,
@@ -121,7 +121,7 @@ class ResponseHandler<T> {
     String path,
     T Function(dynamic) converter,
     Map<String, dynamic>? params,
-    Map<String, dynamic>? body,
+    dynamic body,
   ) async {
     return await _request(
       converter,
