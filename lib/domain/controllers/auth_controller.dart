@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/school/school_response/school_res_model.dart';
 import 'package:control_system/Data/Models/token/token_model.dart';
 import 'package:control_system/Data/Models/user/login_response/login_res_model.dart';
 import 'package:control_system/Data/Network/response_handler.dart';
@@ -9,6 +10,7 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/show
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Network/tools/app_error_handler.dart';
 import '../../Data/enums/req_type_enum.dart';
@@ -60,6 +62,12 @@ class AuthController extends GetxController {
     isLoading.value = false;
     update();
     return isLogin.value;
+  }
+
+  Future<void> saveToSchoolBox(SchoolResModel currentSchool) async {
+    Hive.box('School').put('Id', currentSchool.iD);
+    Hive.box('School').put('Name', currentSchool.name);
+    Hive.box('School').put('SchoolTypeID', currentSchool.schoolTypeID);
   }
 
   Future<String?> refreshToken() async {
