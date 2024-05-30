@@ -3,12 +3,10 @@ import 'package:control_system/domain/controllers/index.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:control_system/presentation/resource_manager/routes/index.dart';
 import 'package:control_system/presentation/resource_manager/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 class LoginForm extends GetView<AuthController> {
   LoginForm({super.key});

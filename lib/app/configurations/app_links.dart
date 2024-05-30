@@ -20,6 +20,8 @@ class SchoolsLinks {
   static const gradesSchools = 'grades/school';
   static const cohort = 'cohort';
   static const connectSubjectToCohort = '$cohort/Connect-Subject';
+  static const getCohortBySchoolType = '$cohort/school-type';
+
   static const subject = 'subject';
   static const subjects = 'subjects';
   static const schoolsClasses = 'school-classes';

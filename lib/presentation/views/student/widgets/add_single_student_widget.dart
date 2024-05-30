@@ -44,31 +44,47 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
             const SizedBox(
               height: 20,
             ),
+
             // grades
             GetBuilder<AddNewStudentController>(
               builder: (controller) {
-                if (controller.isLoadingGrades) {
+                if (controller.isLoading) {
                   return const CircularProgressIndicator();
                 }
 
-                if (controller.options.isEmpty) {
+                if (controller.optionsGrades.isEmpty) {
                   return const Text('No items available');
                 }
 
-                return SizedBox(
-                  width: 500,
-                  child: MultiSelectDropDownView(
-                    onOptionSelected: (selectedItem) {
-                      // controller.setSelectedItem(selectedItem[0]);
-                    },
-                    options: controller.options,
-                  ),
+                return Column(
+                  children: [
+                    SizedBox(
+                      width: 500,
+                      child: MultiSelectDropDownView(
+                        hintText: "Select Grade",
+                        onOptionSelected: (selectedItem) {},
+                        options: controller.optionsGrades,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: 500,
+                      child: MultiSelectDropDownView(
+                        hintText: "Select Cohort",
+                        onOptionSelected: (selectedItem) {},
+                        options: controller.optionsCohort,
+                      ),
+                    )
+                  ],
                 );
               },
             ),
             const SizedBox(
               height: 10,
             ),
+
             // class
             // Obx(
             //   () => classesControllers.classesRooms.isEmpty

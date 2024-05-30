@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/cohort/cohorts_res_model.dart';
 import 'package:control_system/Data/Models/school/grade_response/grades_res_model.dart';
 import 'package:control_system/Data/enums/req_type_enum.dart';
 import 'package:control_system/app/configurations/app_links.dart';
@@ -10,16 +11,24 @@ import 'package:multi_dropdown/models/value_item.dart';
 import '../../../Data/Network/response_handler.dart';
 
 class AddNewStudentController extends GetxController {
-  bool isLoadingGrades = false;
-  List<ValueItem> options = <ValueItem>[];
+  bool isLoading = false;
+  List<ValueItem> optionsGrades = <ValueItem>[];
+  List<ValueItem> optionsCohort = <ValueItem>[];
 
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getGradesBySchoolId();
+    isLoading = true;
+    update();
+    await Future.wait([
+      getGradesBySchoolId(),
+      getCohortBySchoolTypeId()
+    ]);
+    isLoading = false;
+    update();
   }
 
   Future<bool> getGradesBySchoolId() async {
-    isLoadingGrades = true;
+    //isLoadingGrades = true;
     update();
     bool gradeHasBeenAdded = false;
     print(Hive.box('School').get('Id'));
@@ -44,11 +53,45 @@ class AddNewStudentController extends GetxController {
       List<ValueItem> items = result.data!
           .map((item) => ValueItem(label: item.name!, value: item.iD))
           .toList();
-      options = items;
+      optionsGrades = items;
     });
-    isLoadingGrades = false;
+    // isLoadingGrades = false;
     gradeHasBeenAdded = true;
     update();
     return gradeHasBeenAdded;
+  }
+
+  Future<bool> getCohortBySchoolTypeId() async {
+    //isLoadingGrades = true;
+    update();
+    bool cohortHasBeenAdded = false;
+    //print(Hive.box('School').get('SchoolTypeID'));
+
+    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
+    ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+      path: "${SchoolsLinks.getCohortBySchoolType}/$selectedSchoolId",
+      converter: CohortsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      cohortHasBeenAdded = false;
+    }, (result) {
+      List<ValueItem> items = result.data!
+          .map((item) => ValueItem(label: item.name!, value: item.iD))
+          .toList();
+      optionsCohort = items;
+    });
+    //  isLoadingGrades = false;
+    cohortHasBeenAdded = true;
+    update();
+    return cohortHasBeenAdded;
   }
 }
