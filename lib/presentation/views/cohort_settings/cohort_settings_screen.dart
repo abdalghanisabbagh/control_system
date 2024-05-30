@@ -180,7 +180,7 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                           .cohortHasSubjects!
                                                           .length,
                                                       itemBuilder:
-                                                          (context, i) {
+                                                          (context, index) {
                                                         return Padding(
                                                           padding:
                                                               const EdgeInsets
@@ -191,7 +191,7 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                             item
                                                                 .cohortsSubjects!
                                                                 .cohortHasSubjects![
-                                                                    i]
+                                                                    index]
                                                                 .subjects!
                                                                 .name!,
                                                             style: nunitoRegular
@@ -211,15 +211,25 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                         onTap: () {
                                                           MyDialogs.showDialog(
                                                             context,
-                                                            GetBuilder<
-                                                                    SubjectsController>(
+                                                            SizedBox(
+                                                              height: 510,
+                                                              width: 300,
+                                                              child: GetBuilder<
+                                                                  SubjectsController>(
                                                                 init:
                                                                     SubjectsController(),
                                                                 builder:
                                                                     (subjectController) {
+                                                                  subjectController.subjects.removeWhere((e) => item
+                                                                      .cohortsSubjects!
+                                                                      .cohortHasSubjects!
+                                                                      .map((e) => e
+                                                                          .subjects!
+                                                                          .iD)
+                                                                      .contains(
+                                                                          e.iD));
                                                                   return subjectController
-                                                                          .subjects
-                                                                          .isEmpty
+                                                                          .getAllLoading
                                                                       ? const Center(
                                                                           child:
                                                                               CircularProgressIndicator(),
@@ -233,52 +243,50 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                                             ),
                                                                             const Divider(),
                                                                             MultiSelectDropDownView(
+                                                                              hintText: "Select Subjects",
+                                                                              searchEnabled: true,
                                                                               options: subjectController.subjects.map((e) => ValueItem(label: e.name!, value: e.iD!)).toList(),
+                                                                              onOptionSelected: controller.onOptionSelected,
                                                                               multiSelect: true,
                                                                             ),
                                                                             const SizedBox(
                                                                               height: 20,
                                                                             ),
-                                                                            InkWell(
-                                                                              onTap: () async {
-                                                                                // subjCont
-                                                                                //     .addLoading
-                                                                                //     .value = true;
-
-                                                                                // await controller.addNewsubjectToCohort(subjCont.subjectsController, controller.cohorts[index].id);
-                                                                                // subjCont
-                                                                                //     .subjectsController
-                                                                                //     .clear();
-                                                                                // subjCont
-                                                                                //     .addLoading
-                                                                                //     .value = false;
-                                                                                // ignore: use_build_context_synchronously
-                                                                                // Navigator.pop(
-                                                                                //     context);
+                                                                            GetBuilder<CohortsSettingsController>(
+                                                                              builder: (_) {
+                                                                                return InkWell(
+                                                                                  onTap: () async {
+                                                                                    controller.selectedSubjectsIds.isNotEmpty
+                                                                                        ? await controller.addNewsubjecstToCohort(item.iD!).then(
+                                                                                              (value) => value
+                                                                                                  ? {
+                                                                                                      Get.back(),
+                                                                                                      MyFlashBar.showSuccess("Subjects Added Successfully", "Success").show(context)
+                                                                                                    }
+                                                                                                  : null,
+                                                                                            )
+                                                                                        : MyAwesomeDialogue(title: "No Subjects Selected", desc: "Please Select Atleast One Subject", dialogType: DialogType.error).showDialogue(context);
+                                                                                  },
+                                                                                  child: controller.addLoading
+                                                                                      ? const Center(
+                                                                                          child: CircularProgressIndicator(),
+                                                                                        )
+                                                                                      : Container(
+                                                                                          height: 50,
+                                                                                          width: double.infinity,
+                                                                                          decoration: BoxDecoration(
+                                                                                            color: ColorManager.bgSideMenu,
+                                                                                            borderRadius: BorderRadius.circular(10),
+                                                                                          ),
+                                                                                          child: Center(
+                                                                                            child: Text(
+                                                                                              "Add Subjects",
+                                                                                              style: nunitoRegular.copyWith(color: Colors.white),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                );
                                                                               },
-                                                                              child: /* subjCont
-                                                                                  .addLoading
-                                                                                  .value ==
-                                                                              true
-                                                                          ? const Center(
-                                                                              child:
-                                                                                  CircularProgressIndicator(),
-                                                                            )
-                                                                          : */
-                                                                                  Container(
-                                                                                height: 50,
-                                                                                width: double.infinity,
-                                                                                decoration: BoxDecoration(
-                                                                                  color: ColorManager.bgSideMenu,
-                                                                                  borderRadius: BorderRadius.circular(10),
-                                                                                ),
-                                                                                child: Center(
-                                                                                  child: Text(
-                                                                                    "Add Subjects",
-                                                                                    style: nunitoRegular.copyWith(color: Colors.white),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
                                                                             ),
                                                                             SizedBox(
                                                                               height: 300,
@@ -316,7 +324,10 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                                               child: Container(
                                                                                 width: double.infinity,
                                                                                 height: 45,
-                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: ColorManager.bgSideMenu),
+                                                                                decoration: BoxDecoration(
+                                                                                  borderRadius: BorderRadius.circular(10),
+                                                                                  color: ColorManager.bgSideMenu,
+                                                                                ),
                                                                                 child: Center(
                                                                                   child: Text(
                                                                                     "Back",
@@ -327,7 +338,9 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                                             ),
                                                                           ],
                                                                         );
-                                                                }),
+                                                                },
+                                                              ),
+                                                            ),
                                                           );
                                                         },
                                                         child: Container(

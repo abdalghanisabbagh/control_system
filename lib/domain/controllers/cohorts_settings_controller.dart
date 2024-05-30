@@ -3,6 +3,7 @@ import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Models/cohort/cohorts_res_model.dart';
 import '../../Data/Network/response_handler.dart';
@@ -12,6 +13,7 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class CohortsSettingsController extends GetxController {
   List<CohortResModel> cohorts = <CohortResModel>[];
+  List<int> selectedSubjectsIds = <int>[];
 
   bool addLoading = false;
   bool getAllLoading = false;
@@ -62,7 +64,6 @@ class CohortsSettingsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-
         cohortHasBeenAdded = false;
       },
       (r) {
@@ -103,6 +104,48 @@ class CohortsSettingsController extends GetxController {
     );
 
     return cohortHasBeenDeleted;
+  }
+
+  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
+    selectedSubjectsIds =
+        selectedOptions.map((e) => e.value as int).toList().cast<int>();
+    update();
+  }
+
+  Future<bool> addNewsubjecstToCohort(int id) async {
+    addLoading = true;
+    bool cohortHasBeenAdded = false;
+    update();
+    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+    Either<Failure, CohortResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.connectSubjectToCohort}/$id',
+      converter: CohortResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: selectedSubjectsIds,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        cohortHasBeenAdded = false;
+      },
+      (r) {
+        int index = cohorts.indexWhere((element) => element.iD == id);
+        cohorts.removeAt(index);
+        cohorts.insert(index, r);
+        cohortHasBeenAdded = true;
+        update();
+      },
+    );
+
+    selectedSubjectsIds.clear();
+    addLoading = false;
+    update();
+    return cohortHasBeenAdded;
   }
 
   @override
