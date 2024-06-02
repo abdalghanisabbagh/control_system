@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/student/student_model.dart';
+import 'package:control_system/Data/Models/student/student_res_model.dart';
 
 class StudentSeatModel {
   StudentSeatModel({
@@ -20,7 +20,7 @@ class StudentSeatModel {
   int? educationsystemId;
   String? seatNumbers;
   int? examRoomId;
-  StudentMoodel? students;
+  StudentResModel? students;
   String? examRoomName;
 
   factory StudentSeatModel.fromJson(Map<String, dynamic> json) =>
@@ -36,6 +36,6 @@ class StudentSeatModel {
             json['examrooms'] == null ? null : json['examrooms']['Name'],
         students: json["students"] == null
             ? null
-            : StudentMoodel.fromJson(json["students"]),
+            : StudentResModel.fromJson(json["students"]),
       );
 }
