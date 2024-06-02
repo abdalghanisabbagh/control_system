@@ -17,7 +17,7 @@ import 'widgets/render_seat_widget.dart';
 class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
   final TextEditingController columnNumper = TextEditingController(text: "0");
   final TextEditingController classNameController = TextEditingController();
-  final TextEditingController buildingNameController = TextEditingController();
+  final TextEditingController classNumber = TextEditingController();
   final TextEditingController floorNameController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
 
@@ -65,8 +65,8 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                         ),
                         Expanded(
                           child: MytextFormFiled(
-                            controller: buildingNameController,
-                            title: "Building",
+                            controller: classNumber,
+                            title: "Class Number",
                             enableBorderColor: ColorManager.primary,
                           ),
                         ),
@@ -158,7 +158,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                       onTap: () {
                         //  controller.count=1;
                         _formKey.currentState!.validate()
-                            ? controller.update()
+                            ? controller.update(['classSeats'])
                             : null;
                       },
                       child: Container(
@@ -215,7 +215,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                       floorNameController.clear(),
                                       maxCapacityController.clear(),
                                       columnNumper.clear(),
-                                      buildingNameController.clear(),
+                                      classNumber.clear(),
                                       controller.update(),
                                     }
                                   : MyFlashBar.showError(

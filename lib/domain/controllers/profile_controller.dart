@@ -22,4 +22,8 @@ class ProfileController extends GetxController {
         : null;
     return _cachedUserProfile;
   }
+
+  Future<void> deleteProfileFromHiveBox() async {
+    await Hive.box('Profile').clear();
+  }
 }

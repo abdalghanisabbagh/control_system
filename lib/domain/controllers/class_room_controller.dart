@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/class_room/class_room_res_model.dart';
 import '../../Data/Models/class_room/classes_rooms_res_model.dart';
@@ -12,6 +13,9 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class ClassRoomController extends GetxController {
   List<ClassRoomResModel> classesRooms = [];
+
+  int selctedSchoolId = Hive.box('School').get('Id');
+  int currentUserId = Hive.box('Profile').get('ID');
 
   List<int> classSeats = [];
   int numbers = 0;
@@ -109,8 +113,8 @@ class ClassRoomController extends GetxController {
         "Floor": floorName,
         "Rows": rows.toString(),
         "Columns": columns,
-        "Schools_ID": 1,
-        "Created_By": 1
+        "Schools_ID": selctedSchoolId,
+        "Created_By": currentUserId
       },
     );
     response.fold(
@@ -121,7 +125,10 @@ class ClassRoomController extends GetxController {
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
       },
-      (r) {},
+      (r) {
+        classesRooms.add(r);
+        update();
+      },
     );
     count = 1;
     isLoadingAddClassRoom = false;
@@ -151,7 +158,7 @@ class ClassRoomController extends GetxController {
         "Floor": floorName,
         "Rows": rows.toString(),
         "Columns": columns,
-        "Schools_ID": 1,
+        "Schools_ID": Hive.box('School').get('Id'),
         "Created_By": 1
       },
     );
