@@ -102,6 +102,9 @@ class ClassRoomBindings extends Bindings {
       () => ClassRoomController(),
       fenix: true,
     );
+    Get.put<SchoolController>(
+      SchoolController(),
+    );
   }
 }
 
