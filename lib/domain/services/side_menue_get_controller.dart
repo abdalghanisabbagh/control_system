@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../controllers/auth_controller.dart';
+
 class SideMenueGetController extends GetxController {
   late final SideMenuController sideMenuController;
   int nowIndex = 0;
@@ -149,8 +151,11 @@ class SideMenueGetController extends GetxController {
             title: "You are about to sign out",
             desc: "Are you sure you want to sign out?",
             dialogType: DialogType.warning,
-            btnOkOnPressed: () =>
-                context.goNamed(AppRoutesNamesAndPaths.loginScreenName),
+            btnOkOnPressed: () async {
+              await Get.find<AuthController>().signOut().then((value) {
+                context.goNamed(AppRoutesNamesAndPaths.loginScreenName);
+              });
+            },
             btnCancelOnPressed: () {},
           ).showDialogue(context);
         },
