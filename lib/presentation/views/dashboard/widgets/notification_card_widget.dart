@@ -3,7 +3,22 @@ import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 
 class NotificationCardWidget extends StatelessWidget {
-  const NotificationCardWidget({super.key});
+  NotificationCardWidget({
+    super.key,
+    required this.userName,
+    required this.schoolName,
+  });
+
+  final String userName;
+  final String schoolName;
+
+  final DateTime now = DateTime.now();
+
+  String get welcomeMessage => now.hour < 12
+      ? 'Good Morning, $userName'
+      : now.hour < 17
+          ? 'Good Afternoon, $userName'
+          : 'Good Evening, $userName';
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +43,16 @@ class NotificationCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'School Name',
+                schoolName,
+                style: nunitoBold.copyWith(
+                  color: ColorManager.black,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                welcomeMessage,
                 style: nunitoBold.copyWith(
                   color: ColorManager.black,
                 ),

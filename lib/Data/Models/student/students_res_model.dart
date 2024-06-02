@@ -1,22 +1,20 @@
-import 'package:control_system/Data/Models/student/student_model.dart';
+import 'package:control_system/Data/Models/student/student_res_model.dart';
 
-class StudentsTypeResModel {
-  List<StudentMoodel>? data;
+class StudentsResModel {
+  List<StudentResModel>? students;
 
-  StudentsTypeResModel({this.data});
+  StudentsResModel({this.students});
 
-  factory StudentsTypeResModel.fromJson(json) {
-    var converter = List<StudentMoodel>.from(
-        json.map((e) => StudentMoodel.fromJson(e)).toList());
-
-    var data = StudentsTypeResModel(data: converter);
-
-    return data;
+  StudentsResModel.fromJson(json) {
+    students = List<StudentResModel>.from(
+        json.map((e) => StudentResModel.fromJson(e)).toList());
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['data'] = this.data!.map((v) => v.toJson()).toList();
+    if (students != null) {
+      data['data'] = students!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
