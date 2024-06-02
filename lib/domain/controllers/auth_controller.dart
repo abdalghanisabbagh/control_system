@@ -3,7 +3,7 @@ import 'package:control_system/Data/Models/token/token_model.dart';
 import 'package:control_system/Data/Models/user/login_response/login_res_model.dart';
 import 'package:control_system/Data/Network/response_handler.dart';
 import 'package:control_system/app/configurations/app_links.dart';
-import 'package:control_system/domain/controllers/profile_controller.dart';
+import 'package:control_system/domain/controllers/index.dart';
 import 'package:control_system/domain/services/token_service.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dio/dio.dart';
@@ -110,8 +110,12 @@ class AuthController extends GetxController {
     }
   }
 
-  Future signOut() async {
-    await tokenService.deleteTokenModelFromHiveBox();
+  Future<void> signOut() async {
+    await Future.wait([
+      tokenService.deleteTokenModelFromHiveBox(),
+      profileController.deleteProfileFromHiveBox(),
+      SchoolController().deleteFromSchoolBox(),
+    ]);
     isLogin.value = false;
   }
 
