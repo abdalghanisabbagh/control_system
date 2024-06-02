@@ -28,4 +28,8 @@ class TokenService extends GetxController {
         : null;
     return _tokenModel;
   }
+
+  Future<void> deleteTokenModelFromHiveBox() async {
+    await Hive.box('Token').clear();
+  }
 }
