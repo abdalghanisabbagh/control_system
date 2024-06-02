@@ -9,7 +9,11 @@ abstract class Validations {
   }
 
   static String? requiredValidator(String? value) {
-    if (value!.isEmpty) {
+    if (value != null) {
+      if (value.isEmpty) {
+        return 'Field  Is Required';
+      }
+    } else if (value == null) {
       return 'Field  Is Required';
     }
     return null;

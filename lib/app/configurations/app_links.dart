@@ -26,6 +26,9 @@ class SchoolsLinks {
   static const subject = 'subject';
   static const subjects = 'subjects';
   static const schoolsClasses = 'school-classes';
+    static const getSchoolsClassesBySchoolId = '$schoolsClasses/school';
+
+
   static const schoolsType = 'school-type';
 }
 

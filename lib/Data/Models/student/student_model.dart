@@ -19,7 +19,7 @@ class StudentMoodel {
     this.createdBy,
   });
 
-  StudentMoodel.fromJson(Map<String, dynamic> json) {
+  StudentMoodel.fromJson(json) {
     gradesID = json['Grades_ID'];
     schoolsID = json['Schools_ID'];
     cohortID = json['Cohort_ID'];
