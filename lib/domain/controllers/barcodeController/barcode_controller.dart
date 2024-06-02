@@ -1,7 +1,5 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
 class BRCodeController extends GetxController {
 //   String atoken = '';
