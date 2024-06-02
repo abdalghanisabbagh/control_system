@@ -15,6 +15,7 @@ class AddNewStudentController extends GetxController {
   List<ValueItem> optionsGrades = <ValueItem>[];
   List<ValueItem> optionsCohort = <ValueItem>[];
 
+  @override
   void onInit() async {
     super.onInit();
     isLoading = true;
