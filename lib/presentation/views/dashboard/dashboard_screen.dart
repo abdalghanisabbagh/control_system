@@ -1,12 +1,14 @@
 import 'package:control_system/app/extensions/device_type_extension.dart';
+import 'package:control_system/domain/controllers/index.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../base_screen.dart';
 import 'widgets/index.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends GetView<DashboardController> {
   const DashboardScreen({super.key});
 
   @override
@@ -27,7 +29,10 @@ class DashboardScreen extends StatelessWidget {
                       flex: 2,
                       child: Column(
                         children: [
-                          const NotificationCardWidget(),
+                          NotificationCardWidget(
+                            schoolName: controller.schoolName ?? '',
+                            userName: controller.userName ?? '',
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
