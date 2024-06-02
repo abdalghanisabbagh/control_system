@@ -43,7 +43,7 @@ class NotificationCardWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                schoolName,
+                '$schoolName School',
                 style: nunitoBold.copyWith(
                   color: ColorManager.black,
                 ),
