@@ -1,5 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/controllers/class_room_controller.dart';
+import 'package:control_system/domain/controllers/index.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
@@ -128,16 +128,25 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                     const SizedBox(
                                                       height: 5,
                                                     ),
-                                                    // Text(
-                                                    //   controller
-                                                    //       .selectedSchool!
-                                                    //       .name,
-                                                    //   style: nunitoRegular
-                                                    //       .copyWith(
-                                                    //           color: ColorManager
-                                                    //               .bgSideMenu,
-                                                    //           fontSize: 20),
-                                                    // ),
+                                                    Text(
+                                                      Get.find<
+                                                              SchoolController>()
+                                                          .schools
+                                                          .firstWhereOrNull(
+                                                              (element) =>
+                                                                  element.iD ==
+                                                                  controller
+                                                                      .classesRooms[
+                                                                          index]
+                                                                      .schoolsID)!
+                                                          .name
+                                                          .toString(),
+                                                      style: nunitoRegular
+                                                          .copyWith(
+                                                              color: ColorManager
+                                                                  .bgSideMenu,
+                                                              fontSize: 16),
+                                                    ),
                                                     Row(
                                                       children: [
                                                         // Text(
@@ -149,9 +158,9 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                         //         .bgSideMenu,
                                                         //   ),
                                                         // ),
-                                                        const SizedBox(
-                                                          width: 20,
-                                                        ),
+                                                        // const SizedBox(
+                                                        //   width: 20,
+                                                        // ),
                                                         Text(
                                                           "Floor : ${controller.classesRooms[index].floor}",
                                                           style: nunitoRegular
