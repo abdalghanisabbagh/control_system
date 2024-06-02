@@ -36,17 +36,22 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             children: [
               Text(
                 DateFormat("MMM, yyyy").format(_focusedDay),
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: ColorManager.black,
+                ),
               ),
               Row(
                 children: [
                   InkWell(
                     onTap: () {
-                      setState(() {
-                        _focusedDay =
-                            DateTime(_focusedDay.year, _focusedDay.month - 1);
-                      });
+                      setState(
+                        () {
+                          _focusedDay =
+                              DateTime(_focusedDay.year, _focusedDay.month - 1);
+                        },
+                      );
                     },
                     child: const Icon(
                       Icons.chevron_left,
@@ -76,16 +81,25 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           ),
           TableCalendar(
             focusedDay: _focusedDay,
+            currentDay: DateTime.now(),
             firstDay: DateTime.utc(2010),
             lastDay: DateTime.utc(2040),
             headerVisible: false,
             onFormatChanged: (result) {},
-            daysOfWeekStyle: DaysOfWeekStyle(
-              dowTextFormatter: (date, locale) {
-                return DateFormat("EEE").format(date).toUpperCase();
-              },
-              weekendStyle: const TextStyle(fontWeight: FontWeight.bold),
-              weekdayStyle: const TextStyle(fontWeight: FontWeight.bold),
+            weekendDays: const [DateTime.friday, DateTime.saturday],
+            daysOfWeekStyle: const DaysOfWeekStyle(
+              // dowTextFormatter: (date, locale) {
+              //   return DateFormat("EEE").format(date).toUpperCase();
+              // },
+              weekendStyle: TextStyle(
+                fontWeight: FontWeight.w300,
+                color: ColorManager.black,
+                decoration: TextDecoration.lineThrough,
+              ),
+              weekdayStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: ColorManager.black,
+              ),
             ),
             onPageChanged: (day) {
               _focusedDay = day;
