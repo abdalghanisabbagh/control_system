@@ -87,19 +87,23 @@ class SelectSchoolForm extends GetView<SchoolController> {
                                           ),
                                           focusColor: ColorManager.bgSideMenu,
                                           hoverColor: ColorManager.bgSideMenu,
-                                          onTap: () {
+                                          onTap: () async {
                                             if (kDebugMode) {
                                               // print(currentSchool.education!.id
                                               //     .toString());
                                             }
-                                            controller;
                                             MyFlashBar.showSuccess(
-                                                "Select School",
-                                                currentSchool.name!);
-                                            context.goNamed(
-                                              AppRoutesNamesAndPaths
-                                                  .dashBoardScreenName,
+                                              currentSchool.name!,
+                                              "Select School",
                                             );
+                                            await controller
+                                                .saveToSchoolBox(currentSchool)
+                                                .then((_) {
+                                              context.goNamed(
+                                                AppRoutesNamesAndPaths
+                                                    .dashBoardScreenName,
+                                              );
+                                            });
                                           },
                                           title: Text(
                                             "${currentSchool.schoolType!.name ?? ""} ${currentSchool.name ?? ""}",

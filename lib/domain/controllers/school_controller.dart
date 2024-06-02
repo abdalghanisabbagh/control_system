@@ -10,6 +10,7 @@ import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Network/response_handler.dart';
@@ -206,6 +207,17 @@ class SchoolController extends GetxController {
     isLoadingAddGrades = false;
     update();
     return true;
+  }
+
+  Future<void> saveToSchoolBox(SchoolResModel currentSchool) async {
+    await Hive.box('School').put('Id', currentSchool.iD);
+    await Hive.box('School').put('Name', currentSchool.name);
+    await Hive.box('School').put('SchoolTypeID', currentSchool.schoolTypeID);
+    await Hive.box('School').flush();
+  }
+
+  Future<void> deleteFromSchoolBox() async {
+    await Hive.box('School').clear();
   }
 
   void setSelectedItem(ValueItem item) {
