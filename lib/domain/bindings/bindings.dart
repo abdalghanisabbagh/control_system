@@ -29,6 +29,8 @@ class SideMenuBindings extends Bindings {
       fenix: true,
     );
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+
+    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
   }
 }
 
