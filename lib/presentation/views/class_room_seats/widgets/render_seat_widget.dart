@@ -16,6 +16,7 @@ class RendarSeats extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<ClassRoomController>(
+      id: 'classSeats',
       builder: (controller) {
         return controller.classSeats.isEmpty
             ? const SizedBox.shrink()

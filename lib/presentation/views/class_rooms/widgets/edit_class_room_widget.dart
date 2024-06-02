@@ -158,7 +158,7 @@ class EditClassRoomWidget extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       _formKey.currentState!.validate()
-                          ? controller.update()
+                          ? controller.update(['classSeats'])
                           : null;
                     },
                     child: Container(
