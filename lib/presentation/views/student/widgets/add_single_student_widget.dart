@@ -46,9 +46,9 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                         ),
                       ),
                       Text(
-                        "Add new student",
+                        "Add New Student",
                         style: nunitoBold.copyWith(
-                          color: ColorManager.black,
+                          color: ColorManager.primary,
                           fontSize: 20,
                         ),
                       ),
@@ -137,7 +137,12 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                             height: 10,
                           ),
                           FormField<String>(
-                            validator: Validations.requiredValidator,
+                            validator: (value) {
+                              if (controller.selectedItemClassRoom == null) {
+                                return 'This field is required';
+                              }
+                              return null;
+                            },
                             builder: (formFieldState) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

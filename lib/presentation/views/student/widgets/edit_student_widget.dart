@@ -1,4 +1,6 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:control_system/presentation/resource_manager/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -55,7 +57,7 @@ class EditStudentWidget extends StatelessWidget {
             Text(
               "Edit student",
               style: nunitoBold.copyWith(
-                color: ColorManager.black,
+                color: ColorManager.primary,
                 fontSize: 20,
               ),
             ),
@@ -179,17 +181,10 @@ class EditStudentWidget extends StatelessWidget {
               height: 20,
             ),
 
-            TextFormField(
-              controller: fnameController,
-              decoration: InputDecoration(
-                label: Text(
-                  "FirstName",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
+            MytextFormFiled(
+                controller:fnameController,
+                title: "First Name",
+                myValidation: Validations.requiredValidator),
             const SizedBox(
               height: 20,
             ),
