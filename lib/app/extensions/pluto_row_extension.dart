@@ -8,18 +8,18 @@ extension PlutoRowExtension on List<StudentResModel> {
       rows.add(
         PlutoRow(
           cells: {
-            'Id': PlutoCell(value: element.iD.toString()),
+            // 'Id': PlutoCell(value: element.iD.toString()),
             'FirstNameField': PlutoCell(value: element.firstName.toString()),
             'SecondNameField': PlutoCell(value: element.secondName.toString()),
             'ThirdNameField': PlutoCell(value: element.thirdName.toString()),
+            'CohortField': PlutoCell(value: element.cohortID.toString()),
             // 'ReligionField': PlutoCell(value: element.religion),
             // 'CitizenshipField': PlutoCell(value: element.citizenship),
             'GradeField': PlutoCell(value: element.gradesID.toString()),
             'ClassRoomField':
                 PlutoCell(value: element.schoolClassID.toString()),
             'LanguageField': PlutoCell(value: element.secondLang.toString()),
-            'CohortField': PlutoCell(value: element.cohortID.toString()),
-            'AddedField': PlutoCell(value: 'Actions'),
+            'ActionsField': PlutoCell(value: 'Actions'),
           },
           // 'BlbId':PlutoCell(value: element.bLBID),
         ),

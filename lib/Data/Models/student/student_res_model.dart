@@ -10,7 +10,7 @@ class StudentResModel {
   String? email;
   String? secondLang;
   int? createdBy;
-  DateTime? createdAt;
+  String? createdAt;
   int? updatedBy;
   DateTime? updatedAt;
   int? active;

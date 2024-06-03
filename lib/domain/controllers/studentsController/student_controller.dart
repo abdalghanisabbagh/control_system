@@ -26,7 +26,7 @@ class StudentController extends GetxController {
 
   bool loading = false;
 
-  Future<bool> getAllStudents() async {
+  Future<bool> getStudents() async {
     bool gotData = false;
     update();
     ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
@@ -143,7 +143,7 @@ class StudentController extends GetxController {
     loading = true;
     update();
     await Future.wait([
-      getAllStudents(),
+      getStudents(),
       getCohorts(),
       getClassRooms(),
       getGrades(),
