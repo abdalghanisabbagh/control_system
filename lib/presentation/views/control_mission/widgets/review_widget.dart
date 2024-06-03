@@ -208,7 +208,6 @@ class ReviewWidget extends StatelessWidget {
           //                   rows: completeMissionsController.rows,
           //                   onChanged: (PlutoGridOnChangedEvent event) {
           //                     if (kDebugMode) {
-          //                       print(event);
           //                     }
 
           //                     completeMissionsController.stateManager!
@@ -219,7 +218,6 @@ class ReviewWidget extends StatelessWidget {
           //                   onLoaded: (PlutoGridOnLoadedEvent event) {
           //                     completeMissionsController.getRows();
           //                     if (kDebugMode) {
-          //                       print(event);
           //                     }
           //                     event.stateManager
           //                         .setSelectingMode(PlutoGridSelectingMode.cell);

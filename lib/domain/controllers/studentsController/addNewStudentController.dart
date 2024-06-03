@@ -41,7 +41,6 @@ class AddNewStudentController extends GetxController {
   bool checkGradeValidation() {
     checkSelecteGrade = true;
     // test = selectedItemGrade != null && selectedItemCohort != null;
-    // debugPrint(test.toString());
     update();
     return checkSelecteGrade;
   }
