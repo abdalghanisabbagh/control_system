@@ -46,7 +46,8 @@ class StudentController extends GetxController {
         gotData = false;
       },
       (r) {
-        studentsRows = r.students!.convertStudentsToRows();
+        studentsRows = r.students!.convertStudentsToRows(
+            classesRooms: classRooms, cohorts: cohorts, grades: grades);
         gotData = true;
       },
     );
@@ -143,11 +144,12 @@ class StudentController extends GetxController {
     loading = true;
     update();
     await Future.wait([
-      getStudents(),
       getCohorts(),
       getClassRooms(),
       getGrades(),
-    ]);
+    ]).then((_) async {
+      await getStudents();
+    });
     loading = false;
     update();
     super.onInit();
