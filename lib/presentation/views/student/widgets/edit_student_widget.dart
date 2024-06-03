@@ -10,10 +10,10 @@ import 'package:get/get.dart';
 class EditStudentWidget extends GetView<StudentController> {
   EditStudentWidget({
     super.key,
-    // required this.studentResModel,
+    required this.studentResModel,
   });
 
-  // final StudentResModel studentResModel;
+  final StudentResModel studentResModel;
 
   final TextEditingController blbIdController = TextEditingController();
   final TextEditingController fnameController = TextEditingController();
@@ -89,7 +89,10 @@ class EditStudentWidget extends GetView<StudentController> {
                       //    controller.setSelectedItem(selectedItem[0]);
                     },
                     options: controller.optionsCohort,
-                    optionSelected: controller.specificItemtest,
+                    optionSelected: [
+                      controller.optionsCohort.firstWhere((element) =>
+                          element.value == studentResModel.cohortID),
+                    ],
                   ),
                 );
               },
@@ -212,20 +215,20 @@ class EditStudentWidget extends GetView<StudentController> {
             ),
 
             MytextFormFiled(
-                controller: fnameController,
-                //  ..text = studentResModel.firstName.toString(),
+                controller: fnameController
+                  ..text = studentResModel.firstName.toString(),
                 title: "First Name",
                 myValidation: Validations.requiredValidator),
 
             MytextFormFiled(
-                controller: mnameController,
-                //    ..text = studentResModel.secondName.toString(),
+                controller: mnameController
+                  ..text = studentResModel.secondName.toString(),
                 title: "Middle Name",
                 myValidation: Validations.requiredValidator),
 
             MytextFormFiled(
-                controller: lnameController,
-                // ..text = studentResModel.thirdName.toString(),
+                controller: lnameController
+                  ..text = studentResModel.thirdName.toString(),
                 title: "Last Name",
                 myValidation: Validations.requiredValidator),
 
@@ -238,8 +241,8 @@ class EditStudentWidget extends GetView<StudentController> {
                 title: "Citizenship",
                 myValidation: Validations.requiredValidator),
             MytextFormFiled(
-                controller: sLangController,
-                //    ..text = studentResModel.secondLang.toString(),
+                controller: sLangController
+                  ..text = studentResModel.secondLang.toString(),
                 title: "Second Language",
                 myValidation: Validations.requiredValidator),
             const SizedBox(

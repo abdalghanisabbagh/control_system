@@ -1,5 +1,7 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
+import 'package:control_system/presentation/views/student/widgets/edit_student_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -354,14 +356,13 @@ class StudentScreen extends GetView<StudentController> {
                                       // ),
                                       IconButton(
                                         onPressed: () {
-                                          // MyDialogs.showDialog(
-                                          //   context,
-                                          //   EditStudentWidget(
-                                          //       studentIndex:
-                                          //           rendererContext
-                                          //               .rowIdx,
-                                          //       ),
-                                          // );
+
+                                          MyDialogs.showDialog(
+                                            context,
+                                            EditStudentWidget(
+                                                studentResModel: controller.students[rendererContext.rowIdx],
+                                                ),
+                                          );
                                           if (kDebugMode) {
                                             print("edit");
                                           }

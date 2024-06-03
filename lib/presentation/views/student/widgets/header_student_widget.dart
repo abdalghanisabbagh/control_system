@@ -56,7 +56,7 @@ class HeaderStudentWidget extends StatelessWidget {
               tooltip: "Sync Students",
               icon: const Icon(FontAwesomeIcons.rotate),
               onPressed: () {
-                MyDialogs.showDialog(context, EditStudentWidget());
+                // MyDialogs.showDialog(context, EditStudentWidget());
               },
             ),
             IconButton(

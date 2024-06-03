@@ -10,9 +10,11 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../Data/Models/cohort/cohorts_res_model.dart';
+import '../../../Data/Models/student/student_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
@@ -20,14 +22,14 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class StudentController extends GetxController {
-  // List<StudentResModel> students = <StudentResModel>[];
+  List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
   List<CohortResModel> cohorts = <CohortResModel>[];
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<GradeResModel> grades = <GradeResModel>[];
   List<ValueItem> optionsCohort = <ValueItem>[];
   ValueItem? selectedItemGrade;
-  var specificItemtest;
+  ValueItem? specificItemtest;
 
   bool loading = false;
 
@@ -51,6 +53,7 @@ class StudentController extends GetxController {
         gotData = false;
       },
       (r) {
+        students = r.students!;
         studentsRows = r.students!.convertStudentsToRows(
             classesRooms: classRooms, cohorts: cohorts, grades: grades);
         gotData = true;
@@ -87,7 +90,11 @@ class StudentController extends GetxController {
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
         optionsCohort = items;
-        
+        // items.firstWhere(
+        //   (item) => item.value == 1,
+          //   //   orElse: () => ValueItem(label: '', value: -1),
+        // );
+        // print(items.firstWhere((item) => item.value == 1).label);
 
         gotData = true;
       },
