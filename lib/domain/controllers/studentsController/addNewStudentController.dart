@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/class_room/classes_rooms_res_model.dart';
 import 'package:control_system/Data/Models/cohort/cohorts_res_model.dart';
 import 'package:control_system/Data/Models/school/grade_response/grades_res_model.dart';
-import 'package:control_system/Data/Models/student/student_model.dart';
+import 'package:control_system/Data/Models/student/student_res_model.dart';
 import 'package:control_system/Data/enums/req_type_enum.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
@@ -179,11 +179,11 @@ class AddNewStudentController extends GetxController {
     int schoolId = Hive.box('School').get('Id');
     int createdBy = Hive.box('Profile').get('ID');
 
-    ResponseHandler<StudentMoodel> responseHandler = ResponseHandler();
+    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
         path: StudentsLinks.student,
-        converter: StudentMoodel.fromJson,
+        converter: StudentResModel.fromJson,
         type: ReqTypeEnum.POST,
         body: {
           "Grades_ID": gradesId,
