@@ -40,7 +40,8 @@ class AddNewStudentController extends GetxController {
 
   bool checkGradeValidation() {
     checkSelecteGrade = true;
-
+    // test = selectedItemGrade != null && selectedItemCohort != null;
+    // debugPrint(test.toString());
     update();
     return checkSelecteGrade;
   }
@@ -203,8 +204,9 @@ class AddNewStudentController extends GetxController {
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       addStudentHasBeenAdded = false;
-    }, (result) {});
-    addStudentHasBeenAdded = true;
+    }, (result) {
+      addStudentHasBeenAdded = true;
+    });
     update();
     return addStudentHasBeenAdded;
   }
