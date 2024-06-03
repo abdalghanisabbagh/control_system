@@ -149,7 +149,7 @@ class ResponseHandler<T> {
         try {
           return Right(converter(response.data['data']));
         } catch (e) {
-          return Left(Failure(2025, 'error while convert from json'));
+          return Left(Failure(2025, 'error while convert $T from json'));
         }
       } else {
         return Left(
