@@ -87,6 +87,7 @@ class StudentController extends GetxController {
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
         optionsCohort = items;
+        
 
         gotData = true;
       },
