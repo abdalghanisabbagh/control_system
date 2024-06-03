@@ -159,7 +159,7 @@ class ClassRoomController extends GetxController {
         "Rows": rows.toString(),
         "Columns": columns,
         "Schools_ID": Hive.box('School').get('Id'),
-        "Created_By": 1
+        "Created_By": Hive.box('Profile').get('ID')
       },
     );
     response.fold(
