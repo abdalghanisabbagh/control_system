@@ -2,11 +2,13 @@ import 'package:control_system/app/extensions/device_type_extension.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/student/widgets/add_single_student_widget.dart';
-import 'package:control_system/presentation/views/student/widgets/edit_student_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
-class HeaderStudentWidget extends StatelessWidget {
+import '../../../../domain/controllers/studentsController/student_controller.dart';
+
+class HeaderStudentWidget extends GetView<StudentController> {
   const HeaderStudentWidget({super.key});
 
   @override
@@ -56,6 +58,7 @@ class HeaderStudentWidget extends StatelessWidget {
               tooltip: "Sync Students",
               icon: const Icon(FontAwesomeIcons.rotate),
               onPressed: () {
+                controller.onInit();
                 // MyDialogs.showDialog(context, EditStudentWidget());
               },
             ),
