@@ -1,13 +1,13 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
-import 'package:control_system/presentation/views/student/widgets/edit_student_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../domain/controllers/studentsController/student_controller.dart';
+import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import 'widgets/edit_student_widget.dart';
 import 'widgets/header_student_widget.dart';
 
 class StudentScreen extends GetView<StudentController> {
@@ -154,14 +154,14 @@ class StudentScreen extends GetView<StudentController> {
                             ),
                             columns: [
                               /// Text Column definition
-                              // PlutoColumn(
-                              //   readOnly: true,
-                              //   enableRowChecked: true,
-                              //   enableEditingMode: false,
-                              //   title: 'Id',
-                              //   field: 'BlbId',
-                              //   type: PlutoColumnType.text(),
-                              // ),
+                              PlutoColumn(
+                                readOnly: true,
+                                enableRowChecked: true,
+                                enableEditingMode: false,
+                                title: 'Id',
+                                field: 'IdField',
+                                type: PlutoColumnType.text(),
+                              ),
                               PlutoColumn(
                                 enableEditingMode: false,
                                 title: 'First Name',
@@ -356,12 +356,20 @@ class StudentScreen extends GetView<StudentController> {
                                       // ),
                                       IconButton(
                                         onPressed: () {
-
                                           MyDialogs.showDialog(
                                             context,
                                             EditStudentWidget(
-                                                studentResModel: controller.students[rendererContext.rowIdx],
-                                                ),
+                                              studentResModel: controller
+                                                  .students
+                                                  .firstWhere((element) =>
+                                                      int.tryParse(
+                                                          rendererContext
+                                                              .row
+                                                              .cells['IdField']!
+                                                              .value
+                                                              .toString()) ==
+                                                      element.iD),
+                                            ),
                                           );
                                           if (kDebugMode) {
                                             print("edit");
