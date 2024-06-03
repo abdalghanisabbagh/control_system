@@ -2,6 +2,7 @@ import 'package:control_system/domain/controllers/studentsController/addNewStude
 import 'package:get/get.dart';
 
 import '../controllers/index.dart';
+import '../controllers/studentsController/student_controller.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
 
@@ -113,6 +114,11 @@ class StudentsBindings extends Bindings {
   void dependencies() {
     Get.lazyPut<AddNewStudentController>(
       () => AddNewStudentController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<StudentController>(
+      () => StudentController(),
       fenix: true,
     );
   }
