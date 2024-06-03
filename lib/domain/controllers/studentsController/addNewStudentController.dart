@@ -23,6 +23,7 @@ class AddNewStudentController extends GetxController {
   bool checkSelecteGrade = false;
   bool checkSelecteCohort = false;
   bool checkSelecteClassRoom = false;
+  bool isLodingAddStudent = false;
 
   @override
   void onInit() async {
@@ -175,6 +176,8 @@ class AddNewStudentController extends GetxController {
     required String secondName,
     required String thirdName,
   }) async {
+    isLodingAddStudent = true;
+
     update();
     bool addStudentHasBeenAdded = false;
     int schoolId = Hive.box('School').get('Id');
@@ -207,6 +210,8 @@ class AddNewStudentController extends GetxController {
     }, (result) {
       addStudentHasBeenAdded = true;
     });
+    isLodingAddStudent = false;
+
     update();
     return addStudentHasBeenAdded;
   }

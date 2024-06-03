@@ -153,11 +153,9 @@ class EditStudentWidget extends GetView<StudentController> {
                 const SizedBox(
                   height: 20,
                 ),
-                controller.loading
-                    ? const Center(child: CircularProgressIndicator())
-                    : InkWell(
-                        onTap: () async {
-                          await controller
+                 InkWell(
+                        onTap: () {
+                          controller
                               .patchEditStudent(
                             studentid: studentResModel.iD!,
                             gradesId: controller.selectedItemGrade!.value,

@@ -35,6 +35,7 @@ class StudentController extends GetxController {
   ValueItem? selectedItemClassRoom;
 
   bool loading = false;
+  bool islodingEditStudent = false;
 
   Future<bool> getStudents() async {
     bool gotData = false;
@@ -194,7 +195,7 @@ class StudentController extends GetxController {
     required String secondName,
     required String thirdName,
   }) async {
-    loading = true;
+    islodingEditStudent = true;
     update();
     bool editStudentHasBeenAdded = false;
     int schoolId = Hive.box('School').get('Id');
@@ -227,7 +228,7 @@ class StudentController extends GetxController {
     }, (result) {
       editStudentHasBeenAdded = true;
     });
-    loading = false;
+    islodingEditStudent = false;
     update();
     return editStudentHasBeenAdded;
   }
