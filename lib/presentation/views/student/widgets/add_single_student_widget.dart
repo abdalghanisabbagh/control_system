@@ -137,12 +137,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                             height: 10,
                           ),
                           FormField<String>(
-                            validator: (value) {
-                              if (controller.selectedItemClassRoom == null) {
-                                return 'This field is required';
-                              }
-                              return null;
-                            },
+                            validator: Validations.requiredValidator,
                             builder: (formFieldState) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
