@@ -129,18 +129,15 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                       height: 5,
                                                     ),
                                                     Text(
-                                                      Get.find<
-                                                              SchoolController>()
-                                                          .schools
-                                                          .firstWhereOrNull(
-                                                              (element) =>
+                                                      controller.schools
+                                                              .firstWhereOrNull((element) =>
                                                                   element.iD ==
                                                                   controller
                                                                       .classesRooms[
                                                                           index]
-                                                                      .schoolsID)!
-                                                          .name
-                                                          .toString(),
+                                                                      .schoolsID)
+                                                              ?.name ??
+                                                          '',
                                                       style: nunitoRegular
                                                           .copyWith(
                                                               color: ColorManager
