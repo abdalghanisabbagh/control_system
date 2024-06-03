@@ -8,7 +8,6 @@ import 'package:control_system/presentation/resource_manager/assets_manager.dart
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
 import "package:control_system/presentation/views/subject_setting/widgets/add_subject_widget.dart";
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
@@ -183,14 +182,8 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                         onChanged: (value) {
                                                           if (inExam) {
                                                             inExam = false;
-                                                            if (kDebugMode) {
-                                                              print(inExam);
-                                                            }
                                                           } else {
                                                             inExam = true;
-                                                            if (kDebugMode) {
-                                                              print(inExam);
-                                                            }
                                                           }
                                                           subjectsControllers
                                                               .update();
@@ -417,9 +410,6 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
             //                                               "Cohort Create",
             //                                               "Cohort has been created");
             //                                     } catch (e) {
-            //                                       if (kDebugMode) {
-            //                                         print(e);
-            //                                       }
             //                                     }
             //                                   }
             //                                 } else {

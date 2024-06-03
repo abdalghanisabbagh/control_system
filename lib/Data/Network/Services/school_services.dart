@@ -16,7 +16,6 @@ class SchoolServices {
   //     return Left(DataSource.DEFAULT.getFailure());
   //   }
   // } catch (e) {
-  //   print(e);
 
   //   return Left(DataSource.DEFAULT.getFailure());
   // }

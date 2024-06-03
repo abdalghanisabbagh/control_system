@@ -167,8 +167,6 @@ class SideMenueGetController extends GetxController {
     // .where((element) => element.title!.toLowerCase().contains('s'))
     // .toList();
     userMenue = sideMenueItems;
-
-    debugPrint(userMenue.toString());
     return userMenue;
   }
 

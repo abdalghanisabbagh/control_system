@@ -7,7 +7,6 @@ import 'package:control_system/domain/controllers/index.dart';
 import 'package:control_system/domain/services/token_service.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response;
 
 import '../../Data/Network/tools/app_error_handler.dart';
@@ -82,7 +81,6 @@ class AuthController extends GetxController {
         return Response(requestOptions: RequestOptions(path: 'error'));
       },
     );
-    debugPrint('refresh token:${response.data}');
     // if response is good we get new access token need to replace
     //  update refresh token in local storage and profile controller
 
@@ -94,10 +92,6 @@ class AuthController extends GetxController {
     /// check token in local storage and it's time
     ///
     /// then forword to current page
-
-    // debugPrint(DateTime.now()
-    //     .difference(DateTime.tryParse(tokenService.tokenModel!.dToken)!)
-    //     .toString());
 
     if (tokenService.tokenModel != null) {
       if (DateTime.now()
