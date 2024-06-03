@@ -3,6 +3,7 @@ import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Models/cohort/cohorts_res_model.dart';
@@ -53,8 +54,8 @@ class CohortsSettingsController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        "Created_By": 1,
-        "School_Type_ID": 1,
+        "Created_By": Hive.box('Profile').get('ID'),
+        "School_Type_ID": Hive.box('School').get('SchoolTypeID'),
       },
     );
     response.fold(
