@@ -8,6 +8,8 @@ import 'package:control_system/Data/Models/student/students_res_model.dart';
 import 'package:control_system/app/extensions/pluto_row_extension.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../Data/Models/cohort/cohorts_res_model.dart';
@@ -23,6 +25,9 @@ class StudentController extends GetxController {
   List<CohortResModel> cohorts = <CohortResModel>[];
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<GradeResModel> grades = <GradeResModel>[];
+  List<ValueItem> optionsCohort = <ValueItem>[];
+  ValueItem? selectedItemGrade;
+  var specificItemtest;
 
   bool loading = false;
 
@@ -58,10 +63,12 @@ class StudentController extends GetxController {
   Future<bool> getCohorts() async {
     bool gotData = false;
     update();
+    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
+
     ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.cohort,
+      path: "${SchoolsLinks.getCohortBySchoolType}/$selectedSchoolId",
       converter: CohortsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -76,11 +83,21 @@ class StudentController extends GetxController {
       },
       (r) {
         cohorts = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsCohort = items;
+
         gotData = true;
       },
     );
     update();
     return gotData;
+  }
+
+  void setSelectedItemGrade(List<ValueItem> items) {
+    selectedItemGrade = items.first;
+    update();
   }
 
   Future<bool> getClassRooms() async {

@@ -1,11 +1,19 @@
+import 'package:control_system/Data/Models/student/student_res_model.dart';
+import 'package:control_system/domain/controllers/studentsController/student_controller.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/resource_manager/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EditStudentWidget extends StatelessWidget {
-  EditStudentWidget({super.key});
+class EditStudentWidget extends GetView<StudentController> {
+  EditStudentWidget({
+    super.key,
+    // required this.studentResModel,
+  });
+
+  // final StudentResModel studentResModel;
 
   final TextEditingController blbIdController = TextEditingController();
   final TextEditingController fnameController = TextEditingController();
@@ -63,6 +71,28 @@ class EditStudentWidget extends StatelessWidget {
             ),
             const SizedBox(
               height: 20,
+            ),
+            GetBuilder<StudentController>(
+              builder: (controller) {
+                if (controller.loading) {
+                  return const CircularProgressIndicator();
+                }
+
+                if (controller.optionsCohort.isEmpty) {
+                  return const Text('No items available');
+                }
+
+                return SizedBox(
+                  width: 500,
+                  child: MultiSelectDropDownView(
+                    onOptionSelected: (selectedItem) {
+                      //    controller.setSelectedItem(selectedItem[0]);
+                    },
+                    options: controller.optionsCohort,
+                    optionSelected: controller.specificItemtest,
+                  ),
+                );
+              },
             ),
             // DropdownButtonFormField<GradeResponse>(
             //   value: selectedGrade,
@@ -183,16 +213,19 @@ class EditStudentWidget extends StatelessWidget {
 
             MytextFormFiled(
                 controller: fnameController,
+                //  ..text = studentResModel.firstName.toString(),
                 title: "First Name",
                 myValidation: Validations.requiredValidator),
 
             MytextFormFiled(
                 controller: mnameController,
+                //    ..text = studentResModel.secondName.toString(),
                 title: "Middle Name",
                 myValidation: Validations.requiredValidator),
 
             MytextFormFiled(
                 controller: lnameController,
+                // ..text = studentResModel.thirdName.toString(),
                 title: "Last Name",
                 myValidation: Validations.requiredValidator),
 
@@ -206,6 +239,7 @@ class EditStudentWidget extends StatelessWidget {
                 myValidation: Validations.requiredValidator),
             MytextFormFiled(
                 controller: sLangController,
+                //    ..text = studentResModel.secondLang.toString(),
                 title: "Second Language",
                 myValidation: Validations.requiredValidator),
             const SizedBox(

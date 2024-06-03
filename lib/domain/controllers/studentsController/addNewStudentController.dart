@@ -161,8 +161,8 @@ class AddNewStudentController extends GetxController {
           .map((item) => ValueItem(label: item.name!, value: item.iD))
           .toList();
       optionsCohort = items;
+      cohortHasBeenAdded = true;
     });
-    cohortHasBeenAdded = true;
     update();
     return cohortHasBeenAdded;
   }

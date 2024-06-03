@@ -10,9 +10,12 @@ class MultiSelectDropDownView extends StatelessWidget {
     this.multiSelect = false,
     this.showChipSelect = false,
     this.hintText = "Search",
+    this.optionSelected = const [],
   });
 
   final void Function(List<ValueItem<dynamic>>)? onOptionSelected;
+  final List<ValueItem<dynamic>> optionSelected;
+
   final List<ValueItem<dynamic>> options;
   final bool searchEnabled;
   final bool multiSelect;
@@ -21,6 +24,7 @@ class MultiSelectDropDownView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiSelectDropDown(
+      selectedOptions: optionSelected,
       borderWidth: 2,
       focusedBorderWidth: 5,
       onOptionSelected: onOptionSelected,

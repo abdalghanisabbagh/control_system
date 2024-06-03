@@ -223,7 +223,8 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                 .postAddNewStudent(
                               cohortId: controller.selectedItemCohort!.value,
                               gradesId: controller.selectedItemGrade!.value,
-                              schoolClassId: 17,
+                              schoolClassId:
+                                  controller.selectedItemClassRoom!.value,
                               firstName: fnameController.text,
                               secondName: mnameController.text,
                               thirdName: lnameController.text,
