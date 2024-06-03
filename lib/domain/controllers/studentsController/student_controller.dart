@@ -28,18 +28,22 @@ class StudentController extends GetxController {
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<GradeResModel> grades = <GradeResModel>[];
   List<ValueItem> optionsCohort = <ValueItem>[];
+  List<ValueItem> optionsClassRoom = <ValueItem>[];
+  List<ValueItem> optionsGrade = <ValueItem>[];
   ValueItem? selectedItemGrade;
-  ValueItem? specificItemtest;
+  ValueItem? selectedItemCohort;
+  ValueItem? selectedItemClassRoom;
 
   bool loading = false;
 
   Future<bool> getStudents() async {
     bool gotData = false;
     update();
+
     ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
     Either<Failure, StudentsResModel> response =
         await responseHandler.getResponse(
-      path: StudentsLinks.student,
+      path: '${StudentsLinks.studentSchool}/${Hive.box('School').get('Id')}',
       converter: StudentsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -90,11 +94,6 @@ class StudentController extends GetxController {
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
         optionsCohort = items;
-        // items.firstWhere(
-        //   (item) => item.value == 1,
-          //   //   orElse: () => ValueItem(label: '', value: -1),
-        // );
-        // print(items.firstWhere((item) => item.value == 1).label);
 
         gotData = true;
       },
@@ -108,13 +107,25 @@ class StudentController extends GetxController {
     update();
   }
 
+  void setSelectedItemClassRoom(List<ValueItem> items) {
+    selectedItemClassRoom = items.first;
+    update();
+  }
+
+  void setSelectedItemCohort(List<ValueItem> items) {
+    selectedItemCohort = items.first;
+    update();
+  }
+
   Future<bool> getClassRooms() async {
     bool gotData = false;
     update();
+    int schoolId = Hive.box('School').get('Id');
+
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassesRoomsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.schoolsClasses,
+      path: "${SchoolsLinks.getSchoolsClassesBySchoolId}/$schoolId",
       converter: ClassesRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -129,6 +140,10 @@ class StudentController extends GetxController {
       },
       (r) {
         classRooms = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsClassRoom = items;
         gotData = true;
       },
     );
@@ -139,10 +154,12 @@ class StudentController extends GetxController {
   Future<bool> getGrades() async {
     bool gotData = false;
     update();
+    int schoolId = Hive.box('School').get('Id');
+
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
     Either<Failure, GradesResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.grades,
+      path: "${SchoolsLinks.gradesSchools}/$schoolId",
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -157,11 +174,62 @@ class StudentController extends GetxController {
       },
       (r) {
         grades = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsGrade = items;
         gotData = true;
       },
     );
     update();
     return gotData;
+  }
+
+  Future<bool> patchEditStudent({
+    required int studentid,
+    required int gradesId,
+    required int cohortId,
+    required int schoolClassId,
+    required String firstName,
+    required String secondName,
+    required String thirdName,
+  }) async {
+    loading = true;
+    update();
+    bool editStudentHasBeenAdded = false;
+    int schoolId = Hive.box('School').get('Id');
+    int createdBy = Hive.box('Profile').get('ID');
+
+    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+        path: "${StudentsLinks.student}/$studentid",
+        converter: StudentResModel.fromJson,
+        type: ReqTypeEnum.PATCH,
+        body: {
+          "Grades_ID": gradesId,
+          "Schools_ID": schoolId,
+          "Cohort_ID": cohortId,
+          "School_Class_ID": schoolClassId,
+          "First_Name": firstName,
+          "Second_Name": secondName,
+          "Third_Name": thirdName,
+          "Created_By": createdBy
+        });
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      editStudentHasBeenAdded = false;
+    }, (result) {
+      editStudentHasBeenAdded = true;
+    });
+    loading = false;
+    update();
+    return editStudentHasBeenAdded;
   }
 
   @override
