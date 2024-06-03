@@ -5,6 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/class_room/class_room_res_model.dart';
 import '../../Data/Models/class_room/classes_rooms_res_model.dart';
+import '../../Data/Models/school/school_response/school_res_model.dart';
+import '../../Data/Models/school/school_response/schools_res_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
@@ -13,9 +15,7 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class ClassRoomController extends GetxController {
   List<ClassRoomResModel> classesRooms = [];
-
-  int selctedSchoolId = Hive.box('School').get('Id');
-  int currentUserId = Hive.box('Profile').get('ID');
+  List<SchoolResModel> schools = <SchoolResModel>[];
 
   List<int> classSeats = [];
   int numbers = 0;
@@ -47,6 +47,38 @@ class ClassRoomController extends GetxController {
       },
       (r) {
         classesRooms = r.data!;
+        isLoading = false;
+        gotData = true;
+        update();
+      },
+    );
+    return gotData;
+  }
+
+  Future<bool> getSchools() async {
+    isLoading = true;
+    bool gotData = false;
+    update();
+    ResponseHandler<SchoolsResModel> responseHandler = ResponseHandler();
+    Either<Failure, SchoolsResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.getAllSchools,
+      converter: SchoolsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        isLoading = false;
+        gotData = false;
+        update();
+      },
+      (r) {
+        schools = r.data!;
         isLoading = false;
         gotData = true;
         update();
@@ -87,8 +119,10 @@ class ClassRoomController extends GetxController {
   }
 
   @override
-  void onInit() {
-    getClassesRooms();
+  void onInit() async {
+    await getSchools().then((_) async {
+      await getClassesRooms();
+    });
     super.onInit();
   }
 
@@ -113,8 +147,8 @@ class ClassRoomController extends GetxController {
         "Floor": floorName,
         "Rows": rows.toString(),
         "Columns": columns,
-        "Schools_ID": selctedSchoolId,
-        "Created_By": currentUserId
+        "Schools_ID": Hive.box('School').get('Id'),
+        "Created_By": Hive.box('Profile').get('ID'),
       },
     );
     response.fold(
