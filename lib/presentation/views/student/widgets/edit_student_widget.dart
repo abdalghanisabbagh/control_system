@@ -182,79 +182,32 @@ class EditStudentWidget extends StatelessWidget {
             ),
 
             MytextFormFiled(
-                controller:fnameController,
+                controller: fnameController,
                 title: "First Name",
                 myValidation: Validations.requiredValidator),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: mnameController,
-              decoration: InputDecoration(
-                label: Text(
-                  "MiddleName",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: lnameController,
-              decoration: InputDecoration(
-                label: Text(
-                  "lastName",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: religionController,
-              decoration: InputDecoration(
-                label: Text(
-                  "Religion",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: citizenshipController,
-              decoration: InputDecoration(
-                label: Text(
-                  "Citizenship",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: sLangController,
-              decoration: InputDecoration(
-                label: Text(
-                  "Second Language",
-                  style: nunitoRegular.copyWith(
-                    color: ColorManager.black,
-                  ),
-                ),
-              ),
-            ),
+
+            MytextFormFiled(
+                controller: mnameController,
+                title: "Middle Name",
+                myValidation: Validations.requiredValidator),
+
+            MytextFormFiled(
+                controller: lnameController,
+                title: "Last Name",
+                myValidation: Validations.requiredValidator),
+
+            MytextFormFiled(
+                controller: religionController,
+                title: "Religion",
+                myValidation: Validations.requiredValidator),
+            MytextFormFiled(
+                controller: citizenshipController,
+                title: "Citizenship",
+                myValidation: Validations.requiredValidator),
+            MytextFormFiled(
+                controller: sLangController,
+                title: "Second Language",
+                myValidation: Validations.requiredValidator),
             const SizedBox(
               height: 20,
             ),
