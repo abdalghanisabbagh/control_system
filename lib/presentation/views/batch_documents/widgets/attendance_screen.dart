@@ -109,7 +109,6 @@ class AttendanceScreen extends GetView<CreateCoversSheetsController> {
         //             // controller.selectedExamRoom = null;
         //             // controller.getExamRooms(value!.id!);
         //             // controller.selectMission = value;
-        //             // print(value.name);
         //             CompleteMissionsController completeMissionsController =
         //                 Get.find();
         //             completeMissionsController.getDetialsControlMissionById(

@@ -1,6 +1,5 @@
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:control_system/presentation/views/base_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -346,7 +345,6 @@ class StudentScreen extends GetView<StudentController> {
                                       //   ),
                                       // );
                                       // if (kDebugMode) {
-                                      //   print("details");
                                       // }
                                       // },
                                       // icon: const Icon(
@@ -371,9 +369,6 @@ class StudentScreen extends GetView<StudentController> {
                                                       element.iD),
                                             ),
                                           );
-                                          if (kDebugMode) {
-                                            print("edit");
-                                          }
                                         },
                                         icon: const Icon(
                                           Icons.edit,
@@ -384,7 +379,6 @@ class StudentScreen extends GetView<StudentController> {
                                       //   onPressed: () {
                                       //     // log(rendererContext.rowIdx.toString());
                                       //     if (kDebugMode) {
-                                      //       print("delete");
                                       //     }
                                       //   },
                                       //   icon: const Icon(
@@ -407,15 +401,8 @@ class StudentScreen extends GetView<StudentController> {
                               ),
                             ],
                             rows: controller.studentsRows,
-                            onChanged: (PlutoGridOnChangedEvent event) {
-                              if (kDebugMode) {
-                                print(event);
-                              }
-                            },
+                            onChanged: (PlutoGridOnChangedEvent event) {},
                             onLoaded: (PlutoGridOnLoadedEvent event) {
-                              if (kDebugMode) {
-                                print(event);
-                              }
                               event.stateManager.setSelectingMode(
                                 PlutoGridSelectingMode.cell,
                               );

@@ -95,10 +95,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 fontWeight: FontWeight.w300,
                 color: ColorManager.black,
                 decoration: TextDecoration.lineThrough,
+                fontSize: 14,
               ),
               weekdayStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: ColorManager.black,
+                fontSize: 14,
               ),
             ),
             onPageChanged: (day) {
@@ -106,6 +108,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               setState(() {});
             },
             calendarStyle: CalendarStyle(
+              defaultTextStyle: const TextStyle(
+                color: ColorManager.black,
+                fontWeight: FontWeight.bold,
+              ),
               todayDecoration: BoxDecoration(
                 color: ColorManager.bgSideMenu,
                 shape: BoxShape.circle,

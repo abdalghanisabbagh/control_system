@@ -355,7 +355,6 @@ class MissionDetailsWidget extends StatelessWidget {
       //               //     //                                 id: obj
       //               //     //                                     .students?.cohertId);
       //               //     //                       } catch (e) {
-      //               //     //                         print(e);
       //               //     //                       }
 
       //               //     //                       String cohortName =
@@ -398,12 +397,10 @@ class MissionDetailsWidget extends StatelessWidget {
       //               //     //                   _Header(stateManager: stateManager),
       //               //     //               onChanged: (PlutoGridOnChangedEvent event) {
       //               //     //                 if (kDebugMode) {
-      //               //     //                   print(event);
       //               //     //                 }
       //               //     //               },
       //               //     //               onLoaded: (PlutoGridOnLoadedEvent event) {
       //               //     //                 if (kDebugMode) {
-      //               //     //                   print(event);
       //               //     //                 }
       //               //     //                 event.stateManager.setSelectingMode(
       //               //     //                     PlutoGridSelectingMode.cell);

@@ -102,7 +102,6 @@ class RenderSeatsExam extends StatelessWidget {
     //                               }
     //                             } catch (e) {
     //                               if (kDebugMode) {
-    //                                 print(e);
     //                               }
     //                             }
 

@@ -95,6 +95,10 @@ class StudentController extends GetxController {
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
         optionsCohort = items;
+        // items.firstWhere(
+        //   (item) => item.value == 1,
+        //   //   orElse: () => ValueItem(label: '', value: -1),
+        // );
 
         gotData = true;
       },
