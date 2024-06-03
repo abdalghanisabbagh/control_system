@@ -9,9 +9,9 @@ extension PlutoRowExtension on List<StudentResModel> {
         PlutoRow(
           cells: {
             'Id': PlutoCell(value: element.iD.toString()),
-            'FirstName': PlutoCell(value: element.firstName.toString()),
-            'SecondName': PlutoCell(value: element.secondName.toString()),
-            'ThirdName': PlutoCell(value: element.thirdName.toString()),
+            'FirstNameField': PlutoCell(value: element.firstName.toString()),
+            'SecondNameField': PlutoCell(value: element.secondName.toString()),
+            'ThirdNameField': PlutoCell(value: element.thirdName.toString()),
             // 'ReligionField': PlutoCell(value: element.religion),
             // 'CitizenshipField': PlutoCell(value: element.citizenship),
             'GradeField': PlutoCell(value: element.gradesID.toString()),
