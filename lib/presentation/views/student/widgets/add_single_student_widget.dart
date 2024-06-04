@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../domain/controllers/studentsController/addNewStudentController.dart';
+import '../../../../domain/controllers/studentsController/add_new_student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
