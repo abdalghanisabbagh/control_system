@@ -1,6 +1,6 @@
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'assets_manager.dart';
 import 'color_manager.dart';
 import 'font_manager.dart';
 

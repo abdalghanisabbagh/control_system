@@ -1,8 +1,9 @@
-import 'package:control_system/domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:control_system/presentation/resource_manager/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
+import '../../../resource_manager/color_manager.dart';
+import '../../../resource_manager/styles_manager.dart';
 
 class AttendanceScreen extends GetView<CreateCoversSheetsController> {
   const AttendanceScreen({super.key});

@@ -1,6 +1,7 @@
-import 'package:control_system/Data/Models/user/login_response/user_profile_model.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import '../../Data/Models/user/login_response/user_profile_model.dart';
 
 class ProfileController extends GetxController {
   UserProfileModel? _cachedUserProfile;

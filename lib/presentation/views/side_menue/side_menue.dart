@@ -1,9 +1,10 @@
-import 'package:control_system/domain/services/side_menue_get_controller.dart';
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../domain/services/side_menue_get_controller.dart';
+import '../../resource_manager/assets_manager.dart';
+import '../../resource_manager/index.dart';
 
 class SideMenueWidget extends GetView<SideMenueGetController> {
   const SideMenueWidget({
@@ -52,7 +53,7 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
               "Control System",
               style: nunitoRegularStyle(
                   color: ColorManager.white, fontSize: AppSize.s18),
-                overflow: TextOverflow.ellipsis,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           const Divider(

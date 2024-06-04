@@ -1,12 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/controllers/school_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:control_system/presentation/resource_manager/styles_manager.dart';
-import 'package:control_system/presentation/views/schools/Widgets/add_grade_to_school.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../domain/controllers/school_controller.dart';
+import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/color_manager.dart';
+import '../../../resource_manager/styles_manager.dart';
+import 'add_grade_to_school.dart';
 
 class GradeSystemWidget extends GetView<SchoolController> {
   const GradeSystemWidget({

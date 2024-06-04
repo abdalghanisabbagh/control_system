@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/school/school_type/school_type_model.dart';
+import 'school_type_model.dart';
 
 class SchoolsTypeResModel {
   List<SchoolTypeResModel>? data;

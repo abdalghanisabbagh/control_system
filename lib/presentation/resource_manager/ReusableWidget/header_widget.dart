@@ -1,5 +1,6 @@
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
+
+import '../index.dart';
 
 class HeaderWidget extends StatelessWidget {
   final String text;

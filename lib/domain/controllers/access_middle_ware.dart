@@ -1,11 +1,11 @@
-import 'package:control_system/Data/Models/token/token_model.dart';
-import 'package:control_system/Data/Models/user/login_response/user_profile_model.dart';
-import 'package:control_system/domain/controllers/auth_controller.dart';
-import 'package:control_system/domain/services/token_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../Data/Models/token/token_model.dart';
 import '../../Data/Models/user/login_response/login_res_model.dart';
+import '../../Data/Models/user/login_response/user_profile_model.dart';
+import '../services/token_service.dart';
+import 'auth_controller.dart';
 import 'profile_controller.dart';
 
 class AuthMiddleWare extends GetMiddleware {

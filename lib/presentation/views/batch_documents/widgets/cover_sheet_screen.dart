@@ -1,9 +1,9 @@
-import 'package:control_system/domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../domain/controllers/SeatingNumbersControllers/CreateCoversSheetsController.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../../resource_manager/index.dart';
 import 'add_new_cover_widget.dart';
 
 class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {

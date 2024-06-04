@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
+import 'class_room_res_model.dart';
 
 class ClassesRoomsResModel {
   List<ClassRoomResModel>? data;

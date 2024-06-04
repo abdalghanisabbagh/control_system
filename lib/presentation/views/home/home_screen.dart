@@ -1,11 +1,11 @@
-import 'package:control_system/domain/controllers/home_controller.dart';
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/views/home/widgets/home_screen_test.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/controllers/home_controller.dart';
+import '../../resource_manager/assets_manager.dart';
+import '../../resource_manager/index.dart';
+import 'widgets/home_screen_test.dart';
 import 'widgets/main_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -18,7 +18,6 @@ class HomeScreen extends GetView<HomeController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SideMenu(
-            
             showToggle: true,
             items: [
               SideMenuItem(

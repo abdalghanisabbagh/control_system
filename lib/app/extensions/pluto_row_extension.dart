@@ -1,9 +1,9 @@
-import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
-import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
-import 'package:control_system/Data/Models/student/student_res_model.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
+import '../../Data/Models/class_room/class_room_res_model.dart';
 import '../../Data/Models/cohort/cohort_res_model.dart';
+import '../../Data/Models/school/grade_response/grade_res_model.dart';
+import '../../Data/Models/student/student_res_model.dart';
 
 extension PlutoRowExtension on List<StudentResModel> {
   List<PlutoRow> convertStudentsToRows({

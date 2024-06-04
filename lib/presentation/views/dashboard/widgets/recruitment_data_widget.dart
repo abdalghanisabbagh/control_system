@@ -1,7 +1,8 @@
-import 'package:control_system/app/extensions/device_type_extension.dart';
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../app/extensions/device_type_extension.dart';
+import '../../../resource_manager/assets_manager.dart';
+import '../../../resource_manager/index.dart';
 
 class RecruitmentDataWidget extends StatefulWidget {
   const RecruitmentDataWidget({super.key});
@@ -173,8 +174,8 @@ class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
       margin: const EdgeInsets.symmetric(vertical: 15),
       child: Text(
         text,
-        style:
-            const TextStyle(fontWeight: FontWeight.bold, color: ColorManager.black),
+        style: const TextStyle(
+            fontWeight: FontWeight.bold, color: ColorManager.black),
       ),
     );
   }

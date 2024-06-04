@@ -1,7 +1,8 @@
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import '../index.dart';
 
 class MytextFormFiled extends StatelessWidget {
   final String? title;

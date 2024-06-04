@@ -1,16 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/token/token_model.dart';
-import 'package:control_system/Data/Models/user/login_response/login_res_model.dart';
-import 'package:control_system/Data/Network/response_handler.dart';
-import 'package:control_system/app/configurations/app_links.dart';
-import 'package:control_system/domain/controllers/index.dart';
-import 'package:control_system/domain/services/token_service.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
 
+import '../../Data/Models/token/token_model.dart';
+import '../../Data/Models/user/login_response/login_res_model.dart';
+import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/app_error_handler.dart';
 import '../../Data/enums/req_type_enum.dart';
+import '../../app/configurations/app_links.dart';
+import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../services/token_service.dart';
+import 'index.dart';
 
 class AuthController extends GetxController {
   TokenService tokenService = Get.find<TokenService>();

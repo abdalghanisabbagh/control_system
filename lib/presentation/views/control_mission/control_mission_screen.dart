@@ -1,8 +1,8 @@
-import 'package:control_system/presentation/views/base_screen.dart';
-import 'package:control_system/presentation/views/control_mission/widgets/header_mission_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../resource_manager/color_manager.dart';
+import '../base_screen.dart';
+import 'widgets/header_mission_widget.dart';
 
 class ControlMissionScreen extends StatelessWidget {
   const ControlMissionScreen({super.key});

@@ -1,6 +1,7 @@
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/views/control_mission/widgets/review_mission_header_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../../resource_manager/index.dart';
+import '../control_mission/widgets/review_mission_header_widget.dart';
 
 class ExamRoomScreen extends StatelessWidget {
   const ExamRoomScreen({super.key});

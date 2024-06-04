@@ -1,10 +1,10 @@
-import 'package:control_system/app/extensions/device_type_extension.dart';
-import 'package:control_system/domain/controllers/index.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/extensions/device_type_extension.dart';
+import '../../../domain/controllers/index.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
+import '../../resource_manager/index.dart';
 import '../base_screen.dart';
 import 'widgets/index.dart';
 

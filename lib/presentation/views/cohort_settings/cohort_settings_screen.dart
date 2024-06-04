@@ -1,17 +1,18 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
-import 'package:control_system/domain/controllers/index.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/views/base_screen.dart';
-import "package:control_system/presentation/views/cohort_settings/add_subjects_to_cohort.dart";
-import "package:control_system/presentation/views/cohort_settings/widgets/add_cohort_widget.dart";
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
+
+import '../../../Data/Models/cohort/cohort_res_model.dart';
+import '../../../domain/controllers/index.dart';
+import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../resource_manager/assets_manager.dart';
+import '../../resource_manager/index.dart';
+import '../base_screen.dart';
+import "add_subjects_to_cohort.dart";
+import "widgets/add_cohort_widget.dart";
 
 class CohortSettingsScreen extends GetView<CohortsSettingsController> {
   const CohortSettingsScreen({super.key});

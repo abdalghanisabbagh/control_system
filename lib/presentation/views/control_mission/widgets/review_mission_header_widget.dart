@@ -1,5 +1,6 @@
-import 'package:control_system/presentation/resource_manager/styles_manager.dart';
 import 'package:flutter/material.dart';
+
+import '../../../resource_manager/styles_manager.dart';
 
 class ReviewMissionHeaderWidget extends StatelessWidget {
   const ReviewMissionHeaderWidget({super.key, required this.title});

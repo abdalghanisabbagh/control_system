@@ -1,4 +1,3 @@
-import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,6 +5,7 @@ import '../../../domain/bindings/bindings.dart';
 import '../../../domain/controllers/index.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
 import '../../views/index.dart';
+import 'app_routes_names_and_paths.dart';
 
 class AppGoRouter {
   static final router = GoRouter(

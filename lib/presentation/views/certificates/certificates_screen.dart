@@ -1,6 +1,7 @@
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../resource_manager/index.dart';
+import '../base_screen.dart';
 
 class CertificatesScreen extends StatelessWidget {
   const CertificatesScreen({super.key});

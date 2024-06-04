@@ -1,5 +1,6 @@
-import 'package:control_system/presentation/resource_manager/enums/device_type_enum.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../presentation/resource_manager/enums/device_type_enum.dart';
 
 extension DeviceTypeExtension on BuildContext {
   /// This size work for my design, maybe you need some changes depend on your design
