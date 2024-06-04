@@ -15,9 +15,10 @@ class CustomizedButton extends StatelessWidget {
     this.txtColor,
     this.whiteButtonWithColoredBorder = false,
   });
-  final double responsiveHeight, responsiveWidth;
-  final String buttonTitle;
+
   final void Function()? onPressed;
+  final String buttonTitle;
+  final double responsiveHeight, responsiveWidth;
   final Color? txtColor;
   final bool whiteButtonWithColoredBorder;
 

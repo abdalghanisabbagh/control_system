@@ -1,10 +1,4 @@
 class ExamRoomModel {
-  int? controlMissionID;
-  int? schoolClassID;
-  String? name;
-  String? stage;
-  int? capacity;
-
   ExamRoomModel({
     this.controlMissionID,
     this.schoolClassID,
@@ -20,6 +14,12 @@ class ExamRoomModel {
     stage = json['Stage'];
     capacity = json['Capacity'];
   }
+
+  int? capacity;
+  int? controlMissionID;
+  String? name;
+  int? schoolClassID;
+  String? stage;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

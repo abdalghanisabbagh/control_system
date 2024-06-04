@@ -13,11 +13,7 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 
 class CreateCoversSheetsController extends GetxController {
   String atoken = '';
-  DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
-  RxBool isLoading = false.obs;
-  TextEditingController examTimeController = TextEditingController();
-  TextEditingController examFinalDegreeController = TextEditingController();
   List<int> examDurations = [
     15,
     25,
@@ -33,11 +29,15 @@ class CreateCoversSheetsController extends GetxController {
     130,
     150
   ];
-  bool is2Version = false;
-  bool isNight = false;
-  bool isLoadingGetEducationYear = false;
 
+  TextEditingController examFinalDegreeController = TextEditingController();
+  TextEditingController examTimeController = TextEditingController();
+  bool is2Version = false;
+  RxBool isLoading = false.obs;
+  bool isLoadingGetEducationYear = false;
+  bool isNight = false;
   List<ValueItem> options = <ValueItem>[];
+  DateTime selectedDate = DateTime.now();
 
   @override
   void onInit() {

@@ -13,11 +13,11 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
   AddSingleStudentWidget({super.key});
 
   final TextEditingController blbIdController = TextEditingController();
-  final TextEditingController fnameController = TextEditingController();
-  final TextEditingController mnameController = TextEditingController();
-  final TextEditingController lnameController = TextEditingController();
-  final TextEditingController religionController = TextEditingController();
   final TextEditingController citizenshipController = TextEditingController();
+  final TextEditingController fnameController = TextEditingController();
+  final TextEditingController lnameController = TextEditingController();
+  final TextEditingController mnameController = TextEditingController();
+  final TextEditingController religionController = TextEditingController();
   final TextEditingController sLangController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

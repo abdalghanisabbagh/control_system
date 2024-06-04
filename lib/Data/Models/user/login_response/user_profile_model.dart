@@ -1,13 +1,4 @@
 class UserProfileModel {
-  int? iD;
-  String? fullName;
-  String? userName;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  DateTime? updatedAt;
-  int? active;
-
   UserProfileModel({
     this.iD,
     this.fullName,
@@ -24,6 +15,15 @@ class UserProfileModel {
     updatedAt = json['Updated_At'];
     active = json['Active'];
   }
+
+  int? active;
+  String? createdAt;
+  int? createdBy;
+  String? fullName;
+  int? iD;
+  DateTime? updatedAt;
+  int? updatedBy;
+  String? userName;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

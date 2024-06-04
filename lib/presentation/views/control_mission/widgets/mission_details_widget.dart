@@ -4,6 +4,7 @@ import '../../../resource_manager/index.dart';
 
 class MissionDetailsWidget extends StatelessWidget {
   const MissionDetailsWidget({super.key});
+
   // List<PlutoColumn> columns = [
   //   /// Text Column definition
   //   PlutoColumn(

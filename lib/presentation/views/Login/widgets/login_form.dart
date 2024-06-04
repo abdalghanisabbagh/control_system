@@ -12,8 +12,8 @@ import '../../../resource_manager/validations.dart';
 class LoginForm extends GetView<AuthController> {
   LoginForm({super.key});
 
-  final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class RenderSeatsExam extends StatelessWidget {
   const RenderSeatsExam({super.key});
+
   // Map<String, Studentseatnumber> seatsNumbers = {};
 
   @override

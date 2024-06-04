@@ -6,8 +6,10 @@ class AppDialogs extends StatelessWidget {
     required this.curve,
     required this.content,
   });
-  final double? curve;
+
   final Widget content;
+  final double? curve;
+
   @override
   Widget build(BuildContext context) {
     return Transform.scale(

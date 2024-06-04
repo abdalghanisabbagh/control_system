@@ -5,11 +5,13 @@ import '../../../resource_manager/index.dart';
 
 // ignore: must_be_immutable
 class AddExamRoomWidget extends StatelessWidget {
-  TextEditingController newname = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AddExamRoomWidget({
     super.key,
   });
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController newname = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -12,10 +12,17 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class SubjectsController extends GetxController {
-  List<SubjectResModel> subjects = <SubjectResModel>[];
   // RxList<SubjectResModel> subjectsController = <SubjectResModel>[].obs;
   bool addLoading = false;
+
   bool getAllLoading = false;
+  List<SubjectResModel> subjects = <SubjectResModel>[];
+
+  @override
+  void onInit() {
+    getAllSubjects();
+    super.onInit();
+  }
 
   Future getAllSubjects() async {
     getAllLoading = true;
@@ -113,11 +120,5 @@ class SubjectsController extends GetxController {
       },
     );
     return subjectHasBeenDeleted;
-  }
-
-  @override
-  void onInit() {
-    getAllSubjects();
-    super.onInit();
   }
 }

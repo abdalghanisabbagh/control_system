@@ -22,20 +22,35 @@ import '../../../app/extensions/pluto_row_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class StudentController extends GetxController {
+  List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
+  List<CohortResModel> cohorts = <CohortResModel>[];
+  List<GradeResModel> grades = <GradeResModel>[];
+  bool islodingEditStudent = false;
+  bool loading = false;
+  List<ValueItem> optionsClassRoom = <ValueItem>[];
+  List<ValueItem> optionsCohort = <ValueItem>[];
+  List<ValueItem> optionsGrade = <ValueItem>[];
+  ValueItem? selectedItemClassRoom;
+  ValueItem? selectedItemCohort;
+  ValueItem? selectedItemGrade;
   List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
-  List<CohortResModel> cohorts = <CohortResModel>[];
-  List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
-  List<GradeResModel> grades = <GradeResModel>[];
-  List<ValueItem> optionsCohort = <ValueItem>[];
-  List<ValueItem> optionsClassRoom = <ValueItem>[];
-  List<ValueItem> optionsGrade = <ValueItem>[];
-  ValueItem? selectedItemGrade;
-  ValueItem? selectedItemCohort;
-  ValueItem? selectedItemClassRoom;
 
-  bool loading = false;
-  bool islodingEditStudent = false;
+  @override
+  void onInit() async {
+    loading = true;
+    update();
+    await Future.wait([
+      getCohorts(),
+      getClassRooms(),
+      getGrades(),
+    ]).then((_) async {
+      await getStudents();
+    });
+    loading = false;
+    update();
+    super.onInit();
+  }
 
   Future<bool> getStudents() async {
     bool gotData = false;
@@ -235,21 +250,5 @@ class StudentController extends GetxController {
     islodingEditStudent = false;
     update();
     return editStudentHasBeenAdded;
-  }
-
-  @override
-  void onInit() async {
-    loading = true;
-    update();
-    await Future.wait([
-      getCohorts(),
-      getClassRooms(),
-      getGrades(),
-    ]).then((_) async {
-      await getStudents();
-    });
-    loading = false;
-    update();
-    super.onInit();
   }
 }

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../resource_manager/index.dart';
 
 class ReviewWidget extends StatelessWidget {
+  ReviewWidget({super.key});
+
   final FocusNode searchFoucs = FocusNode();
 
-  ReviewWidget({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -239,6 +240,7 @@ class ReviewWidget extends StatelessWidget {
 
 class _Header extends StatefulWidget {
   const _Header();
+
   // required this.stateManager,
 
   // final PlutoGridStateManager stateManager;

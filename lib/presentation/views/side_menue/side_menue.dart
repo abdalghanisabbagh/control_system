@@ -11,7 +11,9 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
     super.key,
     required this.isMobile,
   });
+
   final bool isMobile;
+
   @override
   Widget build(BuildContext context) {
     return SideMenu(

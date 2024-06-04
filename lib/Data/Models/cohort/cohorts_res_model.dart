@@ -1,14 +1,14 @@
 import 'cohort_res_model.dart';
 
 class CohortsResModel {
-  List<CohortResModel>? data;
-
   CohortsResModel({this.data});
 
   CohortsResModel.fromJson(json) {
     data = List<CohortResModel>.from(
         json.map((e) => CohortResModel.fromJson(e)).toList());
   }
+
+  List<CohortResModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

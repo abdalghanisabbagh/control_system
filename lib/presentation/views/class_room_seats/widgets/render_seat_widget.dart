@@ -11,7 +11,9 @@ import '../../../resource_manager/styles_manager.dart';
 // ignore: must_be_immutable
 class RendarSeats extends StatelessWidget {
   RendarSeats({super.key, required this.seatsNumbers});
+
   List<StudentSeatModel> seatsNumbers = [];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

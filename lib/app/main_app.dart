@@ -8,11 +8,11 @@ import '../presentation/resource_manager/theme_manager.dart';
 import 'configurations/scroll_configurations.dart';
 
 class MyApp extends StatefulWidget {
+  factory MyApp() => _instance;
+
   const MyApp._internal();
 
   static const MyApp _instance = MyApp._internal(); // singlton instance
-
-  factory MyApp() => _instance;
 
   @override
   State<MyApp> createState() => _MyAppState();

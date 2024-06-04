@@ -13,11 +13,16 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class CohortsSettingsController extends GetxController {
+  bool addLoading = false;
   List<CohortResModel> cohorts = <CohortResModel>[];
+  bool getAllLoading = false;
   List<int> selectedSubjectsIds = <int>[];
 
-  bool addLoading = false;
-  bool getAllLoading = false;
+  @override
+  void onInit() {
+    getAllCohorts();
+    super.onInit();
+  }
 
   Future getAllCohorts() async {
     getAllLoading = true;
@@ -181,11 +186,5 @@ class CohortsSettingsController extends GetxController {
     );
     update();
     return subjectHasBeenDeleted;
-  }
-
-  @override
-  void onInit() {
-    getAllCohorts();
-    super.onInit();
   }
 }

@@ -1,8 +1,4 @@
 class ControlMissionModel {
-  int? educationYearID;
-  int? schoolsID;
-  String? name;
-
   ControlMissionModel({
     this.educationYearID,
     this.schoolsID,
@@ -14,6 +10,10 @@ class ControlMissionModel {
     schoolsID = json['Schools_ID'];
     name = json['Name'];
   }
+
+  int? educationYearID;
+  String? name;
+  int? schoolsID;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

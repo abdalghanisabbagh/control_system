@@ -1,8 +1,6 @@
 import 'school_type_model.dart';
 
 class SchoolsTypeResModel {
-  List<SchoolTypeResModel>? data;
-
   SchoolsTypeResModel({this.data});
 
   factory SchoolsTypeResModel.fromJson(json) {
@@ -13,6 +11,8 @@ class SchoolsTypeResModel {
 
     return data;
   }
+
+  List<SchoolTypeResModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

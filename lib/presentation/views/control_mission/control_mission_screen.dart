@@ -6,6 +6,7 @@ import 'widgets/header_mission_widget.dart';
 
 class ControlMissionScreen extends StatelessWidget {
   const ControlMissionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen(

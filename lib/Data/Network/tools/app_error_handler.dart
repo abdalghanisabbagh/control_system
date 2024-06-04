@@ -6,8 +6,6 @@ import 'package:control_system/Data/Network/tools/failure_model.dart';
 import 'package:dio/dio.dart';
 
 class ErrorHandler implements Exception {
-  late Failure failure;
-
   ErrorHandler.handle(dynamic error) {
     log(error.toString());
     if (error is DioException) {
@@ -18,6 +16,8 @@ class ErrorHandler implements Exception {
       failure = DataSource.DEFAULT.getFailure();
     }
   }
+
+  late Failure failure;
 }
 
 Failure _handleError(DioException error) {
@@ -78,55 +78,61 @@ extension DataSourceExtension on DataSource {
 }
 
 class ResponseCode {
-  static const int SUCCESS = 200; // success with data
-  static const int NO_CONTENT = 201; // success with no data (no content)
+  static const int BAD_CERTIFICATE = 600; // failure, bad certificate
   static const int BAD_REQUEST = 400; // failure, API rejected request
-  static const int UNAUTORISED = 401; // failure, user is not authorised
+  static const int BAD_RESPONSE = -8; // failure, bad response
+  static const int CACHE_ERROR = -5;
+  static const int CANCEL = -2;
+  static const int CONNECT_TIMEOUT = -1;
+  // local status code
+  static const int DEFAULT = 0000;
+
   static const int FORBIDDEN = 403; //  failure, API rejected request
   static const int INTERNAL_SERVER_ERROR = 500; // failure, crash in server side
   static const int NOT_FOUND = 404; // failure, not found
-  static const int BAD_CERTIFICATE = 600; // failure, bad certificate
-
-  // local status code
-  static const int DEFAULT = 0000;
-  static const int CONNECT_TIMEOUT = -1;
-  static const int CANCEL = -2;
+  static const int NO_CONTENT = 201; // success with no data (no content)
+  static const int NO_INTERNET_CONNECTION = -6;
   static const int RECIEVE_TIMEOUT = -3;
   static const int SEND_TIMEOUT = -4;
-  static const int CACHE_ERROR = -5;
-  static const int NO_INTERNET_CONNECTION = -6;
-  static const int BAD_RESPONSE = -8; // failure, bad response
+  static const int SUCCESS = 200; // success with data
+  static const int UNAUTORISED = 401; // failure, user is not authorised
 }
 
 class ResponseMessage {
-  static const String SUCCESS = "success"; // success with data
-  static const String NO_CONTENT =
-      "success"; // success with no data (no content)
+  static const String BAD_CERTIFICATE = "Bad certificate";
   static const String BAD_REQUEST =
       "Bad request, Try again later"; // failure, API rejected request
-  static const String UNAUTORISED =
-      "User is unauthorised, Try again later"; // failure, user is not authorised
-  static const String FORBIDDEN =
-      "Forbidden request, Try again later"; //  failure, API rejected request
-  static const String INTERNAL_SERVER_ERROR =
-      "Some thing went wrong, Try again later"; // failure, crash in server side
-  static const String NOT_FOUND =
-      "Some thing went wrong, Try again later"; // failure, crash in server side
 
-  // local status code
-  static const String CONNECT_TIMEOUT = "Time out error, Try again later";
-  static const String CANCEL = "Request was cancelled, Try again later";
-  static const String RECIEVE_TIMEOUT = "Time out error, Try again later";
-  static const String SEND_TIMEOUT = "Time out error, Try again later";
+  static const String BAD_RESPONSE = "Bad Response";
   static const String CACHE_ERROR = "Cache error, Try again later";
-  static const String NO_INTERNET_CONNECTION =
-      "Please check your internet connection";
-  static const String DEFAULT = "Some thing went wrong, Try again later";
+  static const String CANCEL = "Request was cancelled, Try again later";
   static const String CONNECTION_ERROR =
       "Some thing went wrong, Try again later";
 
-  static const String BAD_CERTIFICATE = "Bad certificate";
-  static const String BAD_RESPONSE = "Bad Response";
+  // local status code
+  static const String CONNECT_TIMEOUT = "Time out error, Try again later";
+
+  static const String DEFAULT = "Some thing went wrong, Try again later";
+  static const String FORBIDDEN =
+      "Forbidden request, Try again later"; //  failure, API rejected request
+
+  static const String INTERNAL_SERVER_ERROR =
+      "Some thing went wrong, Try again later"; // failure, crash in server side
+
+  static const String NOT_FOUND =
+      "Some thing went wrong, Try again later"; // failure, crash in server side
+
+  static const String NO_CONTENT =
+      "success"; // success with no data (no content)
+
+  static const String NO_INTERNET_CONNECTION =
+      "Please check your internet connection";
+
+  static const String RECIEVE_TIMEOUT = "Time out error, Try again later";
+  static const String SEND_TIMEOUT = "Time out error, Try again later";
+  static const String SUCCESS = "success"; // success with data
+  static const String UNAUTORISED =
+      "User is unauthorised, Try again later"; // failure, user is not authorised
 }
 
 enum DataSource {

@@ -5,7 +5,9 @@ import '../../../resource_manager/index.dart';
 
 class DeleteMissionWidget extends StatelessWidget {
   const DeleteMissionWidget({super.key, required this.curve});
+
   final double? curve;
+
   @override
   Widget build(BuildContext context) {
     return Form(

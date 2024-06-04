@@ -5,6 +5,25 @@ import '../../../resource_manager/index.dart';
 class ProfileCardWidget extends StatelessWidget {
   const ProfileCardWidget({super.key});
 
+  Widget profileListTile(text, value) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(text),
+          Text(
+            value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: ColorManager.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,25 +77,6 @@ class ProfileCardWidget extends StatelessWidget {
           //             DateTime.parse(
           //                 userController.user!.createdDate))),
           profileListTile("Role", "Admin"),
-        ],
-      ),
-    );
-  }
-
-  Widget profileListTile(text, value) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(text),
-          Text(
-            value,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: ColorManager.black,
-            ),
-          ),
         ],
       ),
     );

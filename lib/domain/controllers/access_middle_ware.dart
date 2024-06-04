@@ -9,14 +9,14 @@ import 'auth_controller.dart';
 import 'profile_controller.dart';
 
 class AuthMiddleWare extends GetMiddleware {
-  LoginResModel? loginObject;
-  String? expireTime;
   String? aToken;
+  String? expireTime;
+  bool isAuthenticated = false;
+  LoginResModel? loginObject;
   String? rToken;
+
   @override
   int? get priority => 1;
-
-  bool isAuthenticated = false;
 
   @override
   RouteSettings? redirect(String? route) {

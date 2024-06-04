@@ -14,14 +14,21 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class ClassRoomController extends GetxController {
-  List<ClassRoomResModel> classesRooms = [];
-  List<SchoolResModel> schools = <SchoolResModel>[];
-
   List<int> classSeats = [];
-  int numbers = 0;
+  List<ClassRoomResModel> classesRooms = [];
+  int count = 1;
   bool isLoading = false;
   bool isLoadingAddClassRoom = false;
-  int count = 1;
+  int numbers = 0;
+  List<SchoolResModel> schools = <SchoolResModel>[];
+
+  @override
+  void onInit() async {
+    await getSchools().then((_) async {
+      await getClassesRooms();
+    });
+    super.onInit();
+  }
 
   Future<bool> getClassesRooms() async {
     isLoading = true;
@@ -116,14 +123,6 @@ class ClassRoomController extends GetxController {
     );
     update();
     return classRoomHasBeenDeleted;
-  }
-
-  @override
-  void onInit() async {
-    await getSchools().then((_) async {
-      await getClassesRooms();
-    });
-    super.onInit();
   }
 
   Future<bool> addNewClass({

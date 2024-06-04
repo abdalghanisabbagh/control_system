@@ -17,11 +17,10 @@ final _formKey = GlobalKey<FormState>();
 class EditClassRoomWidget extends StatelessWidget {
   EditClassRoomWidget({super.key, required this.classRoom});
 
-  final ClassRoomResModel classRoom;
-
-  final TextEditingController columnNumper = TextEditingController();
-  final TextEditingController classNameController = TextEditingController();
   final TextEditingController buildingNameController = TextEditingController();
+  final TextEditingController classNameController = TextEditingController();
+  final ClassRoomResModel classRoom;
+  final TextEditingController columnNumper = TextEditingController();
   final TextEditingController floorNameController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
 

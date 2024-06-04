@@ -1,7 +1,4 @@
 class TokenModel {
-  final String aToken;
-  final String dToken;
-  final String rToken;
   TokenModel({
     required this.aToken,
     required this.dToken,
@@ -15,6 +12,10 @@ class TokenModel {
       rToken: json['rToken'],
     );
   }
+
+  final String aToken;
+  final String dToken;
+  final String rToken;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -1,16 +1,6 @@
 import 'cohorts_subjects_res_model.dart';
 
 class CohortResModel {
-  int? iD;
-  int? schoolTypeID;
-  String? name;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  DateTime? updatedAt;
-  int? active;
-  CohortsSubjectsResModel? cohortsSubjects;
-
   CohortResModel({
     this.iD,
     this.schoolTypeID,
@@ -36,6 +26,16 @@ class CohortResModel {
         : null;
     active = json['Active'];
   }
+
+  int? active;
+  CohortsSubjectsResModel? cohortsSubjects;
+  String? createdAt;
+  int? createdBy;
+  int? iD;
+  String? name;
+  int? schoolTypeID;
+  DateTime? updatedAt;
+  int? updatedBy;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

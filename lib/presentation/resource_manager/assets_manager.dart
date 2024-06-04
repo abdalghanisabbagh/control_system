@@ -104,6 +104,10 @@ class AssetsManager {
   /// assets/icons/proccess.png
   static const String assetsIconsProccess = "assets/icons/proccess.png";
 
+  /// Assets for assetsIconsRoles
+  /// assets/icons/roles.png
+  static const String assetsIconsRoles = "assets/icons/roles.png";
+
   /// Assets for assetsIconsStudent
   /// assets/icons/student.png
   static const String assetsIconsStudent = "assets/icons/student.png";
@@ -112,9 +116,9 @@ class AssetsManager {
   /// assets/icons/supject.png
   static const String assetsIconsSupject = "assets/icons/supject.png";
 
-  /// Assets for assetsIconsRoles
-  /// assets/icons/roles.png
-  static const String assetsIconsRoles = "assets/icons/roles.png";
+  /// Assets for assetsImagesClassDesk
+  /// assets/images/class_desk.png
+  static const String assetsImagesClassDesk = "assets/images/class_desk.png";
 
   /// Assets for assetsImagesNis1
   /// assets/images/nis1.jpg
@@ -128,6 +132,10 @@ class AssetsManager {
   /// assets/images/nis3.jpg
   static const String assetsImagesNis3 = "assets/images/nis3.jpg";
 
+  /// Assets for assetsImagesbackground
+  /// assets/images/background.png
+  static const String assetsImagesbackground = "assets/images/background.png";
+
   /// Assets for assetsLogosNIS5
   /// assets/logos/NIS5.png
   static const String assetsLogosNIS5 = "assets/logos/NIS5.png";
@@ -139,12 +147,4 @@ class AssetsManager {
   /// Assets for assetsLogosNisLogo22
   /// assets/logos/nis_logo22.png
   static const String assetsLogosNisLogo22 = "assets/logos/nis_logo22.png";
-
-  /// Assets for assetsImagesClassDesk
-  /// assets/images/class_desk.png
-  static const String assetsImagesClassDesk = "assets/images/class_desk.png";
-
-  /// Assets for assetsImagesbackground
-  /// assets/images/background.png
-  static const String assetsImagesbackground = "assets/images/background.png";
 }
