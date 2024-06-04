@@ -84,7 +84,7 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                   height: 50,
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                    color: ColorManager.bgSideMenu,
+                                    color: ColorManager.glodenColor,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Center(
