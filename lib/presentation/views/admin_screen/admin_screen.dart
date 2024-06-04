@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
-import '../../resource_manager/ReusableWidget/my_back_button.dart';
+import '../../resource_manager/color_manager.dart';
 import '../../resource_manager/styles_manager.dart';
 import '../base_screen.dart';
 import 'widgets/add_new_user.dart';
@@ -13,22 +13,50 @@ class AdminScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScreen(
       key: key,
-      body: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              MyDialogs.showDialog(
-                context,
-                AddNewUserWidget(),
-              );
-            },
-            child: Text(
-              "Add New User",
-              style: nunitoLightStyle(),
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Admin",
+                  style: nunitoBlack.copyWith(
+                    color: ColorManager.bgSideMenu,
+                    fontSize: 30,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    MyDialogs.showDialog(
+                      context,
+                      AddNewUserWidget(),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ColorManager.glodenColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          "Add New User",
+                          style: nunitoBold.copyWith(
+                            color: ColorManager.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          const MyBackButton()
-        ],
+          ],
+        ),
       ),
     );
   }

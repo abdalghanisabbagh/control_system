@@ -54,7 +54,7 @@ class AddNewUserWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Add new Cohort",
+                    "Add new user",
                     style: nunitoRegular.copyWith(
                       color: ColorManager.bgSideMenu,
                       fontSize: 25,
@@ -66,9 +66,10 @@ class AddNewUserWidget extends StatelessWidget {
                     dropdownDecoratorProps: DropDownDecoratorProps(
                       dropdownSearchDecoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: ColorManager.bgSideMenu),
-                            borderRadius: BorderRadius.circular(10)),
+                          borderSide:
+                              BorderSide(color: ColorManager.bgSideMenu),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         border: OutlineInputBorder(
                           borderSide:
                               BorderSide(color: ColorManager.bgSideMenu),
