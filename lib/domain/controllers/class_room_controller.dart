@@ -144,7 +144,7 @@ class ClassRoomController extends GetxController {
         "Name": name,
         "Max_Capacity": maxCapacity,
         "Floor": floorName,
-        "Rows": rows.toString(),
+        "Rows": rows,
         "Columns": columns,
         "Schools_ID": Hive.box('School').get('Id'),
         "Created_By": Hive.box('Profile').get('ID'),
