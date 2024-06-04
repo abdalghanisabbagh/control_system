@@ -1,16 +1,6 @@
 import '../school_type/school_type_model.dart';
 
 class SchoolResModel {
-  int? iD;
-  int? schoolTypeID;
-  String? name;
-  int? createdBy;
-  DateTime? createdAt;
-  int? updatedBy;
-  DateTime? updatedAt;
-  int? active;
-  SchoolTypeResModel? schoolType;
-
   SchoolResModel({
     this.iD,
     this.schoolTypeID,
@@ -36,6 +26,16 @@ class SchoolResModel {
             ? SchoolTypeResModel.fromJson(json['school_type'])
             : null,
       );
+
+  int? active;
+  DateTime? createdAt;
+  int? createdBy;
+  int? iD;
+  String? name;
+  SchoolTypeResModel? schoolType;
+  int? schoolTypeID;
+  DateTime? updatedAt;
+  int? updatedBy;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

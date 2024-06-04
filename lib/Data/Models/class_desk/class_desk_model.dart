@@ -1,8 +1,4 @@
 class ClassDeskModel {
-  int? schoolClassID;
-  int? cloumnNum;
-  int? rowNum;
-
   ClassDeskModel({this.schoolClassID, this.cloumnNum, this.rowNum});
 
   ClassDeskModel.fromJson(Map<String, dynamic> json) {
@@ -10,6 +6,10 @@ class ClassDeskModel {
     cloumnNum = json['Cloumn_Num'];
     rowNum = json['Row_Num'];
   }
+
+  int? cloumnNum;
+  int? rowNum;
+  int? schoolClassID;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

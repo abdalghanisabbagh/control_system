@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 
 class BRCodeController extends GetxController {
@@ -15,7 +14,7 @@ class BRCodeController extends GetxController {
 
 //   FocusNode degreeController = FocusNode();
 //   RxBool isLoading = false.obs;
-  
+
 //   @override
 //   void onReady() {
 //     super.onReady();

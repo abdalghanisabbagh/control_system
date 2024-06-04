@@ -13,15 +13,21 @@ class AddNewUserWidget extends StatelessWidget {
     super.key,
   });
 
-  final GlobalKey<FormState> formkey = GlobalKey();
-  final TextEditingController nisId = TextEditingController();
-  final TextEditingController egyptionId = TextEditingController();
-  final TextEditingController fullName = TextEditingController();
-  final TextEditingController userNameId = TextEditingController();
-  final TextEditingController passwordId = TextEditingController();
   final TextEditingController confirmPasswordId = TextEditingController();
+  final TextEditingController egyptionId = TextEditingController();
+  final GlobalKey<FormState> formkey = GlobalKey();
+  final TextEditingController fullName = TextEditingController();
+  final TextEditingController nisId = TextEditingController();
+  final TextEditingController passwordId = TextEditingController();
   String? roleType;
-  String? selectedDivision;
+  List<String> roleTypes = [
+    'Control admin',
+    'School Director',
+    'Academic Dean',
+    'Principal',
+    'QR Reader',
+    "Vice Principal"
+  ];
 
   List<String> schoolDivision = [
     "Elementary",
@@ -32,14 +38,9 @@ class AddNewUserWidget extends StatelessWidget {
     "Key Stage 3",
     "IGCSE",
   ];
-  List<String> roleTypes = [
-    'Control admin',
-    'School Director',
-    'Academic Dean',
-    'Principal',
-    'QR Reader',
-    "Vice Principal"
-  ];
+
+  String? selectedDivision;
+  final TextEditingController userNameId = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

@@ -4,12 +4,14 @@ import 'package:get/get.dart';
 import '../../../resource_manager/index.dart';
 
 class AddGroupDialog extends StatelessWidget {
-  final TextEditingController studentsNumbers = TextEditingController();
-  final TextEditingController studentsClass = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AddGroupDialog({
     super.key,
   });
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController studentsClass = TextEditingController();
+  final TextEditingController studentsNumbers = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(

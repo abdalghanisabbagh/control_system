@@ -4,7 +4,6 @@ class UsersResModel {
   UsersResModel({
     required this.data,
   });
-  late final List<UserProfileModel> data;
 
   UsersResModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
@@ -14,6 +13,8 @@ class UsersResModel {
       });
     }
   }
+
+  late final List<UserProfileModel> data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

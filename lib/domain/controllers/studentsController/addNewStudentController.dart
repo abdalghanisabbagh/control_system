@@ -13,17 +13,17 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class AddNewStudentController extends GetxController {
-  bool isLoading = false;
-  List<ValueItem> optionsGrades = <ValueItem>[];
-  List<ValueItem> optionsCohort = <ValueItem>[];
-  List<ValueItem> optionsClassRoom = <ValueItem>[];
-  ValueItem? selectedItemGrade;
-  ValueItem? selectedItemCohort;
-  ValueItem? selectedItemClassRoom;
-  bool checkSelecteGrade = false;
-  bool checkSelecteCohort = false;
   bool checkSelecteClassRoom = false;
+  bool checkSelecteCohort = false;
+  bool checkSelecteGrade = false;
+  bool isLoading = false;
   bool isLodingAddStudent = false;
+  List<ValueItem> optionsClassRoom = <ValueItem>[];
+  List<ValueItem> optionsCohort = <ValueItem>[];
+  List<ValueItem> optionsGrades = <ValueItem>[];
+  ValueItem? selectedItemClassRoom;
+  ValueItem? selectedItemCohort;
+  ValueItem? selectedItemGrade;
 
   @override
   void onInit() async {

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../index.dart';
 
 class HeaderWidget extends StatelessWidget {
-  final String text;
   const HeaderWidget({super.key, required this.text});
+
+  final String text;
+
   @override
   Widget build(BuildContext context) {
     return Container(

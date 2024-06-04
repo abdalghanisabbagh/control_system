@@ -15,15 +15,16 @@ import '../../resource_manager/validations.dart';
 import 'widgets/render_seat_widget.dart';
 
 class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
-  final TextEditingController columnNumper = TextEditingController(text: "0");
+  ClassRoomSeatsScreen({super.key});
+
   final TextEditingController classNameController = TextEditingController();
   final TextEditingController classNumber = TextEditingController();
+  final TextEditingController columnNumper = TextEditingController(text: "0");
   final TextEditingController floorNameController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  ClassRoomSeatsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Form(

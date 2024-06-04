@@ -1,11 +1,4 @@
 class SchoolClassesModel {
-  String? name;
-  String? maxCapacity;
-  String? floor;
-  String? rows;
-  int? columns;
-  int? schoolsID;
-
   SchoolClassesModel({
     this.name,
     this.maxCapacity,
@@ -23,6 +16,13 @@ class SchoolClassesModel {
     columns = json['Columns'];
     schoolsID = json['Schools_ID'];
   }
+
+  int? columns;
+  String? floor;
+  String? maxCapacity;
+  String? name;
+  String? rows;
+  int? schoolsID;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

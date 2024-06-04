@@ -5,19 +5,6 @@ import 'package:get/get.dart';
 import '../index.dart';
 
 class MytextFormFiled extends StatelessWidget {
-  final String? title;
-  final TextEditingController controller;
-  final int maxlines;
-  final bool? isEnable;
-  final String? Function(String? newValue)? myValidation;
-  final bool? isNumber;
-  final Widget? suffixIcon;
-  final List<TextInputFormatter>? textInputs;
-  final String? Function(String? value)? onChange;
-  final bool obscureText;
-  final Color? enableBorderColor;
-  final Color? foucsBorderColor;
-
   const MytextFormFiled(
       {super.key,
       this.title,
@@ -32,6 +19,19 @@ class MytextFormFiled extends StatelessWidget {
       this.obscureText = false,
       this.enableBorderColor = ColorManager.grey,
       this.foucsBorderColor = ColorManager.primary});
+
+  final String? Function(String? newValue)? myValidation;
+  final String? Function(String? value)? onChange;
+  final TextEditingController controller;
+  final Color? enableBorderColor;
+  final Color? foucsBorderColor;
+  final bool? isEnable;
+  final bool? isNumber;
+  final int maxlines;
+  final bool obscureText;
+  final Widget? suffixIcon;
+  final List<TextInputFormatter>? textInputs;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {

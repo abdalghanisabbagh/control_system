@@ -16,15 +16,14 @@ class EditStudentWidget extends GetView<StudentController> {
     required this.studentResModel,
   });
 
-  final StudentResModel studentResModel;
-
   final TextEditingController blbIdController = TextEditingController();
-  final TextEditingController fnameController = TextEditingController();
-  final TextEditingController mnameController = TextEditingController();
-  final TextEditingController lnameController = TextEditingController();
-  final TextEditingController religionController = TextEditingController();
   final TextEditingController citizenshipController = TextEditingController();
+  final TextEditingController fnameController = TextEditingController();
+  final TextEditingController lnameController = TextEditingController();
+  final TextEditingController mnameController = TextEditingController();
+  final TextEditingController religionController = TextEditingController();
   final TextEditingController sLangController = TextEditingController();
+  final StudentResModel studentResModel;
 
   @override
   Widget build(BuildContext context) {

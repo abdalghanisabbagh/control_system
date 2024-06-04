@@ -8,6 +8,7 @@ import '../base_screen.dart';
 
 class SetDegreesScreen extends GetView<BRCodeController> {
   const SetDegreesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // controller.brCodeFoucs.requestFocus();

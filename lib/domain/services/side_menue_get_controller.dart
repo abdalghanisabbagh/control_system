@@ -10,10 +10,21 @@ import '../../presentation/resource_manager/routes/index.dart';
 import '../controllers/auth_controller.dart';
 
 class SideMenueGetController extends GetxController {
-  late final SideMenuController sideMenuController;
   int nowIndex = 0;
-
+  late final SideMenuController sideMenuController;
   List<SideMenuItem> userMenue = [];
+
+  @override
+  void onClose() {
+    sideMenuController.dispose();
+    super.onClose();
+  }
+
+  @override
+  void onInit() {
+    sideMenuController = SideMenuController();
+    super.onInit();
+  }
 
   List<SideMenuItem> getUserMenue(BuildContext context) {
     // TODO :: Cheke roles
@@ -179,17 +190,5 @@ class SideMenueGetController extends GetxController {
     if (index != -1) {
       sideMenuController.changePage(index);
     }
-  }
-
-  @override
-  void onInit() {
-    sideMenuController = SideMenuController();
-    super.onInit();
-  }
-
-  @override
-  void onClose() {
-    sideMenuController.dispose();
-    super.onClose();
   }
 }

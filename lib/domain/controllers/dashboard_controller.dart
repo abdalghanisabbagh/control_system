@@ -5,12 +5,10 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class DashboardController extends GetxController {
-  TimeOfDay timeOfDay = TimeOfDay.now();
   DateTime dateTime = DateTime.now();
   String? period;
-
   final String? schoolName = Hive.box('School').get('Name');
-
+  TimeOfDay timeOfDay = TimeOfDay.now();
   final String? userName = Hive.box('Profile').get('User_Name');
 
   @override

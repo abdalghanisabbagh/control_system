@@ -68,6 +68,4 @@ class MyFlashBar {
     return FlushbarHelper.createInformation(
         message: message, title: title, duration: const Duration(seconds: 5));
   }
-
- 
 }

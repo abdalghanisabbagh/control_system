@@ -10,10 +10,9 @@ class NotificationCardWidget extends StatelessWidget {
     required this.schoolName,
   });
 
-  final String userName;
-  final String schoolName;
-
   final DateTime now = DateTime.now();
+  final String schoolName;
+  final String userName;
 
   String get welcomeMessage => now.hour < 12
       ? 'Good Morning, $userName'

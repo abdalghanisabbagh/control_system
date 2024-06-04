@@ -1,20 +1,4 @@
 class StudentResModel {
-  int? iD;
-  int? gradesID;
-  int? schoolsID;
-  int? cohortID;
-  int? schoolClassID;
-  String? firstName;
-  String? secondName;
-  String? thirdName;
-  String? email;
-  String? secondLang;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  DateTime? updatedAt;
-  int? active;
-
   StudentResModel({
     this.iD,
     this.gradesID,
@@ -50,6 +34,22 @@ class StudentResModel {
     updatedAt = json['Updated_At'];
     active = json['Active'];
   }
+
+  int? active;
+  int? cohortID;
+  String? createdAt;
+  int? createdBy;
+  String? email;
+  String? firstName;
+  int? gradesID;
+  int? iD;
+  int? schoolClassID;
+  int? schoolsID;
+  String? secondLang;
+  String? secondName;
+  String? thirdName;
+  DateTime? updatedAt;
+  int? updatedBy;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

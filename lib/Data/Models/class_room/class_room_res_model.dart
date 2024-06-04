@@ -1,17 +1,4 @@
 class ClassRoomResModel {
-  int? iD;
-  int? schoolsID;
-  String? name;
-  String? maxCapacity;
-  String? floor;
-  String? rows;
-  int? columns;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  DateTime? updatedAt;
-  int? active;
-
   ClassRoomResModel({
     this.iD,
     this.schoolsID,
@@ -41,6 +28,19 @@ class ClassRoomResModel {
     updatedAt = json['Updated_At'];
     active = json['Active'];
   }
+
+  int? active;
+  int? columns;
+  String? createdAt;
+  int? createdBy;
+  String? floor;
+  int? iD;
+  String? maxCapacity;
+  String? name;
+  String? rows;
+  int? schoolsID;
+  DateTime? updatedAt;
+  int? updatedBy;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

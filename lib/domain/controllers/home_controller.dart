@@ -4,23 +4,6 @@ import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class HomeController extends GetxController {
-@override
-void onInit() {
-    sideMenu.addListener((index) {
-      pageController.jumpToPage(index);
-    });
-    super.onInit();
-  }
-
-    SideMenuController sideMenu = SideMenuController();
-    PageController pageController = PageController();
-
-  RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
-
-  void onOptionSelected(List<ValueItem> selectedOptions) {
-    this.selectedOptions.value = selectedOptions;
-  }
-
   final List<ValueItem> options = const <ValueItem>[
     ValueItem(label: 'Option 1', value: 1),
     ValueItem(label: 'Option 2', value: 2),
@@ -29,4 +12,20 @@ void onInit() {
     ValueItem(label: 'Option 5', value: 5),
     ValueItem(label: 'Option 6', value: 6),
   ];
+
+  PageController pageController = PageController();
+  RxList<ValueItem> selectedOptions = <ValueItem>[].obs;
+  SideMenuController sideMenu = SideMenuController();
+
+  @override
+  void onInit() {
+    sideMenu.addListener((index) {
+      pageController.jumpToPage(index);
+    });
+    super.onInit();
+  }
+
+  void onOptionSelected(List<ValueItem> selectedOptions) {
+    this.selectedOptions.value = selectedOptions;
+  }
 }

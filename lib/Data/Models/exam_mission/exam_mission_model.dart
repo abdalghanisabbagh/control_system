@@ -1,18 +1,4 @@
 class ExamMissionModel {
-  int? subjectsID;
-  int? controlMissionID;
-  int? gradesID;
-  int? educationYearID;
-  String? month;
-  String? year;
-  String? finalDegree;
-  int? period;
-  int? duration;
-  // StartTime? startTime;
-  // StartTime? endTime;
-  String? pdf;
-  String? pdfV2;
-
   ExamMissionModel({
     this.subjectsID,
     this.controlMissionID,
@@ -44,6 +30,21 @@ class ExamMissionModel {
     pdf = json['pdf'];
     pdfV2 = json['pdf_V2'];
   }
+
+  int? controlMissionID;
+  int? duration;
+  int? educationYearID;
+  String? finalDegree;
+  int? gradesID;
+  String? month;
+  // StartTime? startTime;
+  // StartTime? endTime;
+  String? pdf;
+
+  String? pdfV2;
+  int? period;
+  int? subjectsID;
+  String? year;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

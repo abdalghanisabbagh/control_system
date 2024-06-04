@@ -13,16 +13,6 @@ class StudentSeatModel {
     this.examRoomName,
   });
 
-  int? id;
-  int? studentsId;
-  int? controlmissionId;
-  int? gradesId;
-  int? educationsystemId;
-  String? seatNumbers;
-  int? examRoomId;
-  StudentResModel? students;
-  String? examRoomName;
-
   factory StudentSeatModel.fromJson(Map<String, dynamic> json) =>
       StudentSeatModel(
         id: json["Id"],
@@ -38,4 +28,14 @@ class StudentSeatModel {
             ? null
             : StudentResModel.fromJson(json["students"]),
       );
+
+  int? controlmissionId;
+  int? educationsystemId;
+  int? examRoomId;
+  String? examRoomName;
+  int? gradesId;
+  int? id;
+  String? seatNumbers;
+  StudentResModel? students;
+  int? studentsId;
 }

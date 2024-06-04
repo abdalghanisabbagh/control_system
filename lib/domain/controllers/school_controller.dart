@@ -16,33 +16,31 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class SchoolController extends GetxController {
-  List<SchoolResModel> schools = <SchoolResModel>[];
   List<GradeResModel> grades = <GradeResModel>[];
-  List schoolType = [];
-  bool isLoadingSchools = false;
-  bool isLoadingGrades = false;
   bool isLoadingAddGrades = false;
   bool isLoadingAddSchool = false;
-
+  bool isLoadingGrades = false;
+  bool isLoadingSchools = false;
   List<ValueItem> options = <ValueItem>[];
+  List schoolType = [];
+  List<SchoolResModel> schools = <SchoolResModel>[];
   ValueItem? selectedItem;
-
-  int selectedSchoolIndex = (-1);
   int selectedSchoolId = (-1);
+  int selectedSchoolIndex = (-1);
   String selectedSchoolName = "";
-
-  void updateSelectedSchool(int index, int id) {
-    selectedSchoolIndex = index;
-    selectedSchoolId = id;
-    selectedSchoolName = schools[index].name!;
-    update();
-  }
 
   @override
   void onInit() {
     super.onInit();
     getSchoolType();
     getAllSchools();
+  }
+
+  void updateSelectedSchool(int index, int id) {
+    selectedSchoolIndex = index;
+    selectedSchoolId = id;
+    selectedSchoolName = schools[index].name!;
+    update();
   }
 
   getSchool() async {}

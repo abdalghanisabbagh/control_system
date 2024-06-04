@@ -13,13 +13,17 @@ import '../services/token_service.dart';
 import 'index.dart';
 
 class AuthController extends GetxController {
-  TokenService tokenService = Get.find<TokenService>();
-  ProfileController profileController = Get.find<ProfileController>();
-
-  RxBool isLogin = false.obs;
-  RxBool showPass = true.obs;
-
   RxBool isLoading = false.obs;
+  RxBool isLogin = false.obs;
+  ProfileController profileController = Get.find<ProfileController>();
+  RxBool showPass = true.obs;
+  TokenService tokenService = Get.find<TokenService>();
+
+  @override
+  void onInit() {
+    checkLogin();
+    super.onInit();
+  }
 
 //  List schools = [];
   setShowPass() {
@@ -111,11 +115,5 @@ class AuthController extends GetxController {
       SchoolController().deleteFromSchoolBox(),
     ]);
     isLogin.value = false;
-  }
-
-  @override
-  void onInit() {
-    checkLogin();
-    super.onInit();
   }
 }
