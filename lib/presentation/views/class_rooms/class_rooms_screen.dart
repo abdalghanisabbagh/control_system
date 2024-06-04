@@ -61,14 +61,20 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
             ),
             Expanded(
               child: GetBuilder<ClassRoomController>(
-                builder: (gradesControllers) {
+                builder: (_) {
                   return controller.isLoading
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
                       : controller.classesRooms.isEmpty
-                          ? const Center(
-                              child: Text("No Class rooms"),
+                          ? Center(
+                              child: Text(
+                                "No Class rooms",
+                                style: nunitoBlack.copyWith(
+                                  color: ColorManager.bgSideMenu,
+                                  fontSize: 30,
+                                ),
+                              ),
                             )
                           : controller.classesRooms.isEmpty
                               ? Center(
