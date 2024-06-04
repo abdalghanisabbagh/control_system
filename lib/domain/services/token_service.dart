@@ -1,6 +1,7 @@
-import 'package:control_system/Data/Models/token/token_model.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import '../../Data/Models/token/token_model.dart';
 
 class TokenService extends GetxController {
   TokenModel? _tokenModel;

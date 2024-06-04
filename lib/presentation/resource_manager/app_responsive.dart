@@ -1,6 +1,6 @@
-import 'package:control_system/app/extensions/device_type_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../app/extensions/device_type_extension.dart';
 import 'enums/device_type_enum.dart';
 
 class AppResponsive extends StatelessWidget {

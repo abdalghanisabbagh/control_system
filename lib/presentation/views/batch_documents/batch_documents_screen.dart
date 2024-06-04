@@ -1,13 +1,13 @@
-import 'package:control_system/domain/controllers/SeatingNumbersControllers/seating_number_tab_view_controller.dart';
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:control_system/presentation/views/base_screen.dart';
-import 'package:control_system/presentation/views/batch_documents/widgets/attendance_screen.dart';
-import 'package:control_system/presentation/views/batch_documents/widgets/cover_sheet_screen.dart';
-import 'package:control_system/presentation/views/batch_documents/widgets/seating_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/controllers/SeatingNumbersControllers/seating_number_tab_view_controller.dart';
+import '../../resource_manager/color_manager.dart';
 import '../../resource_manager/styles_manager.dart';
+import '../base_screen.dart';
+import 'widgets/attendance_screen.dart';
+import 'widgets/cover_sheet_screen.dart';
+import 'widgets/seating_screen.dart';
 
 class BatchDocumentsScreen extends GetView<BatchDocumentsController> {
   const BatchDocumentsScreen({super.key});

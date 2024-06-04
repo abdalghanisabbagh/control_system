@@ -1,16 +1,16 @@
 import 'dart:developer';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/controllers/class_room_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/controllers/class_room_controller.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
+import '../../resource_manager/ReusableWidget/my_back_button.dart';
+import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
+import '../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../resource_manager/index.dart';
 import '../../resource_manager/validations.dart';
 import 'widgets/render_seat_widget.dart';
 

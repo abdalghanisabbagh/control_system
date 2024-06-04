@@ -1,11 +1,11 @@
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../domain/controllers/studentsController/student_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../resource_manager/index.dart';
+import '../base_screen.dart';
 import 'widgets/edit_student_widget.dart';
 import 'widgets/header_student_widget.dart';
 

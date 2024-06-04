@@ -1,12 +1,12 @@
-import 'package:control_system/Data/Models/school/school_response/school_res_model.dart';
-import 'package:control_system/domain/controllers/index.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/resource_manager/routes/app_routes_names_and_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../Data/Models/school/school_response/school_res_model.dart';
+import '../../../../domain/controllers/index.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/index.dart';
+import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
 class SelectSchoolForm extends GetView<SchoolController> {
   const SelectSchoolForm({super.key});

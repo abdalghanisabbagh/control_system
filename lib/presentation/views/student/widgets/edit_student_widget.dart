@@ -1,13 +1,14 @@
-import 'package:control_system/Data/Models/student/student_res_model.dart';
-import 'package:control_system/domain/controllers/studentsController/student_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/resource_manager/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../Data/Models/student/student_res_model.dart';
+import '../../../../domain/controllers/studentsController/student_controller.dart';
+import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
+import '../../../resource_manager/index.dart';
+import '../../../resource_manager/validations.dart';
 
 class EditStudentWidget extends GetView<StudentController> {
   EditStudentWidget({
@@ -153,49 +154,48 @@ class EditStudentWidget extends GetView<StudentController> {
                 const SizedBox(
                   height: 20,
                 ),
-                 InkWell(
-                        onTap: () {
-                          controller
-                              .patchEditStudent(
-                            studentid: studentResModel.iD!,
-                            gradesId: controller.selectedItemGrade!.value,
-                            cohortId: controller.selectedItemCohort!.value,
-                            schoolClassId:
-                                controller.selectedItemClassRoom!.value,
-                            firstName: fnameController.text,
-                            secondName: mnameController.text,
-                            thirdName: lnameController.text,
-                          )
-                              .then(
-                            (value) {
-                              value
-                                  ? {
-                                      context.pop(),
-                                      MyFlashBar.showSuccess(
-                                        "The Student has been Edited successfully",
-                                        "Success",
-                                      ).show(context),
-                                    }
-                                  : null;
-                            },
-                          );
-                        },
-                        child: Container(
-                          height: 50,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: ColorManager.bgSideMenu,
-                              borderRadius: BorderRadius.circular(11)),
-                          child: Center(
-                            child: Text(
-                              "Update",
-                              style: nunitoRegular.copyWith(
-                                color: ColorManager.white,
-                              ),
-                            ),
-                          ),
+                InkWell(
+                  onTap: () {
+                    controller
+                        .patchEditStudent(
+                      studentid: studentResModel.iD!,
+                      gradesId: controller.selectedItemGrade!.value,
+                      cohortId: controller.selectedItemCohort!.value,
+                      schoolClassId: controller.selectedItemClassRoom!.value,
+                      firstName: fnameController.text,
+                      secondName: mnameController.text,
+                      thirdName: lnameController.text,
+                    )
+                        .then(
+                      (value) {
+                        value
+                            ? {
+                                context.pop(),
+                                MyFlashBar.showSuccess(
+                                  "The Student has been Edited successfully",
+                                  "Success",
+                                ).show(context),
+                              }
+                            : null;
+                      },
+                    );
+                  },
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: ColorManager.bgSideMenu,
+                        borderRadius: BorderRadius.circular(11)),
+                    child: Center(
+                      child: Text(
+                        "Update",
+                        style: nunitoRegular.copyWith(
+                          color: ColorManager.white,
                         ),
                       ),
+                    ),
+                  ),
+                ),
               ],
             );
           },

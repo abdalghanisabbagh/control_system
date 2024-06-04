@@ -1,15 +1,15 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
-import 'package:control_system/app/configurations/app_links.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
+import '../../Data/Models/cohort/cohort_res_model.dart';
 import '../../Data/Models/cohort/cohorts_res_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
+import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class CohortsSettingsController extends GetxController {

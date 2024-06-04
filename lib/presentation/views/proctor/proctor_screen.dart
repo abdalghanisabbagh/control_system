@@ -1,7 +1,7 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../base_screen.dart';
 import 'widgets/add_new_proctor.dart';
 
 class ProctorScreen extends StatelessWidget {

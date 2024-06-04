@@ -1,12 +1,12 @@
-import 'package:control_system/app/extensions/device_type_extension.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/views/student/widgets/add_single_student_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../app/extensions/device_type_extension.dart';
 import '../../../../domain/controllers/studentsController/student_controller.dart';
+import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../../resource_manager/index.dart';
+import 'add_single_student_widget.dart';
 
 class HeaderStudentWidget extends GetView<StudentController> {
   const HeaderStudentWidget({super.key});

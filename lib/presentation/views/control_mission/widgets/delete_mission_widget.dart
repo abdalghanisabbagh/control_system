@@ -1,6 +1,7 @@
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../resource_manager/index.dart';
 
 class DeleteMissionWidget extends StatelessWidget {
   const DeleteMissionWidget({super.key, required this.curve});

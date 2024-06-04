@@ -1,9 +1,9 @@
-import 'package:control_system/presentation/resource_manager/routes/app_go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../domain/bindings/bindings.dart';
+import '../presentation/resource_manager/routes/app_go_router.dart';
 import '../presentation/resource_manager/theme_manager.dart';
 import 'configurations/scroll_configurations.dart';
 

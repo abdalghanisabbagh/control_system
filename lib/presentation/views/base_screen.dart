@@ -1,10 +1,11 @@
-import 'package:control_system/app/extensions/device_type_extension.dart';
-import 'package:control_system/domain/services/side_menue_get_controller.dart';
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/views/side_menue/side_menue.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../app/extensions/device_type_extension.dart';
+import '../../domain/services/side_menue_get_controller.dart';
+import '../resource_manager/color_manager.dart';
+import '../resource_manager/index.dart';
+import 'side_menue/side_menue.dart';
 
 class BaseScreen extends GetView<SideMenueGetController> {
   final Widget body;

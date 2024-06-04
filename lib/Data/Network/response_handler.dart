@@ -1,12 +1,12 @@
-import 'package:control_system/Data/Models/token/token_model.dart';
-import 'package:control_system/Data/Network/tools/app_error_handler.dart';
-import 'package:control_system/Data/enums/req_type_enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
 
 import '../../domain/controllers/auth_controller.dart';
 import '../../domain/services/token_service.dart';
+import '../Models/token/token_model.dart';
+import '../enums/req_type_enum.dart';
+import 'tools/app_error_handler.dart';
 import 'tools/dio_factory.dart';
 import 'tools/failure_model.dart';
 

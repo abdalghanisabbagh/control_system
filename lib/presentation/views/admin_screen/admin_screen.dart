@@ -1,9 +1,10 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
-import 'package:control_system/presentation/resource_manager/styles_manager.dart';
-import 'package:control_system/presentation/views/admin_screen/widgets/add_new_user.dart';
-import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../resource_manager/ReusableWidget/my_back_button.dart';
+import '../../resource_manager/styles_manager.dart';
+import '../base_screen.dart';
+import 'widgets/add_new_user.dart';
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});

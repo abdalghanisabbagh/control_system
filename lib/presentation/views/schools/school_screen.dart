@@ -1,13 +1,13 @@
-import 'package:control_system/domain/controllers/school_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/header_widget.dart';
-import 'package:control_system/presentation/views/base_screen.dart';
-import 'package:control_system/presentation/views/schools/Widgets/add_new_school.dart';
-import 'package:control_system/presentation/views/schools/Widgets/school_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/controllers/school_controller.dart';
+import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../resource_manager/ReusableWidget/header_widget.dart';
+import '../base_screen.dart';
+import 'Widgets/add_new_school.dart';
 import 'Widgets/grade_system_widget.dart';
+import 'Widgets/school_widget.dart';
 
 class SchoolsScreen extends GetView<SchoolController> {
   const SchoolsScreen({super.key});

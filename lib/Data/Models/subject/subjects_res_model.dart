@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/subject/subject_res_model.dart';
+import 'subject_res_model.dart';
 
 class SubjectsResModel {
   List<SubjectResModel>? data;

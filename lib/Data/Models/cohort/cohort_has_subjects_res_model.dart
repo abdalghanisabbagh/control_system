@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/subject/subject_res_model.dart';
+import '../subject/subject_res_model.dart';
 
 class CohortHasSubjectsResModel {
   int? cohortID;

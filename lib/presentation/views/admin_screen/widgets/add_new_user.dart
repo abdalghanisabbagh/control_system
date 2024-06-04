@@ -1,10 +1,11 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_back_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/resource_manager/validations.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
+import '../../../resource_manager/index.dart';
+import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
 class AddNewUserWidget extends StatelessWidget {

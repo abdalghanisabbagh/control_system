@@ -1,5 +1,6 @@
-import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../base_screen.dart';
 
 class RolesScreen extends StatelessWidget {
   const RolesScreen({super.key});

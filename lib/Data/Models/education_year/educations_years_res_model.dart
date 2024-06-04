@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/education_year/education_year_model.dart';
+import 'education_year_model.dart';
 
 class EducationsYearsModel {
   List<EducationYearModel>? data;

@@ -1,7 +1,8 @@
 import 'dart:math';
 
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
+
+import '../../../resource_manager/index.dart';
 
 class ClockPainter extends CustomPainter {
   final BuildContext context;

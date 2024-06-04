@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/user/login_response/user_profile_model.dart';
+import '../login_response/user_profile_model.dart';
 
 class UsersResModel {
   UsersResModel({

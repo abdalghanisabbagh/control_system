@@ -1,5 +1,6 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:flutter/material.dart';
+
+import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 
 class AddNewSchoolTypeWidget extends StatelessWidget {
   AddNewSchoolTypeWidget({super.key});

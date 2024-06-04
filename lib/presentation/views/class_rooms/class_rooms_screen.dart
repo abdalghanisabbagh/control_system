@@ -1,18 +1,18 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/controllers/index.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/resource_manager/routes/index.dart';
-import 'package:control_system/presentation/views/base_screen.dart';
-import 'package:control_system/presentation/views/class_rooms/widgets/edit_class_room_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../domain/controllers/index.dart';
+import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../resource_manager/assets_manager.dart';
+import '../../resource_manager/index.dart';
+import '../../resource_manager/routes/index.dart';
+import '../base_screen.dart';
+import 'widgets/edit_class_room_widget.dart';
 
 class ClassRoomsScreen extends GetView<ClassRoomController> {
   const ClassRoomsScreen({super.key});

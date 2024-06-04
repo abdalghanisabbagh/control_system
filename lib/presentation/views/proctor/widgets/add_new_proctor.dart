@@ -1,6 +1,7 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_back_button.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
+
+import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/index.dart';
 
 class AddNewProctor extends StatelessWidget {
   const AddNewProctor({super.key});
