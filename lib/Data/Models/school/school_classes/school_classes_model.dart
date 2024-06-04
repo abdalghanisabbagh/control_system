@@ -21,7 +21,7 @@ class SchoolClassesModel {
   String? floor;
   String? maxCapacity;
   String? name;
-  String? rows;
+  List<int>? rows;
   int? schoolsID;
 
   Map<String, dynamic> toJson() {

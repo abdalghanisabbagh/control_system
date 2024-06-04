@@ -191,18 +191,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                                 controller
                                                                     .classesRooms[
                                                                         index]
-                                                                    .rows!
-                                                                    .replaceAll(
-                                                                        '[', '')
-                                                                    .replaceAll(
-                                                                        ']', '')
-                                                                    .split(',')
-                                                                    .toList()
-                                                                    .map((e) =>
-                                                                        int.tryParse(
-                                                                            e) ??
-                                                                        0)
-                                                                    .toList();
+                                                                    .rows!;
                                                             controller.numbers =
                                                                 controller
                                                                     .classesRooms[

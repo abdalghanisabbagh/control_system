@@ -37,7 +37,7 @@ class ClassRoomResModel {
   int? iD;
   String? maxCapacity;
   String? name;
-  String? rows;
+  List<int>? rows;
   int? schoolsID;
   DateTime? updatedAt;
   int? updatedBy;
