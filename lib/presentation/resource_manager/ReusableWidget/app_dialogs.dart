@@ -30,6 +30,7 @@ class AppDialogs extends StatelessWidget {
 }
 
 class MyDialogs {
+  /////////////////////////////Flutter Material Dialog////////////////////////
   static showDialog(BuildContext context, Widget content) {
     showGeneralDialog(
       context: context,
@@ -43,4 +44,18 @@ class MyDialogs {
       },
     );
   }
+
+///////////////////////////////Getx Dialog////////////////////////
+  // static showDialog(BuildContext context, Widget content) {
+  //   Get.generalDialog(
+  //     pageBuilder: (context, animation, secondaryAnimation) => Container(),
+  //     transitionBuilder: (context, animation, secondaryAnimation, child) {
+  //       var curve = Curves.easeInOut.transform(animation.value);
+  //       return AppDialogs(
+  //         curve: curve,
+  //         content: content,
+  //       );
+  //     },
+  //   );
+  // }
 }
