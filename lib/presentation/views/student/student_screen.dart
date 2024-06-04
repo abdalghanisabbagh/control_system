@@ -119,8 +119,14 @@ class StudentScreen extends GetView<StudentController> {
                         child: CircularProgressIndicator(),
                       )
                     : controller.studentsRows.isEmpty
-                        ? const Center(
-                            child: Text("No Student Found"),
+                        ? Center(
+                            child: Text(
+                              "No Student Found",
+                              style: nunitoBlack.copyWith(
+                                color: ColorManager.bgSideMenu,
+                                fontSize: 30,
+                              ),
+                            ),
                           )
                         : PlutoGrid(
                             key: UniqueKey(),
