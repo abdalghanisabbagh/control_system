@@ -27,6 +27,12 @@ class EditStudentWidget extends GetView<StudentController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.selectedItemGrade = controller.optionsGrade
+        .firstWhere((element) => element.value == studentResModel.gradesID);
+    controller.selectedItemCohort = controller.optionsCohort
+        .firstWhere((element) => element.value == studentResModel.cohortID);
+    controller.selectedItemClassRoom = controller.optionsClassRoom.firstWhere(
+        (element) => element.value == studentResModel.schoolClassID);
     return SizedBox(
       width: 500,
       child: SingleChildScrollView(
@@ -153,48 +159,61 @@ class EditStudentWidget extends GetView<StudentController> {
                 const SizedBox(
                   height: 20,
                 ),
-                InkWell(
-                  onTap: () {
-                    controller
-                        .patchEditStudent(
-                      studentid: studentResModel.iD!,
-                      gradesId: controller.selectedItemGrade!.value,
-                      cohortId: controller.selectedItemCohort!.value,
-                      schoolClassId: controller.selectedItemClassRoom!.value,
-                      firstName: fnameController.text,
-                      secondName: mnameController.text,
-                      thirdName: lnameController.text,
-                    )
-                        .then(
-                      (value) {
-                        value
-                            ? {
-                                context.pop(),
-                                MyFlashBar.showSuccess(
-                                  "The Student has been Edited successfully",
-                                  "Success",
-                                ).show(context),
-                              }
-                            : null;
-                      },
-                    );
-                  },
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: ColorManager.bgSideMenu,
-                        borderRadius: BorderRadius.circular(11)),
-                    child: Center(
-                      child: Text(
-                        "Update",
-                        style: nunitoRegular.copyWith(
-                          color: ColorManager.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                GetBuilder<StudentController>(builder: (_) {
+                  return controller.islodingEditStudent
+                      ? const CircularProgressIndicator()
+                      : InkWell(
+                          onTap: () {
+                            // debugPrint('ID ${studentResModel.iD}');
+                            // debugPrint(
+                            //     'GradeId ${controller.selectedItemGrade?.value.toString()}');
+                            // debugPrint(
+                            //     'CohortId ${controller.selectedItemCohort?.value.toString()}');
+                            // debugPrint(
+                            //     'ClassRoomId ${controller.selectedItemClassRoom?.value.toString()}');
+
+                            controller
+                                .patchEditStudent(
+                              studentid: studentResModel.iD!,
+                              gradesId: controller.selectedItemGrade!.value,
+                              cohortId: controller.selectedItemCohort!.value,
+                              schoolClassId:
+                                  controller.selectedItemClassRoom!.value,
+                              firstName: fnameController.text,
+                              secondName: mnameController.text,
+                              thirdName: lnameController.text,
+                            )
+                                .then(
+                              (value) {
+                                value
+                                    ? {
+                                        context.pop(),
+                                        MyFlashBar.showSuccess(
+                                          "The Student has been Edited successfully",
+                                          "Success",
+                                        ).show(context),
+                                      }
+                                    : null;
+                              },
+                            );
+                          },
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: ColorManager.bgSideMenu,
+                                borderRadius: BorderRadius.circular(11)),
+                            child: Center(
+                              child: Text(
+                                "Update",
+                                style: nunitoRegular.copyWith(
+                                  color: ColorManager.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                }),
               ],
             );
           },
