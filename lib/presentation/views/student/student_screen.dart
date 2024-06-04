@@ -126,7 +126,10 @@ class StudentScreen extends GetView<StudentController> {
                             key: UniqueKey(),
                             createFooter: (stateManager) {
                               stateManager.setPageSize(50, notify: false);
-                              return PlutoPagination(stateManager);
+                              return PlutoPagination(
+                                stateManager,
+                                pageSizeToMove: 1,
+                              );
                             },
                             configuration: PlutoGridConfiguration(
                               style: PlutoGridStyleConfig(
