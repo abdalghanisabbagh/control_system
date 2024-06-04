@@ -125,8 +125,7 @@ class StudentScreen extends GetView<StudentController> {
                         : PlutoGrid(
                             key: UniqueKey(),
                             createFooter: (stateManager) {
-                              stateManager.setPageSize(50,
-                                  notify: false); // default 40
+                              stateManager.setPageSize(50, notify: false);
                               return PlutoPagination(stateManager);
                             },
                             configuration: PlutoGridConfiguration(
@@ -155,7 +154,7 @@ class StudentScreen extends GetView<StudentController> {
                               /// Text Column definition
                               PlutoColumn(
                                 readOnly: true,
-                                enableRowChecked: true,
+                                // enableRowChecked: true,
                                 enableEditingMode: false,
                                 title: 'Id',
                                 field: 'IdField',
@@ -403,9 +402,9 @@ class StudentScreen extends GetView<StudentController> {
                             rows: controller.studentsRows,
                             onChanged: (PlutoGridOnChangedEvent event) {},
                             onLoaded: (PlutoGridOnLoadedEvent event) {
-                              event.stateManager.setSelectingMode(
-                                PlutoGridSelectingMode.cell,
-                              );
+                              // event.stateManager.setSelectingMode(
+                              //   PlutoGridSelectingMode.cell,
+                              // );
                             },
                           ),
               ),
