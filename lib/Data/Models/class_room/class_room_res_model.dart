@@ -1,3 +1,5 @@
+import 'dart:convert' as convert;
+
 class ClassRoomResModel {
   ClassRoomResModel({
     this.iD,
@@ -20,7 +22,7 @@ class ClassRoomResModel {
     name = json['Name'];
     maxCapacity = json['Max_Capacity'];
     floor = json['Floor'];
-    rows = json['Rows'];
+    rows = convert.json.decode(json['Rows']).cast<int>();
     columns = json['Columns'];
     createdBy = json['Created_By'];
     createdAt = json['Created_At'];
