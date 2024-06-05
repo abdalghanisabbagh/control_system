@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../Data/Models/student/student_res_model.dart';
 import '../../../../domain/controllers/studentsController/student_controller.dart';
@@ -76,15 +77,41 @@ class EditStudentWidget extends GetView<StudentController> {
                       children: [
                         SizedBox(
                           width: 500,
-                          child: MultiSelectDropDownView(
-                            onOptionSelected: (selectedItem) {
-                              controller.setSelectedItemGrade(selectedItem);
+                          child: FormField<List<ValueItem<dynamic>>>(
+                            validator: Validations
+                                .multiSelectDropDownRequiredValidator,
+                            builder: (formFieldState) {
+                              return Column(
+                                children: [
+                                  MultiSelectDropDownView(
+                                    onOptionSelected: (selectedItem) {
+                                      controller
+                                          .setSelectedItemGrade(selectedItem);
+                                      formFieldState.didChange(selectedItem);
+                                    },
+                                    options: controller.optionsGrade,
+                                    optionSelected: [
+                                      controller.optionsGrade.firstWhere(
+                                        (element) =>
+                                            element.value ==
+                                            studentResModel.gradesID,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  if (formFieldState.hasError)
+                                    Text(
+                                      formFieldState.errorText!,
+                                      style: nunitoRegular.copyWith(
+                                        fontSize: FontSize.s10,
+                                        color: ColorManager.error,
+                                      ),
+                                    ),
+                                ],
+                              );
                             },
-                            options: controller.optionsGrade,
-                            optionSelected: [
-                              controller.optionsGrade.firstWhere((element) =>
-                                  element.value == studentResModel.gradesID),
-                            ],
                           ),
                         ),
                         const SizedBox(
@@ -92,15 +119,41 @@ class EditStudentWidget extends GetView<StudentController> {
                         ),
                         SizedBox(
                           width: 500,
-                          child: MultiSelectDropDownView(
-                            onOptionSelected: (selectedItem) {
-                              controller.setSelectedItemCohort(selectedItem);
+                          child: FormField(
+                            validator: Validations
+                                .multiSelectDropDownRequiredValidator,
+                            builder: (formFieldState) {
+                              return Column(
+                                children: [
+                                  MultiSelectDropDownView(
+                                    onOptionSelected: (selectedItem) {
+                                      controller
+                                          .setSelectedItemCohort(selectedItem);
+                                      formFieldState.didChange(selectedItem);
+                                    },
+                                    options: controller.optionsCohort,
+                                    optionSelected: [
+                                      controller.optionsCohort.firstWhere(
+                                        (element) =>
+                                            element.value ==
+                                            studentResModel.cohortID,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  if (formFieldState.hasError)
+                                    Text(
+                                      formFieldState.errorText!,
+                                      style: nunitoRegular.copyWith(
+                                        fontSize: FontSize.s10,
+                                        color: ColorManager.error,
+                                      ),
+                                    ),
+                                ],
+                              );
                             },
-                            options: controller.optionsCohort,
-                            optionSelected: [
-                              controller.optionsCohort.firstWhere((element) =>
-                                  element.value == studentResModel.cohortID),
-                            ],
                           ),
                         ),
                         const SizedBox(
@@ -108,17 +161,40 @@ class EditStudentWidget extends GetView<StudentController> {
                         ),
                         SizedBox(
                           width: 500,
-                          child: MultiSelectDropDownView(
-                            onOptionSelected: (selectedItem) {
-                              controller.setSelectedItemClassRoom(selectedItem);
+                          child: FormField(
+                            validator: Validations
+                                .multiSelectDropDownRequiredValidator,
+                            builder: (formFieldState) {
+                              return Column(
+                                children: [
+                                  MultiSelectDropDownView(
+                                    onOptionSelected: (selectedItem) {
+                                      controller.setSelectedItemClassRoom(
+                                          selectedItem);
+                                      formFieldState.didChange(selectedItem);
+                                    },
+                                    options: controller.optionsClassRoom,
+                                    optionSelected: [
+                                      controller.optionsClassRoom.firstWhere(
+                                          (element) =>
+                                              element.value ==
+                                              studentResModel.schoolClassID),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  if (formFieldState.hasError)
+                                    Text(
+                                      formFieldState.errorText!,
+                                      style: nunitoRegular.copyWith(
+                                        fontSize: FontSize.s10,
+                                        color: ColorManager.error,
+                                      ),
+                                    ),
+                                ],
+                              );
                             },
-                            options: controller.optionsClassRoom,
-                            optionSelected: [
-                              controller.optionsClassRoom.firstWhere(
-                                  (element) =>
-                                      element.value ==
-                                      studentResModel.schoolClassID),
-                            ],
                           ),
                         ),
                       ],
