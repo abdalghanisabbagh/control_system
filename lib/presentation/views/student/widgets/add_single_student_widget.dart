@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../domain/controllers/studentsController/add_new_student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
@@ -29,256 +30,268 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          child: GetBuilder<AddNewStudentController>(builder: (_) {
-            return controller.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional.topEnd,
-                        child: IconButton(
+          child: GetBuilder<AddNewStudentController>(
+            builder: (_) {
+              return controller.isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Align(
                           alignment: AlignmentDirectional.topEnd,
-                          color: Colors.black,
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            Get.back();
-                          },
+                          child: IconButton(
+                            alignment: AlignmentDirectional.topEnd,
+                            color: Colors.black,
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              Get.back();
+                            },
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Add New Student",
-                        style: nunitoBold.copyWith(
-                          color: ColorManager.primary,
-                          fontSize: 20,
+                        Text(
+                          "Add New Student",
+                          style: nunitoBold.copyWith(
+                            color: ColorManager.primary,
+                            fontSize: 20,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                        const SizedBox(
+                          height: 20,
+                        ),
 
-                      // grades
+                        // grades
 
-                      Column(
-                        children: [
-                          FormField<String>(
-                            validator: (value) {
-                              if (controller.selectedItemGrade == null) {
-                                return 'This field is required';
-                              }
-                              return null;
-                            },
-                            builder: (formFieldState) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 500,
-                                    child: MultiSelectDropDownView(
-                                      hintText: "Select Grade",
-                                      onOptionSelected: (selectedItem) {
-                                        controller.selectedItemGrade =
-                                            selectedItem.isNotEmpty
-                                                ? selectedItem.first
-                                                : null;
-                                        formFieldState
-                                            .didChange(selectedItem as String?);
-                                      },
-                                      options: controller.optionsGrades,
+                        Column(
+                          children: [
+                            FormField<List<ValueItem<dynamic>>>(
+                              validator: Validations
+                                  .multiSelectDropDownRequiredValidator,
+                              builder: (formFieldState) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 500,
+                                      child: MultiSelectDropDownView(
+                                        hintText: "Select Grade",
+                                        onOptionSelected: (selectedItem) {
+                                          controller.selectedItemGrade =
+                                              selectedItem.isNotEmpty
+                                                  ? selectedItem.first
+                                                  : null;
+                                          formFieldState
+                                              .didChange(selectedItem);
+                                        },
+                                        options: controller.optionsGrades,
+                                      ),
                                     ),
-                                  ),
-                                  if (formFieldState.hasError)
-                                    Text(
-                                      formFieldState.errorText!,
-                                      style: const TextStyle(color: Colors.red),
+                                    if (formFieldState.hasError)
+                                      Text(
+                                        formFieldState.errorText!,
+                                        style: nunitoRegular.copyWith(
+                                          fontSize: FontSize.s10,
+                                          color: ColorManager.error,
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            FormField<List<ValueItem<dynamic>>>(
+                              validator: Validations
+                                  .multiSelectDropDownRequiredValidator,
+                              builder: (formFieldState) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 500,
+                                      child: MultiSelectDropDownView(
+                                        hintText: "Select Cohort",
+                                        onOptionSelected: (selectedItem) {
+                                          controller.selectedItemCohort =
+                                              selectedItem.isNotEmpty
+                                                  ? selectedItem.first
+                                                  : null;
+                                          formFieldState
+                                              .didChange(selectedItem);
+                                        },
+                                        options: controller.optionsCohort,
+                                      ),
                                     ),
-                                ],
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          FormField<String>(
-                            validator: (value) {
-                              if (controller.selectedItemCohort == null) {
-                                return 'This field is required';
-                              }
-                              return null;
-                            },
-                            builder: (formFieldState) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 500,
-                                    child: MultiSelectDropDownView(
-                                      hintText: "Select Cohort",
-                                      onOptionSelected: (selectedItem) {
-                                        controller.selectedItemCohort =
-                                            selectedItem.isNotEmpty
-                                                ? selectedItem.first
-                                                : null;
-                                        formFieldState
-                                            .didChange(selectedItem as String?);
-                                      },
-                                      options: controller.optionsCohort,
+                                    if (formFieldState.hasError)
+                                      Text(
+                                        formFieldState.errorText!,
+                                        style: nunitoRegular.copyWith(
+                                          fontSize: FontSize.s10,
+                                          color: ColorManager.error,
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            FormField<List<ValueItem<dynamic>>>(
+                              validator: (value) {
+                                if (controller.selectedItemClassRoom == null) {
+                                  return 'This field is required';
+                                }
+                                return null;
+                              },
+                              builder: (formFieldState) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 500,
+                                      child: MultiSelectDropDownView(
+                                        hintText: "Select Class Room",
+                                        onOptionSelected: (selectedItem) {
+                                          controller.selectedItemClassRoom =
+                                              selectedItem.isNotEmpty
+                                                  ? selectedItem.first
+                                                  : null;
+                                          formFieldState
+                                              .didChange(selectedItem);
+                                        },
+                                        options: controller.optionsClassRoom,
+                                      ),
                                     ),
-                                  ),
-                                  if (formFieldState.hasError)
-                                    Text(
-                                      formFieldState.errorText!,
-                                      style: const TextStyle(color: Colors.red),
-                                    ),
-                                ],
-                              );
-                            },
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          FormField<String>(
-                            validator: (value) {
-                              if (controller.selectedItemClassRoom == null) {
-                                return 'This field is required';
-                              }
-                              return null;
-                            },
-                            builder: (formFieldState) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 500,
-                                    child: MultiSelectDropDownView(
-                                      hintText: "Select Class Room",
-                                      onOptionSelected: (selectedItem) {
-                                        controller.selectedItemClassRoom =
-                                            selectedItem.isNotEmpty
-                                                ? selectedItem.first
-                                                : null;
-                                        formFieldState
-                                            .didChange(selectedItem as String?);
-                                      },
-                                      options: controller.optionsClassRoom,
-                                    ),
-                                  ),
-                                  if (formFieldState.hasError)
-                                    Text(
-                                      formFieldState.errorText!,
-                                      style: const TextStyle(color: Colors.red),
-                                    ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                                    if (formFieldState.hasError)
+                                      Text(
+                                        formFieldState.errorText!,
+                                        style: nunitoRegular.copyWith(
+                                          fontSize: FontSize.s10,
+                                          color: ColorManager.error,
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
 
-                      MytextFormFiled(
+                        MytextFormFiled(
                           controller: blbIdController,
                           title: "BLB ID",
-                          myValidation: Validations.requiredValidator),
+                          myValidation: Validations.requiredValidator,
+                        ),
 
-                      MytextFormFiled(
+                        MytextFormFiled(
                           controller: fnameController,
                           title: "First Name",
-                          myValidation: Validations.requiredValidator),
+                          myValidation: Validations.requiredValidator,
+                        ),
 
-                      MytextFormFiled(
+                        MytextFormFiled(
                           controller: mnameController,
                           title: "Middle Name",
-                          myValidation: Validations.requiredValidator),
+                          myValidation: Validations.requiredValidator,
+                        ),
 
-                      MytextFormFiled(
+                        MytextFormFiled(
                           controller: lnameController,
                           title: "Last Name",
-                          myValidation: Validations.requiredValidator),
+                          myValidation: Validations.requiredValidator,
+                        ),
 
-                      MytextFormFiled(
+                        MytextFormFiled(
                           controller: religionController,
                           title: "Religion",
-                          myValidation: Validations.requiredValidator),
+                          myValidation: Validations.requiredValidator,
+                        ),
 
-                      MytextFormFiled(
+                        MytextFormFiled(
                           controller: citizenshipController,
                           title: "Citizenship",
-                          myValidation: Validations.requiredValidator),
+                          myValidation: Validations.requiredValidator,
+                        ),
 
-                      MytextFormFiled(
+                        MytextFormFiled(
                           controller: sLangController,
                           title: "Second Language",
-                          myValidation: Validations.requiredValidator),
+                          myValidation: Validations.requiredValidator,
+                        ),
 
-                      const SizedBox(
-                        height: 20,
-                      ),
+                        const SizedBox(
+                          height: 20,
+                        ),
 
-                      controller.isLodingAddStudent
-                          ? const CircularProgressIndicator()
-                          : InkWell(
-                              onTap: () {
-                                if (_formKey.currentState!.validate() &&
-                                    controller.selectedItemGrade != null &&
-                                    controller.selectedItemCohort != null &&
-                                    controller.selectedItemClassRoom != null) {
-                                  controller
-                                      .postAddNewStudent(
-                                    cohortId:
-                                        controller.selectedItemCohort!.value,
-                                    gradesId:
-                                        controller.selectedItemGrade!.value,
-                                    schoolClassId:
-                                        controller.selectedItemClassRoom!.value,
-                                    firstName: fnameController.text,
-                                    secondName: mnameController.text,
-                                    thirdName: lnameController.text,
-                                  )
-                                      .then(
-                                    (value) {
-                                      value
-                                          ? {
-                                              context.pop(),
-                                              MyFlashBar.showSuccess(
-                                                "The Student has been added successfully",
-                                                "Success",
-                                              ).show(context),
-                                            }
-                                          : null;
-                                    },
-                                  );
-                                } else {
-                                  if (controller.selectedItemGrade == null) {
-                                    controller.checkGradeValidation();
+                        controller.isLodingAddStudent
+                            ? const CircularProgressIndicator()
+                            : InkWell(
+                                onTap: () {
+                                  if (_formKey.currentState!.validate() &&
+                                      controller.selectedItemGrade != null &&
+                                      controller.selectedItemCohort != null &&
+                                      controller.selectedItemClassRoom !=
+                                          null) {
+                                    controller
+                                        .postAddNewStudent(
+                                      cohortId:
+                                          controller.selectedItemCohort!.value,
+                                      gradesId:
+                                          controller.selectedItemGrade!.value,
+                                      schoolClassId: controller
+                                          .selectedItemClassRoom!.value,
+                                      firstName: fnameController.text,
+                                      secondName: mnameController.text,
+                                      thirdName: lnameController.text,
+                                    )
+                                        .then(
+                                      (value) {
+                                        value
+                                            ? {
+                                                context.pop(),
+                                                MyFlashBar.showSuccess(
+                                                  "The Student has been added successfully",
+                                                  "Success",
+                                                ).show(context),
+                                              }
+                                            : null;
+                                      },
+                                    );
+                                  } else {
+                                    if (controller.selectedItemGrade == null) {
+                                      controller.checkGradeValidation();
+                                    }
+                                    if (controller.selectedItemCohort == null) {
+                                      controller.checkChortValidation();
+                                    }
+                                    if (controller.selectedItemClassRoom ==
+                                        null) {
+                                      controller.checkClassRoomValidation();
+                                    }
                                   }
-                                  if (controller.selectedItemCohort == null) {
-                                    controller.checkChortValidation();
-                                  }
-                                  if (controller.selectedItemClassRoom ==
-                                      null) {
-                                    controller.checkClassRoomValidation();
-                                  }
-                                }
-                              },
-                              child: Container(
-                                height: 50,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
                                     color: ColorManager.bgSideMenu,
-                                    borderRadius: BorderRadius.circular(11)),
-                                child: Center(
-                                  child: Text(
-                                    "Add",
-                                    style: nunitoRegular.copyWith(
-                                      color: ColorManager.white,
+                                    borderRadius: BorderRadius.circular(11),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Add",
+                                      style: nunitoRegular.copyWith(
+                                        color: ColorManager.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            )
-                    ],
-                  );
-          }),
+                              )
+                      ],
+                    );
+            },
+          ),
         ),
       ),
     );
