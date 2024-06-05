@@ -1,6 +1,7 @@
-import 'package:dropdown_search/dropdown_search.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
@@ -47,7 +48,8 @@ class AddNewUserWidget extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: Get.height * 0.75,
+          width: 300,
+          height: Get.height * 0.70,
           child: SingleChildScrollView(
             child: Form(
               key: formkey,
@@ -60,86 +62,60 @@ class AddNewUserWidget extends StatelessWidget {
                       fontSize: 25,
                     ),
                   ),
-                  DropdownSearch<String>(
-                    selectedItem: roleType,
-                    items: roleTypes,
-                    dropdownDecoratorProps: DropDownDecoratorProps(
-                      dropdownSearchDecoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: ColorManager.bgSideMenu),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: ColorManager.bgSideMenu),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorManager.bgSideMenu,
-                            width: 2,
+                  FormField<List<ValueItem<dynamic>>>(
+                    validator: Validations.multiSelectDropDownRequiredValidator,
+                    builder: (formFieldState) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MultiSelectDropDownView(
+                            options: roleTypes
+                                .map((e) => ValueItem(label: e, value: e))
+                                .toList(),
+                            onOptionSelected: (value) {
+                              formFieldState.didChange(value);
+                            },
                           ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: ColorManager.bgSideMenu,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        hintText: "Select Role",
-                        hintStyle: nunitoRegularStyle(
-                            fontSize: 16, color: ColorManager.bgSideMenu),
-                      ),
-                    ),
-                    onChanged: ((value) {
-                      roleType = value;
-
-                      /// TODO: Update Screen
-                    }),
+                          const SizedBox(height: 10),
+                          if (formFieldState.hasError)
+                            Text(
+                              formFieldState.errorText!,
+                              style: nunitoRegular.copyWith(
+                                fontSize: FontSize.s10,
+                                color: ColorManager.error,
+                              ),
+                            ).paddingOnly(left: 10),
+                        ],
+                      );
+                    },
                   ),
                   if (roleType == roleTypes[3] || roleType == roleTypes[5])
-                    DropdownSearch<String>(
-                      selectedItem: selectedDivision,
-                      items: schoolDivision,
-                      dropdownDecoratorProps: DropDownDecoratorProps(
-                        dropdownSearchDecoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: ColorManager.bgSideMenu),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: ColorManager.bgSideMenu),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: ColorManager.bgSideMenu,
-                              width: 2,
+                    FormField(
+                      validator:
+                          Validations.multiSelectDropDownRequiredValidator,
+                      builder: (formFieldState) {
+                        return Column(
+                          children: [
+                            MultiSelectDropDownView(
+                              options: schoolDivision
+                                  .map((e) => ValueItem(label: e, value: e))
+                                  .toList(),
+                              onOptionSelected: (value) {
+                                formFieldState.didChange(value);
+                              },
                             ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: ColorManager.bgSideMenu,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          hintText: "Select Division",
-                          hintStyle: nunitoRegularStyle(
-                              fontSize: 16, color: ColorManager.bgSideMenu),
-                        ),
-                      ),
-                      onChanged: ((value) {
-                        selectedDivision = value;
-
-                        /// TODO: Update Screen
-                      }),
+                            const SizedBox(height: 10),
+                            if (formFieldState.hasError)
+                              Text(
+                                formFieldState.errorText!,
+                                style: nunitoRegular.copyWith(
+                                  fontSize: FontSize.s10,
+                                  color: ColorManager.error,
+                                ),
+                              ).paddingOnly(left: 10),
+                          ],
+                        );
+                      },
                     ),
                   MytextFormFiled(
                     controller: nisId,
