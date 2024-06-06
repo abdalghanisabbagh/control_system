@@ -13,8 +13,8 @@ import '../services/token_service.dart';
 import 'index.dart';
 
 class AuthController extends GetxController {
-  RxBool isLoading = false.obs;
-  RxBool isLogin = false.obs;
+  bool isLoading = false;
+  bool isLogin = false;
   ProfileController profileController = Get.find<ProfileController>();
   RxBool showPass = true.obs;
   TokenService tokenService = Get.find<TokenService>();
@@ -25,13 +25,12 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-//  List schools = [];
   setShowPass() {
     showPass.value = !showPass.value;
   }
 
   Future<bool> login(String username, String password) async {
-    isLoading.value = true;
+    isLoading = true;
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
@@ -56,17 +55,16 @@ class AuthController extends GetxController {
         dToken: DateTime.now().toIso8601String(),
       ));
       profileController.saveProfileToHiveBox(r.userProfile!);
-      isLogin.value = true;
-      isLoading.value = false;
+      isLogin = true;
+      isLoading = false;
     });
 
-    isLoading.value = false;
+    isLoading = false;
     update();
-    return isLogin.value;
+    return isLogin;
   }
 
   Future<String?> refreshToken() async {
-    ///TODO: refresh token
     if (tokenService.tokenModel == null) {
       return null;
     }
@@ -104,7 +102,7 @@ class AuthController extends GetxController {
           55) {
         refreshToken();
       }
-      isLogin.value = true;
+      isLogin = true;
     }
   }
 
@@ -114,6 +112,6 @@ class AuthController extends GetxController {
       profileController.deleteProfileFromHiveBox(),
       SchoolController().deleteFromSchoolBox(),
     ]);
-    isLogin.value = false;
+    isLogin = false;
   }
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../domain/controllers/auth_controller.dart';
 import '../../../../domain/controllers/index.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/assets_manager.dart';
 import '../../../resource_manager/color_manager.dart';
@@ -138,29 +139,31 @@ class LoginForm extends GetView<AuthController> {
                             const SizedBox(
                               height: 32,
                             ),
-                            Obx(
-                              () => Column(
-                                children: [
-                                  controller.isLoading.value
-                                      ? const CircularProgressIndicator()
-                                      : SizedBox(
-                                          width: double.infinity,
-                                          height: 50,
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              _login(
-                                                controller.login,
-                                                emailController.text,
-                                                passwordController.text,
-                                                formKey,
-                                                context,
-                                              );
-                                            },
-                                            child: const Text("Login"),
+                            GetBuilder<AuthController>(
+                              builder: (_) {
+                                return Column(
+                                  children: [
+                                    controller.isLoading
+                                        ? const CircularProgressIndicator()
+                                        : SizedBox(
+                                            width: double.infinity,
+                                            height: 50,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                _login(
+                                                  controller.login,
+                                                  emailController.text,
+                                                  passwordController.text,
+                                                  formKey,
+                                                  context,
+                                                );
+                                              },
+                                              child: const Text("Login"),
+                                            ),
                                           ),
-                                        ),
-                                ],
-                              ),
+                                  ],
+                                );
+                              },
                             )
                           ],
                         ),
@@ -187,6 +190,14 @@ void _login(
     login(
       username,
       password,
-    );
+    ).then((value) {
+      value
+          ? {
+              MyFlashBar.showSuccess(
+                      'You have been logged in successfully', 'Success')
+                  .show(context)
+            }
+          : null;
+    });
   }
 }

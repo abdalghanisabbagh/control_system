@@ -42,25 +42,7 @@ class AddNewStudentController extends GetxController {
     update();
   }
 
-  bool checkGradeValidation() {
-    checkSelecteGrade = true;
-    // test = selectedItemGrade != null && selectedItemCohort != null;
-    update();
-    return checkSelecteGrade;
-  }
-
-  bool checkChortValidation() {
-    checkSelecteCohort = true;
-
-    update();
-    return checkSelecteGrade;
-  }
-
-  bool checkClassRoomValidation() {
-    checkSelecteClassRoom = true;
-    update();
-    return checkSelecteGrade;
-  }
+ 
 
   Future<bool> getGradesBySchoolId() async {
     update();
