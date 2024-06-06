@@ -5,7 +5,7 @@ import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/color_manager.dart';
 import '../../resource_manager/styles_manager.dart';
 import '../base_screen.dart';
-import 'widgets/add_new_role_widget.dart';
+import 'widgets/add_new_screen_widget.dart';
 
 class RolesScreen extends StatelessWidget {
   const RolesScreen({super.key});
@@ -28,7 +28,7 @@ class RolesScreen extends StatelessWidget {
                   onTap: () {
                     MyDialogs.showDialog(
                       context,
-                      const AddNewRoleWidget(),
+                      const AddNewScreenWidget(),
                     );
                   },
                   child: Container(
