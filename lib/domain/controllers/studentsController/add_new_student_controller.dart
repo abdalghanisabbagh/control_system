@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/controllers/studentsController/student_controller.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
@@ -13,6 +14,8 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class AddNewStudentController extends GetxController {
+  StudentController studentController = Get.find<StudentController>();
+
   bool checkSelecteClassRoom = false;
   bool checkSelecteCohort = false;
   bool checkSelecteGrade = false;
@@ -207,6 +210,7 @@ class AddNewStudentController extends GetxController {
       ).showDialogue(Get.key.currentContext!);
       addStudentHasBeenAdded = false;
     }, (result) {
+      studentController.getStudents();
       addStudentHasBeenAdded = true;
     });
     isLodingAddStudent = false;
