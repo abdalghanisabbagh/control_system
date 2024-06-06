@@ -17,7 +17,7 @@ class AddNewScreenWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Add New Role",
+            "Add New Screen",
             style: nunitoBlack.copyWith(
               color: ColorManager.bgSideMenu,
               fontSize: 30,
@@ -26,7 +26,7 @@ class AddNewScreenWidget extends StatelessWidget {
           MytextFormFiled(
             myValidation: Validations.requiredValidator,
             controller: TextEditingController(),
-            title: "Role Name",
+            title: "Screen Name",
           ),
           const SizedBox(
             height: 20,
