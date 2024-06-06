@@ -41,7 +41,6 @@ class SubjectsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-
         getAllLoading = false;
         update();
       },
@@ -84,7 +83,7 @@ class SubjectsController extends GetxController {
         subjectHasBeenAdded = false;
       },
       (r) {
-        subjects = [...subjects, r];
+        getAllSubjects();
         subjectHasBeenAdded = true;
         update();
       },
@@ -114,8 +113,7 @@ class SubjectsController extends GetxController {
         subjectHasBeenDeleted = false;
       },
       (r) {
-        subjects.removeWhere((element) => element.iD == id);
-        subjectHasBeenDeleted = true;
+        getAllSubjects();
         update();
       },
     );
