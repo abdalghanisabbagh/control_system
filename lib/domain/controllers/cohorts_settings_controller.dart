@@ -73,7 +73,7 @@ class CohortsSettingsController extends GetxController {
         cohortHasBeenAdded = false;
       },
       (r) {
-        cohorts = [...cohorts, r];
+        getAllCohorts();
         cohortHasBeenAdded = true;
         update();
       },
@@ -103,7 +103,7 @@ class CohortsSettingsController extends GetxController {
         cohortHasBeenDeleted = false;
       },
       (r) {
-        cohorts.removeWhere((element) => element.iD == id);
+        getAllCohorts();
         cohortHasBeenDeleted = true;
         update();
       },
@@ -140,9 +140,7 @@ class CohortsSettingsController extends GetxController {
         cohortHasBeenAdded = false;
       },
       (r) {
-        int index = cohorts.indexWhere((element) => element.iD == id);
-        cohorts.removeAt(index);
-        cohorts.insert(index, r);
+        getAllCohorts();
         cohortHasBeenAdded = true;
         update();
       },
@@ -178,9 +176,7 @@ class CohortsSettingsController extends GetxController {
         subjectHasBeenDeleted = false;
       },
       (r) {
-        int index = cohorts.indexWhere((element) => element.iD == cohortId);
-        cohorts.removeAt(index);
-        cohorts.insert(index, r);
+        getAllCohorts();
         subjectHasBeenDeleted = true;
       },
     );
