@@ -40,7 +40,7 @@ class RolesScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          "Add New Role",
+                          "Add New Screen",
                           style: nunitoBold.copyWith(
                             color: ColorManager.white,
                             fontSize: 16,
@@ -51,9 +51,6 @@ class RolesScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            const SizedBox(
-              height: 10,
             ),
           ],
         ),
