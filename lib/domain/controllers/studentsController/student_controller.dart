@@ -35,7 +35,6 @@ class StudentController extends GetxController {
   ValueItem? selectedItemGrade;
   List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
-  
 
   @override
   void onInit() async {
@@ -246,6 +245,7 @@ class StudentController extends GetxController {
       ).showDialogue(Get.key.currentContext!);
       editStudentHasBeenAdded = false;
     }, (result) {
+      getStudents();
       editStudentHasBeenAdded = true;
     });
     islodingEditStudent = false;
