@@ -117,7 +117,7 @@ class ClassRoomController extends GetxController {
         classRoomHasBeenDeleted = false;
       },
       (r) {
-        classesRooms.removeWhere((element) => element.iD == id);
+        getClassesRooms();
         classRoomHasBeenDeleted = true;
       },
     );
@@ -159,8 +159,7 @@ class ClassRoomController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
-        classesRooms.add(r);
-        update();
+        getClassesRooms();
       },
     );
     count = 1;
@@ -205,8 +204,7 @@ class ClassRoomController extends GetxController {
         classRoomHasBeenEdited = false;
       },
       (r) {
-        classesRooms.removeWhere((element) => element.iD == id);
-        classesRooms.add(r);
+        getClassesRooms();
         classRoomHasBeenEdited = true;
         update();
       },
