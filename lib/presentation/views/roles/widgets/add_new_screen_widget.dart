@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
-class AddNewRoleWidget extends StatelessWidget {
-  const AddNewRoleWidget({super.key});
+class AddNewScreenWidget extends StatelessWidget {
+  const AddNewScreenWidget({super.key});
   @override
   Widget build(BuildContext context) {
     return Form(
