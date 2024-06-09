@@ -141,28 +141,24 @@ class LoginForm extends GetView<AuthController> {
                             ),
                             GetBuilder<AuthController>(
                               builder: (_) {
-                                return Column(
-                                  children: [
-                                    controller.isLoading
-                                        ? const CircularProgressIndicator()
-                                        : SizedBox(
-                                            width: double.infinity,
-                                            height: 50,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                _login(
-                                                  controller.login,
-                                                  emailController.text,
-                                                  passwordController.text,
-                                                  formKey,
-                                                  context,
-                                                );
-                                              },
-                                              child: const Text("Login"),
-                                            ),
-                                          ),
-                                  ],
-                                );
+                                return controller.isLoading
+                                    ? const CircularProgressIndicator()
+                                    : SizedBox(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            _login(
+                                              controller.login,
+                                              emailController.text,
+                                              passwordController.text,
+                                              formKey,
+                                              context,
+                                            );
+                                          },
+                                          child: const Text("Login"),
+                                        ),
+                                      );
                               },
                             )
                           ],
