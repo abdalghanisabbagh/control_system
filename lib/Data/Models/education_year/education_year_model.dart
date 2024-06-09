@@ -1,7 +1,7 @@
 class EducationYearModel {
   EducationYearModel({this.name});
 
-  EducationYearModel.fromJson(Map<String, dynamic> json) {
+  EducationYearModel.fromJson(json) {
     name = json['Name'];
     id = json['ID'];
   }

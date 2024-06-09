@@ -1,3 +1,4 @@
+import 'package:control_system/domain/controllers/control_mission_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/index.dart';
@@ -116,6 +117,16 @@ class StudentsBindings extends Bindings {
 
     Get.lazyPut<StudentController>(
       () => StudentController(),
+      fenix: true,
+    );
+  }
+}
+
+class ControlMissingBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<ControlMissionController>(
+      () => ControlMissionController(),
       fenix: true,
     );
   }
