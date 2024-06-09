@@ -1,11 +1,15 @@
+import 'dart:typed_data';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:csv/csv.dart';
 import 'package:dartz/dartz.dart';
+import 'package:excel/excel.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-
 import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/cohort/cohort_res_model.dart';
@@ -35,6 +39,7 @@ class StudentController extends GetxController {
   ValueItem? selectedItemGrade;
   List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
+  Map<String, bool> errorMap = {};
 
   @override
   void onInit() async {
@@ -82,6 +87,28 @@ class StudentController extends GetxController {
     update();
     return gotData;
   }
+
+  void readCsvFile(
+    Uint8List fileBytes, {
+    required List<CohortResModel> cohorts,
+    required List<ClassRoomResModel> classesRooms,
+    required List<GradeResModel> grades,
+  }) {
+    String content = String.fromCharCodes(fileBytes);
+    List<List<dynamic>> rowsAsListOfValues = const CsvToListConverter().convert(content);
+    List<StudentResModel> students = rowsAsListOfValues.skip(1).map((row) => StudentResModel.fromCsv(row)).toList();
+
+    final result = students.convertFileStudentsToPluto(
+      cohorts: cohorts,
+      classesRooms: classesRooms,
+      grades: grades,
+    );
+
+    studentsRows = result['rows'];
+    errorMap = result['errorMap'];
+    update();
+  }
+
 
   Future<bool> getCohorts() async {
     bool gotData = false;
@@ -251,5 +278,42 @@ class StudentController extends GetxController {
     islodingEditStudent = false;
     update();
     return editStudentHasBeenAdded;
+  }
+
+  Future<void> pickAndReadFile() async {
+    FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['xlsx', 'csv'],
+      allowMultiple: false,
+    );
+
+    if (pickedFile != null) {
+      Uint8List? fileBytes = pickedFile.files.single.bytes;
+      String? fileName = pickedFile.files.single.name;
+
+      if (fileBytes != null) {
+        if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
+          readExcelFile(fileBytes);
+        } else if (fileName.endsWith('.csv')) {
+          readCsvFile(fileBytes,
+              grades: grades, classesRooms: classRooms, cohorts: cohorts);
+        }
+      }
+    } else {
+      debugPrint('No file selected');
+    }
+  }
+
+  void readExcelFile(Uint8List fileBytes) {
+    var excel = Excel.decodeBytes(fileBytes);
+    for (var table in excel.tables.keys) {
+      debugPrint('Table: $table');
+      var sheet = excel.tables[table];
+      if (sheet != null) {
+        for (var row in sheet.rows) {
+          debugPrint('Row: ${row.map((e) => e?.value)}');
+        }
+      }
+    }
   }
 }

@@ -2,9 +2,12 @@ class StudentResModel {
   StudentResModel({
     this.iD,
     this.gradesID,
+    this.gradeName,
     this.schoolsID,
     this.cohortID,
+    this.cohortName,
     this.schoolClassID,
+    this.schoolClassName,
     this.firstName,
     this.secondName,
     this.thirdName,
@@ -34,16 +37,31 @@ class StudentResModel {
     updatedAt = json['Updated_At'];
     active = json['Active'];
   }
+  factory StudentResModel.fromCsv(List<dynamic> csvRow) {
+    return StudentResModel(
+      iD: int.parse(csvRow[0].toString()),
+      firstName: csvRow[1].toString(),
+      secondName: csvRow[2].toString(),
+      thirdName: csvRow[3].toString(),
+      cohortName: csvRow[4].toString(),
+      gradeName: csvRow[5].toString(),
+      schoolClassName: csvRow[6].toString(),
+      secondLang: csvRow[7].toString(),
+    );
+  }
 
   int? active;
   int? cohortID;
+  String? cohortName;
   String? createdAt;
   int? createdBy;
   String? email;
   String? firstName;
   int? gradesID;
+  String? gradeName;
   int? iD;
   int? schoolClassID;
+  String? schoolClassName;
   int? schoolsID;
   String? secondLang;
   String? secondName;

@@ -194,11 +194,25 @@ class StudentScreen extends GetView<StudentController> {
                                 type: PlutoColumnType.text(),
                               ),
                               PlutoColumn(
-                                readOnly: true,
-                                enableEditingMode: false,
                                 title: 'Cohort',
                                 field: 'CohortField',
                                 type: PlutoColumnType.text(),
+                                renderer: (context) {
+                                  final String? cohortValue =
+                                      context.cell.value;
+                                  final bool isDefaultCohort =
+                                      controller.errorMap[context
+                                              .row.cells['IdField']!.value] ??
+                                          false;
+                                  final Color textColor = isDefaultCohort
+                                      ? Colors.red
+                                      : Colors.black;
+
+                                  return Text(
+                                    cohortValue ?? '',
+                                    style: TextStyle(color: textColor),
+                                  );
+                                },
                               ),
                               // PlutoColumn(
                               //   readOnly: true,
