@@ -55,19 +55,16 @@ class RendarSeats extends StatelessWidget {
                                   child: Image.asset(
                                       AssetsManager.assetsImagesClassDesk),
                                 ),
-                                Positioned(
-                                  //       width: 0,
-                                  top: 40,
-                                  //   left: 0,
-                                  right: (size.width * 0.085) / 2,
-                                  child: Text(
-                                    controller.count.toString(),
-                                    style: nunitoBold.copyWith(
-                                      color: ColorManager.black,
-                                      fontSize: 35,
-                                    ),
-                                  ),
-                                )
+                                Positioned.fill(
+                                    right: 10,
+                                    child: Center(
+                                        child: Text(
+                                      controller.count.toString(),
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.black,
+                                        fontSize: 35,
+                                      ),
+                                    )))
                               ]),
                           ],
                         ),
