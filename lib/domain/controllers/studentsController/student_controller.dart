@@ -95,8 +95,12 @@ class StudentController extends GetxController {
     required List<GradeResModel> grades,
   }) {
     String content = String.fromCharCodes(fileBytes);
-    List<List<dynamic>> rowsAsListOfValues = const CsvToListConverter().convert(content);
-    List<StudentResModel> students = rowsAsListOfValues.skip(1).map((row) => StudentResModel.fromCsv(row)).toList();
+    List<List<dynamic>> rowsAsListOfValues =
+        const CsvToListConverter().convert(content);
+    List<StudentResModel> students = rowsAsListOfValues
+        .skip(1)
+        .map((row) => StudentResModel.fromCsv(row))
+        .toList();
 
     final result = students.convertFileStudentsToPluto(
       cohorts: cohorts,
@@ -108,7 +112,6 @@ class StudentController extends GetxController {
     errorMap = result['errorMap'];
     update();
   }
-
 
   Future<bool> getCohorts() async {
     bool gotData = false;

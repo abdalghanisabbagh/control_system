@@ -44,8 +44,7 @@ extension PlutoRowExtension on List<StudentResModel> {
     }
     return rows;
   }
-
-  Map<String, dynamic> convertFileStudentsToPluto({
+   Map<String, dynamic> convertFileStudentsToPluto({
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,
     required List<GradeResModel> grades,
@@ -55,13 +54,31 @@ extension PlutoRowExtension on List<StudentResModel> {
 
     for (var element in this) {
       String? cohortName;
+      String? gradeName;
+      String? schoolClassName;
       bool isDefault = false;
 
       try {
         cohortName =
             cohorts.firstWhere((item) => item.name == element.cohortName).name;
       } catch (e) {
-        cohortName = element.cohortName;
+        cohortName = '[ERROR] ${element.cohortName}';
+        isDefault = true;
+      }
+
+      try {
+        gradeName =
+            grades.firstWhere((item) => item.name == element.gradeName).name;
+      } catch (e) {
+        gradeName = '[ERROR] ${element.gradeName}';
+        isDefault = true;
+      }
+      try {
+        schoolClassName = classesRooms
+            .firstWhere((item) => item.name == element.schoolClassName)
+            .name;
+      } catch (e) {
+        schoolClassName = '[ERROR] ${element.schoolClassName}';
         isDefault = true;
       }
 
@@ -73,17 +90,8 @@ extension PlutoRowExtension on List<StudentResModel> {
             'SecondNameField': PlutoCell(value: element.secondName),
             'ThirdNameField': PlutoCell(value: element.thirdName),
             'CohortField': PlutoCell(value: cohortName),
-            'GradeField': PlutoCell(
-              value: grades
-                  .firstWhere((item) => item.name == element.gradeName,
-                      orElse: () => GradeResModel(name: "Unknown Grade"))
-                  .name,
-            ),
-            'ClassRoomField': PlutoCell(
-              value: classesRooms
-                  .firstWhere((item) => item.name == element.schoolClassName)
-                  .name,
-            ),
+            'GradeField': PlutoCell(value: gradeName),
+            'ClassRoomField': PlutoCell(value: schoolClassName),
             'LanguageField': PlutoCell(value: element.secondLang),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
@@ -98,4 +106,6 @@ extension PlutoRowExtension on List<StudentResModel> {
       'errorMap': errorMap,
     };
   }
+
+ 
 }
