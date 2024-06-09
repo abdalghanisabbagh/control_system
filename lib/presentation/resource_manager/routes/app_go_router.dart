@@ -107,7 +107,8 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.controlMissionScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
-          return const ControlMissionScreen();
+          ControlMissingBindings().dependencies();
+          return ControlMissionScreen();
         },
         onExit: (context, state) {
           return true;
