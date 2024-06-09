@@ -31,6 +31,7 @@ class AuthController extends GetxController {
 
   Future<bool> login(String username, String password) async {
     isLoading = true;
+    update();
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
@@ -56,7 +57,6 @@ class AuthController extends GetxController {
       ));
       profileController.saveProfileToHiveBox(r.userProfile!);
       isLogin = true;
-      isLoading = false;
     });
 
     isLoading = false;
