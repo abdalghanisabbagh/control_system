@@ -44,7 +44,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Import From Excel",
               icon: const Icon(FontAwesomeIcons.fileExcel),
               onPressed: () {
-                // controller.importExcel();
+                controller.pickAndReadFile();
               },
             ),
             IconButton(

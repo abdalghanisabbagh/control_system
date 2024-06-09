@@ -26,92 +26,6 @@ class StudentScreen extends GetView<StudentController> {
               height: 20,
             ),
 
-            // GetBuilder<StudentController>(
-            //   builder: (studentController) => Container(
-            //     height: 55,
-            //     decoration: BoxDecoration(
-            //       color: ColorManager.bgColor,
-            //       borderRadius: const BorderRadius.all(
-            //         Radius.circular(15),
-            //       ),
-            //       border: Border.all(
-            //         color: ColorManager.bgSideMenu,
-            //         width: 2,
-            //       ),
-            //     ),
-            // child: Obx(
-            //   () {
-            //     return DropdownButton<EducationResponse>(
-            //       value: studentController.educationTypeController,
-            //       borderRadius: BorderRadius.circular(10),
-            //       isExpanded: true,
-            //       underline: Container(),
-            //       hint: Padding(
-            //         padding: const EdgeInsets.symmetric(horizontal: 20),
-            //         child: Text(
-            //           'Select education system',
-            //           style: nunitoBold.copyWith(
-            //             color: ColorManager.bgSideMenu,
-            //             fontSize: 14,
-            //           ),
-            //         ),
-            //       ),
-            //       icon: Container(
-            //         height: 55,
-            //         decoration: BoxDecoration(
-            //           border: Border(
-            //             left: BorderSide(
-            //                 color: ColorManager.bgSideMenu, width: 2),
-            //           ),
-            //         ),
-            //         child: Icon(
-            //           Icons.keyboard_arrow_down_rounded,
-            //           color: ColorManager.bgSideMenu,
-            //         ),
-            //       ),
-            // items: educationController.educationsByschool
-            //     .map<DropdownMenuItem<EducationResponse>>(
-            //   (EducationResponse value) {
-            //     return DropdownMenuItem<EducationResponse>(
-            //       value: value,
-            //       child: Padding(
-            //         padding:
-            //             const EdgeInsets.symmetric(horizontal: 20),
-            //         child: Text(
-            //           value.name,
-            //           maxLines: 1,
-            //           overflow: TextOverflow.ellipsis,
-            //           softWrap: true,
-            //           style: nunitoSemiBold.copyWith(
-            //             fontSize: 12,
-            //             color: ColorManager.red,
-            //           ),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ).toList(),
-            // onChanged: (newOne) async {
-            // controller.onselectEducation(newOne!);
-            // controller.gradeController = null;
-            // try {
-            //   await gradesController
-            //       .getGradesFromServerByEducationId(
-            //     newOne.id,
-            //   );
-            // } catch (e) {
-            //   log(e.toString());
-            // }
-            //       },
-            //     );
-            //   },
-            // ),
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-
             Expanded(
               child: GetBuilder<StudentController>(
                 builder: (_) => controller.loading
@@ -139,6 +53,7 @@ class StudentScreen extends GetView<StudentController> {
                             },
                             configuration: PlutoGridConfiguration(
                               style: PlutoGridStyleConfig(
+                                //  defaultCellPadding: EdgeInsets.zero,
                                 enableGridBorderShadow: true,
                                 iconColor: ColorManager.bgSideMenu,
                                 gridBackgroundColor: ColorManager.bgColor,
@@ -160,10 +75,8 @@ class StudentScreen extends GetView<StudentController> {
                               ),
                             ),
                             columns: [
-                              /// Text Column definition
                               PlutoColumn(
                                 readOnly: true,
-                                // enableRowChecked: true,
                                 enableEditingMode: false,
                                 title: 'Id',
                                 field: 'IdField',
@@ -176,7 +89,6 @@ class StudentScreen extends GetView<StudentController> {
                                 type: PlutoColumnType.text(),
                               ),
 
-                              /// Text Column definition
                               PlutoColumn(
                                 readOnly: true,
                                 enableEditingMode: false,
@@ -194,41 +106,102 @@ class StudentScreen extends GetView<StudentController> {
                                 type: PlutoColumnType.text(),
                               ),
                               PlutoColumn(
-                                readOnly: true,
-                                enableEditingMode: false,
                                 title: 'Cohort',
                                 field: 'CohortField',
+                                cellPadding: EdgeInsets.zero,
+                                // titlePadding: EdgeInsets.zero,
                                 type: PlutoColumnType.text(),
-                              ),
-                              // PlutoColumn(
-                              //   readOnly: true,
-                              //   enableEditingMode: false,
-                              //   title: 'Religion',
-                              //   field: 'ReligionField',
-                              //   type: PlutoColumnType.text(),
-                              // ),
+                                renderer: (context) {
+                                  final String? cohortValue =
+                                      context.cell.value;
+                                  final bool isDefaultcohort =
+                                      cohortValue != null &&
+                                          cohortValue.startsWith('[ERROR]');
+                                  final String? displayValue = isDefaultcohort
+                                      ? cohortValue.substring(7)
+                                      : cohortValue;
 
-                              /// Number Column definition
-                              // PlutoColumn(
-                              //   enableEditingMode: false,
-                              //   title: 'Citizenship',
-                              //   field: 'CitizenshipField',
-                              //   type: PlutoColumnType.text(),
-                              // ),
+                                  return Container(
+                                    color: isDefaultcohort
+                                        ? Colors.red
+                                        : Colors.transparent,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        displayValue!,
+                                        style: TextStyle(
+                                            color: isDefaultcohort
+                                                ? Colors.black
+                                                : Colors.black),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                               PlutoColumn(
-                                readOnly: true,
-                                enableEditingMode: false,
                                 title: 'Grade',
                                 field: 'GradeField',
                                 type: PlutoColumnType.text(),
+                                cellPadding: EdgeInsets.zero,
+                                renderer: (context) {
+                                  final String? gradeValue = context.cell.value;
+                                  final bool isDefaultGrade =
+                                      gradeValue != null &&
+                                          gradeValue.startsWith('[ERROR]');
+                                  final String? displayValue = isDefaultGrade
+                                      ? gradeValue.substring(7)
+                                      : gradeValue;
+
+                                  return Container(
+                                    color: isDefaultGrade
+                                        ? Colors.red
+                                        : Colors.transparent,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        displayValue!,
+                                        style: TextStyle(
+                                            color: isDefaultGrade
+                                                ? Colors.black
+                                                : Colors.black),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
 
-                              /// Select Column definition
                               PlutoColumn(
-                                enableEditingMode: false,
                                 title: 'Class Room',
                                 field: 'ClassRoomField',
                                 type: PlutoColumnType.text(),
+                                cellPadding: EdgeInsets.zero,
+                                renderer: (context) {
+                                  final String? classRoomValue =
+                                      context.cell.value;
+                                  final bool isDefaultClassRoom =
+                                      classRoomValue != null &&
+                                          classRoomValue.startsWith('[ERROR]');
+                                  final String? displayValue =
+                                      isDefaultClassRoom
+                                          ? classRoomValue.substring(7)
+                                          : classRoomValue;
+
+                                  return Container(
+                                    color: isDefaultClassRoom
+                                        ? Colors.red
+                                        : Colors.transparent,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        displayValue!,
+                                        style: TextStyle(
+                                            color: isDefaultClassRoom
+                                                ? Colors.black
+                                                : Colors.black),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                               PlutoColumn(
                                 readOnly: true,
@@ -247,119 +220,6 @@ class StudentScreen extends GetView<StudentController> {
                                 renderer: (rendererContext) {
                                   return Row(
                                     children: [
-                                      // IconButton(
-                                      //   onPressed: () {
-                                      // log(rendererContext.rowIdx
-                                      //     .toString());
-                                      // Get.generalDialog(
-                                      //   pageBuilder: (context, animation,
-                                      //           secondaryAnimation) =>
-                                      //       AlertDialog(
-                                      //     content: Column(
-                                      //       children: [
-                                      //         Text(
-                                      //             "Student Detials ${controller.students[rendererContext.rowIdx].blbId}"),
-                                      //         Row(
-                                      //           children: [
-                                      //             const Text("Name"),
-                                      //             Text(
-                                      //               controller
-                                      //                   .students[
-                                      //                       rendererContext
-                                      //                           .rowIdx]
-                                      //                   .firstName
-                                      //                   .toString(),
-                                      //             ),
-                                      //           ],
-                                      //         ),
-                                      //         Row(
-                                      //           children: [
-                                      //             const Text("Name"),
-                                      //             Text(
-                                      //               controller
-                                      //                   .students[
-                                      //                       rendererContext
-                                      //                           .rowIdx]
-                                      //                   .firstName
-                                      //                   .toString(),
-                                      //             ),
-                                      //           ],
-                                      //         ),
-                                      //         Row(
-                                      //           children: [
-                                      //             const Text("Name"),
-                                      //             Text(
-                                      //               controller
-                                      //                   .students[
-                                      //                       rendererContext
-                                      //                           .rowIdx]
-                                      //                   .firstName
-                                      //                   .toString(),
-                                      //             ),
-                                      //           ],
-                                      //         ),
-                                      //         Row(
-                                      //           children: [
-                                      //             const Text("Name"),
-                                      //             Text(
-                                      //               controller.students[
-                                      //                       rendererContext
-                                      //                           .rowIdx]
-                                      //                   .toString(),
-                                      //             ),
-                                      //           ],
-                                      //         ),
-                                      //         Row(
-                                      //           children: [
-                                      //             const Text("Name"),
-                                      //             Text(
-                                      //               controller
-                                      //                   .students[
-                                      //                       rendererContext
-                                      //                           .rowIdx]
-                                      //                   .firstName
-                                      //                   .toString(),
-                                      //             ),
-                                      //           ],
-                                      //         ),
-                                      //         Row(
-                                      //           children: [
-                                      //             const Text("Name"),
-                                      //             Text(
-                                      //               controller
-                                      //                   .students[
-                                      //                       rendererContext
-                                      //                           .rowIdx]
-                                      //                   .firstName
-                                      //                   .toString(),
-                                      //             ),
-                                      //           ],
-                                      //         ),
-                                      //         Row(
-                                      //           children: [
-                                      //             const Text("Name"),
-                                      //             Text(
-                                      //               controller
-                                      //                   .students[
-                                      //                       rendererContext
-                                      //                           .rowIdx]
-                                      //                   .firstName
-                                      //                   .toString(),
-                                      //             ),
-                                      //           ],
-                                      //         ),
-                                      //       ],
-                                      //     ),
-                                      //   ),
-                                      // );
-                                      // if (kDebugMode) {
-                                      // }
-                                      // },
-                                      // icon: const Icon(
-                                      //   Icons.menu,
-                                      //   color: Colors.black,
-                                      // ),
-                                      // ),
                                       IconButton(
                                         onPressed: () {
                                           MyDialogs.showDialog(
@@ -383,17 +243,6 @@ class StudentScreen extends GetView<StudentController> {
                                           color: Colors.green,
                                         ),
                                       ),
-                                      // IconButton(
-                                      //   onPressed: () {
-                                      //     // log(rendererContext.rowIdx.toString());
-                                      //     if (kDebugMode) {
-                                      //     }
-                                      //   },
-                                      //   icon: const Icon(
-                                      //     Icons.delete,
-                                      //     color: Colors.red,
-                                      //   ),
-                                      // ),
                                     ],
                                   );
                                 },
@@ -410,11 +259,7 @@ class StudentScreen extends GetView<StudentController> {
                             ],
                             rows: controller.studentsRows,
                             onChanged: (PlutoGridOnChangedEvent event) {},
-                            onLoaded: (PlutoGridOnLoadedEvent event) {
-                              // event.stateManager.setSelectingMode(
-                              //   PlutoGridSelectingMode.cell,
-                              // );
-                            },
+                            onLoaded: (PlutoGridOnLoadedEvent event) {},
                           ),
               ),
             ),
