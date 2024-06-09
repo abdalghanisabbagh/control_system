@@ -88,31 +88,6 @@ class StudentController extends GetxController {
     return gotData;
   }
 
-  void readCsvFile(
-    Uint8List fileBytes, {
-    required List<CohortResModel> cohorts,
-    required List<ClassRoomResModel> classesRooms,
-    required List<GradeResModel> grades,
-  }) {
-    String content = String.fromCharCodes(fileBytes);
-    List<List<dynamic>> rowsAsListOfValues =
-        const CsvToListConverter().convert(content);
-    List<StudentResModel> students = rowsAsListOfValues
-        .skip(1)
-        .map((row) => StudentResModel.fromCsv(row))
-        .toList();
-
-    final result = students.convertFileStudentsToPluto(
-      cohorts: cohorts,
-      classesRooms: classesRooms,
-      grades: grades,
-    );
-
-    studentsRows = result['rows'];
-    errorMap = result['errorMap'];
-    update();
-  }
-
   Future<bool> getCohorts() async {
     bool gotData = false;
     update();
@@ -319,4 +294,31 @@ class StudentController extends GetxController {
       }
     }
   }
+
+void readCsvFile(
+    Uint8List fileBytes, {
+    required List<CohortResModel> cohorts,
+    required List<ClassRoomResModel> classesRooms,
+    required List<GradeResModel> grades,
+  }) {
+    String content = String.fromCharCodes(fileBytes);
+    List<List<dynamic>> rowsAsListOfValues =
+        const CsvToListConverter().convert(content);
+    List<StudentResModel> students = rowsAsListOfValues
+        .skip(1)
+        .map((row) => StudentResModel.fromCsv(row))
+        .toList();
+
+    final result = students.convertFileStudentsToPluto(
+      cohorts: cohorts,
+      classesRooms: classesRooms,
+      grades: grades,
+    );
+
+    studentsRows = result['rows'];
+    errorMap = result['errorMap'];
+    update();
+  }
+
 }
+
