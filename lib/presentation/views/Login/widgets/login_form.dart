@@ -19,7 +19,7 @@ class LoginForm extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return KeyboardListener(
       onKeyEvent: (value) {
