@@ -133,6 +133,7 @@ class ClassRoomController extends GetxController {
     required List<int> rows,
   }) async {
     isLoadingAddClassRoom = true;
+    bool added = false;
     update();
     ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassRoomResModel> response =
@@ -144,7 +145,7 @@ class ClassRoomController extends GetxController {
         "Name": name,
         "Max_Capacity": maxCapacity,
         "Floor": floorName,
-        "Rows": rows,
+        "Rows": rows.toString(),
         "Columns": columns,
         "Schools_ID": Hive.box('School').get('Id'),
         "Created_By": Hive.box('Profile').get('ID'),
@@ -157,15 +158,17 @@ class ClassRoomController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
+        added = false;
       },
       (r) {
         getClassesRooms();
+        added = true;
       },
     );
     count = 1;
     isLoadingAddClassRoom = false;
     update();
-    return true;
+    return added;
   }
 
   Future<bool> editClassRoom({
