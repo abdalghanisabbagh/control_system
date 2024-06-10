@@ -31,7 +31,7 @@ class AuthController extends GetxController {
 
   Future<bool> login(String username, String password) async {
     isLoading = true;
-    update();
+    update(['login_btn']);
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(

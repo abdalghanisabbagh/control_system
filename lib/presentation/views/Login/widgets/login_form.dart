@@ -140,6 +140,7 @@ class LoginForm extends GetView<AuthController> {
                               height: 32,
                             ),
                             GetBuilder<AuthController>(
+                              id: 'login_btn',
                               builder: (_) {
                                 return controller.isLoading
                                     ? const CircularProgressIndicator()
@@ -186,14 +187,16 @@ void _login(
     login(
       username,
       password,
-    ).then((value) {
-      value
-          ? {
-              MyFlashBar.showSuccess(
-                      'You have been logged in successfully', 'Success')
-                  .show(context)
-            }
-          : null;
-    });
+    ).then(
+      (value) {
+        value
+            ? {
+                MyFlashBar.showSuccess(
+                        'You have been logged in successfully', 'Success')
+                    .show(context)
+              }
+            : null;
+      },
+    );
   }
 }
