@@ -4,6 +4,7 @@ import 'package:control_system/Data/Models/education_year/educations_years_res_m
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:get/get.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Network/response_handler.dart';
 import '../../Data/enums/req_type_enum.dart';
@@ -13,7 +14,7 @@ class ControlMissionController extends GetxController {
   String? selectedStartDate;
   String? selectedEndDate;
 
-  int selectedEducationYearId = -1;
+  List<ValueItem>? selectedEducationYearId;
   bool isLoading = false;
 
   Future<void> getEducationYears() async {
