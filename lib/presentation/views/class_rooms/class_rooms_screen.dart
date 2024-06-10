@@ -95,7 +95,8 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
-                                                vertical: 50),
+                                              vertical: 50,
+                                            ),
                                             child: Container(
                                               height: 220,
                                               width: double.infinity,
@@ -106,8 +107,10 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                         .withOpacity(0.5),
                                                     spreadRadius: 5,
                                                     blurRadius: 20,
-                                                    offset: const Offset(2,
-                                                        15), // changes position of shadow
+                                                    offset: const Offset(
+                                                      2,
+                                                      15,
+                                                    ), // changes position of shadow
                                                   ),
                                                 ],
                                                 color: ColorManager.ligthBlue,
@@ -126,29 +129,35 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                       controller
                                                           .classesRooms[index]
                                                           .name!,
-                                                      style: nunitoBold.copyWith(
-                                                          color: ColorManager
-                                                              .bgSideMenu,
-                                                          fontSize: 35),
+                                                      style:
+                                                          nunitoBold.copyWith(
+                                                        color: ColorManager
+                                                            .bgSideMenu,
+                                                        fontSize: 35,
+                                                      ),
                                                     ),
                                                     const SizedBox(
                                                       height: 5,
                                                     ),
                                                     Text(
                                                       controller.schools
-                                                              .firstWhereOrNull((element) =>
-                                                                  element.iD ==
-                                                                  controller
-                                                                      .classesRooms[
-                                                                          index]
-                                                                      .schoolsID)
+                                                              .firstWhereOrNull(
+                                                                (element) =>
+                                                                    element
+                                                                        .iD ==
+                                                                    controller
+                                                                        .classesRooms[
+                                                                            index]
+                                                                        .schoolsID,
+                                                              )
                                                               ?.name ??
                                                           '',
                                                       style: nunitoRegular
                                                           .copyWith(
-                                                              color: ColorManager
-                                                                  .bgSideMenu,
-                                                              fontSize: 16),
+                                                        color: ColorManager
+                                                            .bgSideMenu,
+                                                        fontSize: 16,
+                                                      ),
                                                     ),
                                                     Row(
                                                       children: [
@@ -222,14 +231,16 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          10),
+                                                                10,
+                                                              ),
                                                             ),
                                                             child: Center(
                                                               child: Padding(
                                                                 padding:
                                                                     const EdgeInsets
                                                                         .all(
-                                                                        10),
+                                                                  10,
+                                                                ),
                                                                 child: Text(
                                                                   "Edit Classs",
                                                                   style: nunitoBold
@@ -261,19 +272,18 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                                   () async {
                                                                 controller
                                                                     .deleteClassRoom(
-                                                                        id: controller
-                                                                            .classesRooms[index]
-                                                                            .iD!)
+                                                                  id: controller
+                                                                      .classesRooms[
+                                                                          index]
+                                                                      .iD!,
+                                                                )
                                                                     .then(
                                                                   (value) {
                                                                     value
                                                                         ? MyFlashBar.showSuccess("Class deleted successfully",
                                                                                 "Success")
-                                                                            .show(
-                                                                                context)
-                                                                        : MyFlashBar.showError("Something went wrong",
-                                                                                "Error")
-                                                                            .show(context);
+                                                                            .show(context)
+                                                                        : null;
                                                                   },
                                                                 );
                                                               },
@@ -292,14 +302,16 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          10),
+                                                                10,
+                                                              ),
                                                             ),
                                                             child: Center(
                                                               child: Padding(
                                                                 padding:
                                                                     const EdgeInsets
                                                                         .all(
-                                                                        10),
+                                                                  10,
+                                                                ),
                                                                 child: Text(
                                                                   "Delete Classes",
                                                                   style: nunitoBold

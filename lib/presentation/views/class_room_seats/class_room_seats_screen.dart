@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:universal_html/html.dart';
 
 import '../../../domain/controllers/class_room_controller.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
@@ -197,14 +196,15 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                     _formKey.currentState!.validate()
                         ? await controller
                             .addNewClass(
-                              name: classNameController.text,
-                              maxCapacity: maxCapacity.toString(),
-                              floorName: floorNameController.text,
-                              rows: controller.classSeats,
-                              columns: int.tryParse(columnNumper.text) ?? 0,
-                            )
+                            name: classNameController.text,
+                            maxCapacity: maxCapacity.toString(),
+                            floorName: floorNameController.text,
+                            rows: controller.classSeats,
+                            columns: int.tryParse(columnNumper.text) ?? 0,
+                          )
                             .then(
-                              (value) => value
+                            (value) {
+                              value
                                   ? {
                                       MyFlashBar.showSuccess(
                                         "Class has been Added",
@@ -219,11 +219,12 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                       classNumber.clear(),
                                       controller.update(),
                                     }
-                                  : MyFlashBar.showError(
-                                      "Class Not Created",
-                                      "Class Create",
-                                    ).show(context),
-                            )
+                                  : null;
+                              return value;
+                            },
+                          ).then((value) {
+                            value ? window.history.back() : null;
+                          })
                         : null;
                     controller.numbers = 0;
                   } else {
@@ -232,7 +233,6 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                       desc: "capacity not equal",
                       dialogType: DialogType.error,
                     ).showDialogue(context);
-                    log("$maxCapacity  :: $renderCapacity");
                   }
                 },
                 child: Align(
