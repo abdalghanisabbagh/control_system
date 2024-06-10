@@ -191,7 +191,6 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                   int maxCapacity = int.parse(maxCapacityController.text);
                   int renderCapacity =
                       controller.classSeats.fold(0, (int p, c) => p + c);
-
                   if (renderCapacity == maxCapacity) {
                     _formKey.currentState!.validate()
                         ? await controller
