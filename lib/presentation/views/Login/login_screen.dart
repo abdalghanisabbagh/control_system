@@ -13,7 +13,7 @@ class LoginScreen extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       body: SizedBox(
@@ -94,9 +94,8 @@ class LoginScreen extends GetView<AuthController> {
                         : 16,
               ),
               child: GetBuilder<AuthController>(
-                builder: (_) => controller.isLogin
-                    ? const SelectSchoolForm()
-                    : LoginForm(),
+                builder: (_) =>
+                    controller.isLogin ? const SelectSchoolForm() : LoginForm(),
               ),
             )
           ],
