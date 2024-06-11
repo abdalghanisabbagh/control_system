@@ -15,8 +15,10 @@ import '../../Data/enums/req_type_enum.dart';
 
 class ControlMissionController extends GetxController {
   List<EducationYearModel> educationYearList = [];
+  String? batchName;
   String? selectedStartDate;
   String? selectedEndDate;
+  int currentStep = 0;
 
   List<ValueItem>? selectedEducationYear;
   bool isLoading = false;
@@ -131,6 +133,27 @@ class ControlMissionController extends GetxController {
     int educationYearId = selectedItemEducationYear!.value;
     getControlMissionByEducationYear(educationYearId);
 
+    update();
+  }
+
+  bool canMoveToNextStep() {
+    return selectedEndDate != null &&
+        (batchName != null || batchName != null
+            ? batchName!.isNotEmpty
+            : false);
+  }
+
+  void continueToNextStep() {
+    if (currentStep == 0) {
+      currentStep++;
+    }
+    update();
+  }
+
+  void backToPreviousStep() {
+    if (currentStep == 1) {
+      currentStep--;
+    }
     update();
   }
 
