@@ -1,8 +1,8 @@
-import 'package:control_system/presentation/views/control_mission/widgets/create_mission_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/index.dart';
+import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
 class HeaderMissionWidget extends StatelessWidget {
   const HeaderMissionWidget({super.key});
@@ -21,10 +21,7 @@ class HeaderMissionWidget extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            MyDialogs.showDialog(
-              context,
-              CreateMissionWidget(),
-            );
+            context.goNamed(AppRoutesNamesAndPaths.createMissionScreenName);
           },
           child: Container(
             decoration: BoxDecoration(

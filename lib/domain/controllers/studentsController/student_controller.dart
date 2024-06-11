@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:csv/csv.dart';
 import 'package:dartz/dartz.dart';
-import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,9 +39,12 @@ class StudentController extends GetxController {
   List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
   Map<String, bool> errorMap = {};
+  bool isimorted = false;
 
   @override
   void onInit() async {
+    isimorted = false;
+
     loading = true;
     update();
     await Future.wait([
@@ -115,10 +117,6 @@ class StudentController extends GetxController {
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
         optionsCohort = items;
-        // items.firstWhere(
-        //   (item) => item.value == 1,
-        //   //   orElse: () => ValueItem(label: '', value: -1),
-        // );
 
         gotData = true;
       },
@@ -261,41 +259,37 @@ class StudentController extends GetxController {
   Future<void> pickAndReadFile() async {
     FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['xlsx', 'csv'],
+      allowedExtensions: ['csv'],
       allowMultiple: false,
     );
 
     if (pickedFile != null) {
       Uint8List? fileBytes = pickedFile.files.single.bytes;
-      String? fileName = pickedFile.files.single.name;
+      //String? fileName = pickedFile.files.single.name;
 
       if (fileBytes != null) {
-        if (fileName.endsWith('.xlsx') || fileName.endsWith('.xls')) {
-          readExcelFile(fileBytes);
-        } else if (fileName.endsWith('.csv')) {
-          readCsvFile(fileBytes,
-              grades: grades, classesRooms: classRooms, cohorts: cohorts);
-        }
+        readCsvFile(fileBytes,
+            grades: grades, classesRooms: classRooms, cohorts: cohorts);
       }
     } else {
       debugPrint('No file selected');
     }
   }
 
-  void readExcelFile(Uint8List fileBytes) {
-    var excel = Excel.decodeBytes(fileBytes);
-    for (var table in excel.tables.keys) {
-      debugPrint('Table: $table');
-      var sheet = excel.tables[table];
-      if (sheet != null) {
-        for (var row in sheet.rows) {
-          debugPrint('Row: ${row.map((e) => e?.value)}');
-        }
-      }
-    }
-  }
+  // void readExcelFile(Uint8List fileBytes) {
+  //   var excel = Excel.decodeBytes(fileBytes);
+  //   for (var table in excel.tables.keys) {
+  //     debugPrint('Table: $table');
+  //     var sheet = excel.tables[table];
+  //     if (sheet != null) {
+  //       for (var row in sheet.rows) {
+  //         debugPrint('Row: ${row.map((e) => e?.value)}');
+  //       }
+  //     }
+  //   }
+  // }
 
-void readCsvFile(
+  void readCsvFile(
     Uint8List fileBytes, {
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,
@@ -304,21 +298,26 @@ void readCsvFile(
     String content = String.fromCharCodes(fileBytes);
     List<List<dynamic>> rowsAsListOfValues =
         const CsvToListConverter().convert(content);
-    List<StudentResModel> students = rowsAsListOfValues
+    students = rowsAsListOfValues
         .skip(1)
         .map((row) => StudentResModel.fromCsv(row))
         .toList();
-
     final result = students.convertFileStudentsToPluto(
       cohorts: cohorts,
       classesRooms: classesRooms,
       grades: grades,
     );
-
+    isimorted = true;
     studentsRows = result['rows'];
-    errorMap = result['errorMap'];
+    students = result['students'];
+    // for (var element in students) {
+    //   debugPrint(element.cohortID.toString());
+    //   debugPrint(element.gradesID.toString());
+    //   debugPrint(element.schoolClassID.toString());
+    //   debugPrint(element.firstName.toString());
+    //   debugPrint(element.secondName.toString());
+    //   debugPrint(element.thirdName.toString());
+    // }
     update();
   }
-
 }
-

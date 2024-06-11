@@ -14,7 +14,7 @@ class ControlMissionController extends GetxController {
   String? selectedStartDate;
   String? selectedEndDate;
 
-  List<ValueItem>? selectedEducationYearId;
+  List<ValueItem>? selectedEducationYear;
   bool isLoading = false;
 
   Future<void> getEducationYears() async {

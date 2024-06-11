@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:multi_dropdown/models/value_item.dart';
-
 import '../../../../Data/Models/student/student_res_model.dart';
 import '../../../../domain/controllers/studentsController/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
@@ -77,7 +75,7 @@ class EditStudentWidget extends GetView<StudentController> {
                       children: [
                         SizedBox(
                           width: 500,
-                          child: FormField<List<ValueItem<dynamic>>>(
+                          child: FormField(
                             validator: Validations
                                 .multiSelectDropDownRequiredValidator,
                             builder: (formFieldState) {
@@ -91,11 +89,12 @@ class EditStudentWidget extends GetView<StudentController> {
                                     },
                                     options: controller.optionsGrade,
                                     optionSelected: [
-                                      controller.optionsGrade.firstWhere(
-                                        (element) =>
-                                            element.value ==
-                                            studentResModel.gradesID,
-                                      ),
+                                      controller.optionsGrade.firstWhereOrNull(
+                                            (element) =>
+                                                element.value ==
+                                                studentResModel.gradesID,
+                                          ) ??
+                                          controller.optionsGrade.first
                                     ],
                                   ),
                                   const SizedBox(
@@ -133,11 +132,12 @@ class EditStudentWidget extends GetView<StudentController> {
                                     },
                                     options: controller.optionsCohort,
                                     optionSelected: [
-                                      controller.optionsCohort.firstWhere(
-                                        (element) =>
-                                            element.value ==
-                                            studentResModel.cohortID,
-                                      ),
+                                      controller.optionsCohort.firstWhereOrNull(
+                                            (element) =>
+                                                element.value ==
+                                                studentResModel.cohortID,
+                                          ) ??
+                                          controller.optionsCohort.first,
                                     ],
                                   ),
                                   const SizedBox(
@@ -175,10 +175,13 @@ class EditStudentWidget extends GetView<StudentController> {
                                     },
                                     options: controller.optionsClassRoom,
                                     optionSelected: [
-                                      controller.optionsClassRoom.firstWhere(
-                                          (element) =>
-                                              element.value ==
-                                              studentResModel.schoolClassID),
+                                      controller.optionsClassRoom
+                                              .firstWhereOrNull(
+                                            (element) =>
+                                                element.value ==
+                                                studentResModel.schoolClassID,
+                                          ) ??
+                                          controller.optionsClassRoom.first,
                                     ],
                                   ),
                                   const SizedBox(
