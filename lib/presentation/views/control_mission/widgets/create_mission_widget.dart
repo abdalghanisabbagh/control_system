@@ -240,11 +240,9 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                                                       btnOkOnPressed: () {
                                                         controller
                                                                 .selectedEndDate =
-                                                            picked
-                                                                .toIso8601String();
-                                                        // DateFormat(
-                                                        //         'yyyy-MM-dd')
-                                                        //     .format(picked);
+                                                            DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(picked);
                                                         controller.update();
                                                       },
                                                       btnCancelOnPressed: () {},
