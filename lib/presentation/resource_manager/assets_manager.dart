@@ -118,7 +118,7 @@ class AssetsManager {
 
   /// Assets for assetsImagesClassDesk
   /// assets/images/class_desk.png
-  static const String assetsImagesClassDesk = "assets/images/class_desk.jpg";
+  static const String assetsImagesClassDesk = "assets/images/class_desk.png";
 
   /// Assets for assetsImagesNis1
   /// assets/images/nis1.jpg

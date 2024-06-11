@@ -3,10 +3,15 @@ import 'package:control_system/Data/Models/education_year/education_year_model.d
 import 'package:control_system/Data/Models/education_year/educations_years_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
+import '../../Data/Models/cohort/cohorts_res_model.dart';
+import '../../Data/Models/control_mission/control_mission_model.dart';
+import '../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../Data/Network/response_handler.dart';
+import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 
 class ControlMissionController extends GetxController {
@@ -16,8 +21,14 @@ class ControlMissionController extends GetxController {
 
   List<ValueItem>? selectedEducationYear;
   bool isLoading = false;
-
+  bool isLodingGetEducationYears = false;
+  List<ValueItem> optionsEducationYear = <ValueItem>[];
+  List<ControlMissionModel> controlMissionList = <ControlMissionModel>[];
+  ValueItem? selectedItemEducationYear;
   Future<void> getEducationYears() async {
+    isLodingGetEducationYears = true;
+    update();
+
     final response = await ResponseHandler<EducationsYearsModel>().getResponse(
       path: EducationYearsLinks.educationyear,
       converter: EducationsYearsModel.fromJson,
@@ -36,9 +47,16 @@ class ControlMissionController extends GetxController {
       },
       (r) {
         educationYearList = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.id))
+            .toList();
+        optionsEducationYear = items;
         update();
       },
     );
+
+    isLodingGetEducationYears = false;
+    update();
   }
 
   Future<bool> addControlMission() async {
@@ -75,6 +93,46 @@ class ControlMissionController extends GetxController {
     isLoading = false;
     update();
     return success;
+  }
+
+  Future<bool> getControlMissionByEducationYear(int educationYearId) async {
+    bool gotData = false;
+    isLoading = true;
+    update();
+
+    ResponseHandler<ControlMissionsModel> responseHandler = ResponseHandler();
+    Either<Failure, ControlMissionsModel> response =
+        await responseHandler.getResponse(
+      path:
+          "${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
+      converter: ControlMissionsModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+
+        gotData = false;
+      },
+      (r) {
+        controlMissionList = r.data!;
+        gotData = true;
+      },
+    );
+    update();
+    return gotData;
+  }
+
+  void setSelectedItemEducationYear(List<ValueItem> items) {
+    selectedItemEducationYear = items.first;
+    int educationYearId = selectedItemEducationYear!.value;
+    getControlMissionByEducationYear(educationYearId);
+
+    update();
   }
 
   @override
