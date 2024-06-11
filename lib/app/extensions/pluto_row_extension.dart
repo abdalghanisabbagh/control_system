@@ -44,7 +44,8 @@ extension PlutoRowExtension on List<StudentResModel> {
     }
     return rows;
   }
-   Map<String, dynamic> convertFileStudentsToPluto({
+
+  Map<String, dynamic> convertFileStudentsToPluto({
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,
     required List<GradeResModel> grades,
@@ -54,29 +55,44 @@ extension PlutoRowExtension on List<StudentResModel> {
 
     for (var element in this) {
       String? cohortName;
+      int? cohortId;
       String? gradeName;
+      int? gradeId;
+
       String? schoolClassName;
+      int? schoolClassId;
+
       bool isDefault = false;
 
       try {
-        cohortName =
-            cohorts.firstWhere((item) => item.name == element.cohortName).name;
+        final cohort =
+            cohorts.firstWhere((item) => item.name == element.cohortName);
+
+        cohortName = cohort.name;
+        cohortId = cohort.iD;
+
+        element.cohortID = cohortId;
       } catch (e) {
         cohortName = '[ERROR] ${element.cohortName}';
         isDefault = true;
       }
 
       try {
-        gradeName =
-            grades.firstWhere((item) => item.name == element.gradeName).name;
+        final grade =
+            grades.firstWhere((item) => item.name == element.gradeName);
+        gradeName = grade.name;
+        gradeId = grade.iD;
+        element.gradesID = gradeId;
       } catch (e) {
         gradeName = '[ERROR] ${element.gradeName}';
         isDefault = true;
       }
       try {
-        schoolClassName = classesRooms
-            .firstWhere((item) => item.name == element.schoolClassName)
-            .name;
+        final schoolClass = classesRooms
+            .firstWhere((item) => item.name == element.schoolClassName);
+        schoolClassName = schoolClass.name;
+        schoolClassId = schoolClass.iD;
+        element.schoolClassID = schoolClassId;
       } catch (e) {
         schoolClassName = '[ERROR] ${element.schoolClassName}';
         isDefault = true;
@@ -101,11 +117,6 @@ extension PlutoRowExtension on List<StudentResModel> {
       errorMap[element.iD.toString()] = isDefault;
     }
 
-    return {
-      'rows': rows,
-      'errorMap': errorMap,
-    };
+    return {'rows': rows, 'errorMap': errorMap, 'students': this};
   }
-
- 
 }

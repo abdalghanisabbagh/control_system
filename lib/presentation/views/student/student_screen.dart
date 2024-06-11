@@ -227,14 +227,16 @@ class StudentScreen extends GetView<StudentController> {
                                             EditStudentWidget(
                                               studentResModel: controller
                                                   .students
-                                                  .firstWhere((element) =>
-                                                      int.tryParse(
-                                                          rendererContext
-                                                              .row
-                                                              .cells['IdField']!
-                                                              .value
-                                                              .toString()) ==
-                                                      element.iD),
+                                                  .firstWhere((element) {
+                                                print(element.iD);
+                                                return int.tryParse(
+                                                        rendererContext
+                                                            .row
+                                                            .cells['IdField']!
+                                                            .value
+                                                            .toString()) ==
+                                                    element.iD;
+                                              }),
                                             ),
                                           );
                                         },

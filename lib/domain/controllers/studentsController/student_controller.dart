@@ -115,10 +115,6 @@ class StudentController extends GetxController {
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
         optionsCohort = items;
-        // items.firstWhere(
-        //   (item) => item.value == 1,
-        //   //   orElse: () => ValueItem(label: '', value: -1),
-        // );
 
         gotData = true;
       },
@@ -295,7 +291,7 @@ class StudentController extends GetxController {
     }
   }
 
-void readCsvFile(
+  void readCsvFile(
     Uint8List fileBytes, {
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,
@@ -304,11 +300,10 @@ void readCsvFile(
     String content = String.fromCharCodes(fileBytes);
     List<List<dynamic>> rowsAsListOfValues =
         const CsvToListConverter().convert(content);
-    List<StudentResModel> students = rowsAsListOfValues
+    students = rowsAsListOfValues
         .skip(1)
         .map((row) => StudentResModel.fromCsv(row))
         .toList();
-
     final result = students.convertFileStudentsToPluto(
       cohorts: cohorts,
       classesRooms: classesRooms,
@@ -316,9 +311,16 @@ void readCsvFile(
     );
 
     studentsRows = result['rows'];
-    errorMap = result['errorMap'];
+    students = result['students'];
+    for (var element in students) {
+      debugPrint(element.cohortID.toString());
+      debugPrint(element.gradesID.toString());
+      debugPrint(element.schoolClassID.toString());
+      debugPrint(element.firstName.toString());
+      debugPrint(element.secondName.toString());
+      debugPrint(element.thirdName.toString());
+    }
+    //  errorMap = result['errorMap'];
     update();
   }
-
 }
-
