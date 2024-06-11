@@ -58,13 +58,7 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                                         children: [
                                           MultiSelectDropDownView(
                                             options: creatMissionController
-                                                .educationYearList
-                                                .map(
-                                                  (e) => ValueItem(
-                                                      label: e.name!,
-                                                      value: e.id!),
-                                                )
-                                                .toList(),
+                                                .optionsEducationYear,
                                             onOptionSelected: (value) {
                                               formFieldState.didChange(value);
                                               creatMissionController
@@ -77,7 +71,7 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                                             },
                                             hintText: "Select Education Year",
                                           ),
-                                          if (formFieldState.hasError) ...{
+                                          if (formFieldState.hasError) ...[
                                             const SizedBox(height: 10),
                                             Text(
                                               formFieldState.errorText!,
@@ -86,7 +80,7 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                                                 fontSize: FontSize.s10,
                                               ),
                                             ).paddingOnly(left: 10),
-                                          }
+                                          ]
                                         ],
                                       );
                                     },
@@ -246,9 +240,11 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                                                       btnOkOnPressed: () {
                                                         controller
                                                                 .selectedEndDate =
-                                                            DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(picked);
+                                                            picked
+                                                                .toIso8601String();
+                                                        // DateFormat(
+                                                        //         'yyyy-MM-dd')
+                                                        //     .format(picked);
                                                         controller.update();
                                                       },
                                                       btnCancelOnPressed: () {},

@@ -7,7 +7,6 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../Data/Models/cohort/cohorts_res_model.dart';
 import '../../Data/Models/control_mission/control_mission_model.dart';
 import '../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../Data/Network/response_handler.dart';
