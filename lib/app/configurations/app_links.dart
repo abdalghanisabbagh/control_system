@@ -1,4 +1,5 @@
 class AppLinks {
+  /// `http://localhost:3333/`
   static const baseUrl = 'http://localhost:3333/';
   static const baseUrlDev = 'http://10.6.66.90:3333/';
 }
