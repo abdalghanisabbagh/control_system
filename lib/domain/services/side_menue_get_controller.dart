@@ -48,9 +48,9 @@ class SideMenueGetController extends GetxController {
         tooltipContent: "This is a tooltip for Student item",
       ),
       SideMenuItem(
-        title: AppRoutesNamesAndPaths.controlMissionScreenName,
+        title: AppRoutesNamesAndPaths.controlBatchScreenName,
         onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.controlMissionScreenName);
+          context.goNamed(AppRoutesNamesAndPaths.controlBatchScreenName);
           changePage(index);
         },
         iconWidget: Image.asset(AssetsManager.assetsIconsExam),

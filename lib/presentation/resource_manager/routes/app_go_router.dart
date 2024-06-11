@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/views/control_mission/widgets/create_mission_widget.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -103,13 +104,22 @@ class AppGoRouter {
         },
       ),
       GoRoute(
-        path: AppRoutesNamesAndPaths.controlMissionScreenPath,
-        name: AppRoutesNamesAndPaths.controlMissionScreenName,
+        path: AppRoutesNamesAndPaths.controlBatchScreenPath,
+        name: AppRoutesNamesAndPaths.controlBatchScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           ControlMissingBindings().dependencies();
-          return ControlMissionScreen();
+          return const ControlMissionScreen();
         },
+        routes: [
+          GoRoute(
+            path: AppRoutesNamesAndPaths.createMissionScreenPath,
+            name: AppRoutesNamesAndPaths.createMissionScreenName,
+            builder: (context, state) {
+              return CreateMissionScreen();
+            },
+          ),
+        ],
         onExit: (context, state) {
           return true;
         },
