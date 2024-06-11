@@ -209,45 +209,6 @@ class StudentScreen extends GetView<StudentController> {
                                 title: 'Second Language',
                                 field: 'LanguageField',
                                 type: PlutoColumnType.text(),
-                              ),
-
-                              /// Actions Column definition
-                              PlutoColumn(
-                                enableEditingMode: false,
-                                title: 'Actions',
-                                field: 'ActionsField',
-                                type: PlutoColumnType.text(),
-                                renderer: (rendererContext) {
-                                  return Row(
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          MyDialogs.showDialog(
-                                            context,
-                                            EditStudentWidget(
-                                              studentResModel: controller
-                                                  .students
-                                                  .firstWhere((element) {
-                                                print(element.iD);
-                                                return int.tryParse(
-                                                        rendererContext
-                                                            .row
-                                                            .cells['IdField']!
-                                                            .value
-                                                            .toString()) ==
-                                                    element.iD;
-                                              }),
-                                            ),
-                                          );
-                                        },
-                                        icon: const Icon(
-                                          Icons.edit,
-                                          color: Colors.green,
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
                                 footerRenderer: (footerRenderer) {
                                   return PlutoAggregateColumnFooter(
                                     rendererContext: footerRenderer,
@@ -258,6 +219,46 @@ class StudentScreen extends GetView<StudentController> {
                                   );
                                 },
                               ),
+
+                              /// Actions Column definition
+
+                              if (!controller.isimorted)
+                                PlutoColumn(
+                                  enableEditingMode: false,
+                                  title: 'Actions',
+                                  field: 'ActionsField',
+                                  type: PlutoColumnType.text(),
+                                  renderer: (rendererContext) {
+                                    return Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            MyDialogs.showDialog(
+                                              context,
+                                              EditStudentWidget(
+                                                studentResModel: controller
+                                                    .students
+                                                    .firstWhere((element) {
+                                                  return int.tryParse(
+                                                          rendererContext
+                                                              .row
+                                                              .cells['IdField']!
+                                                              .value
+                                                              .toString()) ==
+                                                      element.iD;
+                                                }),
+                                              ),
+                                            );
+                                          },
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
                             ],
                             rows: controller.studentsRows,
                             onChanged: (PlutoGridOnChangedEvent event) {},

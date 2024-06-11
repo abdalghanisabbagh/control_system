@@ -58,6 +58,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Sync Students",
               icon: const Icon(FontAwesomeIcons.rotate),
               onPressed: () {
+                
                 controller.onInit();
                 // MyDialogs.showDialog(context, EditStudentWidget());
               },
