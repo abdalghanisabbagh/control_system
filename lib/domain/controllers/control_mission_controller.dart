@@ -266,9 +266,6 @@ class ControlMissionController extends GetxController {
       },
       (r) {
         controlMissionList = r.data!;
-        optionsGrades = r.data!
-            .map((e) => ValueItem(label: e.name!, value: e.educationYearID))
-            .toList();
         gotData = true;
       },
     );
