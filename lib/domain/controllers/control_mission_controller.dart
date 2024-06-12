@@ -6,8 +6,6 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/show
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
-
-import '../../Data/Models/cohort/cohorts_res_model.dart';
 import '../../Data/Models/control_mission/control_mission_model.dart';
 import '../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../Data/Network/response_handler.dart';
@@ -123,6 +121,7 @@ class ControlMissionController extends GetxController {
         gotData = true;
       },
     );
+    isLoading = false;
     update();
     return gotData;
   }
@@ -130,8 +129,7 @@ class ControlMissionController extends GetxController {
   void setSelectedItemEducationYear(List<ValueItem> items) {
     selectedItemEducationYear = items.first;
     int educationYearId = selectedItemEducationYear!.value;
-    getControlMissionByEducationYear(educationYearId);
-
+     getControlMissionByEducationYear(educationYearId);
     update();
   }
 
