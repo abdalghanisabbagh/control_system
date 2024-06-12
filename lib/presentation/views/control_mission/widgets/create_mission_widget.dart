@@ -28,8 +28,7 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
         height: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: GetBuilder<ControlMissionController>(
-          builder: (creatMissionController) => controller
-                  .educationYearList.isEmpty
+          builder: (controller) => controller.educationYearList.isEmpty
               ? const Center(child: CircularProgressIndicator())
               : Form(
                   key: _formKey,
@@ -41,242 +40,18 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                       const SizedBox(height: 20),
                       EnhanceStepper(
                         type: StepperType.vertical,
+                        currentStep: controller.currentStep,
+                        onStepContinue: () => controller.canMoveToNextStep()
+                            ? controller.continueToNextStep()
+                            : null,
+                        onStepCancel: () => controller.backToPreviousStep(),
                         steps: [
+                          _firstStep(context),
                           EnhanceStep(
-                            title: const Text('Mission Name'),
-                            content: IntrinsicHeight(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  FormField<List<ValueItem<dynamic>>>(
-                                    validator: Validations
-                                        .multiSelectDropDownRequiredValidator,
-                                    builder: (formFieldState) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          MultiSelectDropDownView(
-                                            options: creatMissionController
-                                                .educationYearList
-                                                .map(
-                                                  (e) => ValueItem(
-                                                      label: e.name!,
-                                                      value: e.id!),
-                                                )
-                                                .toList(),
-                                            onOptionSelected: (value) {
-                                              formFieldState.didChange(value);
-                                              creatMissionController
-                                                      .selectedEducationYear =
-                                                  value;
-                                              controller.selectedStartDate =
-                                                  null;
-                                              controller.selectedEndDate = null;
-                                              creatMissionController.update();
-                                            },
-                                            hintText: "Select Education Year",
-                                          ),
-                                          if (formFieldState.hasError) ...{
-                                            const SizedBox(height: 10),
-                                            Text(
-                                              formFieldState.errorText!,
-                                              style: nunitoRegular.copyWith(
-                                                color: ColorManager.red,
-                                                fontSize: FontSize.s10,
-                                              ),
-                                            ).paddingOnly(left: 10),
-                                          }
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                  MytextFormFiled(
-                                    myValidation: Validations.requiredValidator,
-                                    controller: missionNameController,
-                                    title: "Mission Name",
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Visibility(
-                                    visible: controller.selectedEducationYear !=
-                                                null ||
-                                            controller.selectedEducationYear !=
-                                                null
-                                        ? controller
-                                            .selectedEducationYear!.isNotEmpty
-                                        : false,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Start Date: ${controller.selectedStartDate == null ? "Please Select Start Date" : controller.selectedStartDate.toString()}",
-                                          style: nunitoBold.copyWith(
-                                            color: ColorManager.primary,
-                                            fontSize: FontSize.s16,
-                                          ),
-                                        ),
-                                        Text(
-                                          "End Date: ${controller.selectedEndDate == null ? "Please Select End Date" : controller.selectedEndDate.toString()}",
-                                          style: nunitoBold.copyWith(
-                                            color: ColorManager.primary,
-                                            fontSize: FontSize.s16,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Visibility(
-                                    visible: controller.selectedEducationYear !=
-                                                null ||
-                                            controller.selectedEducationYear !=
-                                                null
-                                        ? controller
-                                            .selectedEducationYear!.isNotEmpty
-                                        : false,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            if (controller
-                                                    .selectedEducationYear ==
-                                                null) {
-                                              MyAwesomeDialogue(
-                                                title: "Error",
-                                                desc:
-                                                    "Please Select Education Year First",
-                                                dialogType: DialogType.error,
-                                              ).showDialogue(context);
-                                              return;
-                                            }
-                                            DateTime? picked =
-                                                await showDatePicker(
-                                              context: context,
-                                              fieldHintText: 'Start Date',
-                                              initialDatePickerMode:
-                                                  DatePickerMode.day,
-                                              initialEntryMode:
-                                                  DatePickerEntryMode
-                                                      .calendarOnly,
-                                              firstDate: DateTime.now(),
-                                              lastDate: DateTime(
-                                                int.parse(
-                                                  controller
-                                                      .selectedEducationYear!
-                                                      .first
-                                                      .label
-                                                      .toString()
-                                                      .split('/')
-                                                      .last
-                                                      .toString(),
-                                                ),
-                                                6,
-                                                23,
-                                              ),
-                                            );
-                                            if (picked != null) {
-                                              controller.selectedStartDate =
-                                                  DateFormat('yyyy-MM-dd')
-                                                      .format(picked);
-                                              controller.update();
-                                            }
-                                          },
-                                          child: const Text(
-                                            "Select Start Date",
-                                          ),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            if (controller.selectedStartDate ==
-                                                null) {
-                                              MyAwesomeDialogue(
-                                                title: "Error",
-                                                desc:
-                                                    "Please Select Start Date First",
-                                                dialogType: DialogType.error,
-                                              ).showDialogue(context);
-                                              return;
-                                            }
-                                            await showDatePicker(
-                                              context: context,
-                                              fieldHintText: 'End Date',
-                                              initialDatePickerMode:
-                                                  DatePickerMode.day,
-                                              initialEntryMode:
-                                                  DatePickerEntryMode
-                                                      .calendarOnly,
-                                              firstDate: DateTime.tryParse(
-                                                  controller
-                                                      .selectedStartDate!)!,
-                                              lastDate: DateTime(
-                                                int.parse(
-                                                  controller
-                                                      .selectedEducationYear!
-                                                      .first
-                                                      .label
-                                                      .toString()
-                                                      .split('/')
-                                                      .last
-                                                      .toString(),
-                                                ),
-                                                6,
-                                                30,
-                                              ),
-                                            ).then(
-                                              (picked) {
-                                                if (picked != null) {
-                                                  if (picked.day <
-                                                      DateTime.tryParse(controller
-                                                              .selectedStartDate!)!
-                                                          .add(
-                                                            const Duration(
-                                                              days: 7,
-                                                            ),
-                                                          )
-                                                          .day) {
-                                                    MyAwesomeDialogue(
-                                                      title: "Warning",
-                                                      desc:
-                                                          "End Date should be greater than 7 days from Start Date.\n Are you sure you want to proceed?",
-                                                      dialogType:
-                                                          DialogType.warning,
-                                                      btnOkOnPressed: () {
-                                                        controller
-                                                                .selectedEndDate =
-                                                            DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(picked);
-                                                        controller.update();
-                                                      },
-                                                      btnCancelOnPressed: () {},
-                                                    ).showDialogue(context);
-                                                    return;
-                                                  }
-                                                  controller.selectedEndDate =
-                                                      DateFormat('yyyy-MM-dd')
-                                                          .format(picked);
-                                                  controller.update();
-                                                }
-                                                return null;
-                                              },
-                                            );
-                                          },
-                                          child: const Text(
-                                            "Select End Date",
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  // const SizedBox(height: 20),
-                                  const Spacer(),
-                                  // const SizedBox(height: 20),
-                                  // const Spacer(),
-                                ],
-                              ),
+                            isActive: controller.currentStep == 1,
+                            title: const Text('Batch Students'),
+                            content: const IntrinsicHeight(
+                              child: Column(),
                             ),
                           ),
                         ],
@@ -284,6 +59,199 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                     ],
                   ).paddingSymmetric(horizontal: 20),
                 ),
+        ),
+      ),
+    );
+  }
+
+  EnhanceStep _firstStep(BuildContext context) {
+    return EnhanceStep(
+      isActive: controller.currentStep == 0,
+      title: const Text('Mission Name'),
+      content: IntrinsicHeight(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FormField<List<ValueItem<dynamic>>>(
+              validator: Validations.multiSelectDropDownRequiredValidator,
+              builder: (formFieldState) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MultiSelectDropDownView(
+                      options: controller.optionsEducationYear,
+                      onOptionSelected: (value) {
+                        formFieldState.didChange(value);
+                        controller.selectedEducationYear = value;
+                        controller.selectedStartDate = null;
+                        controller.selectedEndDate = null;
+                        controller.update();
+                      },
+                      hintText: "Select Education Year",
+                    ),
+                    if (formFieldState.hasError) ...[
+                      const SizedBox(height: 10),
+                      Text(
+                        formFieldState.errorText!,
+                        style: nunitoRegular.copyWith(
+                          color: ColorManager.red,
+                          fontSize: FontSize.s10,
+                        ),
+                      ).paddingOnly(left: 10),
+                    ]
+                  ],
+                );
+              },
+            ),
+            MytextFormFiled(
+              myValidation: Validations.requiredValidator,
+              controller: missionNameController,
+              title: "Mission Name",
+              onChange: (value) => controller.batchName = value,
+            ),
+            const SizedBox(height: 20),
+            Visibility(
+              visible: controller.selectedEducationYear != null ||
+                      controller.selectedEducationYear != null
+                  ? controller.selectedEducationYear!.isNotEmpty
+                  : false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Start Date: ${controller.selectedStartDate == null ? "Please Select Start Date" : controller.selectedStartDate.toString()}",
+                    style: nunitoBold.copyWith(
+                      color: ColorManager.primary,
+                      fontSize: FontSize.s16,
+                    ),
+                  ),
+                  Text(
+                    "End Date: ${controller.selectedEndDate == null ? "Please Select End Date" : controller.selectedEndDate.toString()}",
+                    style: nunitoBold.copyWith(
+                      color: ColorManager.primary,
+                      fontSize: FontSize.s16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Visibility(
+              visible: controller.selectedEducationYear != null ||
+                      controller.selectedEducationYear != null
+                  ? controller.selectedEducationYear!.isNotEmpty
+                  : false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (controller.selectedEducationYear == null) {
+                        MyAwesomeDialogue(
+                          title: "Error",
+                          desc: "Please Select Education Year First",
+                          dialogType: DialogType.error,
+                        ).showDialogue(context);
+                        return;
+                      }
+                      DateTime? picked = await showDatePicker(
+                        context: context,
+                        fieldHintText: 'Start Date',
+                        initialDatePickerMode: DatePickerMode.day,
+                        initialEntryMode: DatePickerEntryMode.calendarOnly,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(
+                          int.parse(
+                            controller.selectedEducationYear!.first.label
+                                .toString()
+                                .split('/')
+                                .last
+                                .toString(),
+                          ),
+                          6,
+                          23,
+                        ),
+                      );
+                      if (picked != null) {
+                        controller.selectedStartDate =
+                            DateFormat('yyyy-MM-dd').format(picked);
+                        controller.update();
+                      }
+                    },
+                    child: const Text(
+                      "Select Start Date",
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (controller.selectedStartDate == null) {
+                        MyAwesomeDialogue(
+                          title: "Error",
+                          desc: "Please Select Start Date First",
+                          dialogType: DialogType.error,
+                        ).showDialogue(context);
+                        return;
+                      }
+                      await showDatePicker(
+                        context: context,
+                        fieldHintText: 'End Date',
+                        initialDatePickerMode: DatePickerMode.day,
+                        initialEntryMode: DatePickerEntryMode.calendarOnly,
+                        firstDate:
+                            DateTime.tryParse(controller.selectedStartDate!)!,
+                        lastDate: DateTime(
+                          int.parse(
+                            controller.selectedEducationYear!.first.label
+                                .toString()
+                                .split('/')
+                                .last
+                                .toString(),
+                          ),
+                          6,
+                          30,
+                        ),
+                      ).then(
+                        (picked) {
+                          if (picked != null) {
+                            if (picked.day <
+                                DateTime.tryParse(
+                                        controller.selectedStartDate!)!
+                                    .add(
+                                      const Duration(
+                                        days: 7,
+                                      ),
+                                    )
+                                    .day) {
+                              MyAwesomeDialogue(
+                                title: "Warning",
+                                desc:
+                                    "End Date should be greater than 7 days from Start Date.\n Are you sure you want to proceed?",
+                                dialogType: DialogType.warning,
+                                btnOkOnPressed: () {
+                                  controller.selectedEndDate =
+                                      DateFormat('yyyy-MM-dd').format(picked);
+                                  controller.update();
+                                },
+                                btnCancelOnPressed: () {},
+                              ).showDialogue(context);
+                              return;
+                            }
+                            controller.selectedEndDate =
+                                DateFormat('yyyy-MM-dd').format(picked);
+                            controller.update();
+                          }
+                          return null;
+                        },
+                      );
+                    },
+                    child: const Text(
+                      "Select End Date",
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
