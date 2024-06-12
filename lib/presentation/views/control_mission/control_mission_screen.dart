@@ -1,4 +1,5 @@
 import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:control_system/presentation/views/control_mission/widgets/control_mission_quick_review_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,33 +17,80 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
       body: Container(
         color: ColorManager.bgColor,
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const HeaderMissionWidget(),
-            const Divider(),
-            const SizedBox(height: 20),
-            GetBuilder<ControlMissionController>(
-              builder: (_) {
-                if (controller.isLodingGetEducationYears) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+        child: Column(children: [
+          const HeaderMissionWidget(),
+          const Divider(),
+          const SizedBox(height: 20),
+          GetBuilder<ControlMissionController>(
+            builder: (_) {
+              if (controller.isLodingGetEducationYears) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-                if (controller.optionsEducationYear.isEmpty) {
-                  return const Text('No items available');
-                }
+              if (controller.optionsEducationYear.isEmpty) {
+                return const Text('No items available');
+              }
 
-                return MultiSelectDropDownView(
-                  hintText: "Select Education Year",
-                  onOptionSelected: (selectedItem) {
-                    controller.setSelectedItemEducationYear(selectedItem);
-                  },
-                  showChipSelect: false,
-                  options: controller.optionsEducationYear,
+              return MultiSelectDropDownView(
+                hintText: "Select Education Year",
+                onOptionSelected: (selectedItem) {
+                  controller.setSelectedItemEducationYear(selectedItem);
+                },
+                showChipSelect: false,
+                options: controller.optionsEducationYear,
+              );
+            },
+          ),
+          const SizedBox(height: 20),
+          GetBuilder<ControlMissionController>(
+            builder: (controller) {
+              if (controller.isLoading) {
+                return const Expanded(
+                  child: Center(child: CircularProgressIndicator()),
                 );
-              },
-            ),
-          ],
-        ),
+              }
+
+              if (controller.selectedItemEducationYear == null) {
+                return Expanded(
+                  child: Center(
+                    child: Text(
+                      'please Select Education Year',
+                      style: nunitoRegular.copyWith(
+                        color: ColorManager.bgSideMenu,
+                        fontSize: 23,
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              if (controller.controlMissionList.isEmpty) {
+                return Expanded(
+                  child: Center(
+                    child: Text(
+                      'No items available',
+                      style: nunitoRegular.copyWith(
+                        color: ColorManager.bgSideMenu,
+                        fontSize: 23,
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: controller.controlMissionList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ControlMissionQuickReviewWidget(
+                      controlMission: controller.controlMissionList[index],
+                    );
+                  },
+                ),
+              );
+            },
+          )
+        ]),
       ),
     );
   }

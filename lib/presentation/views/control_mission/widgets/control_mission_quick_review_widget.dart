@@ -1,9 +1,16 @@
+import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../domain/controllers/control_mission_controller.dart';
 import '../../../resource_manager/index.dart';
 
-class ControlMissionQuickReviewWidget extends StatelessWidget {
-  const ControlMissionQuickReviewWidget({super.key});
+class ControlMissionQuickReviewWidget
+    extends GetView<ControlMissionController> {
+  final ControlMissionModel controlMission;
+
+  const ControlMissionQuickReviewWidget(
+      {super.key, required this.controlMission});
 
   @override
   Widget build(BuildContext context) {
@@ -26,36 +33,36 @@ class ControlMissionQuickReviewWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.all(20),
-                // child: Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     Text(
-                //       controller.missions[missionResponseindex].name!,
-                //       style: nunitoBold.copyWith(
-                //           color: ColorManager.bgSideMenu, fontSize: 30),
-                //     ),
-                //     Text(
-                //       "System :${controller.missions[missionResponseindex].educationsystem!.name}",
-                //       style: nunitoRegular.copyWith(
-                //           color: ColorManager.bgSideMenu, fontSize: 16),
-                //     ),
-                //     Text(
-                //       "Students : ${controller.missions[missionResponseindex].studentseatnumbers!.length} students",
-                //       style: nunitoRegular.copyWith(
-                //           color: ColorManager.bgSideMenu, fontSize: 16),
-                //     ),
-                //     Text(
-                //       "Status : Done",
-                //       style: nunitoRegular.copyWith(
-                //           color: Colors.green, fontSize: 16),
-                //     ),
-                //   ],
-                // ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${controlMission.name}",
+                      style: nunitoBold.copyWith(
+                          color: ColorManager.bgSideMenu, fontSize: 30),
+                    ),
+                    // Text(
+                    //   "System :${controller.controlMissionList[missionindex].name}",
+                    //   style: nunitoRegular.copyWith(
+                    //       color: ColorManager.bgSideMenu, fontSize: 16),
+                    // ),
+                    // Text(
+                    //   "Students : ${controller.missions[missionResponseindex].studentseatnumbers!.length} students",
+                    //   style: nunitoRegular.copyWith(
+                    //       color: ColorManager.bgSideMenu, fontSize: 16),
+                    // ),
+                    // Text(
+                    //   "Status : Done",
+                    //   style: nunitoRegular.copyWith(
+                    //       color: Colors.green, fontSize: 16),
+                    // ),
+                  ],
+                ),
               ),
             ],
           ),
