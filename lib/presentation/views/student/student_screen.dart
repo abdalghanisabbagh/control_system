@@ -106,6 +106,8 @@ class StudentScreen extends GetView<StudentController> {
                                 type: PlutoColumnType.text(),
                               ),
                               PlutoColumn(
+                                readOnly: true,
+                                enableEditingMode: false,
                                 title: 'Cohort',
                                 field: 'CohortField',
                                 cellPadding: EdgeInsets.zero,
@@ -139,6 +141,8 @@ class StudentScreen extends GetView<StudentController> {
                                 },
                               ),
                               PlutoColumn(
+                                readOnly: true,
+                                enableEditingMode: false,
                                 title: 'Grade',
                                 field: 'GradeField',
                                 type: PlutoColumnType.text(),
@@ -171,6 +175,8 @@ class StudentScreen extends GetView<StudentController> {
                               ),
 
                               PlutoColumn(
+                                readOnly: true,
+                                enableEditingMode: false,
                                 title: 'Class Room',
                                 field: 'ClassRoomField',
                                 type: PlutoColumnType.text(),
