@@ -41,6 +41,7 @@ class ControlMissionController extends GetxController {
 
   List<StudentResModel> students = [];
   List<PlutoRow> includedStudentsRows = [];
+  List<PlutoRow> excludedStudentsRows = [];
 
   List<ValueItem>? selectedEducationYear;
   bool isLoading = false;
