@@ -5,6 +5,7 @@ import 'package:control_system/Data/Models/education_year/educations_years_res_m
 import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
 import 'package:control_system/Data/Models/school/grade_response/grades_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
+import 'package:control_system/app/extensions/convert_date_string_to_iso8601_string_extension.dart';
 import 'package:control_system/app/extensions/pluto_row_extension.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dartz/dartz.dart';
@@ -17,7 +18,7 @@ import '../../Data/Models/class_room/class_room_res_model.dart';
 import '../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../Data/Models/cohort/cohorts_res_model.dart';
 import '../../Data/Models/control_mission/control_mission_model.dart';
-import '../../Data/Models/control_mission/control_mission_res_model.dart';
+import '../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../Data/Models/student/student_res_model.dart';
 import '../../Data/Models/student/students_res_model.dart';
 import '../../Data/Network/response_handler.dart';
@@ -47,7 +48,7 @@ class ControlMissionController extends GetxController {
   bool isLoading = false;
   bool isLodingGetEducationYears = false;
   List<ValueItem> optionsEducationYear = <ValueItem>[];
-  List<ControlMissionModel> controlMissionList = <ControlMissionModel>[];
+  List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
   ValueItem? selectedItemEducationYear;
   Future<void> getEducationYears() async {
     isLodingGetEducationYears = true;
@@ -121,34 +122,37 @@ class ControlMissionController extends GetxController {
     bool success = false;
     isLoading = true;
     update();
-    // final response =
-    //     await ResponseHandler<ControlMissionResModel>().getResponse(
-    //   path: ControlMissionLinks.addControlMission,
-    //   converter: ControlMissionResModel.fromJson,
-    //   type: ReqTypeEnum.POST,
-    //   body: {
-    //     'start_date': selectedStartDate,
-    //     'end_date': selectedEndDate,
-    //     'education_year_id': selectedEducationYearId,
-    //   },
-    // );
+    final response =
+        await ResponseHandler<ControlMissionResModel>().getResponse(
+      path: ControlMissionLinks.controlMission,
+      converter: ControlMissionResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: {
+        'Education_year_ID': selectedEducationYear!.first.value,
+        'Schools_ID': Hive.box('School').get('Id'),
+        'Name': batchName,
+        'Start_Date': selectedStartDate!.convertDateStringToIso8601String(),
+        'End_Date': selectedEndDate!.convertDateStringToIso8601String(),
+      },
+    );
 
-    // response.fold(
-    //   (l) {
-    //     MyAwesomeDialogue(
-    //       title: 'title',
-    //       desc: l.message,
-    //       dialogType: DialogType.error,
-    //     ).showDialogue(
-    //       Get.key.currentContext!,
-    //     );
-    // success = false;
-    //   },
-    //   (r) {
-    //     success = true;
-    // },
-    // );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+        success = false;
+      },
+      (r) {
+        success = true;
+      },
+    );
     isLoading = false;
+    getControlMissionByEducationYear(selectedEducationYear!.first.value);
     update();
     return success;
   }
@@ -247,12 +251,13 @@ class ControlMissionController extends GetxController {
     isLoading = true;
     update();
 
-    ResponseHandler<ControlMissionsModel> responseHandler = ResponseHandler();
-    Either<Failure, ControlMissionsModel> response =
+    ResponseHandler<ControlMissionsResModel> responseHandler =
+        ResponseHandler();
+    Either<Failure, ControlMissionsResModel> response =
         await responseHandler.getResponse(
       path:
           "${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
-      converter: ControlMissionsModel.fromJson,
+      converter: ControlMissionsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
     response.fold(
