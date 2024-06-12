@@ -1,11 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:enhance_stepper/enhance_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:universal_html/html.dart';
 
 import '../../../../domain/controllers/control_mission_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
@@ -47,15 +49,43 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                             controller.batchName = null;
                             controller.selectedEducationYear = null;
                             controller.currentStep = 0;
+                            controller.selectedStartDate = null;
+                            controller.selectedEndDate = null;
                           },
                         ),
                         const SizedBox(height: 20),
                         EnhanceStepper(
                           type: StepperType.vertical,
                           currentStep: controller.currentStep,
-                          onStepContinue: () => controller.canMoveToNextStep()
-                              ? controller.continueToNextStep()
-                              : null,
+                          onStepContinue: () => controller.currentStep == 1
+                              ? {
+                                  controller.addControlMission().then(
+                                    (value) async {
+                                      if (value) {
+                                        controller.currentStep = 0;
+                                        controller.batchName = null;
+                                        controller.selectedEducationYear = null;
+                                        controller.selectedStartDate = null;
+                                        controller.selectedEndDate = null;
+                                        MyFlashBar.showSuccess(
+                                          'Mission created successfully',
+                                          'Success',
+                                        ).show(context);
+                                        await Future.delayed(
+                                            const Duration(seconds: 2));
+                                        window.history.back();
+                                      } else {
+                                        MyFlashBar.showError(
+                                          'Failed to create mission',
+                                          'Error',
+                                        );
+                                      }
+                                    },
+                                  ),
+                                }
+                              : controller.canMoveToNextStep()
+                                  ? controller.continueToNextStep()
+                                  : null,
                           onStepCancel: () => controller.backToPreviousStep(),
                           steps: [
                             _firstStep(context),

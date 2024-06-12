@@ -1,14 +1,14 @@
 import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
 
-class ControlMissionsModel {
-  ControlMissionsModel({this.data});
+class ControlMissionsResModel {
+  ControlMissionsResModel({this.data});
 
-  ControlMissionsModel.fromJson(json) {
-    data = List<ControlMissionModel>.from(
-        json.map((e) => ControlMissionModel.fromJson(e)).toList());
+  ControlMissionsResModel.fromJson(json) {
+    data = List<ControlMissionResModel>.from(
+        json.map((e) => ControlMissionResModel.fromJson(e)).toList());
   }
 
-  List<ControlMissionModel>? data;
+  List<ControlMissionResModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
