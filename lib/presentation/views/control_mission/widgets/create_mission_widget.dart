@@ -21,6 +21,8 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
 
   final TextEditingController missionNameController = TextEditingController();
 
+  final plutoGridWidgetKey = GlobalKey<PlutoGridState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,184 +46,177 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                         EnhanceStepper(
                           type: StepperType.vertical,
                           currentStep: controller.currentStep,
-                          onStepContinue: () => controller.canMoveToNextStep()
-                              ? controller.continueToNextStep()
-                              : null,
+                          onStepContinue: () =>
+                              //  controller.canMoveToNextStep()
+                              // ?
+                              controller.continueToNextStep(),
+                          // : null,
                           onStepCancel: () => controller.backToPreviousStep(),
                           steps: [
                             _firstStep(context),
                             EnhanceStep(
                               isActive: controller.currentStep == 1,
                               title: const Text('Batch Students'),
-                              content: StatefulBuilder(
-                                builder: (context, setState) {
-                                  return Column(
-                                    children: [
-                                      MultiSelectDropDownView(
-                                        hintText: 'Select Grades',
-                                        options: controller.optionsGrades,
-                                        multiSelect: true,
-                                        showChipSelect: true,
-                                        onOptionSelected: (value) {
-                                          controller
-                                              .updateSelectedGrades(value);
-                                          setState(() {
-                                            debugPrint('SetState called');
-                                          });
-                                        },
-                                      ),
-                                      const SizedBox(height: 10),
-                                      const Text('Students List'),
-                                      const SizedBox(height: 10),
-                                      SizedBox(
-                                        height: 400,
-                                        child: PlutoGrid(
-                                          createFooter: (stateManager) {
-                                            stateManager.setPageSize(50,
-                                                notify: false);
-                                            return PlutoPagination(
-                                              stateManager,
-                                              pageSizeToMove: 1,
-                                            );
-                                          },
-                                          configuration: PlutoGridConfiguration(
-                                            style: PlutoGridStyleConfig(
-                                              //  defaultCellPadding: EdgeInsets.zero,
-                                              enableGridBorderShadow: true,
-                                              iconColor:
-                                                  ColorManager.bgSideMenu,
-                                              gridBackgroundColor:
-                                                  ColorManager.bgColor,
-                                              menuBackgroundColor:
-                                                  ColorManager.bgColor,
-                                              rowColor: ColorManager.bgColor,
-                                              checkedColor: Colors.white,
-                                              gridBorderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            columnSize:
-                                                const PlutoGridColumnSizeConfig(
-                                              autoSizeMode:
-                                                  PlutoAutoSizeMode.scale,
-                                            ),
-                                            columnFilter:
-                                                const PlutoGridColumnFilterConfig(
-                                              filters:
-                                                  FilterHelper.defaultFilters,
-                                            ),
-                                            scrollbar:
-                                                const PlutoGridScrollbarConfig(
-                                              isAlwaysShown: false,
-                                              scrollbarThickness: 8,
-                                              scrollbarThicknessWhileDragging:
-                                                  10,
-                                            ),
-                                          ),
-                                          columns: [
-                                            PlutoColumn(
-                                              readOnly: true,
-                                              enableEditingMode: false,
-                                              title: 'Id',
-                                              field: 'IdField',
-                                              type: PlutoColumnType.text(),
-                                            ),
-                                            PlutoColumn(
-                                              enableEditingMode: false,
-                                              title: 'First Name',
-                                              field: 'FirstNameField',
-                                              type: PlutoColumnType.text(),
-                                            ),
-
-                                            PlutoColumn(
-                                              readOnly: true,
-                                              enableEditingMode: false,
-                                              title: 'Second Name',
-                                              field: 'SecondNameField',
-                                              type: PlutoColumnType.text(),
-                                            ),
-
-                                            /// Text Column definition
-                                            PlutoColumn(
-                                              readOnly: true,
-                                              enableEditingMode: false,
-                                              title: 'Third Name',
-                                              field: 'ThirdNameField',
-                                              type: PlutoColumnType.text(),
-                                            ),
-                                            PlutoColumn(
-                                              readOnly: true,
-                                              title: 'Cohort',
-                                              field: 'CohortField',
-                                              cellPadding: EdgeInsets.zero,
-                                              // titlePadding: EdgeInsets.zero,
-                                              type: PlutoColumnType.text(),
-                                              enableEditingMode: false,
-                                            ),
-                                            PlutoColumn(
-                                              readOnly: true,
-                                              title: 'Grade',
-                                              field: 'GradeField',
-                                              type: PlutoColumnType.text(),
-                                              cellPadding: EdgeInsets.zero,
-                                              enableEditingMode: false,
-                                            ),
-
-                                            PlutoColumn(
-                                              readOnly: true,
-                                              title: 'Class Room',
-                                              field: 'ClassRoomField',
-                                              type: PlutoColumnType.text(),
-                                              cellPadding: EdgeInsets.zero,
-                                              enableEditingMode: false,
-                                            ),
-                                            PlutoColumn(
-                                              readOnly: true,
-                                              enableEditingMode: false,
-                                              title: 'Second Language',
-                                              field: 'LanguageField',
-                                              type: PlutoColumnType.text(),
-                                              footerRenderer: (footerRenderer) {
-                                                return PlutoAggregateColumnFooter(
-                                                  rendererContext:
-                                                      footerRenderer,
-                                                  type: PlutoAggregateColumnType
-                                                      .count,
-                                                  filter: (cell) => true,
-                                                  format: 'count : #,###',
-                                                  alignment: Alignment.center,
-                                                );
-                                              },
-                                            ),
-                                            PlutoColumn(
-                                              enableEditingMode: false,
-                                              title: 'Actions',
-                                              field: 'ActionsField',
-                                              type: PlutoColumnType.text(),
-                                              renderer: (rendererContext) {
-                                                return Row(
-                                                  children: [
-                                                    IconButton(
-                                                      onPressed: () {},
-                                                      icon: const Icon(
-                                                        Icons.remove,
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                          rows: controller.includedStudentsRows,
-                                          onChanged: (PlutoGridOnChangedEvent
-                                              event) {},
-                                          onLoaded:
-                                              (PlutoGridOnLoadedEvent event) {},
+                              content: Column(
+                                children: [
+                                  MultiSelectDropDownView(
+                                    hintText: 'Select Grades',
+                                    options: controller.optionsGrades,
+                                    multiSelect: true,
+                                    showChipSelect: true,
+                                    onOptionSelected: (value) {
+                                      controller.updateSelectedGrades(value);
+                                      plutoGridWidgetKey
+                                          .currentState!.stateManager
+                                          .setPage(1);
+                                    },
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Text('Students List'),
+                                  const SizedBox(height: 10),
+                                  SizedBox(
+                                    height: 400,
+                                    child: PlutoGrid(
+                                      key: plutoGridWidgetKey,
+                                      createFooter: (stateManager) {
+                                        stateManager.setPageSize(50,
+                                            notify: false);
+                                        return PlutoPagination(
+                                          stateManager,
+                                          pageSizeToMove: 1,
+                                        );
+                                      },
+                                      configuration: PlutoGridConfiguration(
+                                        style: PlutoGridStyleConfig(
+                                          //  defaultCellPadding: EdgeInsets.zero,
+                                          enableGridBorderShadow: true,
+                                          iconColor: ColorManager.bgSideMenu,
+                                          gridBackgroundColor:
+                                              ColorManager.bgColor,
+                                          menuBackgroundColor:
+                                              ColorManager.bgColor,
+                                          rowColor: ColorManager.bgColor,
+                                          checkedColor: Colors.white,
+                                          gridBorderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        columnSize:
+                                            const PlutoGridColumnSizeConfig(
+                                          autoSizeMode: PlutoAutoSizeMode.scale,
+                                        ),
+                                        columnFilter:
+                                            const PlutoGridColumnFilterConfig(
+                                          filters: FilterHelper.defaultFilters,
+                                        ),
+                                        scrollbar:
+                                            const PlutoGridScrollbarConfig(
+                                          isAlwaysShown: false,
+                                          scrollbarThickness: 8,
+                                          scrollbarThicknessWhileDragging: 10,
                                         ),
                                       ),
-                                    ],
-                                  );
-                                },
+                                      columns: [
+                                        PlutoColumn(
+                                          readOnly: true,
+                                          enableEditingMode: false,
+                                          title: 'Id',
+                                          field: 'IdField',
+                                          type: PlutoColumnType.text(),
+                                        ),
+                                        PlutoColumn(
+                                          enableEditingMode: false,
+                                          title: 'First Name',
+                                          field: 'FirstNameField',
+                                          type: PlutoColumnType.text(),
+                                        ),
+
+                                        PlutoColumn(
+                                          readOnly: true,
+                                          enableEditingMode: false,
+                                          title: 'Second Name',
+                                          field: 'SecondNameField',
+                                          type: PlutoColumnType.text(),
+                                        ),
+
+                                        /// Text Column definition
+                                        PlutoColumn(
+                                          readOnly: true,
+                                          enableEditingMode: false,
+                                          title: 'Third Name',
+                                          field: 'ThirdNameField',
+                                          type: PlutoColumnType.text(),
+                                        ),
+                                        PlutoColumn(
+                                          readOnly: true,
+                                          title: 'Cohort',
+                                          field: 'CohortField',
+                                          cellPadding: EdgeInsets.zero,
+                                          // titlePadding: EdgeInsets.zero,
+                                          type: PlutoColumnType.text(),
+                                          enableEditingMode: false,
+                                        ),
+                                        PlutoColumn(
+                                          readOnly: true,
+                                          title: 'Grade',
+                                          field: 'GradeField',
+                                          type: PlutoColumnType.text(),
+                                          cellPadding: EdgeInsets.zero,
+                                          enableEditingMode: false,
+                                        ),
+
+                                        PlutoColumn(
+                                          readOnly: true,
+                                          title: 'Class Room',
+                                          field: 'ClassRoomField',
+                                          type: PlutoColumnType.text(),
+                                          cellPadding: EdgeInsets.zero,
+                                          enableEditingMode: false,
+                                        ),
+                                        PlutoColumn(
+                                          readOnly: true,
+                                          enableEditingMode: false,
+                                          title: 'Second Language',
+                                          field: 'LanguageField',
+                                          type: PlutoColumnType.text(),
+                                          footerRenderer: (footerRenderer) {
+                                            return PlutoAggregateColumnFooter(
+                                              rendererContext: footerRenderer,
+                                              type: PlutoAggregateColumnType
+                                                  .count,
+                                              filter: (cell) => true,
+                                              format: 'count : #,###',
+                                              alignment: Alignment.center,
+                                            );
+                                          },
+                                        ),
+                                        PlutoColumn(
+                                          enableEditingMode: false,
+                                          title: 'Actions',
+                                          field: 'ActionsField',
+                                          type: PlutoColumnType.text(),
+                                          renderer: (rendererContext) {
+                                            return Row(
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                    Icons.remove,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                      rows: controller.includedStudentsRows,
+                                      onChanged:
+                                          (PlutoGridOnChangedEvent event) {},
+                                      onLoaded:
+                                          (PlutoGridOnLoadedEvent event) {},
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
