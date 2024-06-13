@@ -139,3 +139,13 @@ class ControlMissingBindings extends Bindings {
     // );
   }
 }
+
+class CreateControlMissionBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<CreateControlMissionController>(
+      () => CreateControlMissionController(),
+      fenix: true,
+    );
+  }
+}
