@@ -1,4 +1,6 @@
+import 'package:control_system/Data/Models/exam_room/exam_room_res_model.dart';
 import 'package:control_system/presentation/views/control_mission/widgets/create_mission_widget.dart';
+import 'package:control_system/presentation/views/control_mission/widgets/distribute_students.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -130,6 +132,19 @@ class AppGoRouter {
               final String id = extra?['id'] ?? 'defaultId';
               return DistributionScreen(name: name, id: id);
             },
+            routes: [
+              GoRoute(
+                path: AppRoutesNamesAndPaths.distributeStudentsScreenPath,
+                name: AppRoutesNamesAndPaths.distributeStudentsScreenName,
+                builder: (context, state) {
+                  return DistributeStudents(
+                    currentExamRoom: ExamRoomResModel.fromExtra(
+                      state.extra as Map<String, String>?,
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: AppRoutesNamesAndPaths.createMissionScreenPath,
