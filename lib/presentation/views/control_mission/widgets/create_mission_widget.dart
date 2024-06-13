@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/controllers/control_mission/create_control_mission.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:enhance_stepper/enhance_stepper.dart';
@@ -9,14 +10,13 @@ import 'package:multi_dropdown/models/value_item.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:universal_html/html.dart';
 
-import '../../../../domain/controllers/control_mission/control_mission_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
-class CreateMissionScreen extends GetView<ControlMissionController> {
+class CreateMissionScreen extends GetView<CreateControlMissionController> {
   CreateMissionScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
@@ -29,8 +29,8 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 20),
-        child: GetBuilder<ControlMissionController>(
-          builder: (controller) => controller.educationYearList.isEmpty
+        child: GetBuilder<CreateControlMissionController>(
+          builder: (controller) => controller.isLoading
               ? const Center(child: CircularProgressIndicator())
               : Form(
                   key: _formKey,
@@ -117,6 +117,9 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                       onOptionSelected: (value) {
                         formFieldState.didChange(value);
                         controller.selectedEducationYear = value;
+                        debugPrint(
+                          controller.selectedEducationYear.toString(),
+                        );
                         controller.selectedStartDate = null;
                         controller.selectedEndDate = null;
                         controller.update();
