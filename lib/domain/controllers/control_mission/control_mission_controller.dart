@@ -350,6 +350,9 @@ class ControlMissionController extends GetxController {
           ),
     );
     update();
+    excludedStudentsRows.clear();
+    includedStudentsStateManager?.setPage(1);
+    excludedStudentsStateManager?.setPage(1);
   }
 
   bool canMoveToNextStep() {
