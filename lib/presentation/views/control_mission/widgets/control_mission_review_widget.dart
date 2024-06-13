@@ -2,8 +2,7 @@ import 'package:control_system/Data/Models/control_mission/control_mission_model
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../Data/Models/control_mission/control_mission_model.dart';
-import '../../../../domain/controllers/control_mission/complete_missions_controller.dart';
+import '../../../../domain/controllers/control_mission/distribution_controller.dart';
 import '../../../../domain/controllers/control_mission/control_mission_controller.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
@@ -82,8 +81,14 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                           // // controller.filterStudentsByGrades();
                           // controller.selectedMission.value =
                           //     controller.missions[missionResponseindex];
-                          context.goNamed(AppRoutesNamesAndPaths
-                              .distributioncreateMissionScreenName);
+                          context.goNamed(
+                            AppRoutesNamesAndPaths
+                                .distributioncreateMissionScreenName,
+                            extra: {
+                              'name': controlMission.name.toString(),
+                              'id': '123'
+                            },
+                          );
                         },
                         child: Container(
                           width: 200,

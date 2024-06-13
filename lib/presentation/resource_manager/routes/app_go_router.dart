@@ -125,8 +125,10 @@ class AppGoRouter {
             path: AppRoutesNamesAndPaths.distributioncreateMissionScreenPath,
             name: AppRoutesNamesAndPaths.distributioncreateMissionScreenName,
             builder: (context, state) {
-
-              return const DistributionScreen();
+              final extra = state.extra as Map<String, String>?;
+              final String name = extra?['name'] ?? 'defaultName';
+              final String id = extra?['id'] ?? 'defaultId';
+              return DistributionScreen(name: name, id: id);
             },
           ),
           GoRoute(
