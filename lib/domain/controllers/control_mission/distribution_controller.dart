@@ -1,22 +1,23 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get/get.dart';
-import '../../../Data/Models/exam_room/exam_room_model.dart';
+
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
+import '../../../Data/Models/exam_room/exam_rooms_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class DistributionController extends GetxController {
-  List<ExamRoomModel> listExamRoom = [];
+  List<ExamRoomResModel> listExamRoom = [];
   bool isLodingGetClassesRooms = false;
   Future<void> getExamRoomByControlMissionId(int controlMissionId) async {
     isLodingGetClassesRooms = true;
     update();
 
-    final response = await ResponseHandler<ExamRoomResModel>().getResponse(
+    final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
       path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
-      converter: ExamRoomResModel.fromJson,
+      converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
 
