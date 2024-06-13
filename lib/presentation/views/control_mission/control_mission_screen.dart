@@ -1,11 +1,11 @@
 import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:control_system/presentation/views/control_mission/widgets/control_mission_quick_review_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/control_mission_controller.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../base_screen.dart';
+import 'widgets/control_mission_review_widget.dart';
 import 'widgets/header_mission_widget.dart';
 
 class ControlMissionScreen extends GetView<ControlMissionController> {
@@ -82,7 +82,7 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
                 child: ListView.builder(
                   itemCount: controller.controlMissionList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ControlMissionQuickReviewWidget(
+                    return ControlMissionReviewWidget(
                       controlMission: controller.controlMissionList[index],
                     );
                   },
