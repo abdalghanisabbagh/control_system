@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/education_year/education_year_model.dart';
 import 'package:control_system/Data/Models/education_year/educations_years_res_model.dart';
-import 'package:control_system/Data/Models/exam_room/exam_room_res_model.dart';
+import 'package:control_system/Data/Models/exam_room/exam_rooms_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dartz/dartz.dart';
@@ -31,9 +31,9 @@ class ControlMissionController extends GetxController {
   Future<void> getExamRoomByControlMissionId(int controlMissionId) async {
     isLodingGetClassesRooms = true;
     update();
-    final response = await ResponseHandler<ExamRoomResModel>().getResponse(
+    final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
       path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
-      converter: ExamRoomResModel.fromJson,
+      converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
 
