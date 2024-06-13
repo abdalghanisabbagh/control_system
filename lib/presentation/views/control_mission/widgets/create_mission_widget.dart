@@ -16,15 +16,11 @@ import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
-final _formKey = GlobalKey<FormState>();
-
 class CreateMissionScreen extends GetView<ControlMissionController> {
   CreateMissionScreen({super.key});
 
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController missionNameController = TextEditingController();
-
-  final includedPlutoGridWidgetKey = GlobalKey<PlutoGridState>();
-  final excludedPlutoGridWidgetKey = GlobalKey<PlutoGridState>();
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +306,6 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
             showChipSelect: true,
             onOptionSelected: (value) {
               controller.updateSelectedGrades(value);
-              includedPlutoGridWidgetKey.currentState!.stateManager.setPage(1);
             },
           ),
           const SizedBox(height: 10),
@@ -325,7 +320,6 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
           SizedBox(
             height: 400,
             child: PlutoGrid(
-              key: includedPlutoGridWidgetKey,
               createFooter: (stateManager) {
                 stateManager.setPageSize(50, notify: false);
                 return PlutoPagination(
@@ -439,29 +433,7 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            controller.excludedStudentsRows.add(controller
-                                .includedStudentsRows
-                                .firstWhere((element) =>
-                                    element.cells['IdField']!.value ==
-                                    rendererContext
-                                        .row.cells['IdField']!.value));
-                            controller.includedStudentsRows.removeWhere(
-                                (element) =>
-                                    element.cells['IdField']!.value ==
-                                    rendererContext
-                                        .row.cells['IdField']!.value);
-                            includedPlutoGridWidgetKey
-                                .currentState!.stateManager
-                                .notifyListeners();
-                            controller.excludedStudentsRows.length == 1
-                                ?
-                                // controller.update(),
-                                excludedPlutoGridWidgetKey
-                                    .currentState!.stateManager
-                                    .setPage(1)
-                                : excludedPlutoGridWidgetKey
-                                    .currentState!.stateManager
-                                    .notifyListeners();
+                            controller.excludeStudent(rendererContext);
                           },
                           icon: const Icon(
                             Icons.remove,
@@ -475,7 +447,9 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
               ],
               rows: controller.includedStudentsRows,
               onChanged: (PlutoGridOnChangedEvent event) {},
-              onLoaded: (PlutoGridOnLoadedEvent event) {},
+              onLoaded: (PlutoGridOnLoadedEvent event) {
+                controller.includedStudentsStateManager = event.stateManager;
+              },
             ),
           ),
           const SizedBox(height: 10),
@@ -490,7 +464,6 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
           SizedBox(
             height: 400,
             child: PlutoGrid(
-              key: excludedPlutoGridWidgetKey,
               createFooter: (stateManager) {
                 stateManager.setPageSize(50, notify: false);
                 return PlutoPagination(
@@ -604,23 +577,7 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            controller.includedStudentsRows.add(controller
-                                .excludedStudentsRows
-                                .firstWhere((element) =>
-                                    element.cells['IdField']!.value ==
-                                    rendererContext
-                                        .row.cells['IdField']!.value));
-                            controller.excludedStudentsRows.removeWhere(
-                                (element) =>
-                                    element.cells['IdField']!.value ==
-                                    rendererContext
-                                        .row.cells['IdField']!.value);
-                            excludedPlutoGridWidgetKey
-                                .currentState!.stateManager
-                                .notifyListeners();
-                            includedPlutoGridWidgetKey
-                                .currentState!.stateManager
-                                .notifyListeners();
+                            controller.includeStudent(rendererContext);
                           },
                           icon: const Icon(
                             Icons.add,
@@ -634,7 +591,9 @@ class CreateMissionScreen extends GetView<ControlMissionController> {
               ],
               rows: controller.excludedStudentsRows,
               onChanged: (PlutoGridOnChangedEvent event) {},
-              onLoaded: (PlutoGridOnLoadedEvent event) {},
+              onLoaded: (PlutoGridOnLoadedEvent event) {
+                controller.excludedStudentsStateManager = event.stateManager;
+              },
             ),
           ),
         ],
