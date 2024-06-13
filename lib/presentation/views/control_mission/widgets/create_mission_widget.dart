@@ -9,7 +9,7 @@ import 'package:multi_dropdown/models/value_item.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:universal_html/html.dart';
 
-import '../../../../domain/controllers/control_mission_controller.dart';
+import '../../../../domain/controllers/control_mission/control_mission_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';

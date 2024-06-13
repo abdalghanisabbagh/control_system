@@ -1,16 +1,17 @@
 import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../domain/controllers/control_mission_controller.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../Data/Models/control_mission/control_mission_model.dart';
+import '../../../../domain/controllers/control_mission/complete_missions_controller.dart';
+import '../../../../domain/controllers/control_mission/control_mission_controller.dart';
 import '../../../resource_manager/index.dart';
+import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
-class ControlMissionReviewWidget
-    extends GetView<ControlMissionController> {
-  final ControlMissionModel controlMission;
+class ControlMissionReviewWidget extends GetView<ControlMissionController> {
+  final ControlMissionResModel controlMission;
 
-  const ControlMissionReviewWidget(
-      {super.key, required this.controlMission});
+  const ControlMissionReviewWidget({super.key, required this.controlMission});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class ControlMissionReviewWidget
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -69,35 +70,41 @@ class ControlMissionReviewWidget
           Column(
             children: [
               Expanded(
-                child: InkWell(
-                  onTap: () async {
-                    // controller.getDetialsControlMissionById(
-                    //     missionId:
-                    //         controller.missions[missionResponseindex].id!);
-                    // // controller.filterStudentsByGrades();
-                    // controller.selectedMission.value =
-                    //     controller.missions[missionResponseindex];
-                    // Get.toNamed(Routes.distribution);
-                  },
-                  child: Container(
-                    width: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
+                child: GetBuilder<DistributionController>(
+                    init: DistributionController(),
+                    builder: (distributionController) {
+                      return InkWell(
+                        onTap: () async {
+                          distributionController.getExamRoomByControlMissionId(
+                              controlMission.iD!);
+                          // controller
+                          //     .getExamRoomByControlMissionId(controlMission.iD!);
+                          // // controller.filterStudentsByGrades();
+                          // controller.selectedMission.value =
+                          //     controller.missions[missionResponseindex];
+                          context.goNamed(AppRoutesNamesAndPaths
+                              .distributioncreateMissionScreenName);
+                        },
+                        child: Container(
+                          width: 200,
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                              color: ColorManager.glodenColor),
+                          child: Center(
+                            child: Text(
+                              "Distribution",
+                              style: nunitoRegular.copyWith(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
                         ),
-                        color: ColorManager.glodenColor),
-                    child: Center(
-                      child: Text(
-                        "Distribution",
-                        style: nunitoRegular.copyWith(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                      );
+                    }),
               ),
               Expanded(
                 child: InkWell(

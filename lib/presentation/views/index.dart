@@ -7,7 +7,6 @@ export 'class_rooms/class_rooms_screen.dart';
 export 'cohort_settings/cohort_settings_screen.dart';
 export 'control_mission/control_mission_screen.dart';
 export 'dashboard/dashboard_screen.dart';
-export 'distribution/distribution_screen.dart';
 export 'exam_screen/exam_room_screen.dart';
 export 'exam_screen/widgets/render_seat_exam.dart';
 export 'home/home_screen.dart';

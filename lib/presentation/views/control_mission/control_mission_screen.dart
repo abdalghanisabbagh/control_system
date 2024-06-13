@@ -2,7 +2,7 @@ import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../domain/controllers/control_mission_controller.dart';
+import '../../../domain/controllers/control_mission/control_mission_controller.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../base_screen.dart';
 import 'widgets/control_mission_review_widget.dart';

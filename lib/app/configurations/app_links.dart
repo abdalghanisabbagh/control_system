@@ -51,7 +51,7 @@ class EducationYearsLinks {
 
 class ControlMissionLinks {
   static const controlMission = 'control-mission';
-  static const controlMissionEducationYear = 'control-mission/education-year';
+  static const controlMissionEducationYear = 'education-year';
   static const controlMissionSchool = 'control-mission/school';
 }
 

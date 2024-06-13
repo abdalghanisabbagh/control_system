@@ -30,14 +30,23 @@ class AppRoutesNamesAndPaths {
   static const String createMissionScreenName = 'Create Mission';
   // createMissionScreen
   static const String createMissionScreenPath = 'create-mission';
+  static const String distributioncreateMissionScreenPath =
+      'distributioncreateMissionScreenPath';
+  static const String distributioncreateMissionScreenName =
+      'distributioncreateMissionScreenName';
+
+  static const String reviewAndDetailsMissionPath =
+      'reviewAndDetailsMissionPath';
+  static const String reviewAndDetailsMissionName =
+      'reviewAndDetailsMissionPath';
 
   static const String dashBoardScreenName = 'Dashboard';
   // dashBoardScreen
   static const String dashBoardScreenPath = '/dashboard';
 
-  static const String distributionScreenName = 'Distribution';
-  // distributionScreen
-  static const String distributionScreenPath = '/distribution';
+  // static const String distributionScreenName = 'Distribution';
+  // // distributionScreen
+  // static const String distributionScreenPath = '/distribution';
 
   static const String examRoomScreenName = 'Exam Room';
   // examRoomScreen

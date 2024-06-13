@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
 import 'package:control_system/Data/Models/education_year/education_year_model.dart';
 import 'package:control_system/Data/Models/education_year/educations_years_res_model.dart';
+import 'package:control_system/Data/Models/exam_room/exam_room_res_model.dart';
 import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
 import 'package:control_system/Data/Models/school/grade_response/grades_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
@@ -53,40 +54,40 @@ class ControlMissionController extends GetxController {
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
   ValueItem? selectedItemEducationYear;
 
-  // Future<void> getExamRoomByControlMissionId(int controlMissionId) async {
-  //   isLodingGetClassesRooms = true;
-  //   update();
+  Future<void> getExamRoomByControlMissionId(int controlMissionId) async {
+    isLodingGetClassesRooms = true;
+    update();
 
-  //   final response = await ResponseHandler<ExamRoomResModel>().getResponse(
-  //     path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
-  //     converter: ExamRoomResModel.fromJson,
-  //     type: ReqTypeEnum.GET,
-  //   );
+    final response = await ResponseHandler<ExamRoomResModel>().getResponse(
+      path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
+      converter: ExamRoomResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
 
-  //   response.fold(
-  //     (l) {
-  //       MyAwesomeDialogue(
-  //         title: 'title',
-  //         desc: l.message,
-  //         dialogType: DialogType.error,
-  //       ).showDialogue(
-  //         Get.key.currentContext!,
-  //       );
-  //     },
-  //     (r) {
-  //     //  print("dfghjk");
-  //       // educationYearList = r.data!;
-  //       // List<ValueItem> items = r.data!
-  //       //     .map((item) => ValueItem(label: item.name!, value: item.id))
-  //       //     .toList();
-  //       // optionsEducationYear = items;
-  //       update();
-  //     },
-  //   );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+      //  print("dfghjk");
+        // educationYearList = r.data!;
+        // List<ValueItem> items = r.data!
+        //     .map((item) => ValueItem(label: item.name!, value: item.id))
+        //     .toList();
+        // optionsEducationYear = items;
+        update();
+      },
+    );
 
-  //   isLodingGetClassesRooms = false;
-  //   update();
-  // }
+    isLodingGetClassesRooms = false;
+    update();
+  }
 
   Future<void> getEducationYears() async {
     isLodingGetEducationYears = true;

@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../../domain/bindings/bindings.dart';
 import '../../../domain/controllers/index.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
+import '../../views/control_mission/distribution/distribution.dart';
+import '../../views/control_mission/widgets/review_mission.dart';
 import '../../views/index.dart';
 import 'app_routes_names_and_paths.dart';
 
@@ -112,6 +114,21 @@ class AppGoRouter {
           return const ControlMissionScreen();
         },
         routes: [
+          GoRoute(
+            path: AppRoutesNamesAndPaths.reviewAndDetailsMissionPath,
+            name: AppRoutesNamesAndPaths.reviewAndDetailsMissionName,
+            builder: (context, state) {
+              return const ReviewAndDetailsMission();
+            },
+          ),
+          GoRoute(
+            path: AppRoutesNamesAndPaths.distributioncreateMissionScreenPath,
+            name: AppRoutesNamesAndPaths.distributioncreateMissionScreenName,
+            builder: (context, state) {
+
+              return const DistributionScreen();
+            },
+          ),
           GoRoute(
             path: AppRoutesNamesAndPaths.createMissionScreenPath,
             name: AppRoutesNamesAndPaths.createMissionScreenName,
@@ -236,16 +253,16 @@ class AppGoRouter {
           return true;
         },
       ),
-      GoRoute(
-        path: AppRoutesNamesAndPaths.distributionScreenPath,
-        name: AppRoutesNamesAndPaths.distributionScreenName,
-        builder: (context, state) {
-          return const DistributionScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
+      // GoRoute(
+      //   path: AppRoutesNamesAndPaths.distributionScreenPath,
+      //   name: AppRoutesNamesAndPaths.distributionScreenName,
+      //   builder: (context, state) {
+      //     return const DistributionScreen();
+      //   },
+      //   onExit: (context, state) {
+      //     return true;
+      //   },
+      // ),
     ],
   );
 }

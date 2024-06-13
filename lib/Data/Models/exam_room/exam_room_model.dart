@@ -1,5 +1,6 @@
 class ExamRoomModel {
   ExamRoomModel({
+    this.id,
     this.controlMissionID,
     this.schoolClassID,
     this.name,
@@ -8,6 +9,7 @@ class ExamRoomModel {
   });
 
   ExamRoomModel.fromJson(Map<String, dynamic> json) {
+    id = json['ID'];
     controlMissionID = json['Control_Mission_ID'];
     schoolClassID = json['School_Class_ID'];
     name = json['Name'];
@@ -16,6 +18,7 @@ class ExamRoomModel {
   }
 
   int? capacity;
+  int? id;
   int? controlMissionID;
   String? name;
   int? schoolClassID;
@@ -23,6 +26,7 @@ class ExamRoomModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = id;
     data['Control_Mission_ID'] = controlMissionID;
     data['School_Class_ID'] = schoolClassID;
     data['Name'] = name;
