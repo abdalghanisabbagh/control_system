@@ -125,7 +125,6 @@ class AppGoRouter {
             path: AppRoutesNamesAndPaths.distributioncreateMissionScreenPath,
             name: AppRoutesNamesAndPaths.distributioncreateMissionScreenName,
             builder: (context, state) {
-
               return const DistributionScreen();
             },
           ),
@@ -133,6 +132,7 @@ class AppGoRouter {
             path: AppRoutesNamesAndPaths.createMissionScreenPath,
             name: AppRoutesNamesAndPaths.createMissionScreenName,
             builder: (context, state) {
+              CreateControlMissionBindings().dependencies();
               return CreateMissionScreen();
             },
           ),
