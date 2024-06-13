@@ -122,6 +122,14 @@ class ControlMissionController extends GetxController {
   }
 
   Future<bool> addControlMission() async {
+    if (selectedGradesIds.isEmpty) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: 'Please select grades',
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      return false;
+    }
     bool success = false;
     isLoading = true;
     update();
@@ -136,6 +144,7 @@ class ControlMissionController extends GetxController {
         'Name': batchName,
         'Start_Date': selectedStartDate!.convertDateStringToIso8601String(),
         'End_Date': selectedEndDate!.convertDateStringToIso8601String(),
+        'grades_ID': selectedGradesIds
       },
     );
 
