@@ -27,6 +27,10 @@ class AppRoutesNamesAndPaths {
   // controlMissionScreen
   static const String controlBatchScreenPath = '/control-batch';
 
+  static const String distributeStudentsScreenName = 'Distribute Students';
+  // distributeStudentScreen
+  static const String distributeStudentsScreenPath = 'distribute-students';
+
   static const String createMissionScreenName = 'Create Mission';
   // createMissionScreen
   static const String createMissionScreenPath = 'create-mission';
