@@ -269,6 +269,11 @@ class DistributionScreen extends GetView<DistributionController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
+                                                context.goNamed(
+                                                  AppRoutesNamesAndPaths
+                                                      .distributeStudentsScreenName,
+                                                  extra: room.toExtra(),
+                                                );
                                                 // DistrbutionController
                                                 //     distrbutionController =
                                                 //     Get.find();
