@@ -27,6 +27,8 @@ import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 
 class ControlMissionController extends GetxController {
+  PlutoGridStateManager? includedStudentsStateManager;
+  PlutoGridStateManager? excludedStudentsStateManager;
   List<EducationYearModel> educationYearList = [];
   String? batchName;
   String? selectedStartDate;
@@ -75,7 +77,7 @@ class ControlMissionController extends GetxController {
         );
       },
       (r) {
-      //  print("dfghjk");
+        //  print("dfghjk");
         // educationYearList = r.data!;
         // List<ValueItem> items = r.data!
         //     .map((item) => ValueItem(label: item.name!, value: item.id))
@@ -158,6 +160,14 @@ class ControlMissionController extends GetxController {
   }
 
   Future<bool> addControlMission() async {
+    if (selectedGradesIds.isEmpty) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: 'Please select grades',
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      return false;
+    }
     bool success = false;
     isLoading = true;
     update();
@@ -172,6 +182,7 @@ class ControlMissionController extends GetxController {
         'Name': batchName,
         'Start_Date': selectedStartDate!.convertDateStringToIso8601String(),
         'End_Date': selectedEndDate!.convertDateStringToIso8601String(),
+        'grades_ID': selectedGradesIds
       },
     );
 
@@ -360,6 +371,30 @@ class ControlMissionController extends GetxController {
       currentStep--;
     }
     update();
+  }
+
+  void excludeStudent(PlutoColumnRendererContext rendererContext) {
+    excludedStudentsRows.add(includedStudentsRows.firstWhere((element) =>
+        element.cells['IdField']!.value ==
+        rendererContext.row.cells['IdField']!.value));
+    includedStudentsRows.removeWhere((element) =>
+        element.cells['IdField']!.value ==
+        rendererContext.row.cells['IdField']!.value);
+    includedStudentsStateManager?.notifyListeners();
+    excludedStudentsRows.length == 1
+        ? excludedStudentsStateManager?.setPage(1)
+        : excludedStudentsStateManager?.notifyListeners();
+  }
+
+  void includeStudent(PlutoColumnRendererContext rendererContext) {
+    includedStudentsRows.add(excludedStudentsRows.firstWhere((element) =>
+        element.cells['IdField']!.value ==
+        rendererContext.row.cells['IdField']!.value));
+    excludedStudentsRows.removeWhere((element) =>
+        element.cells['IdField']!.value ==
+        rendererContext.row.cells['IdField']!.value);
+    includedStudentsStateManager?.notifyListeners();
+    excludedStudentsStateManager?.notifyListeners();
   }
 
   @override
