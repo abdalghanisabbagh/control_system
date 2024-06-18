@@ -54,7 +54,7 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
                 return Expanded(
                   child: Center(
                     child: Text(
-                      'please Select Education Year',
+                      'Please Select Education Year',
                       style: nunitoRegular.copyWith(
                         color: ColorManager.bgSideMenu,
                         fontSize: 23,

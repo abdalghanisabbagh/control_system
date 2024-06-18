@@ -38,4 +38,8 @@ class DistributionController extends GetxController {
     );
     isLodingGetClassesRooms = false;
   }
+
+
+
+
 }
