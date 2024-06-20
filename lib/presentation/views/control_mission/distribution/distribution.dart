@@ -41,6 +41,7 @@ class DistributionScreen extends GetView<DistributionController> {
                 InkWell(
                     onTap: () {
                       MyDialogs.showDialog(context, AddExamRoomWidget());
+                      controller.getClassesRoomsBySchoolId();
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -54,7 +55,7 @@ class DistributionScreen extends GetView<DistributionController> {
               ],
             ),
             GetBuilder<DistributionController>(
-                builder: (_) => controller.isLodingGetClassesRooms
+                builder: (_) => controller.isLodingGetExamRooms
                     ? const Expanded(
                         child: Center(
                           child: CircularProgressIndicator(),

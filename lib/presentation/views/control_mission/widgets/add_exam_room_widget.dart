@@ -1,10 +1,14 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../domain/controllers/control_mission/distribution_controller.dart';
+import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/index.dart';
 
 // ignore: must_be_immutable
-class AddExamRoomWidget extends StatelessWidget {
+class AddExamRoomWidget extends GetView<DistributionController> {
   AddExamRoomWidget({
     super.key,
   });
@@ -17,68 +21,29 @@ class AddExamRoomWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Obx(
-        //   () => controller.allrooms.isEmpty
-        //       ? const Center(
-        //           child: CircularProgressIndicator(),
-        //         )
-        //       : Column(
-        //           children: [
-        //             DropdownSearch<ClassResponse>(
-        //               items: controller.allrooms,
-        //               selectedItem: controller.selectedRoom?.value,
-        //               itemAsString: (item) =>
-        //                   "${item.className} - ${item.floorName} - ${item.buildName}",
-        //               dropdownDecoratorProps: DropDownDecoratorProps(
-        //                 dropdownSearchDecoration: InputDecoration(
-        //                     focusedBorder: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.glodenColor),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     border: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.glodenColor),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     hintText: "Select Class Room",
-        //                     hintStyle: nunitoRegular.copyWith(
-        //                         fontSize: 16, color: ColorManager.black)),
-        //               ),
-        //               onChanged: (
-        //                 (value) {
-        //                   controller.selectedRoom = value!.obs;
-        //                   controller.selectedRoom!.call();
-        //                 },
-        //               ),
-        //             ),
-        //             const SizedBox(
-        //               height: 10,
-        //             ),
-        //             DropdownSearch<String>(
-        //               items: controller.roomType,
-        //               dropdownDecoratorProps: DropDownDecoratorProps(
-        //                 dropdownSearchDecoration: InputDecoration(
-        //                     focusedBorder: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.glodenColor),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     border: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.glodenColor),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     hintText: "Select Class Type",
-        //                     hintStyle: nunitoRegular.copyWith(
-        //                         fontSize: 16, color: ColorManager.black)),
-        //               ),
-        //               onChanged: (
-        //                 (value) {
-        //                   controller.selectedroomType = value!.obs;
-        //                   controller.selectedroomType!.call();
-        //                 },
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        // ),
+        GetBuilder<DistributionController>(
+          builder: (_) {
+            if (controller.isLoadingGetClassRoom) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (controller.optionsClassRoom.isEmpty) {
+              return const Text('No items available');
+            }
+
+            return SizedBox(
+              width: 500,
+              child: MultiSelectDropDownView(
+                hintText: "Select Education Year",
+                onOptionSelected: (selectedItem) {
+                  controller.setSelectedItemClassRoom(selectedItem);
+                },
+                showChipSelect: false,
+                options: controller.optionsClassRoom,
+              ),
+            );
+          },
+        ),
         const SizedBox(
           height: 10,
         ),
@@ -87,10 +52,7 @@ class AddExamRoomWidget extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextFormField(
-                  controller: newname,
-                  decoration: const InputDecoration(hintText: "Room New Name"),
-                ),
+                MytextFormFiled(controller: newname, title: "Room Name"),
               ],
             )),
         const SizedBox(
@@ -98,30 +60,8 @@ class AddExamRoomWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(11),
-                    ),
-                    color: ColorManager.bgSideMenu,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Back",
-                      style: nunitoRegular.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            const Expanded(
+              child: ElevatedBackButton(),
             ),
             const SizedBox(
               width: 10,
