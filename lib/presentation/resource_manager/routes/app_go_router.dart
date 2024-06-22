@@ -127,9 +127,16 @@ class AppGoRouter {
             path: AppRoutesNamesAndPaths.distributioncreateMissionScreenPath,
             name: AppRoutesNamesAndPaths.distributioncreateMissionScreenName,
             builder: (context, state) {
-              final extra = state.extra as Map<String, String>?;
-              final String name = extra?['name'] ?? 'defaultName';
-              final String id = extra?['id'] ?? 'defaultId';
+              final String name;
+              final String id;
+              if (state.extra != null && state.extra is Map<String, String>?) {
+                final extra = state.extra as Map<String, String>?;
+                name = extra?['name'] ?? 'defaultName';
+                id = extra?['id'] ?? 'defaultId';
+              } else {
+                name = 'defaultName';
+                id = 'defaultId';
+              }
               return DistributionScreen(name: name, id: id);
             },
             routes: [
@@ -137,11 +144,16 @@ class AppGoRouter {
                 path: AppRoutesNamesAndPaths.distributeStudentsScreenPath,
                 name: AppRoutesNamesAndPaths.distributeStudentsScreenName,
                 builder: (context, state) {
-                  return DistributeStudents(
-                    currentExamRoom: ExamRoomResModel.fromExtra(
-                      state.extra as Map<String, String>?,
-                    ),
-                  );
+                  return state.extra != null &&
+                          state.extra is Map<String, String>
+                      ? DistributeStudents(
+                          currentExamRoom: ExamRoomResModel.fromExtra(
+                            state.extra as Map<String, String>?,
+                          ),
+                        )
+                      : DistributeStudents(
+                          currentExamRoom: ExamRoomResModel(),
+                        );
                 },
               ),
             ],

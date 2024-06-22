@@ -54,4 +54,34 @@ class ControlMissionResModel {
     data['Active'] = active;
     return data;
   }
+
+  Map<String, String>? toExtra() {
+    return {
+      'ID': iD.toString(),
+      'Education_year_ID': educationYearID.toString(),
+      'Schools_ID': schoolsID.toString(),
+      'Name': name ?? '',
+      'Created_By': createdBy.toString(),
+      'Created_At': createdAt ?? '',
+      'Updated_By': updatedBy.toString(),
+      'Updated_At': updatedAt ?? '',
+      'Start_Date': startDate ?? '',
+      'End_Date': endDate ?? '',
+      'Active': active.toString(),
+    };
+  }
+
+  ControlMissionResModel.fromExtra(Map<String, String>? extra) {
+    iD = int.parse(extra?['ID'] ?? '0');
+    educationYearID = int.parse(extra?['Education_year_ID'] ?? '0');
+    schoolsID = int.parse(extra?['Schools_ID'] ?? '0');
+    name = extra?['Name'];
+    createdBy = int.parse(extra?['Created_By'] ?? '0');
+    createdAt = extra?['Created_At'];
+    updatedBy = int.parse(extra?['Updated_By'] ?? '0');
+    updatedAt = extra?['Updated_At'];
+    startDate = extra?['Start_Date'];
+    endDate = extra?['End_Date'];
+    active = int.parse(extra?['Active'] ?? '0');
+  }
 }
