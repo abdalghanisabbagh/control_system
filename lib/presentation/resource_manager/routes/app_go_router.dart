@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/bindings/bindings.dart';
-import '../../../domain/controllers/control_mission/distribution_controller.dart';
 import '../../../domain/controllers/index.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
 import '../../views/control_mission/distribution/distribution.dart';
@@ -148,16 +147,27 @@ class AppGoRouter {
                 path: AppRoutesNamesAndPaths.distributeStudentsScreenPath,
                 name: AppRoutesNamesAndPaths.distributeStudentsScreenName,
                 builder: (context, state) {
-                  return state.extra != null &&
-                          state.extra is Map<String, String>?
-                      ? DistributeStudents(
-                          currentExamRoom: ExamRoomResModel.fromExtra(
-                            state.extra as Map<String, String>?,
-                          ),
-                        )
-                      : DistributeStudents(
-                          currentExamRoom: ExamRoomResModel(),
-                        );
+                  final distributeController =
+                      Get.find<DistributeStudentsController>();
+                  if (state.extra != null &&
+                      state.extra is Map<String, String>?) {
+                    Map<String, String>? extra =
+                        state.extra as Map<String, String>?;
+                    if (extra?['Name'] != 'null') {
+                      distributeController.examRoomResModel =
+                          ExamRoomResModel.fromExtra(
+                        state.extra as Map<String, String>?,
+                      );
+                      return DistributeStudents(
+                        currentExamRoom: ExamRoomResModel.fromExtra(
+                          state.extra as Map<String, String>?,
+                        ),
+                      );
+                    }
+                  }
+                  return DistributeStudents(
+                    currentExamRoom: distributeController.examRoomResModel,
+                  );
                 },
               ),
             ],

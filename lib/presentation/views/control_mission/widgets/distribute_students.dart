@@ -4,7 +4,9 @@ import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class DistributeStudents extends StatelessWidget {
+import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
+
+class DistributeStudents extends GetView<DistributeStudentsController> {
   const DistributeStudents({super.key, required this.currentExamRoom});
 
   final ExamRoomResModel currentExamRoom;
