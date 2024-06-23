@@ -137,10 +137,10 @@ class ControlMissingBindings extends Bindings {
       () => DistributeStudentsController(),
       fenix: true,
     );
-    // Get.lazyPut<DistributionController>(
-    //   () => DistributionController(),
-    //   fenix: true,
-    // );
+    Get.lazyPut<DistributionController>(
+      () => DistributionController(),
+      fenix: true,
+    );
   }
 }
 
