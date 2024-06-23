@@ -1,6 +1,7 @@
 class StudentResModel {
   StudentResModel({
     this.iD,
+    this.blbId,
     this.gradesID,
     this.gradeName,
     this.schoolsID,
@@ -22,6 +23,7 @@ class StudentResModel {
 
   StudentResModel.fromJson(json) {
     iD = json['ID'];
+    blbId = json['Blb_Id'];
     gradesID = json['Grades_ID'];
     schoolsID = json['Schools_ID'];
     cohortID = json['Cohort_ID'];
@@ -60,6 +62,7 @@ class StudentResModel {
   int? gradesID;
   String? gradeName;
   int? iD;
+  int? blbId;
   int? schoolClassID;
   String? schoolClassName;
   int? schoolsID;
@@ -72,6 +75,7 @@ class StudentResModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ID'] = iD;
+    data['Blb_Id'] = blbId;
     data['Grades_ID'] = gradesID;
     data['Schools_ID'] = schoolsID;
     data['Cohort_ID'] = cohortID;
