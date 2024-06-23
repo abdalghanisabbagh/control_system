@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/bindings/bindings.dart';
+import '../../../domain/controllers/control_mission/distribution_controller.dart';
 import '../../../domain/controllers/index.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
 import '../../views/control_mission/distribution/distribution.dart';
@@ -127,15 +128,18 @@ class AppGoRouter {
             path: AppRoutesNamesAndPaths.distributioncreateMissionScreenPath,
             name: AppRoutesNamesAndPaths.distributioncreateMissionScreenName,
             builder: (context, state) {
+              final distributionController = Get.find<DistributionController>();
               final String name;
               final String id;
               if (state.extra != null && state.extra is Map<String, String>?) {
                 final extra = state.extra as Map<String, String>?;
-                name = extra?['name'] ?? 'defaultName';
-                id = extra?['id'] ?? 'defaultId';
+                name = extra?['name'] ?? distributionController.name;
+                id = extra?['id'] ?? distributionController.id;
+                distributionController.name = name;
+                distributionController.id = id;
               } else {
-                name = 'defaultName';
-                id = 'defaultId';
+                name = distributionController.name;
+                id = distributionController.id;
               }
               return DistributionScreen(name: name, id: id);
             },
@@ -145,7 +149,7 @@ class AppGoRouter {
                 name: AppRoutesNamesAndPaths.distributeStudentsScreenName,
                 builder: (context, state) {
                   return state.extra != null &&
-                          state.extra is Map<String, String>
+                          state.extra is Map<String, String>?
                       ? DistributeStudents(
                           currentExamRoom: ExamRoomResModel.fromExtra(
                             state.extra as Map<String, String>?,

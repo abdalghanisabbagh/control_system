@@ -19,6 +19,8 @@ class DistributionController extends GetxController {
   bool isLoadingGetClassRoom = false;
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   ValueItem? selectedItemClassRoom;
+  String name = '';
+  String id = '';
 
   Future<void> getExamRoomByControlMissionId(int controlMissionId) async {
     isLodingGetExamRooms = true;
@@ -87,10 +89,5 @@ class DistributionController extends GetxController {
   void setSelectedItemClassRoom(List<ValueItem> items) {
     selectedItemClassRoom = items.first;
     update();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
   }
 }
