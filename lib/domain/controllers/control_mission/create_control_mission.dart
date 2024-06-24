@@ -43,6 +43,7 @@ class CreateControlMissionController extends GetxController {
   List<GradeResModel> grades = [];
   List<ValueItem> optionsGrades = [];
   List<int> selectedGradesIds = [];
+  List<int> includedStudentsIds = [];
 
   List<ClassRoomResModel> classesRooms = [];
 
@@ -284,6 +285,9 @@ class CreateControlMissionController extends GetxController {
     bool success = false;
     isLoading = true;
     update();
+    includedStudentsIds = includedStudentsRows
+        .map((e) => int.parse(e.cells['IdField']!.value))
+        .toList();
     final response =
         await ResponseHandler<ControlMissionResModel>().getResponse(
       path: ControlMissionLinks.controlMission,
@@ -295,7 +299,8 @@ class CreateControlMissionController extends GetxController {
         'Name': batchName,
         'Start_Date': selectedStartDate!.convertDateStringToIso8601String(),
         'End_Date': selectedEndDate!.convertDateStringToIso8601String(),
-        'grades_ID': selectedGradesIds
+        'grades_ID': selectedGradesIds,
+        'Student_IDs': includedStudentsIds
       },
     );
 
