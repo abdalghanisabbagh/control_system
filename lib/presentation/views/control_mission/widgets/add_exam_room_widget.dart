@@ -1,11 +1,13 @@
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../domain/controllers/control_mission/distribution_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
@@ -16,7 +18,7 @@ class AddExamRoomWidget extends GetView<DistributionController> {
   });
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController newname = TextEditingController();
+  TextEditingController newRoomName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,7 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                       },
                     ),
                     MytextFormFiled(
-                        controller: newname,
+                        controller: newRoomName,
                         title: "Room Name",
                         myValidation: Validations.requiredValidator),
                     const SizedBox(
@@ -119,7 +121,30 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                               if (formKey.currentState!.validate() &&
                                   controller.selectedItemClassRoom != null &&
                                   controller.selectedItemStage != null) {
-                                print("saaaaa");
+                                controller
+                                    .addNewExamRoom(
+                                        name: newRoomName.text,
+                                        stage:
+                                            controller.selectedItemStage!.label,
+                                        capacity: 30,
+                                        controlMissionId:
+                                            controller.controlMissionId,
+                                        schoolClassId: controller
+                                            .selectedItemClassRoom!.value)
+                                    .then(
+                                  (value) {
+                                    value
+                                        ? {
+                                            context.pop(),
+                                            MyFlashBar.showSuccess(
+                                              "The Student has been added successfully",
+                                              "Success",
+                                            ).show(context),
+                                          }
+                                        : null;
+                                  },
+                                );
+                                ;
                               }
                             },
                             child: Container(

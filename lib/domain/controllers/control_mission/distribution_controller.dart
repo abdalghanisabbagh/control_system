@@ -4,7 +4,6 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
-
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../../Data/Models/exam_room/exam_rooms_res_model.dart';
@@ -19,6 +18,7 @@ class DistributionController extends GetxController {
   bool isLodingGetExamRooms = false;
   bool isLoadingDeleteClassRoom = false;
   bool isLodingGetStageAndClassRoom = false;
+  bool isLodingAddExamRoom = false;
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsStage = <ValueItem>[];
   ValueItem? selectedItemClassRoom;
@@ -166,5 +166,51 @@ class DistributionController extends GetxController {
     await Future.wait([getStage(), getClassesRoomsBySchoolId()]);
     isLodingGetStageAndClassRoom = false;
     update();
+  }
+
+  Future<bool> addNewExamRoom({
+    required int controlMissionId,
+    required int schoolClassId,
+    required String name,
+    required String stage,
+    required int capacity,
+  }) async {
+    isLodingAddExamRoom = true;
+
+    bool addExamRoomHasBeenAdded = false;
+    update();
+
+    ResponseHandler<ExamRoomResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+        path: ExamLinks.examRooms,
+        converter: ExamRoomResModel.fromJson,
+        type: ReqTypeEnum.POST,
+        body: {
+          "Control_Mission_ID": controlMissionId,
+          "School_Class_ID": schoolClassId,
+          "Name": name,
+          "Stage": stage,
+          "Capacity": capacity
+        });
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      isLodingAddExamRoom = false;
+      addExamRoomHasBeenAdded = false;
+      update();
+    }, (result) {
+      getExamRoomByControlMissionId(controlMissionId);
+      // studentController.getStudents();
+      addExamRoomHasBeenAdded = true;
+      isLodingAddExamRoom = false;
+    });
+
+    update();
+    return addExamRoomHasBeenAdded;
   }
 }
