@@ -53,23 +53,19 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                         EnhanceStepper(
                           type: StepperType.vertical,
                           currentStep: controller.currentStep,
-                          onStepContinue: () => controller.currentStep == 1
+                          onStepContinue: () => controller.currentStep == 0
                               ? {
                                   controller.addControlMission().then(
                                     (value) async {
                                       if (value) {
-                                        controller.currentStep = 0;
-                                        controller.batchName = null;
-                                        controller.selectedEducationYear = null;
-                                        controller.selectedStartDate = null;
-                                        controller.selectedEndDate = null;
+                                        controller.currentStep = 1;
                                         MyFlashBar.showSuccess(
                                           'Mission created successfully',
                                           'Success',
                                         ).show(context);
                                         await Future.delayed(
-                                            const Duration(seconds: 2));
-                                        window.history.back();
+                                          const Duration(seconds: 2),
+                                        );
                                       } else {
                                         MyFlashBar.showError(
                                           'Failed to create mission',
@@ -79,9 +75,39 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                     },
                                   ),
                                 }
-                              : controller.canMoveToNextStep()
-                                  ? controller.continueToNextStep()
-                                  : null,
+                              : controller.currentStep == 1
+                                  ? {
+                                      controller
+                                          .createStudentSeatNumbers()
+                                          .then(
+                                        (value) async {
+                                          if (value) {
+                                            controller.currentStep = 0;
+                                            controller.batchName = null;
+                                            controller.selectedEducationYear =
+                                                null;
+                                            controller.selectedStartDate = null;
+                                            controller.selectedEndDate = null;
+                                            MyFlashBar.showSuccess(
+                                              'Mission created successfully',
+                                              'Success',
+                                            ).show(context);
+                                            await Future.delayed(
+                                              const Duration(seconds: 2),
+                                            );
+                                            window.history.back();
+                                          } else {
+                                            MyFlashBar.showError(
+                                              'Failed to create mission',
+                                              'Error',
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    }
+                                  : controller.canMoveToNextStep()
+                                      ? controller.continueToNextStep()
+                                      : null,
                           onStepCancel: () => controller.backToPreviousStep(),
                           steps: [
                             _firstStep(context),
@@ -207,7 +233,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                 .toString(),
                           ),
                           6,
-                          23,
+                          30,
                         ),
                       );
                       if (picked != null) {
@@ -251,14 +277,9 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                       ).then(
                         (picked) {
                           if (picked != null) {
-                            if (picked.day <
+                            if (picked.subtract(const Duration(days: 7)).day <
                                 DateTime.tryParse(
                                         controller.selectedStartDate!)!
-                                    .add(
-                                      const Duration(
-                                        days: 7,
-                                      ),
-                                    )
                                     .day) {
                               MyAwesomeDialogue(
                                 title: "Warning",
