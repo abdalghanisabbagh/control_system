@@ -262,6 +262,7 @@ class EditStudentWidget extends GetView<StudentController> {
                                 firstName: fnameController.text,
                                 secondName: mnameController.text,
                                 thirdName: lnameController.text,
+                                secondLang: sLangController.text,
                               )
                                   .then(
                                 (value) {

@@ -224,45 +224,46 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                           height: 20,
                         ),
 
-                      controller.isLodingAddStudent
-                          ? const CircularProgressIndicator()
-                          : InkWell(
-                              onTap: () {
-                                if (_formKey.currentState!.validate() &&
-                                    controller.selectedItemGrade != null &&
-                                    controller.selectedItemCohort != null &&
-                                    controller.selectedItemClassRoom != null) {
-                                  controller
-                                      .postAddNewStudent(
-                                    cohortId:
-                                        controller.selectedItemCohort!.value,
-                                    gradesId:
-                                        controller.selectedItemGrade!.value,
-                                    schoolClassId:
-                                        controller.selectedItemClassRoom!.value,
-                                    firstName: fnameController.text,
-                                    secondName: mnameController.text,
-                                    thirdName: lnameController.text,
-                                  )
-                                      .then(
-                                    (value) {
-                                      value
-                                          ? {
-                                              context.pop(),
-                                              MyFlashBar.showSuccess(
-                                                "The Student has been added successfully",
-                                                "Success",
-                                              ).show(context),
-                                            }
-                                          : null;
-                                    },
-                                  );
-                                }
-                              },
-                              child: Container(
-                                height: 50,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
+                        controller.isLodingAddStudent
+                            ? const CircularProgressIndicator()
+                            : InkWell(
+                                onTap: () {
+                                  if (_formKey.currentState!.validate() &&
+                                      controller.selectedItemGrade != null &&
+                                      controller.selectedItemCohort != null &&
+                                      controller.selectedItemClassRoom !=
+                                          null) {
+                                    controller.AddNewStudent(
+                                      blubID: int.parse(blbIdController.text),
+                                      cohortId:
+                                          controller.selectedItemCohort!.value,
+                                      gradesId:
+                                          controller.selectedItemGrade!.value,
+                                      schoolClassId: controller
+                                          .selectedItemClassRoom!.value,
+                                      firstName: fnameController.text,
+                                      secondName: mnameController.text,
+                                      thirdName: lnameController.text,
+                                      secondLang: sLangController.text,
+                                    ).then(
+                                      (value) {
+                                        value
+                                            ? {
+                                                context.pop(),
+                                                MyFlashBar.showSuccess(
+                                                  "The Student has been added successfully",
+                                                  "Success",
+                                                ).show(context),
+                                              }
+                                            : null;
+                                      },
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
                                     color: ColorManager.bgSideMenu,
                                     borderRadius: BorderRadius.circular(11),
                                   ),

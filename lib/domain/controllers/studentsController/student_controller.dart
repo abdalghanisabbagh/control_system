@@ -215,7 +215,7 @@ class StudentController extends GetxController {
     required int schoolClassId,
     required String firstName,
     required String secondName,
-    required String thirdName,
+    required String thirdName, required String secondLang,
   }) async {
     islodingEditStudent = true;
     update();
@@ -237,7 +237,8 @@ class StudentController extends GetxController {
           "First_Name": firstName,
           "Second_Name": secondName,
           "Third_Name": thirdName,
-          "Created_By": createdBy
+          "Created_By": createdBy,
+          "Second_Lang": secondLang,
         });
 
     response.fold((fauilr) {

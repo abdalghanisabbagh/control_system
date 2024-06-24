@@ -42,8 +42,6 @@ class AddNewStudentController extends GetxController {
     update();
   }
 
- 
-
   Future<bool> getGradesBySchoolId() async {
     update();
     bool gradeHasBeenAdded = false;
@@ -152,13 +150,15 @@ class AddNewStudentController extends GetxController {
     return cohortHasBeenAdded;
   }
 
-  Future<bool> postAddNewStudent({
+  Future<bool> AddNewStudent({
+    required int blubID,
     required int gradesId,
     required int cohortId,
     required int schoolClassId,
     required String firstName,
     required String secondName,
     required String thirdName,
+    required String secondLang,
   }) async {
     isLodingAddStudent = true;
 
@@ -166,6 +166,7 @@ class AddNewStudentController extends GetxController {
     bool addStudentHasBeenAdded = false;
     int schoolId = Hive.box('School').get('Id');
     int createdBy = Hive.box('Profile').get('ID');
+   
 
     ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
 
@@ -174,6 +175,7 @@ class AddNewStudentController extends GetxController {
         converter: StudentResModel.fromJson,
         type: ReqTypeEnum.POST,
         body: {
+          "Blb_Id": blubID,
           "Grades_ID": gradesId,
           "Schools_ID": schoolId,
           "Cohort_ID": cohortId,
@@ -181,7 +183,8 @@ class AddNewStudentController extends GetxController {
           "First_Name": firstName,
           "Second_Name": secondName,
           "Third_Name": thirdName,
-          "Created_By": createdBy
+          "Created_By": createdBy,
+          "Second_Lang": secondLang
         });
 
     response.fold((fauilr) {
