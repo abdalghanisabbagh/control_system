@@ -85,6 +85,10 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                           context.goNamed(
                             AppRoutesNamesAndPaths
                                 .distributioncreateMissionScreenName,
+                            extra: {
+                              'name': controlMission.name.toString(),
+                              'id': '123'
+                            },
                           );
                         },
                         child: Container(
