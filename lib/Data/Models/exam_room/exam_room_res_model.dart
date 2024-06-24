@@ -8,7 +8,7 @@ class ExamRoomResModel {
     this.capacity,
   });
 
-  ExamRoomResModel.fromJson(Map<String, dynamic> json) {
+  ExamRoomResModel.fromJson(json) {
     id = json['ID'];
     controlMissionID = json['Control_Mission_ID'];
     schoolClassID = json['School_Class_ID'];
