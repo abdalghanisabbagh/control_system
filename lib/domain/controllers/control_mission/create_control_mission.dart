@@ -38,6 +38,7 @@ class CreateControlMissionController extends GetxController {
   String? selectedStartDate;
   String? selectedEndDate;
   int currentStep = 0;
+  int controlMissionId = -1;
   bool isLodingGetEducationYears = false;
 
   List<GradeResModel> grades = [];
@@ -274,20 +275,9 @@ class CreateControlMissionController extends GetxController {
   }
 
   Future<bool> addControlMission() async {
-    if (selectedGradesIds.isEmpty) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: 'Please select grades',
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      return false;
-    }
     bool success = false;
     isLoading = true;
     update();
-    includedStudentsIds = includedStudentsRows
-        .map((e) => int.parse(e.cells['IdField']!.value))
-        .toList();
     final response =
         await ResponseHandler<ControlMissionResModel>().getResponse(
       path: ControlMissionLinks.controlMission,
@@ -299,8 +289,50 @@ class CreateControlMissionController extends GetxController {
         'Name': batchName,
         'Start_Date': selectedStartDate!.convertDateStringToIso8601String(),
         'End_Date': selectedEndDate!.convertDateStringToIso8601String(),
-        'grades_ID': selectedGradesIds,
-        'Student_IDs': includedStudentsIds
+      },
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+        success = false;
+      },
+      (r) {
+        controlMissionId = r.iD!;
+        success = true;
+      },
+    );
+    isLoading = false;
+    update();
+    return success;
+  }
+
+  Future<bool> createStudentSeatNumbers() async {
+    //   if (selectedGradesIds.isEmpty) {
+    //   MyAwesomeDialogue(
+    //     title: 'Error',
+    //     desc: 'Please select grades',
+    //     dialogType: DialogType.error,
+    //   ).showDialogue(Get.key.currentContext!);
+    //   return false;
+    // }
+    bool success = false;
+    includedStudentsIds = includedStudentsRows
+        .map((e) => int.parse(e.cells['IdField']!.value))
+        .toList();
+
+    final response = await ResponseHandler<void>().getResponse(
+      path: ControlMissionLinks.studentSeatNumbers,
+      converter: (_) {},
+      type: ReqTypeEnum.POST,
+      body: {
+        'Student_IDs': includedStudentsIds,
+        'controlMissionId': controlMissionId,
       },
     );
 
@@ -319,8 +351,7 @@ class CreateControlMissionController extends GetxController {
         success = true;
       },
     );
-    isLoading = false;
-    update();
+
     return success;
   }
 
