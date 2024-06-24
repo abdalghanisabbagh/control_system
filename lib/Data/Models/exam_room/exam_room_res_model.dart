@@ -1,3 +1,5 @@
+import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
+
 class ExamRoomResModel {
   ExamRoomResModel({
     this.id,
@@ -6,6 +8,7 @@ class ExamRoomResModel {
     this.name,
     this.stage,
     this.capacity,
+    this.controlMission,
   });
 
   ExamRoomResModel.fromJson(json) {
@@ -15,6 +18,7 @@ class ExamRoomResModel {
     name = json['Name'];
     stage = json['Stage'];
     capacity = json['Capacity'];
+    controlMission = ControlMissionResModel.fromJson(json['control_mission']);
   }
 
   int? capacity;
@@ -23,6 +27,7 @@ class ExamRoomResModel {
   String? name;
   int? schoolClassID;
   String? stage;
+  ControlMissionResModel? controlMission;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -32,6 +37,7 @@ class ExamRoomResModel {
     data['Name'] = name;
     data['Stage'] = stage;
     data['Capacity'] = capacity;
+    data['control_mission'] = controlMission?.toJson();
     return data;
   }
 
