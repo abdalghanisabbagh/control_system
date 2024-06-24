@@ -322,6 +322,8 @@ class CreateControlMissionController extends GetxController {
     //   return false;
     // }
     bool success = false;
+    isLoading = true;
+    update();
     includedStudentsIds = includedStudentsRows
         .map((e) => int.parse(e.cells['IdField']!.value))
         .toList();
@@ -351,7 +353,8 @@ class CreateControlMissionController extends GetxController {
         success = true;
       },
     );
-
+    isLoading = false;
+    update();
     return success;
   }
 
