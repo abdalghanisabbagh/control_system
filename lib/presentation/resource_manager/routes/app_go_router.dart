@@ -127,7 +127,20 @@ class AppGoRouter {
             path: AppRoutesNamesAndPaths.distributioncreateMissionScreenPath,
             name: AppRoutesNamesAndPaths.distributioncreateMissionScreenName,
             builder: (context, state) {
-              return const DistributionScreen();
+              final distributionController = Get.find<DistributionController>();
+              final String name;
+              final String id;
+              if (state.extra != null && state.extra is Map<String, String>?) {
+                final extra = state.extra as Map<String, String>?;
+                name = extra?['name'] ?? distributionController.name;
+                id = extra?['id'] ?? distributionController.id;
+                distributionController.name = name;
+                distributionController.id = id;
+              } else {
+                name = distributionController.name;
+                id = distributionController.id;
+              }
+              return DistributionScreen(name: name, id: id);
             },
             routes: [
               GoRoute(
