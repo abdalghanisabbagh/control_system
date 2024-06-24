@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/satge/stage_res_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -16,10 +17,12 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 class DistributionController extends GetxController {
   List<ExamRoomResModel> listExamRoom = [];
   bool isLodingGetExamRooms = false;
-  bool isLoadingGetClassRoom = false;
   bool isLoadingDeleteClassRoom = false;
+  bool isLodingGetStageAndClassRoom = false;
   List<ValueItem> optionsClassRoom = <ValueItem>[];
+  List<ValueItem> optionsStage = <ValueItem>[];
   ValueItem? selectedItemClassRoom;
+  ValueItem? selectedItemStage;
   String name = '';
   String id = '';
   int controlMissionId = 0;
@@ -54,9 +57,7 @@ class DistributionController extends GetxController {
   }
 
   Future<bool> getClassesRoomsBySchoolId() async {
-    isLoadingGetClassRoom = true;
     bool gotData = false;
-    update();
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassesRoomsResModel> response =
         await responseHandler.getResponse(
@@ -72,7 +73,6 @@ class DistributionController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLoadingGetClassRoom = false;
         gotData = false;
         update();
       },
@@ -81,7 +81,6 @@ class DistributionController extends GetxController {
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
         optionsClassRoom = items;
-        isLoadingGetClassRoom = false;
         gotData = true;
         update();
       },
@@ -91,6 +90,11 @@ class DistributionController extends GetxController {
 
   void setSelectedItemClassRoom(List<ValueItem> items) {
     selectedItemClassRoom = items.first;
+    update();
+  }
+
+  void setSelectedItemStage(List<ValueItem> items) {
+    selectedItemStage = items.first;
     update();
   }
 
@@ -112,7 +116,6 @@ class DistributionController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLoadingGetClassRoom = false;
         succDel = false;
         update();
       },
@@ -124,5 +127,44 @@ class DistributionController extends GetxController {
       },
     );
     return succDel;
+  }
+
+  Future<bool> getStage() async {
+    bool getData = false;
+    ResponseHandler<StageResModel> responseHandler = ResponseHandler();
+    Either<Failure, StageResModel> response = await responseHandler.getResponse(
+      path: Stage.stage,
+      converter: StageResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        // isLoadingGetStage = false;
+        getData = false;
+        update();
+      },
+      (r) {
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsStage = items;
+        getData = true;
+        update();
+      },
+    );
+    return getData;
+  }
+
+  void getStageAndClassRoom() async {
+    isLodingGetStageAndClassRoom = true;
+    update();
+    await Future.wait([getStage(), getClassesRoomsBySchoolId()]);
+    isLodingGetStageAndClassRoom = false;
+    update();
   }
 }

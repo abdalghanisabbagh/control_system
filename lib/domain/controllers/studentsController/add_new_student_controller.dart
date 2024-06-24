@@ -150,7 +150,7 @@ class AddNewStudentController extends GetxController {
     return cohortHasBeenAdded;
   }
 
-  Future<bool> AddNewStudent({
+  Future<bool> addNewStudent({
     required int blubID,
     required int gradesId,
     required int cohortId,
@@ -166,7 +166,6 @@ class AddNewStudentController extends GetxController {
     bool addStudentHasBeenAdded = false;
     int schoolId = Hive.box('School').get('Id');
     int createdBy = Hive.box('Profile').get('ID');
-   
 
     ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
 

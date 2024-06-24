@@ -44,7 +44,9 @@ class DistributionScreen extends GetView<DistributionController> {
                 InkWell(
                     onTap: () {
                       MyDialogs.showDialog(context, AddExamRoomWidget());
-                      controller.getClassesRoomsBySchoolId();
+                       controller.getStageAndClassRoom();
+                      // controller.getClassesRoomsBySchoolId();
+                      // controller.getStage();
                     },
                     child: Container(
                         decoration: BoxDecoration(

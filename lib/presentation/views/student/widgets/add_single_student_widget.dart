@@ -233,7 +233,8 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                       controller.selectedItemCohort != null &&
                                       controller.selectedItemClassRoom !=
                                           null) {
-                                    controller.AddNewStudent(
+                                    controller
+                                        .addNewStudent(
                                       blubID: int.parse(blbIdController.text),
                                       cohortId:
                                           controller.selectedItemCohort!.value,
@@ -245,7 +246,8 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                       secondName: mnameController.text,
                                       thirdName: lnameController.text,
                                       secondLang: sLangController.text,
-                                    ).then(
+                                    )
+                                        .then(
                                       (value) {
                                         value
                                             ? {

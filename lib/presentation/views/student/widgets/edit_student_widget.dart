@@ -244,14 +244,6 @@ class EditStudentWidget extends GetView<StudentController> {
                         ? const CircularProgressIndicator()
                         : InkWell(
                             onTap: () {
-                              // debugPrint('ID ${studentResModel.iD}');
-                              // debugPrint(
-                              //     'GradeId ${controller.selectedItemGrade?.value.toString()}');
-                              // debugPrint(
-                              //     'CohortId ${controller.selectedItemCohort?.value.toString()}');
-                              // debugPrint(
-                              //     'ClassRoomId ${controller.selectedItemClassRoom?.value.toString()}');
-
                               controller
                                   .patchEditStudent(
                                 studentid: studentResModel.iD!,

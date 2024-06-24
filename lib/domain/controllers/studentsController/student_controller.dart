@@ -215,7 +215,8 @@ class StudentController extends GetxController {
     required int schoolClassId,
     required String firstName,
     required String secondName,
-    required String thirdName, required String secondLang,
+    required String thirdName,
+    required String secondLang,
   }) async {
     islodingEditStudent = true;
     update();
@@ -276,19 +277,6 @@ class StudentController extends GetxController {
       debugPrint('No file selected');
     }
   }
-
-  // void readExcelFile(Uint8List fileBytes) {
-  //   var excel = Excel.decodeBytes(fileBytes);
-  //   for (var table in excel.tables.keys) {
-  //     debugPrint('Table: $table');
-  //     var sheet = excel.tables[table];
-  //     if (sheet != null) {
-  //       for (var row in sheet.rows) {
-  //         debugPrint('Row: ${row.map((e) => e?.value)}');
-  //       }
-  //     }
-  //   }
-  // }
 
   void readCsvFile(
     Uint8List fileBytes, {
