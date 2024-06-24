@@ -51,8 +51,9 @@ class EducationYearsLinks {
 
 class ControlMissionLinks {
   static const controlMission = 'control-mission';
+  static const studentSeatNumbers = '$controlMission/student-seat-numbers';
   static const controlMissionEducationYear = 'education-year';
-  static const controlMissionSchool = 'control-mission/school';
+  static const controlMissionSchool = '$controlMission/school';
 }
 
 class ExamLinks {
