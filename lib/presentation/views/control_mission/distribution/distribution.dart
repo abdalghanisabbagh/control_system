@@ -42,21 +42,23 @@ class DistributionScreen extends GetView<DistributionController> {
                 ),
                 const Spacer(),
                 InkWell(
-                    onTap: () {
-                      MyDialogs.showDialog(context, AddExamRoomWidget());
-                       controller.getStageAndClassRoom();
-                      // controller.getClassesRoomsBySchoolId();
-                      // controller.getStage();
-                    },
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: ColorManager.bgSideMenu,
-                            borderRadius: BorderRadius.circular(10)),
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          "Create new exam room",
-                          style: nunitoLight.copyWith(color: Colors.white),
-                        )))
+                  onTap: () {
+                    MyDialogs.showDialog(context, AddExamRoomWidget());
+                    controller.getStageAndClassRoom();
+                    // controller.getClassesRoomsBySchoolId();
+                    // controller.getStage();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: ColorManager.bgSideMenu,
+                        borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      "Create new exam room",
+                      style: nunitoLight.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
               ],
             ),
             GetBuilder<DistributionController>(
@@ -165,14 +167,16 @@ class DistributionScreen extends GetView<DistributionController> {
                                                     controller
                                                         .deleteExamRoom(
                                                             room.id!)
-                                                        .then((value) {
-                                                      value
-                                                          ? MyFlashBar.showSuccess(
-                                                                  'Exam Room Deleted Successfully',
-                                                                  "Success")
-                                                              .show(context)
-                                                          : null;
-                                                    });
+                                                        .then(
+                                                      (value) {
+                                                        value
+                                                            ? MyFlashBar.showSuccess(
+                                                                    'Exam Room Deleted Successfully',
+                                                                    "Success")
+                                                                .show(context)
+                                                            : null;
+                                                      },
+                                                    );
 
                                                     // controller
                                                     //     .deleteClassRoom(
@@ -191,9 +195,7 @@ class DistributionScreen extends GetView<DistributionController> {
                                                     //   },
                                                     // );
                                                   },
-                                                  btnCancelOnPressed: () {
-                                                    Get.back();
-                                                  },
+                                                  btnCancelOnPressed: () {},
                                                 ).showDialogue(
                                                   context,
                                                 );
