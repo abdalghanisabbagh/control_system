@@ -12,6 +12,7 @@ Future<void> main() async {
   await Hive.openBox('Token');
   await Hive.openBox('School'); // Id   --- Name
   await Hive.openBox('Profile'); // Id   --- profile
+  await Hive.openBox('ControlMission');
 
   runApp(MyApp());
 }

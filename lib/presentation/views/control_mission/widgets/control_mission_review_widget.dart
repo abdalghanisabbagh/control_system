@@ -71,46 +71,42 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
             children: [
               Expanded(
                 child: GetBuilder<DistributionController>(
-                    init: DistributionController(),
                     builder: (distributionController) {
-                      return InkWell(
-                        onTap: () async {
-                          distributionController.getExamRoomByControlMissionId(
-                              controlMission.iD!);
-                          // controller
-                          //     .getExamRoomByControlMissionId(controlMission.iD!);
-                          // // controller.filterStudentsByGrades();
-                          // controller.selectedMission.value =
-                          //     controller.missions[missionResponseindex];
-                          context.goNamed(
-                            AppRoutesNamesAndPaths
-                                .distributioncreateMissionScreenName,
-                            extra: {
-                              'name': controlMission.name.toString(),
-                              'id': '123'
-                            },
-                          );
-                        },
-                        child: Container(
-                          width: 200,
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              color: ColorManager.glodenColor),
-                          child: Center(
-                            child: Text(
-                              "Distribution",
-                              style: nunitoRegular.copyWith(
-                                color: Colors.white,
-                                fontSize: 18,
-                              ),
-                            ),
+                  return InkWell(
+                    onTap: () async {
+                      await Future.wait([
+                        distributionController
+                            .saveControlMissionId(controlMission.iD!),
+                        distributionController
+                            .saveControlMissionName(controlMission.name!),
+                      ]);
+                      context.mounted
+                          ? context.goNamed(
+                              AppRoutesNamesAndPaths
+                                  .distributioncreateMissionScreenName,
+                            )
+                          : null;
+                    },
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                          color: ColorManager.glodenColor),
+                      child: Center(
+                        child: Text(
+                          "Distribution",
+                          style: nunitoRegular.copyWith(
+                            color: Colors.white,
+                            fontSize: 18,
                           ),
                         ),
-                      );
-                    }),
+                      ),
+                    ),
+                  );
+                }),
               ),
               Expanded(
                 child: InkWell(
