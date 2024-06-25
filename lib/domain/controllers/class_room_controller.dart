@@ -160,7 +160,7 @@ class ClassRoomController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
         added = false;
       },
-      (r) {
+      (r) async {
         getClassesRooms();
         added = true;
       },

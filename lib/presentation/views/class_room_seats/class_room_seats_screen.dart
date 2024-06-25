@@ -18,7 +18,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
 
   final TextEditingController classNameController = TextEditingController();
   final TextEditingController classNumber = TextEditingController();
-  final TextEditingController columnNumper = TextEditingController(text: "0");
+  final TextEditingController columnNumber = TextEditingController(text: "0");
   final TextEditingController floorNameController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
 
@@ -105,8 +105,8 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                     MytextFormFiled(
                       myValidation: Validations.requiredValidator,
                       enableBorderColor: ColorManager.primary,
-                      controller: columnNumper,
-                      title: "Number of Row",
+                      controller: columnNumber,
+                      title: "Number of Rows",
                       onChange: (value) {
                         controller.numbers = int.tryParse(value!) ?? 0;
                         controller.classSeats.clear();
@@ -199,7 +199,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                             maxCapacity: maxCapacity.toString(),
                             floorName: floorNameController.text,
                             rows: controller.classSeats,
-                            columns: int.tryParse(columnNumper.text) ?? 0,
+                            columns: int.tryParse(columnNumber.text) ?? 0,
                           )
                             .then(
                             (value) {
@@ -214,7 +214,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                       classNameController.clear(),
                                       floorNameController.clear(),
                                       maxCapacityController.clear(),
-                                      columnNumper.clear(),
+                                      columnNumber.clear(),
                                       classNumber.clear(),
                                       controller.update(),
                                     }
