@@ -30,6 +30,7 @@ class StudentController extends GetxController {
   List<GradeResModel> grades = <GradeResModel>[];
   bool islodingEditStudent = false;
   bool loading = false;
+  bool islodingAddStudents = false;
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsCohort = <ValueItem>[];
   List<ValueItem> optionsGrade = <ValueItem>[];
@@ -299,14 +300,39 @@ class StudentController extends GetxController {
     isimorted = true;
     studentsRows = result['rows'];
     students = result['students'];
-    // for (var element in students) {
-    //   debugPrint(element.cohortID.toString());
-    //   debugPrint(element.gradesID.toString());
-    //   debugPrint(element.schoolClassID.toString());
-    //   debugPrint(element.firstName.toString());
-    //   debugPrint(element.secondName.toString());
-    //   debugPrint(element.thirdName.toString());
-    // }
+
     update();
+  }
+
+  Future<bool> addManyStudents({
+    required List<StudentResModel> students,
+  }) async {
+    islodingAddStudents = true;
+    bool addStudentsHasBeenAdded = false;
+    update();
+    List<Map<String, dynamic>> studentData =
+        students.map((student) => student.test()).toList();
+
+    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+        path: StudentsLinks.studentMany,
+        converter: StudentResModel.fromJson,
+        type: ReqTypeEnum.POST,
+        body: studentData);
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      addStudentsHasBeenAdded = false;
+    }, (result) {
+      addStudentsHasBeenAdded = true;
+    });
+    islodingAddStudents = false;
+    update();
+    return addStudentsHasBeenAdded;
   }
 }

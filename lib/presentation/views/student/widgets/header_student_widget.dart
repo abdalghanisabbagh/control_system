@@ -67,7 +67,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Send To DataBase",
               icon: const Icon(Icons.send),
               onPressed: () {
-                // controller.sendStudenToServer(controller.students);
+                controller.addManyStudents(students: controller.students);
               },
             ),
           }

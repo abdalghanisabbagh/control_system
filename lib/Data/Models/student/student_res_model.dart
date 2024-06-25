@@ -41,7 +41,7 @@ class StudentResModel {
   }
   factory StudentResModel.fromCsv(List<dynamic> csvRow) {
     return StudentResModel(
-      iD: int.parse(csvRow[0].toString()),
+      blbId: int.parse(csvRow[0].toString()),
       firstName: csvRow[1].toString(),
       secondName: csvRow[2].toString(),
       thirdName: csvRow[3].toString(),
@@ -90,6 +90,20 @@ class StudentResModel {
     data['Updated_By'] = updatedBy;
     data['Updated_At'] = updatedAt;
     data['Active'] = active;
+    return data;
+  }
+
+  Map<String, dynamic> test() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Blb_Id'] = blbId;
+    data['Grades_ID'] = gradesID;
+    data['Schools_ID'] = schoolsID ?? 1;
+    data['Cohort_ID'] = cohortID;
+    data['School_Class_ID'] = schoolClassID;
+    data['First_Name'] = firstName;
+    data['Second_Name'] = secondName;
+    data['Third_Name'] = thirdName;
+    data['Created_By'] = createdBy ?? 1;
     return data;
   }
 }

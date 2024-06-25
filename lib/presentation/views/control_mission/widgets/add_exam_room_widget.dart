@@ -107,68 +107,71 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        const Expanded(
-                          child: ElevatedBackButton(),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              if (formKey.currentState!.validate() &&
-                                  controller.selectedItemClassRoom != null &&
-                                  controller.selectedItemStage != null) {
-                                controller
-                                    .addNewExamRoom(
-                                        name: newRoomName.text,
-                                        stage:
-                                            controller.selectedItemStage!.label,
-                                        capacity: 30,
-                                        controlMissionId:
-                                            controller.controlMissionId,
-                                        schoolClassId: controller
-                                            .selectedItemClassRoom!.value)
-                                    .then(
-                                  (value) {
-                                    value
-                                        ? {
-                                            context.pop(),
-                                            MyFlashBar.showSuccess(
-                                              "The Student has been added successfully",
-                                              "Success",
-                                            ).show(context),
-                                          }
-                                        : null;
-                                  },
-                                );
-                                ;
-                              }
-                            },
-                            child: Container(
-                              height: 45,
-                              decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(11),
-                                ),
-                                color: ColorManager.glodenColor,
+                    controller.isLodingAddExamRoom
+                        ? const Center(child: CircularProgressIndicator())
+                        : Row(
+                            children: [
+                              const Expanded(
+                                child: ElevatedBackButton(),
                               ),
-                              child: Center(
-                                child: Text(
-                                  "Yes",
-                                  style: nunitoRegular.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 18,
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {
+                                    if (formKey.currentState!.validate() &&
+                                        controller.selectedItemClassRoom !=
+                                            null &&
+                                        controller.selectedItemStage != null) {
+                                      controller
+                                          .addNewExamRoom(
+                                              name: newRoomName.text,
+                                              stage: controller
+                                                  .selectedItemStage!.label,
+                                              capacity: 30,
+                                              controlMissionId:
+                                                  controller.controlMissionId,
+                                              schoolClassId: controller
+                                                  .selectedItemClassRoom!.value)
+                                          .then(
+                                        (value) {
+                                          value
+                                              ? {
+                                                  context.pop(),
+                                                  MyFlashBar.showSuccess(
+                                                    "The Student has been added successfully",
+                                                    "Success",
+                                                  ).show(context),
+                                                }
+                                              : null;
+                                        },
+                                      );
+                                      ;
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.only(
+                                        bottomRight: Radius.circular(11),
+                                      ),
+                                      color: ColorManager.glodenColor,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Yes",
+                                        style: nunitoRegular.copyWith(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
+                            ],
+                          )
                   ]);
           }),
         ),

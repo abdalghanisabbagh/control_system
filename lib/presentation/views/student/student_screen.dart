@@ -78,8 +78,8 @@ class StudentScreen extends GetView<StudentController> {
                               PlutoColumn(
                                 readOnly: true,
                                 enableEditingMode: false,
-                                title: 'Id',
-                                field: 'IdField',
+                                title: 'Blb Id',
+                                field: 'BlbIdField',
                                 type: PlutoColumnType.text(),
                               ),
                               PlutoColumn(

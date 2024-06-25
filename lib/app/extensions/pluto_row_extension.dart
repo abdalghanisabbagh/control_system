@@ -16,7 +16,7 @@ extension PlutoRowExtension on List<StudentResModel> {
       rows.add(
         PlutoRow(
           cells: {
-            'IdField': PlutoCell(value: element.iD.toString()),
+            'BlbIdField': PlutoCell(value: element.blbId.toString()),
             'FirstNameField': PlutoCell(value: element.firstName),
             'SecondNameField': PlutoCell(value: element.secondName),
             'ThirdNameField': PlutoCell(
@@ -60,7 +60,6 @@ extension PlutoRowExtension on List<StudentResModel> {
       String? schoolClassName;
       int? schoolClassId;
 
-
       try {
         final cohort =
             cohorts.firstWhere((item) => item.name == element.cohortName);
@@ -95,7 +94,7 @@ extension PlutoRowExtension on List<StudentResModel> {
       rows.add(
         PlutoRow(
           cells: {
-            'IdField': PlutoCell(value: element.iD.toString()),
+            'BlbIdField': PlutoCell(value: element.blbId.toString()),
             'FirstNameField': PlutoCell(value: element.firstName),
             'SecondNameField': PlutoCell(value: element.secondName),
             'ThirdNameField': PlutoCell(value: element.thirdName),
@@ -107,7 +106,6 @@ extension PlutoRowExtension on List<StudentResModel> {
           },
         ),
       );
-
     }
 
     return {'rows': rows, 'students': this};
