@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/controllers/control_mission/distribute_students_controller.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -89,38 +88,38 @@ class DistributionScreen extends GetView<DistributionController> {
 
                                 return Container(
                                   decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 5,
-                                          blurRadius: 20,
-                                          offset: const Offset(
-                                            2,
-                                            15,
-                                          ), // changes position of shadow
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 5,
+                                        blurRadius: 20,
+                                        offset: const Offset(
+                                          2,
+                                          15,
+                                        ), // changes position of shadow
+                                      ),
+                                    ],
+                                    color: ColorManager.ligthBlue,
+                                    borderRadius: BorderRadius.circular(11),
+                                  ),
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 30,
+                                    vertical: 20,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 40,
                                         ),
-                                      ],
-                                      color: ColorManager.ligthBlue,
-                                      borderRadius: BorderRadius.circular(11),
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 30,
-                                      vertical: 20,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                            vertical: 40,
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Exam Room: ${room.name}",
-                                                style: nunitoBold.copyWith(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Exam Room: ${room.name}",
+                                              style: nunitoBold.copyWith(
                                                   fontSize: 20,
                                                   color:
                                                       ColorManager.bgSideMenu),

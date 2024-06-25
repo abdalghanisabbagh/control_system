@@ -273,6 +273,7 @@ class StudentController extends GetxController {
       if (fileBytes != null) {
         readCsvFile(fileBytes,
             grades: grades, classesRooms: classRooms, cohorts: cohorts);
+       // testCohort(fileBytes);
       }
     } else {
       debugPrint('No file selected');
@@ -335,4 +336,107 @@ class StudentController extends GetxController {
     update();
     return addStudentsHasBeenAdded;
   }
+
+  // void testCohort(
+  //   Uint8List fileBytes,
+  // ) async {
+  //   String content = String.fromCharCodes(fileBytes);
+
+  //   List<List<dynamic>> rowsAsListOfValues =
+  //       const CsvToListConverter().convert(content);
+
+  //   List<dynamic> index9Values = [];
+
+  //   if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 9) {
+  //     index9Values = rowsAsListOfValues.skip(1).map((row) => row[7]).toList();
+  //     for (var value in index9Values) {
+  //       if (!grades.any((grade) => grade.name == value.toString())) {
+  //         print("dsdsd");
+
+  //         bool success = await addNewGrade(name: value.toString());
+  //         if (success) {
+  //           grades.add(GradeResModel(name: value.toString()));
+  //         }
+  //       }
+  //     }
+  //     isimorted = true;
+  //   } else {
+  //     print('The file is empty or does not contain enough columns.');
+  //   }
+
+  //   update();
+  // }
+
+  // Future<bool> addnewCohort(String name) async {
+  //   // addLoading = true;
+  //   update();
+  //   bool cohortHasBeenAdded = false;
+  //   ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+  //   Either<Failure, CohortResModel> response =
+  //       await responseHandler.getResponse(
+  //     path: SchoolsLinks.cohort,
+  //     converter: CohortResModel.fromJson,
+  //     type: ReqTypeEnum.POST,
+  //     body: {
+  //       "Name": name,
+  //       "Created_By": Hive.box('Profile').get('ID'),
+  //       "School_Type_ID": Hive.box('School').get('SchoolTypeID'),
+  //     },
+  //   );
+  //   response.fold(
+  //     (l) {
+  //       MyAwesomeDialogue(
+  //         title: 'Error',
+  //         desc: l.message,
+  //         dialogType: DialogType.error,
+  //       ).showDialogue(Get.key.currentContext!);
+  //       cohortHasBeenAdded = false;
+  //     },
+  //     (r) {
+  //       // getAllCohorts();
+  //       cohortHasBeenAdded = true;
+  //       update();
+  //     },
+  //   );
+
+  //   //  addLoading = false;
+  //   update();
+  //   return cohortHasBeenAdded;
+  // }
+  // Future<bool> addNewGrade({
+  //   required String name,
+  // }) async {
+  //   // isLoadingAddGrades = true;
+  //   update();
+  //   bool gradeHasBeenAdded = false;
+  //   ResponseHandler<GradeResModel> responseHandler = ResponseHandler();
+  //   Either<Failure, GradeResModel> response = await responseHandler.getResponse(
+  //     path: SchoolsLinks.grades,
+  //     converter: GradeResModel.fromJson,
+  //     type: ReqTypeEnum.POST,
+  //     body: {
+  //       "Schools_ID": Hive.box('School').get('Id'),
+  //       "Name": name,
+  //     },
+  //   );
+  //   response.fold(
+  //     (l) {
+  //       MyAwesomeDialogue(
+  //         title: 'Error',
+  //         desc: l.message,
+  //         dialogType: DialogType.error,
+  //       ).showDialogue(Get.key.currentContext!);
+  //       gradeHasBeenAdded = false;
+  //     },
+  //     (r) {
+  //       // spread operator to add new grade
+  //       grades = [...grades, r];
+  //     },
+  //   );
+
+  //   gradeHasBeenAdded = true;
+  //   // isLoadingAddGrades = false;
+  //   update();
+  //   return gradeHasBeenAdded;
+  // }
 }

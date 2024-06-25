@@ -30,7 +30,6 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Promot Students From Excel",
               icon: const Icon(FontAwesomeIcons.arrowUpFromGroundWater),
               onPressed: () {
-                // controller.promotFromExcel();
               },
             ),
             IconButton(
