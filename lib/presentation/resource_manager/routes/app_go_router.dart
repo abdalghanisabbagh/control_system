@@ -1,4 +1,3 @@
-import 'package:control_system/Data/Models/exam_room/exam_room_res_model.dart';
 import 'package:control_system/presentation/views/control_mission/widgets/create_mission_widget.dart';
 import 'package:control_system/presentation/views/control_mission/widgets/distribute_students.dart';
 import 'package:get/get.dart';
@@ -134,27 +133,7 @@ class AppGoRouter {
                 path: AppRoutesNamesAndPaths.distributeStudentsScreenPath,
                 name: AppRoutesNamesAndPaths.distributeStudentsScreenName,
                 builder: (context, state) {
-                  final distributeController =
-                      Get.find<DistributeStudentsController>();
-                  if (state.extra != null &&
-                      state.extra is Map<String, String>?) {
-                    Map<String, String>? extra =
-                        state.extra as Map<String, String>?;
-                    if (extra?['Name'] != 'null') {
-                      distributeController.examRoomResModel =
-                          ExamRoomResModel.fromExtra(
-                        state.extra as Map<String, String>?,
-                      );
-                      return DistributeStudents(
-                        currentExamRoom: ExamRoomResModel.fromExtra(
-                          state.extra as Map<String, String>?,
-                        ),
-                      );
-                    }
-                  }
-                  return DistributeStudents(
-                    currentExamRoom: distributeController.examRoomResModel,
-                  );
+                  return const DistributeStudents();
                 },
               ),
             ],
