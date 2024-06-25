@@ -1,5 +1,7 @@
 class StudentSeatNumberResModel {
   int? iD;
+  int? classDeskID;
+  int? gradesID;
   int? examRoomID;
   int? studentID;
   int? controlMissionID;
@@ -15,6 +17,8 @@ class StudentSeatNumberResModel {
 
   StudentSeatNumberResModel.fromJson(json) {
     iD = json['ID'];
+    classDeskID = json['Class_Desk_ID'];
+    gradesID = json['Grades_ID'];
     examRoomID = json['Exam_Room_ID'];
     studentID = json['Student_ID'];
     controlMissionID = json['Control_Mission_ID'];
@@ -24,6 +28,8 @@ class StudentSeatNumberResModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ID'] = iD;
+    data['Class_Desk_ID'] = classDeskID;
+    data['Grades_ID'] = gradesID;
     data['Exam_Room_ID'] = examRoomID;
     data['Student_ID'] = studentID;
     data['Control_Mission_ID'] = controlMissionID;
