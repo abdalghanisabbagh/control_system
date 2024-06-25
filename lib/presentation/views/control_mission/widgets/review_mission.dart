@@ -15,56 +15,58 @@ class ReviewAndDetailsMission extends GetView<ReviewControlMissionController> {
     return Scaffold(
       backgroundColor: ColorManager.bgSideMenu,
       body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: const EdgeInsets.all(7),
-          padding: const EdgeInsets.all(7),
-          decoration: BoxDecoration(
-              border: Border.all(width: 1),
-              color: ColorManager.bgColor,
-              borderRadius: BorderRadius.circular(10)),
-          child: GetBuilder<ReviewControlMissionController>(
-            builder: (_) => Column(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          context.goNamed(
-                              AppRoutesNamesAndPaths.controlBatchScreenName);
-                        },
-                        icon: const Icon(Icons.arrow_back)),
-                    const HeaderWidget(
-                      text: "Details and Review ",
-                    ),
-                  ],
-                ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(10),
-                //       color: ColorManager.bgSideMenu),
-                //   child: TabBar(
-                //       overlayColor:
-                //           MaterialStateProperty.all(AppColor.bgSideMenu),
-                //       labelStyle: AppTextStyle.nunitoRegular.copyWith(
-                //         fontSize: 30,
-                //       ),
-                //       automaticIndicatorColorAdjustment: true,
-                //       labelColor: AppColor.bgSideMenu,
-                //       labelPadding: const EdgeInsets.symmetric(vertical: 15),
-                //       indicator: BoxDecoration(color: AppColor.white),
-                //       unselectedLabelColor: AppColor.white,
-                //       controller: rmc.controller,
-                //       tabs: rmc.myTabs),
-                // ),
-                // Expanded(
-                //   child: TabBarView(
-                //       controller: rmc.controller,
-                //       children: [MissionDetailsWidget(), ReviewWidget()]),
-                // )
-              ],
-            ),
-          )),
+        width: double.infinity,
+        height: double.infinity,
+        margin: const EdgeInsets.all(7),
+        padding: const EdgeInsets.all(7),
+        decoration: BoxDecoration(
+            border: Border.all(width: 1),
+            color: ColorManager.bgColor,
+            borderRadius: BorderRadius.circular(10)),
+        child: GetBuilder<ReviewControlMissionController>(
+          builder: (_) => Column(
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      context.goNamed(
+                          AppRoutesNamesAndPaths.controlBatchScreenName);
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  const HeaderWidget(
+                    text: "Details and Review ",
+                  ),
+                ],
+              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(10),
+              //       color: ColorManager.bgSideMenu),
+              //   child: TabBar(
+              //       overlayColor:
+              //           MaterialStateProperty.all(AppColor.bgSideMenu),
+              //       labelStyle: AppTextStyle.nunitoRegular.copyWith(
+              //         fontSize: 30,
+              //       ),
+              //       automaticIndicatorColorAdjustment: true,
+              //       labelColor: AppColor.bgSideMenu,
+              //       labelPadding: const EdgeInsets.symmetric(vertical: 15),
+              //       indicator: BoxDecoration(color: AppColor.white),
+              //       unselectedLabelColor: AppColor.white,
+              //       controller: rmc.controller,
+              //       tabs: rmc.myTabs),
+              // ),
+              // Expanded(
+              //   child: TabBarView(
+              //       controller: rmc.controller,
+              //       children: [MissionDetailsWidget(), ReviewWidget()]),
+              // )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

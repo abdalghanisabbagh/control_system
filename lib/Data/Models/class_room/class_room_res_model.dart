@@ -22,7 +22,9 @@ class ClassRoomResModel {
     name = json['Name'];
     maxCapacity = json['Max_Capacity'];
     floor = json['Floor'];
-    rows = convert.json.decode(json['Rows']).cast<int>();
+    rows = json['Rows'] == null
+        ? null
+        : convert.json.decode(json['Rows']).cast<int>();
     columns = json['Columns'];
     createdBy = json['Created_By'];
     createdAt = json['Created_At'];

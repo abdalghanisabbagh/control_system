@@ -13,10 +13,9 @@ import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 import '../widgets/add_exam_room_widget.dart';
 
 class DistributionScreen extends GetView<DistributionController> {
-  final String name;
-  final String id;
-
-  const DistributionScreen({super.key, required this.name, required this.id});
+  const DistributionScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class DistributionScreen extends GetView<DistributionController> {
                     },
                     icon: const Icon(Icons.arrow_back)),
                 HeaderWidget(
-                  text: "Distribution: $name",
+                  text: "Distribution: ${controller.controlMissionName}",
                 ),
                 const Spacer(),
                 InkWell(

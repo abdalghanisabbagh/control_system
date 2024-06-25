@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
+
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../../Data/Models/exam_room/exam_rooms_res_model.dart';
@@ -23,17 +24,38 @@ class DistributionController extends GetxController {
   List<ValueItem> optionsStage = <ValueItem>[];
   ValueItem? selectedItemClassRoom;
   ValueItem? selectedItemStage;
-  String name = '';
-  String id = '';
+  String controlMissionName = '';
   int controlMissionId = 0;
 
-  Future<void> getExamRoomByControlMissionId(int id) async {
+  Future<void> saveControlMissionId(int id) async {
     controlMissionId = id;
+    update();
+    Hive.box('ControlMission').put('Id', id);
+    getExamRoomByControlMissionId();
+  }
+
+  Future<void> saveControlMissionName(String name) async {
+    controlMissionName = name;
+    update();
+    Hive.box('ControlMission').put('Name', name);
+  }
+
+  Future<void> getControlMissionId() async {
+    controlMissionId = Hive.box('ControlMission').get('Id') ?? 0;
+    update();
+  }
+
+  Future<void> getControlMissionName() async {
+    controlMissionName = Hive.box('ControlMission').get('Name') ?? '';
+    update();
+  }
+
+  Future<void> getExamRoomByControlMissionId() async {
     isLodingGetExamRooms = true;
     update();
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-      path: "${ExamLinks.examRoomsControlMission}/$id",
+      path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
       converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -120,7 +142,7 @@ class DistributionController extends GetxController {
         update();
       },
       (r) {
-        getExamRoomByControlMissionId(controlMissionId);
+        getExamRoomByControlMissionId();
         isLoadingDeleteClassRoom = false;
         succDel = true;
         update();
@@ -204,7 +226,7 @@ class DistributionController extends GetxController {
       addExamRoomHasBeenAdded = false;
       update();
     }, (result) {
-      getExamRoomByControlMissionId(controlMissionId);
+      getExamRoomByControlMissionId();
       // studentController.getStudents();
       addExamRoomHasBeenAdded = true;
       isLodingAddExamRoom = false;
@@ -212,5 +234,15 @@ class DistributionController extends GetxController {
 
     update();
     return addExamRoomHasBeenAdded;
+  }
+
+  @override
+  void onInit() async {
+    super.onInit();
+    await Future.wait([
+      getControlMissionId(),
+      getControlMissionName(),
+    ]);
+    getExamRoomByControlMissionId();
   }
 }
