@@ -128,12 +128,21 @@ class AppGoRouter {
             builder: (context, state) {
               return const DistributionScreen();
             },
+            onExit: (context, state) async {
+              await Get.delete<DistributionController>();
+              return true;
+            },
             routes: [
               GoRoute(
                 path: AppRoutesNamesAndPaths.distributeStudentsScreenPath,
                 name: AppRoutesNamesAndPaths.distributeStudentsScreenName,
                 builder: (context, state) {
                   return const DistributeStudents();
+                },
+                onExit: (context, state) async {
+                  await Get.delete<DistributeStudentsController>();
+                  Get.find<DistributionController>().onInit();
+                  return true;
                 },
               ),
             ],
