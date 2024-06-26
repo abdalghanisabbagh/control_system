@@ -6,7 +6,6 @@ import 'package:universal_html/html.dart';
 import '../../../domain/controllers/class_room_controller.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/my_back_button.dart';
-import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../resource_manager/index.dart';
@@ -205,10 +204,6 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                             (value) {
                               value
                                   ? {
-                                      MyFlashBar.showSuccess(
-                                        "Class has been Added",
-                                        "Class Create",
-                                      ).show(context),
                                       controller.numbers = 0,
                                       controller.classSeats.clear(),
                                       classNameController.clear(),
@@ -217,13 +212,11 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                       columnNumber.clear(),
                                       classNumber.clear(),
                                       controller.update(),
+                                      window.history.go(-1),
                                     }
                                   : null;
-                              return value;
                             },
-                          ).then((value) {
-                            value ? window.history.back() : null;
-                          })
+                          )
                         : null;
                     controller.numbers = 0;
                   } else {
