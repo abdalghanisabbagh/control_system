@@ -66,23 +66,43 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Send To DataBase",
               icon: const Icon(Icons.send),
               onPressed: () {
-                controller.isImported
-                    ? controller
-                        .addManyStudents(students: controller.students)
-                        .then((value) {
-                        if (value) {
-                          MyAwesomeDialogue(
-                            title: "Success",
-                            desc: "Students Added Successfully",
-                            dialogType: DialogType.success,
-                          ).showDialogue(context);
-                        }
-                      })
-                    : MyAwesomeDialogue(
-                        title: "Error",
-                        desc: "Please import students first",
-                        dialogType: DialogType.error,
+                if (!controller.isImported) {
+                  MyAwesomeDialogue(
+                    title: "Error",
+                    desc: "Please import File first",
+                    dialogType: DialogType.error,
+                  ).showDialogue(context);
+                } else if (controller.hasErrorInGrade) {
+                  MyAwesomeDialogue(
+                    title: "Error",
+                    desc: "Please check your Grade",
+                    dialogType: DialogType.error,
+                  ).showDialogue(context);
+                } else if (controller.hasErrorInClassRoom) {
+                  MyAwesomeDialogue(
+                    title: "Error",
+                    desc: "Please check your Class Room",
+                    dialogType: DialogType.error,
+                  ).showDialogue(context);
+                } else if (controller.hasErrorInCohort) {
+                  MyAwesomeDialogue(
+                    title: "Error",
+                    desc: "Please check your Cohort",
+                    dialogType: DialogType.error,
+                  ).showDialogue(context);
+                } else {
+                  controller
+                      .addManyStudents(students: controller.students)
+                      .then((value) {
+                    if (value) {
+                      MyAwesomeDialogue(
+                        title: "Success",
+                        desc: "Students Added Successfully",
+                        dialogType: DialogType.success,
                       ).showDialogue(context);
+                    }
+                  });
+                }
               },
             ),
           }

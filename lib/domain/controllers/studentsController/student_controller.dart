@@ -41,6 +41,9 @@ class StudentController extends GetxController {
   List<PlutoRow> studentsRows = <PlutoRow>[];
   Map<String, bool> errorMap = {};
   bool isImported = false;
+  bool hasErrorInGrade = false;
+  bool hasErrorInCohort = false;
+  bool hasErrorInClassRoom = false;
 
   @override
   void onInit() async {
@@ -328,6 +331,10 @@ class StudentController extends GetxController {
       isImported = true;
       studentsRows = result['rows'];
       students = result['students'];
+      hasErrorInGrade = result['errorgrade'];
+      hasErrorInCohort = result['errorcohort'];
+      hasErrorInClassRoom = result['errorclass'];
+      update();
     } else {
       MyAwesomeDialogue(
         title: 'Error',

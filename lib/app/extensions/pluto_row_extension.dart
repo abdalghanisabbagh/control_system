@@ -51,6 +51,9 @@ extension PlutoRowExtension on List<StudentResModel> {
     required List<GradeResModel> grades,
   }) {
     List<PlutoRow> rows = [];
+    bool errorgrade = false;
+    bool errorclass = false;
+    bool errorcohort = false;
 
     for (var element in this) {
       String? cohortName;
@@ -70,6 +73,7 @@ extension PlutoRowExtension on List<StudentResModel> {
         element.cohortID = cohortId;
       } catch (e) {
         cohortName = '[ERROR] ${element.cohortName}';
+        errorcohort = true;
       }
 
       try {
@@ -80,6 +84,7 @@ extension PlutoRowExtension on List<StudentResModel> {
         element.gradesID = gradeId;
       } catch (e) {
         gradeName = '[ERROR] ${element.gradeName}';
+        errorgrade = true;
       }
       try {
         final schoolClass = classesRooms
@@ -89,6 +94,7 @@ extension PlutoRowExtension on List<StudentResModel> {
         element.schoolClassID = schoolClassId;
       } catch (e) {
         schoolClassName = '[ERROR] ${element.schoolClassName}';
+        errorclass = true;
       }
 
       rows.add(
@@ -108,6 +114,12 @@ extension PlutoRowExtension on List<StudentResModel> {
       );
     }
 
-    return {'rows': rows, 'students': this};
+    return {
+      'rows': rows,
+      'students': this,
+      'errorcohort': errorcohort,
+      'errorgrade': errorgrade,
+      'errorclass': errorclass
+    };
   }
 }
