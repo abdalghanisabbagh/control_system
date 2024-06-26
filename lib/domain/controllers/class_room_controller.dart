@@ -19,6 +19,7 @@ class ClassRoomController extends GetxController {
   int count = 1;
   bool isLoading = false;
   bool isLoadingAddClassRoom = false;
+  bool isLoadingEditClassRoom = false;
   int numbers = 0;
   List<SchoolResModel> schools = <SchoolResModel>[];
 
@@ -210,6 +211,32 @@ class ClassRoomController extends GetxController {
     return created;
   }
 
+  Future<bool> deleteAllClassDesks({required int schoolClassID}) async {
+    bool deleted = false;
+    update();
+    ResponseHandler<void> responseHandler = ResponseHandler<void>();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${SchoolsLinks.classDesks}/class/$schoolClassID',
+      converter: (_) {},
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        deleted = false;
+      },
+      (r) {
+        deleted = true;
+      },
+    );
+    update();
+    return deleted;
+  }
+
   Future<bool> editClassRoom({
     required int id,
     required String name,
@@ -219,6 +246,7 @@ class ClassRoomController extends GetxController {
     required List<int> rows,
   }) async {
     bool classRoomHasBeenEdited = false;
+    isLoadingEditClassRoom = true;
     update();
     ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassRoomResModel> response =
@@ -251,6 +279,15 @@ class ClassRoomController extends GetxController {
         update();
       },
     );
+    if (classRoomHasBeenEdited) {
+      await deleteAllClassDesks(schoolClassID: id);
+      await createClassDesks(
+        schoolClassID: response.getOrElse(() => ClassRoomResModel()).iD!,
+        rows: rows,
+      );
+    }
+    isLoadingEditClassRoom = false;
+    update();
     return classRoomHasBeenEdited;
   }
 }
