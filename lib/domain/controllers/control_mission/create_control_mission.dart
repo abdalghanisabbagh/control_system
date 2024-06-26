@@ -324,8 +324,14 @@ class CreateControlMissionController extends GetxController {
     bool success = false;
     isLoading = true;
     update();
-    includedStudentsIds = includedStudentsRows
-        .map((e) => int.parse(e.cells['IdField']!.value))
+    List<int> blbIds = includedStudentsRows
+        .map((e) => int.parse(e.cells['BlbIdField']!.value))
+        .toList();
+    includedStudentsIds = students
+        .where((e) => blbIds.contains(e.blbId))
+        .map(
+          (e) => e.iD!,
+        )
         .toList();
 
     final response = await ResponseHandler<void>().getResponse(
