@@ -293,7 +293,7 @@ class StudentController extends GetxController {
     List<List<dynamic>> rowsAsListOfValues =
         const CsvToListConverter().convert(content);
 
-    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues.length > 7) {
+    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 7) {
       List<String> headers =
           rowsAsListOfValues.first.map((header) => header.toString()).toList();
       List<String> requiredHeaders = [
@@ -313,7 +313,7 @@ class StudentController extends GetxController {
         MyAwesomeDialogue(
           title: 'Error',
           desc:
-              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values ​​in the file and try again.',
+              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values ​​in the file and try again',
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
       }
