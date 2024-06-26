@@ -1,4 +1,4 @@
-export 'SeatingNumbersControllers/CreateCoversSheetsController.dart';
+export 'SeatingNumbersControllers/create_covers_sheets_controller.dart';
 export 'SeatingNumbersControllers/seating_number_tab_view_controller.dart';
 export 'access_middle_ware.dart';
 export 'auth_controller.dart';
