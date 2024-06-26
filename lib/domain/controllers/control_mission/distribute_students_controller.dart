@@ -1,4 +1,3 @@
-import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -20,9 +19,6 @@ class DistributeStudentsController extends GetxController {
             name: Hive.box('ExamRoom').get('Name'),
             stage: Hive.box('ExamRoom').get('Stage'),
             capacity: Hive.box('ExamRoom').get('Capacity'),
-            classRoom: ClassRoomResModel(
-              name: Hive.box('ExamRoom').get('school_class')['Name'],
-            ),
             controlMissionID: Hive.box('ExamRoom').get('Control_Mission_ID'),
             schoolClassID: Hive.box('ExamRoom').get('School_Class_ID'),
           )
