@@ -1,5 +1,3 @@
-import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
-
 class ExamRoomResModel {
   ExamRoomResModel({
     this.id,
@@ -8,7 +6,6 @@ class ExamRoomResModel {
     this.name,
     this.stage,
     this.capacity,
-    this.classRoom,
   });
 
   ExamRoomResModel.fromJson(json) {
@@ -18,7 +15,6 @@ class ExamRoomResModel {
     name = json['Name'];
     stage = json['Stage'];
     capacity = json['Capacity'];
-    classRoom = ClassRoomResModel.fromJson(json['school_class']);
   }
 
   int? capacity;
@@ -27,7 +23,6 @@ class ExamRoomResModel {
   String? name;
   int? schoolClassID;
   String? stage;
-  ClassRoomResModel? classRoom;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -37,7 +32,6 @@ class ExamRoomResModel {
     data['Name'] = name;
     data['Stage'] = stage;
     data['Capacity'] = capacity;
-    data['school_class'] = classRoom?.toJson();
     return data;
   }
 
