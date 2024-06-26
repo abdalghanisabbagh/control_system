@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 
-import '../controllers/index.dart';
-import '../controllers/studentsController/add_new_student_controller.dart';
-import '../controllers/studentsController/student_controller.dart';
+import '../controllers/controllers.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
 

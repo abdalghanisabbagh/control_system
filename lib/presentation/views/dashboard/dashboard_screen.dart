@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../app/extensions/device_type_extension.dart';
-import '../../../domain/controllers/index.dart';
+import '../../../domain/controllers/dashboard_controller.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/index.dart';
 import '../base_screen.dart';

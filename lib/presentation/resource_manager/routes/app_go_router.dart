@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/bindings/bindings.dart';
-import '../../../domain/controllers/index.dart';
+import '../../../domain/controllers/controllers.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
 import '../../views/control_mission/distribution/distribution.dart';
 import '../../views/control_mission/widgets/review_mission.dart';
