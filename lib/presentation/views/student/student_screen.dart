@@ -248,10 +248,11 @@ class StudentScreen extends GetView<StudentController> {
                                                   return int.tryParse(
                                                           rendererContext
                                                               .row
-                                                              .cells['IdField']!
+                                                              .cells[
+                                                                  'BlbIdField']!
                                                               .value
                                                               .toString()) ==
-                                                      element.iD;
+                                                      element.blbId;
                                                 }),
                                               ),
                                             );
