@@ -132,7 +132,7 @@ class DistributionScreen extends GetView<DistributionController> {
                                                       ColorManager.bgSideMenu),
                                             ),
                                             Text(
-                                              "Class Name : ${room.classRoom!.name}",
+                                              "Class Name : ${room.name}",
                                               style: nunitoBold.copyWith(
                                                   fontSize: 20,
                                                   color:

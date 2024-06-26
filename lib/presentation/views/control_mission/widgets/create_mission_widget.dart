@@ -60,7 +60,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                       if (value) {
                                         controller.currentStep = 1;
                                         MyFlashBar.showSuccess(
-                                          'Mission created successfully',
+                                          'Student seat numbers created successfully',
                                           'Success',
                                         ).show(context);
                                         await Future.delayed(
@@ -379,7 +379,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                   readOnly: true,
                   enableEditingMode: false,
                   title: 'Id',
-                  field: 'IdField',
+                  field: 'BlbIdField',
                   type: PlutoColumnType.text(),
                 ),
                 PlutoColumn(
