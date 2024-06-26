@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/controllers/control_mission/distribute_students_controller.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -212,12 +213,16 @@ class DistributionScreen extends GetView<DistributionController> {
                                           ),
                                           Expanded(
                                             child: InkWell(
-                                              onTap: () {
-                                                context.goNamed(
-                                                  AppRoutesNamesAndPaths
-                                                      .distributeStudentsScreenName,
-                                                  extra: room.toExtra(),
-                                                );
+                                              onTap: () async {
+                                                await Get.find<
+                                                        DistributeStudentsController>()
+                                                    .saveExamRoom(room);
+                                                context.mounted
+                                                    ? context.goNamed(
+                                                        AppRoutesNamesAndPaths
+                                                            .distributeStudentsScreenName,
+                                                      )
+                                                    : null;
                                               },
                                               child: Container(
                                                 height: 45,
