@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../Data/Models/cohort/cohort_res_model.dart';
-import '../../../domain/controllers/index.dart';
+import '../../../domain/controllers/cohorts_settings_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';

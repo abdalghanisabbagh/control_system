@@ -10,7 +10,8 @@ import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import '../services/token_service.dart';
-import 'index.dart';
+import 'profile_controller.dart';
+import 'school_controller.dart';
 
 class AuthController extends GetxController {
   bool isLoading = false;
