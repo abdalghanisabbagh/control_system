@@ -273,7 +273,7 @@ class StudentController extends GetxController {
       if (fileBytes != null) {
         readCsvFile(fileBytes,
             grades: grades, classesRooms: classRooms, cohorts: cohorts);
-       // testCohort(fileBytes);
+        // testCohort(fileBytes);
       }
     } else {
       debugPrint('No file selected');
@@ -289,19 +289,52 @@ class StudentController extends GetxController {
     String content = String.fromCharCodes(fileBytes);
     List<List<dynamic>> rowsAsListOfValues =
         const CsvToListConverter().convert(content);
-    students = rowsAsListOfValues
-        .skip(1)
-        .map((row) => StudentResModel.fromCsv(row))
-        .toList();
-    final result = students.convertFileStudentsToPluto(
-      cohorts: cohorts,
-      classesRooms: classesRooms,
-      grades: grades,
-    );
-    isimorted = true;
-    studentsRows = result['rows'];
-    students = result['students'];
 
+    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues.length > 7) {
+      List<String> headers =
+          rowsAsListOfValues.first.map((header) => header.toString()).toList();
+      List<String> requiredHeaders = [
+        'blbid',
+        'firstname',
+        'middlename',
+        'lastname',
+        'grade',
+        'class',
+        'cohort',
+        'second_language'
+      ];
+
+      List<String> missingHeaders =
+          requiredHeaders.where((header) => !headers.contains(header)).toList();
+      if (missingHeaders.isNotEmpty) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc:
+              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values ​​in the file and try again.',
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      }
+      rowsAsListOfValues.removeAt(0);
+
+      students = rowsAsListOfValues
+          .map((row) => StudentResModel.fromCsvWithHeaders(row, headers))
+          .toList();
+
+      final result = students.convertFileStudentsToPluto(
+        cohorts: cohorts,
+        classesRooms: classesRooms,
+        grades: grades,
+      );
+
+      studentsRows = result['rows'];
+      students = result['students'];
+    } else {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "Please check the values ​​in the file and try again.",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }
     update();
   }
 

@@ -39,18 +39,6 @@ class StudentResModel {
     updatedAt = json['Updated_At'];
     active = json['Active'];
   }
-  factory StudentResModel.fromCsv(List<dynamic> csvRow) {
-    return StudentResModel(
-      blbId: int.parse(csvRow[0].toString()),
-      firstName: csvRow[1].toString(),
-      secondName: csvRow[2].toString(),
-      thirdName: csvRow[3].toString(),
-      cohortName: csvRow[4].toString(),
-      gradeName: csvRow[5].toString(),
-      schoolClassName: csvRow[6].toString(),
-      secondLang: csvRow[7].toString(),
-    );
-  }
 
   int? active;
   int? cohortID;
@@ -105,5 +93,24 @@ class StudentResModel {
     data['Third_Name'] = thirdName;
     data['Created_By'] = createdBy ?? 1;
     return data;
+  }
+
+  factory StudentResModel.fromCsvWithHeaders(
+      List<dynamic> row, List<String> headers) {
+    Map<String, dynamic> data = {};
+    for (int i = 0; i < headers.length; i++) {
+      data[headers[i]] = row[i];
+    }
+
+    return StudentResModel(
+      blbId: data['blbid'],
+      firstName: data['firstname'],
+      secondName: data['middlename'],
+      thirdName: data['lastname'],
+      cohortName: data['cohort'],
+      gradeName: data['grade'],
+      schoolClassName: data['class'],
+      secondLang: data['second_language'],
+    );
   }
 }
