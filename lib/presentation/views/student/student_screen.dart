@@ -160,6 +160,7 @@ class StudentScreen extends GetView<StudentController> {
                                     color: isDefaultGrade
                                         ? Colors.red
                                         : Colors.transparent,
+                                        
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
@@ -228,7 +229,7 @@ class StudentScreen extends GetView<StudentController> {
 
                               /// Actions Column definition
 
-                              if (!controller.isimorted)
+                              if (!controller.isImported)
                                 PlutoColumn(
                                   enableEditingMode: false,
                                   title: 'Actions',

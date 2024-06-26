@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -29,8 +31,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
             IconButton(
               tooltip: "Promot Students From Excel",
               icon: const Icon(FontAwesomeIcons.arrowUpFromGroundWater),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
             IconButton(
               tooltip: "Download excel template",
@@ -57,7 +58,6 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Sync Students",
               icon: const Icon(FontAwesomeIcons.rotate),
               onPressed: () {
-                
                 controller.onInit();
                 // MyDialogs.showDialog(context, EditStudentWidget());
               },
@@ -66,7 +66,23 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Send To DataBase",
               icon: const Icon(Icons.send),
               onPressed: () {
-                controller.addManyStudents(students: controller.students);
+                controller.isImported
+                    ? controller
+                        .addManyStudents(students: controller.students)
+                        .then((value) {
+                        if (value) {
+                          MyAwesomeDialogue(
+                            title: "Success",
+                            desc: "Students Added Successfully",
+                            dialogType: DialogType.success,
+                          ).showDialogue(context);
+                        }
+                      })
+                    : MyAwesomeDialogue(
+                        title: "Error",
+                        desc: "Please import students first",
+                        dialogType: DialogType.error,
+                      ).showDialogue(context);
               },
             ),
           }

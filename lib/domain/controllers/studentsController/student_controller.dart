@@ -40,11 +40,11 @@ class StudentController extends GetxController {
   List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
   Map<String, bool> errorMap = {};
-  bool isimorted = false;
+  bool isImported = false;
 
   @override
   void onInit() async {
-    isimorted = false;
+    isImported = false;
 
     loading = true;
     update();
@@ -325,7 +325,7 @@ class StudentController extends GetxController {
         classesRooms: classesRooms,
         grades: grades,
       );
-
+      isImported = true;
       studentsRows = result['rows'];
       students = result['students'];
     } else {
@@ -341,17 +341,17 @@ class StudentController extends GetxController {
   Future<bool> addManyStudents({
     required List<StudentResModel> students,
   }) async {
-    islodingAddStudents = true;
+    loading = true;
     bool addStudentsHasBeenAdded = false;
     update();
     List<Map<String, dynamic>> studentData =
         students.map((student) => student.test()).toList();
 
-    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
+    ResponseHandler<void> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
         path: StudentsLinks.studentMany,
-        converter: StudentResModel.fromJson,
+        converter: (_) {},
         type: ReqTypeEnum.POST,
         body: studentData);
 
@@ -364,8 +364,10 @@ class StudentController extends GetxController {
       addStudentsHasBeenAdded = false;
     }, (result) {
       addStudentsHasBeenAdded = true;
+      isImported = false;
     });
-    islodingAddStudents = false;
+    loading = false;
+
     update();
     return addStudentsHasBeenAdded;
   }
@@ -472,5 +474,4 @@ class StudentController extends GetxController {
   //   update();
   //   return gradeHasBeenAdded;
   // }
-  
 }

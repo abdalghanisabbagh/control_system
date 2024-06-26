@@ -92,6 +92,7 @@ class StudentResModel {
     data['Second_Name'] = secondName;
     data['Third_Name'] = thirdName;
     data['Created_By'] = createdBy ?? 1;
+    data['Second_Lang'] = secondLang;
     return data;
   }
 
