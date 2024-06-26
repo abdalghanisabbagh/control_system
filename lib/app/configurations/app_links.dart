@@ -24,6 +24,7 @@ class SchoolsLinks {
   static const gradesSchools = 'grades/school';
   static const schools = 'schools';
   static const schoolsClasses = 'school-classes';
+  static const classDesks = 'class-desk';
   static const schoolsType = 'school-type';
   static const subject = 'subject';
   static const subjects = 'subjects';
