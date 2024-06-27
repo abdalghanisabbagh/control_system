@@ -1,3 +1,5 @@
+import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
+
 class StudentResModel {
   StudentResModel({
     this.iD,
@@ -37,6 +39,8 @@ class StudentResModel {
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
+    gradeResModel =
+        json['grades'] == null ? null : GradeResModel.fromJson(json['grades']);
     active = json['Active'];
   }
 
@@ -59,6 +63,7 @@ class StudentResModel {
   String? thirdName;
   DateTime? updatedAt;
   int? updatedBy;
+  GradeResModel? gradeResModel;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -77,6 +82,7 @@ class StudentResModel {
     data['Created_At'] = createdAt;
     data['Updated_By'] = updatedBy;
     data['Updated_At'] = updatedAt;
+    data['grades'] = gradeResModel?.toJson();
     data['Active'] = active;
     return data;
   }
