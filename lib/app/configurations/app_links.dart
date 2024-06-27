@@ -39,12 +39,12 @@ class StudentsLinks {
   static const studentBarcodesStudent = 'student-barcodes/student';
   static const studentCohort = 'student/cohort';
   static const studentSchool = 'student/school';
-  static const studentSetNumbers = 'student-set-numbers';
-  static const studentSetNumbersControlMission =
-      'student-set-numbers/control-mission';
+  static const studentSeatNumbers = 'student-seat-numbers';
+  static const studentSeatNumbersControlMission =
+      '$studentSeatNumbers/control-mission';
 
-  static const studentSetNumbersExamRoom = 'student-set-numbers/exam-rooms';
-  static const studentSetNumbersStudent = 'student-set-numbers/student';
+  static const studentSeatNumbersExamRoom = '$studentSeatNumbers/exam-rooms';
+  static const studentSeatNumbersStudent = '$studentSeatNumbers/student';
   static const studentsClass = 'student/class';
 }
 
