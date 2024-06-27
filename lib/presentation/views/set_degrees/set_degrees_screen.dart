@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../domain/controllers/barcodeController/barcode_controller.dart';
+import '../../../domain/controllers/barcode_controllers/barcode_controller.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/index.dart';
 import '../base_screen.dart';

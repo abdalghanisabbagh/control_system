@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../../../app/extensions/device_type_extension.dart';
-import '../../../../domain/controllers/studentsController/student_controller.dart';
+import '../../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/index.dart';
 import 'add_single_student_widget.dart';

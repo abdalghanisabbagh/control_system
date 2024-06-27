@@ -1,7 +1,6 @@
-export 'SeatingNumbersControllers/SeatingNumbersControllers.dart';
 export 'access_middle_ware.dart';
 export 'auth_controller.dart';
-export 'barcodeController/barcodeController.dart';
+export 'barcode_controllers/barcode_controllers.dart';
 export 'class_room_controller.dart';
 export 'cohorts_settings_controller.dart';
 export 'control_mission/control_mission.dart';
@@ -9,5 +8,6 @@ export 'dashboard_controller.dart';
 export 'home_controller.dart';
 export 'profile_controller.dart';
 export 'school_controller.dart';
-export 'studentsController/studentsController.dart';
+export 'seating_numbers_controllers/seating_numbers_controllers.dart';
+export 'students_controllers/students_controllers.dart';
 export 'subject_controller.dart';
