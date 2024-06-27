@@ -89,6 +89,15 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                 )
                               : SearchableList(
                                   initialList: controller.classesRooms,
+                                  emptyWidget: Center(
+                                    child: Text(
+                                      "No data found",
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.bgSideMenu,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
                                   filter: (query) => controller.classesRooms
                                       .where(
                                         (element) => element.name!
