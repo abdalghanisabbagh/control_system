@@ -41,6 +41,7 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                             SizedBox(
                               width: 500,
                               child: MultiSelectDropDownView(
+                                searchEnabled: true,
                                 hintText: "Select Class Room",
                                 onOptionSelected: (selectedItem) {
                                   controller.selectedItemClassRoom =
@@ -147,7 +148,6 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                                               : null;
                                         },
                                       );
-                                      ;
                                     }
                                   },
                                   child: Container(
