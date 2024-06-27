@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../domain/controllers/class_room_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
@@ -86,9 +87,18 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                     ),
                                   ),
                                 )
-                              : ListView.builder(
-                                  itemCount: controller.classesRooms.length,
-                                  itemBuilder: (context, index) {
+                              : SearchableList(
+                                  initialList: controller.classesRooms,
+                                  filter: (query) => controller.classesRooms
+                                      .where(
+                                        (element) => element.name!
+                                            .toLowerCase()
+                                            .contains(
+                                              query.toLowerCase(),
+                                            ),
+                                      )
+                                      .toList(),
+                                  itemBuilder: (classRoom) {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Stack(
@@ -126,9 +136,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      controller
-                                                          .classesRooms[index]
-                                                          .name!,
+                                                      classRoom.name!,
                                                       style:
                                                           nunitoBold.copyWith(
                                                         color: ColorManager
@@ -145,9 +153,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                                 (element) =>
                                                                     element
                                                                         .iD ==
-                                                                    controller
-                                                                        .classesRooms[
-                                                                            index]
+                                                                    classRoom
                                                                         .schoolsID,
                                                               )
                                                               ?.name ??
@@ -162,7 +168,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                     Row(
                                                       children: [
                                                         // Text(
-                                                        //   "Building : ${controller.classesRooms[index].buildingName}",
+                                                        //   "Building : ${classRoom.buildingName}",
                                                         //   style:
                                                         //       nunitoRegular
                                                         //           .copyWith(
@@ -174,7 +180,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                         //   width: 20,
                                                         // ),
                                                         Text(
-                                                          "Floor : ${controller.classesRooms[index].floor}",
+                                                          "Floor : ${classRoom.floor}",
                                                           style: nunitoRegular
                                                               .copyWith(
                                                             color: ColorManager
@@ -185,7 +191,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                           width: 20,
                                                         ),
                                                         Text(
-                                                          "Capacity : ${controller.classesRooms[index].maxCapacity}",
+                                                          "Capacity : ${classRoom.maxCapacity}",
                                                           style: nunitoRegular
                                                               .copyWith(
                                                             color: ColorManager
@@ -203,23 +209,16 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                           onTap: () {
                                                             controller
                                                                     .classSeats =
-                                                                controller
-                                                                    .classesRooms[
-                                                                        index]
-                                                                    .rows!;
+                                                                classRoom.rows!;
                                                             controller.numbers =
-                                                                controller
-                                                                    .classesRooms[
-                                                                        index]
+                                                                classRoom
                                                                     .columns!;
                                                             MyDialogs
                                                                 .showDialog(
                                                               context,
                                                               EditClassRoomWidget(
                                                                 classRoom:
-                                                                    controller
-                                                                            .classesRooms[
-                                                                        index],
+                                                                    classRoom,
                                                               ),
                                                             );
                                                           },
@@ -272,9 +271,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                                   () async {
                                                                 controller
                                                                     .deleteClassRoom(
-                                                                  id: controller
-                                                                      .classesRooms[
-                                                                          index]
+                                                                  id: classRoom
                                                                       .iD!,
                                                                 )
                                                                     .then(
