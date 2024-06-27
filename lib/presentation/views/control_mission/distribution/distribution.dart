@@ -60,26 +60,26 @@ class DistributionScreen extends GetView<DistributionController> {
               ],
             ),
             GetBuilder<DistributionController>(
-                builder: (_) => controller.isLodingGetExamRooms
-                    ? const Expanded(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : controller.listExamRoom.isEmpty
-                        ? Expanded(
-                            child: Center(
-                              child: Text(
-                                "No Rooms",
-                                style: nunitoRegular.copyWith(
-                                  color: ColorManager.bgSideMenu,
-                                  fontSize: 23,
-                                ),
+              builder: (_) => controller.isLodingGetExamRooms
+                  ? const Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : controller.listExamRoom.isEmpty
+                      ? Expanded(
+                          child: Center(
+                            child: Text(
+                              "No Rooms",
+                              style: nunitoRegular.copyWith(
+                                color: ColorManager.bgSideMenu,
+                                fontSize: 23,
                               ),
                             ),
-                          )
-                        : Expanded(
-                            child: Container(
+                          ),
+                        )
+                      : Expanded(
+                          child: Container(
                             margin: const EdgeInsets.all(10),
                             padding: const EdgeInsets.all(10),
                             child: ListView.builder(
@@ -181,27 +181,23 @@ class DistributionScreen extends GetView<DistributionController> {
                                                 );
                                               },
                                               child: Container(
+                                                height: 45,
                                                 decoration: BoxDecoration(
-                                                  color: Colors.red,
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
+                                                      const BorderRadius.only(
+                                                    bottomLeft: Radius.circular(
+                                                      11,
+                                                    ),
                                                   ),
+                                                  color: ColorManager.red,
                                                 ),
                                                 child: Center(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                      10,
-                                                    ),
-                                                    child: Text(
-                                                      "Delete Exam Room",
-                                                      style:
-                                                          nunitoBold.copyWith(
-                                                        color:
-                                                            ColorManager.white,
-                                                        fontSize: 16,
-                                                      ),
+                                                  child: Text(
+                                                    "Delete Exam Room",
+                                                    style:
+                                                        nunitoRegular.copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
                                                     ),
                                                   ),
                                                 ),
@@ -227,20 +223,24 @@ class DistributionScreen extends GetView<DistributionController> {
                                               child: Container(
                                                 height: 45,
                                                 decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    11)),
-                                                    color: ColorManager
-                                                        .glodenColor),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(
+                                                      11,
+                                                    ),
+                                                  ),
+                                                  color:
+                                                      ColorManager.glodenColor,
+                                                ),
                                                 child: Center(
                                                   child: Text(
                                                     "Distribution",
                                                     style:
                                                         nunitoRegular.copyWith(
-                                                            color: Colors.white,
-                                                            fontSize: 18),
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -253,7 +253,9 @@ class DistributionScreen extends GetView<DistributionController> {
                                 );
                               },
                             ),
-                          )))
+                          ),
+                        ),
+            ),
           ],
         ),
       ),
