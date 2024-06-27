@@ -313,7 +313,7 @@ class StudentController extends GetxController {
         MyAwesomeDialogue(
           title: 'Error',
           desc:
-              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values ​​in the file and try again',
+              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values in the file and try again',
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
       }
@@ -338,7 +338,7 @@ class StudentController extends GetxController {
     } else {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "Please check the values ​​in the file and try again.",
+        desc: "Please check the values in the file and try again.",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }

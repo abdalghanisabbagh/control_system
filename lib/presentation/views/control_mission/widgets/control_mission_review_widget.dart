@@ -1,4 +1,5 @@
 import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
+import 'package:control_system/domain/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -109,38 +110,43 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                 }),
               ),
               Expanded(
-                child: InkWell(
-                  onTap: () {
-                    // ReviewMissionControllers reviewMissionControllers =
-                    //     Get.find();
-                    // reviewMissionControllers.selectMission =
-                    //     controller.missions[missionResponseindex];
-
-                    // controller.getDetialsControlMissionById(
-                    //     missionId:
-                    //         controller.missions[missionResponseindex].id!);
-
-                    // Get.toNamed(Routes.reviewlMission);
-                  },
-                  child: Container(
-                    width: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10)),
-                      color: ColorManager.red,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Details And Review",
-                        style: nunitoRegular.copyWith(
-                          color: Colors.white,
-                          fontSize: 18,
+                child: GetBuilder<DetailsAndReviewMissionController>(
+                    builder: (detailsAndReviewMissionController) {
+                  return InkWell(
+                    onTap: () async {
+                      await Future.wait([
+                        detailsAndReviewMissionController
+                            .saveControlMissionId(controlMission.iD!),
+                        detailsAndReviewMissionController
+                            .saveControlMissionName(controlMission.name!),
+                      ]);
+                      context.mounted
+                          ? context.goNamed(
+                              AppRoutesNamesAndPaths
+                                  .reviewAndDetailsMissionName,
+                            )
+                          : null;
+                    },
+                    child: Container(
+                      width: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        color: ColorManager.red,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Details And Review",
+                          style: nunitoRegular.copyWith(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
             ],
           )
