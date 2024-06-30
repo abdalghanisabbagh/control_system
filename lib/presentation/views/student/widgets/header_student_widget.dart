@@ -37,7 +37,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Download excel template",
               icon: const Icon(FontAwesomeIcons.cloudArrowDown),
               onPressed: () {
-                controller.exportToPdf(context, controller.studentsRows);
+                controller.exportToCsv(context, controller.studentsRows);
               },
             ),
             IconButton(

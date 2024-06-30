@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:csv/csv.dart';
@@ -8,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
@@ -25,6 +28,8 @@ import '../../../app/extensions/pluto_row_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'dart:html' as html;
+import 'package:csv/csv.dart' as csv;
+
 class StudentController extends GetxController {
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<CohortResModel> cohorts = <CohortResModel>[];
@@ -483,81 +488,122 @@ class StudentController extends GetxController {
   //   return gradeHasBeenAdded;
   // }
 
-    Future<void> exportToPdf(
-        BuildContext context, List<PlutoRow> studentsRows) async {
-      final pdf = pw.Document();
+  Future<void> exportToPdf(
+      BuildContext context, List<PlutoRow> studentsRows) async {
+    final pdf = pw.Document();
 
-      List<List<String>> tableData = [];
+    List<List<String>> tableData = [];
 
-      List<String> headers = [
-        'Blb Id',
-        'First Name',
-        'Second Name',
-        'Third Name',
-        'Cohort',
-        'Grade',
-        'Class Room',
-        'Second Language'
-      ];
+    List<String> headers = [
+      'Blb Id',
+      'First Name',
+      'Second Name',
+      'Third Name',
+      'Cohort',
+      'Grade',
+      'Class Room',
+      'Second Language'
+    ];
 
-      tableData.add(headers);
+    tableData.add(headers);
 
-      for (var row in studentsRows) {
-        List<String> rowData = [];
-        var cellsValues = row.cells.values.toList();
-        for (var i = 0; i < cellsValues.length - 1; i++) {
-          rowData.add(cellsValues[i].value.toString());
-        }
-        tableData.add(rowData);
+    for (var row in studentsRows) {
+      List<String> rowData = [];
+      var cellsValues = row.cells.values.toList();
+      for (var i = 0; i < cellsValues.length - 1; i++) {
+        rowData.add(cellsValues[i].value.toString());
       }
-
-      const maxRowsPerPage = 20;
-      for (var i = 0; i < tableData.length; i += maxRowsPerPage) {
-        final end = i + maxRowsPerPage;
-        final dataSubset =
-            tableData.sublist(i, end > tableData.length ? tableData.length : end);
-
-        final pageData = [headers, ...dataSubset];
-
-        pdf.addPage(
-          pw.Page(
-            build: (pw.Context context) {
-              return pw.Column(
-                children: [
-                  pw.TableHelper.fromTextArray(
-                    context: context,
-                    data: pageData,
-                  ),
-                  pw.Spacer(),
-                  pw.Align(
-                    alignment: pw.Alignment.bottomCenter,
-                    child: pw.Text(
-                      'Page ${context.pageNumber} of ${context.pagesCount}',
-                      style: const pw.TextStyle(fontSize: 10),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        );
-      }
-
-      final Uint8List bytes = await pdf.save();
-      final blob = html.Blob([bytes]); 
-      final url =
-          html.Url.createObjectUrlFromBlob(blob); 
-
-      html.AnchorElement(href: url)
-        ..setAttribute('download', 'pluto_grid_export.pdf')
-        ..click();
-
-      MyAwesomeDialogue(
-        title: 'success',
-        desc: "PDF file exported successfully.",
-        dialogType: DialogType.success,
-      ).showDialogue(Get.key.currentContext!);
-
-      
+      tableData.add(rowData);
     }
+
+    const maxRowsPerPage = 20;
+    for (var i = 0; i < tableData.length; i += maxRowsPerPage) {
+      final end = i + maxRowsPerPage;
+      final dataSubset =
+          tableData.sublist(i, end > tableData.length ? tableData.length : end);
+
+      final pageData = [headers, ...dataSubset];
+
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Column(
+              children: [
+                pw.TableHelper.fromTextArray(
+                  context: context,
+                  data: pageData,
+                ),
+                pw.Spacer(),
+                pw.Align(
+                  alignment: pw.Alignment.bottomCenter,
+                  child: pw.Text(
+                    'Page ${context.pageNumber} of ${context.pagesCount}',
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    }
+
+    final Uint8List bytes = await pdf.save();
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    html.AnchorElement(href: url)
+      ..setAttribute('download', 'pluto_grid_export.pdf')
+      ..click();
+
+    MyAwesomeDialogue(
+      title: 'success',
+      desc: "PDF file exported successfully.",
+      dialogType: DialogType.success,
+    ).showDialogue(Get.key.currentContext!);
+  }
+
+  void exportToCsv(BuildContext context, List<PlutoRow> studentsRows) {
+    List<List<dynamic>> csvData = [];
+
+    List<String> headers = [
+      'Blb Id',
+      'First Name',
+      'Second Name',
+      'Third Name',
+      'Cohort',
+      'Grade',
+      'Class Room',
+      'Second Language'
+    ];
+
+    csvData.add(headers);
+
+    for (var row in studentsRows) {
+      List<dynamic> rowData = [];
+      var cellsValues = row.cells.values.toList();
+      for (var i = 0; i < cellsValues.length - 1; i++) {
+        rowData.add(cellsValues[i].value.toString());
+      }
+      csvData.add(rowData);
+    }
+
+    String csvString = const csv.ListToCsvConverter().convert(csvData);
+
+    final bytes = utf8.encode(csvString);
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    html.AnchorElement(href: url)
+      ..setAttribute('download', 'pluto_grid_export.csv')
+      ..click();
+
+    html.Url.revokeObjectUrl(url);
+
+    MyAwesomeDialogue(
+      title: 'success',
+      desc: "CSV file exported successfully.",
+      dialogType: DialogType.success,
+    ).showDialogue(Get.key.currentContext!);
+  }
 }
