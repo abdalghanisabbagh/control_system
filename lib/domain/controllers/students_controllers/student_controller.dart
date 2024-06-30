@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:csv/csv.dart';
@@ -25,8 +24,7 @@ import '../../../app/configurations/app_links.dart';
 import '../../../app/extensions/pluto_row_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:html' as html; // استيراد حزمة html للوصول إلى وظائف الويب
-
+import 'dart:html' as html;
 class StudentController extends GetxController {
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<CohortResModel> cohorts = <CohortResModel>[];
@@ -485,81 +483,81 @@ class StudentController extends GetxController {
   //   return gradeHasBeenAdded;
   // }
 
-  Future<void> exportToPdf(
-      BuildContext context, List<PlutoRow> studentsRows) async {
-    // Create the PDF document
-    final pdf = pw.Document();
+    Future<void> exportToPdf(
+        BuildContext context, List<PlutoRow> studentsRows) async {
+      final pdf = pw.Document();
 
-    // Prepare table data
-    List<List<String>> tableData = [];
+      List<List<String>> tableData = [];
 
-    // Column headers
-    List<String> headers = [
-      'Blb Id',
-      'First Name',
-      'Second Name',
-      'Third Name',
-      'Cohort',
-      'Grade',
-      'Class Room',
-      'Second Language'
-    ];
-    tableData.add(headers);
+      List<String> headers = [
+        'Blb Id',
+        'First Name',
+        'Second Name',
+        'Third Name',
+        'Cohort',
+        'Grade',
+        'Class Room',
+        'Second Language'
+      ];
 
-    // Iterate through PlutoRows and extract cell values
-    for (var row in studentsRows) {
-      List<String> rowData = [];
-      for (var column in row.cells.values) {
-        rowData.add(column.value
-            .toString()); // Adjust this based on your actual data structure
+      tableData.add(headers);
+
+      for (var row in studentsRows) {
+        List<String> rowData = [];
+        var cellsValues = row.cells.values.toList();
+        for (var i = 0; i < cellsValues.length - 1; i++) {
+          rowData.add(cellsValues[i].value.toString());
+        }
+        tableData.add(rowData);
       }
-      tableData.add(rowData);
-    }
 
-    // Add pages with the table to the PDF document
-    final maxRowsPerPage = 50; // Adjust as needed
-    for (var i = 0; i < tableData.length; i += maxRowsPerPage) {
-      final end = i + maxRowsPerPage;
-      final dataSubset =
-          tableData.sublist(i, end > tableData.length ? tableData.length : end);
+      const maxRowsPerPage = 20;
+      for (var i = 0; i < tableData.length; i += maxRowsPerPage) {
+        final end = i + maxRowsPerPage;
+        final dataSubset =
+            tableData.sublist(i, end > tableData.length ? tableData.length : end);
 
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Table.fromTextArray(
-              context: context,
-              data: dataSubset,
-            );
-          },
-        ),
-      );
-    }
+        final pageData = [headers, ...dataSubset];
 
-    // Save the PDF document
-    final Uint8List bytes =
-        await pdf.save(); // Create bytes from the PDF document
-    final blob = html.Blob([bytes]); // Create a Blob from the bytes
-    final url =
-        html.Url.createObjectUrlFromBlob(blob); // Create URL for the file
-
-    // Create an anchor element to trigger download of the PDF
-    html.AnchorElement(href: url)
-      ..setAttribute('download', 'pluto_grid_export.pdf')
-      ..click(); // Programmatically trigger the download
-
-    // Show a dialog indicating successful export
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('PDF Exported'),
-        content: Text('PDF file exported successfully.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('OK'),
+        pdf.addPage(
+          pw.Page(
+            build: (pw.Context context) {
+              return pw.Column(
+                children: [
+                  pw.TableHelper.fromTextArray(
+                    context: context,
+                    data: pageData,
+                  ),
+                  pw.Spacer(),
+                  pw.Align(
+                    alignment: pw.Alignment.bottomCenter,
+                    child: pw.Text(
+                      'Page ${context.pageNumber} of ${context.pagesCount}',
+                      style: const pw.TextStyle(fontSize: 10),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
-        ],
-      ),
-    );
-  }
+        );
+      }
+
+      final Uint8List bytes = await pdf.save();
+      final blob = html.Blob([bytes]); 
+      final url =
+          html.Url.createObjectUrlFromBlob(blob); 
+
+      html.AnchorElement(href: url)
+        ..setAttribute('download', 'pluto_grid_export.pdf')
+        ..click();
+
+      MyAwesomeDialogue(
+        title: 'success',
+        desc: "PDF file exported successfully.",
+        dialogType: DialogType.success,
+      ).showDialogue(Get.key.currentContext!);
+
+      
+    }
 }
