@@ -510,7 +510,7 @@ class StudentController extends GetxController {
     for (var row in studentsRows) {
       List<String> rowData = [];
       for (var column in row.cells.values) {
-        rowData.add(column!.value
+        rowData.add(column.value
             .toString()); // Adjust this based on your actual data structure
       }
       tableData.add(rowData);
