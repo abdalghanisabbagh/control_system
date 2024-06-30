@@ -318,6 +318,48 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                   const SizedBox(
                     height: 20,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: ColorManager.red),
+                            child: const Center(
+                                child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      "Export to PDF",
+                                    ))),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Container(
+                            height: 55,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.green),
+                            child: const Center(
+                                child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      "Export to Excel",
+                                    ))),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   // Expanded(
                   //   child: GetBuilder<CompleteMissionsController>(
                   //     builder: (completeMissionsController) =>
