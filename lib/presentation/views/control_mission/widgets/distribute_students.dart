@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 import 'add_new_students_to_exam_room_widget.dart';
+import 'remove_students_from_exam_room_widget.dart';
 
 class DistributeStudents extends GetView<DistributeStudentsController> {
   const DistributeStudents({
@@ -40,17 +41,40 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: List.generate(
                               controller.countByGrade.keys.length,
-                              (index) => Text(
-                                '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.countByGrade.values.toList()[index]})',
-                                style: nunitoRegular,
+                              (index) => Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.countByGrade.values.toList()[index]})',
+                                    style: nunitoRegular,
+                                  ),
+                                  Text(
+                                    '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.availableStudents.where((element) => element.gradesID == controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).iD).length})',
+                                    style: nunitoRegular,
+                                  ),
+                                ],
                               ).paddingSymmetric(horizontal: 10),
                             )..insert(
                                 0,
-                                Text(
-                                  'Available: ${controller.availableStudentsCount}',
-                                  style: nunitoRegular,
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Available: ${controller.availableStudentsCount}',
+                                      style: nunitoRegular,
+                                    ),
+                                    Text(
+                                      'Current: ${controller.availableStudents.length}',
+                                      style: nunitoRegular,
+                                    ),
+                                    Text(
+                                      'Max: ${controller.examRoomResModel.capacity}',
+                                      style: nunitoRegular,
+                                    ),
+                                  ],
                                 ),
                               ),
                           ),
@@ -131,6 +155,18 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                         style: nunitoBold.copyWith(
                                           color: ColorManager.white,
                                           fontSize: 20,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          MyDialogs.showDialog(
+                                            context,
+                                            RemoveStudentsFromExamRoomWidget(),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.person_remove_alt_1,
+                                          color: ColorManager.white,
                                         ),
                                       ),
                                       IconButton(
