@@ -1,6 +1,10 @@
 import 'dart:convert';
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html;
 import 'dart:typed_data';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:csv/csv.dart' as csv;
 import 'package:csv/csv.dart';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
@@ -9,7 +13,9 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:pluto_grid/pluto_grid.dart';
+
 import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/cohort/cohort_res_model.dart';
@@ -24,9 +30,6 @@ import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../app/extensions/pluto_row_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'dart:html' as html;
-import 'package:csv/csv.dart' as csv;
 
 class StudentController extends GetxController {
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
