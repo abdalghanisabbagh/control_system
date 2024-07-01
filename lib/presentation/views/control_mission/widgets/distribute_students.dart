@@ -46,7 +46,13 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                 '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.countByGrade.values.toList()[index]})',
                                 style: nunitoRegular,
                               ).paddingSymmetric(horizontal: 10),
-                            ),
+                            )..insert(
+                                0,
+                                Text(
+                                  'Available: ${controller.availableStudentsCount}',
+                                  style: nunitoRegular,
+                                ),
+                              ),
                           ),
                         ),
                         const Spacer(),
