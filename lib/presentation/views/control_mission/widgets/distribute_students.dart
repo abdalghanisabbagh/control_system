@@ -137,54 +137,105 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                       children: List.generate(
                                         controller.availableStudents.length,
                                         (i) {
-                                          return Container(
-                                            alignment: Alignment.topLeft,
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10,
-                                              vertical: 5,
-                                            ),
-                                            height: Get.height * 0.1,
-                                            width: Get.width * 0.1,
-                                            decoration: BoxDecoration(
-                                              color: ColorManager.glodenColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                10,
+                                          return Draggable(
+                                            feedback: Container(
+                                              alignment: Alignment.topLeft,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 5,
                                               ),
-                                              border: Border.all(
-                                                width: 1,
+                                              height: Get.height * 0.1,
+                                              width: Get.width * 0.1,
+                                              decoration: BoxDecoration(
+                                                color: ColorManager.glodenColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  10,
+                                                ),
+                                                border: Border.all(
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Student Name: ${controller.availableStudents[i].firstName!} ${controller.availableStudents[i].secondName!} ${controller.availableStudents[i].thirdName!} ',
+                                                    style: nunitoBold.copyWith(
+                                                      color: ColorManager.white,
+                                                      fontSize: 12,
+                                                    ),
+                                                    maxLines: 1,
+                                                  ),
+                                                  Text(
+                                                    'Seat NO: ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).seatNumber}',
+                                                    style: nunitoBold.copyWith(
+                                                      color: ColorManager.white,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Grade : ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).student?.gradeResModel?.name}',
+                                                    style: nunitoBold.copyWith(
+                                                      color: ColorManager.white,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Student Name: ${controller.availableStudents[i].firstName!} ${controller.availableStudents[i].secondName!} ${controller.availableStudents[i].thirdName!} ',
-                                                  style: nunitoBold.copyWith(
-                                                    color: ColorManager.white,
-                                                    fontSize: 12,
-                                                  ),
-                                                  maxLines: 1,
+                                            child: Container(
+                                              alignment: Alignment.topLeft,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 5,
+                                              ),
+                                              height: Get.height * 0.1,
+                                              width: Get.width * 0.1,
+                                              decoration: BoxDecoration(
+                                                color: ColorManager.glodenColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  10,
                                                 ),
-                                                Text(
-                                                  'Seat NO: ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).seatNumber}',
-                                                  style: nunitoBold.copyWith(
-                                                    color: ColorManager.white,
-                                                    fontSize: 14,
-                                                  ),
+                                                border: Border.all(
+                                                  width: 1,
                                                 ),
-                                                Text(
-                                                  'Grade : ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).student?.gradeResModel?.name}',
-                                                  style: nunitoBold.copyWith(
-                                                    color: ColorManager.white,
-                                                    fontSize: 14,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Student Name: ${controller.availableStudents[i].firstName!} ${controller.availableStudents[i].secondName!} ${controller.availableStudents[i].thirdName!} ',
+                                                    style: nunitoBold.copyWith(
+                                                      color: ColorManager.white,
+                                                      fontSize: 12,
+                                                    ),
+                                                    maxLines: 1,
                                                   ),
-                                                ),
-                                              ],
+                                                  Text(
+                                                    'Seat NO: ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).seatNumber}',
+                                                    style: nunitoBold.copyWith(
+                                                      color: ColorManager.white,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Grade : ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).student?.gradeResModel?.name}',
+                                                    style: nunitoBold.copyWith(
+                                                      color: ColorManager.white,
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ).paddingAll(
+                                              5,
                                             ),
-                                          ).paddingAll(
-                                            5,
                                           );
                                         },
                                       ),
