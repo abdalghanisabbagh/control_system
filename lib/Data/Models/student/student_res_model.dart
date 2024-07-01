@@ -1,3 +1,7 @@
+import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
+import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
+import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
+
 class StudentResModel {
   StudentResModel({
     this.iD,
@@ -18,6 +22,9 @@ class StudentResModel {
     this.createdAt,
     this.updatedBy,
     this.updatedAt,
+    this.gradeResModel,
+    this.classRoomResModel,
+    this.cohortResModel,
     this.active,
   });
 
@@ -37,6 +44,13 @@ class StudentResModel {
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
+    gradeResModel =
+        json['grades'] == null ? null : GradeResModel.fromJson(json['grades']);
+    classRoomResModel = json['school_class'] == null
+        ? null
+        : ClassRoomResModel.fromJson(json['school_class']);
+    cohortResModel =
+        json['cohort'] == null ? null : CohortResModel.fromJson(json['cohort']);
     active = json['Active'];
   }
 
@@ -59,6 +73,9 @@ class StudentResModel {
   String? thirdName;
   DateTime? updatedAt;
   int? updatedBy;
+  GradeResModel? gradeResModel;
+  CohortResModel? cohortResModel;
+  ClassRoomResModel? classRoomResModel;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -77,6 +94,7 @@ class StudentResModel {
     data['Created_At'] = createdAt;
     data['Updated_By'] = updatedBy;
     data['Updated_At'] = updatedAt;
+    data['grades'] = gradeResModel?.toJson();
     data['Active'] = active;
     return data;
   }
