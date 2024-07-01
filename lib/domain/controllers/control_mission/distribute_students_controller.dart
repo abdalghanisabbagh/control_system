@@ -5,7 +5,7 @@ import 'package:control_system/Data/Models/student_seat/student_seat_res_model.d
 import 'package:control_system/Data/Models/student_seat/students_seats_numbers_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart' show TextEditingController;
+import 'package:flutter/material.dart' show TextEditingController, debugPrint;
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
@@ -30,6 +30,7 @@ class DistributeStudentsController extends GetxController {
   Map<String, int> countByGrade = {};
 
   List<ValueItem> optionsGrades = [];
+  List<ValueItem> optionsGradesInExamRoom = [];
   int selectedItemGradeId = -1;
 
   bool isLoading = false;
@@ -173,6 +174,17 @@ class DistributeStudentsController extends GetxController {
         countByGrade[selectedItemGradeId.toString()]! -
             int.parse(numberOfStudentsController.text);
     availableStudentsCount -= int.parse(numberOfStudentsController.text);
+    optionsGradesInExamRoom.contains(ValueItem(
+            label: grades
+                .firstWhere((element) => element.iD == selectedItemGradeId)
+                .name!,
+            value: selectedItemGradeId))
+        ? null
+        : optionsGradesInExamRoom.add(ValueItem(
+            label: grades
+                .firstWhere((element) => element.iD == selectedItemGradeId)
+                .name!,
+            value: selectedItemGradeId));
     numberOfStudentsController.clear();
     update();
     return;
