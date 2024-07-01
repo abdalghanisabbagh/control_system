@@ -35,6 +35,7 @@ dependencies:
   csv: ^6.0.0
   enhance_stepper: ^1.0.1
   collection: ^1.18.0
+  pdf: ^3.11.0
 
 dev_dependencies:
   flutter_test:

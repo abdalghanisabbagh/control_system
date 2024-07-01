@@ -126,8 +126,8 @@ class ControlMissingBindings extends Bindings {
       () => ControlMissionController(),
       fenix: true,
     );
-    Get.lazyPut<ReviewControlMissionController>(
-      () => ReviewControlMissionController(),
+    Get.lazyPut<DetailsAndReviewMissionController>(
+      () => DetailsAndReviewMissionController(),
       fenix: true,
     );
 

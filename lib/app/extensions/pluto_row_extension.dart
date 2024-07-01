@@ -4,6 +4,7 @@ import '../../Data/Models/class_room/class_room_res_model.dart';
 import '../../Data/Models/cohort/cohort_res_model.dart';
 import '../../Data/Models/school/grade_response/grade_res_model.dart';
 import '../../Data/Models/student/student_res_model.dart';
+import '../../Data/Models/student_seat/student_seat_res_model.dart';
 
 extension PlutoRowExtension on List<StudentResModel> {
   List<PlutoRow> convertStudentsToRows({
@@ -121,5 +122,38 @@ extension PlutoRowExtension on List<StudentResModel> {
       'errorgrade': errorgrade,
       'errorclass': errorclass
     };
+  }
+}
+
+extension PlutoRowStudentSeatsNumbersExtansion
+    on List<StudentSeatNumberResModel> {
+  List<PlutoRow> convertStudentsToRows() {
+    List<PlutoRow> rows = [];
+
+    for (var element in this) {
+      rows.add(
+        PlutoRow(
+          cells: {
+            'BlbIdField': PlutoCell(value: element.student!.blbId.toString()),
+            'StudentNameField': PlutoCell(
+                value:
+                    "${element.student!.firstName} ${element.student!.secondName}"),
+            'SeatNumberField': PlutoCell(
+              value: element.seatNumber.toString(),
+            ),
+            'GradeField': PlutoCell(
+                value: element.student!.gradeResModel!.name.toString()),
+            'ClassRoomField': PlutoCell(
+              value: element.student!.classRoomResModel!.name.toString(),
+            ),
+            'CohortField': PlutoCell(
+                value: element.student!.cohortResModel!.name.toString()),
+            'ActionsField': PlutoCell(value: 'Actions'),
+          },
+        ),
+      );
+    }
+
+    return rows;
   }
 }

@@ -37,7 +37,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Download excel template",
               icon: const Icon(FontAwesomeIcons.cloudArrowDown),
               onPressed: () {
-                // controller.downloadeTemp();
+                controller.exportToCsv(context, controller.studentsRows);
               },
             ),
             IconButton(
@@ -59,7 +59,6 @@ class HeaderStudentWidget extends GetView<StudentController> {
               icon: const Icon(FontAwesomeIcons.rotate),
               onPressed: () {
                 controller.onInit();
-                // MyDialogs.showDialog(context, EditStudentWidget());
               },
             ),
             IconButton(
