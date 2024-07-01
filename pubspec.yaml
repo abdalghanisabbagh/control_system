@@ -36,6 +36,7 @@ dependencies:
   enhance_stepper: ^1.0.1
   collection: ^1.18.0
   pdf: ^3.11.0
+  super_drag_and_drop: ^0.8.17
 
 dev_dependencies:
   flutter_test:

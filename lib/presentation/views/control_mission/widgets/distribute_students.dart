@@ -3,6 +3,7 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/my_b
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 import 'add_new_students_to_exam_room_widget.dart';
@@ -193,55 +194,12 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                       children: List.generate(
                                         controller.availableStudents.length,
                                         (i) {
-                                          return Draggable(
-                                            feedback: Container(
-                                              alignment: Alignment.topLeft,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 10,
-                                                vertical: 5,
-                                              ),
-                                              height: Get.height * 0.1,
-                                              width: Get.width * 0.1,
-                                              decoration: BoxDecoration(
-                                                color: ColorManager.glodenColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  10,
-                                                ),
-                                                border: Border.all(
-                                                  width: 1,
-                                                ),
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
-                                                    style: nunitoBold.copyWith(
-                                                      color: ColorManager.white,
-                                                      fontSize: 12,
-                                                    ),
-                                                    maxLines: 1,
-                                                  ),
-                                                  Text(
-                                                    'Seat NO: ${controller.availableStudents[i].seatNumber}',
-                                                    style: nunitoBold.copyWith(
-                                                      color: ColorManager.white,
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
-                                                    style: nunitoBold.copyWith(
-                                                      color: ColorManager.white,
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                          Widget child = DragItemWidget(
+                                            dragItemProvider: (_) {
+                                              return null;
+                                            },
+                                            allowedOperations: () =>
+                                                [DropOperation.copy],
                                             child: Container(
                                               alignment: Alignment.topLeft,
                                               padding:
@@ -289,7 +247,11 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                   ),
                                                 ],
                                               ),
-                                            ).paddingAll(
+                                            ),
+                                          );
+                                          return Draggable(
+                                            feedback: child,
+                                            child: child.paddingAll(
                                               5,
                                             ),
                                           );
