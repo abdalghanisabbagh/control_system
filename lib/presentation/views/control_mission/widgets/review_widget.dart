@@ -1,6 +1,5 @@
 import 'package:control_system/domain/controllers/control_mission/review_control_mission_controller.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -244,8 +243,7 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
 class _Header extends StatefulWidget {
   const _Header({
     required this.stateManager,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final PlutoGridStateManager stateManager;
 

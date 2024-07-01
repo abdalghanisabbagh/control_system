@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../domain/controllers/control_mission/control_mission_controller.dart';
-import '../../../../domain/controllers/control_mission/distribution_controller.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
