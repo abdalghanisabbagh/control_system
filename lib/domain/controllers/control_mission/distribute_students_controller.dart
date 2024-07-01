@@ -21,6 +21,7 @@ class DistributeStudentsController extends GetxController {
   ExamRoomResModel examRoomResModel = ExamRoomResModel();
 
   TextEditingController numberOfStudentsController = TextEditingController();
+  int availableStudentsCount = 0;
 
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
   List<StudentSeatNumberResModel> availableStudents = [];
@@ -82,7 +83,10 @@ class DistributeStudentsController extends GetxController {
       },
       (r) {
         studentsSeatNumbers = r.studentSeatNumbers!;
-
+        availableStudentsCount = examRoomResModel.capacity! -
+            studentsSeatNumbers
+                .where((element) => element.examRoomID == examRoomResModel.id)
+                .length;
         Map<int?, List<StudentSeatNumberResModel>> gradesCollection =
             studentsSeatNumbers
                 .where((e) => (e.examRoomID == null))
@@ -142,6 +146,17 @@ class DistributeStudentsController extends GetxController {
     return gotData;
   }
 
+  bool canAddStudents() {
+    return (selectedItemGradeId != -1) &&
+        (numberOfStudentsController.text.isNotEmpty) &&
+        (countByGrade[selectedItemGradeId.toString()]! -
+                int.parse(numberOfStudentsController.text) >=
+            0) &&
+        (int.parse(numberOfStudentsController.text) +
+                availableStudents.length) <=
+            examRoomResModel.capacity!;
+  }
+
   void getAvailableStudents() async {
     availableStudents.addAll(studentsSeatNumbers
         .where((element) => (element.gradesID == selectedItemGradeId))
@@ -157,6 +172,7 @@ class DistributeStudentsController extends GetxController {
     countByGrade[selectedItemGradeId.toString()] =
         countByGrade[selectedItemGradeId.toString()]! -
             int.parse(numberOfStudentsController.text);
+    availableStudentsCount -= int.parse(numberOfStudentsController.text);
     numberOfStudentsController.clear();
     update();
     return;

@@ -1,7 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/controllers.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_add_button.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_back_button.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -86,7 +88,10 @@ class AddNewStudentsToExamRoomWidget
                                 children: [
                                   Expanded(
                                     child: ElevatedBackButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        controller.numberOfStudentsController
+                                            .clear();
+                                      },
                                     ),
                                   ),
                                   const SizedBox(
@@ -96,8 +101,19 @@ class AddNewStudentsToExamRoomWidget
                                     child: ElevatedAddButton(
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
-                                          controller.getAvailableStudents();
-                                          Get.back();
+                                          controller.canAddStudents()
+                                              ? {
+                                                  controller
+                                                      .getAvailableStudents(),
+                                                  Get.back(),
+                                                }
+                                              : MyAwesomeDialogue(
+                                                      title: 'Error',
+                                                      desc:
+                                                          'PLease Make Sure You Have Entered The Right Number Of Students',
+                                                      dialogType:
+                                                          DialogType.error)
+                                                  .showDialogue(context);
                                         }
                                       },
                                     ),
