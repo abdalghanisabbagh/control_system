@@ -5,7 +5,7 @@ import 'package:control_system/Data/Models/student_seat/student_seat_res_model.d
 import 'package:control_system/Data/Models/student_seat/students_seats_numbers_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart' show TextEditingController, debugPrint;
+import 'package:flutter/material.dart' show TextEditingController;
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
@@ -148,9 +148,7 @@ class DistributeStudentsController extends GetxController {
   }
 
   bool canAddStudents() {
-    return (selectedItemGradeId != -1) &&
-        (numberOfStudentsController.text.isNotEmpty) &&
-        (countByGrade[selectedItemGradeId.toString()]! -
+    return (countByGrade[selectedItemGradeId.toString()]! -
                 int.parse(numberOfStudentsController.text) >=
             0) &&
         (int.parse(numberOfStudentsController.text) +
@@ -158,11 +156,49 @@ class DistributeStudentsController extends GetxController {
             examRoomResModel.capacity!;
   }
 
+  bool canRemoveStudents() {
+    return availableStudents
+                .where((element) => (element.gradesID == selectedItemGradeId))
+                .length -
+            int.parse(numberOfStudentsController.text) >=
+        0;
+  }
+
+  void removeStudentsFromExamRoom() {
+    studentsSeatNumbers.addAll(
+      availableStudents.reversed
+          .where((element) => (element.gradesID == selectedItemGradeId))
+          .take(int.parse(numberOfStudentsController.text)),
+    );
+
+    studentsSeatNumbers
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+
+    availableStudents
+      ..removeWhere((element) => (studentsSeatNumbers.contains(element)))
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort(
+        (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
+      );
+    availableStudentsCount += int.parse(numberOfStudentsController.text);
+    countByGrade[selectedItemGradeId.toString()] =
+        countByGrade[selectedItemGradeId.toString()]! +
+            int.parse(numberOfStudentsController.text);
+    availableStudents
+            .where((element) => (element.gradesID == selectedItemGradeId))
+            .isEmpty
+        ? optionsGradesInExamRoom
+            .removeWhere((element) => (element.value == selectedItemGradeId))
+        : null;
+    numberOfStudentsController.clear();
+    update();
+  }
+
   void getAvailableStudents() async {
     availableStudents.addAll(studentsSeatNumbers
         .where((element) => (element.gradesID == selectedItemGradeId))
-        .take(int.parse(numberOfStudentsController.text))
-        .toList());
+        .take(int.parse(numberOfStudentsController.text)));
     studentsSeatNumbers
         .removeWhere((element) => availableStudents.contains(element));
     availableStudents
