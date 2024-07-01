@@ -36,9 +36,19 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                           ),
                         ),
                         const Spacer(),
-                        const Row(children: [
-                          // List.generate(controller.studentsSeatNumbers, generator)
-                        ]),
+                        SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(
+                              controller.countByGrade.keys.length,
+                              (index) => Text(
+                                '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.countByGrade.values.toList()[index]})',
+                                style: nunitoRegular,
+                              ).paddingSymmetric(horizontal: 10),
+                            ),
+                          ),
+                        ),
                         const Spacer(),
                         Column(
                           children: [
@@ -174,14 +184,14 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                     maxLines: 1,
                                                   ),
                                                   Text(
-                                                    'Seat NO: ${controller.studentsSeatNumbers[i].seatNumber}',
+                                                    'Seat NO: ${controller.availableStudents[i].seatNumber}',
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager.white,
                                                       fontSize: 14,
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Grade : ${controller.studentsSeatNumbers[i].student?.gradeResModel?.name}',
+                                                    'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager.white,
                                                       fontSize: 14,

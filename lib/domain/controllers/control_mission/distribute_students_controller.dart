@@ -26,6 +26,8 @@ class DistributeStudentsController extends GetxController {
   List<StudentSeatNumberResModel> availableStudents = [];
   List<GradeResModel> grades = [];
 
+  Map<String, int> countByGrade = {};
+
   List<ValueItem> optionsGrades = [];
   int selectedItemGradeId = -1;
 
@@ -80,7 +82,6 @@ class DistributeStudentsController extends GetxController {
       },
       (r) {
         studentsSeatNumbers = r.studentSeatNumbers!;
-        Map<String, int> countByGrade = {};
 
         Map<int?, List<StudentSeatNumberResModel>> gradesCollection =
             studentsSeatNumbers
@@ -96,8 +97,10 @@ class DistributeStudentsController extends GetxController {
         optionsGrades = studentsSeatNumbers
             .map(
               (e) => ValueItem(
-                label:
-                    '${grades.firstWhere((g) => (g.iD == e.gradesID) && (e.examRoomID == null)).name!} (${countByGrade[e.gradesID.toString()]})',
+                label: grades
+                    .firstWhere(
+                        (g) => (g.iD == e.gradesID) && (e.examRoomID == null))
+                    .name!,
                 value: e.gradesID!,
               ),
             )
@@ -151,6 +154,9 @@ class DistributeStudentsController extends GetxController {
       ..sort(
         (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
       );
+    countByGrade[selectedItemGradeId.toString()] =
+        countByGrade[selectedItemGradeId.toString()]! -
+            int.parse(numberOfStudentsController.text);
     numberOfStudentsController.clear();
     update();
     return;
