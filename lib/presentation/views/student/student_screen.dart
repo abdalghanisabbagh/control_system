@@ -97,7 +97,6 @@ class StudentScreen extends GetView<StudentController> {
                                 type: PlutoColumnType.text(),
                               ),
 
-                              /// Text Column definition
                               PlutoColumn(
                                 readOnly: true,
                                 enableEditingMode: false,

@@ -57,8 +57,7 @@ class DetailsAndReviewMission
                           labelStyle: nunitoRegularStyle(),
                           automaticIndicatorColorAdjustment: true,
                           labelColor: ColorManager.primary,
-                          labelPadding:
-                              const EdgeInsets.symmetric(vertical: 15),
+                          labelPadding: const EdgeInsets.symmetric(vertical: 5),
                           indicator: BoxDecoration(color: ColorManager.white),
                           indicatorSize: TabBarIndicatorSize.tab,
                           unselectedLabelColor: ColorManager.white,
