@@ -12,7 +12,6 @@ import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
-import '../../../Data/Models/student/student_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
@@ -24,7 +23,7 @@ class DistributeStudentsController extends GetxController {
   TextEditingController numberOfStudentsController = TextEditingController();
 
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
-  List<StudentResModel> availableStudents = [];
+  List<StudentSeatNumberResModel> availableStudents = [];
   List<GradeResModel> grades = [];
 
   List<ValueItem> optionsGrades = [];
@@ -141,12 +140,18 @@ class DistributeStudentsController extends GetxController {
   }
 
   void getAvailableStudents() async {
-    availableStudents.assignAll(studentsSeatNumbers
+    availableStudents.addAll(studentsSeatNumbers
         .where((element) => (element.gradesID == selectedItemGradeId))
         .take(int.parse(numberOfStudentsController.text))
-        .map((element) => element.student!)
         .toList());
-
+    studentsSeatNumbers
+        .removeWhere((element) => availableStudents.contains(element));
+    availableStudents
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort(
+        (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
+      );
+    numberOfStudentsController.clear();
     update();
     return;
   }
