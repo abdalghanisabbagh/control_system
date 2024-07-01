@@ -132,4 +132,48 @@ class StudentResModel {
       secondLang: data['second_language'],
     );
   }
+
+  @override
+  bool operator ==(covariant StudentResModel other) {
+    if (identical(this, other)) return true;
+
+    return other.iD == iD &&
+        other.blbId == blbId &&
+        other.gradesID == gradesID &&
+        other.schoolsID == schoolsID &&
+        other.cohortID == cohortID &&
+        other.schoolClassID == schoolClassID &&
+        other.firstName == firstName &&
+        other.secondName == secondName &&
+        other.thirdName == thirdName &&
+        other.email == email &&
+        other.secondLang == secondLang &&
+        other.createdBy == createdBy &&
+        other.createdAt == createdAt &&
+        other.updatedBy == updatedBy &&
+        other.updatedAt == updatedAt &&
+        other.gradeResModel == gradeResModel &&
+        other.active == active;
+  }
+
+  @override
+  int get hashCode {
+    return iD.hashCode ^
+        blbId.hashCode ^
+        gradesID.hashCode ^
+        schoolsID.hashCode ^
+        cohortID.hashCode ^
+        schoolClassID.hashCode ^
+        firstName.hashCode ^
+        secondName.hashCode ^
+        thirdName.hashCode ^
+        email.hashCode ^
+        secondLang.hashCode ^
+        createdBy.hashCode ^
+        createdAt.hashCode ^
+        updatedBy.hashCode ^
+        updatedAt.hashCode ^
+        gradeResModel.hashCode ^
+        active.hashCode;
+  }
 }

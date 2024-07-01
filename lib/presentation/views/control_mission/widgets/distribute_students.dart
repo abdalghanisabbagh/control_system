@@ -36,6 +36,10 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                           ),
                         ),
                         const Spacer(),
+                        const Row(children: [
+                          // List.generate(controller.studentsSeatNumbers, generator)
+                        ]),
+                        const Spacer(),
                         Column(
                           children: [
                             const SizedBox(
@@ -162,7 +166,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Student Name: ${controller.availableStudents[i].firstName!} ${controller.availableStudents[i].secondName!} ${controller.availableStudents[i].thirdName!} ',
+                                                    'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager.white,
                                                       fontSize: 12,
@@ -170,14 +174,14 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                     maxLines: 1,
                                                   ),
                                                   Text(
-                                                    'Seat NO: ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).seatNumber}',
+                                                    'Seat NO: ${controller.studentsSeatNumbers[i].seatNumber}',
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager.white,
                                                       fontSize: 14,
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Grade : ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).student?.gradeResModel?.name}',
+                                                    'Grade : ${controller.studentsSeatNumbers[i].student?.gradeResModel?.name}',
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager.white,
                                                       fontSize: 14,
@@ -210,7 +214,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Student Name: ${controller.availableStudents[i].firstName!} ${controller.availableStudents[i].secondName!} ${controller.availableStudents[i].thirdName!} ',
+                                                    'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager.white,
                                                       fontSize: 12,
@@ -218,14 +222,14 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                     maxLines: 1,
                                                   ),
                                                   Text(
-                                                    'Seat NO: ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).seatNumber}',
+                                                    'Seat NO: ${controller.availableStudents[i].seatNumber}',
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager.white,
                                                       fontSize: 14,
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Grade : ${controller.studentsSeatNumbers.firstWhere((e) => e.studentID == controller.availableStudents[i].iD).student?.gradeResModel?.name}',
+                                                    'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
                                                     style: nunitoBold.copyWith(
                                                       color: ColorManager.white,
                                                       fontSize: 14,
