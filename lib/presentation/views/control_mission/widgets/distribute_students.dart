@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -464,7 +465,14 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                     dialogType: DialogType.error,
                                   ).showDialogue(context);
                                 } else {
-                                  controller.finish();
+                                  controller.finish().then((value) {
+                                    if (value) {
+                                      MyFlashBar.showSuccess(
+                                        'Success',
+                                        'Students have been distributed successfully',
+                                      ).show(context);
+                                    }
+                                  });
                                 }
                               },
                               icon: const Icon(Icons.done, color: Colors.white),

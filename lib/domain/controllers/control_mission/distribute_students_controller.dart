@@ -167,12 +167,17 @@ class DistributeStudentsController extends GetxController {
         update();
       },
       (r) {
-        studentsSeatNumbers = r.studentSeatNumbers!;
+        studentsSeatNumbers = r.studentSeatNumbers!
+          ..removeWhere((element) =>
+              element.examRoomID != null &&
+              element.examRoomID != examRoomResModel.id);
         availableStudents
           ..assignAll(studentsSeatNumbers
               .where((element) => element.examRoomID == examRoomResModel.id))
           ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
           ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+        availableStudentsCount =
+            examRoomResModel.capacity! - availableStudents.length;
         studentsSeatNumbers
           ..removeWhere((element) => element.examRoomID == examRoomResModel.id)
           ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
@@ -186,10 +191,8 @@ class DistributeStudentsController extends GetxController {
             )
             .toSet()
             .toList();
-        availableStudentsCount = examRoomResModel.capacity! -
-            studentsSeatNumbers
-                .where((element) => element.examRoomID == examRoomResModel.id)
-                .length;
+        availableStudentsCount =
+            examRoomResModel.capacity! - availableStudents.length;
         Map<int?, List<StudentSeatNumberResModel>> gradesCollection =
             studentsSeatNumbers
                 .where((e) => (e.examRoomID == null))
@@ -212,9 +215,9 @@ class DistributeStudentsController extends GetxController {
             .toList();
         isLoading = false;
         gotData = true;
-        update();
       },
     );
+    update();
     return gotData;
   }
 
@@ -298,28 +301,28 @@ class DistributeStudentsController extends GetxController {
     availableStudents.addAll(studentsSeatNumbers
         .where((element) => (element.gradesID == selectedItemGradeId))
         .take(int.parse(numberOfStudentsController.text)));
-    studentsSeatNumbers
-        .removeWhere((element) => availableStudents.contains(element));
-    availableStudents
-      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
-      ..sort(
-        (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
-      );
-    countByGrade[selectedItemGradeId.toString()] =
-        countByGrade[selectedItemGradeId.toString()]! -
-            int.parse(numberOfStudentsController.text);
-    availableStudentsCount -= int.parse(numberOfStudentsController.text);
-    optionsGradesInExamRoom.contains(ValueItem(
-            label: grades
-                .firstWhere((element) => element.iD == selectedItemGradeId)
-                .name!,
-            value: selectedItemGradeId))
-        ? null
-        : optionsGradesInExamRoom.add(ValueItem(
-            label: grades
-                .firstWhere((element) => element.iD == selectedItemGradeId)
-                .name!,
-            value: selectedItemGradeId));
+    // studentsSeatNumbers
+    //     .removeWhere((element) => availableStudents.contains(element));
+    // availableStudents
+    //   ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+    //   ..sort(
+    //     (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
+    //   );
+    // countByGrade[selectedItemGradeId.toString()] =
+    //     countByGrade[selectedItemGradeId.toString()]! -
+    //         int.parse(numberOfStudentsController.text);
+    // availableStudentsCount -= int.parse(numberOfStudentsController.text);
+    // optionsGradesInExamRoom.contains(ValueItem(
+    //         label: grades
+    //             .firstWhere((element) => element.iD == selectedItemGradeId)
+    //             .name!,
+    //         value: selectedItemGradeId))
+    //     ? null
+    //     : optionsGradesInExamRoom.add(ValueItem(
+    //         label: grades
+    //             .firstWhere((element) => element.iD == selectedItemGradeId)
+    //             .name!,
+    //         value: selectedItemGradeId));
     numberOfStudentsController.clear();
     update();
     return;
