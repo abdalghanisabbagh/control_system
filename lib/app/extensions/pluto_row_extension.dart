@@ -7,9 +7,8 @@ import '../../Data/Models/student/student_res_model.dart';
 import '../../Data/Models/student_seat/student_seat_res_model.dart';
 
 extension PlutoRowExtension on List<StudentResModel> {
-  List<PlutoRow> convertStudentsToRows(
-  ) {
-   List<PlutoRow> rows = [];
+  List<PlutoRow> convertStudentsToRows() {
+    List<PlutoRow> rows = [];
     for (var element in this) {
       rows.add(
         PlutoRow(

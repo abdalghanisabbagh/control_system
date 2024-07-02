@@ -6,11 +6,8 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 import 'package:pluto_grid/pluto_grid.dart';
-
 import '../../../Data/Models/class_room/class_room_res_model.dart';
-import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/cohort/cohort_res_model.dart';
-import '../../../Data/Models/cohort/cohorts_res_model.dart';
 import '../../../Data/Models/control_mission/control_mission_model.dart';
 import '../../../Data/Models/education_year/education_year_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
@@ -151,75 +148,13 @@ class CreateControlMissionController extends GetxController {
     return gotData;
   }
 
-  Future<bool> getCohorts() async {
-    bool gotData = false;
-    update();
-    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
-
-    ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
-    Either<Failure, CohortsResModel> response =
-        await responseHandler.getResponse(
-      path: "${SchoolsLinks.getCohortBySchoolType}/$selectedSchoolId",
-      converter: CohortsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        cohorts = r.data!;
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
-
-  Future<bool> getClassRooms() async {
-    bool gotData = false;
-    update();
-    int schoolId = Hive.box('School').get('Id');
-
-    ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
-    Either<Failure, ClassesRoomsResModel> response =
-        await responseHandler.getResponse(
-      path: "${SchoolsLinks.getSchoolsClassesBySchoolId}/$schoolId",
-      converter: ClassesRoomsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        classesRooms = r.data!;
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
-
   void updateSelectedGrades(List<ValueItem> selectedOptions) {
     selectedGradesIds = selectedOptions.map((e) => e.value as int).toList();
     includedStudentsRows.assignAll(
       students
           .where((student) => selectedGradesIds.contains(student.gradesID))
           .toList()
-          .convertStudentsToRows(
-           
-          ),
+          .convertStudentsToRows(),
     );
     update();
     excludedStudentsRows.clear();
@@ -370,8 +305,6 @@ class CreateControlMissionController extends GetxController {
     await Future.wait([
       getEducationYears(),
       getGrades(),
-      getClassRooms(),
-      getCohorts(),
     ]).then((_) async {
       getStudents();
     });
