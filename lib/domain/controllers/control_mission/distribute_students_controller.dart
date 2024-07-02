@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
+import 'package:control_system/Data/Models/class_desk/class_desk_res_model.dart';
+import 'package:control_system/Data/Models/class_desk/class_desks_res_model.dart';
 import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
 import 'package:control_system/Data/Models/student_seat/student_seat_res_model.dart';
 import 'package:control_system/Data/Models/student_seat/students_seats_numbers_res_model.dart';
@@ -23,8 +27,12 @@ class DistributeStudentsController extends GetxController {
   TextEditingController numberOfStudentsController = TextEditingController();
   int availableStudentsCount = 0;
 
+  int numberOrRows = 0;
+
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
   List<StudentSeatNumberResModel> availableStudents = [];
+  List<ClassDeskResModel> classDesks = [];
+  Map<int?, List<ClassDeskResModel>> classDeskCollection = {};
   List<GradeResModel> grades = [];
 
   Map<String, int> countByGrade = {};
@@ -56,6 +64,82 @@ class DistributeStudentsController extends GetxController {
     update();
   }
 
+  Future<void> getClassDesks() async {
+    ResponseHandler<ClassDesksResModel> responseHandler = ResponseHandler();
+    Either<Failure, ClassDesksResModel> response =
+        await responseHandler.getResponse(
+      path:
+          '${SchoolsLinks.classDesks}/class/${examRoomResModel.schoolClassID}',
+      converter: ClassDesksResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        classDesks = r.data!;
+        classDeskCollection = classDesks.groupListsBy(
+          (e) => e.cloumnNum,
+        );
+        numberOrRows =
+            classDesks.map((element) => element.cloumnNum!).reduce(max) + 1;
+      },
+    );
+    update();
+    return;
+  }
+
+  void autoGenerateSimple() {
+    for (int i = 0; i < availableStudents.length; i++) {
+      availableStudents[i].classDeskID = classDesks[i].id;
+      availableStudents[i].examRoomID = examRoomResModel.id;
+    }
+    update();
+  }
+
+  void removeAll() {
+    for (int i = 0; i < availableStudents.length; i++) {
+      availableStudents[i].classDeskID = null;
+    }
+    update();
+  }
+
+  Future<bool> finish() async {
+    bool success = false;
+    ResponseHandler<void> responseHandler = ResponseHandler();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: availableStudents
+          .map((element) => {
+                "ID": element.iD,
+                "Exam_Room_ID": element.examRoomID,
+                "Class_Desk_ID": element.classDeskID,
+              })
+          .toList(),
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        success = true;
+      },
+    );
+    update();
+    return success;
+  }
+
   Future<bool> getStudentsSeatNumbers() async {
     isLoading = true;
     update();
@@ -84,6 +168,24 @@ class DistributeStudentsController extends GetxController {
       },
       (r) {
         studentsSeatNumbers = r.studentSeatNumbers!;
+        availableStudents
+          ..assignAll(studentsSeatNumbers
+              .where((element) => element.examRoomID == examRoomResModel.id))
+          ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+          ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+        studentsSeatNumbers
+          ..removeWhere((element) => element.examRoomID == examRoomResModel.id)
+          ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+          ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+        optionsGradesInExamRoom = availableStudents
+            .map(
+              (e) => ValueItem(
+                label: grades.firstWhere((g) => g.iD == e.gradesID).name!,
+                value: e.gradesID!,
+              ),
+            )
+            .toSet()
+            .toList();
         availableStudentsCount = examRoomResModel.capacity! -
             studentsSeatNumbers
                 .where((element) => element.examRoomID == examRoomResModel.id)
@@ -102,10 +204,7 @@ class DistributeStudentsController extends GetxController {
         optionsGrades = studentsSeatNumbers
             .map(
               (e) => ValueItem(
-                label: grades
-                    .firstWhere(
-                        (g) => (g.iD == e.gradesID) && (e.examRoomID == null))
-                    .name!,
+                label: grades.firstWhere((g) => g.iD == e.gradesID).name!,
                 value: e.gradesID!,
               ),
             )
@@ -233,7 +332,10 @@ class DistributeStudentsController extends GetxController {
     update();
     await Future.wait([
       getExamRoom().then((_) async => getGradesBySchoolId()).then((_) async {
-        getStudentsSeatNumbers();
+        await Future.wait([
+          getStudentsSeatNumbers(),
+          getClassDesks(),
+        ]);
       }),
     ]);
     isLoading = false;

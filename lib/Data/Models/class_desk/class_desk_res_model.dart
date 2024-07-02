@@ -1,12 +1,12 @@
-class ClassDeskModel {
-  ClassDeskModel({
+class ClassDeskResModel {
+  ClassDeskResModel({
     this.id,
     this.schoolClassID,
     this.cloumnNum,
     this.rowNum,
   });
 
-  ClassDeskModel.fromJson(json) {
+  ClassDeskResModel.fromJson(json) {
     id = json['ID'];
     schoolClassID = json['School_Class_ID'];
     cloumnNum = json['Cloumn_Num'];
