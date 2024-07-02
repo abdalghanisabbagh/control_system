@@ -218,9 +218,7 @@ class CreateControlMissionController extends GetxController {
           .where((student) => selectedGradesIds.contains(student.gradesID))
           .toList()
           .convertStudentsToRows(
-            cohorts: cohorts,
-            classesRooms: classesRooms,
-            grades: grades,
+           
           ),
     );
     update();

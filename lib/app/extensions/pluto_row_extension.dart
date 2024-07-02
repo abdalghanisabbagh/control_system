@@ -7,12 +7,9 @@ import '../../Data/Models/student/student_res_model.dart';
 import '../../Data/Models/student_seat/student_seat_res_model.dart';
 
 extension PlutoRowExtension on List<StudentResModel> {
-  List<PlutoRow> convertStudentsToRows({
-    required List<CohortResModel> cohorts,
-    required List<ClassRoomResModel> classesRooms,
-    required List<GradeResModel> grades,
-  }) {
-    List<PlutoRow> rows = [];
+  List<PlutoRow> convertStudentsToRows(
+  ) {
+   List<PlutoRow> rows = [];
     for (var element in this) {
       rows.add(
         PlutoRow(
@@ -24,18 +21,13 @@ extension PlutoRowExtension on List<StudentResModel> {
               value: element.thirdName,
             ),
             'CohortField': PlutoCell(
-              value: cohorts
-                  .firstWhere((item) => item.iD == element.cohortID)
-                  .name,
+              value: element.cohortResModel!.name,
             ),
             'GradeField': PlutoCell(
-              value:
-                  grades.firstWhere((item) => item.iD == element.gradesID).name,
+              value: element.gradeResModel!.name,
             ),
             'ClassRoomField': PlutoCell(
-              value: classesRooms
-                  .firstWhere((item) => item.iD == element.schoolClassID)
-                  .name,
+              value: element.classRoomResModel!.name,
             ),
             'LanguageField': PlutoCell(value: element.secondLang),
             'ActionsField': PlutoCell(value: 'Actions'),

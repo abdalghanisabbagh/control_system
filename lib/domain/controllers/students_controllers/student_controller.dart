@@ -92,8 +92,7 @@ class StudentController extends GetxController {
       },
       (r) {
         students = r.students!;
-        studentsRows = r.students!.convertStudentsToRows(
-            classesRooms: classRooms, cohorts: cohorts, grades: grades);
+        studentsRows = r.students!.convertStudentsToRows();
         gotData = true;
       },
     );
