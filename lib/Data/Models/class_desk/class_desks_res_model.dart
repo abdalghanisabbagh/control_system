@@ -4,11 +4,11 @@ class ClassDesksResModel {
   ClassDesksResModel({this.data});
 
   ClassDesksResModel.fromJson(json) {
-    data = List<ClassDeskModel>.from(
-        json.map((e) => ClassDeskModel.fromJson(e)).toList());
+    data = List<ClassDeskResModel>.from(
+        json.map((e) => ClassDeskResModel.fromJson(e)).toList());
   }
 
-  List<ClassDeskModel>? data;
+  List<ClassDeskResModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
