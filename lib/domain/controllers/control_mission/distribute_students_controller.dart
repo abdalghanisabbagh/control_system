@@ -285,6 +285,40 @@ class DistributeStudentsController extends GetxController {
         0;
   }
 
+  void removeStudentFromExamRoom({required int studentSeatNumberId}) {
+    studentsSeatNumbers.add(
+      availableStudents
+          .firstWhere((element) => element.iD == studentSeatNumberId),
+    );
+    ++availableStudentsCount;
+    countByGrade[availableStudents
+        .firstWhere((e) => e.iD == studentSeatNumberId)
+        .gradesID
+        .toString()] = countByGrade[availableStudents
+            .firstWhere((e) => e.iD == studentSeatNumberId)
+            .gradesID
+            .toString()]! +
+        1;
+    removedStudentsFromExamRoom.add(
+      availableStudents
+          .firstWhere((element) => element.iD == studentSeatNumberId),
+    );
+    availableStudents
+      ..removeWhere((element) => (element.iD == studentSeatNumberId))
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort(
+        (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
+      );
+    availableStudents
+            .where((element) => (element.gradesID == selectedItemGradeId))
+            .isEmpty
+        ? optionsGradesInExamRoom
+            .removeWhere((element) => (element.value == selectedItemGradeId))
+        : null;
+    update();
+    return;
+  }
+
   void removeStudentsFromExamRoom() {
     List<StudentSeatNumberResModel> removedStudents = availableStudents.reversed
         .where((element) => (element.gradesID == selectedItemGradeId))

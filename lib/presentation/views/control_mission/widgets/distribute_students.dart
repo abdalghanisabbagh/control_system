@@ -6,7 +6,6 @@ import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
@@ -194,7 +193,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: Get.height * 0.6,
+                                  height: Get.height * 0.63,
                                   child: SingleChildScrollView(
                                     child: Column(
                                       crossAxisAlignment:
@@ -202,66 +201,77 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                       children: List.generate(
                                         controller.availableStudents.length,
                                         (i) {
-                                          Widget child = DragItemWidget(
-                                            dragItemProvider: (_) {
-                                              return null;
-                                            },
-                                            allowedOperations: () =>
-                                                [DropOperation.copy],
-                                            child: Container(
-                                              alignment: Alignment.topLeft,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 10,
-                                                vertical: 5,
+                                          Widget child = Container(
+                                            alignment: Alignment.topLeft,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 10,
+                                              vertical: 5,
+                                            ),
+                                            height: Get.height * 0.12,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: ColorManager.glodenColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                10,
                                               ),
-                                              height: Get.height * 0.1,
-                                              width: Get.width * 0.1,
-                                              decoration: BoxDecoration(
-                                                color: ColorManager.glodenColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  10,
+                                              border: Border.all(
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
+                                                  style: nunitoBold.copyWith(
+                                                    color: ColorManager.white,
+                                                    fontSize: 12,
+                                                  ),
+                                                  maxLines: 1,
                                                 ),
-                                                border: Border.all(
-                                                  width: 1,
+                                                Text(
+                                                  'Seat NO: ${controller.availableStudents[i].seatNumber}',
+                                                  style: nunitoBold.copyWith(
+                                                    color: ColorManager.white,
+                                                    fontSize: 14,
+                                                  ),
                                                 ),
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
-                                                    style: nunitoBold.copyWith(
-                                                      color: ColorManager.white,
-                                                      fontSize: 12,
-                                                    ),
-                                                    maxLines: 1,
+                                                Text(
+                                                  'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
+                                                  style: nunitoBold.copyWith(
+                                                    color: ColorManager.white,
+                                                    fontSize: 14,
                                                   ),
-                                                  Text(
-                                                    'Seat NO: ${controller.availableStudents[i].seatNumber}',
-                                                    style: nunitoBold.copyWith(
-                                                      color: ColorManager.white,
-                                                      fontSize: 14,
-                                                    ),
+                                                ),
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          controller.removeStudentFromExamRoom(
+                                                              studentSeatNumberId:
+                                                                  controller
+                                                                      .availableStudents[
+                                                                          i]
+                                                                      .iD!);
+                                                        },
+                                                        icon: const Icon(
+                                                          FontAwesomeIcons
+                                                              .trashCan,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  Text(
-                                                    'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
-                                                    style: nunitoBold.copyWith(
-                                                      color: ColorManager.white,
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           );
-                                          return Draggable(
-                                            feedback: child,
-                                            child: child.paddingAll(
-                                              5,
-                                            ),
+                                          return child.paddingAll(
+                                            5,
                                           );
                                         },
                                       ),
