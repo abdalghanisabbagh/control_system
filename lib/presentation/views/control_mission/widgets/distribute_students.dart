@@ -458,11 +458,43 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                           Expanded(
                             child: ElevatedButton.icon(
                               onPressed: () {
-                                if (controller.availableStudents.isEmpty) {
+                                if (controller.availableStudents.any(
+                                    (element) => element.classDeskID == null)) {
                                   MyAwesomeDialogue(
                                     title: 'Error',
-                                    desc: 'No students added yet',
-                                    dialogType: DialogType.error,
+                                    desc:
+                                        'Some students are not distributed. Are you sure you want to finish ?',
+                                    dialogType: DialogType.warning,
+                                    btnCancelOnPressed: () {},
+                                    btnOkOnPressed: () {
+                                      controller.finish().then((value) {
+                                        if (value) {
+                                          MyFlashBar.showSuccess(
+                                            'Success',
+                                            'Students have been distributed successfully',
+                                          ).show(context);
+                                        }
+                                      });
+                                    },
+                                  ).showDialogue(context);
+                                } else if (controller
+                                    .availableStudents.isEmpty) {
+                                  MyAwesomeDialogue(
+                                    title: 'Error',
+                                    desc:
+                                        'No students added yet. Are you sure you want to finish ?',
+                                    dialogType: DialogType.warning,
+                                    btnCancelOnPressed: () {},
+                                    btnOkOnPressed: () {
+                                      controller.finish().then((value) {
+                                        if (value) {
+                                          MyFlashBar.showSuccess(
+                                            'Success',
+                                            'Students have been distributed successfully',
+                                          ).show(context);
+                                        }
+                                      });
+                                    },
                                   ).showDialogue(context);
                                 } else {
                                   controller.finish().then((value) {
