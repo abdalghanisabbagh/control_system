@@ -1,11 +1,14 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
+import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import 'add_new_students_to_exam_room_widget.dart';
 import 'remove_students_from_exam_room_widget.dart';
 
@@ -87,7 +90,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                               height: 10,
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                controller.autoGenerateSimple();
+                              },
                               child: const Text(
                                 'Auto Generate (Simple)',
                               ),
@@ -105,7 +110,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                               height: 10,
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                controller.removeAll();
+                              },
                               child: const Text(
                                 'Remove All',
                               ),
@@ -298,36 +305,112 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                     child: Column(
                                       children: [
                                         ...List.generate(
-                                          5,
+                                          controller.numberOrRows,
                                           (i) {
                                             return Row(
                                               children: [
                                                 ...List.generate(
-                                                  6,
+                                                  controller
+                                                      .classDeskCollection[i]!
+                                                      .length,
                                                   (j) {
-                                                    return Container(
-                                                      height: Get.height * 0.2,
-                                                      width: Get.width * 0.1,
-                                                      decoration: BoxDecoration(
-                                                        color: ColorManager
-                                                            .primary,
-                                                        border: Border.all(
-                                                          width: 1,
-                                                        ),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          'Class Desk ${i * 6 + j + 1}',
-                                                          style: nunitoBold
-                                                              .copyWith(
-                                                            color: ColorManager
-                                                                .white,
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ).paddingSymmetric(
-                                                        horizontal: 5);
+                                                    return (controller
+                                                                    .availableStudents
+                                                                    .length >
+                                                                i * 6 + j) &&
+                                                            (controller
+                                                                    .availableStudents[
+                                                                        i * 6 +
+                                                                            j]
+                                                                    .classDeskID !=
+                                                                null)
+                                                        ? Container(
+                                                            height: Get.height *
+                                                                0.2,
+                                                            width:
+                                                                Get.width * 0.1,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: ColorManager
+                                                                  .glodenColor,
+                                                              border:
+                                                                  Border.all(
+                                                                width: 1,
+                                                              ),
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  'Student Name: ${controller.availableStudents[i * 6 + j].student?.firstName!} ${controller.availableStudents[i * 6 + j].student?.secondName!} ${controller.availableStudents[i * 6 + j].student?.thirdName!} ',
+                                                                  style: nunitoBold
+                                                                      .copyWith(
+                                                                    color: ColorManager
+                                                                        .white,
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
+                                                                  maxLines: 1,
+                                                                ),
+                                                                Text(
+                                                                  'Seat NO: ${controller.availableStudents[i * 6 + j].seatNumber}',
+                                                                  style: nunitoBold
+                                                                      .copyWith(
+                                                                    color: ColorManager
+                                                                        .white,
+                                                                    fontSize:
+                                                                        14,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  'Grade : ${controller.availableStudents[i * 6 + j].student?.gradeResModel?.name}',
+                                                                  style: nunitoBold
+                                                                      .copyWith(
+                                                                    color: ColorManager
+                                                                        .white,
+                                                                    fontSize:
+                                                                        14,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ).paddingSymmetric(
+                                                                horizontal: 5),
+                                                          ).paddingSymmetric(
+                                                            horizontal: 5)
+                                                        : Container(
+                                                            height: Get.height *
+                                                                0.2,
+                                                            width:
+                                                                Get.width * 0.1,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  ColorManager
+                                                                      .primary,
+                                                              border:
+                                                                  Border.all(
+                                                                width: 1,
+                                                              ),
+                                                            ),
+                                                            child: Center(
+                                                              child: Text(
+                                                                'Class Desk ${i * 6 + j + 1}',
+                                                                style: nunitoBold
+                                                                    .copyWith(
+                                                                  color:
+                                                                      ColorManager
+                                                                          .white,
+                                                                  fontSize: 20,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ).paddingSymmetric(
+                                                            horizontal: 5);
                                                   },
                                                 ),
                                               ],
@@ -374,7 +457,56 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                           ),
                           Expanded(
                             child: ElevatedButton.icon(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (controller.availableStudents.any(
+                                    (element) => element.classDeskID == null)) {
+                                  MyAwesomeDialogue(
+                                    title: 'Error',
+                                    desc:
+                                        'Some students are not distributed. Are you sure you want to finish ?',
+                                    dialogType: DialogType.warning,
+                                    btnCancelOnPressed: () {},
+                                    btnOkOnPressed: () {
+                                      controller.finish().then((value) {
+                                        if (value) {
+                                          MyFlashBar.showSuccess(
+                                            'Success',
+                                            'Students have been distributed successfully',
+                                          ).show(context);
+                                        }
+                                      });
+                                    },
+                                  ).showDialogue(context);
+                                } else if (controller
+                                    .availableStudents.isEmpty) {
+                                  MyAwesomeDialogue(
+                                    title: 'Error',
+                                    desc:
+                                        'No students added yet. Are you sure you want to finish ?',
+                                    dialogType: DialogType.warning,
+                                    btnCancelOnPressed: () {},
+                                    btnOkOnPressed: () {
+                                      controller.finish().then((value) {
+                                        if (value) {
+                                          MyFlashBar.showSuccess(
+                                            'Success',
+                                            'Students have been distributed successfully',
+                                          ).show(context);
+                                        }
+                                      });
+                                    },
+                                  ).showDialogue(context);
+                                } else {
+                                  controller.finish().then((value) {
+                                    if (value) {
+                                      MyFlashBar.showSuccess(
+                                        'Success',
+                                        'Students have been distributed successfully',
+                                      ).show(context);
+                                    }
+                                  });
+                                }
+                              },
                               icon: const Icon(Icons.done, color: Colors.white),
                               label: const Text('Finish'),
                               style: ElevatedButton.styleFrom(
