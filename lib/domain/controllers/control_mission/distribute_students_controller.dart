@@ -31,6 +31,7 @@ class DistributeStudentsController extends GetxController {
 
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
   List<StudentSeatNumberResModel> availableStudents = [];
+  List<StudentSeatNumberResModel> removedStudentsFromExamRoom = [];
   List<ClassDeskResModel> classDesks = [];
   Map<int?, List<ClassDeskResModel>> classDeskCollection = {};
   List<GradeResModel> grades = [];
@@ -103,8 +104,8 @@ class DistributeStudentsController extends GetxController {
   }
 
   void removeAll() {
-    for (int i = 0; i < availableStudents.length; i++) {
-      availableStudents[i].classDeskID = null;
+    for (var element in availableStudents) {
+      element.classDeskID = null;
     }
     update();
   }
@@ -116,13 +117,18 @@ class DistributeStudentsController extends GetxController {
       path: '${StudentsLinks.studentSeatNumbers}/many',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
-      body: availableStudents
-          .map((element) => {
-                "ID": element.iD,
-                "Exam_Room_ID": element.examRoomID,
-                "Class_Desk_ID": element.classDeskID,
-              })
-          .toList(),
+      body: [
+        ...availableStudents.map((element) => {
+              "ID": element.iD,
+              "Exam_Room_ID": element.examRoomID,
+              "Class_Desk_ID": element.classDeskID,
+            }),
+        ...removedStudentsFromExamRoom.map((element) => {
+              "ID": element.iD,
+              "Exam_Room_ID": null,
+              "Class_Desk_ID": null,
+            }),
+      ],
     );
     response.fold(
       (l) {
@@ -182,7 +188,7 @@ class DistributeStudentsController extends GetxController {
           ..removeWhere((element) => element.examRoomID == examRoomResModel.id)
           ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
           ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
-        optionsGradesInExamRoom = availableStudents
+        optionsGradesInExamRoom.assignAll(availableStudents
             .map(
               (e) => ValueItem(
                 label: grades.firstWhere((g) => g.iD == e.gradesID).name!,
@@ -190,7 +196,7 @@ class DistributeStudentsController extends GetxController {
               ),
             )
             .toSet()
-            .toList();
+            .toList());
         availableStudentsCount =
             examRoomResModel.capacity! - availableStudents.length;
         Map<int?, List<StudentSeatNumberResModel>> gradesCollection =
@@ -267,12 +273,16 @@ class DistributeStudentsController extends GetxController {
   }
 
   void removeStudentsFromExamRoom() {
+    List<StudentSeatNumberResModel> removedStudents = availableStudents.reversed
+        .where((element) => (element.gradesID == selectedItemGradeId))
+        .take(int.parse(numberOfStudentsController.text))
+        .toList();
     studentsSeatNumbers.addAll(
-      availableStudents.reversed
-          .where((element) => (element.gradesID == selectedItemGradeId))
-          .take(int.parse(numberOfStudentsController.text)),
+      removedStudents,
     );
-
+    removedStudentsFromExamRoom
+      ..addAll(removedStudents)
+      ..toSet();
     studentsSeatNumbers
       ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
       ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
@@ -301,28 +311,30 @@ class DistributeStudentsController extends GetxController {
     availableStudents.addAll(studentsSeatNumbers
         .where((element) => (element.gradesID == selectedItemGradeId))
         .take(int.parse(numberOfStudentsController.text)));
-    // studentsSeatNumbers
-    //     .removeWhere((element) => availableStudents.contains(element));
-    // availableStudents
-    //   ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
-    //   ..sort(
-    //     (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
-    //   );
-    // countByGrade[selectedItemGradeId.toString()] =
-    //     countByGrade[selectedItemGradeId.toString()]! -
-    //         int.parse(numberOfStudentsController.text);
-    // availableStudentsCount -= int.parse(numberOfStudentsController.text);
-    // optionsGradesInExamRoom.contains(ValueItem(
-    //         label: grades
-    //             .firstWhere((element) => element.iD == selectedItemGradeId)
-    //             .name!,
-    //         value: selectedItemGradeId))
-    //     ? null
-    //     : optionsGradesInExamRoom.add(ValueItem(
-    //         label: grades
-    //             .firstWhere((element) => element.iD == selectedItemGradeId)
-    //             .name!,
-    //         value: selectedItemGradeId));
+    studentsSeatNumbers
+        .removeWhere((element) => availableStudents.contains(element));
+    removedStudentsFromExamRoom
+        .removeWhere((element) => availableStudents.contains(element));
+    availableStudents
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort(
+        (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
+      );
+    availableStudentsCount -= int.parse(numberOfStudentsController.text);
+    countByGrade[selectedItemGradeId.toString()] =
+        countByGrade[selectedItemGradeId.toString()]! -
+            int.parse(numberOfStudentsController.text);
+    optionsGradesInExamRoom.contains(ValueItem(
+            label: grades
+                .firstWhere((element) => element.iD == selectedItemGradeId)
+                .name!,
+            value: selectedItemGradeId))
+        ? null
+        : optionsGradesInExamRoom.add(ValueItem(
+            label: grades
+                .firstWhere((element) => element.iD == selectedItemGradeId)
+                .name!,
+            value: selectedItemGradeId));
     numberOfStudentsController.clear();
     update();
     return;
