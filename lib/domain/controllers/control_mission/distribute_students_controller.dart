@@ -177,6 +177,15 @@ class DistributeStudentsController extends GetxController {
           ..removeWhere((element) =>
               element.examRoomID != null &&
               element.examRoomID != examRoomResModel.id);
+        optionsGrades = studentsSeatNumbers
+            .map(
+              (e) => ValueItem(
+                label: grades.firstWhere((g) => g.iD == e.gradesID).name!,
+                value: e.gradesID!,
+              ),
+            )
+            .toSet()
+            .toList();
         availableStudents
           ..assignAll(studentsSeatNumbers
               .where((element) => element.examRoomID == examRoomResModel.id))
@@ -216,16 +225,6 @@ class DistributeStudentsController extends GetxController {
             .toSet()) {
           countByGrade[element.toString()] = 0;
         }
-
-        optionsGrades = studentsSeatNumbers
-            .map(
-              (e) => ValueItem(
-                label: grades.firstWhere((g) => g.iD == e.gradesID).name!,
-                value: e.gradesID!,
-              ),
-            )
-            .toSet()
-            .toList();
         isLoading = false;
         gotData = true;
       },
