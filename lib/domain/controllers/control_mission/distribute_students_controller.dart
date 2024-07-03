@@ -127,7 +127,7 @@ class DistributeStudentsController extends GetxController {
       body: [
         ...availableStudents.map((element) => {
               "ID": element.iD,
-              "Exam_Room_ID": element.examRoomID,
+              "Exam_Room_ID": examRoomResModel.id,
               "Class_Desk_ID": element.classDeskID,
             }),
         ...removedStudentsFromExamRoom.map((element) => {
