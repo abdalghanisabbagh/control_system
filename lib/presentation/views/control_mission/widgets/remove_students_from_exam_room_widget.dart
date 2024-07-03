@@ -111,8 +111,8 @@ class RemoveStudentsFromExamRoomWidget
                                                   title: 'Error',
                                                   desc: '''
                                                       PLease Make Sure You Have Entered The Right Number Of Students.
-                                                      \ncurrent number of students from the selected grade: ${controller.availableStudents.where((element) => element.gradesID == controller.selectedItemGradeId).length}
-                                                      \ncurrent number of students from the selected number of students: ${controller.numberOfStudentsController.text}
+                                                      \n current number of students from the selected grade: ${controller.availableStudents.where((element) => element.gradesID == controller.selectedItemGradeId).length}
+                                                      \n current number of students from the selected number of students: ${controller.numberOfStudentsController.text}
                                                       ''',
                                                   dialogType: DialogType.error,
                                                 ).showDialogue(context);
