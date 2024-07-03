@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../../../Data/Models/student_seat/student_seat_res_model.dart';
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import 'add_new_students_to_exam_room_widget.dart';
@@ -208,7 +209,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                               vertical: 5,
                                             ),
                                             height: Get.height * 0.12,
-                                            width: double.infinity,
+                                            width: Get.width * 0.2,
                                             decoration: BoxDecoration(
                                               color: ColorManager.glodenColor,
                                               borderRadius:
@@ -270,7 +271,13 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                               ],
                                             ),
                                           );
-                                          return child.paddingAll(
+                                          return Draggable<
+                                                      StudentSeatNumberResModel>(
+                                                  data: controller
+                                                      .availableStudents[i],
+                                                  feedback: child,
+                                                  child: child)
+                                              .paddingAll(
                                             5,
                                           );
                                         },
@@ -414,35 +421,57 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                 horizontal: 5),
                                                           ).paddingSymmetric(
                                                             horizontal: 5)
-                                                        : Container(
-                                                            height: Get.height *
-                                                                0.2,
-                                                            width:
-                                                                Get.width * 0.1,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  ColorManager
-                                                                      .primary,
-                                                              border:
-                                                                  Border.all(
-                                                                width: 1,
-                                                              ),
-                                                            ),
-                                                            child: Center(
-                                                              child: Text(
-                                                                'Class Desk ${i * 6 + j + 1}',
-                                                                style: nunitoBold
-                                                                    .copyWith(
-                                                                  color:
-                                                                      ColorManager
-                                                                          .white,
-                                                                  fontSize: 20,
+                                                        : DragTarget<
+                                                            StudentSeatNumberResModel>(
+                                                            onAcceptWithDetails:
+                                                                (details) {
+                                                              controller.addStudentToDesk(
+                                                                  studentSeatNumberId:
+                                                                      details
+                                                                          .data
+                                                                          .iD!,
+                                                                  classDeskIndex:
+                                                                      i * 6 +
+                                                                          j);
+                                                            },
+                                                            builder: (BuildContext
+                                                                        context,
+                                                                    List<StudentSeatNumberResModel?>
+                                                                        data,
+                                                                    List<dynamic>
+                                                                        rejects) =>
+                                                                Container(
+                                                              height:
+                                                                  Get.height *
+                                                                      0.2,
+                                                              width: Get.width *
+                                                                  0.1,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color:
+                                                                    ColorManager
+                                                                        .primary,
+                                                                border:
+                                                                    Border.all(
+                                                                  width: 1,
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ).paddingSymmetric(
-                                                            horizontal: 5);
+                                                              child: Center(
+                                                                child: Text(
+                                                                  'Class Desk ${i * 6 + j + 1}',
+                                                                  style: nunitoBold
+                                                                      .copyWith(
+                                                                    color: ColorManager
+                                                                        .white,
+                                                                    fontSize:
+                                                                        20,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ).paddingSymmetric(
+                                                                    horizontal:
+                                                                        5),
+                                                          );
                                                   },
                                                 ),
                                               ],
