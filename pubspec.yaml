@@ -37,6 +37,7 @@ dependencies:
   collection: ^1.18.0
   pdf: ^3.11.0
   super_drag_and_drop: ^0.8.17
+  file_saver : ^0.2.13 
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/logos/
+    - assets/files/template.pdf
 
   fonts:
     - family: Nunito

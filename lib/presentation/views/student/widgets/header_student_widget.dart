@@ -31,15 +31,16 @@ class HeaderStudentWidget extends GetView<StudentController> {
             IconButton(
               tooltip: "Promot Students From Excel",
               icon: const Icon(FontAwesomeIcons.arrowUpFromGroundWater),
-              onPressed: () {},
-            ),
-            IconButton(
-              tooltip: "Download excel template",
-              icon: const Icon(FontAwesomeIcons.cloudArrowDown),
               onPressed: () {
                 controller.exportToCsv(context, controller.studentsRows);
               },
             ),
+            IconButton(
+                tooltip: "Download excel template",
+                icon: const Icon(FontAwesomeIcons.cloudArrowDown),
+                onPressed: () {
+                  controller.downloadFile();
+                }),
             IconButton(
               tooltip: "Import From Excel",
               icon: const Icon(FontAwesomeIcons.fileExcel),

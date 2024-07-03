@@ -62,7 +62,13 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                               child: CircularProgressIndicator(),
                             );
                           } else if (controller.listExamRoom.isEmpty) {
-                            return const Text("No items available");
+                            return Center(
+                                child: Text(
+                              "No items available",
+                              style: nunitoRegular.copyWith(
+                                fontSize: 20,
+                              ),
+                            ));
                           } else {
                             return ListView.builder(
                               itemCount: controller.listExamRoom.length,
@@ -134,7 +140,11 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                   child: CircularProgressIndicator(),
                                 )
                               : controller.listExamRoom.isEmpty
-                                  ? const Text("No items available")
+                                  ? Center(
+                                      child: Text("No items available",
+                                          style: nunitoRegular.copyWith(
+                                            fontSize: 20,
+                                          )))
                                   : ListView.builder(
                                       itemCount: controller.listExamRoom.length,
                                       itemBuilder: (context, index) {
@@ -177,9 +187,6 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                 ),
               ],
             ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

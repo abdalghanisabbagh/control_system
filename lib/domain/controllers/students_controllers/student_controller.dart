@@ -8,7 +8,9 @@ import 'package:csv/csv.dart' as csv;
 import 'package:csv/csv.dart';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
@@ -605,5 +607,25 @@ class StudentController extends GetxController {
       desc: "CSV file exported successfully.",
       dialogType: DialogType.success,
     ).showDialogue(Get.key.currentContext!);
+  }
+
+  Future<void> downloadFile() async {
+    try {
+      final ByteData data = await rootBundle.load('assets/files/template.pdf');
+      final Uint8List bytes = data.buffer.asUint8List();
+
+      await FileSaver.instance.saveFile(
+        name: 'student_template',
+        bytes: bytes,
+        mimeType: MimeType.pdf,
+        ext: 'pdf',
+      );
+    } catch (e) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "$e",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }
   }
 }
