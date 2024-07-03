@@ -6,6 +6,7 @@ import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../domain/controllers/control_mission/distribution_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/index.dart';
@@ -119,8 +120,8 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                                 width: 10,
                               ),
                               Expanded(
-                                child: InkWell(
-                                  onTap: () {
+                                child: ElevatedAddButton(
+                                  onPressed: () {
                                     if (formKey.currentState!.validate() &&
                                         controller.selectedItemClassRoom !=
                                             null &&
@@ -150,24 +151,6 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                                       );
                                     }
                                   },
-                                  child: Container(
-                                    height: 45,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.only(
-                                        bottomRight: Radius.circular(11),
-                                      ),
-                                      color: ColorManager.glodenColor,
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Yes",
-                                        style: nunitoRegular.copyWith(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ),
                             ],
