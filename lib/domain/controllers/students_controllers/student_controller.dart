@@ -1,7 +1,6 @@
 import 'dart:convert';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
-import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:csv/csv.dart' as csv;
@@ -17,7 +16,6 @@ import 'package:multi_dropdown/models/value_item.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pluto_grid/pluto_grid.dart';
-
 import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/cohort/cohort_res_model.dart';
@@ -360,7 +358,7 @@ class StudentController extends GetxController {
     bool addStudentsHasBeenAdded = false;
     update();
     List<Map<String, dynamic>> studentData =
-        students.map((student) => student.test()).toList();
+        students.map((student) => student.importStudentByExcel()).toList();
 
     ResponseHandler<void> responseHandler = ResponseHandler();
 
