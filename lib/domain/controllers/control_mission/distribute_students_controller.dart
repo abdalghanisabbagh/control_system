@@ -240,6 +240,14 @@ class DistributeStudentsController extends GetxController {
     return gotData;
   }
 
+  void addStudentToDesk(
+      {required int studentSeatNumberId, required int classDeskIndex}) {
+    availableStudents
+        .firstWhere((element) => element.iD == studentSeatNumberId)
+        .classDeskID = classDesks[classDeskIndex].id;
+    update();
+  }
+
   Future<bool> getGradesBySchoolId() async {
     int schoolId = await Hive.box('School').get('Id');
 
