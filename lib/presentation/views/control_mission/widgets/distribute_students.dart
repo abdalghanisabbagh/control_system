@@ -4,6 +4,7 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/my_b
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
@@ -111,7 +112,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                             ),
                             TextButton(
                               onPressed: () {
-                                controller.removeAll();
+                                controller.removeAllFromDesks();
                               },
                               child: const Text(
                                 'Remove All',
@@ -346,6 +347,27 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: [
+                                                                    IconButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        controller.removeStudentFromDesk(
+                                                                            studentSeatNumberId:
+                                                                                controller.availableStudents[i * 6 + j].iD!);
+                                                                      },
+                                                                      icon:
+                                                                          const Icon(
+                                                                        FontAwesomeIcons
+                                                                            .deleteLeft,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                const Spacer(),
                                                                 Text(
                                                                   'Student Name: ${controller.availableStudents[i * 6 + j].student?.firstName!} ${controller.availableStudents[i * 6 + j].student?.secondName!} ${controller.availableStudents[i * 6 + j].student?.thirdName!} ',
                                                                   style: nunitoBold
