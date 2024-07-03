@@ -182,12 +182,12 @@ class DistributeStudentsController extends GetxController {
               .where((element) => element.examRoomID == examRoomResModel.id))
           ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
           ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
-        availableStudentsCount =
-            examRoomResModel.capacity! - availableStudents.length;
         studentsSeatNumbers
           ..removeWhere((element) => element.examRoomID == examRoomResModel.id)
           ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
           ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+        availableStudentsCount =
+            examRoomResModel.capacity! - availableStudents.length;
         optionsGradesInExamRoom.assignAll(availableStudents
             .map(
               (e) => ValueItem(
@@ -209,6 +209,13 @@ class DistributeStudentsController extends GetxController {
         gradesCollection.forEach((key, value) {
           countByGrade[key.toString()] = value.length;
         });
+        for (var element in availableStudents
+            .groupListsBy((e) => e.gradesID)
+            .keys
+            .where((key) => countByGrade[key.toString()] == null)
+            .toSet()) {
+          countByGrade[element.toString()] = 0;
+        }
 
         optionsGrades = studentsSeatNumbers
             .map(
