@@ -103,7 +103,14 @@ class DistributeStudentsController extends GetxController {
     update();
   }
 
-  void removeAll() {
+  void removeStudentFromDesk({required int studentSeatNumberId}) {
+    availableStudents
+        .firstWhere((element) => element.iD == studentSeatNumberId)
+        .classDeskID = null;
+    update();
+  }
+
+  void removeAllFromDesks() {
     for (var element in availableStudents) {
       element.classDeskID = null;
     }
