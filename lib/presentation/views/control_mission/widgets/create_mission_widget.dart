@@ -231,8 +231,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                 int.parse(controller
                                     .selectedEducationYear!.first.label
                                     .toString()
-                                    .split('/')
-                                    .first
+                                    .split('/')[1]
                                     .toString()),
                                 6,
                                 30)
