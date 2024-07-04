@@ -212,8 +212,6 @@ class DistributeStudentsController extends GetxController {
             )
             .toSet()
             .toList());
-        availableStudentsCount =
-            examRoomResModel.capacity! - availableStudents.length;
         Map<int?, List<StudentSeatNumberResModel>> gradesCollection =
             studentsSeatNumbers
                 .where((e) => (e.examRoomID == null))
