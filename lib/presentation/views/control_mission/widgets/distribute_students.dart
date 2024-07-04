@@ -374,7 +374,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                           () {
                                                                         controller.removeStudentFromDesk(
                                                                             studentSeatNumberId:
-                                                                                controller.availableStudents[i * 6 + j].iD!);
+                                                                                controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).iD!);
                                                                       },
                                                                       icon:
                                                                           const Icon(
