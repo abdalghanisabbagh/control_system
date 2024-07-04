@@ -333,15 +333,15 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                       .length,
                                                   (j) {
                                                     return (controller
-                                                                    .availableStudents
-                                                                    .length >
-                                                                i * 6 + j) &&
-                                                            (controller
-                                                                    .availableStudents[
-                                                                        i * 6 +
-                                                                            j]
-                                                                    .classDeskID !=
-                                                                null)
+                                                            .availableStudents
+                                                            .map((element) =>
+                                                                element
+                                                                    .classDeskID)
+                                                            .toList()
+                                                            .contains(controller
+                                                                .classDesks[
+                                                                    i * 6 + j]
+                                                                .id!))
                                                         ? Container(
                                                             height: Get.height *
                                                                 0.2,
@@ -386,7 +386,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                 ),
                                                                 const Spacer(),
                                                                 Text(
-                                                                  'Student Name: ${controller.availableStudents[i * 6 + j].student?.firstName!} ${controller.availableStudents[i * 6 + j].student?.secondName!} ${controller.availableStudents[i * 6 + j].student?.thirdName!} ',
+                                                                  'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.thirdName!} ',
                                                                   style: nunitoBold
                                                                       .copyWith(
                                                                     color: ColorManager
@@ -397,7 +397,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                   maxLines: 1,
                                                                 ),
                                                                 Text(
-                                                                  'Seat NO: ${controller.availableStudents[i * 6 + j].seatNumber}',
+                                                                  'Seat NO: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).seatNumber}',
                                                                   style: nunitoBold
                                                                       .copyWith(
                                                                     color: ColorManager
@@ -407,7 +407,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  'Grade : ${controller.availableStudents[i * 6 + j].student?.gradeResModel?.name}',
+                                                                  'Grade : ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
                                                                   style: nunitoBold
                                                                       .copyWith(
                                                                     color: ColorManager
