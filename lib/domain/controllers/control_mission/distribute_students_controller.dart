@@ -293,10 +293,15 @@ class DistributeStudentsController extends GetxController {
   }
 
   void removeStudentFromExamRoom({required int studentSeatNumberId}) {
-    studentsSeatNumbers.add(
-      availableStudents
-          .firstWhere((element) => element.iD == studentSeatNumberId),
-    );
+    studentsSeatNumbers
+      ..add(
+        availableStudents
+            .firstWhere((element) => element.iD == studentSeatNumberId),
+      )
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort(
+        (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
+      );
     ++availableStudentsCount;
     countByGrade[availableStudents
         .firstWhere((e) => e.iD == studentSeatNumberId)
