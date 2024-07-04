@@ -98,7 +98,6 @@ class DistributeStudentsController extends GetxController {
   void autoGenerateSimple() {
     for (int i = 0; i < availableStudents.length; i++) {
       availableStudents[i].classDeskID = classDesks[i].id;
-      availableStudents[i].examRoomID = examRoomResModel.id;
     }
     update();
   }
