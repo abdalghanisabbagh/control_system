@@ -211,7 +211,12 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                             height: Get.height * 0.12,
                                             width: Get.width * 0.2,
                                             decoration: BoxDecoration(
-                                              color: ColorManager.glodenColor,
+                                              color: ColorManager.gradesColor[
+                                                  controller
+                                                      .availableStudents[i]
+                                                      .student!
+                                                      .gradeResModel!
+                                                      .name!],
                                               borderRadius:
                                                   BorderRadius.circular(
                                                 10,
@@ -408,8 +413,14 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                         width:
                                                                             1.5,
                                                                       ),
-                                                                      color: ColorManager
-                                                                          .greyA8,
+                                                                      color: ColorManager.gradesColor[controller
+                                                                          .availableStudents
+                                                                          .firstWhere((element) =>
+                                                                              element.classDeskID ==
+                                                                              controller.classDesks[i * 6 + j].id)
+                                                                          .student!
+                                                                          .gradeResModel!
+                                                                          .name!],
                                                                     ),
                                                                     width: double
                                                                         .infinity,
