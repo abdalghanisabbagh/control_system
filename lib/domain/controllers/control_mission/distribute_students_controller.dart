@@ -96,19 +96,27 @@ class DistributeStudentsController extends GetxController {
   }
 
   void autoGenerateSimple() {
+    List<int> availableSeats = [];
+    int j = 0;
     for (int i = 0; i < availableStudents.length; i++) {
-      if (availableStudents[i].classDeskID != null) {
-        // availableStudents
-        //         .firstWhere((element) => element.classDeskID == null)
-        //         .classDeskID =
-        //     classDesks
-        //         .firstWhere((element) =>
-        //             (element.cloumnNum! * 6 + element.rowNum!) == i)
-        //         .id;
+      if (availableStudents[i].classDeskID != null &&
+          availableStudents[i].classDeskID != classDesks[i].id) {
+        availableSeats.add(i);
+      }
+    }
+
+    availableSeats.sort();
+
+    for (int i = 0; i < availableStudents.length; i++) {
+      if (availableStudents[i].classDeskID == null &&
+          j < availableSeats.length &&
+          availableSeats[j] < i &&
+          availableStudents.firstWhereOrNull(
+                  (e) => e.classDeskID == classDesks[availableSeats[j]].id) ==
+              null) {
+        availableStudents[i].classDeskID = classDesks[availableSeats[j++]].id;
       } else if (availableStudents[i].classDeskID == null &&
-          availableStudents
-              .where((element) => element.classDeskID == classDesks[i].id)
-              .isEmpty) {
+          j >= availableSeats.length) {
         availableStudents[i].classDeskID = classDesks[i].id;
       }
     }
