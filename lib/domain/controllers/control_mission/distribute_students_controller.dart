@@ -97,7 +97,20 @@ class DistributeStudentsController extends GetxController {
 
   void autoGenerateSimple() {
     for (int i = 0; i < availableStudents.length; i++) {
-      availableStudents[i].classDeskID = classDesks[i].id;
+      if (availableStudents[i].classDeskID != null) {
+        // availableStudents
+        //         .firstWhere((element) => element.classDeskID == null)
+        //         .classDeskID =
+        //     classDesks
+        //         .firstWhere((element) =>
+        //             (element.cloumnNum! * 6 + element.rowNum!) == i)
+        //         .id;
+      } else if (availableStudents[i].classDeskID == null &&
+          availableStudents
+              .where((element) => element.classDeskID == classDesks[i].id)
+              .isEmpty) {
+        availableStudents[i].classDeskID = classDesks[i].id;
+      }
     }
     update();
   }
