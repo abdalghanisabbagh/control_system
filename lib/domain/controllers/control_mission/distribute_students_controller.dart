@@ -128,13 +128,40 @@ class DistributeStudentsController extends GetxController {
         .firstWhere((element) => element.iD == studentSeatNumberId)
         .classDeskID = null;
     update();
+
+    ResponseHandler responseHandler = ResponseHandler();
+    responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/$studentSeatNumberId',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Class_Desk_ID": null,
+      },
+    );
+    return;
   }
 
-  void removeAllFromDesks() {
+  void removeAllFromDesks() async {
     for (var element in availableStudents) {
       element.classDeskID = null;
     }
+
+    ResponseHandler responseHandler = ResponseHandler();
+
+    await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: [
+        ...availableStudents.map((element) => {
+              "ID": element.iD,
+              "Class_Desk_ID": null,
+            }),
+      ],
+    );
+
     update();
+    return;
   }
 
   Future<bool> finish() async {
@@ -259,11 +286,21 @@ class DistributeStudentsController extends GetxController {
   }
 
   void addStudentToDesk(
-      {required int studentSeatNumberId, required int classDeskIndex}) {
+      {required int studentSeatNumberId, required int classDeskIndex}) async {
     availableStudents
         .firstWhere((element) => element.iD == studentSeatNumberId)
         .classDeskID = classDesks[classDeskIndex].id;
+
     update();
+    ResponseHandler responseHandler = ResponseHandler();
+    await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/$studentSeatNumberId',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Class_Desk_ID": classDesks[classDeskIndex].id,
+      },
+    );
   }
 
   Future<bool> getGradesBySchoolId() async {
@@ -311,11 +348,13 @@ class DistributeStudentsController extends GetxController {
         0;
   }
 
-  void removeStudentFromExamRoom({required int studentSeatNumberId}) {
+  void removeStudentFromExamRoom({required int studentSeatNumberId}) async {
     studentsSeatNumbers
       ..add(
         availableStudents
-            .firstWhere((element) => element.iD == studentSeatNumberId),
+            .firstWhere((element) => element.iD == studentSeatNumberId)
+          ..classDeskID = null
+          ..examRoomID = null,
       )
       ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
       ..sort(
@@ -347,10 +386,23 @@ class DistributeStudentsController extends GetxController {
             .removeWhere((element) => (element.value == selectedItemGradeId))
         : null;
     update();
+
+    ResponseHandler responseHandler = ResponseHandler();
+
+    await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/$studentSeatNumberId',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Exam_Room_ID": null,
+        "Class_Desk_ID": null,
+      },
+    );
+
     return;
   }
 
-  void removeStudentsFromExamRoom() {
+  void removeStudentsFromExamRoom() async {
     List<StudentSeatNumberResModel> removedStudents = availableStudents.reversed
         .where((element) => (element.gradesID == selectedItemGradeId))
         .take(int.parse(numberOfStudentsController.text))
@@ -361,6 +413,7 @@ class DistributeStudentsController extends GetxController {
     removedStudentsFromExamRoom
       ..addAll(removedStudents)
       ..toSet();
+
     studentsSeatNumbers
       ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
       ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
@@ -383,12 +436,42 @@ class DistributeStudentsController extends GetxController {
         : null;
     numberOfStudentsController.clear();
     update();
+
+    ResponseHandler responseHandler = ResponseHandler();
+
+    await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: removedStudents
+          .map((e) => {
+                "ID": e.iD,
+                "Exam_Room_ID": null,
+                "Class_Desk_ID": null,
+              })
+          .toList(),
+    );
   }
 
   void getAvailableStudents() async {
     availableStudents.addAll(studentsSeatNumbers
         .where((element) => (element.gradesID == selectedItemGradeId))
         .take(int.parse(numberOfStudentsController.text)));
+
+    ResponseHandler responseHandler = ResponseHandler();
+    await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: availableStudents
+          .map((e) => {
+                "ID": e.iD,
+                "Exam_Room_ID": examRoomResModel.id,
+                "Class_Desk_ID": e.classDeskID,
+              })
+          .toList(),
+    );
+
     studentsSeatNumbers
         .removeWhere((element) => availableStudents.contains(element));
     removedStudentsFromExamRoom
