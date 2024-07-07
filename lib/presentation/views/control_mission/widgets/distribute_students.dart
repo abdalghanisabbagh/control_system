@@ -49,18 +49,56 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: List.generate(
                               controller.countByGrade.keys.length,
-                              (index) => Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.countByGrade.values.toList()[index]})',
-                                    style: nunitoRegular,
+                              (index) => IntrinsicHeight(
+                                child: SizedBox(
+                                  width: 150,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 1.5,
+                                            ),
+                                            color: ColorManager.yellow,
+                                          ),
+                                          child: Text(
+                                            '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.countByGrade.values.toList()[index]})',
+                                            style: nunitoRegular,
+                                          ).paddingSymmetric(
+                                              horizontal: 10, vertical: 5),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 5,
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 1.5,
+                                            ),
+                                            color: ColorManager.gradesColor[
+                                                controller.grades
+                                                    .firstWhere((element) =>
+                                                        element.iD.toString() ==
+                                                        controller
+                                                            .countByGrade.keys
+                                                            .toList()[index])
+                                                    .name],
+                                          ),
+                                          child: Text(
+                                            '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.availableStudents.where((element) => element.gradesID == controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).iD).length})',
+                                            style: nunitoRegular,
+                                          ).paddingSymmetric(
+                                              horizontal: 10, vertical: 5),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '${controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).name} (${controller.availableStudents.where((element) => element.gradesID == controller.grades.firstWhere((element) => element.iD.toString() == controller.countByGrade.keys.toList()[index]).iD).length})',
-                                    style: nunitoRegular,
-                                  ),
-                                ],
+                                ),
                               ).paddingSymmetric(horizontal: 10),
                             )..insert(
                                 0,
