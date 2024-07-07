@@ -342,20 +342,11 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                 .classDesks[
                                                                     i * 6 + j]
                                                                 .id!))
-                                                        ? Container(
+                                                        ? SizedBox(
                                                             height: Get.height *
                                                                 0.2,
                                                             width:
                                                                 Get.width * 0.1,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: ColorManager
-                                                                  .glodenColor,
-                                                              border:
-                                                                  Border.all(
-                                                                width: 1,
-                                                              ),
-                                                            ),
                                                             child: Column(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -364,61 +355,114 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    IconButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        controller.removeStudentFromDesk(
-                                                                            studentSeatNumberId:
-                                                                                controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).iD!);
-                                                                      },
-                                                                      icon:
-                                                                          const Icon(
-                                                                        FontAwesomeIcons
-                                                                            .deleteLeft,
+                                                                Expanded(
+                                                                  flex: 2,
+                                                                  child:
+                                                                      Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      border:
+                                                                          Border
+                                                                              .all(
+                                                                        width:
+                                                                            1.5,
                                                                       ),
+                                                                      color: ColorManager
+                                                                          .yellow,
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                                const Spacer(),
-                                                                Text(
-                                                                  'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.thirdName!} ',
-                                                                  style: nunitoBold
-                                                                      .copyWith(
-                                                                    color: ColorManager
-                                                                        .white,
-                                                                    fontSize:
-                                                                        12,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceAround,
+                                                                      children: [
+                                                                        Text(
+                                                                          '${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).seatNumber}',
+                                                                          style:
+                                                                              nunitoRegular,
+                                                                        ),
+                                                                        IconButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            controller.removeStudentFromDesk(studentSeatNumberId: controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).iD!);
+                                                                          },
+                                                                          icon:
+                                                                              const Icon(
+                                                                            FontAwesomeIcons.deleteLeft,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   ),
-                                                                  maxLines: 1,
                                                                 ),
-                                                                Text(
-                                                                  'Seat NO: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).seatNumber}',
-                                                                  style: nunitoBold
-                                                                      .copyWith(
-                                                                    color: ColorManager
-                                                                        .white,
-                                                                    fontSize:
-                                                                        14,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  'Grade : ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
-                                                                  style: nunitoBold
-                                                                      .copyWith(
-                                                                    color: ColorManager
-                                                                        .white,
-                                                                    fontSize:
-                                                                        14,
+                                                                Expanded(
+                                                                  flex: 5,
+                                                                  child:
+                                                                      Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      border:
+                                                                          Border
+                                                                              .all(
+                                                                        width:
+                                                                            1.5,
+                                                                      ),
+                                                                      color: ColorManager
+                                                                          .greyA8,
+                                                                    ),
+                                                                    width: double
+                                                                        .infinity,
+                                                                    child:
+                                                                        Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        const Spacer(),
+                                                                        Text(
+                                                                          'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.thirdName!} ',
+                                                                          style:
+                                                                              nunitoBold.copyWith(
+                                                                            color:
+                                                                                ColorManager.white,
+                                                                            fontSize:
+                                                                                12,
+                                                                          ),
+                                                                          maxLines:
+                                                                              3,
+                                                                        ),
+                                                                        Text(
+                                                                          'Seat NO: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).seatNumber}',
+                                                                          style:
+                                                                              nunitoBold.copyWith(
+                                                                            color:
+                                                                                ColorManager.white,
+                                                                            fontSize:
+                                                                                14,
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          'Grade : ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
+                                                                          style:
+                                                                              nunitoBold.copyWith(
+                                                                            color:
+                                                                                ColorManager.white,
+                                                                            fontSize:
+                                                                                14,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ).paddingSymmetric(
+                                                                      horizontal:
+                                                                          5,
+                                                                      vertical:
+                                                                          5,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],
-                                                            ).paddingSymmetric(
-                                                                horizontal: 5),
+                                                            ),
                                                           ).paddingSymmetric(
                                                             horizontal: 5)
                                                         : DragTarget<
@@ -440,33 +484,75 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                         data,
                                                                     List<dynamic>
                                                                         rejects) =>
-                                                                Container(
+                                                                SizedBox(
                                                               height:
                                                                   Get.height *
                                                                       0.2,
                                                               width: Get.width *
                                                                   0.1,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color:
-                                                                    ColorManager
-                                                                        .primary,
-                                                                border:
-                                                                    Border.all(
-                                                                  width: 1,
-                                                                ),
-                                                              ),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  'Class Desk ${i * 6 + j + 1}',
-                                                                  style: nunitoBold
-                                                                      .copyWith(
-                                                                    color: ColorManager
-                                                                        .white,
-                                                                    fontSize:
-                                                                        20,
+                                                              child: Column(
+                                                                children: [
+                                                                  Expanded(
+                                                                    flex: 2,
+                                                                    child:
+                                                                        Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border:
+                                                                            Border.all(
+                                                                          width:
+                                                                              1.5,
+                                                                        ),
+                                                                        color: ColorManager
+                                                                            .yellow,
+                                                                      ),
+                                                                      child:
+                                                                          IconButton(
+                                                                        onPressed:
+                                                                            () {},
+                                                                        icon:
+                                                                            Icon(
+                                                                          FontAwesomeIcons
+                                                                              .ban,
+                                                                          color:
+                                                                              ColorManager.red,
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                                   ),
-                                                                ),
+                                                                  Expanded(
+                                                                    flex: 5,
+                                                                    child:
+                                                                        Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border:
+                                                                            Border.all(
+                                                                          width:
+                                                                              1.5,
+                                                                        ),
+                                                                        color: ColorManager
+                                                                            .greyA8,
+                                                                      ),
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        '${i * 6 + j + 1}',
+                                                                        style: nunitoBold
+                                                                            .copyWith(
+                                                                          color:
+                                                                              ColorManager.white,
+                                                                          fontSize:
+                                                                              20,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ).paddingSymmetric(
                                                                     horizontal:
