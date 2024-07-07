@@ -59,6 +59,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                         flex: 3,
                                         child: Container(
                                           width: double.infinity,
+                                          alignment: Alignment.center,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               width: 1.5,
@@ -76,6 +77,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                         flex: 5,
                                         child: Container(
                                           width: double.infinity,
+                                          alignment: Alignment.center,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               width: 1.5,
