@@ -172,6 +172,8 @@ extension PlutoRowExtension on List<StudentResModel> {
       try {
         final blb = students.firstWhere((item) => item.blbId == element.blbId);
         blbId = blb.blbId.toString();
+        // ! Don't invoke `print` in production code.
+        // ignore: avoid_print
         print(blbId.toString());
       } catch (e) {
         blbId = "[ERROR] ${element.blbId}";
