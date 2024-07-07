@@ -65,4 +65,19 @@ class ColorManager {
   static Color textFormFieldLabelStyle = Colors.black;
   static Color white = const Color(0xffffffff);
   static Color yellow = const Color(0xffFFD400);
+
+  static Map<String, Color> gradesColor = {
+    'Grade 1': const Color(0xffbcabae),
+    'Grade 2': const Color(0xff716969),
+    'Grade 3': const Color(0xffbc6c25),
+    'Grade 4': const Color(0xffdda15e),
+    'Grade 5': const Color(0xfffb8500),
+    'Grade 6': const Color(0xffffb703),
+    'Grade 7': const Color(0xff023047),
+    'Grade 8': const Color(0xff001d3d),
+    'Grade 9': const Color(0xff003566),
+    'Grade 10': const Color(0xffe07a5f),
+    'Grade 11': const Color(0xff184e77),
+    'Grade 12': const Color(0xff168aad),
+  };
 }
