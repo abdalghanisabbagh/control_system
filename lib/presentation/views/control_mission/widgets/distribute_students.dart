@@ -208,7 +208,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                               horizontal: 10,
                                               vertical: 5,
                                             ),
-                                            height: Get.height * 0.12,
+                                            height: Get.height * 0.13,
                                             width: Get.width * 0.2,
                                             decoration: BoxDecoration(
                                               color: ColorManager.gradesColor[
@@ -233,7 +233,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                   'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
                                                   style: nunitoBold.copyWith(
                                                     color: ColorManager.white,
-                                                    fontSize: 12,
+                                                    fontSize: 10,
                                                   ),
                                                   maxLines: 1,
                                                 ),
@@ -241,14 +241,21 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                   'Seat NO: ${controller.availableStudents[i].seatNumber}',
                                                   style: nunitoBold.copyWith(
                                                     color: ColorManager.white,
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                   ),
                                                 ),
                                                 Text(
                                                   'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
                                                   style: nunitoBold.copyWith(
                                                     color: ColorManager.white,
-                                                    fontSize: 14,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Desk NO : ${controller.classDesks.indexWhere((element) => element.id == controller.availableStudents[i].classDeskID)}',
+                                                  style: nunitoBold.copyWith(
+                                                    color: ColorManager.white,
+                                                    fontSize: 12,
                                                   ),
                                                 ),
                                                 Expanded(
