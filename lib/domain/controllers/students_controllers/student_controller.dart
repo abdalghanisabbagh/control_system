@@ -16,6 +16,7 @@ import 'package:multi_dropdown/models/value_item.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/cohort/cohort_res_model.dart';
@@ -47,14 +48,17 @@ class StudentController extends GetxController {
   List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
   Map<String, bool> errorMap = {};
-  bool isImported = false;
+  bool isImportedNew = false;
+  bool isImportedPromot = false;
   bool hasErrorInGrade = false;
   bool hasErrorInCohort = false;
   bool hasErrorInClassRoom = false;
+  bool hasErrorInBlbId = false;
 
   @override
   void onInit() async {
-    isImported = false;
+    isImportedNew = false;
+    isImportedPromot = false;
 
     loading = true;
     update();
@@ -277,12 +281,18 @@ class StudentController extends GetxController {
 
     if (pickedFile != null) {
       Uint8List? fileBytes = pickedFile.files.single.bytes;
-      //String? fileName = pickedFile.files.single.name;
 
       if (fileBytes != null) {
-        readCsvFile(fileBytes,
-            grades: grades, classesRooms: classRooms, cohorts: cohorts);
-        // testCohort(fileBytes);
+        if (isImportedNew) {
+          readCsvFile(fileBytes,
+              grades: grades, classesRooms: classRooms, cohorts: cohorts);
+        } else {
+          promotExcelFile(fileBytes,
+              students: students,
+              cohorts: cohorts,
+              classesRooms: classRooms,
+              grades: grades);
+        }
       }
     } else {
       debugPrint('No file selected');
@@ -334,12 +344,77 @@ class StudentController extends GetxController {
         classesRooms: classesRooms,
         grades: grades,
       );
-      isImported = true;
+      isImportedNew = true;
       studentsRows = result['rows'];
       students = result['students'];
       hasErrorInGrade = result['errorgrade'];
       hasErrorInCohort = result['errorcohort'];
       hasErrorInClassRoom = result['errorclass'];
+      update();
+    } else {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "Please check the values in the file and try again.",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }
+    update();
+  }
+
+  void promotExcelFile(
+    Uint8List fileBytes, {
+    required List<StudentResModel> students,
+    required List<CohortResModel> cohorts,
+    required List<ClassRoomResModel> classesRooms,
+    required List<GradeResModel> grades,
+  }) {
+    String content = String.fromCharCodes(fileBytes);
+    List<List<dynamic>> rowsAsListOfValues =
+        const CsvToListConverter().convert(content);
+
+    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 7) {
+      List<String> headers =
+          rowsAsListOfValues.first.map((header) => header.toString()).toList();
+      List<String> requiredHeaders = [
+        'id',
+        'firstname',
+        'middlename',
+        'lastname',
+        'grade',
+        'class',
+        'cohort',
+        'second_language'
+      ];
+
+      List<String> missingHeaders =
+          requiredHeaders.where((header) => !headers.contains(header)).toList();
+      if (missingHeaders.isNotEmpty) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc:
+              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values in the file and try again',
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      }
+      rowsAsListOfValues.removeAt(0);
+
+      var studentsCsv = rowsAsListOfValues
+          .map((row) => StudentResModel.fromCsvWithHeaders(row, headers))
+          .toList();
+
+      final result = studentsCsv.convertPromtoFileStudentsToPluto(
+        students: students,
+        cohorts: cohorts,
+        classesRooms: classesRooms,
+        grades: grades,
+      );
+      isImportedPromot = true;
+      studentsRows = result['rows'];
+      students = result['students'];
+      hasErrorInGrade = result['errorgrade'];
+      hasErrorInCohort = result['errorcohort'];
+      hasErrorInClassRoom = result['errorclass'];
+      hasErrorInBlbId = result['errorBlbID'];
       update();
     } else {
       MyAwesomeDialogue(
@@ -377,7 +452,7 @@ class StudentController extends GetxController {
       addStudentsHasBeenAdded = false;
     }, (result) {
       addStudentsHasBeenAdded = true;
-      isImported = false;
+      isImportedNew = false;
     });
     loading = false;
 
@@ -624,6 +699,13 @@ class StudentController extends GetxController {
         desc: "$e",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
+    }
+  }
+
+  Future<void> downloadeTemp() async {
+    if (!await launchUrl(Uri.parse(
+        "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
+      throw 'Could not launch file';
     }
   }
 }

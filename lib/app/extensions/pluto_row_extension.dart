@@ -114,6 +114,95 @@ extension PlutoRowExtension on List<StudentResModel> {
       'errorclass': errorclass
     };
   }
+
+  Map<String, dynamic> convertPromtoFileStudentsToPluto({
+    required List<StudentResModel> students,
+    required List<CohortResModel> cohorts,
+    required List<ClassRoomResModel> classesRooms,
+    required List<GradeResModel> grades,
+  }) {
+    List<PlutoRow> rows = [];
+    bool errorgrade = false;
+    bool errorclass = false;
+    bool errorcohort = false;
+    bool errorBlbID = false;
+
+    for (var element in this) {
+      String? cohortName;
+      int? cohortId;
+      String? gradeName;
+      int? gradeId;
+      String? schoolClassName;
+      int? schoolClassId;
+      String? blbId;
+
+      try {
+        final cohort =
+            cohorts.firstWhere((item) => item.name == element.cohortName);
+
+        cohortName = cohort.name;
+        cohortId = cohort.iD;
+
+        element.cohortID = cohortId;
+      } catch (e) {
+        cohortName = '[ERROR] ${element.cohortName}';
+        errorcohort = true;
+      }
+
+      try {
+        final grade =
+            grades.firstWhere((item) => item.name == element.gradeName);
+        gradeName = grade.name;
+        gradeId = grade.iD;
+        element.gradesID = gradeId;
+      } catch (e) {
+        gradeName = '[ERROR] ${element.gradeName}';
+        errorgrade = true;
+      }
+      try {
+        final schoolClass = classesRooms
+            .firstWhere((item) => item.name == element.schoolClassName);
+        schoolClassName = schoolClass.name;
+        schoolClassId = schoolClass.iD;
+        element.schoolClassID = schoolClassId;
+      } catch (e) {
+        schoolClassName = '[ERROR] ${element.schoolClassName}';
+        errorclass = true;
+      }
+      try {
+        final blb = students.firstWhere((item) => item.blbId == element.blbId);
+        blbId = blb.blbId.toString();
+        print(blbId.toString());
+      } catch (e) {
+        blbId = "[ERROR] ${element.blbId}";
+        errorBlbID = true;
+      }
+      rows.add(
+        PlutoRow(
+          cells: {
+            'BlbIdField': PlutoCell(value: blbId),
+            'FirstNameField': PlutoCell(value: element.firstName),
+            'SecondNameField': PlutoCell(value: element.secondName),
+            'ThirdNameField': PlutoCell(value: element.thirdName),
+            'CohortField': PlutoCell(value: cohortName),
+            'GradeField': PlutoCell(value: gradeName),
+            'ClassRoomField': PlutoCell(value: schoolClassName),
+            'LanguageField': PlutoCell(value: element.secondLang),
+            'ActionsField': PlutoCell(value: 'Actions'),
+          },
+        ),
+      );
+    }
+
+    return {
+      'rows': rows,
+      'students': this,
+      'errorcohort': errorcohort,
+      'errorgrade': errorgrade,
+      'errorclass': errorclass,
+      'errorBlbID': errorBlbID
+    };
+  }
 }
 
 extension PlutoRowStudentSeatsNumbersExtansion

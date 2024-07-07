@@ -32,14 +32,16 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Promot Students From Excel",
               icon: const Icon(FontAwesomeIcons.arrowUpFromGroundWater),
               onPressed: () {
-                controller.exportToCsv(context, controller.studentsRows);
+                controller.pickAndReadFile();
               },
             ),
             IconButton(
                 tooltip: "Download excel template",
                 icon: const Icon(FontAwesomeIcons.cloudArrowDown),
                 onPressed: () {
-                  controller.downloadFile();
+                  controller.downloadeTemp();
+
+                  //   controller.downloadFile();
                 }),
             IconButton(
               tooltip: "Import From Excel",
@@ -66,7 +68,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Send To DataBase",
               icon: const Icon(Icons.send),
               onPressed: () {
-                if (!controller.isImported) {
+                if (!controller.isImportedNew) {
                   MyAwesomeDialogue(
                     title: "Error",
                     desc: "Please import File first",

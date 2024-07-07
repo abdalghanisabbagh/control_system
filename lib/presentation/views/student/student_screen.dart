@@ -84,6 +84,33 @@ class StudentScreen extends GetView<StudentController> {
                                     title: 'Blb Id',
                                     field: 'BlbIdField',
                                     type: PlutoColumnType.text(),
+                                    renderer: (context) {
+                                      final String? bLbValue =
+                                          context.cell.value;
+                                      final bool isDefaultGrade =
+                                          bLbValue != null &&
+                                              bLbValue.startsWith('[ERROR]');
+                                      final String? displayValue =
+                                          isDefaultGrade
+                                              ? bLbValue.substring(7)
+                                              : bLbValue;
+
+                                      return Container(
+                                        color: isDefaultGrade
+                                            ? Colors.red
+                                            : Colors.transparent,
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            displayValue!,
+                                            style: TextStyle(
+                                                color: isDefaultGrade
+                                                    ? Colors.black
+                                                    : Colors.black),
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                   PlutoColumn(
                                     enableEditingMode: false,
@@ -234,7 +261,7 @@ class StudentScreen extends GetView<StudentController> {
 
                                   /// Actions Column definition
 
-                                  if (!controller.isImported)
+                                  if (!controller.isImportedNew)
                                     PlutoColumn(
                                       enableEditingMode: false,
                                       title: 'Actions',

@@ -123,7 +123,7 @@ class StudentResModel {
     }
 
     return StudentResModel(
-      blbId: data['blbid'],
+      blbId: data['id'],
       firstName: data['firstname'],
       secondName: data['middlename'],
       thirdName: data['lastname'],
