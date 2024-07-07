@@ -261,7 +261,7 @@ class StudentScreen extends GetView<StudentController> {
 
                                   /// Actions Column definition
 
-                                  if (!controller.isImportedNew)
+                                  if (!controller.isImportedPromot)
                                     PlutoColumn(
                                       enableEditingMode: false,
                                       title: 'Actions',

@@ -283,91 +283,28 @@ class StudentController extends GetxController {
       Uint8List? fileBytes = pickedFile.files.single.bytes;
 
       if (fileBytes != null) {
-        if (isImportedNew) {
-          readCsvFile(fileBytes,
-              grades: grades, classesRooms: classRooms, cohorts: cohorts);
-        } else {
-          promotExcelFile(fileBytes,
-              students: students,
-              cohorts: cohorts,
-              classesRooms: classRooms,
-              grades: grades);
-        }
+        await _processCsvFile(
+          fileBytes,
+          isImportedNew: isImportedNew,
+          students: students,
+          cohorts: cohorts,
+          classesRooms: classRooms,
+          grades: grades,
+        );
       }
     } else {
       debugPrint('No file selected');
     }
   }
 
-  void readCsvFile(
+  Future<void> _processCsvFile(
     Uint8List fileBytes, {
-    required List<CohortResModel> cohorts,
-    required List<ClassRoomResModel> classesRooms,
-    required List<GradeResModel> grades,
-  }) {
-    String content = String.fromCharCodes(fileBytes);
-    List<List<dynamic>> rowsAsListOfValues =
-        const CsvToListConverter().convert(content);
-
-    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 7) {
-      List<String> headers =
-          rowsAsListOfValues.first.map((header) => header.toString()).toList();
-      List<String> requiredHeaders = [
-        'blbid',
-        'firstname',
-        'middlename',
-        'lastname',
-        'grade',
-        'class',
-        'cohort',
-        'second_language'
-      ];
-
-      List<String> missingHeaders =
-          requiredHeaders.where((header) => !headers.contains(header)).toList();
-      if (missingHeaders.isNotEmpty) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc:
-              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values in the file and try again',
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      }
-      rowsAsListOfValues.removeAt(0);
-
-      students = rowsAsListOfValues
-          .map((row) => StudentResModel.fromCsvWithHeaders(row, headers))
-          .toList();
-
-      final result = students.convertFileStudentsToPluto(
-        cohorts: cohorts,
-        classesRooms: classesRooms,
-        grades: grades,
-      );
-      isImportedNew = true;
-      studentsRows = result['rows'];
-      students = result['students'];
-      hasErrorInGrade = result['errorgrade'];
-      hasErrorInCohort = result['errorcohort'];
-      hasErrorInClassRoom = result['errorclass'];
-      update();
-    } else {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "Please check the values in the file and try again.",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-    }
-    update();
-  }
-
-  void promotExcelFile(
-    Uint8List fileBytes, {
+    required bool isImportedNew,
     required List<StudentResModel> students,
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,
     required List<GradeResModel> grades,
-  }) {
+  }) async {
     String content = String.fromCharCodes(fileBytes);
     List<List<dynamic>> rowsAsListOfValues =
         const CsvToListConverter().convert(content);
@@ -395,6 +332,7 @@ class StudentController extends GetxController {
               'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values in the file and try again',
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
+        return;
       }
       rowsAsListOfValues.removeAt(0);
 
@@ -402,13 +340,25 @@ class StudentController extends GetxController {
           .map((row) => StudentResModel.fromCsvWithHeaders(row, headers))
           .toList();
 
-      final result = studentsCsv.convertPromtoFileStudentsToPluto(
-        students: students,
-        cohorts: cohorts,
-        classesRooms: classesRooms,
-        grades: grades,
-      );
-      isImportedPromot = true;
+      final result = isImportedNew
+          ? studentsCsv.convertFileStudentsToPluto(
+              cohorts: cohorts,
+              classesRooms: classesRooms,
+              grades: grades,
+            )
+            
+          : studentsCsv.convertPromtoFileStudentsToPluto(
+              students: students,
+              cohorts: cohorts,
+              classesRooms: classesRooms,
+              grades: grades,
+            );
+
+      if (isImportedNew) {
+        isImportedNew = true;
+      } else {
+        isImportedPromot = true;
+      }
       studentsRows = result['rows'];
       students = result['students'];
       hasErrorInGrade = result['errorgrade'];
@@ -422,8 +372,8 @@ class StudentController extends GetxController {
         desc: "Please check the values in the file and try again.",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
+      update();
     }
-    update();
   }
 
   Future<bool> addManyStudents({
