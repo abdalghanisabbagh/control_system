@@ -292,7 +292,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  'Desk NO : ${controller.classDesks.indexWhere((element) => element.id == controller.availableStudents[i].classDeskID)}',
+                                                  'Desk NO : ${controller.classDesks.indexWhere((element) => element.id == controller.availableStudents[i].classDeskID) + 1}',
                                                   style: nunitoBold.copyWith(
                                                     color: ColorManager.white,
                                                     fontSize: 12,
