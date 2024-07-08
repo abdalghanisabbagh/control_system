@@ -72,6 +72,7 @@ class UserRolesSystemsLink {
   static const userRolesSystems = 'user-roles-systems';
   static const userRolesSystemsConnectRolesTOScreens =
       'user-roles-systems/connect-roles-to-screens';
+      static const screen='user-roles-systems/screen';
 }
 
 class Stage {

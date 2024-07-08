@@ -10,10 +10,9 @@ import 'package:get/get.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
-class AddNewScreenWidget extends StatelessWidget {
-  AddNewScreenWidget({super.key});
+class AddNewRolesWidget extends StatelessWidget {
+  AddNewRolesWidget({super.key});
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController screenIdController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -21,7 +20,7 @@ class AddNewScreenWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Add New Screen",
+            "Add New Roles",
             style: nunitoBlack.copyWith(
               color: ColorManager.bgSideMenu,
               fontSize: 30,
@@ -30,12 +29,7 @@ class AddNewScreenWidget extends StatelessWidget {
           MytextFormFiled(
             myValidation: Validations.requiredValidator,
             controller: nameController,
-            title: "Screen Name",
-          ),
-          MytextFormFiled(
-            myValidation: Validations.requiredValidator,
-            controller: screenIdController,
-            title: "Screen Id",
+            title: "Role Name",
           ),
           const SizedBox(
             height: 20,
@@ -57,16 +51,14 @@ class AddNewScreenWidget extends StatelessWidget {
                         child: ElevatedAddButton(
                           onPressed: () async {
                             controller
-                                .addNewScreen(
-                                    name: nameController.text,
-                                    frontId: screenIdController.text)
+                                .addNewRoles(
+                                    name: nameController.text,)
                                 .then((added) {
                               if (added) {
                                 nameController.clear();
-                                screenIdController.clear();
                                 Get.back();
                                 MyFlashBar.showSuccess(
-                                        'Screen has ben added', 'Screen')
+                                        'Roles has ben added', 'Roles')
                                     .show(Get.key.currentContext);
                               }
                             });

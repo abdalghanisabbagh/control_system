@@ -1,0 +1,27 @@
+import 'package:control_system/Data/Models/user/screens/screen_res_model.dart';
+
+class RoleResModel {
+  String name;
+  int id;
+  List<ScreenResModel>? screens = [];
+
+  RoleResModel({
+    required this.id,
+    required this.name,
+    this.screens,
+  });
+
+  factory RoleResModel.fromJson(json) => RoleResModel(
+        id: json["ID"],
+        name: json["Name"],
+        screens: json["roles_has_screens"] != null
+            ? List<ScreenResModel>.from(json["roles_has_screens"]
+                .map((x) => ScreenResModel.fromJson(x['screens'] ?? x)))
+            : null,
+      );
+  toJson() => {
+        "ID": id,
+        "Name": name,
+        "roles_has_screens": screens?.map((e) => e.toJson()).toList(),
+      };
+}

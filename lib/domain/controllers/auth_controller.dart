@@ -50,7 +50,7 @@ class AuthController extends GetxController {
               title: 'Error',
               desc: l.message,
               dialogType: DialogType.error,
-            ), (r) {
+            ).showDialogue(Get.key.currentContext!), (r) {
       tokenService.saveTokenModelToHiveBox(TokenModel(
         aToken: r.accessToken!,
         rToken: r.refreshToken!,

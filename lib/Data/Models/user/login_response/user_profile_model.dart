@@ -1,8 +1,23 @@
+import 'dart:math';
+
+import 'package:control_system/Data/Models/user/roles/role_res_model.dart';
+
 class UserProfileModel {
+  int? active;
+  String? createdAt;
+  int? createdBy;
+  String? fullName;
+  int? iD;
+  DateTime? updatedAt;
+  int? updatedBy;
+  String? userName;
+  List<RoleResModel>? roles;
+
   UserProfileModel({
     this.iD,
     this.fullName,
     this.userName,
+    this.roles,
   });
 
   UserProfileModel.fromJson(Map<String, dynamic> json) {
@@ -14,16 +29,9 @@ class UserProfileModel {
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
     active = json['Active'];
+    roles = List<RoleResModel>.from(
+        json['Roles'].map((e) => RoleResModel.fromJson(e)));
   }
-
-  int? active;
-  String? createdAt;
-  int? createdBy;
-  String? fullName;
-  int? iD;
-  DateTime? updatedAt;
-  int? updatedBy;
-  String? userName;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -35,6 +43,7 @@ class UserProfileModel {
     data['Updated_By'] = updatedBy;
     data['Updated_At'] = updatedAt;
     data['Active'] = active;
+    data['Roles'] = roles?.map((e) => e.toJson()).toList();
     return data;
   }
 }

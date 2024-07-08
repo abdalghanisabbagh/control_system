@@ -245,6 +245,8 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.rolesScreenPath,
         name: AppRoutesNamesAndPaths.rolesScreenName,
         builder: (context, state) {
+          RolesBinidings().dependencies();
+
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const RolesScreen();
         },

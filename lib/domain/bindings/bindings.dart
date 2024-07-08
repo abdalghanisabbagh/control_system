@@ -1,3 +1,4 @@
+import 'package:control_system/domain/controllers/roles_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/controllers.dart';
@@ -150,4 +151,19 @@ class CreateControlMissionBindings extends Bindings {
       fenix: true,
     );
   }
+}
+
+
+
+class RolesBinidings extends Bindings{
+
+ @override
+  void dependencies() {
+    Get.lazyPut<RolesController>(
+      () => RolesController(),
+      fenix: true,
+    );
+  }
+
+  
 }
