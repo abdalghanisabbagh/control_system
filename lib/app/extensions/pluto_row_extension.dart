@@ -38,6 +38,7 @@ extension PlutoRowExtension on List<StudentResModel> {
   }
 
   Map<String, dynamic> convertFileStudentsToPluto({
+    required List<StudentResModel> students,
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,
     required List<GradeResModel> grades,
@@ -46,6 +47,7 @@ extension PlutoRowExtension on List<StudentResModel> {
     bool errorgrade = false;
     bool errorclass = false;
     bool errorcohort = false;
+    List<String> errors = [];
 
     for (var element in this) {
       String? cohortName;
@@ -54,6 +56,8 @@ extension PlutoRowExtension on List<StudentResModel> {
       int? gradeId;
       String? schoolClassName;
       int? schoolClassId;
+      String? blbId;
+      // bool hasError = false;
 
       try {
         final cohort =
@@ -88,18 +92,53 @@ extension PlutoRowExtension on List<StudentResModel> {
         schoolClassName = '[ERROR] ${element.schoolClassName}';
         errorclass = true;
       }
+      String? firstName = element.firstName;
+      if (firstName == null || firstName.isEmpty) {
+        errors.add('FirstNameField is empty');
+        //  hasError = true;
+      }
+
+      String? secondName = element.secondName;
+      if (secondName == null || secondName.isEmpty) {
+        errors.add('SecondNameField is empty');
+        //  hasError = true;
+      }
+
+      String? thirdName = element.thirdName;
+      if (thirdName == null || thirdName.isEmpty) {
+        errors.add('ThirdNameField is empty');
+        //  hasError = true;
+      }
+
+      String? secondLang = element.secondLang;
+      if (secondLang == null || secondLang.isEmpty) {
+        errors.add('LanguageField is empty');
+        //  hasError = true;
+      }
+      // String? blbId = element.blbId.toString();
+      // if (blbId.isEmpty) {
+      //   errors.add('BLB ID is empty');
+      //   //  hasError = true;
+      // }
+      try {
+        final blb = students.firstWhere((item) => item.blbId == element.blbId);
+        blbId = blb.blbId.toString();
+        blbId = "[ERROR] $blbId";
+      } catch (e) {
+        blbId = " ${element.blbId}";
+      }
 
       rows.add(
         PlutoRow(
           cells: {
-            'BlbIdField': PlutoCell(value: element.blbId.toString()),
-            'FirstNameField': PlutoCell(value: element.firstName),
-            'SecondNameField': PlutoCell(value: element.secondName),
-            'ThirdNameField': PlutoCell(value: element.thirdName),
+            'BlbIdField': PlutoCell(value: blbId),
+            'FirstNameField': PlutoCell(value: firstName ?? ''),
+            'SecondNameField': PlutoCell(value: secondName ?? ''),
+            'ThirdNameField': PlutoCell(value: thirdName ?? ''),
             'CohortField': PlutoCell(value: cohortName),
             'GradeField': PlutoCell(value: gradeName),
             'ClassRoomField': PlutoCell(value: schoolClassName),
-            'LanguageField': PlutoCell(value: element.secondLang),
+            'LanguageField': PlutoCell(value: secondLang ?? ''),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),
@@ -111,7 +150,8 @@ extension PlutoRowExtension on List<StudentResModel> {
       'students': this,
       'errorcohort': errorcohort,
       'errorgrade': errorgrade,
-      'errorclass': errorclass
+      'errorclass': errorclass,
+      'errors': errors,
     };
   }
 
@@ -135,6 +175,7 @@ extension PlutoRowExtension on List<StudentResModel> {
       String? schoolClassName;
       int? schoolClassId;
       String? blbId;
+      int? studentId;
 
       try {
         final cohort =
@@ -172,6 +213,8 @@ extension PlutoRowExtension on List<StudentResModel> {
       try {
         final blb = students.firstWhere((item) => item.blbId == element.blbId);
         blbId = blb.blbId.toString();
+        studentId = blb.iD;
+        element.iD = studentId;
       } catch (e) {
         blbId = "[ERROR] ${element.blbId}";
         errorBlbID = true;
