@@ -165,39 +165,7 @@ class DistributeStudentsController extends GetxController {
   }
 
   Future<bool> finish() async {
-    bool success = false;
-    ResponseHandler<void> responseHandler = ResponseHandler();
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumbers}/many',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: [
-        ...availableStudents.map((element) => {
-              "ID": element.iD,
-              "Exam_Room_ID": examRoomResModel.id,
-              "Class_Desk_ID": element.classDeskID,
-            }),
-        ...removedStudentsFromExamRoom.map((element) => {
-              "ID": element.iD,
-              "Exam_Room_ID": null,
-              "Class_Desk_ID": null,
-            }),
-      ],
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      },
-      (r) {
-        success = true;
-      },
-    );
-    update();
-    return success;
+    return true;
   }
 
   Future<bool> getStudentsSeatNumbers() async {
