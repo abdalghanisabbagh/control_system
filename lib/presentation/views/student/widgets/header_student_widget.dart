@@ -32,6 +32,8 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Promot Students From Excel",
               icon: const Icon(FontAwesomeIcons.arrowUpFromGroundWater),
               onPressed: () {
+                controller.isImportedPromot = true;
+                controller.isImportedNew = false;
                 controller.pickAndReadFile();
               },
             ),
@@ -47,6 +49,8 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Import From Excel",
               icon: const Icon(FontAwesomeIcons.fileExcel),
               onPressed: () {
+                controller.isImportedNew = true;
+                controller.isImportedPromot = false;
                 controller.pickAndReadFile();
               },
             ),
@@ -68,7 +72,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
               tooltip: "Send To DataBase",
               icon: const Icon(Icons.send),
               onPressed: () {
-                if (!controller.isImportedNew) {
+                if (!controller.isImportedNew && !controller.isImportedPromot) {
                   MyAwesomeDialogue(
                     title: "Error",
                     desc: "Please import File first",
@@ -92,18 +96,44 @@ class HeaderStudentWidget extends GetView<StudentController> {
                     desc: "Please check your Cohort",
                     dialogType: DialogType.error,
                   ).showDialogue(context);
+                } else if (controller.hasError.isNotEmpty) {
+                  MyAwesomeDialogue(
+                    title: "Error",
+                    desc: "Please check your values",
+                    dialogType: DialogType.error,
+                  ).showDialogue(context);
+                } else if (controller.hasErrorInBlbId) {
+                  MyAwesomeDialogue(
+                    title: "Error",
+                    desc: "Please check your Blb Id",
+                    dialogType: DialogType.error,
+                  ).showDialogue(context);
                 } else {
-                  controller
-                      .addManyStudents(students: controller.students)
-                      .then((value) {
-                    if (value) {
-                      MyAwesomeDialogue(
-                        title: "Success",
-                        desc: "Students Added Successfully",
-                        dialogType: DialogType.success,
-                      ).showDialogue(context);
-                    }
-                  });
+                  if (controller.isImportedNew) {
+                    controller
+                        .addManyStudents(students: controller.students)
+                        .then((value) {
+                      if (value) {
+                        MyAwesomeDialogue(
+                          title: "Success",
+                          desc: "Students Added Successfully",
+                          dialogType: DialogType.success,
+                        ).showDialogue(context);
+                      }
+                    });
+                  } else if (controller.isImportedPromot) {
+                    controller
+                        .updateManyStudents(students: controller.students)
+                        .then((value) {
+                      if (value) {
+                        MyAwesomeDialogue(
+                          title: "Success",
+                          desc: "Students Promoted Successfully",
+                          dialogType: DialogType.success,
+                        ).showDialogue(context);
+                      }
+                    });
+                  }
                 }
               },
             ),

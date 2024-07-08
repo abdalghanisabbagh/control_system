@@ -54,6 +54,7 @@ class StudentController extends GetxController {
   bool hasErrorInCohort = false;
   bool hasErrorInClassRoom = false;
   bool hasErrorInBlbId = false;
+  List hasError = [];
 
   @override
   void onInit() async {
@@ -285,7 +286,6 @@ class StudentController extends GetxController {
       if (fileBytes != null) {
         await _processCsvFile(
           fileBytes,
-          isImportedNew: isImportedNew,
           students: students,
           cohorts: cohorts,
           classesRooms: classRooms,
@@ -299,7 +299,6 @@ class StudentController extends GetxController {
 
   Future<void> _processCsvFile(
     Uint8List fileBytes, {
-    required bool isImportedNew,
     required List<StudentResModel> students,
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,
@@ -339,33 +338,37 @@ class StudentController extends GetxController {
       var studentsCsv = rowsAsListOfValues
           .map((row) => StudentResModel.fromCsvWithHeaders(row, headers))
           .toList();
+      Map<String, dynamic> result;
 
-      final result = isImportedNew
-          ? studentsCsv.convertFileStudentsToPluto(
-              cohorts: cohorts,
-              classesRooms: classesRooms,
-              grades: grades,
-            )
-            
-          : studentsCsv.convertPromtoFileStudentsToPluto(
-              students: students,
-              cohorts: cohorts,
-              classesRooms: classesRooms,
-              grades: grades,
-            );
-
-      if (isImportedNew) {
-        isImportedNew = true;
-      } else {
-        isImportedPromot = true;
+      if (isImportedNew == true) {
+        result = studentsCsv.convertFileStudentsToPluto(
+          students: students,
+          cohorts: cohorts,
+          classesRooms: classesRooms,
+          grades: grades,
+        );
+        studentsRows = result['rows'];
+        students.assignAll(result['students']);
+        hasErrorInGrade = result['errorgrade'];
+        hasErrorInCohort = result['errorcohort'];
+        hasErrorInClassRoom = result['errorclass'];
+        hasError.assignAll(result['errors']);
+        update();
+      } else if (isImportedPromot == true) {
+        result = studentsCsv.convertPromtoFileStudentsToPluto(
+          students: students,
+          cohorts: cohorts,
+          classesRooms: classesRooms,
+          grades: grades,
+        );
+        studentsRows = result['rows'];
+        students.assignAll(result['students']);
+        hasErrorInGrade = result['errorgrade'];
+        hasErrorInCohort = result['errorcohort'];
+        hasErrorInClassRoom = result['errorclass'];
+        hasErrorInBlbId = result['errorBlbID'];
+        update();
       }
-      studentsRows = result['rows'];
-      students = result['students'];
-      hasErrorInGrade = result['errorgrade'];
-      hasErrorInCohort = result['errorcohort'];
-      hasErrorInClassRoom = result['errorclass'];
-      hasErrorInBlbId = result['errorBlbID'];
-      update();
     } else {
       MyAwesomeDialogue(
         title: 'Error',
@@ -403,6 +406,7 @@ class StudentController extends GetxController {
     }, (result) {
       addStudentsHasBeenAdded = true;
       isImportedNew = false;
+      onInit();
     });
     loading = false;
 
@@ -410,6 +414,40 @@ class StudentController extends GetxController {
     return addStudentsHasBeenAdded;
   }
 
+  Future<bool> updateManyStudents({
+    required List<StudentResModel> students,
+  }) async {
+    loading = true;
+    bool updateStudentsHasBeenAdded = false;
+    update();
+
+    List<Map<String, dynamic>> studentData =
+        students.map((student) => student.importStudentByExcel()).toList();
+
+    ResponseHandler<void> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+        path: StudentsLinks.studentMany,
+        converter: (_) {},
+        type: ReqTypeEnum.PATCH,
+        body: studentData);
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      updateStudentsHasBeenAdded = false;
+    }, (result) {
+      updateStudentsHasBeenAdded = true;
+      onInit();
+    });
+    loading = false;
+
+    update();
+    return updateStudentsHasBeenAdded;
+  }
   // void testCohort(
   //   Uint8List fileBytes,
   // ) async {

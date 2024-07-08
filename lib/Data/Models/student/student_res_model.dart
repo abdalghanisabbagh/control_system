@@ -100,8 +100,24 @@ class StudentResModel {
     return data;
   }
 
+  // Map<String, dynamic> imporNewtStudentByExcel() {
+  //   final Map<String, dynamic> data = <String, dynamic>{};
+  //   data['Blb_Id'] = blbId;
+  //   data['Grades_ID'] = gradesID;
+  //   data['Schools_ID'] = schoolsID ?? Hive.box('School').get('Id');
+  //   data['Cohort_ID'] = cohortID;
+  //   data['School_Class_ID'] = schoolClassID;
+  //   data['First_Name'] = firstName;
+  //   data['Second_Name'] = secondName;
+  //   data['Third_Name'] = thirdName;
+  //   data['Created_By'] = createdBy ?? Hive.box('Profile').get('ID');
+  //   data['Second_Lang'] = secondLang;
+  //   return data;
+  // }
+
   Map<String, dynamic> importStudentByExcel() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    if (iD != null) data['ID'] = iD;
     data['Blb_Id'] = blbId;
     data['Grades_ID'] = gradesID;
     data['Schools_ID'] = schoolsID ?? Hive.box('School').get('Id');
@@ -119,21 +135,24 @@ class StudentResModel {
       List<dynamic> row, List<String> headers) {
     Map<String, dynamic> data = {};
     for (int i = 0; i < headers.length; i++) {
-      data[headers[i]] = row[i];
+      if (row[i] != null && row[i].toString().isNotEmpty) {
+        data[headers[i]] = row[i];
+      }
     }
 
     return StudentResModel(
-      blbId: data['id'],
-      firstName: data['firstname'],
-      secondName: data['middlename'],
-      thirdName: data['lastname'],
-      cohortName: data['cohort'],
-      gradeName: data['grade'],
-      schoolClassName: data['class'],
-      secondLang: data['second_language'],
+      blbId: data.containsKey('id') ? data['id'] : null,
+      firstName: data.containsKey('firstname') ? data['firstname'] : null,
+      secondName: data.containsKey('middlename') ? data['middlename'] : null,
+      thirdName: data.containsKey('lastname') ? data['lastname'] : null,
+      cohortName: data.containsKey('cohort') ? data['cohort'] : null,
+      gradeName: data.containsKey('grade') ? data['grade'] : null,
+      schoolClassName: data.containsKey('class') ? data['class'] : null,
+      secondLang:
+          data.containsKey('second_language') ? data['second_language'] : null,
     );
   }
-
+ 
   @override
   bool operator ==(covariant StudentResModel other) {
     if (identical(this, other)) return true;
