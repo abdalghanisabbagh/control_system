@@ -84,29 +84,29 @@ class StudentScreen extends GetView<StudentController> {
                                     title: 'Blb Id',
                                     field: 'BlbIdField',
                                     type: PlutoColumnType.text(),
+                                    cellPadding: EdgeInsets.zero,
                                     renderer: (context) {
-                                      final String? bLbValue =
+                                      final String? blbValue =
                                           context.cell.value;
-                                      final bool isDefaultGrade =
-                                          bLbValue != null &&
-                                              bLbValue.startsWith('[ERROR]');
-                                      final String? displayValue =
-                                          isDefaultGrade
-                                              ? bLbValue.substring(7)
-                                              : bLbValue;
+                                      final bool isErrorValue =
+                                          blbValue != null &&
+                                              blbValue.startsWith('[ERROR]');
+                                      bool isNullValue =
+                                          blbValue!.startsWith('null');
+                                      final String displayValue = isErrorValue
+                                          ? blbValue.substring(7)
+                                          : (blbValue);
 
                                       return Container(
-                                        color: isDefaultGrade
+                                        color: isErrorValue || isNullValue
                                             ? Colors.red
                                             : Colors.transparent,
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            displayValue!,
-                                            style: TextStyle(
-                                                color: isDefaultGrade
-                                                    ? Colors.black
-                                                    : Colors.black),
+                                            displayValue,
+                                            style: const TextStyle(
+                                                color: Colors.black),
                                           ),
                                         ),
                                       );
@@ -117,22 +117,90 @@ class StudentScreen extends GetView<StudentController> {
                                     title: 'First Name',
                                     field: 'FirstNameField',
                                     type: PlutoColumnType.text(),
-                                  ),
+                                    cellPadding: EdgeInsets.zero,
+                                    renderer: (rendererContext) {
+                                      String? value = rendererContext
+                                          .row.cells['FirstNameField']?.value;
+                                      Color backgroundColor =
+                                          Colors.transparent;
+                                      String displayText = value ?? '';
 
+                                      if (value == null || value.isEmpty) {
+                                        backgroundColor = Colors.red;
+                                        displayText = 'null';
+                                      }
+
+                                      return Container(
+                                        color: backgroundColor,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          displayText,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                   PlutoColumn(
-                                    readOnly: true,
                                     enableEditingMode: false,
-                                    title: 'Second Name',
+                                    title: 'second Name',
                                     field: 'SecondNameField',
                                     type: PlutoColumnType.text(),
-                                  ),
+                                    cellPadding: EdgeInsets.zero,
+                                    renderer: (rendererContext) {
+                                      String? value = rendererContext
+                                          .row.cells['SecondNameField']?.value;
+                                      Color backgroundColor =
+                                          Colors.transparent;
+                                      String displayText = value ?? '';
 
+                                      if (value == null || value.isEmpty) {
+                                        backgroundColor = Colors.red;
+                                        displayText = 'null';
+                                      }
+
+                                      return Container(
+                                        color: backgroundColor,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          displayText,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                   PlutoColumn(
-                                    readOnly: true,
                                     enableEditingMode: false,
                                     title: 'Third Name',
                                     field: 'ThirdNameField',
                                     type: PlutoColumnType.text(),
+                                    cellPadding: EdgeInsets.zero,
+                                    renderer: (rendererContext) {
+                                      String? value = rendererContext
+                                          .row.cells['ThirdNameField']?.value;
+                                      Color backgroundColor =
+                                          Colors.transparent;
+                                      String displayText = value ?? '';
+
+                                      if (value == null || value.isEmpty) {
+                                        backgroundColor = Colors.red;
+                                        displayText = 'null';
+                                      }
+
+                                      return Container(
+                                        color: backgroundColor,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          displayText,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                   PlutoColumn(
                                     readOnly: true,
@@ -140,7 +208,6 @@ class StudentScreen extends GetView<StudentController> {
                                     title: 'Cohort',
                                     field: 'CohortField',
                                     cellPadding: EdgeInsets.zero,
-                                    // titlePadding: EdgeInsets.zero,
                                     type: PlutoColumnType.text(),
                                     renderer: (context) {
                                       final String? cohortValue =
@@ -161,10 +228,8 @@ class StudentScreen extends GetView<StudentController> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             displayValue!,
-                                            style: TextStyle(
-                                                color: isDefaultcohort
-                                                    ? Colors.black
-                                                    : Colors.black),
+                                            style: const TextStyle(
+                                                color: Colors.black),
                                           ),
                                         ),
                                       );
@@ -196,16 +261,13 @@ class StudentScreen extends GetView<StudentController> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             displayValue!,
-                                            style: TextStyle(
-                                                color: isDefaultGrade
-                                                    ? Colors.black
-                                                    : Colors.black),
+                                            style: const TextStyle(
+                                                color: Colors.black),
                                           ),
                                         ),
                                       );
                                     },
                                   ),
-
                                   PlutoColumn(
                                     readOnly: true,
                                     enableEditingMode: false,
@@ -233,10 +295,8 @@ class StudentScreen extends GetView<StudentController> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             displayValue!,
-                                            style: TextStyle(
-                                                color: isDefaultClassRoom
-                                                    ? Colors.black
-                                                    : Colors.black),
+                                            style: const TextStyle(
+                                                color: Colors.black),
                                           ),
                                         ),
                                       );
@@ -248,6 +308,7 @@ class StudentScreen extends GetView<StudentController> {
                                     title: 'Second Language',
                                     field: 'LanguageField',
                                     type: PlutoColumnType.text(),
+                                    cellPadding: EdgeInsets.zero,
                                     footerRenderer: (footerRenderer) {
                                       return PlutoAggregateColumnFooter(
                                         rendererContext: footerRenderer,
@@ -257,48 +318,69 @@ class StudentScreen extends GetView<StudentController> {
                                         alignment: Alignment.center,
                                       );
                                     },
+                                    renderer: (rendererContext) {
+                                      String? value = rendererContext
+                                          .row.cells['LanguageField']?.value;
+                                      Color backgroundColor =
+                                          Colors.transparent;
+                                      String displayText = value ?? '';
+
+                                      if (value == null || value.isEmpty) {
+                                        backgroundColor = Colors.red;
+                                        displayText = 'null';
+                                      }
+
+                                      return Container(
+                                        color: backgroundColor,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          displayText,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
-
-                                  /// Actions Column definition
-
-                                  if (!controller.isImportedPromot)
-                                    PlutoColumn(
-                                      enableEditingMode: false,
-                                      title: 'Actions',
-                                      field: 'ActionsField',
-                                      type: PlutoColumnType.text(),
-                                      renderer: (rendererContext) {
-                                        return Row(
-                                          children: [
-                                            IconButton(
-                                              onPressed: () {
-                                                MyDialogs.showDialog(
-                                                  context,
-                                                  EditStudentWidget(
-                                                    studentResModel: controller
-                                                        .students
-                                                        .firstWhere((element) {
-                                                      return int.tryParse(
-                                                              rendererContext
-                                                                  .row
-                                                                  .cells[
-                                                                      'BlbIdField']!
-                                                                  .value
-                                                                  .toString()) ==
-                                                          element.blbId;
-                                                    }),
-                                                  ),
-                                                );
-                                              },
-                                              icon: const Icon(
-                                                Icons.edit,
-                                                color: Colors.green,
-                                              ),
+                                  PlutoColumn(
+                                    enableEditingMode: false,
+                                    title: 'Actions',
+                                    field: 'ActionsField',
+                                    type: PlutoColumnType.text(),
+                                    hide: controller.isImportedPromot ||
+                                        controller.isImportedNew,
+                                    renderer: (rendererContext) {
+                                      return Row(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              MyDialogs.showDialog(
+                                                context,
+                                                EditStudentWidget(
+                                                  studentResModel: controller
+                                                      .students
+                                                      .firstWhere((element) {
+                                                    return int.tryParse(
+                                                            rendererContext
+                                                                .row
+                                                                .cells[
+                                                                    'BlbIdField']!
+                                                                .value
+                                                                .toString()) ==
+                                                        element.blbId;
+                                                  }),
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Colors.green,
                                             ),
-                                          ],
-                                        );
-                                      },
-                                    ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
                                 ],
                                 rows: controller.studentsRows,
                                 onChanged: (PlutoGridOnChangedEvent event) {},
