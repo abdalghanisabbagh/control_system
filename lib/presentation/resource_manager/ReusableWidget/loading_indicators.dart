@@ -6,7 +6,7 @@ abstract class LoadingIndicators {
         height: 80,
         width: 80,
         child: LoadingIndicator(
-          indicatorType: Indicator.pacman,
+          indicatorType: Indicator.ballRotateChase,
         ),
       );
 }
