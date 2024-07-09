@@ -21,7 +21,7 @@ class ProctorResModel {
     this.updatedAt,
   });
 
-  ProctorResModel.fromJson(Map<String, dynamic> json) {
+  ProctorResModel.fromJson(json) {
     iD = json['ID'];
     fullName = json['Full_Name'];
     userName = json['User_Name'];
