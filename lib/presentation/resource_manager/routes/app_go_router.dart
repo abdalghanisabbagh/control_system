@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import '../../../domain/bindings/bindings.dart';
 import '../../../domain/controllers/controllers.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
-import '../../views/control_mission/distribution_and_details/distribution.dart';
 import '../../views/control_mission/distribution_and_details/details_and_review_mission.dart';
+import '../../views/control_mission/distribution_and_details/distribution.dart';
 import '../../views/index.dart';
 import 'app_routes_names_and_paths.dart';
 
@@ -177,6 +177,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.proctorScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          ProctorBindings().dependencies();
           return const ProctorScreen();
         },
         onExit: (context, state) {
