@@ -8,11 +8,18 @@ import 'package:control_system/Data/Models/school/grade_response/grade_res_model
 import 'package:control_system/Data/Models/student_seat/student_seat_res_model.dart';
 import 'package:control_system/Data/Models/student_seat/students_seats_numbers_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
+import 'package:control_system/app/extensions/convert_material_color_to_pdf_color_extension.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
+import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart' show TextEditingController;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:universal_html/html.dart' as html;
 
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
@@ -20,6 +27,7 @@ import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/color_manager.dart';
 
 class DistributeStudentsController extends GetxController {
   ExamRoomResModel examRoomResModel = ExamRoomResModel();
@@ -49,6 +57,335 @@ class DistributeStudentsController extends GetxController {
     this.examRoomResModel = examRoomResModel;
     update();
     Hive.box('ExamRoom').putAll(examRoomResModel.toJson());
+  }
+
+  Future<void> exportToPdf() async {
+    ByteData nunitoBoldFontData =
+        await rootBundle.load('assets/fonts/Nunito-SemiBold.ttf');
+
+    ByteData logoImage =
+        await rootBundle.load(AssetsManager.assetsLogosNisLogo);
+
+    final Uint8List logoImageBytes = logoImage.buffer.asUint8List();
+
+    final pw.Document document = pw.Document(
+        pageMode: PdfPageMode.fullscreen,
+        title: 'Student Distribution in ${examRoomResModel.name}');
+
+    double pdfWidth = PdfPageFormat.a4.width;
+    double pdfHeight = PdfPageFormat.a4.height;
+
+    document.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        orientation: pw.PageOrientation.landscape,
+        build: (pw.Context context) {
+          return pw.DefaultTextStyle(
+            style: pw.TextStyle(
+              fontSize: 8,
+              font: pw.Font.ttf(
+                nunitoBoldFontData,
+              ),
+            ),
+            child: pw.Container(
+              alignment: pw.Alignment.center,
+              width: pdfWidth,
+              height: pdfHeight,
+              child: pw.Column(
+                children: [
+                  pw.Container(
+                    height: pdfHeight * 0.05,
+                    width: pdfWidth * 0.17,
+                    decoration: pw.BoxDecoration(
+                      color: ColorManager.primary.toPdfColorFromValue(),
+                      border: pw.Border.all(
+                        width: 1,
+                      ),
+                    ),
+                    child: pw.Center(
+                      child: pw.Text(
+                        'Smart Board',
+                        style: pw.TextStyle(
+                          color: ColorManager.white.toPdfColorFromValue(),
+                        ),
+                      ),
+                    ),
+                  ),
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.center,
+                    children: [
+                      ...List.generate(
+                        numberOrRows,
+                        (i) {
+                          return pw.Row(
+                            children: [
+                              ...List.generate(
+                                classDeskCollection[i]!.length,
+                                (j) {
+                                  return (availableStudents
+                                          .map((element) => element.classDeskID)
+                                          .toList()
+                                          .contains(classDesks[i * 6 + j].id!))
+                                      ? pw.Padding(
+                                          padding: pw.EdgeInsets.symmetric(
+                                            horizontal: pdfWidth * 0.015,
+                                          ),
+                                          child: pw.Column(
+                                            mainAxisAlignment:
+                                                pw.MainAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                pw.CrossAxisAlignment.start,
+                                            children: [
+                                              pw.SizedBox(
+                                                height: pdfHeight * 0.01,
+                                              ),
+                                              pw.Container(
+                                                height: pdfHeight * 0.03,
+                                                width: pdfWidth * 0.17,
+                                                decoration: pw.BoxDecoration(
+                                                  border: pw.Border.all(
+                                                    width: 1.5,
+                                                  ),
+                                                  color: ColorManager.yellow
+                                                      .toPdfColorFromValue(),
+                                                ),
+                                                child: pw.Row(
+                                                  mainAxisAlignment: pw
+                                                      .MainAxisAlignment.center,
+                                                  children: [
+                                                    pw.Text(
+                                                      '${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).seatNumber}',
+                                                    ),
+                                                    pw.SizedBox(
+                                                      width: pdfWidth * 0.01,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              pw.Container(
+                                                height: pdfHeight * 0.05,
+                                                width: pdfWidth * 0.17,
+                                                decoration: pw.BoxDecoration(
+                                                  border: pw.Border.all(
+                                                    width: 1.5,
+                                                  ),
+                                                  color: ColorManager
+                                                      .gradesColor[availableStudents
+                                                          .firstWhere((element) =>
+                                                              element
+                                                                  .classDeskID ==
+                                                              classDesks[
+                                                                      i * 6 + j]
+                                                                  .id)
+                                                          .student!
+                                                          .gradeResModel!
+                                                          .name!]!
+                                                      .toPdfColorFromValue(),
+                                                ),
+                                                child: pw.Row(
+                                                  children: [
+                                                    pw.SizedBox(
+                                                        width: pdfWidth * 0.01),
+                                                    pw.Column(
+                                                      crossAxisAlignment: pw
+                                                          .CrossAxisAlignment
+                                                          .start,
+                                                      children: [
+                                                        pw.SizedBox(
+                                                          height:
+                                                              pdfHeight * 0.01,
+                                                        ),
+                                                        pw.SizedBox(
+                                                          width:
+                                                              pdfWidth * 0.15,
+                                                          child: pw.FittedBox(
+                                                            fit: pw
+                                                                .BoxFit.contain,
+                                                            child: pw.Text(
+                                                              'Student Name: ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.firstName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.secondName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.thirdName!} ',
+                                                              style: const pw
+                                                                  .TextStyle(
+                                                                fontSize: 6,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        pw.Text(
+                                                          'Seat NO: ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).seatNumber}',
+                                                        ),
+                                                        pw.Text(
+                                                          'Grade : ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
+                                                        ),
+                                                        pw.SizedBox(
+                                                            width: pdfWidth *
+                                                                0.01),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : pw.Padding(
+                                          padding: pw.EdgeInsets.symmetric(
+                                              horizontal: pdfWidth * 0.015),
+                                          child: pw.Column(
+                                            children: [
+                                              pw.SizedBox(
+                                                height: pdfHeight * 0.01,
+                                              ),
+                                              pw.Container(
+                                                height: pdfHeight * 0.03,
+                                                width: pdfWidth * 0.17,
+                                                decoration: pw.BoxDecoration(
+                                                  border: pw.Border.all(
+                                                    width: 1.5,
+                                                  ),
+                                                  color: ColorManager.yellow
+                                                      .toPdfColorFromValue(),
+                                                ),
+                                              ),
+                                              pw.Container(
+                                                height: pdfHeight * 0.05,
+                                                width: pdfWidth * 0.17,
+                                                decoration: pw.BoxDecoration(
+                                                  border: pw.Border.all(
+                                                    width: 1.5,
+                                                  ),
+                                                  color: ColorManager.greyA8
+                                                      .toPdfColorFromValue(),
+                                                ),
+                                                alignment: pw.Alignment.center,
+                                                child: pw.Text(
+                                                  '${i * 6 + j + 1}',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  pw.SizedBox(height: pdfHeight * 0.01),
+                  pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Row(
+                        children: List.generate(
+                          countByGrade.keys.length,
+                          (index) => pw.Padding(
+                            padding: pw.EdgeInsets.symmetric(
+                              horizontal: pdfWidth * 0.005,
+                            ),
+                            child: availableStudents
+                                    .where((element) =>
+                                        element.gradesID ==
+                                        grades
+                                            .firstWhere((element) =>
+                                                element.iD.toString() ==
+                                                countByGrade.keys
+                                                    .toList()[index])
+                                            .iD)
+                                    .isEmpty
+                                ? pw.SizedBox.shrink()
+                                : pw.Column(
+                                    mainAxisAlignment:
+                                        pw.MainAxisAlignment.start,
+                                    children: [
+                                      pw.Container(
+                                        height: pdfHeight * 0.025,
+                                        width: pdfWidth * 0.17,
+                                        alignment: pw.Alignment.center,
+                                        decoration: pw.BoxDecoration(
+                                          border: pw.Border.all(
+                                            width: 1.5,
+                                          ),
+                                          color: ColorManager.yellow
+                                              .toPdfColorFromValue(),
+                                        ),
+                                        child: pw.Padding(
+                                          padding: pw.EdgeInsets.symmetric(
+                                            horizontal: pdfWidth * 0.01,
+                                            vertical: pdfHeight * 0.01,
+                                          ),
+                                          child: pw.Text(
+                                            '${grades.firstWhere((element) => element.iD.toString() == countByGrade.keys.toList()[index]).name}',
+                                          ),
+                                        ),
+                                      ),
+                                      pw.Container(
+                                        height: pdfHeight * 0.035,
+                                        width: pdfWidth * 0.17,
+                                        alignment: pw.Alignment.center,
+                                        decoration: pw.BoxDecoration(
+                                          border: pw.Border.all(
+                                            width: 1.5,
+                                          ),
+                                          color: ColorManager.gradesColor[grades
+                                                  .firstWhere((element) =>
+                                                      element.iD.toString() ==
+                                                      countByGrade.keys
+                                                          .toList()[index])
+                                                  .name]!
+                                              .toPdfColorFromValue(),
+                                        ),
+                                        child: pw.Padding(
+                                          padding: pw.EdgeInsets.symmetric(
+                                            horizontal: pdfWidth * 0.01,
+                                            vertical: pdfHeight * 0.01,
+                                          ),
+                                          child: pw.Text(
+                                            '${availableStudents.where((element) => element.gradesID == grades.firstWhere((element) => element.iD.toString() == countByGrade.keys.toList()[index]).iD).length}',
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                      ),
+                      pw.Row(
+                        mainAxisSize: pw.MainAxisSize.max,
+                        mainAxisAlignment: pw.MainAxisAlignment.end,
+                        children: [
+                          pw.Image(
+                            pw.MemoryImage(
+                              logoImageBytes,
+                            ),
+                            width: pdfWidth * 0.3,
+                            height: pdfHeight * 0.06,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+
+    final Uint8List bytes = await document.save();
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    html.AnchorElement(href: url)
+      ..setAttribute(
+          'download', 'student distribute of ${examRoomResModel.name}.pdf')
+      ..click();
+
+    MyFlashBar.showSuccess(
+      "PDF file exported successfully.",
+      'success',
+    ).show(Get.key.currentContext!);
   }
 
   Future<void> getExamRoom() async {
