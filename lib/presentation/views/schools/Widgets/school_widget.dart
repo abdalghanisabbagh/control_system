@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../domain/controllers/school_controller.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
@@ -45,7 +46,9 @@ class SchoolWidget extends GetView<SchoolController> {
             width: double.infinity,
             child: GetBuilder<SchoolController>(builder: (_) {
               return controller.isLoadingSchools
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Center(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    )
                   : controller.schools.isEmpty
                       ? const Center(child: Text("No schools found"))
                       : ListView.builder(

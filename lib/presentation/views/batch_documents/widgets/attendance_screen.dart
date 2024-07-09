@@ -39,8 +39,8 @@ class AttendanceScreen extends GetView<CreateCoversSheetsController> {
           height: 20,
         ),
         // Obx(() => controller.creatMissionController.yearList.isEmpty
-        //     ? const Center(
-        //         child: CircularProgressIndicator(),
+        //     ? Center(
+        //         child: LoadingIndicators.getLoadingIndicator(),
         //       )
         //     : DropdownSearch<YearsResponse>(
         //         items: controller.creatMissionController.yearList,

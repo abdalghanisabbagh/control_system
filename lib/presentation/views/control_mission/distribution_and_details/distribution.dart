@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../domain/controllers/control_mission/distribution_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/header_widget.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
@@ -61,9 +62,9 @@ class DistributionScreen extends GetView<DistributionController> {
             ),
             GetBuilder<DistributionController>(
               builder: (_) => controller.isLodingGetExamRooms
-                  ? const Expanded(
+                  ? Expanded(
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: LoadingIndicators.getLoadingIndicator(),
                       ),
                     )
                   : controller.listExamRoom.isEmpty

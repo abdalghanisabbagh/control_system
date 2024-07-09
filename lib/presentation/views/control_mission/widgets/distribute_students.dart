@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 import '../../../../Data/Models/student_seat/student_seat_res_model.dart';
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import 'add_new_students_to_exam_room_widget.dart';
 import 'remove_students_from_exam_room_widget.dart';
@@ -24,7 +25,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
       body: GetBuilder<DistributeStudentsController>(
         builder: (_) {
           return controller.isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
+                )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

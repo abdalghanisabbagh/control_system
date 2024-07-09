@@ -7,6 +7,7 @@ import '../../../../domain/controllers/school_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
@@ -32,7 +33,7 @@ class AddNewSchoolWidget extends GetView<SchoolController> {
         GetBuilder<SchoolController>(
           builder: (controller) {
             if (controller.isLoadingAddGrades) {
-              return const CircularProgressIndicator();
+              return LoadingIndicators.getLoadingIndicator();
             }
 
             if (controller.options.isEmpty) {

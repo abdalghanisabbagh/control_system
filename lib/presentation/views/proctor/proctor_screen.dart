@@ -50,8 +50,8 @@ class ProctorScreen extends StatelessWidget {
 
           //// missions / date
           // Obx(() => creatMissionController.yearList.isEmpty
-          //     ? const Center(
-          //         child: CircularProgressIndicator(),
+          //     ? Center(
+          //         child: LoadingIndicators.getLoadingIndicator(),
           //       )
           //     : DropdownSearch<YearsResponse>(
           //         items: creatMissionController.yearList,
@@ -549,12 +549,12 @@ class ProctorScreen extends StatelessWidget {
               //               //               ],
               //               //             )
               //               //           : controller.roomsLoading
-              //               //               ? const Center(
+              //               //               ? Center(
               //               //                   child: Column(
               //               //                     mainAxisSize:
               //               //                         MainAxisSize.min,
               //               //                     children: [
-              //               //                       CircularProgressIndicator(),
+              //               //                       LoadingIndicators.getLoadingIndicator(),
               //               //                       Text('Loading...')
               //               //                     ],
               //               //                   ),

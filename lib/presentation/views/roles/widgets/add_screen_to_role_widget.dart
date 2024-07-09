@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
@@ -41,8 +42,8 @@ class AddScreensToRolesWidget extends GetView<RolesController> {
         ),
         GetBuilder<RolesController>(builder: (controller) {
           return controller.addLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
+              ? Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
                 )
               : Row(
                   children: [

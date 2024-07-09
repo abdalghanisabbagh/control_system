@@ -7,6 +7,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 import '../../../Data/Models/subject/subject_res_model.dart';
 import '../../../domain/controllers/subject_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../resource_manager/assets_manager.dart';
@@ -75,8 +76,8 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                 ),
                 Expanded(
                   child: controller.getAllLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
+                      ? Center(
+                          child: LoadingIndicators.getLoadingIndicator(),
                         )
                       : controller.subjects.isEmpty
                           ? Center(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 
 // ignore: must_be_immutable
@@ -58,8 +59,8 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                         child: GetBuilder<DetailsAndReviewMissionController>(
                             builder: (_) {
                           if (controller.isLodingGetExamRooms) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
+                            return Center(
+                              child: LoadingIndicators.getLoadingIndicator(),
                             );
                           } else if (controller.listExamRoom.isEmpty) {
                             return Center(
@@ -136,8 +137,9 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                         height: 200,
                         child: GetBuilder<DetailsAndReviewMissionController>(
                           builder: (_) => controller.isLodingGetExamRooms
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
+                              ? Center(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
                                 )
                               : controller.listExamRoom.isEmpty
                                   ? Center(
@@ -264,8 +266,8 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                   Expanded(
                     child: GetBuilder<DetailsAndReviewMissionController>(
                       builder: (_) => controller.isLodingGetStudentsSeatNumbers
-                          ? const Center(
-                              child: CircularProgressIndicator(),
+                          ? Center(
+                              child: LoadingIndicators.getLoadingIndicator(),
                             )
                           : controller.studentsSeatNumbers.isEmpty
                               ? Center(

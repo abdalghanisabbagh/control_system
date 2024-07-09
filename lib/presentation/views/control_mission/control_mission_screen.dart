@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../domain/controllers/control_mission/control_mission_controller.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../base_screen.dart';
 import 'widgets/control_mission_review_widget.dart';
 import 'widgets/header_mission_widget.dart';
@@ -24,7 +25,9 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
           GetBuilder<ControlMissionController>(
             builder: (_) {
               if (controller.isLodingGetEducationYears) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
+                );
               }
 
               if (controller.optionsEducationYear.isEmpty) {
@@ -45,8 +48,10 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
           GetBuilder<ControlMissionController>(
             builder: (controller) {
               if (controller.isLoading) {
-                return const Expanded(
-                  child: Center(child: CircularProgressIndicator()),
+                return Expanded(
+                  child: Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
                 );
               }
 

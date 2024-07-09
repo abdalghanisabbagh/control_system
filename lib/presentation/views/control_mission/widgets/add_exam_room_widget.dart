@@ -8,6 +8,7 @@ import '../../../../domain/controllers/control_mission/distribution_controller.d
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
@@ -30,7 +31,9 @@ class AddExamRoomWidget extends GetView<DistributionController> {
           key: formKey,
           child: GetBuilder<DistributionController>(builder: (_) {
             return controller.isLodingGetStageAndClassRoom
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  )
                 : Column(mainAxisSize: MainAxisSize.min, children: [
                     FormField<List<ValueItem<dynamic>>>(
                       validator:
@@ -110,7 +113,9 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                       height: 10,
                     ),
                     controller.isLodingAddExamRoom
-                        ? const Center(child: CircularProgressIndicator())
+                        ? Center(
+                            child: LoadingIndicators.getLoadingIndicator(),
+                          )
                         : Row(
                             children: [
                               const Expanded(

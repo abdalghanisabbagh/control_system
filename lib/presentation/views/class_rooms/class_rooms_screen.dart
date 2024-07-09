@@ -7,6 +7,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 import '../../../domain/controllers/class_room_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
+import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../resource_manager/assets_manager.dart';
@@ -64,8 +65,8 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
               child: GetBuilder<ClassRoomController>(
                 builder: (_) {
                   return controller.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
+                      ? Center(
+                          child: LoadingIndicators.getLoadingIndicator(),
                         )
                       : controller.classesRooms.isEmpty
                           ? Center(

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/color_manager.dart';
@@ -27,8 +28,8 @@ class RemoveStudentsFromExamRoomWidget
       child: GetBuilder<DistributeStudentsController>(
         builder: (_) {
           return controller.isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
+              ? Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
                 )
               : Form(
                   key: _formKey,
@@ -79,8 +80,8 @@ class RemoveStudentsFromExamRoomWidget
                       ),
                       Expanded(
                         child: controller.isLoadingStudents
-                            ? const Center(
-                                child: CircularProgressIndicator(),
+                            ? Center(
+                                child: LoadingIndicators.getLoadingIndicator(),
                               )
                             : Row(
                                 mainAxisAlignment:

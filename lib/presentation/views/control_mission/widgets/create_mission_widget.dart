@@ -11,6 +11,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:universal_html/html.dart';
 
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/index.dart';
@@ -32,7 +33,9 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: GetBuilder<CreateControlMissionController>(
             builder: (controller) => controller.isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  )
                 : Form(
                     key: _formKey,
                     child: SingleChildScrollView(

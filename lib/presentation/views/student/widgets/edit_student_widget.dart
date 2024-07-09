@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../Data/Models/student/student_res_model.dart';
 import '../../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/index.dart';
@@ -65,7 +66,7 @@ class EditStudentWidget extends GetView<StudentController> {
                 GetBuilder<StudentController>(
                   builder: (controller) {
                     if (controller.loading) {
-                      return const CircularProgressIndicator();
+                      return LoadingIndicators.getLoadingIndicator();
                     }
 
                     if (controller.optionsCohort.isEmpty) {
@@ -242,7 +243,7 @@ class EditStudentWidget extends GetView<StudentController> {
                 GetBuilder<StudentController>(
                   builder: (_) {
                     return controller.islodingEditStudent
-                        ? const CircularProgressIndicator()
+                        ? LoadingIndicators.getLoadingIndicator()
                         : InkWell(
                             onTap: () {
                               controller
