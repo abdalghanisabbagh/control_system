@@ -8,13 +8,18 @@ import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/cohort/cohorts_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/student/student_res_model.dart';
+import '../../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../profile_controller.dart';
 
 class AddNewStudentController extends GetxController {
   StudentController studentController = Get.find<StudentController>();
+
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
 
   bool checkSelecteClassRoom = false;
   bool checkSelecteCohort = false;
@@ -165,8 +170,6 @@ class AddNewStudentController extends GetxController {
     update();
     bool addStudentHasBeenAdded = false;
     int schoolId = Hive.box('School').get('Id');
-    int createdBy = Hive.box('Profile').get('ID');
-
     ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
@@ -182,7 +185,7 @@ class AddNewStudentController extends GetxController {
           "First_Name": firstName,
           "Second_Name": secondName,
           "Third_Name": thirdName,
-          "Created_By": createdBy,
+          "Created_By": _userProfile?.iD,
           "Second_Lang": secondLang
         });
 
