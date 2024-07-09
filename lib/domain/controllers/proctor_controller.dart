@@ -10,7 +10,7 @@ class ProctorController extends GetxController {
       TextEditingController();
   final TextEditingController nisIdController = TextEditingController();
 
-  bool showPassord = false;
+  bool showPassord = true;
   @override
   void onClose() {
     fullNameController.dispose();
