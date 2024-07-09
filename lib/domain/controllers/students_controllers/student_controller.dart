@@ -396,8 +396,6 @@ class StudentController extends GetxController {
         .map((student) => student.importStudentByExcel())
         .toList();
 
-    print(studentData[0]);
-
     ResponseHandler<void> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
