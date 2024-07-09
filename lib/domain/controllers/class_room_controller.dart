@@ -7,13 +7,18 @@ import '../../Data/Models/class_room/class_room_res_model.dart';
 import '../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../Data/Models/school/school_response/school_res_model.dart';
 import '../../Data/Models/school/school_response/schools_res_model.dart';
+import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'profile_controller.dart';
 
 class ClassRoomController extends GetxController {
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
+
   List<int> classSeats = [];
   List<ClassRoomResModel> classesRooms = [];
   int count = 1;
@@ -149,7 +154,7 @@ class ClassRoomController extends GetxController {
         "Rows": rows.toString(),
         "Columns": columns,
         "Schools_ID": Hive.box('School').get('Id'),
-        "Created_By": Hive.box('Profile').get('ID'),
+        "Created_By": _userProfile?.iD,
       },
     );
     response.fold(
@@ -261,7 +266,7 @@ class ClassRoomController extends GetxController {
         "Rows": rows.toString(),
         "Columns": columns,
         "Schools_ID": Hive.box('School').get('Id'),
-        "Created_By": Hive.box('Profile').get('ID')
+        "Created_By": _userProfile?.iD,
       },
     );
     response.fold(
