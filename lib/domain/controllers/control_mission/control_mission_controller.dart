@@ -4,7 +4,6 @@ import 'package:control_system/Data/Models/education_year/educations_years_res_m
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
@@ -98,9 +97,6 @@ class ControlMissionController extends GetxController {
     bool gotData = false;
     isLoading = true;
     update();
-
-    debugPrint("educationYearId: $educationYearId");
-
     ResponseHandler<ControlMissionsResModel> responseHandler =
         ResponseHandler();
     Either<Failure, ControlMissionsResModel> response =

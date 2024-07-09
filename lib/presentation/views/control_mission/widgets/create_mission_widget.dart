@@ -155,9 +155,6 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                         onOptionSelected: (value) {
                           formFieldState.didChange(value);
                           controller.selectedEducationYear = value;
-                          debugPrint(
-                            controller.selectedEducationYear.toString(),
-                          );
                           controller.selectedStartDate = null;
                           controller.selectedEndDate = null;
                           controller.update();
