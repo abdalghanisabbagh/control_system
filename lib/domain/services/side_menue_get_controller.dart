@@ -39,10 +39,50 @@ class SideMenueGetController extends GetxController {
         routeName: AppRoutesNamesAndPaths.controlBatchScreenName,
         iconWidget: Image.asset(AssetsManager.assetsIconsExam)),
     AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.batchDocumentsScreenName,
+        pageNumber: '3000',
+        routeName: AppRoutesNamesAndPaths.batchDocumentsScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc)),
+    // AppMenueItem(
+    //     pageName: AppRoutesNamesAndPaths.certificateScreenName,
+    //     pageNumber: '4000',
+    //     routeName: AppRoutesNamesAndPaths.certificateScreenName,
+    //     iconWidget: Image.asset(AssetsManager.assetsIconsCertificates)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.setDegreesScreenName,
+        pageNumber: '4000',
+        routeName: AppRoutesNamesAndPaths.setDegreesScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsProccess)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.schoolsScreenName,
+        pageNumber: '5000',
+        routeName: AppRoutesNamesAndPaths.schoolsScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsCampus)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.classRoomScreenName,
+        pageNumber: '6000',
+        routeName: AppRoutesNamesAndPaths.classRoomScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsClassRooms)),
+    AppMenueItem(
         pageName: AppRoutesNamesAndPaths.subjectSettingScreenName,
         pageNumber: '7000',
         routeName: AppRoutesNamesAndPaths.subjectSettingScreenName,
         iconWidget: Image.asset(AssetsManager.assetsIconsSupject)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.cohortSettingScreenName,
+        pageNumber: '8000',
+        routeName: AppRoutesNamesAndPaths.cohortSettingScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsCohort)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.adminScreenName,
+        pageNumber: '9000',
+        routeName: AppRoutesNamesAndPaths.adminScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsAdmin)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.proctorScreenName,
+        pageNumber: '10000',
+        routeName: AppRoutesNamesAndPaths.proctorScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc)),
     AppMenueItem(
         pageName: AppRoutesNamesAndPaths.rolesScreenName,
         pageNumber: '11000',
@@ -63,157 +103,6 @@ class SideMenueGetController extends GetxController {
   }
 
   List<SideMenuItem> getUserMenue(BuildContext context) {
-    // TODO :: Cheke roles
-    /*   final List<SideMenuItem> sideMenueItems = [
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.dashBoardScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.dashBoardScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsDashboard),
-        tooltipContent: "This is a tooltip for Dashboard item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.studentScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.studentScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsStudent),
-        tooltipContent: "This is a tooltip for Student item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.controlBatchScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.controlBatchScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsExam),
-        tooltipContent: "This is a tooltip for Control Mission item",
-      ),
-      // SideMenuItem(
-      //   title: AppRoutesNamesAndPaths.batchDocumentsScreenName,
-      //   onTap: (index, _) {
-      //     context.goNamed(AppRoutesNamesAndPaths.batchDocumentsScreenName);
-      //     changePage(index);
-      //   },
-      //   iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
-      //   tooltipContent: "This is a tooltip for Batch Documents item",
-      // ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.batchDocumentsScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.batchDocumentsScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
-        tooltipContent: "This is a tooltip for Batch Documents item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.certificateScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.certificateScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsCertificates),
-        tooltipContent: "This is a tooltip for Certificates item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.setDegreesScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.setDegreesScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsProccess),
-        tooltipContent: "This is a tooltip for Set Degrees item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.schoolsScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.schoolsScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsCampus),
-        tooltipContent: "This is a tooltip for Schools item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.classRoomScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.classRoomScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsClassRooms),
-        tooltipContent: "This is a tooltip for Class Rooms item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.subjectSettingScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.subjectSettingScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsSupject),
-        tooltipContent: "This is a tooltip for Subjects item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.cohortSettingScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.cohortSettingScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsCohort),
-        tooltipContent: "This is a tooltip for Cohort Settings item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.adminScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.adminScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsAdmin),
-        tooltipContent: "This is a tooltip for Admin item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.proctorScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.proctorScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc),
-        tooltipContent: "This is a tooltip for Proctor item",
-      ),
-      SideMenuItem(
-        title: AppRoutesNamesAndPaths.rolesScreenName,
-        onTap: (index, _) {
-          context.goNamed(AppRoutesNamesAndPaths.rolesScreenName);
-          changePage(index);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsRoles),
-        tooltipContent: "This is a tooltip for Roles item",
-      ),
-      SideMenuItem(
-        title: 'Sign Out',
-        onTap: (index, _) {
-          MyAwesomeDialogue(
-            title: "You are about to sign out",
-            desc: "Are you sure you want to sign out?",
-            dialogType: DialogType.warning,
-            btnOkOnPressed: () async {
-              await Get.find<AuthController>().signOut().then((value) {
-                context.goNamed(AppRoutesNamesAndPaths.loginScreenName);
-              });
-            },
-            btnCancelOnPressed: () {},
-          ).showDialogue(context);
-        },
-        iconWidget: Image.asset(AssetsManager.assetsIconsLogout),
-        tooltipContent: "This is a tooltip for Dashboard item",
-      ),
-    ];
-*/
-    // TODO :: Cheke roles
-    // .where((element) => element.title!.toLowerCase().contains('s'))
-    // .toList();
     ProfileController profileController = Get.find();
 
     final List<SideMenuItem> sideMenueItems = [
