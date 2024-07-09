@@ -24,15 +24,6 @@ class ProfileController extends GetxController {
         ? UserProfileModel.fromJson(jsonDecode(data))
         : null;
     return _cachedUserProfile;
-    // Hive.box('Profile').containsKey("CachedUserProfile")
-    //     ? UserProfileModel(
-    //         iD: Hive.box('Profile').get('ID'),
-    //         fullName: Hive.box('Profile').get('Full_Name'),
-    //         userName: Hive.box('Profile').get('User_Name'),
-    //         roles: Hive.box('Profile').get('Roles'),
-    //       )
-    //     : null;
-    // return _cachedUserProfile;
   }
 
   Future<void> deleteProfileFromHiveBox() async {
