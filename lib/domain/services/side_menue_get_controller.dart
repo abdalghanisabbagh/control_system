@@ -33,6 +33,21 @@ class SideMenueGetController extends GetxController {
         pageNumber: '1000',
         routeName: AppRoutesNamesAndPaths.studentScreenName,
         iconWidget: Image.asset(AssetsManager.assetsIconsStudent)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.controlBatchScreenName,
+        pageNumber: '2000',
+        routeName: AppRoutesNamesAndPaths.controlBatchScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsExam)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.subjectSettingScreenName,
+        pageNumber: '7000',
+        routeName: AppRoutesNamesAndPaths.subjectSettingScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsSupject)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.rolesScreenName,
+        pageNumber: '11000',
+        routeName: AppRoutesNamesAndPaths.rolesScreenName,
+        iconWidget: Image.asset(AssetsManager.assetsIconsRoles)),
   ];
 
   @override
@@ -215,15 +230,12 @@ class SideMenueGetController extends GetxController {
 
     sideMenueItems.addAll(allMenue
         .where((page) {
-          return profileController.cachedUserProfile!.roles!
-                  .firstWhereOrNull((role) {
-                var screen = role.screens!.firstWhereOrNull((screen) {
-                      return screen.frontId == page.pageNumber;
-                    }) !=
-                    null;
-                return screen;
-              }) !=
-              null;
+          return profileController.cachedUserProfile!.roles!.where((role) {
+            var screen = role.screens!.where((screen) {
+              return screen.frontId == page.pageNumber;
+            }).isNotEmpty;
+            return screen;
+          }).isNotEmpty;
         })
         .map((page) => SideMenuItem(
               title: page.pageName,
