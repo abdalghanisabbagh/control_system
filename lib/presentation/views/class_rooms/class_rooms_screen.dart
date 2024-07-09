@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../domain/controllers/class_room_controller.dart';
+import '../../../domain/controllers/profile_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -32,24 +33,29 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                 const Expanded(
                   child: HeaderWidget(text: "Class Rooms"),
                 ),
-                InkWell(
-                  onTap: () {
-                    context.goNamed(
-                        AppRoutesNamesAndPaths.classRoomSeatsScreenName);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: ColorManager.glodenColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          "Add Class Room",
-                          style: nunitoBold.copyWith(
-                            color: ColorManager.white,
-                            fontSize: 16,
+                Visibility(
+                  visible: Get.find<ProfileController>().canAccessWidget(
+                    widgetId: '6100',
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      context.goNamed(
+                          AppRoutesNamesAndPaths.classRoomSeatsScreenName);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: ColorManager.glodenColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "Add Class Room",
+                            style: nunitoBold.copyWith(
+                              color: ColorManager.white,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
@@ -215,49 +221,58 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                     ),
                                                     Row(
                                                       children: [
-                                                        InkWell(
-                                                          onTap: () {
-                                                            controller
-                                                                    .classSeats =
-                                                                classRoom.rows!;
-                                                            controller.numbers =
-                                                                classRoom
-                                                                    .columns!;
-                                                            MyDialogs
-                                                                .showDialog(
-                                                              context,
-                                                              EditClassRoomWidget(
-                                                                classRoom:
-                                                                    classRoom,
-                                                              ),
-                                                            );
-                                                          },
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: ColorManager
-                                                                  .glodenColor,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                10,
-                                                              ),
-                                                            ),
-                                                            child: Center(
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(
+                                                        Visibility(
+                                                          visible: Get.find<
+                                                                  ProfileController>()
+                                                              .canAccessWidget(
+                                                            widgetId: '6200',
+                                                          ),
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                      .classSeats =
+                                                                  classRoom
+                                                                      .rows!;
+                                                              controller
+                                                                      .numbers =
+                                                                  classRoom
+                                                                      .columns!;
+                                                              MyDialogs
+                                                                  .showDialog(
+                                                                context,
+                                                                EditClassRoomWidget(
+                                                                  classRoom:
+                                                                      classRoom,
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: ColorManager
+                                                                    .glodenColor,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
                                                                   10,
                                                                 ),
-                                                                child: Text(
-                                                                  "Edit Classs",
-                                                                  style: nunitoBold
-                                                                      .copyWith(
-                                                                    color: ColorManager
-                                                                        .white,
-                                                                    fontSize:
-                                                                        16,
+                                                              ),
+                                                              child: Center(
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                    10,
+                                                                  ),
+                                                                  child: Text(
+                                                                    "Edit Classs",
+                                                                    style: nunitoBold
+                                                                        .copyWith(
+                                                                      color: ColorManager
+                                                                          .white,
+                                                                      fontSize:
+                                                                          16,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
@@ -267,66 +282,73 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                         const SizedBox(
                                                           width: 20,
                                                         ),
-                                                        InkWell(
-                                                          onTap: () async {
-                                                            MyAwesomeDialogue(
-                                                              title:
-                                                                  'You Are About To Delete This Class',
-                                                              desc:
-                                                                  'Are You Sure?',
-                                                              dialogType:
-                                                                  DialogType
-                                                                      .warning,
-                                                              btnOkOnPressed:
-                                                                  () async {
-                                                                controller
-                                                                    .deleteClassRoom(
-                                                                  id: classRoom
-                                                                      .iD!,
-                                                                )
-                                                                    .then(
-                                                                  (value) {
-                                                                    value
-                                                                        ? MyFlashBar.showSuccess("Class deleted successfully",
-                                                                                "Success")
-                                                                            .show(context)
-                                                                        : null;
-                                                                  },
-                                                                );
-                                                              },
-                                                              btnCancelOnPressed:
-                                                                  () {
-                                                                Get.back();
-                                                              },
-                                                            ).showDialogue(
-                                                              context,
-                                                            );
-                                                          },
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Colors.red,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                10,
-                                                              ),
-                                                            ),
-                                                            child: Center(
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(
+                                                        Visibility(
+                                                          visible: Get.find<
+                                                                  ProfileController>()
+                                                              .canAccessWidget(
+                                                            widgetId: '6300',
+                                                          ),
+                                                          child: InkWell(
+                                                            onTap: () async {
+                                                              MyAwesomeDialogue(
+                                                                title:
+                                                                    'You Are About To Delete This Class',
+                                                                desc:
+                                                                    'Are You Sure?',
+                                                                dialogType:
+                                                                    DialogType
+                                                                        .warning,
+                                                                btnOkOnPressed:
+                                                                    () async {
+                                                                  controller
+                                                                      .deleteClassRoom(
+                                                                    id: classRoom
+                                                                        .iD!,
+                                                                  )
+                                                                      .then(
+                                                                    (value) {
+                                                                      value
+                                                                          ? MyFlashBar.showSuccess("Class deleted successfully", "Success")
+                                                                              .show(context)
+                                                                          : null;
+                                                                    },
+                                                                  );
+                                                                },
+                                                                btnCancelOnPressed:
+                                                                    () {
+                                                                  Get.back();
+                                                                },
+                                                              ).showDialogue(
+                                                                context,
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color:
+                                                                    Colors.red,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
                                                                   10,
                                                                 ),
-                                                                child: Text(
-                                                                  "Delete Classes",
-                                                                  style: nunitoBold
-                                                                      .copyWith(
-                                                                    color: ColorManager
-                                                                        .white,
-                                                                    fontSize:
-                                                                        16,
+                                                              ),
+                                                              child: Center(
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                    10,
+                                                                  ),
+                                                                  child: Text(
+                                                                    "Delete Classes",
+                                                                    style: nunitoBold
+                                                                        .copyWith(
+                                                                      color: ColorManager
+                                                                          .white,
+                                                                      fontSize:
+                                                                          16,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),

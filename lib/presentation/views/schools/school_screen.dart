@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/controllers/profile_controller.dart';
 import '../../../domain/controllers/school_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
@@ -24,12 +25,17 @@ class SchoolsScreen extends GetView<SchoolController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const HeaderWidget(text: "School Setting"),
-                IconButton(
-                  tooltip: "Add new School",
-                  onPressed: () {
-                    MyDialogs.showDialog(context, const AddNewSchoolWidget());
-                  },
-                  icon: const Icon(Icons.school),
+                Visibility(
+                  visible: Get.find<ProfileController>().canAccessWidget(
+                    widgetId: '5100',
+                  ),
+                  child: IconButton(
+                    tooltip: "Add new School",
+                    onPressed: () {
+                      MyDialogs.showDialog(context, const AddNewSchoolWidget());
+                    },
+                    icon: const Icon(Icons.school),
+                  ),
                 ),
               ],
             ),

@@ -68,83 +68,93 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
           ),
           Column(
             children: [
-              Expanded(
-                child: GetBuilder<DistributionController>(
-                    builder: (distributionController) {
-                  return InkWell(
-                    onTap: () async {
-                      await Future.wait([
-                        distributionController
-                            .saveControlMissionId(controlMission.iD!),
-                        distributionController
-                            .saveControlMissionName(controlMission.name!),
-                      ]);
-                      context.mounted
-                          ? context.goNamed(
-                              AppRoutesNamesAndPaths
-                                  .distributioncreateMissionScreenName,
-                            )
-                          : null;
-                    },
-                    child: Container(
-                      width: 200,
-                      decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                          color: ColorManager.glodenColor),
-                      child: Center(
-                        child: Text(
-                          "Distribution",
-                          style: nunitoRegular.copyWith(
-                            color: Colors.white,
-                            fontSize: 18,
+              Visibility(
+                visible: Get.find<ProfileController>().canAccessWidget(
+                  widgetId: '2200',
+                ),
+                child: Expanded(
+                  child: GetBuilder<DistributionController>(
+                      builder: (distributionController) {
+                    return InkWell(
+                      onTap: () async {
+                        await Future.wait([
+                          distributionController
+                              .saveControlMissionId(controlMission.iD!),
+                          distributionController
+                              .saveControlMissionName(controlMission.name!),
+                        ]);
+                        context.mounted
+                            ? context.goNamed(
+                                AppRoutesNamesAndPaths
+                                    .distributioncreateMissionScreenName,
+                              )
+                            : null;
+                      },
+                      child: Container(
+                        width: 200,
+                        decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                            color: ColorManager.glodenColor),
+                        child: Center(
+                          child: Text(
+                            "Distribution",
+                            style: nunitoRegular.copyWith(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
-              Expanded(
-                child: GetBuilder<DetailsAndReviewMissionController>(
-                    builder: (detailsAndReviewMissionController) {
-                  return InkWell(
-                    onTap: () async {
-                      await Future.wait([
-                        detailsAndReviewMissionController
-                            .saveControlMissionId(controlMission.iD!),
-                        detailsAndReviewMissionController
-                            .saveControlMissionName(controlMission.name!),
-                      ]);
-                      context.mounted
-                          ? context.goNamed(
-                              AppRoutesNamesAndPaths
-                                  .reviewAndDetailsMissionName,
-                            )
-                          : null;
-                    },
-                    child: Container(
-                      width: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        color: ColorManager.red,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Details And Review",
-                          style: nunitoRegular.copyWith(
-                            color: Colors.white,
-                            fontSize: 18,
+              Visibility(
+                visible: Get.find<ProfileController>().canAccessWidget(
+                  widgetId: '2300',
+                ),
+                child: Expanded(
+                  child: GetBuilder<DetailsAndReviewMissionController>(
+                      builder: (detailsAndReviewMissionController) {
+                    return InkWell(
+                      onTap: () async {
+                        await Future.wait([
+                          detailsAndReviewMissionController
+                              .saveControlMissionId(controlMission.iD!),
+                          detailsAndReviewMissionController
+                              .saveControlMissionName(controlMission.name!),
+                        ]);
+                        context.mounted
+                            ? context.goNamed(
+                                AppRoutesNamesAndPaths
+                                    .reviewAndDetailsMissionName,
+                              )
+                            : null;
+                      },
+                      child: Container(
+                        width: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10)),
+                          color: ColorManager.red,
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Details And Review",
+                            style: nunitoRegular.copyWith(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
             ],
           )

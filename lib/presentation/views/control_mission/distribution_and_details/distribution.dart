@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../domain/controllers/control_mission/distribution_controller.dart';
+import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -42,19 +43,24 @@ class DistributionScreen extends GetView<DistributionController> {
                   text: "Distribution: ${controller.controlMissionName}",
                 ),
                 const Spacer(),
-                InkWell(
-                  onTap: () {
-                    MyDialogs.showDialog(context, AddExamRoomWidget());
-                    controller.getStageAndClassRoom();
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: ColorManager.bgSideMenu,
-                        borderRadius: BorderRadius.circular(10)),
-                    padding: const EdgeInsets.all(20),
-                    child: Text(
-                      "Create new exam room",
-                      style: nunitoLight.copyWith(color: Colors.white),
+                Visibility(
+                  visible: Get.find<ProfileController>().canAccessWidget(
+                    widgetId: '2201',
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      MyDialogs.showDialog(context, AddExamRoomWidget());
+                      controller.getStageAndClassRoom();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: ColorManager.bgSideMenu,
+                          borderRadius: BorderRadius.circular(10)),
+                      padding: const EdgeInsets.all(20),
+                      child: Text(
+                        "Create new exam room",
+                        style: nunitoLight.copyWith(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
@@ -152,53 +158,61 @@ class DistributionScreen extends GetView<DistributionController> {
                                       ),
                                       Row(
                                         children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              onTap: () async {
-                                                MyAwesomeDialogue(
-                                                  title:
-                                                      'You Are About To Delete This Exam Room',
-                                                  desc: 'Are You Sure?',
-                                                  dialogType:
-                                                      DialogType.warning,
-                                                  btnOkOnPressed: () async {
-                                                    controller
-                                                        .deleteExamRoom(
-                                                            room.id!)
-                                                        .then(
-                                                      (value) {
-                                                        value
-                                                            ? MyFlashBar.showSuccess(
-                                                                    'Exam Room Deleted Successfully',
-                                                                    "Success")
-                                                                .show(context)
-                                                            : null;
-                                                      },
-                                                    );
-                                                  },
-                                                  btnCancelOnPressed: () {},
-                                                ).showDialogue(
-                                                  context,
-                                                );
-                                              },
-                                              child: Container(
-                                                height: 45,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    bottomLeft: Radius.circular(
-                                                      11,
+                                          Visibility(
+                                            visible:
+                                                Get.find<ProfileController>()
+                                                    .canAccessWidget(
+                                              widgetId: '2202',
+                                            ),
+                                            child: Expanded(
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  MyAwesomeDialogue(
+                                                    title:
+                                                        'You Are About To Delete This Exam Room',
+                                                    desc: 'Are You Sure?',
+                                                    dialogType:
+                                                        DialogType.warning,
+                                                    btnOkOnPressed: () async {
+                                                      controller
+                                                          .deleteExamRoom(
+                                                              room.id!)
+                                                          .then(
+                                                        (value) {
+                                                          value
+                                                              ? MyFlashBar.showSuccess(
+                                                                      'Exam Room Deleted Successfully',
+                                                                      "Success")
+                                                                  .show(context)
+                                                              : null;
+                                                        },
+                                                      );
+                                                    },
+                                                    btnCancelOnPressed: () {},
+                                                  ).showDialogue(
+                                                    context,
+                                                  );
+                                                },
+                                                child: Container(
+                                                  height: 45,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      bottomLeft:
+                                                          Radius.circular(
+                                                        11,
+                                                      ),
                                                     ),
+                                                    color: ColorManager.red,
                                                   ),
-                                                  color: ColorManager.red,
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    "Delete Exam Room",
-                                                    style:
-                                                        nunitoRegular.copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Delete Exam Room",
+                                                      style: nunitoRegular
+                                                          .copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -208,39 +222,46 @@ class DistributionScreen extends GetView<DistributionController> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Expanded(
-                                            child: InkWell(
-                                              onTap: () async {
-                                                await Get.find<
-                                                        DistributeStudentsController>()
-                                                    .saveExamRoom(room);
-                                                context.mounted
-                                                    ? context.goNamed(
-                                                        AppRoutesNamesAndPaths
-                                                            .distributeStudentsScreenName,
-                                                      )
-                                                    : null;
-                                              },
-                                              child: Container(
-                                                height: 45,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    bottomRight:
-                                                        Radius.circular(
-                                                      11,
+                                          Visibility(
+                                            visible:
+                                                Get.find<ProfileController>()
+                                                    .canAccessWidget(
+                                              widgetId: '2203',
+                                            ),
+                                            child: Expanded(
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  await Get.find<
+                                                          DistributeStudentsController>()
+                                                      .saveExamRoom(room);
+                                                  context.mounted
+                                                      ? context.goNamed(
+                                                          AppRoutesNamesAndPaths
+                                                              .distributeStudentsScreenName,
+                                                        )
+                                                      : null;
+                                                },
+                                                child: Container(
+                                                  height: 45,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      bottomRight:
+                                                          Radius.circular(
+                                                        11,
+                                                      ),
                                                     ),
+                                                    color: ColorManager
+                                                        .glodenColor,
                                                   ),
-                                                  color:
-                                                      ColorManager.glodenColor,
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    "Distribution",
-                                                    style:
-                                                        nunitoRegular.copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 18,
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Distribution",
+                                                      style: nunitoRegular
+                                                          .copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 18,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),

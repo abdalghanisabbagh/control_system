@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../domain/controllers/profile_controller.dart';
 import '../../../../domain/controllers/school_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -41,21 +42,26 @@ class GradeSystemWidget extends GetView<SchoolController> {
                 ),
               );
             }),
-            IconButton(
-              tooltip: "Add New Grade",
-              onPressed: () {
-                controller.selectedSchoolIndex == -1
-                    ? MyAwesomeDialogue(
-                            title: "Error",
-                            desc: "please select a school",
-                            dialogType: DialogType.error)
-                        .showDialogue(context)
-                    : MyDialogs.showDialog(
-                        context,
-                        const AddNewGradeToSchool(),
-                      );
-              },
-              icon: const Icon(Icons.add),
+            Visibility(
+              visible: Get.find<ProfileController>().canAccessWidget(
+                widgetId: '5200',
+              ),
+              child: IconButton(
+                tooltip: "Add New Grade",
+                onPressed: () {
+                  controller.selectedSchoolIndex == -1
+                      ? MyAwesomeDialogue(
+                              title: "Error",
+                              desc: "please select a school",
+                              dialogType: DialogType.error)
+                          .showDialogue(context)
+                      : MyDialogs.showDialog(
+                          context,
+                          const AddNewGradeToSchool(),
+                        );
+                },
+                icon: const Icon(Icons.add),
+              ),
             )
           ],
         ),

@@ -5,6 +5,7 @@ import 'package:control_system/presentation/views/roles/widgets/add_screen_to_ro
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/controllers/profile_controller.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/color_manager.dart';
@@ -35,26 +36,32 @@ class RolesScreen extends GetView<RolesController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const HeaderWidget(text: "Roles"),
-                          InkWell(
-                            onTap: () {
-                              MyDialogs.showDialog(
-                                context,
-                                AddNewRolesWidget(),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: ColorManager.glodenColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Text(
-                                    "Add New Roles",
-                                    style: nunitoBold.copyWith(
-                                      color: ColorManager.white,
-                                      fontSize: 16,
+                          Visibility(
+                            visible:
+                                Get.find<ProfileController>().canAccessWidget(
+                              widgetId: '11200',
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                MyDialogs.showDialog(
+                                  context,
+                                  AddNewRolesWidget(),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: ColorManager.glodenColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Text(
+                                      "Add New Roles",
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.white,
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -90,18 +97,25 @@ class RolesScreen extends GetView<RolesController> {
                                               child: ListTile(
                                                 title: Text(controller
                                                     .roles[index].name),
-                                                trailing: ElevatedButton(
-                                                  onPressed: () {
-                                                    MyDialogs.showDialog(
-                                                      context,
-                                                      AddScreensToRolesWidget(
-                                                        role: controller
-                                                            .roles[index],
-                                                      ),
-                                                    );
-                                                  },
-                                                  child:
-                                                      const Text("Add Screen"),
+                                                trailing: Visibility(
+                                                  visible: Get.find<
+                                                          ProfileController>()
+                                                      .canAccessWidget(
+                                                    widgetId: '11100',
+                                                  ),
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      MyDialogs.showDialog(
+                                                        context,
+                                                        AddScreensToRolesWidget(
+                                                          role: controller
+                                                              .roles[index],
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                        "Add Screen"),
+                                                  ),
                                                 ),
                                               ),
                                             );
@@ -120,26 +134,32 @@ class RolesScreen extends GetView<RolesController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const HeaderWidget(text: "Screens"),
-                          InkWell(
-                            onTap: () {
-                              MyDialogs.showDialog(
-                                context,
-                                AddNewScreenWidget(),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: ColorManager.glodenColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Text(
-                                    "Add New Screen",
-                                    style: nunitoBold.copyWith(
-                                      color: ColorManager.white,
-                                      fontSize: 16,
+                          Visibility(
+                            visible:
+                                Get.find<ProfileController>().canAccessWidget(
+                              widgetId: '11100',
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                MyDialogs.showDialog(
+                                  context,
+                                  AddNewScreenWidget(),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: ColorManager.glodenColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Text(
+                                      "Add New Screen",
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.white,
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 ),

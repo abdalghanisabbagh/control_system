@@ -5,6 +5,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../Data/Models/cohort/cohort_res_model.dart';
 import '../../../domain/controllers/cohorts_settings_controller.dart';
+import '../../../domain/controllers/profile_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
@@ -38,26 +39,31 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                         fontSize: 30,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        MyDialogs.showDialog(
-                          context,
-                          const AddCohortWidget(),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ColorManager.glodenColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Add Cohorts",
-                              style: nunitoBold.copyWith(
-                                color: ColorManager.white,
-                                fontSize: 16,
+                    Visibility(
+                      visible: Get.find<ProfileController>().canAccessWidget(
+                        widgetId: '8100',
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          MyDialogs.showDialog(
+                            context,
+                            const AddCohortWidget(),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: ColorManager.glodenColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                "Add Cohorts",
+                                style: nunitoBold.copyWith(
+                                  color: ColorManager.white,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
@@ -207,39 +213,48 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                   ),
                                                   Row(
                                                     children: [
-                                                      InkWell(
-                                                        onTap: () {
-                                                          MyDialogs.showDialog(
-                                                            context,
-                                                            AddSubjectsToCohort(
-                                                              item: item,
+                                                      Visibility(
+                                                        visible: Get.find<
+                                                                ProfileController>()
+                                                            .canAccessWidget(
+                                                          widgetId: '8300',
+                                                        ),
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            MyDialogs
+                                                                .showDialog(
+                                                              context,
+                                                              AddSubjectsToCohort(
+                                                                item: item,
+                                                              ),
+                                                            );
+                                                          },
+                                                          child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: ColorManager
+                                                                  .glodenColor,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                10,
+                                                              ),
                                                             ),
-                                                          );
-                                                        },
-                                                        child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: ColorManager
-                                                                .glodenColor,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                              10,
-                                                            ),
-                                                          ),
-                                                          child: Center(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(10),
-                                                              child: Text(
-                                                                "Add subjects",
-                                                                style: nunitoBold
-                                                                    .copyWith(
-                                                                  color:
-                                                                      ColorManager
-                                                                          .white,
-                                                                  fontSize: 16,
+                                                            child: Center(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        10),
+                                                                child: Text(
+                                                                  "Add subjects",
+                                                                  style: nunitoBold
+                                                                      .copyWith(
+                                                                    color: ColorManager
+                                                                        .white,
+                                                                    fontSize:
+                                                                        16,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -249,61 +264,68 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                       const SizedBox(
                                                         width: 20,
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          MyAwesomeDialogue(
-                                                            title:
-                                                                'You are bout to delete this cohort',
-                                                            desc:
-                                                                'Are you sure ?',
-                                                            dialogType:
-                                                                DialogType
-                                                                    .warning,
-                                                            btnOkOnPressed: () {
-                                                              controller
-                                                                  .deleteCohort(
-                                                                      item.iD!)
-                                                                  .then(
-                                                                (value) {
-                                                                  value
-                                                                      ? MyFlashBar.showSuccess(
-                                                                              'Cohort deleted successfully',
-                                                                              'Success')
-                                                                          .show(
-                                                                              context)
-                                                                      : null;
-                                                                },
-                                                              );
-                                                            },
-                                                            btnCancelOnPressed:
-                                                                () {
-                                                              Get.back();
-                                                            },
-                                                          ).showDialogue(
-                                                              context);
-                                                        },
-                                                        child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors.red,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
+                                                      Visibility(
+                                                        visible: Get.find<
+                                                                ProfileController>()
+                                                            .canAccessWidget(
+                                                          widgetId: '8200',
+                                                        ),
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            MyAwesomeDialogue(
+                                                              title:
+                                                                  'You are bout to delete this cohort',
+                                                              desc:
+                                                                  'Are you sure ?',
+                                                              dialogType:
+                                                                  DialogType
+                                                                      .warning,
+                                                              btnOkOnPressed:
+                                                                  () {
+                                                                controller
+                                                                    .deleteCohort(
+                                                                        item.iD!)
+                                                                    .then(
+                                                                  (value) {
+                                                                    value
+                                                                        ? MyFlashBar.showSuccess('Cohort deleted successfully',
+                                                                                'Success')
+                                                                            .show(context)
+                                                                        : null;
+                                                                  },
+                                                                );
+                                                              },
+                                                              btnCancelOnPressed:
+                                                                  () {
+                                                                Get.back();
+                                                              },
+                                                            ).showDialogue(
+                                                                context);
+                                                          },
+                                                          child: Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Colors.red,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                            ),
+                                                            child: Center(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
                                                                         10),
-                                                          ),
-                                                          child: Center(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(10),
-                                                              child: Text(
-                                                                "Delete Cohort",
-                                                                style: nunitoBold
-                                                                    .copyWith(
-                                                                  color:
-                                                                      ColorManager
-                                                                          .white,
-                                                                  fontSize: 16,
+                                                                child: Text(
+                                                                  "Delete Cohort",
+                                                                  style: nunitoBold
+                                                                      .copyWith(
+                                                                    color: ColorManager
+                                                                        .white,
+                                                                    fontSize:
+                                                                        16,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),

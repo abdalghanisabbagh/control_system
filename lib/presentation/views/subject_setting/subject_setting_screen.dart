@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../Data/Models/subject/subject_res_model.dart';
+import '../../../domain/controllers/profile_controller.dart';
 import '../../../domain/controllers/subject_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -39,30 +40,35 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                         fontSize: 30,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        // RxBool inExam = true.obs;
-                        // TextEditingController subjectTitleController =
-                        //     TextEditingController();
+                    Visibility(
+                      visible: Get.find<ProfileController>().canAccessWidget(
+                        widgetId: '7100',
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          // RxBool inExam = true.obs;
+                          // TextEditingController subjectTitleController =
+                          //     TextEditingController();
 
-                        MyDialogs.showDialog(
-                          context,
-                          const AddSubjectWidget(),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ColorManager.glodenColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              "Add Subject",
-                              style: nunitoBold.copyWith(
-                                color: ColorManager.white,
-                                fontSize: 16,
+                          MyDialogs.showDialog(
+                            context,
+                            const AddSubjectWidget(),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: ColorManager.glodenColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                "Add Subject",
+                                style: nunitoBold.copyWith(
+                                  color: ColorManager.white,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
@@ -204,66 +210,76 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        MyAwesomeDialogue(
-                                                          title:
-                                                              'You are about to delete this subject',
-                                                          desc: 'Are you sure?',
-                                                          dialogType: DialogType
-                                                              .warning,
-                                                          btnOkOnPressed: () {
-                                                            controller
-                                                                .deleteSubject(
-                                                              id: item.iD!,
-                                                            )
-                                                                .then(
-                                                              (value) {
-                                                                value
-                                                                    ? {
-                                                                        MyFlashBar
-                                                                            .showSuccess(
-                                                                          "Subject has been deleted successfully",
-                                                                          "Subject Deleted",
-                                                                        ).show(
-                                                                            context),
-                                                                      }
-                                                                    : null;
-                                                              },
-                                                            );
-                                                          },
-                                                          btnCancelOnPressed:
-                                                              () {
-                                                            Get.back();
-                                                          },
-                                                        ).showDialogue(context);
-                                                      },
-                                                      child: Container(
-                                                        width: 150,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.red,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            10,
-                                                          ),
-                                                        ),
-                                                        child: Center(
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(
+                                                    Visibility(
+                                                      visible: Get.find<
+                                                              ProfileController>()
+                                                          .canAccessWidget(
+                                                        widgetId: '7200',
+                                                      ),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          MyAwesomeDialogue(
+                                                            title:
+                                                                'You are about to delete this subject',
+                                                            desc:
+                                                                'Are you sure?',
+                                                            dialogType:
+                                                                DialogType
+                                                                    .warning,
+                                                            btnOkOnPressed: () {
+                                                              controller
+                                                                  .deleteSubject(
+                                                                id: item.iD!,
+                                                              )
+                                                                  .then(
+                                                                (value) {
+                                                                  value
+                                                                      ? {
+                                                                          MyFlashBar
+                                                                              .showSuccess(
+                                                                            "Subject has been deleted successfully",
+                                                                            "Subject Deleted",
+                                                                          ).show(
+                                                                              context),
+                                                                        }
+                                                                      : null;
+                                                                },
+                                                              );
+                                                            },
+                                                            btnCancelOnPressed:
+                                                                () {
+                                                              Get.back();
+                                                            },
+                                                          ).showDialogue(
+                                                              context);
+                                                        },
+                                                        child: Container(
+                                                          width: 150,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.red,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
                                                               10,
                                                             ),
-                                                            child: Text(
-                                                              "Delete Subject",
-                                                              style: nunitoBold
-                                                                  .copyWith(
-                                                                color:
-                                                                    ColorManager
-                                                                        .white,
-                                                                fontSize: 16,
+                                                          ),
+                                                          child: Center(
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(
+                                                                10,
+                                                              ),
+                                                              child: Text(
+                                                                "Delete Subject",
+                                                                style: nunitoBold
+                                                                    .copyWith(
+                                                                  color:
+                                                                      ColorManager
+                                                                          .white,
+                                                                  fontSize: 16,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
@@ -273,16 +289,24 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                     const SizedBox(
                                                       width: 20,
                                                     ),
-                                                    SizedBox(
-                                                      width: 150,
-                                                      height: 43,
-                                                      child: ElevatedEditButton(
-                                                        onPressed: () =>
-                                                            MyDialogs
-                                                                .showDialog(
-                                                          context,
-                                                          EditSubjectWidget(
-                                                            subject: item,
+                                                    Visibility(
+                                                      visible: Get.find<
+                                                              ProfileController>()
+                                                          .canAccessWidget(
+                                                        widgetId: '7300',
+                                                      ),
+                                                      child: SizedBox(
+                                                        width: 150,
+                                                        height: 43,
+                                                        child:
+                                                            ElevatedEditButton(
+                                                          onPressed: () =>
+                                                              MyDialogs
+                                                                  .showDialog(
+                                                            context,
+                                                            EditSubjectWidget(
+                                                              subject: item,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),

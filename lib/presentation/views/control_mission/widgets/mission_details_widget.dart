@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
+import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 
@@ -200,65 +201,70 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                   // const SizedBox(
                   //   height: 5,
                   // ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            controller.studentsSeatNumbers.isEmpty
-                                ? MyAwesomeDialogue(
-                                    title: 'Error',
-                                    desc: "No students found",
-                                    dialogType: DialogType.error,
-                                  ).showDialogue(Get.key.currentContext!)
-                                : controller.exportToPdf(context,
-                                    controller.studentsSeatNumbersRows);
-                          },
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: ColorManager.red),
-                            child: const Center(
-                                child: Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Text(
-                                      "Export to PDF",
-                                    ))),
+                  Visibility(
+                    visible: Get.find<ProfileController>().canAccessWidget(
+                      widgetId: '2302',
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              controller.studentsSeatNumbers.isEmpty
+                                  ? MyAwesomeDialogue(
+                                      title: 'Error',
+                                      desc: "No students found",
+                                      dialogType: DialogType.error,
+                                    ).showDialogue(Get.key.currentContext!)
+                                  : controller.exportToPdf(context,
+                                      controller.studentsSeatNumbersRows);
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: ColorManager.red),
+                              child: const Center(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        "Export to PDF",
+                                      ))),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            controller.studentsSeatNumbers.isEmpty
-                                ? MyAwesomeDialogue(
-                                    title: 'Error',
-                                    desc: "No students found",
-                                    dialogType: DialogType.error,
-                                  ).showDialogue(Get.key.currentContext!)
-                                : controller.exportToCsv(context,
-                                    controller.studentsSeatNumbersRows);
-                          },
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.green),
-                            child: const Center(
-                                child: Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Text(
-                                      "Export to Excel",
-                                    ))),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              controller.studentsSeatNumbers.isEmpty
+                                  ? MyAwesomeDialogue(
+                                      title: 'Error',
+                                      desc: "No students found",
+                                      dialogType: DialogType.error,
+                                    ).showDialogue(Get.key.currentContext!)
+                                  : controller.exportToCsv(context,
+                                      controller.studentsSeatNumbersRows);
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.green),
+                              child: const Center(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        "Export to Excel",
+                                      ))),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 10,

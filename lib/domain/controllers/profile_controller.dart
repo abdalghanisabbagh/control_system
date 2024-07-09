@@ -8,6 +8,15 @@ import '../../Data/Models/user/login_response/user_profile_model.dart';
 class ProfileController extends GetxController {
   UserProfileModel? _cachedUserProfile;
 
+  bool canAccessWidget({required String widgetId}) {
+    return (cachedUserProfile?.roles
+            ?.map((role) => role.screens
+                ?.map((screen) => screen.frontId)
+                .contains(widgetId))
+            .firstOrNull ??
+        false);
+  }
+
   UserProfileModel? get cachedUserProfile =>
       _cachedUserProfile ?? getProfileFromHiveBox();
 
