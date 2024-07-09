@@ -272,7 +272,6 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                 Text(
                                                   'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
                                                   style: nunitoBold.copyWith(
-                                                    color: ColorManager.white,
                                                     fontSize: 10,
                                                   ),
                                                   maxLines: 1,
@@ -280,21 +279,18 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                 Text(
                                                   'Seat NO: ${controller.availableStudents[i].seatNumber}',
                                                   style: nunitoBold.copyWith(
-                                                    color: ColorManager.white,
                                                     fontSize: 12,
                                                   ),
                                                 ),
                                                 Text(
                                                   'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
                                                   style: nunitoBold.copyWith(
-                                                    color: ColorManager.white,
                                                     fontSize: 12,
                                                   ),
                                                 ),
                                                 Text(
                                                   'Desk NO : ${controller.classDesks.indexWhere((element) => element.id == controller.availableStudents[i].classDeskID) + 1}',
                                                   style: nunitoBold.copyWith(
-                                                    color: ColorManager.white,
                                                     fontSize: 12,
                                                   ),
                                                 ),
@@ -482,8 +478,6 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                           'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.thirdName!} ',
                                                                           style:
                                                                               nunitoBold.copyWith(
-                                                                            color:
-                                                                                ColorManager.white,
                                                                             fontSize:
                                                                                 12,
                                                                           ),
@@ -494,8 +488,6 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                           'Seat NO: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).seatNumber}',
                                                                           style:
                                                                               nunitoBold.copyWith(
-                                                                            color:
-                                                                                ColorManager.white,
                                                                             fontSize:
                                                                                 14,
                                                                           ),
@@ -504,8 +496,6 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                           'Grade : ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
                                                                           style:
                                                                               nunitoBold.copyWith(
-                                                                            color:
-                                                                                ColorManager.white,
                                                                             fontSize:
                                                                                 14,
                                                                           ),
@@ -642,7 +632,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                           ),
                           Expanded(
                             child: ElevatedButton.icon(
-                              onPressed: () {},
+                              onPressed: () {
+                                controller.exportToPdf();
+                              },
                               icon:
                                   const Icon(Icons.print, color: Colors.white),
                               label: const Text('Print'),
