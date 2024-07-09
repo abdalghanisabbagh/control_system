@@ -300,7 +300,11 @@ class StudentController extends GetxController {
         );
       }
     } else {
-      debugPrint('No file selected');
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: 'No file selected',
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
     }
   }
 
