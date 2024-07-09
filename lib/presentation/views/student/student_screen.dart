@@ -383,7 +383,10 @@ class StudentScreen extends GetView<StudentController> {
                                     },
                                   ),
                                 ],
-                                rows: controller.studentsRows,
+                                rows: controller.isImportedPromot ||
+                                        controller.isImportedNew
+                                    ? controller.importedStudentsRows
+                                    : controller.studentsRows,
                                 onChanged: (PlutoGridOnChangedEvent event) {},
                                 onLoaded: (PlutoGridOnLoadedEvent event) {},
                               ),

@@ -53,6 +53,8 @@ class StudentController extends GetxController {
   ValueItem? selectedItemGrade;
   List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
+  List<StudentResModel> importedStudents = <StudentResModel>[];
+  List<PlutoRow> importedStudentsRows = <PlutoRow>[];
   Map<String, bool> errorMap = {};
   bool isImportedNew = false;
   bool isImportedPromot = false;
@@ -352,8 +354,8 @@ class StudentController extends GetxController {
           classesRooms: classesRooms,
           grades: grades,
         );
-        studentsRows = result['rows'];
-        students.assignAll(result['students']);
+        importedStudentsRows.assignAll(result['rows']);
+        importedStudents.assignAll(result['students']);
         hasErrorInGrade = result['errorgrade'];
         hasErrorInCohort = result['errorcohort'];
         hasErrorInClassRoom = result['errorclass'];
@@ -366,8 +368,8 @@ class StudentController extends GetxController {
           classesRooms: classesRooms,
           grades: grades,
         );
-        studentsRows = result['rows'];
-        students.assignAll(result['students']);
+        importedStudentsRows.assignAll(result['rows']);
+        importedStudents.assignAll(result['students']);
         hasErrorInGrade = result['errorgrade'];
         hasErrorInCohort = result['errorcohort'];
         hasErrorInClassRoom = result['errorclass'];
@@ -390,8 +392,11 @@ class StudentController extends GetxController {
     loading = true;
     bool addStudentsHasBeenAdded = false;
     update();
-    List<Map<String, dynamic>> studentData =
-        students.map((student) => student.importStudentByExcel()).toList();
+    List<Map<String, dynamic>> studentData = importedStudents
+        .map((student) => student.importStudentByExcel())
+        .toList();
+
+    print(studentData[0]);
 
     ResponseHandler<void> responseHandler = ResponseHandler();
 
@@ -426,8 +431,9 @@ class StudentController extends GetxController {
     bool updateStudentsHasBeenAdded = false;
     update();
 
-    List<Map<String, dynamic>> studentData =
-        students.map((student) => student.importStudentByExcel()).toList();
+    List<Map<String, dynamic>> studentData = importedStudents
+        .map((student) => student.importStudentByExcel())
+        .toList();
 
     ResponseHandler<void> responseHandler = ResponseHandler();
 

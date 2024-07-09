@@ -1,6 +1,8 @@
 import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
 import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
 import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
+import 'package:control_system/domain/controllers/profile_controller.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class StudentResModel {
@@ -100,20 +102,6 @@ class StudentResModel {
     return data;
   }
 
-  // Map<String, dynamic> imporNewtStudentByExcel() {
-  //   final Map<String, dynamic> data = <String, dynamic>{};
-  //   data['Blb_Id'] = blbId;
-  //   data['Grades_ID'] = gradesID;
-  //   data['Schools_ID'] = schoolsID ?? Hive.box('School').get('Id');
-  //   data['Cohort_ID'] = cohortID;
-  //   data['School_Class_ID'] = schoolClassID;
-  //   data['First_Name'] = firstName;
-  //   data['Second_Name'] = secondName;
-  //   data['Third_Name'] = thirdName;
-  //   data['Created_By'] = createdBy ?? Hive.box('Profile').get('ID');
-  //   data['Second_Lang'] = secondLang;
-  //   return data;
-  // }
 
   Map<String, dynamic> importStudentByExcel() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -126,7 +114,7 @@ class StudentResModel {
     data['First_Name'] = firstName;
     data['Second_Name'] = secondName;
     data['Third_Name'] = thirdName;
-    data['Created_By'] = createdBy ?? Hive.box('Profile').get('ID');
+    data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
     data['Second_Lang'] = secondLang;
     return data;
   }
@@ -152,7 +140,7 @@ class StudentResModel {
           data.containsKey('second_language') ? data['second_language'] : null,
     );
   }
- 
+
   @override
   bool operator ==(covariant StudentResModel other) {
     if (identical(this, other)) return true;
