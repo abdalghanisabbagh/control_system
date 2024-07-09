@@ -7,13 +7,11 @@ import '../../Data/Models/user/login_response/user_profile_model.dart';
 
 class ProfileController extends GetxController {
   UserProfileModel? _cachedUserProfile;
-  UserProfileModel? profileModel;
 
   UserProfileModel? get cachedUserProfile =>
       _cachedUserProfile ?? getProfileFromHiveBox();
 
   void saveProfileToHiveBox(UserProfileModel cachedUserProfile) {
-    profileModel = cachedUserProfile;
     update();
     Hive.box('Profile').put('Profile', jsonEncode(cachedUserProfile.toJson()));
   }
@@ -27,6 +25,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> deleteProfileFromHiveBox() async {
+    _cachedUserProfile = null;
     await Hive.box('Profile').clear();
   }
 }
