@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -16,16 +18,12 @@ class TokenService extends GetxController {
   }
 
   void saveTokenModelToHiveBox(TokenModel tokenModel) {
-    Hive.box('Token').putAll(tokenModel.toJson());
+    Hive.box('Token').put('Token', jsonEncode(tokenModel.toJson()));
   }
 
   TokenModel? getTokenModelFromHiveBox() {
-    _tokenModel = Hive.box('Token').containsKey('aToken')
-        ? TokenModel(
-            aToken: Hive.box('Token').get('aToken'),
-            rToken: Hive.box('Token').get('rToken'),
-            dToken: Hive.box('Token').get('dToken'),
-          )
+    _tokenModel = Hive.box('Token').containsKey('Token')
+        ? TokenModel.fromJson(jsonDecode(Hive.box('Token').get('Token')))
         : null;
     return _tokenModel;
   }
