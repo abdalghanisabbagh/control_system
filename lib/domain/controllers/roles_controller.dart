@@ -13,6 +13,9 @@ import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 class RolesController extends GetxController {
+  // final UserProfileModel? _userProfile =
+  //     Get.find<ProfileController>().cachedUserProfile;
+
   bool getAllLoading = false;
   bool addLoading = false;
   bool connectLoading = false;
@@ -98,7 +101,7 @@ class RolesController extends GetxController {
       body: {
         "Name": name,
         "Front_Id": frontId,
-        // "Created_By": Hive.box('Profile').get('ID'),
+        // "Created_By": _userProfile?.iD,
       },
     );
     response.fold(
@@ -134,7 +137,7 @@ class RolesController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        // "Created_By": Hive.box('Profile').get('ID'),
+        // "Created_By": _userProfile?.iD,
       },
     );
     response.fold(
