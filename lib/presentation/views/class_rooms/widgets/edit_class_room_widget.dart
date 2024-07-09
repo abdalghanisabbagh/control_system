@@ -5,6 +5,7 @@ import '../../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../../domain/controllers/class_room_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_edit_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/color_manager.dart';
@@ -190,8 +191,8 @@ class EditClassRoomWidget extends StatelessWidget {
                   height: 20,
                 ),
                 controller.isLoadingEditClassRoom
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                    ? Center(
+                        child: LoadingIndicators.getLoadingIndicator(),
                       )
                     : Row(
                         children: [

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../domain/controllers/seating_numbers_controllers/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/index.dart';
 
 class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
@@ -27,7 +28,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.isLoading.value
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: LoadingIndicators.getLoadingIndicator())
           : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
@@ -54,8 +55,9 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                       GetBuilder<CreateCoversSheetsController>(
                         builder: (controller) {
                           if (controller.isLoadingGetEducationYear) {
-                            return const Center(
-                                child: CircularProgressIndicator());
+                            return Center(
+                              child: LoadingIndicators.getLoadingIndicator(),
+                            );
                           }
 
                           if (controller.options.isEmpty) {
@@ -78,8 +80,8 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
 //// select Education Year
                       // Obx(() => controller
                       //         .creatMissionController.yearList.isEmpty
-                      //     ? const Center(
-                      //         child: CircularProgressIndicator(),
+                      //     ? Center(
+                      //         child: LoadingIndicators.getLoadingIndicator(),
                       //       )
                       //     : DropdownSearch<YearsResponse>(
                       //         items: controller.creatMissionController.yearList,
@@ -120,8 +122,8 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
 
                       // Obx(
                       //   () => controller.missionsController.missions.isEmpty
-                      //       ? const Center(
-                      //           child: CircularProgressIndicator(),
+                      //       ? Center(
+                      //           child: LoadingIndicators.getLoadingIndicator(),
                       //         )
                       //       : DropdownButtonFormField<MissionObjectResponse>(
                       //           value: controller.selectMission,

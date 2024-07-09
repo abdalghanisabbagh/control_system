@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/font_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
@@ -27,8 +28,8 @@ class AddNewStudentsToExamRoomWidget
       child: GetBuilder<DistributeStudentsController>(
         builder: (_) {
           return controller.isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
+              ? Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
                 )
               : Form(
                   key: _formKey,
@@ -79,8 +80,8 @@ class AddNewStudentsToExamRoomWidget
                       ),
                       Expanded(
                         child: controller.isLoadingStudents
-                            ? const Center(
-                                child: CircularProgressIndicator(),
+                            ? Center(
+                                child: LoadingIndicators.getLoadingIndicator(),
                               )
                             : Row(
                                 mainAxisAlignment:

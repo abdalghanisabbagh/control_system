@@ -152,8 +152,8 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
           //   child: GetBuilder<DetailsAndReviewMissionController>(
           //     builder: (completeMissionsController) =>
           //         completeMissionsController.rows.isEmpty
-          //             ? const Center(
-          //                 child: CircularProgressIndicator(),
+          //             ? Center(
+          //                 child: LoadingIndicators.getLoadingIndicator(),
           //               )
           //             : PlutoGrid(
           //                 configuration: PlutoGridConfiguration(

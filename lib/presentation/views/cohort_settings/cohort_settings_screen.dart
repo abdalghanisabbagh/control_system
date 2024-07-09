@@ -6,6 +6,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 import '../../../Data/Models/cohort/cohort_res_model.dart';
 import '../../../domain/controllers/cohorts_settings_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../resource_manager/assets_manager.dart';
@@ -76,8 +77,8 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: controller.getAllLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(),
+                        ? Center(
+                            child: LoadingIndicators.getLoadingIndicator(),
                           )
                         : controller.cohorts.isEmpty
                             ? Center(

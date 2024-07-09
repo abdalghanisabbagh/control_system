@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../domain/controllers/subject_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
@@ -205,8 +206,8 @@ class AddSubjectWidget extends StatelessWidget {
         GetBuilder<SubjectsController>(
           builder: (controller) {
             return controller.addLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
+                ? Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
                   )
                 : Row(
                     children: [

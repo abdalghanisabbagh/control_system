@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../domain/controllers/school_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
@@ -84,7 +85,9 @@ class GradeSystemWidget extends GetView<SchoolController> {
                       ),
                     ))
                   : controller.isLoadingGrades
-                      ? const Center(child: CircularProgressIndicator())
+                      ? Center(
+                          child: LoadingIndicators.getLoadingIndicator(),
+                        )
                       : controller.grades.isEmpty
                           ? Center(
                               child: Text(

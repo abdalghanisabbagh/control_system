@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../resource_manager/ReusableWidget/header_widget.dart';
+import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/color_manager.dart';
 import '../../resource_manager/styles_manager.dart';
 import '../base_screen.dart';
@@ -71,8 +72,9 @@ class RolesScreen extends GetView<RolesController> {
                             child: GetBuilder<RolesController>(
                                 builder: (controller) {
                               return controller.getAllLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(),
+                                  ? Center(
+                                      child: LoadingIndicators
+                                          .getLoadingIndicator(),
                                     )
                                   : controller.roles.isEmpty
                                       ? const Center(
@@ -155,8 +157,9 @@ class RolesScreen extends GetView<RolesController> {
                             child: GetBuilder<RolesController>(
                                 builder: (controller) {
                               return controller.getAllLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(),
+                                  ? Center(
+                                      child: LoadingIndicators
+                                          .getLoadingIndicator(),
                                     )
                                   : controller.screens.isEmpty
                                       ? const Center(

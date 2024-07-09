@@ -35,8 +35,8 @@ class SeatingScreen extends GetView<CreateCoversSheetsController> {
         ),
 
         //   Obx(() => controller.creatMissionController.yearList.isEmpty
-        //       ? const Center(
-        //           child: CircularProgressIndicator(),
+        //       ? Center(
+        //           child: LoadingIndicators.getLoadingIndicator(),
         //         )
         //       : DropdownSearch<YearsResponse>(
         //           items: controller.creatMissionController.yearList,
@@ -74,9 +74,9 @@ class SeatingScreen extends GetView<CreateCoversSheetsController> {
         //           ? const SizedBox.shrink()
         //           : Obx(
         //               () => controller.missionsController.missionsLoader.value
-        //                   ? const Expanded(
+        //                   ? Expanded(
         //                       child: Center(
-        //                         child: CircularProgressIndicator(),
+        //                         child: LoadingIndicators.getLoadingIndicator(),
         //                       ),
         //                     )
         //                   : controller.missionsController.missions.isEmpty
@@ -217,7 +217,7 @@ class SeatingScreen extends GetView<CreateCoversSheetsController> {
         //     () => controller.missionsController.missions.isEmpty
         //         ? const SizedBox.shrink()
         //         : controller.gradeController.grades.isEmpty
-        //             ? const CircularProgressIndicator()
+        //             ? LoadingIndicators.getLoadingIndicator()
         //             : DropdownSearch<GradeResponse>(
         //                 popupProps: PopupProps.menu(
         //                   searchFieldProps: TextFieldProps(
@@ -268,8 +268,8 @@ class SeatingScreen extends GetView<CreateCoversSheetsController> {
         //             child: Text("No Data"),
         //           )
         //         : controller.isLoading.value
-        //             ? const Center(
-        //                 child: CircularProgressIndicator(),
+        //             ? Center(
+        //                 child: LoadingIndicators.getLoadingIndicator(),
         //               )
         //             : controller.selectMission == null
         //                 ? const Center(

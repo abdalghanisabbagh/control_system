@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../../domain/controllers/auth_controller.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/assets_manager.dart';
@@ -142,7 +143,7 @@ class LoginForm extends GetView<AuthController> {
                               id: 'login_btn',
                               builder: (_) {
                                 return controller.isLoading
-                                    ? const CircularProgressIndicator()
+                                    ? LoadingIndicators.getLoadingIndicator()
                                     : SizedBox(
                                         width: double.infinity,
                                         height: 50,

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../domain/controllers/cohorts_settings_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
@@ -69,7 +70,7 @@ class AddCohortWidget extends StatelessWidget {
               height: 20,
             ),
             controller.addLoading
-                ? const CircularProgressIndicator()
+                ? LoadingIndicators.getLoadingIndicator()
                 : Row(
                     children: [
                       const Expanded(

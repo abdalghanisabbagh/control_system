@@ -7,6 +7,7 @@ import 'package:control_system/presentation/resource_manager/validations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
@@ -36,8 +37,8 @@ class AddNewRolesWidget extends StatelessWidget {
           ),
           GetBuilder<RolesController>(builder: (controller) {
             return controller.addLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
+                ? Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
                   )
                 : Row(
                     children: [
@@ -52,7 +53,8 @@ class AddNewRolesWidget extends StatelessWidget {
                           onPressed: () async {
                             controller
                                 .addNewRoles(
-                                    name: nameController.text,)
+                              name: nameController.text,
+                            )
                                 .then((added) {
                               if (added) {
                                 nameController.clear();

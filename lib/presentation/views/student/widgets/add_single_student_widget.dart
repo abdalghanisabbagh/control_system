@@ -5,6 +5,7 @@ import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../domain/controllers/students_controllers/add_new_student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/index.dart';
@@ -33,7 +34,9 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
           child: GetBuilder<AddNewStudentController>(
             builder: (_) {
               return controller.isLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Center(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    )
                   : Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -225,7 +228,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                         ),
 
                         controller.isLodingAddStudent
-                            ? const CircularProgressIndicator()
+                            ? LoadingIndicators.getLoadingIndicator()
                             : InkWell(
                                 onTap: () {
                                   if (_formKey.currentState!.validate() &&
