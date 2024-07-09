@@ -1,3 +1,5 @@
+import 'package:control_system/domain/controllers/proctor_controller.dart';
+import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 abstract class Validations {
@@ -41,6 +43,15 @@ abstract class Validations {
       return 'Please enter password';
     } else if (!checkPassword(value)) {
       return 'Please enter valid password';
+    }
+    return null;
+  }
+
+  static String? validateConfirmPassword(String? value) {
+    if (value!.isEmpty) {
+      return 'Please confirm password';
+    } else if (value != Get.find<ProctorController>().passwordController.text) {
+      return 'Passwords do not match';
     }
     return null;
   }
