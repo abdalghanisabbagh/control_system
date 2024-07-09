@@ -1,7 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/user/login_response/user_profile_model.dart';
+import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/subject/subject_res_model.dart';
 import '../../Data/Models/subject/subjects_res_model.dart';
@@ -12,8 +13,10 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class SubjectsController extends GetxController {
-  // RxList<SubjectResModel> subjectsController = <SubjectResModel>[].obs;
   bool addLoading = false;
+
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
 
   bool getAllLoading = false;
   List<SubjectResModel> subjects = <SubjectResModel>[];
@@ -68,7 +71,7 @@ class SubjectsController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        "Created_By": Hive.box('Profile').get('ID'),
+        "Created_By": _userProfile?.iD,
         // "title": title,
         // "inExam": inExam,
       },
