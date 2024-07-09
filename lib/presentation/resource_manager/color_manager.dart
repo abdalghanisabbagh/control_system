@@ -67,17 +67,17 @@ class ColorManager {
   static Color yellow = const Color(0xffFFD400);
 
   static Map<String, Color> gradesColor = {
-    'Grade 1': const Color(0xffbcabae),
-    'Grade 2': const Color(0xff716969),
-    'Grade 3': const Color(0xffbc6c25),
-    'Grade 4': const Color(0xffdda15e),
+    'Grade 1': const Color(0xff4eb9e1),
+    'Grade 2': const Color(0xff75f8b4),
+    'Grade 3': const Color(0xffdda15e),
+    'Grade 4': const Color(0xff67d1d0),
     'Grade 5': const Color(0xfffb8500),
-    'Grade 6': const Color(0xffffb703),
-    'Grade 7': const Color(0xff023047),
-    'Grade 8': const Color(0xff001d3d),
-    'Grade 9': const Color(0xff003566),
+    'Grade 6': const Color(0xff66ebab),
+    'Grade 7': const Color(0xfff292a2),
+    'Grade 8': const Color(0xff67efef),
+    'Grade 9': const Color(0xffffb703),
     'Grade 10': const Color(0xffe07a5f),
-    'Grade 11': const Color(0xff184e77),
+    'Grade 11': const Color(0xff95c0ba),
     'Grade 12': const Color(0xff168aad),
   };
 }
