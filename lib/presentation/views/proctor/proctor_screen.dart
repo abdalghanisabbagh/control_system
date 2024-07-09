@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,20 +13,20 @@ import 'widgets/add_new_proctor.dart';
 class ProctorScreen extends GetView<ProctorController> {
   const ProctorScreen({super.key});
 
-  // Future _selectDate(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //       context: context,
-  //       initialDate: controller.selectedDate,
-  //       initialDatePickerMode: DatePickerMode.day,
-  //       firstDate: DateTime(2015),
-  //       lastDate: DateTime(2101));
-  //   if (picked != null) {
-  //     controller.selectedDate = picked;
-  //     controller.onSelectDate();
-  //   }
-  //   controller.dateController.text =
-  //       DateFormat('dd MMMM yyyy').format(controller.selectedDate);
-  // }
+  Future _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        // initialDate: controller.selectedDate,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      // controller.selectedDate = picked;
+      // controller.onSelectDate();
+    }
+    // controller.dateController.text =
+    //     DateFormat('dd MMMM yyyy').format(controller.selectedDate);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,154 +60,109 @@ class ProctorScreen extends GetView<ProctorController> {
                         ],
                       ),
                     ),
-
-                    //// missions / date
-                    // Obx(() => creatMissionController.yearList.isEmpty
-                    //     ? Center(
-                    //         child: LoadingIndicators.getLoadingIndicator(),
-                    //       )
-                    //     : DropdownSearch<YearsResponse>(
-                    //         items: creatMissionController.yearList,
-                    //         itemAsString: (item) => item.year,
-                    //         selectedItem:
-                    //             creatMissionController.selectedyear?.value,
-                    //         dropdownDecoratorProps: DropDownDecoratorProps(
-                    //           dropdownSearchDecoration: InputDecoration(
-                    //               focusedBorder: OutlineInputBorder(
-                    //                   borderSide:
-                    //                       BorderSide(color: ColorManager.glodenColor),
-                    //                   borderRadius: BorderRadius.circular(10)),
-                    //               border: OutlineInputBorder(
-                    //                   borderSide:
-                    //                       BorderSide(color: ColorManager.glodenColor),
-                    //                   borderRadius: BorderRadius.circular(10)),
-                    //               hintText: "Select Education Years",
-                    //               hintStyle:.nunitoRegular.copyWith(
-                    //                   fontSize: 16, color: ColorManager.black)),
-                    //         ),
-                    //         onChanged: ((value) {
-                    //           controller.selectedyear = value;
-                    //           controller.onChangeYear(value!);
-                    //         },),
-                    //       ),),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      // child: Obx(
-                      //   () => controller.mission.missionsLoader.value
-                      //       ? const Center(
-                      //           child: LinearProgressIndicator(),
-                      //         )
-                      //       : controller.mission.missions.isEmpty
-                      //           ? const Center(
-                      //               child: Text("No Missions"),
-                      //             )
-                      //           : Row(
-                      //               children: [
-                      //                 Expanded(
-                      //                   child:
-                      //                       DropdownSearch<MissionObjectResponse>(
-                      //                     popupProps: PopupProps.menu(
-                      //                       searchFieldProps: TextFieldProps(
-                      //                           decoration: InputDecoration(
-                      //                               hintText: "search",
-                      //                               hintStyle:
-                      //                                   .nunitoRegular
-                      //                                   .copyWith(
-                      //                                       fontSize: 16,
-                      //                                       color: ColorManager.black),
-                      //                               focusedBorder: OutlineInputBorder(
-                      //                                   borderSide: BorderSide(
-                      //                                       color: ColorManager.black),
-                      //                                   borderRadius:
-                      //                                       BorderRadius.circular(
-                      //                                           10)),
-                      //                               enabledBorder: OutlineInputBorder(
-                      //                                   borderSide: BorderSide(
-                      //                                       color: ColorManager.black),
-                      //                                   borderRadius:
-                      //                                       BorderRadius.circular(
-                      //                                           10))),
-                      //                           cursorColor: ColorManager.glodenColor),
-                      //                       showSearchBox: true,
-                      //                     ),
-                      //                     items: controller.mission.missions,
-                      //                     itemAsString: (item) => item.name!,
-                      //                     dropdownDecoratorProps:
-                      //                         DropDownDecoratorProps(
-                      //                       dropdownSearchDecoration:
-                      //                           InputDecoration(
-                      //                               focusedBorder:
-                      //                                   OutlineInputBorder(
-                      //                                       borderSide: BorderSide(
-                      //                                           color:
-                      //                                               ColorManager.black),
-                      //                                       borderRadius:
-                      //                                           BorderRadius
-                      //                                               .circular(10),),
-                      //                               border: OutlineInputBorder(
-                      //                                   borderSide: BorderSide(
-                      //                                       color: ColorManager.black),
-                      //                                   borderRadius:
-                      //                                       BorderRadius.circular(
-                      //                                           10),),
-                      //                               hintText: "Select Mission",
-                      //                               hintStyle:
-                      //                                   .nunitoRegular
-                      //                                   .copyWith(
-                      //                                       fontSize: 16,
-                      //                                       color: ColorManager.black)),
-                      //                     ),
-                      //                     onChanged: (value) {
-                      //                       controller.onchangeMission(value);
-                      //                     },
-                      //                     selectedItem: controller.selectedMission,
-                      //                   ),
-                      //                 ),
-                      //                 InkWell(
-                      //                   onTap: () {
-                      //                     _selectDate(context);
-                      //                   },
-                      //                   child: Container(
-                      //                     width: 200,
-                      //                     margin: const EdgeInsets.symmetric(
-                      //                         horizontal: 10),
-                      //                     decoration: BoxDecoration(
-                      //                       border: Border.all(
-                      //                           color: ColorManager.bgSideMenu,
-                      //                           width: 0.5),
-                      //                       borderRadius: const BorderRadius.all(
-                      //                           Radius.circular(15)),
-                      //                     ),
-                      //                     padding: const EdgeInsets.symmetric(
-                      //                         horizontal: 10),
-                      //                     child: TextFormField(
-                      //                       cursorColor: ColorManager.bgSideMenu,
-                      //                       enabled: false,
-                      //                       style:.nunitoRegular
-                      //                           .copyWith(fontSize: 14),
-                      //                       controller: controller.dateController,
-                      //                       decoration: InputDecoration(
-                      //                           suffixIcon: const Icon(
-                      //                             Icons.date_range_outlined,
-                      //                             color: Colors.black,
-                      //                           ),
-                      //                           focusedBorder: InputBorder.none,
-                      //                           enabledBorder: InputBorder.none,
-                      //                           errorBorder: InputBorder.none,
-                      //                           disabledBorder: InputBorder.none,
-                      //                           // hintText:
-                      //                           //     'Example: DD/MM/YYYY',
-                      //                           hintStyle:
-                      //                               .nunitoRegular
-                      //                               .copyWith(
-                      //                             color: ColorManager.black,
-                      //                           )),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      // ),
+                    MultiSelectDropDownView(
+                      hintText: "Select Education Year",
+                      multiSelect: false,
+                      showChipSelect: true,
+                      onOptionSelected: controller.onEducationYearChange,
+                      options: controller.optionsEducationYear,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GetBuilder<ProctorController>(
+                        builder: (_) => controller.controlMissionsAreLoading
+                            ? Center(
+                                child: LoadingIndicators.getLoadingIndicator(),
+                              )
+                            : controller.selectedEducationYearId == null
+                                ? Center(
+                                    child: Text(
+                                      "Please Select Education Year First",
+                                      style: nunitoRegular,
+                                    ),
+                                  )
+                                : controller.controlMissions.isEmpty
+                                    ? Center(
+                                        child: Text(
+                                          "No Missions Created For Selected Education Year",
+                                          style: nunitoRegular,
+                                        ),
+                                      )
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: MultiSelectDropDownView(
+                                              showChipSelect: true,
+                                              searchEnabled: true,
+                                              multiSelect: false,
+                                              options: controller
+                                                  .optionsControlMissions,
+                                              onOptionSelected: controller
+                                                  .onControlMissionsChange,
+                                              hintText:
+                                                  "Select Control Missions",
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              _selectDate(context);
+                                            },
+                                            child: Container(
+                                              width: 200,
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color:
+                                                      ColorManager.bgSideMenu,
+                                                  width: 0.5,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(15),
+                                                ),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                              ),
+                                              child: TextFormField(
+                                                cursorColor:
+                                                    ColorManager.bgSideMenu,
+                                                enabled: false,
+                                                style: nunitoRegular.copyWith(
+                                                  fontSize: 14,
+                                                ),
+                                                // controller:
+                                                //     controller.dateController,
+                                                decoration: InputDecoration(
+                                                  suffixIcon: const Icon(
+                                                    Icons.date_range_outlined,
+                                                    color: Colors.black,
+                                                  ),
+                                                  focusedBorder:
+                                                      InputBorder.none,
+                                                  enabledBorder:
+                                                      InputBorder.none,
+                                                  errorBorder: InputBorder.none,
+                                                  disabledBorder:
+                                                      InputBorder.none,
+                                                  hintText:
+                                                      'Example: DD/MM/YYYY',
+                                                  hintStyle:
+                                                      nunitoRegular.copyWith(
+                                                    color: ColorManager.black,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                      ),
                     ),
 
                     //// rooms / proctors
@@ -301,121 +257,206 @@ class ProctorScreen extends GetView<ProctorController> {
                                               ],
                                             ),
                                           ),
-                                          /*
-                                              const Divider(
-                                                  color: Colors.white,
-                                                  height: 3,
-                                                ),
-                                                Expanded(
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets.all(
-                                                                20),
-                                                        child: Text(
-                                                          "Principals",
-                                                          style:
-                                                              .nunitoBold
-                                                              .copyWith(
-                                                                  fontSize: 20,
-                                                                  color: Colors
-                                                                      .black),
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: ListView.builder(
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          shrinkWrap: true,
-                                                          itemCount: controller
-                                                              .principal.length,
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            var proctor =
-                                                                controller
-                                                                        .principal[
-                                                                    index];
-                                                            return Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: InkWell(
-                                                                onDoubleTap: () {
-                                                                  ProctorExams
-                                                                      .unAssignProctorFromExam(
-                                                                          proctor);
-                                                                },
-                                                                onTap: () {
-                                                                  controller
-                                                                          .selectedProctor =
-                                                                      proctor;
-                                                                  controller
-                                                                      .update();
-                                                                },
-                                                                child: Container(
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: controller
-                                                                                .selectedProctor !=
-                                                                            null
-                                                                        ? controller.selectedProctor!.id ==
-                                                                                proctor
-                                                                                    .id
-                                                                            ? Colors
-                                                                                .white
-                                                                            : Colors
-                                                                                .blueGrey
-                                                                        : Colors
-                                                                            .blueGrey,
-                                                                    borderRadius: const BorderRadius
-                                                                            .all(
-                                                                        Radius.circular(
-                                                                            10)),
-                                                                  ),
-                                                                  child: Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                        horizontal:
-                                                                            8),
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          proctor.userName ??
-                                                                              '',
-                                                                          style:.nunitoBold.copyWith(
-                                                                              color:
-                                                                                  ColorManager.black,
-                                                                              fontSize: 20),
-                                                                        ),
-                                                                        Text(
-                                                                          proctor.isFloorManager ??
-                                                                              '',
-                                                                          style:.nunitoBold.copyWith(
-                                                                              color:
-                                                                                  ColorManager.red,
-                                                                              fontSize: 20),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                             */
+                                          const Divider(
+                                            color: Colors.white,
+                                            height: 3,
+                                          ),
+                                          // Expanded(
+                                          //   child: Column(
+                                          //     children: [
+                                          //       Padding(
+                                          //         padding:
+                                          //             const EdgeInsets.all(20),
+                                          //         child: Text(
+                                          //           "Principals",
+                                          //           style: nunitoBold.copyWith(
+                                          //             fontSize: 20,
+                                          //             color: Colors.black,
+                                          //           ),
+                                          //         ),
+                                          //       ),
+                                          //       Expanded(
+                                          //         child: ListView.builder(
+                                          //           scrollDirection:
+                                          //               Axis.vertical,
+                                          //           shrinkWrap: true,
+                                          //           itemCount: controller
+                                          //               .proctors.length,
+                                          //           itemBuilder:
+                                          //               (context, index) {
+                                          //             return Padding(
+                                          //               padding:
+                                          //                   const EdgeInsets
+                                          //                       .all(8.0),
+                                          //               child: InkWell(
+                                          //                 onDoubleTap: () {
+                                          //                   // ProctorExams
+                                          //                   //     .unAssignProctorFromExam(
+                                          //                   //         proctor);
+                                          //                 },
+                                          //                 onTap: () {
+                                          //                   controller
+                                          //                           .selectedProctor =
+                                          //                       controller
+                                          //                               .proctors[
+                                          //                           index];
+                                          //                   controller.update();
+                                          //                 },
+                                          //                 child: Container(
+                                          //                   decoration:
+                                          //                       BoxDecoration(
+                                          //                     color: controller
+                                          //                                 .selectedProctor !=
+                                          //                             null
+                                          //                         ? controller.selectedProctor
+                                          //                                     ?.iD ==
+                                          //                                 controller
+                                          //                                     .proctors[
+                                          //                                         index]
+                                          //                                     .iD
+                                          //                             ? Colors
+                                          //                                 .white
+                                          //                             : Colors
+                                          //                                 .blueGrey
+                                          //                         : Colors
+                                          //                             .blueGrey,
+                                          //                     borderRadius:
+                                          //                         const BorderRadius
+                                          //                             .all(
+                                          //                       Radius.circular(
+                                          //                         10,
+                                          //                       ),
+                                          //                     ),
+                                          //                   ),
+                                          //                   child: Padding(
+                                          //                     padding:
+                                          //                         const EdgeInsets
+                                          //                             .symmetric(
+                                          //                       horizontal: 8,
+                                          //                     ),
+                                          //                     child: Row(
+                                          //                       mainAxisAlignment:
+                                          //                           MainAxisAlignment
+                                          //                               .spaceBetween,
+                                          //                       children: [
+                                          //                         Text(
+                                          //                           controller
+                                          //                                   .proctors[index]
+                                          //                                   .userName ??
+                                          //                               '',
+                                          //                           style: nunitoBold
+                                          //                               .copyWith(
+                                          //                             color: ColorManager
+                                          //                                 .black,
+                                          //                             fontSize:
+                                          //                                 20,
+                                          //                           ),
+                                          //                         ),
+                                          //                         // Text(
+                                          //                         //   controller.proctors[index].isFloorManager ??
+                                          //                         //       '',
+                                          //                         //   style:nunitoBold.copyWith(
+                                          //                         //       color:
+                                          //                         //           ColorManager.red,
+                                          //                         //       fontSize: 20,),
+                                          //                         // ),
+                                          //                       ],
+                                          //                     ),
+                                          //                   ),
+                                          //                 ),
+                                          //               ),
+                                          //             );
+                                          //           },
+                                          //         ),
+                                          //       ),
+                                          //     ],
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ),
-                                  )
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: GetBuilder<ProctorController>(
+                                      builder: (_) => controller
+                                              .examRoomsAreLoading
+                                          ? Center(
+                                              child: LoadingIndicators
+                                                  .getLoadingIndicator(),
+                                            )
+                                          : controller.examRooms.isEmpty &&
+                                                  controller
+                                                          .selectedControlMissionsId !=
+                                                      null
+                                              ? Center(
+                                                  child: Text(
+                                                    'No exam rooms added yet',
+                                                    style: nunitoBold,
+                                                  ),
+                                                )
+                                              : GridView.builder(
+                                                  shrinkWrap: true,
+                                                  gridDelegate:
+                                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 6,
+                                                    mainAxisSpacing: 5,
+                                                    crossAxisSpacing: 5,
+                                                  ),
+                                                  itemCount: controller
+                                                      .examRooms.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return InkWell(
+                                                      // onTap: () {
+                                                      //   /// get exam missin in this room
+                                                      //   ProctorExams
+                                                      //       .assignProctorToExamByRoomId(
+                                                      //           room
+                                                      //               .id!,
+                                                      //           controller
+                                                      //               .selectedProctor);
+                                                      // },
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors
+                                                              .lightBlueAccent,
+                                                          border: Border.all(
+                                                            color: Colors.blue,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            10,
+                                                          ),
+                                                        ),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Text(
+                                                                  '${controller.examRooms[index].name}'),
+                                                            ),
+                                                            Text(
+                                                              '${controller.examRooms[index].stage}',
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                    ),
+                                  ),
                                 ],
                               ),
                         // child: GetBuilder<Proctor_controller>(
@@ -929,6 +970,8 @@ class ProctorScreen extends GetView<ProctorController> {
                       ),
                     )
                   ],
+                ).paddingSymmetric(
+                  horizontal: 10,
                 );
         },
       ),
