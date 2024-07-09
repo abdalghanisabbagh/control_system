@@ -6,13 +6,18 @@ import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Models/cohort/cohort_res_model.dart';
 import '../../Data/Models/cohort/cohorts_res_model.dart';
+import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'profile_controller.dart';
 
 class CohortsSettingsController extends GetxController {
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
+
   bool addLoading = false;
   List<CohortResModel> cohorts = <CohortResModel>[];
   bool getAllLoading = false;
@@ -59,8 +64,8 @@ class CohortsSettingsController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        "Created_By": Hive.box('Profile').get('ID'),
         "School_Type_ID": Hive.box('School').get('SchoolTypeID'),
+        "Created_By": _userProfile?.iD,
       },
     );
     response.fold(
