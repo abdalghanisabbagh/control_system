@@ -9,8 +9,8 @@ import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 
-class AddNewProctor extends GetView<ProctorController> {
-  const AddNewProctor({super.key});
+class CreateNewProctor extends GetView<ProctorController> {
+  const CreateNewProctor({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,7 @@ class AddNewProctor extends GetView<ProctorController> {
       child: Form(
         key: controller.formKey,
         child: GetBuilder<ProctorController>(
+          id: 'createNewProctor',
           builder: (proctorcontroller) {
             return Column(
               mainAxisSize: MainAxisSize.min,
@@ -58,7 +59,11 @@ class AddNewProctor extends GetView<ProctorController> {
                       onPressed: () {
                         proctorcontroller.showPassord =
                             !proctorcontroller.showPassord;
-                        proctorcontroller.update();
+                        proctorcontroller.update(
+                          [
+                            'createNewProctor',
+                          ],
+                        );
                       },
                     ),
                   ),
@@ -79,7 +84,11 @@ class AddNewProctor extends GetView<ProctorController> {
                       onPressed: () {
                         proctorcontroller.showPassord =
                             !proctorcontroller.showPassord;
-                        proctorcontroller.update();
+                        proctorcontroller.update(
+                          [
+                            'createNewProctor',
+                          ],
+                        );
                       },
                     ),
                     myValidation: Validations.validateConfirmPassword,

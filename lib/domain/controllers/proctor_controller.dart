@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../Data/Models/proctor/proctor_res_model.dart';
+import '../../Data/Models/proctor/proctors_res_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
@@ -12,6 +13,8 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class ProctorController extends GetxController {
+  List<ProctorResModel> proctors = [];
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
@@ -27,7 +30,11 @@ class ProctorController extends GetxController {
   Future<bool> createNewProctor() async {
     bool createdSuccessfully = false;
     isLoading = true;
-    update();
+    update(
+      [
+        'createNewProctor',
+      ],
+    );
     ResponseHandler<ProctorResModel> responseHandler = ResponseHandler();
     Either<Failure, ProctorResModel> response =
         await responseHandler.getResponse(
@@ -42,7 +49,11 @@ class ProctorController extends GetxController {
       },
     );
     isLoading = false;
-    update();
+    update(
+      [
+        'createNewProctor',
+      ],
+    );
     response.fold(
       (l) {
         MyAwesomeDialogue(
@@ -53,10 +64,67 @@ class ProctorController extends GetxController {
         createdSuccessfully = false;
       },
       (r) {
+        getProctors();
         createdSuccessfully = true;
       },
     );
+    update(
+      [
+        'createNewProctor',
+      ],
+    );
+
     return createdSuccessfully;
+  }
+
+  Future<bool> getProctors() async {
+    bool gotData = false;
+    isLoading = true;
+    update(
+      [
+        'proctorEntryScreen',
+      ],
+    );
+    ResponseHandler<ProctorsResModel> responseHandler = ResponseHandler();
+    Either<Failure, ProctorsResModel> response =
+        await responseHandler.getResponse(
+      path: ProctorsLinks.proctor,
+      converter: ProctorsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        proctors = r.data!;
+        gotData = true;
+      },
+    );
+    isLoading = false;
+    update(
+      [
+        'proctorEntryScreen',
+      ],
+    );
+    return gotData;
+  }
+
+  @override
+  void onInit() async {
+    isLoading = true;
+    update();
+    await Future.wait([
+      getProctors(),
+    ]);
+    isLoading = false;
+    update();
+    super.onInit();
   }
 
   @override
