@@ -176,15 +176,17 @@ class AddNewProctor extends GetView<ProctorController> {
                               onPressed: () {
                                 if (controller.formKey.currentState!
                                     .validate()) {
-                                  controller.createNewProctor().then((value) {
-                                    if (value) {
-                                      Get.back();
-                                      MyFlashBar.showSuccess(
-                                              'Proctor has been created successfully',
-                                              'Success')
-                                          .show(Get.key.currentContext!);
-                                    }
-                                  });
+                                  controller.createNewProctor().then(
+                                    (value) {
+                                      if (value) {
+                                        Get.back();
+                                        MyFlashBar.showSuccess(
+                                                'Proctor has been created successfully',
+                                                'Success')
+                                            .show(Get.key.currentContext!);
+                                      }
+                                    },
+                                  );
                                 }
                               },
                             ),
