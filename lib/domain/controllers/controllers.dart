@@ -6,6 +6,7 @@ export 'cohorts_settings_controller.dart';
 export 'control_mission/control_mission.dart';
 export 'dashboard_controller.dart';
 export 'home_controller.dart';
+export 'proctor_controller.dart';
 export 'profile_controller.dart';
 export 'school_controller.dart';
 export 'seating_numbers_controllers/seating_numbers_controllers.dart';

@@ -153,17 +153,22 @@ class CreateControlMissionBindings extends Bindings {
   }
 }
 
-
-
-class RolesBinidings extends Bindings{
-
- @override
+class RolesBinidings extends Bindings {
+  @override
   void dependencies() {
     Get.lazyPut<RolesController>(
       () => RolesController(),
       fenix: true,
     );
   }
+}
 
-  
+class ProctorBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<ProctorController>(
+      () => ProctorController(),
+      fenix: true,
+    );
+  }
 }
