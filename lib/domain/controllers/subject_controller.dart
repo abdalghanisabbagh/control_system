@@ -97,6 +97,48 @@ class SubjectsController extends GetxController {
     return subjectHasBeenAdded;
   }
 
+  Future<bool> editSubject({
+    required int id,
+    required String name,
+    // required String title,
+    // required bool inExam,
+  }) async {
+    addLoading = true;
+    update();
+    bool subjectHasBeenUpdated = false;
+    ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
+    Either<Failure, SubjectResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.subjects}/$id',
+      converter: SubjectResModel.fromJson,
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Name": name,
+        "Created_By": _userProfile?.iD,
+        // "title": title,
+        // "inExam": inExam,
+      },
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        subjectHasBeenUpdated = false;
+      },
+      (r) {
+        getAllSubjects();
+        subjectHasBeenUpdated = true;
+        update();
+      },
+    );
+    addLoading = false;
+    update();
+    return subjectHasBeenUpdated;
+  }
+
   Future<bool> deleteSubject({required int id}) async {
     bool subjectHasBeenDeleted = false;
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();

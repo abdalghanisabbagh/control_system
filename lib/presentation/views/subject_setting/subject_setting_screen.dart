@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_edit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
@@ -12,6 +13,7 @@ import '../../resource_manager/assets_manager.dart';
 import '../../resource_manager/index.dart';
 import '../base_screen.dart';
 import "widgets/add_subject_widget.dart";
+import 'widgets/edit_subject_widget.dart';
 
 class SubjectSettingScreen extends GetView<SubjectsController> {
   const SubjectSettingScreen({super.key});
@@ -113,7 +115,8 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 50),
+                                          vertical: 50,
+                                        ),
                                         child: Container(
                                           height: 250,
                                           width: double.infinity,
@@ -124,8 +127,10 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                     .withOpacity(0.5),
                                                 spreadRadius: 5,
                                                 blurRadius: 20,
-                                                offset: const Offset(2,
-                                                    15), // changes position of shadow
+                                                offset: const Offset(
+                                                  2,
+                                                  15,
+                                                ), // changes position of shadow
                                               ),
                                             ],
                                             color: ColorManager.ligthBlue,
@@ -196,67 +201,92 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                 const SizedBox(
                                                   height: 10,
                                                 ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    MyAwesomeDialogue(
-                                                      title:
-                                                          'You are about to delete this subject',
-                                                      desc: 'Are you sure?',
-                                                      dialogType:
-                                                          DialogType.warning,
-                                                      btnOkOnPressed: () {
-                                                        controller
-                                                            .deleteSubject(
-                                                          id: item.iD!,
-                                                        )
-                                                            .then(
-                                                          (value) {
-                                                            value
-                                                                ? {
-                                                                    MyFlashBar
-                                                                        .showSuccess(
-                                                                      "Subject has been deleted successfully",
-                                                                      "Subject Deleted",
-                                                                    ).show(
-                                                                        context),
-                                                                  }
-                                                                : null;
+                                                Row(
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        MyAwesomeDialogue(
+                                                          title:
+                                                              'You are about to delete this subject',
+                                                          desc: 'Are you sure?',
+                                                          dialogType: DialogType
+                                                              .warning,
+                                                          btnOkOnPressed: () {
+                                                            controller
+                                                                .deleteSubject(
+                                                              id: item.iD!,
+                                                            )
+                                                                .then(
+                                                              (value) {
+                                                                value
+                                                                    ? {
+                                                                        MyFlashBar
+                                                                            .showSuccess(
+                                                                          "Subject has been deleted successfully",
+                                                                          "Subject Deleted",
+                                                                        ).show(
+                                                                            context),
+                                                                      }
+                                                                    : null;
+                                                              },
+                                                            );
                                                           },
-                                                        );
+                                                          btnCancelOnPressed:
+                                                              () {
+                                                            Get.back();
+                                                          },
+                                                        ).showDialogue(context);
                                                       },
-                                                      btnCancelOnPressed: () {
-                                                        Get.back();
-                                                      },
-                                                    ).showDialogue(context);
-                                                  },
-                                                  child: Container(
-                                                    width: 150,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.red,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                        10,
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(
-                                                          10,
+                                                      child: Container(
+                                                        width: 150,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            10,
+                                                          ),
                                                         ),
-                                                        child: Text(
-                                                          "Delete Subject",
-                                                          style: nunitoBold
-                                                              .copyWith(
-                                                            color: ColorManager
-                                                                .white,
-                                                            fontSize: 16,
+                                                        child: Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(
+                                                              10,
+                                                            ),
+                                                            child: Text(
+                                                              "Delete Subject",
+                                                              style: nunitoBold
+                                                                  .copyWith(
+                                                                color:
+                                                                    ColorManager
+                                                                        .white,
+                                                                fontSize: 16,
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
+                                                    const SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 150,
+                                                      height: 43,
+                                                      child: ElevatedEditButton(
+                                                        onPressed: () =>
+                                                            MyDialogs
+                                                                .showDialog(
+                                                          context,
+                                                          EditSubjectWidget(
+                                                            subject: item,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
