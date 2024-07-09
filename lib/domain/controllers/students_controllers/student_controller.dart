@@ -17,6 +17,7 @@ import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/cohort/cohort_res_model.dart';
@@ -25,14 +26,19 @@ import '../../../Data/Models/school/grade_response/grade_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/student/student_res_model.dart';
 import '../../../Data/Models/student/students_res_model.dart';
+import '../../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../app/extensions/pluto_row_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../profile_controller.dart';
 
 class StudentController extends GetxController {
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
+
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<CohortResModel> cohorts = <CohortResModel>[];
   List<GradeResModel> grades = <GradeResModel>[];
@@ -237,7 +243,6 @@ class StudentController extends GetxController {
     update();
     bool editStudentHasBeenAdded = false;
     int schoolId = Hive.box('School').get('Id');
-    int createdBy = Hive.box('Profile').get('ID');
 
     ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
 
@@ -253,7 +258,7 @@ class StudentController extends GetxController {
           "First_Name": firstName,
           "Second_Name": secondName,
           "Third_Name": thirdName,
-          "Created_By": createdBy,
+          "Created_By": _userProfile?.iD,
           "Second_Lang": secondLang,
         });
 
