@@ -432,7 +432,7 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
-  Future<void> autoGenerateSimple() async {
+  void autoGenerateSimple() {
     for (int i = 0; i < availableStudents.length; i++) {
       if (availableStudents[i].classDeskID == null) {
         availableStudents[i].classDeskID = availableStudents[i].classDeskID =
@@ -447,7 +447,7 @@ class DistributeStudentsController extends GetxController {
     update();
 
     ResponseHandler responseHandler = ResponseHandler();
-    await responseHandler.getResponse(
+    responseHandler.getResponse(
       path: '${StudentsLinks.studentSeatNumbers}/many',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
