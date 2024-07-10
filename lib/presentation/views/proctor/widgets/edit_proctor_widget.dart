@@ -1,0 +1,228 @@
+import 'package:control_system/Data/Models/proctor/proctor_res_model.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_edit_button.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../../domain/controllers/proctor_controller.dart';
+import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
+import '../../../resource_manager/validations.dart';
+
+class EditProctorWidget extends GetView<ProctorController> {
+  const EditProctorWidget({super.key, required this.proctor});
+
+  final ProctorResModel proctor;
+
+  @override
+  Widget build(BuildContext context) {
+    controller.fullNameController.text = proctor.fullName ?? '';
+    controller.usernameController.text = proctor.userName ?? '';
+    controller.passwordController.text = proctor.password ?? '';
+    controller.confirmPasswordController.text = proctor.password ?? '';
+    // controller.nisIdController.text = proctor.nisId ?? '';
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Form(
+        key: controller.formKey,
+        child: GetBuilder<ProctorController>(
+          id: 'updateProctor',
+          builder: (proctorcontroller) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "Proctor Full Name",
+                    controller: proctorcontroller.fullNameController,
+                    myValidation: Validations.requiredValidator,
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "Username",
+                    controller: proctorcontroller.usernameController,
+                    myValidation: Validations.requiredValidator,
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "Password",
+                    controller: proctorcontroller.passwordController,
+                    myValidation: Validations.requiredValidator,
+                    obscureText: proctorcontroller.showPassord,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        proctorcontroller.showPassord
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        proctorcontroller.showPassord =
+                            !proctorcontroller.showPassord;
+                        proctorcontroller.update(
+                          [
+                            'updateProctor',
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "Confirm Password",
+                    controller: proctorcontroller.confirmPasswordController,
+                    obscureText: proctorcontroller.showPassord,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        proctorcontroller.showPassord
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        proctorcontroller.showPassord =
+                            !proctorcontroller.showPassord;
+                        proctorcontroller.update(
+                          [
+                            'updateProctor',
+                          ],
+                        );
+                      },
+                    ),
+                    myValidation: Validations.validateConfirmPassword,
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "NIS Id",
+                    controller: proctorcontroller.nisIdController,
+                    myValidation: Validations.requiredValidator,
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                /*    SizedBox(
+                  width: 450,
+                  child: TextFormField(
+                    controller: proctorcontroller.nationController,
+                    decoration: InputDecoration(
+                      labelText: 'National Id',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a National Id';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+            
+                GetBuilder<Proctor_controller>(builder: (context) {
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          const Text('Floor Manager :'),
+                          Switch(
+                              value: proctorcontroller.isFloorManager,
+                              activeColor: ColorManager.glodenColor,
+                              onChanged: (newValue) {
+                                proctorcontroller.isFloorManager = newValue;
+                                proctorcontroller.update();
+                              }),
+                        ],
+                      ),
+                      if (proctorcontroller.isFloorManager)
+                        SizedBox(
+                          width: 450,
+                          child: DropdownSearch<String>(
+                            items: proctorcontroller.mission.roomType,
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: ColorManager.glodenColor),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: ColorManager.glodenColor),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: "Select Stage",
+                                  hintStyle: AppTextStyle.nunitoRegular.copyWith(
+                                      fontSize: 16, color: ColorManager.black)),
+                            ),
+                            onChanged: (value) {
+                              proctorcontroller.roomTypePrincepl = value;
+                            },
+                          ),
+                        ),
+                    ],
+                  );
+                }),
+                */
+                const SizedBox(height: 16.0),
+                controller.isLoading
+                    ? Center(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      )
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedBackButton(
+                              onPressed: () {
+                                controller.fullNameController.clear();
+                                controller.usernameController.clear();
+                                controller.passwordController.clear();
+                                controller.confirmPasswordController.clear();
+                                controller.nisIdController.clear();
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 16.0),
+                          Expanded(
+                            child: ElevatedEditButton(
+                              onPressed: () {
+                                if (controller.formKey.currentState!
+                                    .validate()) {
+                                  controller.editProctor(proctor.iD!).then(
+                                    (value) {
+                                      if (value) {
+                                        Get.back();
+                                        MyFlashBar.showSuccess(
+                                                'Proctor has been updated successfully',
+                                                'Success')
+                                            .show(Get.key.currentContext!);
+                                      }
+                                    },
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

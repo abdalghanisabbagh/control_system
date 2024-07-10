@@ -218,7 +218,11 @@ class ProctorController extends GetxController {
   Future<bool> getProctors() async {
     bool gotData = false;
     isLoading = true;
-    update();
+    update(
+      [
+        'proctors',
+      ],
+    );
     ResponseHandler<ProctorsResModel> responseHandler = ResponseHandler();
     Either<Failure, ProctorsResModel> response =
         await responseHandler.getResponse(
@@ -241,8 +245,60 @@ class ProctorController extends GetxController {
       },
     );
     isLoading = false;
-    update();
+    update(
+      [
+        'proctors',
+      ],
+    );
     return gotData;
+  }
+
+  Future<bool> editProctor(int proctorId) async {
+    bool editedSuccessfully = false;
+    isLoading = true;
+    update(
+      [
+        'updateProctor',
+      ],
+    );
+    ResponseHandler<ProctorResModel> responseHandler = ResponseHandler();
+    Either<Failure, ProctorResModel> response =
+        await responseHandler.getResponse(
+      path: "${ProctorsLinks.proctor}/$proctorId",
+      converter: ProctorResModel.fromJson,
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Full_Name": fullNameController.text,
+        "User_Name": usernameController.text,
+        "Password": passwordController.text,
+      },
+    );
+    isLoading = false;
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        editedSuccessfully = false;
+      },
+      (r) {
+        getProctors();
+        editedSuccessfully = true;
+      },
+    );
+    fullNameController.clear();
+    usernameController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    nisIdController.clear();
+    update(
+      [
+        'updateProctor',
+      ],
+    );
+    return editedSuccessfully;
   }
 
   @override

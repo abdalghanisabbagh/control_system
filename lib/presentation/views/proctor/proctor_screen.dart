@@ -1,5 +1,6 @@
 import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
+import 'package:control_system/presentation/views/proctor/widgets/edit_proctor_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -206,53 +207,71 @@ class ProctorScreen extends GetView<ProctorController> {
                                                     ),
                                                   ),
                                                 ),
-                                                Expanded(
-                                                  child: ListView.builder(
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    shrinkWrap: true,
-                                                    itemCount: controller
-                                                        .proctors.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: ColorManager
-                                                                .ligthBlue,
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                10,
+                                                GetBuilder<ProctorController>(
+                                                  id: 'proctors',
+                                                  builder: (context) {
+                                                    return Expanded(
+                                                      child: ListView.builder(
+                                                        scrollDirection:
+                                                            Axis.vertical,
+                                                        shrinkWrap: true,
+                                                        itemCount: controller
+                                                            .proctors.length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return InkWell(
+                                                            onDoubleTap: () {
+                                                              MyDialogs
+                                                                  .showDialog(
+                                                                context,
+                                                                EditProctorWidget(
+                                                                  proctor: controller
+                                                                          .proctors[
+                                                                      index],
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: ColorManager
+                                                                      .ligthBlue,
+                                                                  borderRadius:
+                                                                      const BorderRadius
+                                                                          .all(
+                                                                    Radius
+                                                                        .circular(
+                                                                      10,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                      horizontal:
+                                                                          8),
+                                                                  child: Text(
+                                                                    '${index + 1} - ${controller.proctors[index].userName}',
+                                                                    style: nunitoBold
+                                                                        .copyWith(
+                                                                      color: ColorManager
+                                                                          .black,
+                                                                      fontSize:
+                                                                          20,
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    horizontal:
-                                                                        8),
-                                                            child: Text(
-                                                              '${index + 1} - ${controller.proctors[index].userName}',
-                                                              style: nunitoBold
-                                                                  .copyWith(
-                                                                color:
-                                                                    ColorManager
-                                                                        .black,
-                                                                fontSize: 20,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               ],
                                             ),
