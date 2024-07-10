@@ -191,6 +191,12 @@ class ProctorController extends GetxController {
       ],
     );
 
+    fullNameController.clear();
+    usernameController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    nisIdController.clear();
+
     return createdSuccessfully;
   }
 
@@ -288,16 +294,16 @@ class ProctorController extends GetxController {
         editedSuccessfully = true;
       },
     );
-    fullNameController.clear();
-    usernameController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
-    nisIdController.clear();
     update(
       [
         'updateProctor',
       ],
     );
+    fullNameController.clear();
+    usernameController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    nisIdController.clear();
     return editedSuccessfully;
   }
 
