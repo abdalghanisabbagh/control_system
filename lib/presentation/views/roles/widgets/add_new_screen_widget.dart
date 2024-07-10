@@ -13,8 +13,10 @@ import '../../../resource_manager/validations.dart';
 
 class AddNewScreenWidget extends StatelessWidget {
   AddNewScreenWidget({super.key});
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController screenIdController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(

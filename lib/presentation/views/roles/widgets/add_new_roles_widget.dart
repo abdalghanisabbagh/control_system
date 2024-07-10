@@ -13,7 +13,9 @@ import '../../../resource_manager/validations.dart';
 
 class AddNewRolesWidget extends StatelessWidget {
   AddNewRolesWidget({super.key});
+
   final TextEditingController nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(

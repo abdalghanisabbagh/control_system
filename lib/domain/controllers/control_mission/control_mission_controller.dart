@@ -15,16 +15,20 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class ControlMissionController extends GetxController {
-  List<EducationYearModel> educationYearList = [];
-
-  List<ValueItem>? selectedEducationYear;
-  bool isLoading = false;
-  bool isLodingGetEducationYears = false;
-  bool isLodingGetClassesRooms = false;
-
-  List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
+  List<EducationYearModel> educationYearList = [];
+  bool isLoading = false;
+  bool isLodingGetClassesRooms = false;
+  bool isLodingGetEducationYears = false;
+  List<ValueItem> optionsEducationYear = <ValueItem>[];
+  List<ValueItem>? selectedEducationYear;
   ValueItem? selectedItemEducationYear;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    getEducationYears();
+  }
 
   // Future<void> getExamRoomByControlMissionId(int controlMissionId) async {
   //   isLodingGetClassesRooms = true;
@@ -131,11 +135,5 @@ class ControlMissionController extends GetxController {
     int educationYearId = selectedItemEducationYear!.value;
     getControlMissionByEducationYear(educationYearId);
     update();
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    getEducationYears();
   }
 }

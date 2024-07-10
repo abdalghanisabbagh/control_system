@@ -21,33 +21,19 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class CreateCoversSheetsController extends GetxController {
-  final int schoolId = Hive.box('School').get('Id');
-
+  List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
   TextEditingController dateController = TextEditingController();
   TextEditingController examFinalDegreeController = TextEditingController();
-
-  ValueItem? selectedItemEducationYear;
-  ValueItem? selectedItemControlMission;
-  ValueItem? selectedItemGrade;
-  ValueItem? selectedItemSubject;
-  ValueItem? selectedIExamDuration;
-
-  bool isLoadingGetControlMission = false;
-  bool isLodingGetSubject = false;
-  bool isLoadingGrades = false;
-  bool is2Version = false;
-  bool isLoadingGetEducationYear = false;
-  bool isNight = false;
-  bool isLodingAddExamMission = false;
-
-  List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
   List<GradeResModel> gradesList = <GradeResModel>[];
-  List<SubjectResModel> subjectsList = <SubjectResModel>[];
-  List<ValueItem> optionsEducationYear = <ValueItem>[];
+  bool is2Version = false;
+  bool isLoadingGetControlMission = false;
+  bool isLoadingGetEducationYear = false;
+  bool isLoadingGrades = false;
+  bool isLodingAddExamMission = false;
+  bool isLodingGetSubject = false;
+  bool isNight = false;
   List<ValueItem> optionsControlMission = <ValueItem>[];
-  List<ValueItem> optionsGrades = <ValueItem>[];
-  List<ValueItem> optionsSubjects = <ValueItem>[];
-
+  List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
     const ValueItem(value: 25, label: '25 Mins'),
@@ -64,11 +50,19 @@ class CreateCoversSheetsController extends GetxController {
     const ValueItem(value: 150, label: '150 Mins')
   ];
 
+  List<ValueItem> optionsGrades = <ValueItem>[];
+  List<ValueItem> optionsSubjects = <ValueItem>[];
+  final int schoolId = Hive.box('School').get('Id');
   DateTime selectedDate = DateTime.now();
-
   String? selectedDay;
+  ValueItem? selectedIExamDuration;
+  ValueItem? selectedItemControlMission;
+  ValueItem? selectedItemEducationYear;
+  ValueItem? selectedItemGrade;
+  ValueItem? selectedItemSubject;
   String? selectedMonth;
   String? selectedYear;
+  List<SubjectResModel> subjectsList = <SubjectResModel>[];
 
   @override
   void onInit() {

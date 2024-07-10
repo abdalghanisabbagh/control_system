@@ -7,9 +7,10 @@ import '../../../resource_manager/index.dart';
 
 // ignore: must_be_immutable
 class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
+  ReviewWidget({super.key});
+
   FocusNode searchFoucs = FocusNode();
 
-  ReviewWidget({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(

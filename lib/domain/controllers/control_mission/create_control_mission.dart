@@ -23,34 +23,42 @@ import '../../../app/extensions/pluto_row_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class CreateControlMissionController extends GetxController {
-  PlutoGridStateManager? includedStudentsStateManager;
-  PlutoGridStateManager? excludedStudentsStateManager;
-
-  bool isLoading = false;
-
-  List<EducationYearModel> educationYearList = [];
-  List<ValueItem>? selectedEducationYear;
-  List<ValueItem> optionsEducationYear = <ValueItem>[];
-
   String? batchName;
-  String? selectedStartDate;
-  String? selectedEndDate;
-  int currentStep = 0;
-  int controlMissionId = -1;
-  bool isLodingGetEducationYears = false;
-
-  List<GradeResModel> grades = [];
-  List<ValueItem> optionsGrades = [];
-  List<int> selectedGradesIds = [];
-  List<int> includedStudentsIds = [];
-
   List<ClassRoomResModel> classesRooms = [];
-
   List<CohortResModel> cohorts = [];
-
-  List<StudentResModel> students = [];
-  List<PlutoRow> includedStudentsRows = [];
+  int controlMissionId = -1;
+  int currentStep = 0;
+  List<EducationYearModel> educationYearList = [];
   List<PlutoRow> excludedStudentsRows = [];
+  PlutoGridStateManager? excludedStudentsStateManager;
+  List<GradeResModel> grades = [];
+  List<int> includedStudentsIds = [];
+  List<PlutoRow> includedStudentsRows = [];
+  PlutoGridStateManager? includedStudentsStateManager;
+  bool isLoading = false;
+  bool isLodingGetEducationYears = false;
+  List<ValueItem> optionsEducationYear = <ValueItem>[];
+  List<ValueItem> optionsGrades = [];
+  List<ValueItem>? selectedEducationYear;
+  String? selectedEndDate;
+  List<int> selectedGradesIds = [];
+  String? selectedStartDate;
+  List<StudentResModel> students = [];
+
+  @override
+  void onInit() async {
+    super.onInit();
+    isLoading = true;
+    update();
+    await Future.wait([
+      getEducationYears(),
+      getGrades(),
+    ]).then((_) async {
+      getStudents();
+    });
+    isLoading = false;
+    update();
+  }
 
   Future<bool> getGrades() async {
     bool gotData = false;
@@ -296,20 +304,5 @@ class CreateControlMissionController extends GetxController {
     isLoading = false;
     update();
     return success;
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    isLoading = true;
-    update();
-    await Future.wait([
-      getEducationYears(),
-      getGrades(),
-    ]).then((_) async {
-      getStudents();
-    });
-    isLoading = false;
-    update();
   }
 }

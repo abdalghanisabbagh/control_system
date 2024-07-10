@@ -16,9 +16,6 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'profile_controller.dart';
 
 class ClassRoomController extends GetxController {
-  final UserProfileModel? _userProfile =
-      Get.find<ProfileController>().cachedUserProfile;
-
   List<int> classSeats = [];
   List<ClassRoomResModel> classesRooms = [];
   int count = 1;
@@ -27,6 +24,9 @@ class ClassRoomController extends GetxController {
   bool isLoadingEditClassRoom = false;
   int numbers = 0;
   List<SchoolResModel> schools = <SchoolResModel>[];
+
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
 
   @override
   void onInit() async {

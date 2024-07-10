@@ -15,17 +15,27 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class DistributionController extends GetxController {
-  List<ExamRoomResModel> listExamRoom = [];
-  bool isLodingGetExamRooms = false;
+  int controlMissionId = 0;
+  String controlMissionName = '';
   bool isLoadingDeleteClassRoom = false;
-  bool isLodingGetStageAndClassRoom = false;
   bool isLodingAddExamRoom = false;
+  bool isLodingGetExamRooms = false;
+  bool isLodingGetStageAndClassRoom = false;
+  List<ExamRoomResModel> listExamRoom = [];
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsStage = <ValueItem>[];
   ValueItem? selectedItemClassRoom;
   ValueItem? selectedItemStage;
-  String controlMissionName = '';
-  int controlMissionId = 0;
+
+  @override
+  void onInit() async {
+    super.onInit();
+    await Future.wait([
+      getControlMissionId(),
+      getControlMissionName(),
+    ]);
+    getExamRoomByControlMissionId();
+  }
 
   Future<void> saveControlMissionId(int id) async {
     controlMissionId = id;
@@ -234,15 +244,5 @@ class DistributionController extends GetxController {
 
     update();
     return addExamRoomHasBeenAdded;
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    await Future.wait([
-      getControlMissionId(),
-      getControlMissionName(),
-    ]);
-    getExamRoomByControlMissionId();
   }
 }

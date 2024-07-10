@@ -15,13 +15,13 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'profile_controller.dart';
 
 class CohortsSettingsController extends GetxController {
-  final UserProfileModel? _userProfile =
-      Get.find<ProfileController>().cachedUserProfile;
-
   bool addLoading = false;
   List<CohortResModel> cohorts = <CohortResModel>[];
   bool getAllLoading = false;
   List<int> selectedSubjectsIds = <int>[];
+
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
 
   @override
   void onInit() {

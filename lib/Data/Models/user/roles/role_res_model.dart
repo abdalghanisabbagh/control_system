@@ -1,10 +1,6 @@
 import '../screens/screen_res_model.dart';
 
 class RoleResModel {
-  String name;
-  int id;
-  List<ScreenResModel>? screens = [];
-
   RoleResModel({
     required this.id,
     required this.name,
@@ -19,6 +15,11 @@ class RoleResModel {
                 .map((x) => ScreenResModel.fromJson(x['screens'] ?? x)))
             : null,
       );
+
+  int id;
+  String name;
+  List<ScreenResModel>? screens = [];
+
   toJson() => {
         "ID": id,
         "Name": name,

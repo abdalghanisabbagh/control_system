@@ -16,9 +16,9 @@ import '../../../resource_manager/validations.dart';
 
 class RemoveStudentsFromExamRoomWidget
     extends GetView<DistributeStudentsController> {
-  final _formKey = GlobalKey<FormState>();
-
   RemoveStudentsFromExamRoomWidget({super.key});
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

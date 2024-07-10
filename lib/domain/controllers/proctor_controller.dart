@@ -21,34 +21,59 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'profile_controller.dart';
 
 class ProctorController extends GetxController {
-  final int schoolId = Hive.box('School').get('Id');
-
-  List<ProctorResModel> proctors = [];
-  ProctorResModel? selectedProctor;
-
-  List<EducationYearModel> educationYears = [];
-  List<ValueItem> optionsEducationYear = [];
-  int? selectedEducationYearId;
-
-  List<ControlMissionResModel> controlMissions = [];
-  List<ValueItem> optionsControlMissions = [];
-  int? selectedControlMissionsId;
-
-  List<ExamRoomResModel> examRooms = [];
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-  final TextEditingController nisIdController = TextEditingController();
 
-  bool showPassord = true;
-
-  bool isLoading = false;
+  List<ControlMissionResModel> controlMissions = [];
   bool controlMissionsAreLoading = false;
+  List<EducationYearModel> educationYears = [];
+  List<ExamRoomResModel> examRooms = [];
   bool examRoomsAreLoading = false;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController fullNameController = TextEditingController();
+  bool isLoading = false;
+  final TextEditingController nisIdController = TextEditingController();
+  List<ValueItem> optionsControlMissions = [];
+  List<ValueItem> optionsEducationYear = [];
+  final TextEditingController passwordController = TextEditingController();
+  List<ProctorResModel> proctors = [];
+  final int schoolId = Hive.box('School').get('Id');
+  int? selectedControlMissionsId;
+  int? selectedEducationYearId;
+  ProctorResModel? selectedProctor;
+  bool showPassord = true;
+  final TextEditingController usernameController = TextEditingController();
+
+  @override
+  void onClose() {
+    fullNameController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nisIdController.dispose();
+    super.onClose();
+  }
+
+  @override
+  void onInit() async {
+    isLoading = true;
+    update(
+      [
+        'proctorEntryScreen',
+      ],
+    );
+    await Future.wait([
+      getProctors(),
+      getEducationYears(),
+    ]);
+    isLoading = false;
+    update(
+      [
+        'proctorEntryScreen',
+      ],
+    );
+    super.onInit();
+  }
 
   Future<void> getExamRoomByControlMissionId() async {
     examRoomsAreLoading = true;
@@ -305,36 +330,5 @@ class ProctorController extends GetxController {
     confirmPasswordController.clear();
     nisIdController.clear();
     return editedSuccessfully;
-  }
-
-  @override
-  void onInit() async {
-    isLoading = true;
-    update(
-      [
-        'proctorEntryScreen',
-      ],
-    );
-    await Future.wait([
-      getProctors(),
-      getEducationYears(),
-    ]);
-    isLoading = false;
-    update(
-      [
-        'proctorEntryScreen',
-      ],
-    );
-    super.onInit();
-  }
-
-  @override
-  void onClose() {
-    fullNameController.dispose();
-    usernameController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    nisIdController.dispose();
-    super.onClose();
   }
 }

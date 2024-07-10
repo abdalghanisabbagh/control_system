@@ -1,14 +1,4 @@
 class ProctorResModel {
-  int? iD;
-  String? fullName;
-  String? userName;
-  String? password;
-  String? active;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  String? updatedAt;
-
   ProctorResModel({
     this.iD,
     this.fullName,
@@ -32,6 +22,16 @@ class ProctorResModel {
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
   }
+
+  String? active;
+  String? createdAt;
+  int? createdBy;
+  String? fullName;
+  int? iD;
+  String? password;
+  String? updatedAt;
+  int? updatedBy;
+  String? userName;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

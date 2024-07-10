@@ -20,119 +20,9 @@ import '../../../resource_manager/validations.dart';
 class CreateMissionScreen extends GetView<CreateControlMissionController> {
   CreateMissionScreen({super.key});
 
-  final _formKey = GlobalKey<FormState>();
   final TextEditingController missionNameController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: RepaintBoundary(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: GetBuilder<CreateControlMissionController>(
-            builder: (controller) => controller.isLoading
-                ? Center(
-                    child: LoadingIndicators.getLoadingIndicator(),
-                  )
-                : Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: RepaintBoundary(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            MyBackButton(
-                              onPressed: () {
-                                controller.batchName = null;
-                                controller.selectedEducationYear = null;
-                                controller.currentStep = 0;
-                                controller.selectedStartDate = null;
-                                controller.selectedEndDate = null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            EnhanceStepper(
-                              type: StepperType.vertical,
-                              currentStep: controller.currentStep,
-                              onStepContinue: () => controller.currentStep == 0
-                                  ? {
-                                      controller.addControlMission().then(
-                                        (value) async {
-                                          if (value) {
-                                            controller.currentStep = 1;
-                                            MyFlashBar.showSuccess(
-                                              'Student seat numbers created successfully',
-                                              'Success',
-                                            ).show(context);
-                                            await Future.delayed(
-                                              const Duration(seconds: 2),
-                                            );
-                                          } else {
-                                            MyFlashBar.showError(
-                                              'Failed to create mission',
-                                              'Error',
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    }
-                                  : controller.currentStep == 1
-                                      ? {
-                                          controller
-                                              .createStudentSeatNumbers()
-                                              .then(
-                                            (value) async {
-                                              if (value) {
-                                                controller.currentStep = 0;
-                                                controller.batchName = null;
-                                                controller
-                                                        .selectedEducationYear =
-                                                    null;
-                                                controller.selectedStartDate =
-                                                    null;
-                                                controller.selectedEndDate =
-                                                    null;
-                                                MyFlashBar.showSuccess(
-                                                  'Mission created successfully',
-                                                  'Success',
-                                                ).show(context);
-                                                await Future.delayed(
-                                                  const Duration(seconds: 2),
-                                                );
-                                                window.history.back();
-                                              } else {
-                                                MyFlashBar.showError(
-                                                  'Failed to create mission',
-                                                  'Error',
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        }
-                                      : controller.canMoveToNextStep()
-                                          ? controller.continueToNextStep()
-                                          : null,
-                              onStepCancel: () =>
-                                  controller.backToPreviousStep(),
-                              steps: [
-                                _firstStep(context),
-                                _secondStep(context),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ).paddingSymmetric(horizontal: 20),
-                  ),
-          ),
-        ),
-      ),
-    );
-  }
+  final _formKey = GlobalKey<FormState>();
 
   EnhanceStep _firstStep(BuildContext context) {
     return EnhanceStep(
@@ -648,6 +538,117 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: RepaintBoundary(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: GetBuilder<CreateControlMissionController>(
+            builder: (controller) => controller.isLoading
+                ? Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  )
+                : Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: RepaintBoundary(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            MyBackButton(
+                              onPressed: () {
+                                controller.batchName = null;
+                                controller.selectedEducationYear = null;
+                                controller.currentStep = 0;
+                                controller.selectedStartDate = null;
+                                controller.selectedEndDate = null;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            EnhanceStepper(
+                              type: StepperType.vertical,
+                              currentStep: controller.currentStep,
+                              onStepContinue: () => controller.currentStep == 0
+                                  ? {
+                                      controller.addControlMission().then(
+                                        (value) async {
+                                          if (value) {
+                                            controller.currentStep = 1;
+                                            MyFlashBar.showSuccess(
+                                              'Student seat numbers created successfully',
+                                              'Success',
+                                            ).show(context);
+                                            await Future.delayed(
+                                              const Duration(seconds: 2),
+                                            );
+                                          } else {
+                                            MyFlashBar.showError(
+                                              'Failed to create mission',
+                                              'Error',
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    }
+                                  : controller.currentStep == 1
+                                      ? {
+                                          controller
+                                              .createStudentSeatNumbers()
+                                              .then(
+                                            (value) async {
+                                              if (value) {
+                                                controller.currentStep = 0;
+                                                controller.batchName = null;
+                                                controller
+                                                        .selectedEducationYear =
+                                                    null;
+                                                controller.selectedStartDate =
+                                                    null;
+                                                controller.selectedEndDate =
+                                                    null;
+                                                MyFlashBar.showSuccess(
+                                                  'Mission created successfully',
+                                                  'Success',
+                                                ).show(context);
+                                                await Future.delayed(
+                                                  const Duration(seconds: 2),
+                                                );
+                                                window.history.back();
+                                              } else {
+                                                MyFlashBar.showError(
+                                                  'Failed to create mission',
+                                                  'Error',
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        }
+                                      : controller.canMoveToNextStep()
+                                          ? controller.continueToNextStep()
+                                          : null,
+                              onStepCancel: () =>
+                                  controller.backToPreviousStep(),
+                              steps: [
+                                _firstStep(context),
+                                _secondStep(context),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ).paddingSymmetric(horizontal: 20),
+                  ),
+          ),
         ),
       ),
     );

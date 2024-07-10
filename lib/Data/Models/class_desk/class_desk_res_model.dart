@@ -13,8 +13,8 @@ class ClassDeskResModel {
     rowNum = json['Row_Num'];
   }
 
-  int? id;
   int? cloumnNum;
+  int? id;
   int? rowNum;
   int? schoolClassID;
 

@@ -24,20 +24,22 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class DetailsAndReviewMissionController extends GetxController {
-  String controlMissionName = '';
   int controlMissionId = 0;
+  String controlMissionName = '';
   bool isLodingGetExamRooms = false;
   bool isLodingGetStudentsSeatNumbers = false;
   List<ExamRoomResModel> listExamRoom = [];
-  List<StudentSeatNumberResModel> studentsSeatNumbers =
-      <StudentSeatNumberResModel>[];
-  List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
-
-  TabController? tabController;
   final List<Tab> myTabs = const <Tab>[
     Tab(text: 'Mission Details'),
     Tab(text: 'Review Students Grades'),
   ];
+
+  List<StudentSeatNumberResModel> studentsSeatNumbers =
+      <StudentSeatNumberResModel>[];
+
+  List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
+  TabController? tabController;
+
   @override
   void onInit() async {
     super.onInit();

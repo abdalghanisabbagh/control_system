@@ -14,12 +14,11 @@ import 'profile_controller.dart';
 
 class SubjectsController extends GetxController {
   bool addLoading = false;
+  bool getAllLoading = false;
+  List<SubjectResModel> subjects = <SubjectResModel>[];
 
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
-
-  bool getAllLoading = false;
-  List<SubjectResModel> subjects = <SubjectResModel>[];
 
   @override
   void onInit() {

@@ -30,28 +30,39 @@ import '../../../presentation/resource_manager/assets_manager.dart';
 import '../../../presentation/resource_manager/color_manager.dart';
 
 class DistributeStudentsController extends GetxController {
-  ExamRoomResModel examRoomResModel = ExamRoomResModel();
-
-  TextEditingController numberOfStudentsController = TextEditingController();
-  int availableStudentsCount = 0;
-
-  int numberOrRows = 0;
-
-  List<StudentSeatNumberResModel> studentsSeatNumbers = [];
   List<StudentSeatNumberResModel> availableStudents = [];
-  List<StudentSeatNumberResModel> removedStudentsFromExamRoom = [];
-  List<ClassDeskResModel> classDesks = [];
+  int availableStudentsCount = 0;
   Map<int?, List<ClassDeskResModel>> classDeskCollection = {};
-  List<GradeResModel> grades = [];
-
+  List<ClassDeskResModel> classDesks = [];
   Map<String, int> countByGrade = {};
-
-  List<ValueItem> optionsGrades = [];
-  List<ValueItem> optionsGradesInExamRoom = [];
-  int selectedItemGradeId = -1;
-
+  ExamRoomResModel examRoomResModel = ExamRoomResModel();
+  List<GradeResModel> grades = [];
   bool isLoading = false;
   bool isLoadingStudents = false;
+  TextEditingController numberOfStudentsController = TextEditingController();
+  int numberOrRows = 0;
+  List<ValueItem> optionsGrades = [];
+  List<ValueItem> optionsGradesInExamRoom = [];
+  List<StudentSeatNumberResModel> removedStudentsFromExamRoom = [];
+  int selectedItemGradeId = -1;
+  List<StudentSeatNumberResModel> studentsSeatNumbers = [];
+
+  @override
+  void onInit() async {
+    super.onInit();
+    isLoading = true;
+    update();
+    await Future.wait([
+      getExamRoom().then((_) async => getGradesBySchoolId()).then((_) async {
+        await Future.wait([
+          getStudentsSeatNumbers(),
+          getClassDesks(),
+        ]);
+      }),
+    ]);
+    isLoading = false;
+    update();
+  }
 
   Future<void> saveExamRoom(ExamRoomResModel examRoomResModel) async {
     this.examRoomResModel = examRoomResModel;
@@ -806,22 +817,5 @@ class DistributeStudentsController extends GetxController {
     numberOfStudentsController.clear();
     update();
     return;
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    isLoading = true;
-    update();
-    await Future.wait([
-      getExamRoom().then((_) async => getGradesBySchoolId()).then((_) async {
-        await Future.wait([
-          getStudentsSeatNumbers(),
-          getClassDesks(),
-        ]);
-      }),
-    ]);
-    isLoading = false;
-    update();
   }
 }

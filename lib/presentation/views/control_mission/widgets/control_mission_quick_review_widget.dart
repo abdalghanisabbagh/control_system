@@ -7,10 +7,10 @@ import '../../../resource_manager/index.dart';
 
 class ControlMissionQuickReviewWidget
     extends GetView<ControlMissionController> {
-  final ControlMissionResModel controlMission;
-
   const ControlMissionQuickReviewWidget(
       {super.key, required this.controlMission});
+
+  final ControlMissionResModel controlMission;
 
   @override
   Widget build(BuildContext context) {
