@@ -107,7 +107,7 @@ class ProctorController extends GetxController {
     update();
   }
 
-  Future<void> getControlMissionByEducationYear() async {
+  Future<void> getControlMissionByEducationYearId() async {
     controlMissionsAreLoading = true;
     update();
     ResponseHandler<ControlMissionsResModel> responseHandler =
@@ -205,7 +205,7 @@ class ProctorController extends GetxController {
   void onEducationYearChange(List<ValueItem<dynamic>> selectedOptions) {
     selectedEducationYearId = selectedOptions.firstOrNull?.value;
     selectedEducationYearId != null
-        ? getControlMissionByEducationYear()
+        ? getControlMissionByEducationYearId()
         : {
             selectedControlMissionsId = null,
             examRooms = [],
