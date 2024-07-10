@@ -1,54 +1,126 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
-
+import '../../../Data/Models/control_mission/control_mission_model.dart';
+import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
+import '../../../Data/Models/school/grade_response/grade_res_model.dart';
+import '../../../Data/Models/school/grade_response/grades_res_model.dart';
+import '../../../Data/Models/subject/subject_res_model.dart';
+import '../../../Data/Models/subject/subjects_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../profile_controller.dart';
 
 class CreateCoversSheetsController extends GetxController {
-  String atoken = '';
-  TextEditingController dateController = TextEditingController();
-  List<int> examDurations = [
-    15,
-    25,
-    45,
-    60,
-    70,
-    75,
-    85,
-    90,
-    100,
-    105,
-    120,
-    130,
-    150
-  ];
+  final int schoolId = Hive.box('School').get('Id');
 
+  TextEditingController dateController = TextEditingController();
   TextEditingController examFinalDegreeController = TextEditingController();
-  TextEditingController examTimeController = TextEditingController();
+
+  ValueItem? selectedItemEducationYear;
+  ValueItem? selectedItemControlMission;
+  ValueItem? selectedItemGrade;
+  ValueItem? selectedItemSubject;
+  ValueItem? selectedIExamDuration;
+
+  bool isLoadingGetControlMission = false;
+  bool isLodingGetSubject = false;
+  bool isLoadingGrades = false;
   bool is2Version = false;
-  RxBool isLoading = false.obs;
   bool isLoadingGetEducationYear = false;
   bool isNight = false;
-  List<ValueItem> options = <ValueItem>[];
+  bool isLodingAddExamMission = false;
+
+  List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
+  List<GradeResModel> gradesList = <GradeResModel>[];
+  List<SubjectResModel> subjectsList = <SubjectResModel>[];
+  List<ValueItem> optionsEducationYear = <ValueItem>[];
+  List<ValueItem> optionsControlMission = <ValueItem>[];
+  List<ValueItem> optionsGrades = <ValueItem>[];
+  List<ValueItem> optionsSubjects = <ValueItem>[];
+
+  List<ValueItem> optionsExamDurations = [
+    const ValueItem(value: 15, label: '15 Mins'),
+    const ValueItem(value: 25, label: '25 Mins'),
+    const ValueItem(value: 45, label: '45 Mins'),
+    const ValueItem(value: 60, label: '60 Mins'),
+    const ValueItem(value: 70, label: '70 Mins'),
+    const ValueItem(value: 75, label: '75 Mins'),
+    const ValueItem(value: 85, label: '85 Mins'),
+    const ValueItem(value: 90, label: '90 Mins'),
+    const ValueItem(value: 100, label: '100 Mins'),
+    const ValueItem(value: 105, label: '105 Mins'),
+    const ValueItem(value: 120, label: '120 Mins'),
+    const ValueItem(value: 130, label: '130 Mins'),
+    const ValueItem(value: 150, label: '150 Mins')
+  ];
+
   DateTime selectedDate = DateTime.now();
+
+  String? selectedDay;
+  String? selectedMonth;
+  String? selectedYear;
 
   @override
   void onInit() {
     super.onInit();
     geteducationyear();
+    getGradesBySchoolId();
+    getAllSubjects();
   }
 
-  Future<bool> geteducationyear() async {
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      initialDatePickerMode: DatePickerMode.day,
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      selectedDate = picked;
+      selectedDay = picked.day.toString();
+      selectedMonth = picked.month.toString();
+      selectedYear = picked.year.toString();
+      dateController.text = DateFormat('dd MMMM yyyy').format(selectedDate);
+    }
+  }
+
+  void setSelectedItemEducationYear(List<ValueItem> items) {
+    selectedItemEducationYear = items.first;
+    int educationYearId = selectedItemEducationYear!.value;
+    getControlMissionByEducationYearAndBySchool(educationYearId);
+    update();
+  }
+
+  void setSelectedItemControlMission(List<ValueItem> items) {
+    selectedItemControlMission = items.first;
+    update();
+  }
+
+  void setSelectedItemGrade(List<ValueItem> items) {
+    selectedItemGrade = items.first;
+    update();
+  }
+
+  void setSelectedItemSubject(List<ValueItem> items) {
+    selectedItemSubject = items.first;
+    // int controlMissionId = selectedItemEducationYear!.value;
+    update();
+  }
+
+  Future<void> geteducationyear() async {
     isLoadingGetEducationYear = true;
     update();
-    bool getEducationYear = false;
     ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
     Either<Failure, EducationsYearsModel> response =
         await responseHandler.getResponse(
@@ -63,19 +135,184 @@ class CreateCoversSheetsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        getEducationYear = false;
       },
       (r) {
         List<ValueItem> items = r.data!
             .map((item) => ValueItem(label: item.name!, value: item.id))
             .toList();
-        options = items;
+        optionsEducationYear = items;
       },
     );
-    getEducationYear = true;
 
     isLoadingGetEducationYear = false;
     update();
-    return getEducationYear;
+  }
+
+  Future<void> getControlMissionByEducationYearAndBySchool(
+      int educationYearId) async {
+    isLoadingGetControlMission = true;
+
+    update();
+
+    ResponseHandler<ControlMissionsResModel> responseHandler =
+        ResponseHandler();
+    Either<Failure, ControlMissionsResModel> response =
+        await responseHandler.getResponse(
+      path:
+          "${ControlMissionLinks.controlMissionSchool}/$schoolId/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
+      converter: ControlMissionsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        controlMissionList = r.data!;
+        optionsControlMission.assignAll(
+          controlMissionList.map(
+            (e) => ValueItem(
+              label: e.name!,
+              value: e.iD,
+            ),
+          ),
+        );
+      },
+    );
+    isLoadingGetControlMission = false;
+    update();
+  }
+
+  Future<void> getGradesBySchoolId() async {
+    isLoadingGrades = true;
+
+    update();
+    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      converter: GradesResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }, (result) {
+      gradesList = result.data!;
+      optionsGrades.assignAll(
+        gradesList.map(
+          (e) => ValueItem(
+            label: e.name!,
+            value: e.iD,
+          ),
+        ),
+      );
+
+      update();
+    });
+    isLoadingGrades = false;
+  }
+
+  Future<void> getAllSubjects() async {
+    isLodingGetSubject = true;
+
+    update();
+    ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
+    Either<Failure, SubjectsResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.subjects,
+      converter: SubjectsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        isLodingGetSubject = false;
+        update();
+      },
+      (r) {
+        subjectsList = r.data!;
+        optionsSubjects.assignAll(
+          subjectsList.map(
+            (e) => ValueItem(
+              label: e.name!,
+              value: e.iD,
+            ),
+          ),
+        );
+
+        isLodingGetSubject = false;
+        update();
+      },
+    );
+  }
+
+  Future<bool> addNewExamMission({
+    required int subjectId,
+    required int controlMissionId,
+    required int gradeId,
+    required int educationyearId,
+    required String year,
+    required String month,
+    required String finalDegree,
+  }) async {
+    isLodingAddExamMission = true;
+
+    update();
+    bool addExamMissionHasBeenAdded = false;
+    ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
+
+    ExamMissionResModel examMissionResModel = ExamMissionResModel(
+        subjectsID: subjectId,
+        controlMissionID: controlMissionId,
+        gradesID: gradeId,
+        educationYearID: educationyearId,
+        year: year,
+        month: month,
+        finalDegree: finalDegree,
+        createdBy: Get.find<ProfileController>().cachedUserProfile?.iD);
+
+    var response = await responseHandler.getResponse(
+        path: ExamLinks.examMission,
+        converter: ExamMissionResModel.fromJson,
+        type: ReqTypeEnum.POST,
+        body: {
+          "Created_By":Get.find<ProfileController>().cachedUserProfile?.iD ,
+          "Subjects_ID": subjectId,
+          "Control_Mission_ID":  controlMissionId,
+          "grades_ID": gradeId,
+          "education_year_ID": educationyearId,
+          "Month": month,
+          "Year": year,
+        
+        });
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      addExamMissionHasBeenAdded = false;
+    }, (result) {
+      //  studentController.getStudents();
+      addExamMissionHasBeenAdded = true;
+    });
+    isLodingAddExamMission = false;
+
+    update();
+    return addExamMissionHasBeenAdded;
   }
 }

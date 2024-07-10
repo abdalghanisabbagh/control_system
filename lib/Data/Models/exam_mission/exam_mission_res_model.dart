@@ -1,3 +1,7 @@
+import 'package:get/get.dart';
+
+import '../../../domain/controllers/profile_controller.dart';
+
 class ExamMissionResModel {
   int? iD;
   int? subjectsID;
@@ -65,7 +69,7 @@ class ExamMissionResModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['ID'] = iD;
+    if (iD != null) data['ID'] = iD;
     data['Subjects_ID'] = subjectsID;
     data['Control_Mission_ID'] = controlMissionID;
     data['grades_ID'] = gradesID;
@@ -79,7 +83,7 @@ class ExamMissionResModel {
     data['end_time'] = endTime;
     data['pdf'] = pdf;
     data['pdf_V2'] = pdfV2;
-    data['Created_By'] = createdBy;
+    data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
     data['Created_At'] = createdAt;
     data['Updated_By'] = updatedBy;
     data['Updated_At'] = updatedAt;

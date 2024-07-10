@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../../domain/controllers/seating_numbers_controllers/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/index.dart';
 import 'add_new_cover_widget.dart';
 
@@ -40,7 +42,7 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
                     // Get.defaultDialog(
                     //     title: "Add New Cover",
                     //     content: const AddNewCoverWidget());
-                    MyDialogs.showDialog(context, const AddNewCoverWidget());
+                    MyDialogs.showDialog(context,  AddNewCoverWidget());
                   },
                   tooltip: "Add New Cover",
                   icon: const Icon(
@@ -51,6 +53,27 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
               ),
             ),
           ],
+        ),
+        GetBuilder<CreateCoversSheetsController>(
+          builder: (controller) {
+            if (controller.isLoadingGetEducationYear) {
+              return Center(
+                child: LoadingIndicators.getLoadingIndicator(),
+              );
+            }
+
+            if (controller.optionsEducationYear.isEmpty) {
+              return const Text('No items available');
+            }
+
+            return MultiSelectDropDownView(
+              hintText: "Select Education Year",
+              onOptionSelected: (selectedItem) {
+                controller.setSelectedItemEducationYear(selectedItem);
+              },
+              options: controller.optionsEducationYear,
+            );
+          },
         ),
       ],
     );

@@ -1,406 +1,456 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../domain/controllers/seating_numbers_controllers/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/index.dart';
+import '../../../resource_manager/validations.dart';
 
 class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
-  const AddNewCoverWidget({super.key});
-
-  Future _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: controller.selectedDate,
-        initialDatePickerMode: DatePickerMode.day,
-        firstDate: DateTime(2015),
-        lastDate: DateTime(2101));
-    if (picked != null) {
-      controller.selectedDate = picked;
-    }
-    controller.dateController.text =
-        DateFormat('dd MMMM yyyy').format(controller.selectedDate);
-  }
+  AddNewCoverWidget({super.key});
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => controller.isLoading.value
-          ? Center(child: LoadingIndicators.getLoadingIndicator())
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: AlignmentDirectional.topEnd,
+            child: IconButton(
+              alignment: AlignmentDirectional.topEnd,
+              color: Colors.black,
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: IconButton(
-                    alignment: AlignmentDirectional.topEnd,
-                    color: Colors.black,
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Form(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GetBuilder<CreateCoversSheetsController>(
-                        builder: (controller) {
+                FormField<List<ValueItem<dynamic>>>(
+                    validator: Validations.multiSelectDropDownRequiredValidator,
+                    builder: (formFieldState) {
+                      return GetBuilder<CreateCoversSheetsController>(
+                        builder: (_) {
                           if (controller.isLoadingGetEducationYear) {
                             return Center(
-                              child: LoadingIndicators.getLoadingIndicator(),
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: FittedBox(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                ),
+                              ),
                             );
                           }
 
-                          if (controller.options.isEmpty) {
+                          if (controller.optionsEducationYear.isEmpty) {
                             return const Text('No items available');
                           }
 
-                          return SizedBox(
-                            width: 500,
-                            child: MultiSelectDropDownView(
-                              hintText: "Select Education Year",
-                              onOptionSelected: (selectedItem) {
-                                //  controller.setSelectedItem(selectedItem[0]);
-                              },
-                              showChipSelect: true,
-                              options: controller.options,
-                            ),
-                          );
-                        },
-                      ),
-//// select Education Year
-                      // Obx(() => controller
-                      //         .creatMissionController.yearList.isEmpty
-                      //     ? Center(
-                      //         child: LoadingIndicators.getLoadingIndicator(),
-                      //       )
-                      //     : DropdownSearch<YearsResponse>(
-                      //         items: controller.creatMissionController.yearList,
-                      //         itemAsString: (item) => item.year,
-                      //         selectedItem: controller.creatMissionController
-                      //                     .selectedyear !=
-                      //                 null
-                      //             ? controller.creatMissionController
-                      //                 .selectedyear!.value
-                      //             : null,
-                      //         dropdownDecoratorProps: DropDownDecoratorProps(
-                      //           dropdownSearchDecoration: InputDecoration(
-                      //               focusedBorder: OutlineInputBorder(
-                      //                   borderSide: BorderSide(
-                      //                       color: ColorManager.glodenColor),
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(10)),
-                      //               border: OutlineInputBorder(
-                      //                   borderSide: BorderSide(
-                      //                       color: ColorManager.glodenColor),
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(10)),
-                      //               hintText: "Select Education Years",
-                      //               hintStyle: nunitoBoldStyle().copyWith(
-                      //                   fontSize: 30,
-                      //                   color: ColorManager.bgSideMenu)),
-                      //         ),
-                      //         onChanged: ((value) {
-                      //           controller.selectedyear = value;
-                      //           controller.onChangeYear(value!);
-                      //         }),
-                      //       )),
-
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      // mission
-
-                      // Obx(
-                      //   () => controller.missionsController.missions.isEmpty
-                      //       ? Center(
-                      //           child: LoadingIndicators.getLoadingIndicator(),
-                      //         )
-                      //       : DropdownButtonFormField<MissionObjectResponse>(
-                      //           value: controller.selectMission,
-                      //           decoration: InputDecoration(
-                      //               focusedBorder: OutlineInputBorder(
-                      //                   borderRadius: BorderRadius.circular(8)),
-                      //               enabledBorder: OutlineInputBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(8))),
-                      //           hint: Text("Select Mission",
-                      //               style: AppTextStyle.nunitoRegular.copyWith(
-                      //                 color: ColorManager.black,
-                      //               )),
-                      //           items: controller.missionsController.missions
-                      //               .map((MissionObjectResponse selected) {
-                      //             return DropdownMenuItem(
-                      //                 value: selected,
-                      //                 child: Row(
-                      //                   children: [
-                      //                     Text(selected.name!),
-                      //                   ],
-                      //                 ));
-                      //           }).toList(),
-                      //           onChanged: (v) {
-                      //             controller.selectMission = v!;
-                      //             // controller.getExamRooms(
-                      //             //     controller.selectMission!.id!);
-                      //           }),
-                      // ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                      // Grades
-                      // DropdownButtonFormField<GradeResponse>(
-                      //     value: controller.selectedGrade,
-                      //     decoration: InputDecoration(
-                      //         focusedBorder: OutlineInputBorder(
-                      //             borderRadius: BorderRadius.circular(8)),
-                      //         enabledBorder: OutlineInputBorder(
-                      //             borderRadius: BorderRadius.circular(8))),
-                      //     hint: Text("Select grade",
-                      //         style: nunitoBoldStyle().copyWith(
-                      //             fontSize: 30,
-                      //             color: ColorManager.bgSideMenu)),
-                      //     items: controller.gradeController.grades
-                      //         .map((GradeResponse selected) {
-                      //       return DropdownMenuItem(
-                      //           value: selected,
-                      //           child: Row(
-                      //             children: [
-                      //               Text(selected.name),
-                      //             ],
-                      //           ));
-                      //     }).toList(),
-                      //     onChanged: (v) {
-                      //       //   controller.selectedGrade = v!;
-                      //     }),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      // subject
-                      // DropdownButtonFormField<SubjectResponse>(
-                      //     value: controller.selectedSubject,
-                      //     decoration: InputDecoration(
-                      //         focusedBorder: OutlineInputBorder(
-                      //             borderRadius: BorderRadius.circular(8)),
-                      //         enabledBorder: OutlineInputBorder(
-                      //             borderRadius: BorderRadius.circular(8))),
-                      //     hint: Text("Select subject",
-                      //         style: nunitoBoldStyle().copyWith(
-                      //             fontSize: 30,
-                      //             color: ColorManager.bgSideMenu)),
-                      //     items: controller.subjectController.subjects
-                      //         .map((SubjectResponse category) {
-                      //       return DropdownMenuItem(
-                      //           value: category,
-                      //           child: Row(
-                      //             children: [
-                      //               Text(category.name),
-                      //             ],
-                      //           ));
-                      //     }).toList(),
-                      //     onChanged: (v) {
-                      //       //  controller.selectedSubject = v!;
-                      //     }),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Exam Date:', style: nunitoRegularStyle()),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          GetBuilder<CreateCoversSheetsController>(
-                              builder: (controller) {
-                            return DropdownButtonFormField<int>(
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8)),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 500,
+                                child: MultiSelectDropDownView(
+                                  hintText: "Select Education Year",
+                                  onOptionSelected: (selectedItem) {
+                                    controller.selectedItemEducationYear =
+                                        selectedItem.isNotEmpty
+                                            ? selectedItem.first
+                                            : null;
+                                    controller.setSelectedItemEducationYear(
+                                        selectedItem);
+                                    formFieldState.didChange(selectedItem);
+                                    controller.update();
+                                  },
+                                  options: controller.optionsEducationYear,
+                                ),
+                              ),
+                              if (formFieldState.hasError)
+                                Text(
+                                  formFieldState.errorText!,
+                                  style: nunitoRegular.copyWith(
+                                    fontSize: FontSize.s14,
+                                    color: ColorManager.error,
                                   ),
                                 ),
-                                hint: Text("Exam Duration",
-                                    style: nunitoRegularStyle()),
-                                value:
-                                    controller.examTimeController.text.isEmpty
-                                        ? null
-                                        : int.parse(controller
-                                            .examTimeController.text
-                                            .split(' ')[0]),
-                                items: controller.examDurations
-                                    .map((item) => DropdownMenuItem<int>(
-                                          value: item,
-                                          child: Text(
-                                            '$item Mins',
-                                            style: nunitoRegularStyle(),
-                                          ),
-                                        ))
-                                    .toList(),
-                                onChanged: (newValue) {
-                                  controller.examTimeController.text =
-                                      '$newValue Mins';
-                                  controller.update();
-                                });
-                          }),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              _selectDate(context);
-                            },
-                            child: Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: ColorManager.bgSideMenu, width: 0.5),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15)),
+                            ],
+                          );
+                        },
+                      );
+                    }),
+                const SizedBox(
+                  height: 10,
+                ),
+                FormField<List<ValueItem<dynamic>>>(
+                    validator: Validations.multiSelectDropDownRequiredValidator,
+                    builder: (formFieldState) {
+                      return GetBuilder<CreateCoversSheetsController>(
+                        builder: (_) {
+                          if (controller.isLoadingGrades) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: FittedBox(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                ),
                               ),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: TextFormField(
-                                cursorColor: ColorManager.bgSideMenu,
-                                enabled: false,
-                                style: nunitoRegularStyle(),
-                                controller: controller.dateController,
-                                decoration: InputDecoration(
-                                    suffixIcon: const Icon(
-                                      Icons.date_range_outlined,
-                                      color: Colors.black,
-                                    ),
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    hintText: 'Example: DD/MM/YYYY',
-                                    hintStyle: nunitoRegularStyle()),
+                            );
+                          }
+
+                          if (controller.optionsGrades.isEmpty) {
+                            return const Text('No items available');
+                          }
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 500,
+                                child: MultiSelectDropDownView(
+                                  hintText: "Select Grade",
+                                  onOptionSelected: (selectedItem) {
+                                    controller.selectedItemGrade =
+                                        selectedItem.isNotEmpty
+                                            ? selectedItem.first
+                                            : null;
+                                    formFieldState.didChange(selectedItem);
+                                  },
+                                  options: controller.optionsGrades,
+                                ),
                               ),
+                              if (formFieldState.hasError)
+                                Text(
+                                  formFieldState.errorText!,
+                                  style: nunitoRegular.copyWith(
+                                    fontSize: FontSize.s14,
+                                    color: ColorManager.error,
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                      );
+                    }),
+                const SizedBox(height: 10),
+                FormField<List<ValueItem<dynamic>>>(
+                    validator: Validations.multiSelectDropDownRequiredValidator,
+                    builder: (formFieldState) {
+                      return GetBuilder<CreateCoversSheetsController>(
+                        builder: (_) {
+                          if (controller.isLodingGetSubject) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: FittedBox(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                ),
+                              ),
+                            );
+                          }
+
+                          if (controller.optionsSubjects.isEmpty) {
+                            return const Text('No items available');
+                          }
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 500,
+                                child: MultiSelectDropDownView(
+                                  hintText: "Select Subject",
+                                  onOptionSelected: (selectedItem) {
+                                    controller.selectedItemSubject =
+                                        selectedItem.isNotEmpty
+                                            ? selectedItem.first
+                                            : null;
+                                    formFieldState.didChange(selectedItem);
+                                  },
+                                  options: controller.optionsSubjects,
+                                ),
+                              ),
+                              if (formFieldState.hasError)
+                                Text(
+                                  formFieldState.errorText!,
+                                  style: nunitoRegular.copyWith(
+                                    fontSize: FontSize.s14,
+                                    color: ColorManager.error,
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                      );
+                    }),
+                const SizedBox(height: 10),
+                FormField<List<ValueItem<dynamic>>>(
+                    validator: Validations.multiSelectDropDownRequiredValidator,
+                    builder: (formFieldState) {
+                      return GetBuilder<CreateCoversSheetsController>(
+                        builder: (_) {
+                          if (controller.isLoadingGetControlMission) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: FittedBox(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                ),
+                              ),
+                            );
+                          }
+
+                          if (controller.optionsControlMission.isEmpty) {
+                            return const Text('No items available');
+                          }
+                          if (controller.selectedItemEducationYear == null) {
+                            return const SizedBox.shrink();
+                          }
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 500,
+                                child: MultiSelectDropDownView(
+                                  hintText: "Select Control Mission",
+                                  onOptionSelected: (selectedItem) {
+                                    controller.selectedItemControlMission =
+                                        selectedItem.isNotEmpty
+                                            ? selectedItem.first
+                                            : null;
+                                    formFieldState.didChange(selectedItem);
+                                  },
+                                  options: controller.optionsControlMission,
+                                ),
+                              ),
+                              if (formFieldState.hasError)
+                                Text(
+                                  formFieldState.errorText!,
+                                  style: nunitoRegular.copyWith(
+                                    fontSize: FontSize.s14,
+                                    color: ColorManager.error,
+                                  ),
+                                ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }),
+                Text('Exam Date:', style: nunitoRegularStyle()),
+                const SizedBox(
+                  height: 5,
+                ),
+                FormField<List<ValueItem<dynamic>>>(
+                    validator: Validations.multiSelectDropDownRequiredValidator,
+                    builder: (formFieldState) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 500,
+                            child: MultiSelectDropDownView(
+                              hintText: "Select Exam Date",
+                              onOptionSelected: (selectedItem) {
+                                controller.selectedIExamDuration =
+                                    selectedItem.isNotEmpty
+                                        ? selectedItem.first
+                                        : null;
+                                formFieldState.didChange(selectedItem);
+                              },
+                              options: controller.optionsExamDurations,
                             ),
                           ),
+                          if (formFieldState.hasError)
+                            Text(
+                              formFieldState.errorText!,
+                              style: nunitoRegular.copyWith(
+                                fontSize: FontSize.s14,
+                                color: ColorManager.error,
+                              ),
+                            ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                         ],
-                      ),
-
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        controller: controller.examFinalDegreeController
-                          ..text = "100",
-                        style: nunitoRegularStyle(),
-                        enabled: false,
-                        decoration: InputDecoration(
-                          label: Text("Exam Final Grade",
-                              style: nunitoRegularStyle()),
+                      );
+                    }),
+                const SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () {
+                    controller.selectDate(context);
+                  },
+                  child: TextFormField(
+                    validator: Validations.requiredValidator,
+                    cursorColor: ColorManager.bgSideMenu,
+                    enabled: false,
+                    style: nunitoRegularStyle(),
+                    controller: controller.dateController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: ColorManager.bgSideMenu,
+                          width: 20,
+                          style: BorderStyle.solid,
                         ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
                       ),
-                      const SizedBox(
-                        height: 20,
+                      suffixIcon: const Icon(
+                        Icons.date_range_outlined,
+                        color: Colors.black,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Exams Versions :", style: nunitoRegularStyle()),
-                          GetBuilder<CreateCoversSheetsController>(
-                              builder: (controller) {
-                            return Row(
-                              children: [
-                                Text(
-                                  '1 Version',
-                                  style: TextStyle(
-                                      color: !controller.is2Version
-                                          ? Colors.black
-                                          : Colors.grey),
-                                ),
-                                Switch.adaptive(
-                                    value: controller.is2Version,
-                                    onChanged: (newValue) {
-                                      controller.is2Version = newValue;
-                                      controller.update();
-                                    }),
-                                Text(
-                                  '2 Versions',
-                                  style: TextStyle(
-                                      color: controller.is2Version
-                                          ? Colors.black
-                                          : Colors.grey),
-                                ),
-                              ],
-                            );
-                          }),
-                        ],
-                      ),
-
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Exams Period :", style: nunitoRegularStyle()),
-                          GetBuilder<CreateCoversSheetsController>(
-                              builder: (controller) {
-                            return Row(
-                              children: [
-                                Text(
-                                  'Session One Exams',
-                                  style: TextStyle(
-                                      color: !controller.isNight
-                                          ? Colors.black
-                                          : Colors.grey),
-                                ),
-                                Switch.adaptive(
-                                    value: controller.isNight,
-                                    onChanged: (newValue) {
-                                      controller.isNight = newValue;
-                                      controller.update();
-                                    }),
-                                Text(
-                                  'Session Two Exams',
-                                  style: TextStyle(
-                                      color: controller.isNight
-                                          ? Colors.black
-                                          : Colors.grey),
-                                ),
-                              ],
-                            );
-                          }),
-                        ],
-                      ),
-
-                      InkWell(
-                        onTap: () {
-                          //      controller.saveCoverSheet();
-                        },
-                        child: Container(
-                            height: 50,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: ColorManager.bgSideMenu,
-                                borderRadius: BorderRadius.circular(11)),
-                            child: Center(
-                              child: Text("Add", style: nunitoSemiBoldStyle()),
-                            )),
-                      )
-                    ],
+                      hintText: 'Example: DD/MM/YYYY',
+                      hintStyle: nunitoRegularStyle(),
+                    ),
                   ),
                 ),
               ],
             ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            controller: controller.examFinalDegreeController..text = "100",
+            style: nunitoRegularStyle(),
+            enabled: false,
+            decoration: InputDecoration(
+              label: Text("Exam Final Grade", style: nunitoRegularStyle()),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Exams Versions :", style: nunitoRegularStyle()),
+              GetBuilder<CreateCoversSheetsController>(builder: (controller) {
+                return Row(
+                  children: [
+                    Text(
+                      '1 Version',
+                      style: TextStyle(
+                          color: !controller.is2Version
+                              ? Colors.black
+                              : Colors.grey),
+                    ),
+                    Switch.adaptive(
+                        value: controller.is2Version,
+                        onChanged: (newValue) {
+                          controller.is2Version = newValue;
+                          controller.update();
+                        }),
+                    Text(
+                      '2 Versions',
+                      style: TextStyle(
+                          color: controller.is2Version
+                              ? Colors.black
+                              : Colors.grey),
+                    ),
+                  ],
+                );
+              }),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Exams Period :", style: nunitoRegularStyle()),
+              GetBuilder<CreateCoversSheetsController>(builder: (controller) {
+                return Row(
+                  children: [
+                    Text(
+                      'Session One Exams',
+                      style: TextStyle(
+                          color:
+                              !controller.isNight ? Colors.black : Colors.grey),
+                    ),
+                    Switch.adaptive(
+                        value: controller.isNight,
+                        onChanged: (newValue) {
+                          controller.isNight = newValue;
+                          controller.update();
+                        }),
+                    Text(
+                      'Session Two Exams',
+                      style: TextStyle(
+                          color:
+                              controller.isNight ? Colors.black : Colors.grey),
+                    ),
+                  ],
+                );
+              }),
+            ],
+          ),
+          InkWell(
+            onTap: () {
+              if (_formKey.currentState!.validate()) {
+                controller
+                    .addNewExamMission(
+                        subjectId: controller.selectedItemSubject!.value,
+                        controlMissionId:
+                            controller.selectedItemControlMission!.value,
+                        gradeId: controller.selectedItemGrade!.value,
+                        educationyearId:
+                            controller.selectedItemEducationYear!.value,
+                        year: controller.selectedYear!,
+                        month:
+                            '${controller.selectedMonth!}/${controller.selectedDay!}',
+                        finalDegree: 100.toString())
+                    .then((value) {
+                  if (value) {
+                    Get.back();
+                    MyFlashBar.showSuccess(
+                      "Exam Cover Sheet Added Successfully",
+                      "Success",
+                    ).show(Get.key.currentContext!);
+                  }
+                });
+              }
+            },
+            child: Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: ColorManager.bgSideMenu,
+                    borderRadius: BorderRadius.circular(11)),
+                child: Center(
+                  child: Text("Add", style: nunitoSemiBoldStyle()),
+                )),
+          )
+        ],
+      ),
     );
   }
 }
