@@ -432,7 +432,7 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
-  void autoGenerateSimple() {
+  Future<void> autoGenerateSimple() async {
     for (int i = 0; i < availableStudents.length; i++) {
       if (availableStudents[i].classDeskID == null) {
         availableStudents[i].classDeskID = availableStudents[i].classDeskID =
@@ -445,6 +445,21 @@ class DistributeStudentsController extends GetxController {
       }
     }
     update();
+
+    ResponseHandler responseHandler = ResponseHandler();
+    await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: [
+        ...availableStudents.map((element) => {
+              "ID": element.iD,
+              "Class_Desk_ID": element.classDeskID,
+            }),
+      ],
+    );
+
+    return;
   }
 
   void removeStudentFromDesk({required int studentSeatNumberId}) {
