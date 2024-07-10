@@ -480,14 +480,14 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
-  void removeAllFromDesks() async {
+  void removeAllFromDesks() {
     for (var element in availableStudents) {
       element.classDeskID = null;
     }
 
     ResponseHandler responseHandler = ResponseHandler();
 
-    await responseHandler.getResponse(
+    responseHandler.getResponse(
       path: '${StudentsLinks.studentSeatNumbers}/many',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
