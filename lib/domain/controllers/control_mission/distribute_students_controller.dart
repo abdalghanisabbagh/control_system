@@ -655,7 +655,7 @@ class DistributeStudentsController extends GetxController {
         0;
   }
 
-  void removeStudentFromExamRoom({required int studentSeatNumberId}) async {
+  void removeStudentFromExamRoom({required int studentSeatNumberId}) {
     studentsSeatNumbers
       ..add(
         availableStudents
@@ -696,7 +696,7 @@ class DistributeStudentsController extends GetxController {
 
     ResponseHandler responseHandler = ResponseHandler();
 
-    await responseHandler.getResponse(
+    responseHandler.getResponse(
       path: '${StudentsLinks.studentSeatNumbers}/$studentSeatNumberId',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
@@ -709,7 +709,7 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
-  void removeStudentsFromExamRoom() async {
+  void removeStudentsFromExamRoom() {
     List<StudentSeatNumberResModel> removedStudents = availableStudents.reversed
         .where((element) => (element.gradesID == selectedItemGradeId))
         .take(int.parse(numberOfStudentsController.text))
@@ -746,7 +746,7 @@ class DistributeStudentsController extends GetxController {
 
     ResponseHandler responseHandler = ResponseHandler();
 
-    await responseHandler.getResponse(
+    responseHandler.getResponse(
       path: '${StudentsLinks.studentSeatNumbers}/many',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
