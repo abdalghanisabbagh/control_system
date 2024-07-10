@@ -110,11 +110,10 @@ class RemoveStudentsFromExamRoomWidget
                                                 }
                                               : MyAwesomeDialogue(
                                                   title: 'Error',
-                                                  desc: '''
-                                                      PLease Make Sure You Have Entered The Right Number Of Students.
+                                                  desc:
+                                                      '''PLease Make Sure You Have Entered The Right Number Of Students.
                                                       \n current number of students from the selected grade: ${controller.availableStudents.where((element) => element.gradesID == controller.selectedItemGradeId).length}
-                                                      \n current number of students from the selected number of students: ${controller.numberOfStudentsController.text}
-                                                      ''',
+                                                      \n current number of students from the selected number of students: ${controller.numberOfStudentsController.text}''',
                                                   dialogType: DialogType.error,
                                                 ).showDialogue(context);
                                         }
