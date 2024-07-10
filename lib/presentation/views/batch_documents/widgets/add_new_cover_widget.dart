@@ -128,10 +128,8 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                                 child: MultiSelectDropDownView(
                                   hintText: "Select Grade",
                                   onOptionSelected: (selectedItem) {
-                                    controller.selectedItemGrade =
-                                        selectedItem.isNotEmpty
-                                            ? selectedItem.first
-                                            : null;
+                                    controller.setSelectedItemEducationYear(
+                                        selectedItem);
                                     formFieldState.didChange(selectedItem);
                                   },
                                   options: controller.optionsGrades,
