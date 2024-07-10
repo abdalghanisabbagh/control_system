@@ -1,5 +1,3 @@
-import 'package:control_system/presentation/views/control_mission/widgets/create_mission_widget.dart';
-import 'package:control_system/presentation/views/control_mission/widgets/distribute_students.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +6,8 @@ import '../../../domain/controllers/controllers.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
 import '../../views/control_mission/distribution_and_details/details_and_review_mission.dart';
 import '../../views/control_mission/distribution_and_details/distribution.dart';
+import '../../views/control_mission/widgets/create_mission_widget.dart';
+import '../../views/control_mission/widgets/distribute_students.dart';
 import '../../views/index.dart';
 import 'app_routes_names_and_paths.dart';
 

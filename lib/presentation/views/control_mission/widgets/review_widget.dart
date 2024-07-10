@@ -1,8 +1,9 @@
-import 'package:control_system/domain/controllers/control_mission/review_control_mission_controller.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+
+import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
+import '../../../resource_manager/index.dart';
 
 // ignore: must_be_immutable
 class ReviewWidget extends GetView<DetailsAndReviewMissionController> {

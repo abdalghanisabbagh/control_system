@@ -2,15 +2,6 @@ import 'dart:math';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
-import 'package:control_system/Data/Models/class_desk/class_desk_res_model.dart';
-import 'package:control_system/Data/Models/class_desk/class_desks_res_model.dart';
-import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
-import 'package:control_system/Data/Models/student_seat/student_seat_res_model.dart';
-import 'package:control_system/Data/Models/student_seat/students_seats_numbers_res_model.dart';
-import 'package:control_system/app/configurations/app_links.dart';
-import 'package:control_system/app/extensions/convert_material_color_to_pdf_color_extension.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,12 +12,21 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:universal_html/html.dart' as html;
 
+import '../../../Data/Models/class_desk/class_desk_res_model.dart';
+import '../../../Data/Models/class_desk/class_desks_res_model.dart';
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
+import '../../../Data/Models/school/grade_response/grade_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
+import '../../../Data/Models/student_seat/student_seat_res_model.dart';
+import '../../../Data/Models/student_seat/students_seats_numbers_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
+import '../../../app/configurations/app_links.dart';
+import '../../../app/extensions/convert_material_color_to_pdf_color_extension.dart';
+import '../../../presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/assets_manager.dart';
 import '../../../presentation/resource_manager/color_manager.dart';
 
 class DistributeStudentsController extends GetxController {

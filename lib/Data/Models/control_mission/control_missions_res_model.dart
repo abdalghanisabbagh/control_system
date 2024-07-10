@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
+import 'control_mission_model.dart';
 
 class ControlMissionsResModel {
   ControlMissionsResModel({this.data});

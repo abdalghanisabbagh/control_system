@@ -1,17 +1,17 @@
-import 'package:control_system/domain/controllers/roles_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/views/roles/widgets/add_new_roles_widget.dart';
-import 'package:control_system/presentation/views/roles/widgets/add_screen_to_role_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/profile_controller.dart';
+import '../../../domain/controllers/roles_controller.dart';
+import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/color_manager.dart';
 import '../../resource_manager/styles_manager.dart';
 import '../base_screen.dart';
+import 'widgets/add_new_roles_widget.dart';
 import 'widgets/add_new_screen_widget.dart';
+import 'widgets/add_screen_to_role_widget.dart';
 
 class RolesScreen extends GetView<RolesController> {
   const RolesScreen({super.key});

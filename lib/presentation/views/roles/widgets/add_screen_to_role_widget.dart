@@ -1,14 +1,14 @@
-import 'package:control_system/Data/Models/user/roles/role_res_model.dart';
-import 'package:control_system/domain/controllers/roles_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_add_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_back_button.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
+import '../../../../Data/Models/user/roles/role_res_model.dart';
+import '../../../../domain/controllers/roles_controller.dart';
+import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
+import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 

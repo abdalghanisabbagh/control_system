@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/student/student_res_model.dart';
+import '../student/student_res_model.dart';
 
 class StudentSeatNumberResModel {
   int? iD;

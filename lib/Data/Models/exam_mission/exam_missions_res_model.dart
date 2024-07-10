@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
+import 'exam_mission_res_model.dart';
 
 class ExamMissionsResModel {
   ExamMissionsResModel({this.data});

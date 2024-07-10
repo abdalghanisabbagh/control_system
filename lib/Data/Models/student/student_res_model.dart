@@ -1,9 +1,10 @@
-import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
-import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
-import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
-import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import '../../../domain/controllers/profile_controller.dart';
+import '../class_room/class_room_res_model.dart';
+import '../cohort/cohort_res_model.dart';
+import '../school/grade_response/grade_res_model.dart';
 
 class StudentResModel {
   StudentResModel({
@@ -101,7 +102,6 @@ class StudentResModel {
     data['Active'] = active;
     return data;
   }
-
 
   Map<String, dynamic> importStudentByExcel() {
     final Map<String, dynamic> data = <String, dynamic>{};

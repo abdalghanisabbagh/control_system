@@ -1,16 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/user/login_response/user_profile_model.dart';
-import 'package:control_system/domain/controllers/profile_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 
 import '../../Data/Models/subject/subject_res_model.dart';
 import '../../Data/Models/subject/subjects_res_model.dart';
+import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'profile_controller.dart';
 
 class SubjectsController extends GetxController {
   bool addLoading = false;
