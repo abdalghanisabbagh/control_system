@@ -413,42 +413,53 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
               }),
             ],
           ),
-          InkWell(
-            onTap: () {
-              if (_formKey.currentState!.validate()) {
-                controller
-                    .addNewExamMission(
-                        subjectId: controller.selectedItemSubject!.value,
-                        controlMissionId:
-                            controller.selectedItemControlMission!.value,
-                        gradeId: controller.selectedItemGrade!.value,
-                        educationyearId:
-                            controller.selectedItemEducationYear!.value,
-                        year: controller.selectedYear!,
-                        month:
-                            '${controller.selectedMonth!}/${controller.selectedDay!}',
-                        finalDegree: 100.toString())
-                    .then((value) {
-                  if (value) {
-                    Get.back();
-                    MyFlashBar.showSuccess(
-                      "Exam Cover Sheet Added Successfully",
-                      "Success",
-                    ).show(Get.key.currentContext!);
-                  }
-                });
-              }
-            },
-            child: Container(
+          GetBuilder<CreateCoversSheetsController>(builder: (_) {
+            if (controller.isLodingAddExamMission) {
+              return SizedBox(
+                width: 50,
                 height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: ColorManager.bgSideMenu,
-                    borderRadius: BorderRadius.circular(11)),
-                child: Center(
-                  child: Text("Add", style: nunitoSemiBoldStyle()),
-                )),
-          )
+                child: FittedBox(
+                  child: LoadingIndicators.getLoadingIndicator(),
+                ),
+              );
+            }
+            return InkWell(
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  controller
+                      .addNewExamMission(
+                          subjectId: controller.selectedItemSubject!.value,
+                          controlMissionId:
+                              controller.selectedItemControlMission!.value,
+                          gradeId: controller.selectedItemGrade!.value,
+                          educationyearId:
+                              controller.selectedItemEducationYear!.value,
+                          year: controller.selectedYear!,
+                          month:
+                              '${controller.selectedMonth!}/${controller.selectedDay!}',
+                          finalDegree: 100.toString())
+                      .then((value) {
+                    if (value) {
+                      Get.back();
+                      MyFlashBar.showSuccess(
+                        "Exam Cover Sheet Added Successfully",
+                        "Success",
+                      ).show(Get.key.currentContext!);
+                    }
+                  });
+                }
+              },
+              child: Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: ColorManager.bgSideMenu,
+                      borderRadius: BorderRadius.circular(11)),
+                  child: Center(
+                    child: Text("Add", style: nunitoSemiBoldStyle()),
+                  )),
+            );
+          })
         ],
       ),
     );

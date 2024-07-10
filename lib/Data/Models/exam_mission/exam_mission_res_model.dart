@@ -68,26 +68,31 @@ class ExamMissionResModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (iD != null) data['ID'] = iD;
-    data['Subjects_ID'] = subjectsID;
-    data['Control_Mission_ID'] = controlMissionID;
-    data['grades_ID'] = gradesID;
-    data['education_year_ID'] = educationYearID;
-    data['Month'] = month;
-    data['Year'] = year;
-    data['FinalDegree'] = finalDegree;
-    data['Period'] = period;
-    data['duration'] = duration;
-    data['start_time'] = startTime;
-    data['end_time'] = endTime;
-    data['pdf'] = pdf;
-    data['pdf_V2'] = pdfV2;
+  final Map<String, dynamic> data = <String, dynamic>{};
+  
+  if (iD != null) data['ID'] = iD;
+  if (subjectsID != null) data['Subjects_ID'] = subjectsID;
+  if (controlMissionID != null) data['Control_Mission_ID'] = controlMissionID;
+  if (gradesID != null) data['grades_ID'] = gradesID;
+  if (educationYearID != null) data['education_year_ID'] = educationYearID;
+  if (month != null) data['Month'] = month;
+  if (year != null) data['Year'] = year;
+  if (finalDegree != null) data['FinalDegree'] = finalDegree;
+  if (period != null) data['Period'] = period;
+  if (duration != null) data['duration'] = duration;
+  if (startTime != null) data['start_time'] = startTime;
+  if (endTime != null) data['end_time'] = endTime;
+  if (pdf != null) data['pdf'] = pdf;
+  if (pdfV2 != null) data['pdf_V2'] = pdfV2;
+  if (Get.find<ProfileController>().cachedUserProfile?.iD != null) {
     data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
-    data['Created_At'] = createdAt;
-    data['Updated_By'] = updatedBy;
-    data['Updated_At'] = updatedAt;
-    data['Active'] = active;
-    return data;
   }
+  if (createdAt != null) data['Created_At'] = createdAt;
+  if (updatedBy != null) data['Updated_By'] = updatedBy;
+  if (updatedAt != null) data['Updated_At'] = updatedAt;
+  if (active != null) data['Active'] = active;
+
+  return data;
+}
+
 }

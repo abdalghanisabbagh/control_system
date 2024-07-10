@@ -18,7 +18,6 @@ import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import '../profile_controller.dart';
 
 class CreateCoversSheetsController extends GetxController {
   final int schoolId = Hive.box('School').get('Id');
@@ -275,29 +274,20 @@ class CreateCoversSheetsController extends GetxController {
     ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
 
     ExamMissionResModel examMissionResModel = ExamMissionResModel(
-        subjectsID: subjectId,
-        controlMissionID: controlMissionId,
-        gradesID: gradeId,
-        educationYearID: educationyearId,
-        year: year,
-        month: month,
-        finalDegree: finalDegree,
-        createdBy: Get.find<ProfileController>().cachedUserProfile?.iD);
+      subjectsID: subjectId,
+      controlMissionID: controlMissionId,
+      gradesID: gradeId,
+      educationYearID: educationyearId,
+      year: year,
+      month: month,
+      finalDegree: finalDegree,
+    );
 
     var response = await responseHandler.getResponse(
         path: ExamLinks.examMission,
         converter: ExamMissionResModel.fromJson,
         type: ReqTypeEnum.POST,
-        body: {
-          "Created_By":Get.find<ProfileController>().cachedUserProfile?.iD ,
-          "Subjects_ID": subjectId,
-          "Control_Mission_ID":  controlMissionId,
-          "grades_ID": gradeId,
-          "education_year_ID": educationyearId,
-          "Month": month,
-          "Year": year,
-        
-        });
+        body: examMissionResModel.toJson());
 
     response.fold((fauilr) {
       MyAwesomeDialogue(
