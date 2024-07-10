@@ -388,13 +388,16 @@ class ProctorScreen extends GetView<ProctorController> {
                                               child: LoadingIndicators
                                                   .getLoadingIndicator(),
                                             )
-                                          : controller.examRooms.isEmpty &&
-                                                  controller
-                                                          .selectedControlMissionsId !=
-                                                      null
+                                          : controller.examRooms.isEmpty
                                               ? Center(
                                                   child: Text(
-                                                    'No exam rooms added yet',
+                                                    controller.selectedEducationYearId ==
+                                                            null
+                                                        ? 'Please Select Education Year First'
+                                                        : controller.selectedControlMissionsId ==
+                                                                null
+                                                            ? 'Please Select Control Mission First'
+                                                            : 'No exam rooms added yet',
                                                     style: nunitoBold,
                                                   ),
                                                 )
