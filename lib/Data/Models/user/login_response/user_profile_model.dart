@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/user/roles/role_res_model.dart';
+import '../roles/role_res_model.dart';
 
 class UserProfileModel {
   int? active;

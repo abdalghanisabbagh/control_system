@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/satge/stage_model.dart';
+import 'stage_model.dart';
 
 class StageResModel {
   StageResModel({this.data});

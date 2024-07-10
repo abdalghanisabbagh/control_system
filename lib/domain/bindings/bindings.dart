@@ -1,7 +1,7 @@
-import 'package:control_system/domain/controllers/roles_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/controllers.dart';
+import '../controllers/roles_controller.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
 

@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/user/screens/screen_res_model.dart';
+import '../screens/screen_res_model.dart';
 
 class RoleResModel {
   String name;

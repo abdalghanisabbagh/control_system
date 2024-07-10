@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/exam_room/exam_room_res_model.dart';
+import 'exam_room_res_model.dart';
 
 class ExamRoomsResModel {
   ExamRoomsResModel({this.data});

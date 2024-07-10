@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/student_seat/student_seat_res_model.dart';
+import 'student_seat_res_model.dart';
 
 class StudentsSeatsNumbersResModel {
   StudentsSeatsNumbersResModel({this.studentSeatNumbers});

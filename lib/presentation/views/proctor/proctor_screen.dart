@@ -1,15 +1,15 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:control_system/presentation/views/proctor/widgets/edit_proctor_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/proctor_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
+import '../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../resource_manager/color_manager.dart';
 import '../../resource_manager/styles_manager.dart';
 import '../base_screen.dart';
 import 'widgets/add_new_proctor.dart';
+import 'widgets/edit_proctor_widget.dart';
 
 class ProctorScreen extends GetView<ProctorController> {
   const ProctorScreen({super.key});

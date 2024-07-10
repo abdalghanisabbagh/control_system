@@ -1,7 +1,7 @@
-import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../Data/Models/control_mission/control_mission_model.dart';
 import '../../../../domain/controllers/control_mission/control_mission_controller.dart';
 import '../../../resource_manager/index.dart';
 

@@ -1,10 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/controllers/control_mission/distribute_students_controller.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 import '../../../../domain/controllers/control_mission/distribution_controller.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
@@ -12,6 +11,7 @@ import '../../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/index.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 import '../widgets/add_exam_room_widget.dart';
 

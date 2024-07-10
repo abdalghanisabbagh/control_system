@@ -1,6 +1,7 @@
-import 'package:control_system/domain/controllers/proctor_controller.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
+
+import '../../domain/controllers/proctor_controller.dart';
 
 abstract class Validations {
   /// Email Validator
