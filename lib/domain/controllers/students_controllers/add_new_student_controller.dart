@@ -16,11 +16,6 @@ import '../profile_controller.dart';
 import 'student_controller.dart';
 
 class AddNewStudentController extends GetxController {
-  StudentController studentController = Get.find<StudentController>();
-
-  final UserProfileModel? _userProfile =
-      Get.find<ProfileController>().cachedUserProfile;
-
   bool checkSelecteClassRoom = false;
   bool checkSelecteCohort = false;
   bool checkSelecteGrade = false;
@@ -32,6 +27,10 @@ class AddNewStudentController extends GetxController {
   ValueItem? selectedItemClassRoom;
   ValueItem? selectedItemCohort;
   ValueItem? selectedItemGrade;
+  StudentController studentController = Get.find<StudentController>();
+
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
 
   @override
   void onInit() async {

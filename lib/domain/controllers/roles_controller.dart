@@ -14,16 +14,17 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class RolesController extends GetxController {
+  bool addLoading = false;
+  bool connectLoading = false;
   // final UserProfileModel? _userProfile =
   //     Get.find<ProfileController>().cachedUserProfile;
 
   bool getAllLoading = false;
-  bool addLoading = false;
-  bool connectLoading = false;
 
-  List<ScreenResModel> screens = [];
   List<RoleResModel> roles = [];
+  List<ScreenResModel> screens = [];
   List<int> selectedSreensIds = [];
+
   @override
   void onInit() {
     getAllScreens();

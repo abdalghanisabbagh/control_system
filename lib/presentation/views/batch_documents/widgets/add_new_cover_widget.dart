@@ -11,6 +11,7 @@ import '../../../resource_manager/validations.dart';
 
 class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
   AddNewCoverWidget({super.key});
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override

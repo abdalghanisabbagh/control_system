@@ -8,6 +8,15 @@ class ExamRoomResModel {
     this.capacity,
   });
 
+  ExamRoomResModel.fromExtra(Map<String, String>? extra) {
+    id = int.parse(extra?['ID'] ?? '0');
+    controlMissionID = int.parse(extra?['Control_Mission_ID'] ?? '0');
+    schoolClassID = int.parse(extra?['School_Class_ID'] ?? '0');
+    name = extra?['Name'];
+    stage = extra?['Stage'];
+    capacity = int.parse(extra?['Capacity'] ?? '0');
+  }
+
   ExamRoomResModel.fromJson(json) {
     id = json['ID'];
     controlMissionID = json['Control_Mission_ID'];
@@ -18,8 +27,8 @@ class ExamRoomResModel {
   }
 
   int? capacity;
-  int? id;
   int? controlMissionID;
+  int? id;
   String? name;
   int? schoolClassID;
   String? stage;
@@ -44,14 +53,5 @@ class ExamRoomResModel {
       'Stage': stage ?? '',
       'Capacity': capacity.toString(),
     };
-  }
-
-  ExamRoomResModel.fromExtra(Map<String, String>? extra) {
-    id = int.parse(extra?['ID'] ?? '0');
-    controlMissionID = int.parse(extra?['Control_Mission_ID'] ?? '0');
-    schoolClassID = int.parse(extra?['School_Class_ID'] ?? '0');
-    name = extra?['Name'];
-    stage = extra?['Stage'];
-    capacity = int.parse(extra?['Capacity'] ?? '0');
   }
 }

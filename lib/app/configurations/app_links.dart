@@ -1,6 +1,7 @@
 class AppLinks {
   /// `http://localhost:3333/`
   static const baseUrl = 'http://localhost:3333/';
+
   static const baseUrlDev = 'http://10.6.65.80:3333/';
 }
 
@@ -14,6 +15,7 @@ class AuthLinks {
 }
 
 class SchoolsLinks {
+  static const classDesks = 'class-desk';
   static const cohort = 'cohort';
   static const connectSubjectToCohort = '$cohort/Connect-Subject';
   static const disConnectSubjectFromCohort = '$cohort/disconnect-Subject';
@@ -24,7 +26,6 @@ class SchoolsLinks {
   static const gradesSchools = 'grades/school';
   static const schools = 'schools';
   static const schoolsClasses = 'school-classes';
-  static const classDesks = 'class-desk';
   static const schoolsType = 'school-type';
   static const subject = 'subject';
   static const subjects = 'subjects';
@@ -32,12 +33,11 @@ class SchoolsLinks {
 
 class StudentsLinks {
   static const student = 'student';
-  static const studentMany = 'student/many';
-
   static const studentBarcodes = 'student-barcodes';
   static const studentBarcodesExamMission = 'student-barcodes/exam-mission';
   static const studentBarcodesStudent = 'student-barcodes/student';
   static const studentCohort = 'student/cohort';
+  static const studentMany = 'student/many';
   static const studentSchool = 'student/school';
   static const studentSeatNumbers = 'student-seat-numbers';
   static const studentSeatNumbersControlMission =
@@ -54,9 +54,9 @@ class EducationYearsLinks {
 
 class ControlMissionLinks {
   static const controlMission = 'control-mission';
-  static const studentSeatNumbers = '$controlMission/student-seat-numbers';
   static const controlMissionEducationYear = 'education-year';
   static const controlMissionSchool = '$controlMission/school';
+  static const studentSeatNumbers = '$controlMission/student-seat-numbers';
 }
 
 class ExamLinks {
@@ -69,10 +69,10 @@ class ExamLinks {
 }
 
 class UserRolesSystemsLink {
+  static const screen = 'user-roles-systems/screen';
   static const userRolesSystems = 'user-roles-systems';
   static const userRolesSystemsConnectRolesTOScreens =
       'user-roles-systems/connect-roles-to-screens';
-  static const screen = 'user-roles-systems/screen';
 }
 
 class Stage {

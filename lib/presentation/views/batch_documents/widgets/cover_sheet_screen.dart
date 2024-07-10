@@ -42,7 +42,7 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
                     // Get.defaultDialog(
                     //     title: "Add New Cover",
                     //     content: const AddNewCoverWidget());
-                    MyDialogs.showDialog(context,  AddNewCoverWidget());
+                    MyDialogs.showDialog(context, AddNewCoverWidget());
                   },
                   tooltip: "Add New Cover",
                   icon: const Icon(

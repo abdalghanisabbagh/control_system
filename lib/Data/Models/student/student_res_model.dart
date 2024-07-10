@@ -32,6 +32,28 @@ class StudentResModel {
     this.active,
   });
 
+  factory StudentResModel.fromCsvWithHeaders(
+      List<dynamic> row, List<String> headers) {
+    Map<String, dynamic> data = {};
+    for (int i = 0; i < headers.length; i++) {
+      if (row[i] != null && row[i].toString().isNotEmpty) {
+        data[headers[i]] = row[i];
+      }
+    }
+
+    return StudentResModel(
+      blbId: data.containsKey('id') ? data['id'] : null,
+      firstName: data.containsKey('firstname') ? data['firstname'] : null,
+      secondName: data.containsKey('middlename') ? data['middlename'] : null,
+      thirdName: data.containsKey('lastname') ? data['lastname'] : null,
+      cohortName: data.containsKey('cohort') ? data['cohort'] : null,
+      gradeName: data.containsKey('grade') ? data['grade'] : null,
+      schoolClassName: data.containsKey('class') ? data['class'] : null,
+      secondLang:
+          data.containsKey('second_language') ? data['second_language'] : null,
+    );
+  }
+
   StudentResModel.fromJson(json) {
     iD = json['ID'];
     blbId = json['Blb_Id'];
@@ -59,16 +81,19 @@ class StudentResModel {
   }
 
   int? active;
+  int? blbId;
+  ClassRoomResModel? classRoomResModel;
   int? cohortID;
   String? cohortName;
+  CohortResModel? cohortResModel;
   String? createdAt;
   int? createdBy;
   String? email;
   String? firstName;
-  int? gradesID;
   String? gradeName;
+  GradeResModel? gradeResModel;
+  int? gradesID;
   int? iD;
-  int? blbId;
   int? schoolClassID;
   String? schoolClassName;
   int? schoolsID;
@@ -77,69 +102,6 @@ class StudentResModel {
   String? thirdName;
   DateTime? updatedAt;
   int? updatedBy;
-  GradeResModel? gradeResModel;
-  CohortResModel? cohortResModel;
-  ClassRoomResModel? classRoomResModel;
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['ID'] = iD;
-    data['Blb_Id'] = blbId;
-    data['Grades_ID'] = gradesID;
-    data['Schools_ID'] = schoolsID;
-    data['Cohort_ID'] = cohortID;
-    data['School_Class_ID'] = schoolClassID;
-    data['First_Name'] = firstName;
-    data['Second_Name'] = secondName;
-    data['Third_Name'] = thirdName;
-    data['Email'] = email;
-    data['Second_Lang'] = secondLang;
-    data['Created_By'] = createdBy;
-    data['Created_At'] = createdAt;
-    data['Updated_By'] = updatedBy;
-    data['Updated_At'] = updatedAt;
-    data['grades'] = gradeResModel?.toJson();
-    data['Active'] = active;
-    return data;
-  }
-
-  Map<String, dynamic> importStudentByExcel() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (iD != null) data['ID'] = iD;
-    data['Blb_Id'] = blbId;
-    data['Grades_ID'] = gradesID;
-    data['Schools_ID'] = schoolsID ?? Hive.box('School').get('Id');
-    data['Cohort_ID'] = cohortID;
-    data['School_Class_ID'] = schoolClassID;
-    data['First_Name'] = firstName;
-    data['Second_Name'] = secondName;
-    data['Third_Name'] = thirdName;
-    data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
-    data['Second_Lang'] = secondLang;
-    return data;
-  }
-
-  factory StudentResModel.fromCsvWithHeaders(
-      List<dynamic> row, List<String> headers) {
-    Map<String, dynamic> data = {};
-    for (int i = 0; i < headers.length; i++) {
-      if (row[i] != null && row[i].toString().isNotEmpty) {
-        data[headers[i]] = row[i];
-      }
-    }
-
-    return StudentResModel(
-      blbId: data.containsKey('id') ? data['id'] : null,
-      firstName: data.containsKey('firstname') ? data['firstname'] : null,
-      secondName: data.containsKey('middlename') ? data['middlename'] : null,
-      thirdName: data.containsKey('lastname') ? data['lastname'] : null,
-      cohortName: data.containsKey('cohort') ? data['cohort'] : null,
-      gradeName: data.containsKey('grade') ? data['grade'] : null,
-      schoolClassName: data.containsKey('class') ? data['class'] : null,
-      secondLang:
-          data.containsKey('second_language') ? data['second_language'] : null,
-    );
-  }
 
   @override
   bool operator ==(covariant StudentResModel other) {
@@ -183,5 +145,43 @@ class StudentResModel {
         updatedAt.hashCode ^
         gradeResModel.hashCode ^
         active.hashCode;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['Blb_Id'] = blbId;
+    data['Grades_ID'] = gradesID;
+    data['Schools_ID'] = schoolsID;
+    data['Cohort_ID'] = cohortID;
+    data['School_Class_ID'] = schoolClassID;
+    data['First_Name'] = firstName;
+    data['Second_Name'] = secondName;
+    data['Third_Name'] = thirdName;
+    data['Email'] = email;
+    data['Second_Lang'] = secondLang;
+    data['Created_By'] = createdBy;
+    data['Created_At'] = createdAt;
+    data['Updated_By'] = updatedBy;
+    data['Updated_At'] = updatedAt;
+    data['grades'] = gradeResModel?.toJson();
+    data['Active'] = active;
+    return data;
+  }
+
+  Map<String, dynamic> importStudentByExcel() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (iD != null) data['ID'] = iD;
+    data['Blb_Id'] = blbId;
+    data['Grades_ID'] = gradesID;
+    data['Schools_ID'] = schoolsID ?? Hive.box('School').get('Id');
+    data['Cohort_ID'] = cohortID;
+    data['School_Class_ID'] = schoolClassID;
+    data['First_Name'] = firstName;
+    data['Second_Name'] = secondName;
+    data['Third_Name'] = thirdName;
+    data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
+    data['Second_Lang'] = secondLang;
+    return data;
   }
 }

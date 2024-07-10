@@ -27,32 +27,30 @@ class AppRoutesNamesAndPaths {
   // controlMissionScreen
   static const String controlBatchScreenPath = '/control-batch';
 
-  static const String distributeStudentsScreenName = 'Distribute Students';
-  // distributeStudentScreen
-  static const String distributeStudentsScreenPath = 'distribute-students';
-
   static const String createMissionScreenName = 'Create Mission';
   // createMissionScreen
   static const String createMissionScreenPath = 'create-mission';
-  static const String distributioncreateMissionScreenPath =
-      'distributioncreateMissionScreenPath';
-  static const String distributioncreateMissionScreenName =
-      'distributioncreateMissionScreenName';
-
-  static const String reviewAndDetailsMissionPath =
-      'reviewAndDetailsMissionPath';
-  static const String reviewAndDetailsMissionName =
-      'reviewAndDetailsMissionPath';
 
   static const String dashBoardScreenName = 'Dashboard';
   // dashBoardScreen
   static const String dashBoardScreenPath = '/dashboard';
+
+  static const String distributeStudentsScreenName = 'Distribute Students';
+  // distributeStudentScreen
+  static const String distributeStudentsScreenPath = 'distribute-students';
+
+  static const String distributioncreateMissionScreenName =
+      'distributioncreateMissionScreenName';
+
+  static const String distributioncreateMissionScreenPath =
+      'distributioncreateMissionScreenPath';
 
   // static const String distributionScreenName = 'Distribution';
   // // distributionScreen
   // static const String distributionScreenPath = '/distribution';
 
   static const String examRoomScreenName = 'Exam Room';
+
   // examRoomScreen
   static const String examRoomScreenPath = '/exam-room';
 
@@ -71,6 +69,12 @@ class AppRoutesNamesAndPaths {
   static const String renderSeatScreenName = 'Render Seat';
   // renderSeatScreen
   static const String renderSeatScreenPath = '/render-seat';
+
+  static const String reviewAndDetailsMissionName =
+      'reviewAndDetailsMissionPath';
+
+  static const String reviewAndDetailsMissionPath =
+      'reviewAndDetailsMissionPath';
 
   static const String rolesScreenName = 'Roles';
   // rolesScreen

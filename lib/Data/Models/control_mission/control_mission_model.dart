@@ -1,16 +1,4 @@
 class ControlMissionResModel {
-  int? iD;
-  int? educationYearID;
-  int? schoolsID;
-  String? name;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  String? updatedAt;
-  String? startDate;
-  String? endDate;
-  int? active;
-
   ControlMissionResModel({
     this.iD,
     this.educationYearID,
@@ -25,6 +13,20 @@ class ControlMissionResModel {
     this.active,
   });
 
+  ControlMissionResModel.fromExtra(Map<String, String>? extra) {
+    iD = int.parse(extra?['ID'] ?? '0');
+    educationYearID = int.parse(extra?['Education_year_ID'] ?? '0');
+    schoolsID = int.parse(extra?['Schools_ID'] ?? '0');
+    name = extra?['Name'];
+    createdBy = int.parse(extra?['Created_By'] ?? '0');
+    createdAt = extra?['Created_At'];
+    updatedBy = int.parse(extra?['Updated_By'] ?? '0');
+    updatedAt = extra?['Updated_At'];
+    startDate = extra?['Start_Date'];
+    endDate = extra?['End_Date'];
+    active = int.parse(extra?['Active'] ?? '0');
+  }
+
   ControlMissionResModel.fromJson(json) {
     iD = json['ID'];
     educationYearID = json['Education_year_ID'];
@@ -38,6 +40,18 @@ class ControlMissionResModel {
     endDate = json['End_Date'];
     active = json['Active'];
   }
+
+  int? active;
+  String? createdAt;
+  int? createdBy;
+  int? educationYearID;
+  String? endDate;
+  int? iD;
+  String? name;
+  int? schoolsID;
+  String? startDate;
+  String? updatedAt;
+  int? updatedBy;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -69,19 +83,5 @@ class ControlMissionResModel {
       'End_Date': endDate ?? '',
       'Active': active.toString(),
     };
-  }
-
-  ControlMissionResModel.fromExtra(Map<String, String>? extra) {
-    iD = int.parse(extra?['ID'] ?? '0');
-    educationYearID = int.parse(extra?['Education_year_ID'] ?? '0');
-    schoolsID = int.parse(extra?['Schools_ID'] ?? '0');
-    name = extra?['Name'];
-    createdBy = int.parse(extra?['Created_By'] ?? '0');
-    createdAt = extra?['Created_At'];
-    updatedBy = int.parse(extra?['Updated_By'] ?? '0');
-    updatedAt = extra?['Updated_At'];
-    startDate = extra?['Start_Date'];
-    endDate = extra?['End_Date'];
-    active = int.parse(extra?['Active'] ?? '0');
   }
 }

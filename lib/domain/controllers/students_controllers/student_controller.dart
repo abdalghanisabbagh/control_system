@@ -36,15 +36,22 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 import '../profile_controller.dart';
 
 class StudentController extends GetxController {
-  final UserProfileModel? _userProfile =
-      Get.find<ProfileController>().cachedUserProfile;
-
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<CohortResModel> cohorts = <CohortResModel>[];
+  Map<String, bool> errorMap = {};
   List<GradeResModel> grades = <GradeResModel>[];
+  List hasError = [];
+  bool hasErrorInBlbId = false;
+  bool hasErrorInClassRoom = false;
+  bool hasErrorInCohort = false;
+  bool hasErrorInGrade = false;
+  List<StudentResModel> importedStudents = <StudentResModel>[];
+  List<PlutoRow> importedStudentsRows = <PlutoRow>[];
+  bool isImportedNew = false;
+  bool isImportedPromot = false;
+  bool islodingAddStudents = false;
   bool islodingEditStudent = false;
   bool loading = false;
-  bool islodingAddStudents = false;
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsCohort = <ValueItem>[];
   List<ValueItem> optionsGrade = <ValueItem>[];
@@ -53,16 +60,9 @@ class StudentController extends GetxController {
   ValueItem? selectedItemGrade;
   List<StudentResModel> students = <StudentResModel>[];
   List<PlutoRow> studentsRows = <PlutoRow>[];
-  List<StudentResModel> importedStudents = <StudentResModel>[];
-  List<PlutoRow> importedStudentsRows = <PlutoRow>[];
-  Map<String, bool> errorMap = {};
-  bool isImportedNew = false;
-  bool isImportedPromot = false;
-  bool hasErrorInGrade = false;
-  bool hasErrorInCohort = false;
-  bool hasErrorInClassRoom = false;
-  bool hasErrorInBlbId = false;
-  List hasError = [];
+
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
 
   @override
   void onInit() async {
@@ -308,88 +308,6 @@ class StudentController extends GetxController {
     }
   }
 
-  Future<void> _processCsvFile(
-    Uint8List fileBytes, {
-    required List<StudentResModel> students,
-    required List<CohortResModel> cohorts,
-    required List<ClassRoomResModel> classesRooms,
-    required List<GradeResModel> grades,
-  }) async {
-    String content = String.fromCharCodes(fileBytes);
-    List<List<dynamic>> rowsAsListOfValues =
-        const CsvToListConverter().convert(content);
-
-    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 7) {
-      List<String> headers =
-          rowsAsListOfValues.first.map((header) => header.toString()).toList();
-      List<String> requiredHeaders = [
-        'id',
-        'firstname',
-        'middlename',
-        'lastname',
-        'grade',
-        'class',
-        'cohort',
-        'second_language'
-      ];
-
-      List<String> missingHeaders =
-          requiredHeaders.where((header) => !headers.contains(header)).toList();
-      if (missingHeaders.isNotEmpty) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc:
-              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values in the file and try again',
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        return;
-      }
-      rowsAsListOfValues.removeAt(0);
-
-      var studentsCsv = rowsAsListOfValues
-          .map((row) => StudentResModel.fromCsvWithHeaders(row, headers))
-          .toList();
-      Map<String, dynamic> result;
-
-      if (isImportedNew == true) {
-        result = studentsCsv.convertFileStudentsToPluto(
-          students: students,
-          cohorts: cohorts,
-          classesRooms: classesRooms,
-          grades: grades,
-        );
-        importedStudentsRows.assignAll(result['rows']);
-        importedStudents.assignAll(result['students']);
-        hasErrorInGrade = result['errorgrade'];
-        hasErrorInCohort = result['errorcohort'];
-        hasErrorInClassRoom = result['errorclass'];
-        hasError.assignAll(result['errors']);
-        update();
-      } else if (isImportedPromot == true) {
-        result = studentsCsv.convertPromtoFileStudentsToPluto(
-          students: students,
-          cohorts: cohorts,
-          classesRooms: classesRooms,
-          grades: grades,
-        );
-        importedStudentsRows.assignAll(result['rows']);
-        importedStudents.assignAll(result['students']);
-        hasErrorInGrade = result['errorgrade'];
-        hasErrorInCohort = result['errorcohort'];
-        hasErrorInClassRoom = result['errorclass'];
-        hasErrorInBlbId = result['errorBlbID'];
-        update();
-      }
-    } else {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "Please check the values in the file and try again.",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      update();
-    }
-  }
-
   Future<bool> addManyStudents({
     required List<StudentResModel> students,
   }) async {
@@ -461,6 +379,7 @@ class StudentController extends GetxController {
     update();
     return updateStudentsHasBeenAdded;
   }
+
   // void testCohort(
   //   Uint8List fileBytes,
   // ) async {
@@ -707,6 +626,88 @@ class StudentController extends GetxController {
     if (!await launchUrl(Uri.parse(
         "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
       throw 'Could not launch file';
+    }
+  }
+
+  Future<void> _processCsvFile(
+    Uint8List fileBytes, {
+    required List<StudentResModel> students,
+    required List<CohortResModel> cohorts,
+    required List<ClassRoomResModel> classesRooms,
+    required List<GradeResModel> grades,
+  }) async {
+    String content = String.fromCharCodes(fileBytes);
+    List<List<dynamic>> rowsAsListOfValues =
+        const CsvToListConverter().convert(content);
+
+    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 7) {
+      List<String> headers =
+          rowsAsListOfValues.first.map((header) => header.toString()).toList();
+      List<String> requiredHeaders = [
+        'id',
+        'firstname',
+        'middlename',
+        'lastname',
+        'grade',
+        'class',
+        'cohort',
+        'second_language'
+      ];
+
+      List<String> missingHeaders =
+          requiredHeaders.where((header) => !headers.contains(header)).toList();
+      if (missingHeaders.isNotEmpty) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc:
+              'Missing headers: ${missingHeaders.join(', ')} \nPlease check the header values in the file and try again',
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        return;
+      }
+      rowsAsListOfValues.removeAt(0);
+
+      var studentsCsv = rowsAsListOfValues
+          .map((row) => StudentResModel.fromCsvWithHeaders(row, headers))
+          .toList();
+      Map<String, dynamic> result;
+
+      if (isImportedNew == true) {
+        result = studentsCsv.convertFileStudentsToPluto(
+          students: students,
+          cohorts: cohorts,
+          classesRooms: classesRooms,
+          grades: grades,
+        );
+        importedStudentsRows.assignAll(result['rows']);
+        importedStudents.assignAll(result['students']);
+        hasErrorInGrade = result['errorgrade'];
+        hasErrorInCohort = result['errorcohort'];
+        hasErrorInClassRoom = result['errorclass'];
+        hasError.assignAll(result['errors']);
+        update();
+      } else if (isImportedPromot == true) {
+        result = studentsCsv.convertPromtoFileStudentsToPluto(
+          students: students,
+          cohorts: cohorts,
+          classesRooms: classesRooms,
+          grades: grades,
+        );
+        importedStudentsRows.assignAll(result['rows']);
+        importedStudents.assignAll(result['students']);
+        hasErrorInGrade = result['errorgrade'];
+        hasErrorInCohort = result['errorcohort'];
+        hasErrorInClassRoom = result['errorclass'];
+        hasErrorInBlbId = result['errorBlbID'];
+        update();
+      }
+    } else {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "Please check the values in the file and try again.",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      update();
     }
   }
 }

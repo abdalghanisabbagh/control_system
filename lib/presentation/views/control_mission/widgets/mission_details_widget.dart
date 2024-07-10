@@ -14,6 +14,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
   MissionDetailsWidget({super.key});
 
   late PlutoGridStateManager stateManager;
+
   @override
   Widget build(BuildContext context) {
     return Container(

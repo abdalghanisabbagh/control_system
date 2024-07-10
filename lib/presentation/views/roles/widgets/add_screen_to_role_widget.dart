@@ -14,7 +14,9 @@ import '../../../resource_manager/styles_manager.dart';
 
 class AddScreensToRolesWidget extends GetView<RolesController> {
   const AddScreensToRolesWidget({super.key, required this.role});
+
   final RoleResModel role;
+
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -3,26 +3,6 @@ import 'package:get/get.dart';
 import '../../../domain/controllers/profile_controller.dart';
 
 class ExamMissionResModel {
-  int? iD;
-  int? subjectsID;
-  int? controlMissionID;
-  int? gradesID;
-  int? educationYearID;
-  String? month;
-  String? year;
-  String? finalDegree;
-  int? period;
-  int? duration;
-  String? startTime;
-  String? endTime;
-  String? pdf;
-  String? pdfV2;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  String? updatedAt;
-  int? active;
-
   ExamMissionResModel({
     this.iD,
     this.subjectsID,
@@ -67,32 +47,51 @@ class ExamMissionResModel {
     active = json['Active'];
   }
 
+  int? active;
+  int? controlMissionID;
+  String? createdAt;
+  int? createdBy;
+  int? duration;
+  int? educationYearID;
+  String? endTime;
+  String? finalDegree;
+  int? gradesID;
+  int? iD;
+  String? month;
+  String? pdf;
+  String? pdfV2;
+  int? period;
+  String? startTime;
+  int? subjectsID;
+  String? updatedAt;
+  int? updatedBy;
+  String? year;
+
   Map<String, dynamic> toJson() {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  
-  if (iD != null) data['ID'] = iD;
-  if (subjectsID != null) data['Subjects_ID'] = subjectsID;
-  if (controlMissionID != null) data['Control_Mission_ID'] = controlMissionID;
-  if (gradesID != null) data['grades_ID'] = gradesID;
-  if (educationYearID != null) data['education_year_ID'] = educationYearID;
-  if (month != null) data['Month'] = month;
-  if (year != null) data['Year'] = year;
-  if (finalDegree != null) data['FinalDegree'] = finalDegree;
-  if (period != null) data['Period'] = period;
-  if (duration != null) data['duration'] = duration;
-  if (startTime != null) data['start_time'] = startTime;
-  if (endTime != null) data['end_time'] = endTime;
-  if (pdf != null) data['pdf'] = pdf;
-  if (pdfV2 != null) data['pdf_V2'] = pdfV2;
-  if (Get.find<ProfileController>().cachedUserProfile?.iD != null) {
-    data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
+    final Map<String, dynamic> data = <String, dynamic>{};
+
+    if (iD != null) data['ID'] = iD;
+    if (subjectsID != null) data['Subjects_ID'] = subjectsID;
+    if (controlMissionID != null) data['Control_Mission_ID'] = controlMissionID;
+    if (gradesID != null) data['grades_ID'] = gradesID;
+    if (educationYearID != null) data['education_year_ID'] = educationYearID;
+    if (month != null) data['Month'] = month;
+    if (year != null) data['Year'] = year;
+    if (finalDegree != null) data['FinalDegree'] = finalDegree;
+    if (period != null) data['Period'] = period;
+    if (duration != null) data['duration'] = duration;
+    if (startTime != null) data['start_time'] = startTime;
+    if (endTime != null) data['end_time'] = endTime;
+    if (pdf != null) data['pdf'] = pdf;
+    if (pdfV2 != null) data['pdf_V2'] = pdfV2;
+    if (Get.find<ProfileController>().cachedUserProfile?.iD != null) {
+      data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
+    }
+    if (createdAt != null) data['Created_At'] = createdAt;
+    if (updatedBy != null) data['Updated_By'] = updatedBy;
+    if (updatedAt != null) data['Updated_At'] = updatedAt;
+    if (active != null) data['Active'] = active;
+
+    return data;
   }
-  if (createdAt != null) data['Created_At'] = createdAt;
-  if (updatedBy != null) data['Updated_By'] = updatedBy;
-  if (updatedAt != null) data['Updated_At'] = updatedAt;
-  if (active != null) data['Active'] = active;
-
-  return data;
-}
-
 }
