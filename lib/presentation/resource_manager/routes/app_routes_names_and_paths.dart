@@ -39,6 +39,11 @@ class AppRoutesNamesAndPaths {
   // distributeStudentScreen
   static const String distributeStudentsScreenPath = 'distribute-students';
 
+  static const String addNewStudentsToControlMissionName = 'Add New Students';
+  // addNewStudentsToControlMission
+  static const String addNewStudentsToControlMissionPath =
+      'add-new-students-to-control-mission';
+
   static const String distributioncreateMissionScreenName =
       'distributioncreateMissionScreenName';
 
