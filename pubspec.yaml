@@ -39,6 +39,7 @@ dependencies:
   file_saver : ^0.2.13 
   url_launcher: ^6.3.0
   loading_indicator: ^3.1.1
+  badges: ^3.1.2
 
 dev_dependencies:
   flutter_test:
