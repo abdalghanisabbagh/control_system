@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,19 +19,27 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 
 class CoversSheetsController extends GetxController {
   List<ExamMissionResModel> examMissionsList = <ExamMissionResModel>[];
+  List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
+  List<ExamMissionResModel> filteredExamMissionsList = [];
+
   List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsControlMission = <ValueItem>[];
   List<ValueItem> optionsGrades = <ValueItem>[];
   List<ValueItem> optionsSubjects = <ValueItem>[];
+
+  ControlMissionResModel? controlMissionObject;
 
   bool isLoadingGetControlMission = false;
   bool isLodingGetSubject = false;
   bool isLodingGetExamMission = false;
   bool isLoadingGrades = false;
   bool isLoadingGetEducationYear = false;
+  bool isLoading = false;
 
   ValueItem? selectedItemControlMission;
   ValueItem? selectedItemEducationYear;
+  ValueItem? selectedItemGrade;
+  ValueItem? selectedSubject;
 
   final int schoolId = Hive.box('School').get('Id');
 
@@ -40,6 +49,22 @@ class CoversSheetsController extends GetxController {
     super.onInit();
   }
 
+  Future<void> updateFilteredList(
+      ValueItem? selectedItemGrade, ValueItem? selectedItemSubject) async {
+    if (selectedItemGrade == null && selectedItemSubject == null) {
+      filteredExamMissionsList = examMissionsList;
+    } else {
+      filteredExamMissionsList = examMissionsList.where((mission) {
+        bool matchesGrade = selectedItemGrade == null ||
+            mission.gradesID == selectedItemGrade.value;
+        bool matchesSubject = selectedItemSubject == null ||
+            mission.subjectsID == selectedItemSubject.value;
+        return matchesGrade && matchesSubject;
+      }).toList();
+    }
+    update();
+  }
+
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemEducationYear = items.first;
@@ -47,21 +72,56 @@ class CoversSheetsController extends GetxController {
       getControlMissionByEducationYearAndBySchool(educationYearId);
     } else {
       selectedItemEducationYear = null;
+      examMissionsList.clear();
+      filteredExamMissionsList.clear();
+      selectedItemControlMission = null;
     }
 
     update();
   }
 
-  void setSelectedItemControlMission(List<ValueItem> items) {
+  void setSelectedItemControlMission(List<ValueItem> items) async {
     if (items.isNotEmpty) {
       selectedItemControlMission = items.first;
-      int controlMission = selectedItemControlMission!.value;
-      getAllExamMissionsByControlMission(controlMission);
+      int controlMissionId = selectedItemControlMission!.value;
+      controlMissionObject = controlMissionList.firstWhereOrNull(
+        (element) => element.iD == controlMissionId,
+      );
+      isLoading = true;
+      update();
+      await Future.wait([getAllSubjects(), getGradesBySchoolId()]);
+      isLoading = false;
+      update();
+      await getAllExamMissionsByControlMission(controlMissionId);
+      updateFilteredList(null, null);
     } else {
       selectedItemControlMission = null;
+      examMissionsList.clear();
+      filteredExamMissionsList.clear();
     }
 
     update();
+  }
+
+  void setSelectedItemGrade(List<ValueItem> items) {
+    if (items.isNotEmpty) {
+      selectedItemGrade = items.first;
+      updateFilteredList(selectedItemGrade, null);
+    } else {
+      updateFilteredList(null, null);
+      selectedItemGrade = null;
+    }
+    update();
+  }
+
+  void setSelectedItemSubject(List<ValueItem> items) {
+    if (items.isNotEmpty) {
+      selectedSubject = items.first;
+      updateFilteredList(null, selectedSubject);
+    } else {
+      updateFilteredList(null, null);
+      selectedItemGrade = null;
+    }
   }
 
   Future<void> geteducationyear() async {
@@ -118,6 +178,7 @@ class CoversSheetsController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
+        controlMissionList = r.data!;
         List<ValueItem> items = r.data!
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
@@ -177,10 +238,13 @@ class CoversSheetsController extends GetxController {
         update();
       },
       (r) {
-         List<ValueItem> items = r.data!
+        List<ValueItem> items = r.data!
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
         optionsSubjects = items;
+
+        isLodingGetSubject = false;
+        update();
       },
     );
   }
@@ -192,7 +256,7 @@ class CoversSheetsController extends GetxController {
     ResponseHandler<ExamMissionsResModel> responseHandler = ResponseHandler();
     Either<Failure, ExamMissionsResModel> response =
         await responseHandler.getResponse(
-      path: "${ExamLinks.examMission}/$controlMissionId",
+      path: "${ExamLinks.examMissionControlMission}/$controlMissionId",
       converter: ExamMissionsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

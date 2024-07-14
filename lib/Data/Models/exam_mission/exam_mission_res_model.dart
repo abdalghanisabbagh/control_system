@@ -1,3 +1,5 @@
+import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
+import 'package:control_system/Data/Models/subject/subject_res_model.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/profile_controller.dart';
@@ -22,6 +24,8 @@ class ExamMissionResModel {
     this.createdAt,
     this.updatedBy,
     this.updatedAt,
+    this.gradeResModel,
+    this.subjectResModel,
     this.active,
   });
 
@@ -44,6 +48,11 @@ class ExamMissionResModel {
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
+    gradeResModel =
+        json['grades'] == null ? null : GradeResModel.fromJson(json['grades']);
+    subjectResModel = json['subjects'] == null
+        ? null
+        : SubjectResModel.fromJson(json['subjects']);
     active = json['Active'];
   }
 
@@ -65,6 +74,8 @@ class ExamMissionResModel {
   int? subjectsID;
   String? updatedAt;
   int? updatedBy;
+  GradeResModel? gradeResModel;
+  SubjectResModel? subjectResModel;
   String? year;
 
   Map<String, dynamic> toJson() {

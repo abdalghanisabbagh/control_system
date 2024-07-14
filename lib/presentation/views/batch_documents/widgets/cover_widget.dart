@@ -1,16 +1,21 @@
-
-
 import 'package:badges/badges.dart' as bdg;
+import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
+import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-
+import '../../../resource_manager/styles_manager.dart';
 
 class CoverWidget extends StatelessWidget {
+  ExamMissionResModel examMissionObject;
+  ControlMissionResModel controlMissionObject;
   CoverWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+    required this.examMissionObject,
+    required this.controlMissionObject,
+  });
 
   // CreateCoversSheetsController controller = Get.find();
   // AuthController authController = Get.find();
@@ -18,14 +23,17 @@ class CoverWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 20,
-            offset: const Offset(2, 15), // changes position of shadow
-          ),
-        ], color: ColorManager.ligthBlue, borderRadius: BorderRadius.circular(11)),
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 20,
+                offset: const Offset(2, 15),
+              ),
+            ],
+            color: ColorManager.ligthBlue,
+            borderRadius: BorderRadius.circular(11)),
         margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         width: double.infinity,
         child: Column(
@@ -41,18 +49,18 @@ class CoverWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 7),
                       child: IconButton(
                         onPressed: () {
-                        //   showGeneralDialog(
-                        //       context: context,
-                        //       pageBuilder: (ctx, a1, a2) {
-                        //         return Container();
-                        //       },
-                        //       transitionBuilder: (ctx, a1, a2, child) {
-                        //         var curve =
-                        //             Curves.easeInOut.transform(a1.value);
+                          //   showGeneralDialog(
+                          //       context: context,
+                          //       pageBuilder: (ctx, a1, a2) {
+                          //         return Container();
+                          //       },
+                          //       transitionBuilder: (ctx, a1, a2, child) {
+                          //         var curve =
+                          //             Curves.easeInOut.transform(a1.value);
 
-                        //         return DeleteMissionDialog(curve: curve);
-                        //       });
-                        // },
+                          //         return DeleteMissionDialog(curve: curve);
+                          //       });
+                          // },
                         },
                         icon: Icon(
                           Icons.delete_forever,
@@ -64,24 +72,31 @@ class CoverWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Mission name :",
-                         
+                          "Mission name:${controlMissionObject.name}",
+                          style: nunitoRegularStyle().copyWith(
+                            color: ColorManager.primary,
+                          ),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Exam Date :",
-                              // style: AppTextStyle.nunitoRegular.copyWith(
-                              //     color: ColorManager.bgSideMenu, fontSize: 16),
+                              "Exam Date : ${examMissionObject.startTime != null ? DateFormat('yyyy,MM,dd (HH:mm)').format(DateTime.parse(examMissionObject.startTime!)) : examMissionObject.month}  ( ${examMissionObject.period == 0 ? 'Session One Exams' : 'Session Two Exams'} )",
+                              style: nunitoRegularStyle().copyWith(
+                                color: ColorManager.primary,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 50,
                             ),
                             Text(
-                              "Grade : ",
-                              // style: AppTextStyle.nunitoRegular.copyWith(
-                              //     color: ColorManager.bgSideMenu, fontSize: 16),
+                              "Grade : ${examMissionObject.gradeResModel!.name}",
+                              style: nunitoRegularStyle().copyWith(
+                                color: ColorManager.primary,
+                              ),
                             ),
                           ],
                         ),
@@ -89,18 +104,22 @@ class CoverWidget extends StatelessWidget {
                           height: 20,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "Subject name :",
-                              // style: AppTextStyle.nunitoRegular.copyWith(
-                              //     color: ColorManager.bgSideMenu, fontSize: 16),
+                              "Subject name : ${examMissionObject.subjectResModel!.name}",
+                              style: nunitoRegularStyle().copyWith(
+                                color: ColorManager.primary,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 200,
                             ),
                             Text(
-                              "Exam Duration :",
-                              // style: AppTextStyle.nunitoRegular.copyWith(
-                              //     color: ColorManager.bgSideMenu, fontSize: 16),
-                            ),
+                                "Exam Duration :${examMissionObject.duration} min",
+                                style: nunitoRegularStyle().copyWith(
+                                  color: ColorManager.primary,
+                                )),
                           ],
                         )
                       ],
@@ -119,7 +138,7 @@ class CoverWidget extends StatelessWidget {
                           ),
                           child: IconButton(
                             onPressed: () {
-                             // controller.isNight = objet.period;
+                              // controller.isNight = objet.period;
 
                               // Get.dialog(
                               //     GetBuilder<CreateCoversSheetsController>(
@@ -964,7 +983,7 @@ class CoverWidget extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "American Cover Sheet",
                             // style: AppTextStyle.nunitoRegular
                             //     .copyWith(color: Colors.white, fontSize: 18),
@@ -987,14 +1006,14 @@ class CoverWidget extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                        // controller.printAnswerSheetsIB(
-                        //                 objet.id!, false);
+                      // controller.printAnswerSheetsIB(
+                      //                 objet.id!, false);
                     },
                     child: Container(
                       height: 50,
                       width: double.infinity,
                       decoration: const BoxDecoration(
-                        borderRadius:  BorderRadius.only(
+                        borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                         color: Colors.lightBlue,
@@ -1002,7 +1021,7 @@ class CoverWidget extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "IB Cover Sheet",
                             // style: AppTextStyle.nunitoRegular
                             //     .copyWith(color: Colors.white, fontSize: 18),
@@ -1019,7 +1038,6 @@ class CoverWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-             
                 const SizedBox(
                   width: 20,
                 ),
@@ -1071,7 +1089,7 @@ class CoverWidget extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "British Cover Sheet",
                             // style: AppTextStyle.nunitoRegular
                             //     .copyWith(color: Colors.white, fontSize: 18),
