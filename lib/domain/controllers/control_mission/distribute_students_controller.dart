@@ -144,112 +144,9 @@ class DistributeStudentsController extends GetxController {
                               ...List.generate(
                                 classDeskCollection[i]!.length,
                                 (j) {
-                                  return (availableStudents
-                                          .map((element) => element.classDeskID)
-                                          .toList()
-                                          .contains(classDesks[i * 6 + j].id!))
+                                  return blockedClassDesks
+                                          .contains(classDesks[i * 6 + j].id)
                                       ? pw.Padding(
-                                          padding: pw.EdgeInsets.symmetric(
-                                            horizontal: pdfWidth * 0.015,
-                                          ),
-                                          child: pw.Column(
-                                            mainAxisAlignment:
-                                                pw.MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                pw.CrossAxisAlignment.start,
-                                            children: [
-                                              pw.SizedBox(
-                                                height: pdfHeight * 0.01,
-                                              ),
-                                              pw.Container(
-                                                height: pdfHeight * 0.03,
-                                                width: pdfWidth * 0.17,
-                                                decoration: pw.BoxDecoration(
-                                                  border: pw.Border.all(
-                                                    width: 1.5,
-                                                  ),
-                                                  color: ColorManager.yellow
-                                                      .toPdfColorFromValue(),
-                                                ),
-                                                child: pw.Row(
-                                                  mainAxisAlignment: pw
-                                                      .MainAxisAlignment.center,
-                                                  children: [
-                                                    pw.Text(
-                                                      '${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).seatNumber}',
-                                                    ),
-                                                    pw.SizedBox(
-                                                      width: pdfWidth * 0.01,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              pw.Container(
-                                                height: pdfHeight * 0.05,
-                                                width: pdfWidth * 0.17,
-                                                decoration: pw.BoxDecoration(
-                                                  border: pw.Border.all(
-                                                    width: 1.5,
-                                                  ),
-                                                  color: ColorManager
-                                                      .gradesColor[availableStudents
-                                                          .firstWhere((element) =>
-                                                              element
-                                                                  .classDeskID ==
-                                                              classDesks[
-                                                                      i * 6 + j]
-                                                                  .id)
-                                                          .student!
-                                                          .gradeResModel!
-                                                          .name!]!
-                                                      .toPdfColorFromValue(),
-                                                ),
-                                                child: pw.Row(
-                                                  children: [
-                                                    pw.SizedBox(
-                                                        width: pdfWidth * 0.01),
-                                                    pw.Column(
-                                                      crossAxisAlignment: pw
-                                                          .CrossAxisAlignment
-                                                          .start,
-                                                      children: [
-                                                        pw.SizedBox(
-                                                          height:
-                                                              pdfHeight * 0.01,
-                                                        ),
-                                                        pw.SizedBox(
-                                                          width:
-                                                              pdfWidth * 0.15,
-                                                          child: pw.FittedBox(
-                                                            fit: pw
-                                                                .BoxFit.contain,
-                                                            child: pw.Text(
-                                                              'Student Name: ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.firstName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.secondName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.thirdName!} ',
-                                                              style: const pw
-                                                                  .TextStyle(
-                                                                fontSize: 6,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        pw.Text(
-                                                          'Seat NO: ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).seatNumber}',
-                                                        ),
-                                                        pw.Text(
-                                                          'Grade : ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
-                                                        ),
-                                                        pw.SizedBox(
-                                                            width: pdfWidth *
-                                                                0.01),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      : pw.Padding(
                                           padding: pw.EdgeInsets.symmetric(
                                               horizontal: pdfWidth * 0.015),
                                           child: pw.Column(
@@ -275,7 +172,7 @@ class DistributeStudentsController extends GetxController {
                                                   border: pw.Border.all(
                                                     width: 1.5,
                                                   ),
-                                                  color: ColorManager.greyA8
+                                                  color: ColorManager.red
                                                       .toPdfColorFromValue(),
                                                 ),
                                                 alignment: pw.Alignment.center,
@@ -285,7 +182,163 @@ class DistributeStudentsController extends GetxController {
                                               ),
                                             ],
                                           ),
-                                        );
+                                        )
+                                      : (availableStudents
+                                              .map((element) =>
+                                                  element.classDeskID)
+                                              .toList()
+                                              .contains(
+                                                  classDesks[i * 6 + j].id!))
+                                          ? pw.Padding(
+                                              padding: pw.EdgeInsets.symmetric(
+                                                horizontal: pdfWidth * 0.015,
+                                              ),
+                                              child: pw.Column(
+                                                mainAxisAlignment:
+                                                    pw.MainAxisAlignment.end,
+                                                crossAxisAlignment:
+                                                    pw.CrossAxisAlignment.start,
+                                                children: [
+                                                  pw.SizedBox(
+                                                    height: pdfHeight * 0.01,
+                                                  ),
+                                                  pw.Container(
+                                                    height: pdfHeight * 0.03,
+                                                    width: pdfWidth * 0.17,
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                      border: pw.Border.all(
+                                                        width: 1.5,
+                                                      ),
+                                                      color: ColorManager.yellow
+                                                          .toPdfColorFromValue(),
+                                                    ),
+                                                    child: pw.Row(
+                                                      mainAxisAlignment: pw
+                                                          .MainAxisAlignment
+                                                          .center,
+                                                      children: [
+                                                        pw.Text(
+                                                          '${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).seatNumber}',
+                                                        ),
+                                                        pw.SizedBox(
+                                                          width:
+                                                              pdfWidth * 0.01,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  pw.Container(
+                                                    height: pdfHeight * 0.05,
+                                                    width: pdfWidth * 0.17,
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                      border: pw.Border.all(
+                                                        width: 1.5,
+                                                      ),
+                                                      color: ColorManager
+                                                          .gradesColor[availableStudents
+                                                              .firstWhere((element) =>
+                                                                  element
+                                                                      .classDeskID ==
+                                                                  classDesks[
+                                                                          i * 6 +
+                                                                              j]
+                                                                      .id)
+                                                              .student!
+                                                              .gradeResModel!
+                                                              .name!]!
+                                                          .toPdfColorFromValue(),
+                                                    ),
+                                                    child: pw.Row(
+                                                      children: [
+                                                        pw.SizedBox(
+                                                            width: pdfWidth *
+                                                                0.01),
+                                                        pw.Column(
+                                                          crossAxisAlignment: pw
+                                                              .CrossAxisAlignment
+                                                              .start,
+                                                          children: [
+                                                            pw.SizedBox(
+                                                              height:
+                                                                  pdfHeight *
+                                                                      0.01,
+                                                            ),
+                                                            pw.SizedBox(
+                                                              width: pdfWidth *
+                                                                  0.15,
+                                                              child:
+                                                                  pw.FittedBox(
+                                                                fit: pw.BoxFit
+                                                                    .contain,
+                                                                child: pw.Text(
+                                                                  'Student Name: ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.firstName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.secondName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.thirdName!} ',
+                                                                  style: const pw
+                                                                      .TextStyle(
+                                                                    fontSize: 6,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            pw.Text(
+                                                              'Seat NO: ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).seatNumber}',
+                                                            ),
+                                                            pw.Text(
+                                                              'Grade : ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
+                                                            ),
+                                                            pw.SizedBox(
+                                                                width:
+                                                                    pdfWidth *
+                                                                        0.01),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          : pw.Padding(
+                                              padding: pw.EdgeInsets.symmetric(
+                                                  horizontal: pdfWidth * 0.015),
+                                              child: pw.Column(
+                                                children: [
+                                                  pw.SizedBox(
+                                                    height: pdfHeight * 0.01,
+                                                  ),
+                                                  pw.Container(
+                                                    height: pdfHeight * 0.03,
+                                                    width: pdfWidth * 0.17,
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                      border: pw.Border.all(
+                                                        width: 1.5,
+                                                      ),
+                                                      color: ColorManager.yellow
+                                                          .toPdfColorFromValue(),
+                                                    ),
+                                                  ),
+                                                  pw.Container(
+                                                    height: pdfHeight * 0.05,
+                                                    width: pdfWidth * 0.17,
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                      border: pw.Border.all(
+                                                        width: 1.5,
+                                                      ),
+                                                      color: ColorManager.greyA8
+                                                          .toPdfColorFromValue(),
+                                                    ),
+                                                    alignment:
+                                                        pw.Alignment.center,
+                                                    child: pw.Text(
+                                                      '${i * 6 + j + 1}',
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
                                 },
                               ),
                             ],
