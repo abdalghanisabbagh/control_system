@@ -512,6 +512,8 @@ class DistributeStudentsController extends GetxController {
       if (availableStudents[i].classDeskID == null) {
         availableStudents[i].classDeskID = availableStudents[i].classDeskID =
             classDesks
+                .whereNot(
+                    (classDesk) => blockedClassDesks.contains(classDesk.id))
                 .whereNot((classDesk) => availableStudents
                     .map((student) => student.classDeskID)
                     .contains(classDesk.id))
