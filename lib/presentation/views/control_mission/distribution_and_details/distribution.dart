@@ -34,13 +34,40 @@ class DistributionScreen extends GetView<DistributionController> {
             Row(
               children: [
                 IconButton(
-                    onPressed: () {
-                      context.goNamed(
-                          AppRoutesNamesAndPaths.controlBatchScreenName);
-                    },
-                    icon: const Icon(Icons.arrow_back)),
+                  onPressed: () {
+                    context
+                        .goNamed(AppRoutesNamesAndPaths.controlBatchScreenName);
+                  },
+                  icon: const Icon(Icons.arrow_back),
+                ),
                 HeaderWidget(
                   text: "Distribution: ${controller.controlMissionName}",
+                ),
+                const Spacer(),
+                InkWell(
+                  onTap: () {
+                    context.goNamed(AppRoutesNamesAndPaths
+                        .addNewStudentsToControlMissionName);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(11),
+                      ),
+                      color: ColorManager.glodenColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Add Students",
+                        style: nunitoRegular.copyWith(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 const Spacer(),
                 Visibility(
@@ -49,17 +76,23 @@ class DistributionScreen extends GetView<DistributionController> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      MyDialogs.showDialog(context, AddExamRoomWidget());
+                      MyDialogs.showDialog(
+                        context,
+                        AddExamRoomWidget(),
+                      );
                       controller.getStageAndClassRoom();
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: ColorManager.bgSideMenu,
-                          borderRadius: BorderRadius.circular(10)),
+                        color: ColorManager.bgSideMenu,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       padding: const EdgeInsets.all(20),
                       child: Text(
                         "Create new exam room",
-                        style: nunitoLight.copyWith(color: Colors.white),
+                        style: nunitoLight.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -93,7 +126,6 @@ class DistributionScreen extends GetView<DistributionController> {
                               itemCount: controller.listExamRoom.length,
                               itemBuilder: (context, index) {
                                 final room = controller.listExamRoom[index];
-
                                 return Container(
                                   decoration: BoxDecoration(
                                     boxShadow: [
