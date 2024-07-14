@@ -194,24 +194,22 @@ class CreateControlMissionController extends GetxController {
 
   void excludeStudent(PlutoColumnRendererContext rendererContext) {
     excludedStudentsRows.add(includedStudentsRows.firstWhere((element) =>
-        element.cells['IdField']!.value ==
-        rendererContext.row.cells['IdField']!.value));
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value));
     includedStudentsRows.removeWhere((element) =>
-        element.cells['IdField']!.value ==
-        rendererContext.row.cells['IdField']!.value);
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value);
     includedStudentsStateManager?.notifyListeners();
-    excludedStudentsRows.length == 1
-        ? excludedStudentsStateManager?.setPage(1)
-        : excludedStudentsStateManager?.notifyListeners();
+    excludedStudentsStateManager?.setPage(1);
   }
 
   void includeStudent(PlutoColumnRendererContext rendererContext) {
     includedStudentsRows.add(excludedStudentsRows.firstWhere((element) =>
-        element.cells['IdField']!.value ==
-        rendererContext.row.cells['IdField']!.value));
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value));
     excludedStudentsRows.removeWhere((element) =>
-        element.cells['IdField']!.value ==
-        rendererContext.row.cells['IdField']!.value);
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value);
     includedStudentsStateManager?.notifyListeners();
     excludedStudentsStateManager?.notifyListeners();
   }
@@ -255,14 +253,6 @@ class CreateControlMissionController extends GetxController {
   }
 
   Future<bool> createStudentSeatNumbers() async {
-    //   if (selectedGradesIds.isEmpty) {
-    //   MyAwesomeDialogue(
-    //     title: 'Error',
-    //     desc: 'Please select grades',
-    //     dialogType: DialogType.error,
-    //   ).showDialogue(Get.key.currentContext!);
-    //   return false;
-    // }
     bool success = false;
     isLoading = true;
     update();
