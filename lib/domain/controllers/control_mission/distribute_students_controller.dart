@@ -34,6 +34,7 @@ class DistributeStudentsController extends GetxController {
   int availableStudentsCount = 0;
   Map<int?, List<ClassDeskResModel>> classDeskCollection = {};
   List<ClassDeskResModel> classDesks = [];
+  List<int> blockedClassDesks = [];
   Map<String, int> countByGrade = {};
   ExamRoomResModel examRoomResModel = ExamRoomResModel();
   List<GradeResModel> grades = [];
@@ -61,6 +62,16 @@ class DistributeStudentsController extends GetxController {
       }),
     ]);
     isLoading = false;
+    update();
+  }
+
+  void blockClassDesk({required int classDeskId}) {
+    blockedClassDesks.add(classDeskId);
+    update();
+  }
+
+  void unBlockClassDesk({required int classDeskId}) {
+    blockedClassDesks.remove(classDeskId);
     update();
   }
 
