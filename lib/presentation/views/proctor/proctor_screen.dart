@@ -408,18 +408,54 @@ class ProctorScreen extends GetView<ProctorController> {
                                                   .getLoadingIndicator(),
                                             )
                                           : controller.examRooms.isEmpty
-                                              ? Center(
-                                                  child: Text(
-                                                    controller.selectedEducationYearId ==
-                                                            null
-                                                        ? 'Please Select Education Year First'
-                                                        : controller.selectedControlMissionsId ==
-                                                                null
-                                                            ? 'Please Select Control Mission First'
-                                                            : 'No exam rooms added yet',
-                                                    style: nunitoBold,
-                                                  ),
-                                                )
+                                              ? controller.selectedEducationYearId !=
+                                                          null &&
+                                                      controller
+                                                              .selectedControlMissionsId !=
+                                                          null
+                                                  ? Center(
+                                                      child: Text(
+                                                        'No Exam Rooms Available. Please Create At Least One Exam Room',
+                                                        style:
+                                                            nunitoBold.copyWith(
+                                                          fontSize: 18,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          'First Select Education Year',
+                                                          style: nunitoBold
+                                                              .copyWith(
+                                                            decoration: controller
+                                                                        .selectedEducationYearId !=
+                                                                    null
+                                                                ? TextDecoration
+                                                                    .lineThrough
+                                                                : null,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        Text(
+                                                          'Second Select Control Mission',
+                                                          style: nunitoBold
+                                                              .copyWith(
+                                                            decoration: controller
+                                                                        .selectedControlMissionsId !=
+                                                                    null
+                                                                ? TextDecoration
+                                                                    .lineThrough
+                                                                : null,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
                                               : GridView.builder(
                                                   shrinkWrap: true,
                                                   gridDelegate:
