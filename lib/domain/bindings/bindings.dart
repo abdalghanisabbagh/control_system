@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../controllers/batch_documents.dart/batch_documents_controller.dart';
+import '../controllers/batch_documents.dart/cover_shetts_controller.dart';
+import '../controllers/batch_documents.dart/create_covers_sheets_controller.dart';
 import '../controllers/controllers.dart';
 import '../controllers/roles_controller.dart';
 import '../services/side_menue_get_controller.dart';
@@ -41,7 +44,19 @@ class BatchDocumentsBindings extends Bindings {
       () => BatchDocumentsController(),
       fenix: true,
     );
-    Get.put(CreateCoversSheetsController());
+    Get.lazyPut<CreateCoversSheetsController>(
+      () => CreateCoversSheetsController(),
+      fenix: true,
+    );
+     Get.lazyPut<CreateCoversSheetsController>(
+      () => CreateCoversSheetsController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<CoversSheetsController>(
+      () => CoversSheetsController(),
+      fenix: true,
+    );
 
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../../../domain/controllers/seating_numbers_controllers/create_covers_sheets_controller.dart';
+import '../../../../domain/controllers/batch_documents.dart/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
@@ -128,10 +128,8 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                                 child: MultiSelectDropDownView(
                                   hintText: "Select Grade",
                                   onOptionSelected: (selectedItem) {
-                                    controller.selectedItemGrade =
-                                        selectedItem.isNotEmpty
-                                            ? selectedItem.first
-                                            : null;
+                                    controller.setSelectedItemEducationYear(
+                                        selectedItem);
                                     formFieldState.didChange(selectedItem);
                                   },
                                   options: controller.optionsGrades,

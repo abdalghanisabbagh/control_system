@@ -1,15 +1,14 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
-
 import '../../../Data/Models/control_mission/control_mission_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
-import '../../../Data/Models/exam_mission/exam_mission_res_model.dart';
 import '../../../Data/Models/school/grade_response/grade_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/subject/subject_res_model.dart';
@@ -27,13 +26,17 @@ class CreateCoversSheetsController extends GetxController {
   List<GradeResModel> gradesList = <GradeResModel>[];
   bool is2Version = false;
   bool isLoadingGetControlMission = false;
-  bool isLoadingGetEducationYear = false;
-  bool isLoadingGrades = false;
-  bool isLodingAddExamMission = false;
   bool isLodingGetSubject = false;
+  bool isLodingGetExamMission = false;
+  bool isLoadingGrades = false;
+  bool isLoadingGetEducationYear = false;
+  bool isLodingAddExamMission = false;
   bool isNight = false;
-  List<ValueItem> optionsControlMission = <ValueItem>[];
+
+  List<SubjectResModel> subjectsList = <SubjectResModel>[];
+  List<ExamMissionResModel> examMissionsList = <ExamMissionResModel>[];
   List<ValueItem> optionsEducationYear = <ValueItem>[];
+  List<ValueItem> optionsControlMission = <ValueItem>[];
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
     const ValueItem(value: 25, label: '25 Mins'),
@@ -62,7 +65,6 @@ class CreateCoversSheetsController extends GetxController {
   ValueItem? selectedItemSubject;
   String? selectedMonth;
   String? selectedYear;
-  List<SubjectResModel> subjectsList = <SubjectResModel>[];
 
   @override
   void onInit() {
@@ -90,14 +92,25 @@ class CreateCoversSheetsController extends GetxController {
   }
 
   void setSelectedItemEducationYear(List<ValueItem> items) {
-    selectedItemEducationYear = items.first;
-    int educationYearId = selectedItemEducationYear!.value;
-    getControlMissionByEducationYearAndBySchool(educationYearId);
+    if (items.isNotEmpty) {
+      selectedItemEducationYear = items.first;
+      int educationYearId = selectedItemEducationYear!.value;
+      getControlMissionByEducationYearAndBySchool(educationYearId);
+    } else {
+      selectedItemEducationYear = null;
+    }
+
     update();
   }
 
   void setSelectedItemControlMission(List<ValueItem> items) {
-    selectedItemControlMission = items.first;
+    if (items.isNotEmpty) {
+      selectedItemControlMission = items.first;
+    //  int controlMission = selectedItemControlMission!.value;
+    } else {
+      selectedItemControlMission = null;
+    }
+
     update();
   }
 
@@ -108,7 +121,6 @@ class CreateCoversSheetsController extends GetxController {
 
   void setSelectedItemSubject(List<ValueItem> items) {
     selectedItemSubject = items.first;
-    // int controlMissionId = selectedItemEducationYear!.value;
     update();
   }
 
@@ -300,4 +312,6 @@ class CreateCoversSheetsController extends GetxController {
     update();
     return addExamMissionHasBeenAdded;
   }
+
+  
 }

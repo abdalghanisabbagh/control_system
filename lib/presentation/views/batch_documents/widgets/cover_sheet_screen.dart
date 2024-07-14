@@ -1,15 +1,16 @@
+import 'package:control_system/presentation/views/batch_documents/widgets/cover_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
 import '../../../../domain/controllers/profile_controller.dart';
-import '../../../../domain/controllers/seating_numbers_controllers/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/index.dart';
 import 'add_new_cover_widget.dart';
 
-class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
+class CoverSheetsScreen extends GetView<CoversSheetsController> {
   const CoverSheetsScreen({super.key});
 
   @override
@@ -39,9 +40,6 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
                   onPressed: () {
-                    // Get.defaultDialog(
-                    //     title: "Add New Cover",
-                    //     content: const AddNewCoverWidget());
                     MyDialogs.showDialog(context, AddNewCoverWidget());
                   },
                   tooltip: "Add New Cover",
@@ -54,24 +52,164 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
             ),
           ],
         ),
-        GetBuilder<CreateCoversSheetsController>(
+        Row(
+          children: [
+            GetBuilder<CoversSheetsController>(
+              builder: (controller) {
+                if (controller.isLoadingGetEducationYear) {
+                  return SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: FittedBox(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    ),
+                  );
+                }
+
+                if (controller.optionsEducationYear.isEmpty) {
+                  return const Text('No items available');
+                }
+
+                return SizedBox(
+                  width: Get.width * 0.4,
+                  child: MultiSelectDropDownView(
+                    hintText: "Select Education Year",
+                    onOptionSelected: controller.setSelectedItemEducationYear,
+                    options: controller.optionsEducationYear,
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            GetBuilder<CoversSheetsController>(
+              builder: (controller) {
+                if (controller.isLoadingGetControlMission) {
+                  return Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  );
+                }
+
+                if (controller.optionsControlMission.isEmpty) {
+                  return const Text('No items available');
+                }
+                if (controller.selectedItemEducationYear == null) {
+                  return const SizedBox.shrink();
+                }
+
+                return SizedBox(
+                  width: Get.width * 0.4,
+                  child: MultiSelectDropDownView(
+                    hintText: "Select Control Mission",
+                    onOptionSelected: (selectedItem) {
+                      controller.setSelectedItemControlMission(selectedItem);
+                    },
+                    options: controller.optionsControlMission,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GetBuilder<CoversSheetsController>(
+              builder: (controller) {
+                if (controller.isLoading) {
+                  return SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: FittedBox(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    ),
+                  );
+                }
+
+                if (controller.optionsGrades.isEmpty) {
+                  return const Text('No items available');
+                }
+                if (controller.selectedItemEducationYear == null ||
+                    controller.selectedItemControlMission == null) {
+                  return const SizedBox.shrink();
+                }
+
+                return SizedBox(
+                  width: Get.width * 0.4,
+                  child: MultiSelectDropDownView(
+                    hintText: "Select Grade",
+                    onOptionSelected: controller.setSelectedItemGrade,
+                    options: controller.optionsGrades,
+                  ),
+                );
+              },
+            ),
+            GetBuilder<CoversSheetsController>(
+              builder: (controller) {
+                if (controller.isLoading) {
+                  return Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  );
+                }
+
+                if (controller.optionsSubjects.isEmpty) {
+                  return const Text('No items available');
+                }
+                if (controller.selectedItemEducationYear == null ||
+                    controller.selectedItemControlMission == null) {
+                  return const SizedBox.shrink();
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.only(right: 43.0),
+                  child: SizedBox(
+                    width: Get.width * 0.4,
+                    child: MultiSelectDropDownView(
+                      hintText: "Select Subject",
+                      onOptionSelected: controller.setSelectedItemSubject,
+                      options: controller.optionsSubjects,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+        GetBuilder<CoversSheetsController>(
           builder: (controller) {
-            if (controller.isLoadingGetEducationYear) {
-              return Center(
-                child: LoadingIndicators.getLoadingIndicator(),
+            if (controller.isLodingGetExamMission) {
+              return Expanded(
+                child: Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
+                ),
               );
             }
 
-            if (controller.optionsEducationYear.isEmpty) {
-              return const Text('No items available');
+            if (controller.filteredExamMissionsList.isEmpty) {
+              return Expanded(
+                child: Center(
+                  child: Text(
+                    'No items available',
+                    style: nunitoBoldStyle(),
+                  ),
+                ),
+              );
             }
 
-            return MultiSelectDropDownView(
-              hintText: "Select Education Year",
-              onOptionSelected: (selectedItem) {
-                controller.setSelectedItemEducationYear(selectedItem);
-              },
-              options: controller.optionsEducationYear,
+            return Expanded(
+              child: ListView.builder(
+                  itemCount: controller.filteredExamMissionsList.length,
+                  itemBuilder: (context, index) {
+                    return CoverWidget(
+                      controlMissionObject: controller.controlMissionObject!,
+                      examMissionObject:
+                          controller.filteredExamMissionsList[index],
+                    );
+                  }),
             );
           },
         ),

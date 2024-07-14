@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../domain/controllers/seating_numbers_controllers/create_covers_sheets_controller.dart';
+import '../../../../domain/controllers/batch_documents.dart/create_covers_sheets_controller.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
