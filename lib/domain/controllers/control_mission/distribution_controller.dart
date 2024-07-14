@@ -86,6 +86,7 @@ class DistributionController extends GetxController {
       },
     );
     isLodingGetExamRooms = false;
+    update();
   }
 
   Future<bool> getClassesRoomsBySchoolId() async {
