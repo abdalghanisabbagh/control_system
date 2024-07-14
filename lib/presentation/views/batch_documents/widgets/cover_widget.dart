@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 import '../../../resource_manager/styles_manager.dart';
 
+// ignore: must_be_immutable
 class CoverWidget extends StatelessWidget {
   ExamMissionResModel examMissionObject;
   ControlMissionResModel controlMissionObject;
