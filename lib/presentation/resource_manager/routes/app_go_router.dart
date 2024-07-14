@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../domain/bindings/bindings.dart';
 import '../../../domain/controllers/controllers.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
+import '../../views/control_mission/distribution_and_details/add_new_students_to_control_mission.dart';
 import '../../views/control_mission/distribution_and_details/details_and_review_mission.dart';
 import '../../views/control_mission/distribution_and_details/distribution.dart';
 import '../../views/control_mission/widgets/create_mission_widget.dart';
@@ -133,6 +134,19 @@ class AppGoRouter {
               return true;
             },
             routes: [
+              GoRoute(
+                path: AppRoutesNamesAndPaths.addNewStudentsToControlMissionPath,
+                name: AppRoutesNamesAndPaths.addNewStudentsToControlMissionName,
+                builder: (context, state) {
+                  AddNewStudentsToControlMissionBindings().dependencies();
+                  return const AddStudentsToControlMissionScreen();
+                },
+                onExit: (context, state) async {
+                  await Get.delete<DistributeStudentsController>();
+                  Get.find<CreateControlMissionController>().onInit();
+                  return true;
+                },
+              ),
               GoRoute(
                 path: AppRoutesNamesAndPaths.distributeStudentsScreenPath,
                 name: AppRoutesNamesAndPaths.distributeStudentsScreenName,
