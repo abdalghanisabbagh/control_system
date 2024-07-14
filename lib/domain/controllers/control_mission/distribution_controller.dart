@@ -82,7 +82,6 @@ class DistributionController extends GetxController {
       },
       (r) {
         listExamRoom = r.data!;
-        update();
       },
     );
     isLodingGetExamRooms = false;
