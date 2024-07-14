@@ -153,6 +153,16 @@ class CreateControlMissionBindings extends Bindings {
   }
 }
 
+class AddNewStudentsToControlMissionBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<AddNewStudentsToControlMissionController>(
+      () => AddNewStudentsToControlMissionController(),
+      fenix: true,
+    );
+  }
+}
+
 class RolesBinidings extends Bindings {
   @override
   void dependencies() {
