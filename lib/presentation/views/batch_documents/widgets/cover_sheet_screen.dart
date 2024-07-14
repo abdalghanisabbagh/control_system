@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
 import '../../../../domain/controllers/profile_controller.dart';
-import '../../../../domain/controllers/seating_numbers_controllers/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/index.dart';
 import 'add_new_cover_widget.dart';
 
-class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
+class CoverSheetsScreen extends GetView<CoversSheetsController> {
   const CoverSheetsScreen({super.key});
 
   @override
@@ -53,7 +53,7 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
         ),
         Row(
           children: [
-            GetBuilder<CreateCoversSheetsController>(
+            GetBuilder<CoversSheetsController>(
               builder: (controller) {
                 if (controller.isLoadingGetEducationYear) {
                   return SizedBox(
@@ -82,7 +82,7 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
             const SizedBox(
               width: 10,
             ),
-            GetBuilder<CreateCoversSheetsController>(
+            GetBuilder<CoversSheetsController>(
               builder: (controller) {
                 if (controller.isLoadingGetControlMission) {
                   return Center(
@@ -111,7 +111,6 @@ class CoverSheetsScreen extends GetView<CreateCoversSheetsController> {
             ),
           ],
         ),
-        
       ],
     );
   }

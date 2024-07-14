@@ -9,6 +9,5 @@ export 'home_controller.dart';
 export 'proctor_controller.dart';
 export 'profile_controller.dart';
 export 'school_controller.dart';
-export 'seating_numbers_controllers/seating_numbers_controllers.dart';
 export 'students_controllers/students_controllers.dart';
 export 'subject_controller.dart';
