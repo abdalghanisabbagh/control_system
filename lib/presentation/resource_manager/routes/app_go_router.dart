@@ -142,8 +142,7 @@ class AppGoRouter {
                   return const AddStudentsToControlMissionScreen();
                 },
                 onExit: (context, state) async {
-                  await Get.delete<DistributeStudentsController>();
-                  Get.find<CreateControlMissionController>().onInit();
+                  await Get.delete<AddNewStudentsToControlMissionController>();
                   return true;
                 },
               ),
