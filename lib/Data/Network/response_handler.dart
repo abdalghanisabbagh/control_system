@@ -146,10 +146,19 @@ class ResponseHandler<T> {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       if (response.data['status'] == true) {
-        try {
-          return Right(converter(response.data['data']));
-        } catch (e) {
-          return Left(Failure(2025, 'error while convert $T from json'));
+        if (response.data['data'] != null) {
+          try {
+            return Right(converter(response.data['data']));
+          } catch (e) {
+            return Left(Failure(2025, 'error while convert $T from json'));
+          }
+        } else {
+          return Left(
+            Failure(
+              2025,
+              'No data found',
+            ),
+          );
         }
       } else {
         return Left(
