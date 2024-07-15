@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
 import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:control_system/domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:intl/intl.dart';
 
+import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/styles_manager.dart';
 
 // ignore: must_be_immutable
@@ -64,16 +66,37 @@ class CoverWidget extends GetView<CoversSheetsController> {
                       ),
                       IconButton(
                           onPressed: () {
-                            controller
-                                .deleteExamMission(id: examMissionObject.iD!)
-                                .then(
-                              (value) {
-                                MyFlashBar.showSuccess(
-                                  "Exam Cover Sheet Added Successfully",
-                                  "Success",
-                                ).show(Get.key.currentContext!);
+                            MyAwesomeDialogue(
+                              title: 'Delete Exam Cover Sheet',
+                              desc:
+                                  'Are you sure you want to delete this mission?',
+                              dialogType: DialogType.warning,
+                              btnCancelOnPressed: () {},
+                              btnOkOnPressed: () {
+                                controller
+                                    .deleteExamMission(
+                                        id: examMissionObject.iD!)
+                                    .then((value) {
+                                  if (value) {
+                                    MyFlashBar.showSuccess(
+                                      'Success',
+                                      'Students have been distributed successfully',
+                                    ).show(context);
+                                  }
+                                });
                               },
-                            );
+                            ).showDialogue(context);
+
+                            // controller
+                            //     .deleteExamMission(id: examMissionObject.iD!)
+                            //     .then(
+                            //   (value) {
+                            //     MyFlashBar.showSuccess(
+                            //       "Exam Cover Sheet Added Successfully",
+                            //       "Success",
+                            //     ).show(Get.key.currentContext!);
+                            //   },
+                            // );
                           },
                           icon: CircleAvatar(
                               backgroundColor: ColorManager.red,
