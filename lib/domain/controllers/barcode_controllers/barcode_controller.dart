@@ -60,11 +60,13 @@ class BarcodeController extends GetxController {
         setDegreeSuccess = false;
       },
       (r) {
+        barcodeResModel = null;
+        barcodeController.clear();
+        studentDegreeController.clear();
         setDegreeSuccess = true;
       },
     );
     isLoading = false;
-    getDataFromBarcode();
     update();
 
     return setDegreeSuccess;
