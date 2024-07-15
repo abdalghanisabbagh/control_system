@@ -38,15 +38,7 @@ class BarCodeSubjects extends StatelessWidget {
                   style: nunitoBlack.copyWith(
                       color: ColorManager.bgSideMenu, fontSize: 16),
                   children: const <TextSpan>[
-                    // TODO?
-                    // TextSpan(
-                    //   text: StudentServices.getGrade(
-                    //           id: controller
-                    //               .stdExBRCResMod!.students!.gradesId)
-                    //       .name,
-                    //   style: nunitoBold.copyWith(
-                    //       color: ColorManager.bgSideMenu, fontSize: 16),
-                    // ),
+                 
                   ],
                 ),
               ),
@@ -56,15 +48,7 @@ class BarCodeSubjects extends StatelessWidget {
                   style: nunitoBlack.copyWith(
                       color: ColorManager.bgSideMenu, fontSize: 16),
                   children: const <TextSpan>[
-                    // TextSpan(
-                    //   //TODO ?
-                    //   text: StudentServices.getClass(
-                    //           id: controller
-                    //               .stdExBRCResMod!.students!.classId)!
-                    //       .name,
-                    //   style: nunitoBold.copyWith(
-                    //       color: ColorManager.bgSideMenu, fontSize: 16),
-                    // ),
+                   
                   ],
                 ),
               ),

@@ -169,7 +169,6 @@ class AddNewUserWidget extends StatelessWidget {
               child: InkWell(
                 onTap: () async {
                   if (formkey.currentState!.validate() || roleType != null) {
-                    ///TODO :: Create Method
                   }
                 },
                 child: Container(
