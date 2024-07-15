@@ -83,16 +83,16 @@ class CoversSheetsController extends GetxController {
   void setSelectedItemControlMission(List<ValueItem> items) async {
     if (items.isNotEmpty) {
       selectedItemControlMission = items.first;
-      int controlMissionId = selectedItemControlMission!.value;
       controlMissionObject = controlMissionList.firstWhereOrNull(
-        (element) => element.iD == controlMissionId,
+        (element) => element.iD == selectedItemControlMission!.value,
       );
       isLoading = true;
       update();
       await Future.wait([getAllSubjects(), getGradesBySchoolId()]);
       isLoading = false;
       update();
-      await getAllExamMissionsByControlMission(controlMissionId);
+      await getAllExamMissionsByControlMission(
+          selectedItemControlMission!.value);
       updateFilteredList(null, null);
     } else {
       selectedItemControlMission = null;
@@ -277,5 +277,36 @@ class CoversSheetsController extends GetxController {
         update();
       },
     );
+  }
+
+  Future<bool> deleteExamMission({
+    required int id,
+  }) async {
+    bool examMissionHasBeenDeleted = false;
+
+    ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
+
+    Either<Failure, ExamMissionResModel> response =
+        await responseHandler.getResponse(
+      path: '${ExamLinks.examMission}/$id',
+      converter: ExamMissionResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        examMissionHasBeenDeleted = false;
+      },
+      (r) {
+        getAllExamMissionsByControlMission(selectedItemControlMission!.value);
+        examMissionHasBeenDeleted = true;
+      },
+    );
+    update();
+    return examMissionHasBeenDeleted;
   }
 }

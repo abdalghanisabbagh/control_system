@@ -106,7 +106,7 @@ class CreateCoversSheetsController extends GetxController {
   void setSelectedItemControlMission(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemControlMission = items.first;
-    //  int controlMission = selectedItemControlMission!.value;
+      //  int controlMission = selectedItemControlMission!.value;
     } else {
       selectedItemControlMission = null;
     }
@@ -312,6 +312,4 @@ class CreateCoversSheetsController extends GetxController {
     update();
     return addExamMissionHasBeenAdded;
   }
-
-  
 }

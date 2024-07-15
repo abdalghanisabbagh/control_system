@@ -128,8 +128,8 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                                 child: MultiSelectDropDownView(
                                   hintText: "Select Grade",
                                   onOptionSelected: (selectedItem) {
-                                    controller.setSelectedItemEducationYear(
-                                        selectedItem);
+                                    controller
+                                        .setSelectedItemGrade(selectedItem);
                                     formFieldState.didChange(selectedItem);
                                   },
                                   options: controller.optionsGrades,
