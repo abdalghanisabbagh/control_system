@@ -1,3 +1,4 @@
+import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:control_system/Data/Models/student/student_res_model.dart';
 
 class BarcodeResModel {
@@ -11,6 +12,7 @@ class BarcodeResModel {
   String? examVersion;
   int? isCheating;
   StudentResModel? student;
+  ExamMissionResModel? examMission;
 
   BarcodeResModel({
     this.iD,
@@ -23,6 +25,7 @@ class BarcodeResModel {
     this.examVersion,
     this.isCheating,
     this.student,
+    this.examMission,
   });
 
   BarcodeResModel.fromJson(json) {
@@ -37,6 +40,10 @@ class BarcodeResModel {
     isCheating = json['isCheating'];
     student = json['student'] != null
         ? StudentResModel.fromJson(json['student'])
+        : null;
+
+    examMission = json['exam_mission'] != null
+        ? ExamMissionResModel.fromJson(json['exam_mission'])
         : null;
   }
 
@@ -53,6 +60,9 @@ class BarcodeResModel {
     data['isCheating'] = isCheating;
     if (student != null) {
       data['student'] = student!.toJson();
+      if (examMission != null) {
+        data['exam_mission'] = examMission!.toJson();
+      }
     }
     return data;
   }
