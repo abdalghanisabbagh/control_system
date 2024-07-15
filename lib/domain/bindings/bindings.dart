@@ -1,10 +1,6 @@
 import 'package:get/get.dart';
 
-import '../controllers/batch_documents.dart/batch_documents_controller.dart';
-import '../controllers/batch_documents.dart/cover_shetts_controller.dart';
-import '../controllers/batch_documents.dart/create_covers_sheets_controller.dart';
 import '../controllers/controllers.dart';
-import '../controllers/roles_controller.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
 
@@ -48,7 +44,7 @@ class BatchDocumentsBindings extends Bindings {
       () => CreateCoversSheetsController(),
       fenix: true,
     );
-     Get.lazyPut<CreateCoversSheetsController>(
+    Get.lazyPut<CreateCoversSheetsController>(
       () => CreateCoversSheetsController(),
       fenix: true,
     );
@@ -153,6 +149,16 @@ class ControlMissingBindings extends Bindings {
     );
     Get.lazyPut<DistributionController>(
       () => DistributionController(),
+      fenix: true,
+    );
+  }
+}
+
+class BarcodeBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<BarcodeController>(
+      () => BarcodeController(),
       fenix: true,
     );
   }
