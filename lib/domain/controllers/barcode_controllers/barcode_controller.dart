@@ -1,6 +1,20 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/barcodes/barcode_res_model.dart';
+import 'package:control_system/Data/Network/response_handler.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BRCodeController extends GetxController {
+import '../../../Data/Network/tools/failure_model.dart';
+import '../../../Data/enums/req_type_enum.dart';
+import '../../../app/configurations/app_links.dart';
+
+class BarcodeController extends GetxController {
+  BarcodeResModel? barcodeResModel;
+
+  final TextEditingController barcodeController = TextEditingController();
+
 //   String atoken = '';
 //   SchoolResponse? selectedSchool;
 //   EducationResponse? selectedEduction;
@@ -9,11 +23,16 @@ class BRCodeController extends GetxController {
 //   bool edit = false;
 //   TextEditingController degreeTextController = TextEditingController();
 
-//   final TextEditingController barcodeController = TextEditingController();
 //   final FocusNode brCodeFoucs = FocusNode();
 
 //   FocusNode degreeController = FocusNode();
-//   RxBool isLoading = false.obs;
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    barcodeController.dispose();
+    super.dispose();
+  }
 
 //   @override
 //   void onReady() {
@@ -31,28 +50,37 @@ class BRCodeController extends GetxController {
 //     ClassesControllers classesControllers = Get.find();
 //   }
 
-//   getDataFromBarcode(String barcode) async {
-//     degreeTextController.clear();
-//     buildwidget = false;
-//     update();
-//     final res = await StudentExamBarcodeService.getfullDataByBarcode(
-//         token: atoken, barcode: barcode);
+  Future<void> getDataFromBarcode() async {
+    isLoading = true;
+    update();
 
-//     if (res != null) {
-//       stdExBRCResMod = res;
-//       if (stdExBRCResMod!.studentDegree != null) {
-//         brCodeFoucs.requestFocus();
-//         barcodeController.clear();
-//       } else {
-//         degreeController.requestFocus();
-//       }
-//       buildwidget = true;
-//       update();
-//     } else {
-//       buildwidget = false;
-//       update();
-//     }
-//   }
+    ResponseHandler<BarcodeResModel> responseHandler =
+        ResponseHandler<BarcodeResModel>();
+
+    Either<Failure, BarcodeResModel> response =
+        await responseHandler.getResponse(
+      path:
+          '${StudentsLinks.studentBarcodes}/barcode/${barcodeController.text}',
+      converter: BarcodeResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        isLoading = false;
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        isLoading = false;
+        barcodeResModel = r;
+      },
+    );
+
+    update();
+  }
 
 //   editStudentGrades() {
 //     edit = true;
