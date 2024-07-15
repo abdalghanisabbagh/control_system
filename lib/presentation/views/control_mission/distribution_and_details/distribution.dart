@@ -44,32 +44,6 @@ class DistributionScreen extends GetView<DistributionController> {
                   text: "Distribution: ${controller.controlMissionName}",
                 ),
                 const Spacer(),
-                InkWell(
-                  onTap: () {
-                    context.goNamed(AppRoutesNamesAndPaths
-                        .addNewStudentsToControlMissionName);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(11),
-                      ),
-                      color: ColorManager.glodenColor,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Add Students",
-                        style: nunitoRegular.copyWith(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const Spacer(),
                 Visibility(
                   visible: Get.find<ProfileController>().canAccessWidget(
                     widgetId: '2201',
