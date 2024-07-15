@@ -26,6 +26,7 @@ class ColorManager {
   // static Color shippedStatus = const Color(0xffAC2E9F);
 
   static Color deliverdStatus = const Color(0xff07CC66);
+  static Color green = const Color(0xff07CC66);
 
   static Color displayLargeText = Colors.black;
   static Color elevatedButtonColor = Colors.black;
