@@ -43,6 +43,8 @@ class CoversSheetsController extends GetxController {
   ValueItem? selectedSubject;
 
   final int schoolId = Hive.box('School').get('Id');
+  final int schoolTypeId = Hive.box('School').get('SchoolTypeID');
+
 
   @override
   void onInit() {

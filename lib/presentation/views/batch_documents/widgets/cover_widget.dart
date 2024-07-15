@@ -5,6 +5,7 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/my_s
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/get_core.dart';
 import 'package:intl/intl.dart';
 
 import '../../../resource_manager/styles_manager.dart';
@@ -18,9 +19,6 @@ class CoverWidget extends GetView<CoversSheetsController> {
     required this.examMissionObject,
     required this.controlMissionObject,
   });
-
-  // CreateCoversSheetsController controller = Get.find();
-  // AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +53,14 @@ class CoverWidget extends GetView<CoversSheetsController> {
                       ),
                       const Spacer(),
                       IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.edit)),
+                        onPressed: () {},
+                        icon: CircleAvatar(
+                          backgroundColor: ColorManager.primary,
+                          child: Icon(Icons.edit, color: ColorManager.white),
+                        ),
+                      ),
                       const SizedBox(
-                        width: 25,
+                        width: 15,
                       ),
                       IconButton(
                           onPressed: () {
@@ -72,7 +75,12 @@ class CoverWidget extends GetView<CoversSheetsController> {
                               },
                             );
                           },
-                          icon: const Icon(Icons.delete_forever)),
+                          icon: CircleAvatar(
+                              backgroundColor: ColorManager.red,
+                              child: Icon(
+                                Icons.delete_forever,
+                                color: ColorManager.white,
+                              ))),
                     ],
                   ),
                   const SizedBox(
@@ -87,8 +95,8 @@ class CoverWidget extends GetView<CoversSheetsController> {
                           color: ColorManager.primary,
                         ),
                       ),
-                      const SizedBox(
-                        width: 50,
+                      SizedBox(
+                        width: Get.width * 0.2,
                       ),
                       Text(
                         "Grade : ${examMissionObject.gradeResModel!.name}",
@@ -110,8 +118,8 @@ class CoverWidget extends GetView<CoversSheetsController> {
                           color: ColorManager.primary,
                         ),
                       ),
-                      const SizedBox(
-                        width: 200,
+                      SizedBox(
+                        width: Get.width * 0.3,
                       ),
                       Text("Exam Duration :${examMissionObject.duration} min",
                           style: nunitoRegularStyle().copyWith(
@@ -880,227 +888,124 @@ class CoverWidget extends GetView<CoversSheetsController> {
             ),
             Row(
               children: [
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      // Get.defaultDialog(
-                      //     content: Column(
-                      //   children: [
-                      //     const Text("What do you want to print ?"),
-                      //     const SizedBox(
-                      //       height: 50,
-                      //     ),
-                      //     Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         ElevatedButton(
-                      //             onPressed: () {
-                      //               log("Taped American");
-                      //               Get.defaultDialog(
-                      //                   title: "WA Covers",
-                      //                   content: Column(
-                      //                     children: [
-                      //                       ElevatedButton(
-                      //                           onPressed: () {
-                      //                             CreateCoversSheetsController
-                      //                                 controller = Get.find();
-                      //                             controller
-                      //                                 .printAnswerSheetsAM(
-                      //                                     objet.id!, true);
-                      //                           },
-                      //                           child: const Text("old Cover")),
-                      //                       const SizedBox(
-                      //                         height: 20,
-                      //                       ),
-                      //                       ElevatedButton(
-                      //                           onPressed: () {
-                      //                             CreateCoversSheetsController
-                      //                                 controller = Get.find();
-                      //                             controller
-                      //                                 .printAnswerSheetsArabicWritingAssessment(
-                      //                                     objet.id!);
-                      //                           },
-                      //                           child: const Text(
-                      //                               "Arabic Writing Assessment")),
-                      //                       const SizedBox(
-                      //                         height: 20,
-                      //                       ),
-                      //                       ElevatedButton(
-                      //                           onPressed: () {
-                      //                             CreateCoversSheetsController
-                      //                                 controller = Get.find();
-                      //                             controller
-                      //                                 .printAnswerSheetsEnglishWritingAssessment(
-                      //                                     objet.id!);
-                      //                           },
-                      //                           child: const Text(
-                      //                               "English Writing Assessment")),
-                      //                       const SizedBox(
-                      //                         height: 20,
-                      //                       ),
-                      //                       ElevatedButton(
-                      //                           onPressed: () {
-                      //                             CreateCoversSheetsController
-                      //                                 controller = Get.find();
-                      //                             controller
-                      //                                 .printAnswerSheetsEnglishSocialStudiesWritingAssessment(
-                      //                                     objet.id!);
-                      //                           },
-                      //                           child: const Text(
-                      //                               "English Social Studies Writing Assessment")),
-                      //                     ],
-                      //                   ));
-                      //             },
-                      //             child: const Text("WA Cover")),
-                      //         ElevatedButton(
-                      //             onPressed: () {
-                      //               log("Taped American");
-                      //               CreateCoversSheetsController controller =
-                      //                   Get.find();
-                      //               controller.printAnswerSheetsAM(
-                      //                   objet.id!, false);
-                      //             },
-                      //             child: const Text("Exam Cover")),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ));
-                    },
-                    child: Container(
-                      height: 50,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        color: ColorManager.bgSideMenu,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "American Cover Sheet",
-                            // style: AppTextStyle.nunitoRegular
-                            //     .copyWith(color: Colors.white, fontSize: 18),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Icon(
-                            Icons.print,
-                            color: ColorManager.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      // controller.printAnswerSheetsIB(
-                      //                 objet.id!, false);
-                    },
-                    child: Container(
-                      height: 50,
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        color: Colors.lightBlue,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "IB Cover Sheet",
-                            // style: AppTextStyle.nunitoRegular
-                            //     .copyWith(color: Colors.white, fontSize: 18),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Icon(
-                            Icons.print,
-                            color: ColorManager.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Get.defaultDialog(
-                          content: Column(
-                        children: [
-                          const Text("What do you want to print?"),
-                          const SizedBox(
+                controller.schoolTypeId == 1
+                    ? Expanded(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Container(
                             height: 50,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                              color: ColorManager.bgSideMenu,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "American Cover Sheet",
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Icon(
+                                  Icons.print,
+                                  color: ColorManager.white,
+                                )
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    // log("Taped British");
-                                    // CreateCoversSheetsController controller =
-                                    //     Get.find();
-                                    // controller.printAnswerSheetsBR(
-                                    //     objet.id!, true);
-                                  },
-                                  child: const Text("WA Cover")),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    // log("Taped British");
-                                    // CreateCoversSheetsController controller =
-                                    //     Get.find();
-                                    // controller.printAnswerSheetsBR(
-                                    //     objet.id!, false);
-                                  },
-                                  child: const Text("Exam Cover")),
-                            ],
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                controller.schoolTypeId == 2
+                    ? Expanded(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                              color: Colors.lightBlue,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "IB Cover Sheet",
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Icon(
+                                  Icons.print,
+                                  color: ColorManager.white,
+                                )
+                              ],
+                            ),
                           ),
-                        ],
-                      ));
-                    },
-                    child: Container(
-                      height: 50,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        color: ColorManager.red,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "British Cover Sheet",
-                            // style: AppTextStyle.nunitoRegular
-                            //     .copyWith(color: Colors.white, fontSize: 18),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                controller.schoolTypeId == 5
+                    ? Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Get.defaultDialog(
+                                content: Column(
+                              children: [
+                                const Text("What do you want to print?"),
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                        onPressed: () {},
+                                        child: const Text("WA Cover")),
+                                    ElevatedButton(
+                                        onPressed: () {},
+                                        child: const Text("Exam Cover")),
+                                  ],
+                                ),
+                              ],
+                            ));
+                          },
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                              color: ColorManager.red,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "British Cover Sheet",
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Icon(
+                                  Icons.print,
+                                  color: ColorManager.white,
+                                )
+                              ],
+                            ),
                           ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Icon(
-                            Icons.print,
-                            color: ColorManager.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
           ],
