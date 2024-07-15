@@ -57,11 +57,13 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
             GetBuilder<CoversSheetsController>(
               builder: (controller) {
                 if (controller.isLoadingGetEducationYear) {
-                  return SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: FittedBox(
-                      child: LoadingIndicators.getLoadingIndicator(),
+                  return Center(
+                    child: SizedBox(
+                      width: Get.width * 0.4,
+                      height: 50,
+                      child: FittedBox(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      ),
                     ),
                   );
                 }
@@ -87,7 +89,13 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
               builder: (controller) {
                 if (controller.isLoadingGetControlMission) {
                   return Center(
-                    child: LoadingIndicators.getLoadingIndicator(),
+                    child: SizedBox(
+                      width: Get.width * 0.4,
+                      height: 50,
+                      child: FittedBox(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      ),
+                    ),
                   );
                 }
 
@@ -116,16 +124,17 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
           height: 10,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GetBuilder<CoversSheetsController>(
               builder: (controller) {
                 if (controller.isLoading) {
-                  return SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: FittedBox(
-                      child: LoadingIndicators.getLoadingIndicator(),
+                  return Center(
+                    child: SizedBox(
+                      width: Get.width * 0.4,
+                      height: 50,
+                      child: FittedBox(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      ),
                     ),
                   );
                 }
@@ -148,11 +157,20 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                 );
               },
             ),
+            const SizedBox(
+              width: 10,
+            ),
             GetBuilder<CoversSheetsController>(
               builder: (controller) {
                 if (controller.isLoading) {
                   return Center(
-                    child: LoadingIndicators.getLoadingIndicator(),
+                    child: SizedBox(
+                      width: Get.width * 0.4,
+                      height: 50,
+                      child: FittedBox(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      ),
+                    ),
                   );
                 }
 

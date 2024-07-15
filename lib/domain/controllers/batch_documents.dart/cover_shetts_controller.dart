@@ -180,8 +180,7 @@ class CoversSheetsController extends GetxController {
       },
       (r) {
         selectedItemControlMission = null;
-        filteredExamMissionsList = [];
-
+filteredExamMissionsList.clear();
         controlMissionList = r.data!;
         List<ValueItem> items = r.data!
             .map((item) => ValueItem(label: item.name!, value: item.iD))

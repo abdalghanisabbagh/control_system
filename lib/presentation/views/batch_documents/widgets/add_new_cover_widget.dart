@@ -96,6 +96,64 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                         },
                       );
                     }),
+                FormField<List<ValueItem<dynamic>>>(
+                    validator: Validations.multiSelectDropDownRequiredValidator,
+                    builder: (formFieldState) {
+                      return GetBuilder<CreateCoversSheetsController>(
+                        builder: (_) {
+                          if (controller.isLoadingGetControlMission) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: FittedBox(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                ),
+                              ),
+                            );
+                          }
+
+                          if (controller.optionsControlMission.isEmpty) {
+                            return const Text('No items available');
+                          }
+                          if (controller.selectedItemEducationYear == null) {
+                            return const SizedBox.shrink();
+                          }
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                width: 500,
+                                child: MultiSelectDropDownView(
+                                  hintText: "Select Control Mission",
+                                  onOptionSelected: (selectedItem) {
+                                    controller.selectedItemControlMission =
+                                        selectedItem.isNotEmpty
+                                            ? selectedItem.first
+                                            : null;
+                                    formFieldState.didChange(selectedItem);
+                                  },
+                                  options: controller.optionsControlMission,
+                                ),
+                              ),
+                              if (formFieldState.hasError)
+                                Text(
+                                  formFieldState.errorText!,
+                                  style: nunitoRegular.copyWith(
+                                    fontSize: FontSize.s14,
+                                    color: ColorManager.error,
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                      );
+                    }),
                 const SizedBox(
                   height: 10,
                 ),
@@ -202,65 +260,9 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                         },
                       );
                     }),
-                const SizedBox(height: 10),
-                FormField<List<ValueItem<dynamic>>>(
-                    validator: Validations.multiSelectDropDownRequiredValidator,
-                    builder: (formFieldState) {
-                      return GetBuilder<CreateCoversSheetsController>(
-                        builder: (_) {
-                          if (controller.isLoadingGetControlMission) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: FittedBox(
-                                  child:
-                                      LoadingIndicators.getLoadingIndicator(),
-                                ),
-                              ),
-                            );
-                          }
-
-                          if (controller.optionsControlMission.isEmpty) {
-                            return const Text('No items available');
-                          }
-                          if (controller.selectedItemEducationYear == null) {
-                            return const SizedBox.shrink();
-                          }
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 500,
-                                child: MultiSelectDropDownView(
-                                  hintText: "Select Control Mission",
-                                  onOptionSelected: (selectedItem) {
-                                    controller.selectedItemControlMission =
-                                        selectedItem.isNotEmpty
-                                            ? selectedItem.first
-                                            : null;
-                                    formFieldState.didChange(selectedItem);
-                                  },
-                                  options: controller.optionsControlMission,
-                                ),
-                              ),
-                              if (formFieldState.hasError)
-                                Text(
-                                  formFieldState.errorText!,
-                                  style: nunitoRegular.copyWith(
-                                    fontSize: FontSize.s14,
-                                    color: ColorManager.error,
-                                  ),
-                                ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text('Exam Date:', style: nunitoRegularStyle()),
                 const SizedBox(
                   height: 5,
