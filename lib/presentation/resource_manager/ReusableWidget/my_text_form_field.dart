@@ -21,6 +21,7 @@ class MytextFormFiled extends StatelessWidget {
     this.enableBorderColor = ColorManager.grey,
     this.foucsBorderColor = ColorManager.primary,
     this.onFieldSubmitted,
+    this.focusNode,
   });
 
   final String? Function(String? newValue)? myValidation;
@@ -37,6 +38,7 @@ class MytextFormFiled extends StatelessWidget {
   final Widget? suffixIcon;
   final List<TextInputFormatter>? textInputs;
   final String? title;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +80,7 @@ class MytextFormFiled extends StatelessWidget {
       onChanged: onChange,
       onFieldSubmitted: onFieldSubmitted,
       obscureText: obscureText,
+      focusNode: focusNode,
     ).paddingOnly(
       top: AppPading.p25,
     );
