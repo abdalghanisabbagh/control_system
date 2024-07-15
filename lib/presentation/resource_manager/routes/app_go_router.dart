@@ -202,9 +202,11 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.setDegreesScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          BarcodeBindings().dependencies();
           return const SetDegreesScreen();
         },
         onExit: (context, state) {
+          Get.delete<BarcodeController>();
           return true;
         },
       ),
