@@ -98,9 +98,18 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                     ),
                   );
                 }
+                if (controller.selectedItemEducationYear == null) {
+                  return Text(
+                    'Please Select Education Year',
+                    style: nunitoBoldStyle(),
+                  );
+                }
 
                 if (controller.optionsControlMission.isEmpty) {
-                  return const Text('No items available');
+                  return Text(
+                    'No items available',
+                    style: nunitoBoldStyle(),
+                  );
                 }
                 if (controller.selectedItemEducationYear == null) {
                   return const SizedBox.shrink();
@@ -138,13 +147,16 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                     ),
                   );
                 }
-
-                if (controller.optionsGrades.isEmpty) {
-                  return const Text('No items available');
-                }
                 if (controller.selectedItemEducationYear == null ||
                     controller.selectedItemControlMission == null) {
                   return const SizedBox.shrink();
+                }
+
+                if (controller.optionsGrades.isEmpty) {
+                  return Text(
+                    'No items available',
+                    style: nunitoBoldStyle(),
+                  );
                 }
 
                 return SizedBox(
@@ -173,13 +185,15 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                     ),
                   );
                 }
-
-                if (controller.optionsSubjects.isEmpty) {
-                  return const Text('No items available');
-                }
                 if (controller.selectedItemEducationYear == null ||
                     controller.selectedItemControlMission == null) {
                   return const SizedBox.shrink();
+                }
+                if (controller.optionsSubjects.isEmpty) {
+                  return Text(
+                    'No items available',
+                    style: nunitoBoldStyle(),
+                  );
                 }
 
                 return Padding(
