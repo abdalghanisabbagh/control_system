@@ -117,6 +117,18 @@ class AppGoRouter {
         },
         routes: [
           GoRoute(
+            path: AppRoutesNamesAndPaths.addNewStudentsToControlMissionPath,
+            name: AppRoutesNamesAndPaths.addNewStudentsToControlMissionName,
+            builder: (context, state) {
+              AddNewStudentsToControlMissionBindings().dependencies();
+              return const AddStudentsToControlMissionScreen();
+            },
+            onExit: (context, state) async {
+              await Get.delete<AddNewStudentsToControlMissionController>();
+              return true;
+            },
+          ),
+          GoRoute(
             path: AppRoutesNamesAndPaths.reviewAndDetailsMissionPath,
             name: AppRoutesNamesAndPaths.reviewAndDetailsMissionName,
             builder: (context, state) {
@@ -134,18 +146,6 @@ class AppGoRouter {
               return true;
             },
             routes: [
-              GoRoute(
-                path: AppRoutesNamesAndPaths.addNewStudentsToControlMissionPath,
-                name: AppRoutesNamesAndPaths.addNewStudentsToControlMissionName,
-                builder: (context, state) {
-                  AddNewStudentsToControlMissionBindings().dependencies();
-                  return const AddStudentsToControlMissionScreen();
-                },
-                onExit: (context, state) async {
-                  await Get.delete<AddNewStudentsToControlMissionController>();
-                  return true;
-                },
-              ),
               GoRoute(
                 path: AppRoutesNamesAndPaths.distributeStudentsScreenPath,
                 name: AppRoutesNamesAndPaths.distributeStudentsScreenName,

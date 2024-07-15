@@ -341,7 +341,13 @@ class AddStudentsToControlMissionScreen
                         const SizedBox(height: 10),
                         ElevatedAddButton(
                           onPressed: () async {
-                            await controller.addStudentsToControlMission();
+                            await controller.addStudentsToControlMission().then(
+                              (value) {
+                                if (value) {
+                                  Get.back();
+                                }
+                              },
+                            );
                           },
                         ),
                       ],

@@ -11,6 +11,7 @@ class ControlMissionResModel {
     this.startDate,
     this.endDate,
     this.active,
+    this.count,
   });
 
   ControlMissionResModel.fromExtra(Map<String, String>? extra) {
@@ -39,6 +40,7 @@ class ControlMissionResModel {
     startDate = json['Start_Date'];
     endDate = json['End_Date'];
     active = json['Active'];
+    count = json['_count'];
   }
 
   int? active;
@@ -52,6 +54,7 @@ class ControlMissionResModel {
   String? startDate;
   String? updatedAt;
   int? updatedBy;
+  Map<String, dynamic>? count;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
