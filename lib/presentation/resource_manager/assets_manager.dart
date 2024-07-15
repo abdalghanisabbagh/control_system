@@ -47,6 +47,11 @@ class AssetsManager {
   static const String assetsFontsPlayfairDisplaySemiBold =
       "assets/fonts/PlayfairDisplay-SemiBold.ttf";
 
+  /// Assets for assetsIconsStudentDegree
+  /// assets/icons/student_degrees.png
+  static const String assetsIconsStudentDegrees =
+      "assets/icons/student_degrees.png";
+
   /// Assets for assetsIconsAdmin
   /// assets/icons/admin.png
   static const String assetsIconsAdmin = "assets/icons/admin.png";
