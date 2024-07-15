@@ -31,7 +31,7 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       width: double.infinity,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,25 +46,44 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                       style: nunitoBold.copyWith(
                           color: ColorManager.bgSideMenu, fontSize: 30),
                     ),
-                    // Text(
-                    //   "System :${controller.controlMissionList[missionindex].name}",
-                    //   style: nunitoRegular.copyWith(
-                    //       color: ColorManager.bgSideMenu, fontSize: 16),
-                    // ),
-                    // Text(
-                    //   "Students : ${controller.missions[missionResponseindex].studentseatnumbers!.length} students",
-                    //   style: nunitoRegular.copyWith(
-                    //       color: ColorManager.bgSideMenu, fontSize: 16),
-                    // ),
-                    // Text(
-                    //   "Status : Done",
-                    //   style: nunitoRegular.copyWith(
-                    //       color: Colors.green, fontSize: 16),
-                    // ),
+                    Text(
+                      "Number Of Students: ${controlMission.count?['student_seat_numnbers']}",
+                      style: nunitoRegular.copyWith(
+                          color: ColorManager.bgSideMenu, fontSize: 16),
+                    ),
                   ],
                 ),
               ),
             ],
+          ),
+          const Spacer(),
+          InkWell(
+            onTap: () {
+              context.goNamed(
+                  AppRoutesNamesAndPaths.addNewStudentsToControlMissionName);
+            },
+            child: Container(
+              width: 200,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                color: ColorManager.bgSideMenu,
+              ),
+              child: Center(
+                child: Text(
+                  "Add New Students To Control Mission",
+                  style: nunitoRegular.copyWith(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
           ),
           Column(
             children: [
@@ -157,7 +176,7 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
