@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/loading_indicators.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../resource_manager/index.dart';
 import '../base_screen.dart';
+import 'widgets/edit_student_degrees_widget.dart';
 
 class SetDegreesScreen extends GetView<BarcodeController> {
   const SetDegreesScreen({super.key});
@@ -23,7 +25,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
             color: ColorManager.bgColor,
             child: Column(
               children: [
-                const HeaderWidget(text: "Student Grades"),
+                const HeaderWidget(text: "Student Degrees"),
                 const SizedBox(
                   height: 20,
                 ),
@@ -114,6 +116,41 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                           .bgSideMenu,
                                                     ),
                                                   ),
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  controller.barcodeResModel
+                                                                  ?.studentDegree !=
+                                                              null &&
+                                                          controller
+                                                              .barcodeResModel!
+                                                              .studentDegree!
+                                                              .isNotEmpty
+                                                      ? Row(
+                                                          children: [
+                                                            Text(
+                                                              'Degree : ',
+                                                              style:
+                                                                  nunitoRegular,
+                                                            ),
+                                                            Text(
+                                                              "${controller.barcodeResModel?.studentDegree}",
+                                                              style:
+                                                                  nunitoRegular
+                                                                      .copyWith(
+                                                                color: int.parse(controller
+                                                                            .barcodeResModel!
+                                                                            .studentDegree!) <
+                                                                        60
+                                                                    ? ColorManager
+                                                                        .red
+                                                                    : ColorManager
+                                                                        .green,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      : const SizedBox.shrink(),
                                                 ],
                                               ),
                                               const SizedBox(
@@ -124,7 +161,12 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                   Visibility(
                                                     visible: true,
                                                     child: InkWell(
-                                                      onTap: () {},
+                                                      onTap: () {
+                                                        MyDialogs.showDialog(
+                                                          context,
+                                                          const EditStudentDegreesWidget(),
+                                                        );
+                                                      },
                                                       child: Container(
                                                         decoration:
                                                             BoxDecoration(

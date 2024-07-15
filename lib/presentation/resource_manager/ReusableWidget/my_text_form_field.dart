@@ -10,6 +10,7 @@ class MytextFormFiled extends StatelessWidget {
     this.title,
     required this.controller,
     this.maxlines = 1,
+    this.maxLength,
     this.isEnable,
     this.myValidation,
     this.isNumber,
@@ -31,6 +32,7 @@ class MytextFormFiled extends StatelessWidget {
   final bool? isEnable;
   final bool? isNumber;
   final int maxlines;
+  final int? maxLength;
   final bool obscureText;
   final Widget? suffixIcon;
   final List<TextInputFormatter>? textInputs;
@@ -70,6 +72,7 @@ class MytextFormFiled extends StatelessWidget {
       ),
       controller: controller,
       maxLines: maxlines,
+      maxLength: maxLength,
       enabled: isEnable,
       validator: myValidation,
       onChanged: onChange,

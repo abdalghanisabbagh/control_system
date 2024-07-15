@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/barcodes/barcode_res_model.dart';
 import 'package:control_system/Data/Network/response_handler.dart';
@@ -14,6 +16,7 @@ class BarcodeController extends GetxController {
   BarcodeResModel? barcodeResModel;
 
   final TextEditingController barcodeController = TextEditingController();
+  final TextEditingController studentDegreeController = TextEditingController();
 
 //   String atoken = '';
 //   SchoolResponse? selectedSchool;
@@ -31,7 +34,40 @@ class BarcodeController extends GetxController {
   @override
   void dispose() {
     barcodeController.dispose();
+    studentDegreeController.dispose();
     super.dispose();
+  }
+
+  Future<bool> setStudentDegree() async {
+    isLoading = true;
+    bool setDegreeSuccess = false;
+    update();
+
+    ResponseHandler<BarcodeResModel> responseHandler =
+        ResponseHandler<BarcodeResModel>();
+    Either<Failure, BarcodeResModel> response =
+        await responseHandler.getResponse(
+      path: '${StudentsLinks.studentBarcodes}/${barcodeResModel?.iD}',
+      converter: BarcodeResModel.fromJson,
+      body: {
+        'ID': barcodeResModel?.iD,
+        'StudentDegree': studentDegreeController.text,
+      },
+      type: ReqTypeEnum.PATCH,
+    );
+    response.fold(
+      (l) {
+        setDegreeSuccess = false;
+      },
+      (r) {
+        setDegreeSuccess = true;
+      },
+    );
+    isLoading = false;
+    getDataFromBarcode();
+    update();
+
+    return setDegreeSuccess;
   }
 
 //   @override
