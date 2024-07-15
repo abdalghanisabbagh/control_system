@@ -43,6 +43,7 @@ class MytextFormFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       keyboardType: isNumber == true ? TextInputType.number : null,
       inputFormatters: isNumber == true
           ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]

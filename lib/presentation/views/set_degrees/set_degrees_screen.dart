@@ -35,6 +35,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                   onFieldSubmitted: (_) {
                     controller.getDataFromBarcode();
                   },
+                  isNumber: true,
                 ),
               ),
               const SizedBox(
