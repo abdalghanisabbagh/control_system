@@ -35,6 +35,7 @@ class CoversSheetsController extends GetxController {
   bool isLoadingGrades = false;
   bool isLoadingGetEducationYear = false;
   bool isLoading = false;
+  bool isLoadingAddExamMission = false;
 
   ValueItem? selectedItemControlMission;
   ValueItem? selectedItemEducationYear;
@@ -178,6 +179,9 @@ class CoversSheetsController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
+        selectedItemControlMission = null;
+        filteredExamMissionsList = [];
+
         controlMissionList = r.data!;
         List<ValueItem> items = r.data!
             .map((item) => ValueItem(label: item.name!, value: item.iD))
@@ -272,7 +276,7 @@ class CoversSheetsController extends GetxController {
       },
       (r) {
         examMissionsList = r.data!;
-
+        updateFilteredList(null, null);
         isLodingGetExamMission = false;
         update();
       },
@@ -308,5 +312,54 @@ class CoversSheetsController extends GetxController {
     );
     update();
     return examMissionHasBeenDeleted;
+  }
+
+  Future<bool> addNewExamMission({
+    required int subjectId,
+    required int controlMissionId,
+    required int gradeId,
+    required int educationyearId,
+    required String year,
+    required String month,
+    required String finalDegree,
+  }) async {
+    isLoadingAddExamMission = true;
+
+    update();
+    bool addExamMissionHasBeenAdded = false;
+    ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
+
+    ExamMissionResModel examMissionResModel = ExamMissionResModel(
+      subjectsID: subjectId,
+      controlMissionID: controlMissionId,
+      gradesID: gradeId,
+      educationYearID: educationyearId,
+      year: year,
+      month: month,
+      finalDegree: finalDegree,
+    );
+
+    var response = await responseHandler.getResponse(
+        path: ExamLinks.examMission,
+        converter: ExamMissionResModel.fromJson,
+        type: ReqTypeEnum.POST,
+        body: examMissionResModel.toJson());
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      addExamMissionHasBeenAdded = false;
+    }, (result) {
+      getAllExamMissionsByControlMission(selectedItemControlMission!.value);
+
+      addExamMissionHasBeenAdded = true;
+    });
+    isLoadingAddExamMission = false;
+
+    update();
+    return addExamMissionHasBeenAdded;
   }
 }

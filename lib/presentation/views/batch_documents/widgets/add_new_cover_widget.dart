@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
+import '../../../../domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
 import '../../../../domain/controllers/batch_documents.dart/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -412,7 +413,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
               }),
             ],
           ),
-          GetBuilder<CreateCoversSheetsController>(builder: (_) {
+          GetBuilder<CoversSheetsController>(builder: (controllerCovers) {
             if (controller.isLodingAddExamMission) {
               return SizedBox(
                 width: 50,
@@ -425,7 +426,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             return InkWell(
               onTap: () {
                 if (_formKey.currentState!.validate()) {
-                  controller
+                  controllerCovers
                       .addNewExamMission(
                           subjectId: controller.selectedItemSubject!.value,
                           controlMissionId:

@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
+import 'package:control_system/domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -106,7 +107,6 @@ class CreateCoversSheetsController extends GetxController {
   void setSelectedItemControlMission(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemControlMission = items.first;
-      //  int controlMission = selectedItemControlMission!.value;
     } else {
       selectedItemControlMission = null;
     }
@@ -265,51 +265,5 @@ class CreateCoversSheetsController extends GetxController {
     );
   }
 
-  Future<bool> addNewExamMission({
-    required int subjectId,
-    required int controlMissionId,
-    required int gradeId,
-    required int educationyearId,
-    required String year,
-    required String month,
-    required String finalDegree,
-  }) async {
-    isLodingAddExamMission = true;
-
-    update();
-    bool addExamMissionHasBeenAdded = false;
-    ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
-
-    ExamMissionResModel examMissionResModel = ExamMissionResModel(
-      subjectsID: subjectId,
-      controlMissionID: controlMissionId,
-      gradesID: gradeId,
-      educationYearID: educationyearId,
-      year: year,
-      month: month,
-      finalDegree: finalDegree,
-    );
-
-    var response = await responseHandler.getResponse(
-        path: ExamLinks.examMission,
-        converter: ExamMissionResModel.fromJson,
-        type: ReqTypeEnum.POST,
-        body: examMissionResModel.toJson());
-
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      addExamMissionHasBeenAdded = false;
-    }, (result) {
-      //  studentController.getStudents();
-      addExamMissionHasBeenAdded = true;
-    });
-    isLodingAddExamMission = false;
-
-    update();
-    return addExamMissionHasBeenAdded;
-  }
+ 
 }
