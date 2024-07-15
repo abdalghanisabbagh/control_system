@@ -25,7 +25,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
             color: ColorManager.bgColor,
             child: Column(
               children: [
-                const HeaderWidget(text: "Student Grades"),
+                const HeaderWidget(text: "Student Degrees"),
                 const SizedBox(
                   height: 20,
                 ),
@@ -116,6 +116,41 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                           .bgSideMenu,
                                                     ),
                                                   ),
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  controller.barcodeResModel
+                                                                  ?.studentDegree !=
+                                                              null &&
+                                                          controller
+                                                              .barcodeResModel!
+                                                              .studentDegree!
+                                                              .isNotEmpty
+                                                      ? Row(
+                                                          children: [
+                                                            Text(
+                                                              'Degree : ',
+                                                              style:
+                                                                  nunitoRegular,
+                                                            ),
+                                                            Text(
+                                                              "${controller.barcodeResModel?.studentDegree}",
+                                                              style:
+                                                                  nunitoRegular
+                                                                      .copyWith(
+                                                                color: int.parse(controller
+                                                                            .barcodeResModel!
+                                                                            .studentDegree!) <
+                                                                        60
+                                                                    ? ColorManager
+                                                                        .red
+                                                                    : ColorManager
+                                                                        .green,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      : const SizedBox.shrink(),
                                                 ],
                                               ),
                                               const SizedBox(
