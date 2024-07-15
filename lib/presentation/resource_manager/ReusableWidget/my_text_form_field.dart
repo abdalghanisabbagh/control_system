@@ -5,23 +5,26 @@ import 'package:get/get.dart';
 import '../index.dart';
 
 class MytextFormFiled extends StatelessWidget {
-  const MytextFormFiled(
-      {super.key,
-      this.title,
-      required this.controller,
-      this.maxlines = 1,
-      this.isEnable,
-      this.myValidation,
-      this.isNumber,
-      this.textInputs,
-      this.onChange,
-      this.suffixIcon,
-      this.obscureText = false,
-      this.enableBorderColor = ColorManager.grey,
-      this.foucsBorderColor = ColorManager.primary});
+  const MytextFormFiled({
+    super.key,
+    this.title,
+    required this.controller,
+    this.maxlines = 1,
+    this.isEnable,
+    this.myValidation,
+    this.isNumber,
+    this.textInputs,
+    this.onChange,
+    this.suffixIcon,
+    this.obscureText = false,
+    this.enableBorderColor = ColorManager.grey,
+    this.foucsBorderColor = ColorManager.primary,
+    this.onFieldSubmitted,
+  });
 
   final String? Function(String? newValue)? myValidation;
   final String? Function(String? value)? onChange;
+  final Function(String? value)? onFieldSubmitted;
   final TextEditingController controller;
   final Color? enableBorderColor;
   final Color? foucsBorderColor;
@@ -70,6 +73,7 @@ class MytextFormFiled extends StatelessWidget {
       enabled: isEnable,
       validator: myValidation,
       onChanged: onChange,
+      onFieldSubmitted: onFieldSubmitted,
       obscureText: obscureText,
     ).paddingOnly(
       top: AppPading.p25,
