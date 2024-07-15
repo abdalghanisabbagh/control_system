@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/loading_indicators.dart';
 import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../resource_manager/index.dart';
 import '../base_screen.dart';
+import 'widgets/edit_student_degrees_widget.dart';
 
 class SetDegreesScreen extends GetView<BarcodeController> {
   const SetDegreesScreen({super.key});
@@ -124,7 +126,12 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                   Visibility(
                                                     visible: true,
                                                     child: InkWell(
-                                                      onTap: () {},
+                                                      onTap: () {
+                                                        MyDialogs.showDialog(
+                                                          context,
+                                                          const EditStudentDegreesWidget(),
+                                                        );
+                                                      },
                                                       child: Container(
                                                         decoration:
                                                             BoxDecoration(
