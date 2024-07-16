@@ -99,20 +99,13 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                   );
                 }
                 if (controller.selectedItemEducationYear == null) {
-                  return Text(
-                    'Please Select Education Year',
-                    style: nunitoBoldStyle(),
-                  );
+                  return const SizedBox.shrink();
                 }
-
                 if (controller.optionsControlMission.isEmpty) {
                   return Text(
                     'No items available',
                     style: nunitoBoldStyle(),
                   );
-                }
-                if (controller.selectedItemEducationYear == null) {
-                  return const SizedBox.shrink();
                 }
 
                 return SizedBox(
@@ -220,14 +213,34 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                 ),
               );
             }
-
-            if (controller.filteredExamMissionsList.isEmpty) {
+            if (controller.selectedItemEducationYear == null ||
+                controller.selectedItemControlMission == null) {
               return Expanded(
-                child: Center(
-                  child: Text(
-                    'No items available',
-                    style: nunitoBoldStyle(),
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'First Select Education Year',
+                      style: nunitoBold.copyWith(
+                        decoration: controller.selectedItemEducationYear != null
+                            ? TextDecoration.lineThrough
+                            : null,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Second Select Control Mission',
+                      style: nunitoBold.copyWith(
+                        decoration:
+                            controller.selectedItemControlMission != null
+                                ? TextDecoration.lineThrough
+                                : null,
+                      ),
+                    ),
+                  ],
                 ),
               );
             }
