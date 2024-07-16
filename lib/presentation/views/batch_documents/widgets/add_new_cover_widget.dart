@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../../../domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
+import '../../../../domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
 import '../../../../domain/controllers/batch_documents.dart/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
