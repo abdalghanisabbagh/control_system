@@ -245,6 +245,17 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
               );
             }
 
+            if (controller.filteredExamMissionsList.isEmpty) {
+              return Expanded(
+                child: Center(
+                  child: Text(
+                    'No items available',
+                    style: nunitoBoldStyle(),
+                  ),
+                ),
+              );
+            }
+
             return Expanded(
               child: ListView.builder(
                   itemCount: controller.filteredExamMissionsList.length,

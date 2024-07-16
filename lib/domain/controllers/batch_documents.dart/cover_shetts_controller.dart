@@ -90,11 +90,14 @@ class CoversSheetsController extends GetxController {
       );
       isLoading = true;
       update();
-      await Future.wait([getAllSubjects(), getGradesBySchoolId()]);
+      await Future.wait([
+        getAllSubjects(),
+        getGradesBySchoolId(),
+        getAllExamMissionsByControlMission(selectedItemControlMission!.value)
+      ]);
       isLoading = false;
       update();
-      await getAllExamMissionsByControlMission(
-          selectedItemControlMission!.value);
+      // a
       updateFilteredList(null, null);
     } else {
       selectedItemControlMission = null;
