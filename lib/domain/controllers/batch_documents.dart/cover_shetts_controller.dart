@@ -88,6 +88,7 @@ class CoversSheetsController extends GetxController {
       controlMissionObject = controlMissionList.firstWhereOrNull(
         (element) => element.iD == selectedItemControlMission!.value,
       );
+
       isLoading = true;
       update();
       await Future.wait([
@@ -97,7 +98,8 @@ class CoversSheetsController extends GetxController {
       ]);
       isLoading = false;
       update();
-      // a
+      // await getAllExamMissionsByControlMission(
+      //     selectedItemControlMission!.value);
       updateFilteredList(null, null);
     } else {
       selectedItemControlMission = null;

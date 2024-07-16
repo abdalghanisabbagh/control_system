@@ -213,37 +213,6 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                 ),
               );
             }
-            if (controller.selectedItemEducationYear == null ||
-                controller.selectedItemControlMission == null) {
-              return Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'First Select Education Year',
-                      style: nunitoBold.copyWith(
-                        decoration: controller.selectedItemEducationYear != null
-                            ? TextDecoration.lineThrough
-                            : null,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Second Select Control Mission',
-                      style: nunitoBold.copyWith(
-                        decoration:
-                            controller.selectedItemControlMission != null
-                                ? TextDecoration.lineThrough
-                                : null,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
 
             if (controller.filteredExamMissionsList.isEmpty) {
               return Expanded(
