@@ -6,7 +6,6 @@ import '../../domain/controllers/auth_controller.dart';
 import '../../domain/services/token_service.dart';
 import '../Models/token/token_model.dart';
 import '../enums/req_type_enum.dart';
-import 'tools/app_error_handler.dart';
 import 'tools/dio_factory.dart';
 import 'tools/failure_model.dart';
 
@@ -61,10 +60,20 @@ class ResponseHandler<T> {
   ) async {
     return await _request(
       converter,
-      () => _dio.get(
+      () => _dio
+          .get(
         path,
         queryParameters: params,
         data: body,
+      )
+          .catchError(
+        (error) {
+          return Response(
+            statusCode: error.response.statusCode,
+            data: {"message": error.response.data['message']},
+            requestOptions: RequestOptions(),
+          );
+        },
       ),
     );
   }
@@ -77,10 +86,20 @@ class ResponseHandler<T> {
   ) async {
     return await _request(
       converter,
-      () => _dio.post(
+      () => _dio
+          .post(
         path,
         queryParameters: params,
         data: body,
+      )
+          .catchError(
+        (error) {
+          return Response(
+            statusCode: error.response.statusCode,
+            data: {"message": error.response.data['message']},
+            requestOptions: RequestOptions(),
+          );
+        },
       ),
     );
   }
@@ -93,10 +112,20 @@ class ResponseHandler<T> {
   ) async {
     return await _request(
       converter,
-      () => _dio.put(
+      () => _dio
+          .put(
         path,
         queryParameters: params,
         data: body,
+      )
+          .catchError(
+        (error) {
+          return Response(
+            statusCode: error.response.statusCode,
+            data: {"message": error.response.data['message']},
+            requestOptions: RequestOptions(),
+          );
+        },
       ),
     );
   }
@@ -109,10 +138,20 @@ class ResponseHandler<T> {
   ) async {
     return await _request(
       converter,
-      () => _dio.delete(
+      () => _dio
+          .delete(
         path,
         queryParameters: params,
         data: body,
+      )
+          .catchError(
+        (error) {
+          return Response(
+            statusCode: error.response.statusCode,
+            data: {"message": error.response.data['message']},
+            requestOptions: RequestOptions(),
+          );
+        },
       ),
     );
   }
@@ -125,10 +164,20 @@ class ResponseHandler<T> {
   ) async {
     return await _request(
       converter,
-      () => _dio.patch(
+      () => _dio
+          .patch(
         path,
         queryParameters: params,
         data: body,
+      )
+          .catchError(
+        (error) {
+          return Response(
+            statusCode: error.response.statusCode,
+            data: {"message": error.response.data['message']},
+            requestOptions: RequestOptions(),
+          );
+        },
       ),
     );
   }
@@ -137,12 +186,7 @@ class ResponseHandler<T> {
     T Function(dynamic) converter,
     Future<Response> Function() request,
   ) async {
-    final Response response = await request.call().catchError(
-      (error) {
-        ErrorHandler.handle(error);
-        return Response(requestOptions: RequestOptions(path: 'error'));
-      },
-    );
+    final Response response = await request.call();
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       if (response.data['status'] == true) {
