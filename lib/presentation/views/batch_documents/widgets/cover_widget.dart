@@ -4,10 +4,13 @@ import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.d
 import 'package:control_system/domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
+import 'package:control_system/presentation/views/batch_documents/widgets/add_new_cover_widget.dart';
+import 'package:control_system/presentation/views/batch_documents/widgets/edit_cover_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/styles_manager.dart';
 
@@ -54,7 +57,9 @@ class CoverWidget extends GetView<CoversSheetsController> {
                       ),
                       const Spacer(),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          MyDialogs.showDialog(context, EditCoverWidget());
+                        },
                         icon: CircleAvatar(
                           backgroundColor: ColorManager.primary,
                           child: Icon(Icons.edit, color: ColorManager.white),
