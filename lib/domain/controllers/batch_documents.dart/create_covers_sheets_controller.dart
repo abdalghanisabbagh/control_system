@@ -1,10 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 import '../../../Data/Models/control_mission/control_mission_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
@@ -21,8 +19,6 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 
 class CreateCoversSheetsController extends GetxController {
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
-  TextEditingController dateController = TextEditingController();
-  TextEditingController examFinalDegreeController = TextEditingController();
   List<GradeResModel> gradesList = <GradeResModel>[];
   bool is2Version = false;
   bool isLoadingGetControlMission = false;
@@ -56,15 +52,12 @@ class CreateCoversSheetsController extends GetxController {
   List<ValueItem> optionsGrades = <ValueItem>[];
   List<ValueItem> optionsSubjects = <ValueItem>[];
   final int schoolId = Hive.box('School').get('Id');
-  DateTime selectedDate = DateTime.now();
-  String? selectedDay;
   ValueItem? selectedIExamDuration;
   ValueItem? selectedItemControlMission;
   ValueItem? selectedItemEducationYear;
   ValueItem? selectedItemGrade;
   ValueItem? selectedItemSubject;
-  String? selectedMonth;
-  String? selectedYear;
+
 
   @override
   void onInit() {
@@ -74,22 +67,6 @@ class CreateCoversSheetsController extends GetxController {
     getAllSubjects();
   }
 
-  Future<void> selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime(2015),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      selectedDate = picked;
-      selectedDay = picked.day.toString();
-      selectedMonth = picked.month.toString();
-      selectedYear = picked.year.toString();
-      dateController.text = DateFormat('dd MMMM yyyy').format(selectedDate);
-    }
-  }
 
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isNotEmpty) {
@@ -264,5 +241,10 @@ class CreateCoversSheetsController extends GetxController {
     );
   }
 
- 
+  // @override
+  // void onClose() {
+  //   dateController.dispose();
+  //   examFinalDegreeController.dispose();
+  //   super.onClose();
+  // }
 }

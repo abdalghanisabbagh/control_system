@@ -45,7 +45,6 @@ class CoversSheetsController extends GetxController {
   final int schoolId = Hive.box('School').get('Id');
   final int schoolTypeId = Hive.box('School').get('SchoolTypeID');
 
-
   @override
   void onInit() {
     geteducationyear();
@@ -182,7 +181,7 @@ class CoversSheetsController extends GetxController {
       },
       (r) {
         selectedItemControlMission = null;
-filteredExamMissionsList.clear();
+        filteredExamMissionsList.clear();
         controlMissionList = r.data!;
         List<ValueItem> items = r.data!
             .map((item) => ValueItem(label: item.name!, value: item.iD))
@@ -325,6 +324,14 @@ filteredExamMissionsList.clear();
     required String finalDegree,
   }) async {
     isLoadingAddExamMission = true;
+    print("addNewExamMission");
+    print(subjectId);
+    print(controlMissionId);
+    print(gradeId);
+    print(educationyearId);
+    print(year);
+    print(month);
+    print(finalDegree);
 
     update();
     bool addExamMissionHasBeenAdded = false;

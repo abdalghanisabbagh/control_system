@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
@@ -10,8 +11,33 @@ import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
+// ignore: must_be_immutable
 class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
   AddNewCoverWidget({super.key});
+
+  DateTime selectedDate = DateTime.now();
+  String? selectedDay;
+  String? selectedMonth;
+  String? selectedYear;
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      initialDatePickerMode: DatePickerMode.day,
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      selectedDate = picked;
+      selectedDay = picked.day.toString();
+      selectedMonth = picked.month.toString();
+      selectedYear = picked.year.toString();
+    }
+  }
+
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController examFinalDegreeController =
+      TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -29,7 +55,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
               color: Colors.black,
               icon: const Icon(Icons.close),
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
             ),
           ),
@@ -306,14 +332,16 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                 ),
                 InkWell(
                   onTap: () {
-                    controller.selectDate(context);
+                    selectDate(context);
+                    dateController.text =
+                        DateFormat('dd MMMM yyyy').format(selectedDate);
                   },
                   child: TextFormField(
                     validator: Validations.requiredValidator,
                     cursorColor: ColorManager.bgSideMenu,
                     enabled: false,
                     style: nunitoRegularStyle(),
-                    controller: controller.dateController,
+                    controller: dateController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -340,7 +368,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             height: 20,
           ),
           TextFormField(
-            controller: controller.examFinalDegreeController..text = "100",
+            controller: examFinalDegreeController..text = "100",
             style: nunitoRegularStyle(),
             enabled: false,
             decoration: InputDecoration(
@@ -436,9 +464,8 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                           gradeId: controller.selectedItemGrade!.value,
                           educationyearId:
                               controller.selectedItemEducationYear!.value,
-                          year: controller.selectedYear!,
-                          month:
-                              '${controller.selectedMonth!}/${controller.selectedDay!}',
+                          year: selectedYear!,
+                          month: '${selectedMonth!}/${selectedDay!}',
                           finalDegree: 100.toString())
                       .then((value) {
                     if (value) {
