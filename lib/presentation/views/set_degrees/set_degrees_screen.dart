@@ -74,148 +74,29 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                       ),
                                       Text(
                                         "Class : ${controller.barcodeResModel?.student?.classRoomResModel?.name}",
-                                        style: nunitoRegular.copyWith(
+                                        style: nunitoBold.copyWith(
                                           color: ColorManager.bgSideMenu,
+                                          fontSize: 35,
                                         ),
                                       ),
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Column(
-                                        children: [
-                                          Text(
-                                            "Subject : ${controller.barcodeResModel?.examMission?.subjectResModel?.name}",
-                                            style: nunitoRegular.copyWith(
-                                              color: ColorManager.bgSideMenu,
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                alignment: Alignment.center,
-                                                width: Get.width * 0.05,
-                                                height: Get.width * 0.05,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    color:
-                                                        ColorManager.bgSideMenu,
-                                                  ),
-                                                ),
-                                                child: TextField(
-                                                  onSubmitted: (_) {
-                                                    controller
-                                                        .setStudentDegree()
-                                                        .then((value) {
-                                                      if (value) {
-                                                        MyFlashBar.showSuccess(
-                                                                'Degree set successfully',
-                                                                'Success')
-                                                            .show(context);
-                                                      }
-                                                    });
-                                                  },
-                                                  style: nunitoRegular.copyWith(
-                                                    color: controller
-                                                                    .barcodeResModel
-                                                                    ?.studentDegree !=
-                                                                null &&
-                                                            controller
-                                                                    .barcodeResModel
-                                                                    ?.studentDegree! !=
-                                                                ''
-                                                        ? int.parse(controller
-                                                                    .barcodeResModel!
-                                                                    .studentDegree!) >=
-                                                                60
-                                                            ? ColorManager.green
-                                                            : ColorManager.red
-                                                        : ColorManager
-                                                            .bgSideMenu,
-                                                  ),
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    counter: SizedBox.shrink(),
-                                                    border: InputBorder.none,
-                                                    errorBorder:
-                                                        InputBorder.none,
-                                                    enabledBorder:
-                                                        InputBorder.none,
-                                                    focusedBorder:
-                                                        InputBorder.none,
-                                                  ),
-                                                  maxLength: 3,
-                                                  maxLines: 1,
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  inputFormatters: [
-                                                    FilteringTextInputFormatter
-                                                        .digitsOnly,
-                                                  ],
-                                                  focusNode: FocusNode()
-                                                    ..requestFocus(),
-                                                  controller: controller
-                                                      .studentDegreeController
-                                                    ..text = controller
-                                                                    .barcodeResModel
-                                                                    ?.studentDegree !=
-                                                                null &&
-                                                            controller
-                                                                .barcodeResModel!
-                                                                .studentDegree!
-                                                                .isNotEmpty
-                                                        ? controller
-                                                            .barcodeResModel!
-                                                            .studentDegree!
-                                                        : '',
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                '/ 100',
-                                                style: nunitoRegular,
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          controller.isLoading
-                                              ? LoadingIndicators
-                                                  .getLoadingIndicator()
-                                              : Container(
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                    maxWidth: 100,
-                                                    maxHeight: 70,
-                                                  ),
-                                                  child: ElevatedEditButton(
-                                                    onPressed: () {
-                                                      controller
-                                                          .setStudentDegree()
-                                                          .then((value) {
-                                                        if (value) {
-                                                          MyFlashBar.showSuccess(
-                                                                  'Degree set successfully',
-                                                                  'Success')
-                                                              .show(context);
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                        ],
+                                      Text(
+                                        "Subject : ${controller.barcodeResModel?.examMission?.subjectResModel?.name}",
+                                        style: nunitoBold.copyWith(
+                                          color: ColorManager.bgSideMenu,
+                                          fontSize: 35,
+                                        ),
                                       ),
                                       const SizedBox(
                                         width: 20,
                                       ),
                                       Text(
                                         "Grade : ${controller.barcodeResModel?.student?.gradeResModel?.name}",
-                                        style: nunitoRegular.copyWith(
+                                        style: nunitoBold.copyWith(
                                           color: ColorManager.bgSideMenu,
+                                          fontSize: 35,
                                         ),
                                       ),
                                       const SizedBox(
@@ -230,7 +111,11 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                               children: [
                                                 Text(
                                                   'Degree : ',
-                                                  style: nunitoRegular,
+                                                  style: nunitoBold.copyWith(
+                                                    color:
+                                                        ColorManager.bgSideMenu,
+                                                    fontSize: 35,
+                                                  ),
                                                 ),
                                                 Text(
                                                   "${controller.barcodeResModel?.studentDegree}",
@@ -241,6 +126,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                             60
                                                         ? ColorManager.red
                                                         : ColorManager.green,
+                                                    fontSize: 35,
                                                   ),
                                                 ),
                                               ],
@@ -253,6 +139,116 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                   ),
                                 ),
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Enter The Degree:",
+                                    style: nunitoBold.copyWith(
+                                        color: ColorManager.bgSideMenu),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: Get.width * 0.05,
+                                    height: Get.width * 0.02,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: ColorManager.bgSideMenu,
+                                      ),
+                                    ),
+                                    child: TextField(
+                                      onSubmitted: (_) {
+                                        controller
+                                            .setStudentDegree()
+                                            .then((value) {
+                                          if (value) {
+                                            MyFlashBar.showSuccess(
+                                                    'Degree set successfully',
+                                                    'Success')
+                                                .show(context);
+                                          }
+                                        });
+                                      },
+                                      style: nunitoRegular.copyWith(
+                                        color: controller.barcodeResModel
+                                                        ?.studentDegree !=
+                                                    null &&
+                                                controller.barcodeResModel
+                                                        ?.studentDegree! !=
+                                                    ''
+                                            ? int.parse(controller
+                                                        .barcodeResModel!
+                                                        .studentDegree!) >=
+                                                    60
+                                                ? ColorManager.green
+                                                : ColorManager.red
+                                            : ColorManager.bgSideMenu,
+                                      ),
+                                      decoration: const InputDecoration(
+                                        counter: SizedBox.shrink(),
+                                        border: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                      ),
+                                      maxLength: 3,
+                                      maxLines: 1,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                      ],
+                                      focusNode: FocusNode()..requestFocus(),
+                                      controller:
+                                          controller.studentDegreeController
+                                            ..text = controller.barcodeResModel
+                                                            ?.studentDegree !=
+                                                        null &&
+                                                    controller
+                                                        .barcodeResModel!
+                                                        .studentDegree!
+                                                        .isNotEmpty
+                                                ? controller.barcodeResModel!
+                                                    .studentDegree!
+                                                : '',
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    '/ 100',
+                                    style: nunitoRegular,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              controller.isLoading
+                                  ? LoadingIndicators.getLoadingIndicator()
+                                  : Container(
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 100,
+                                        maxHeight: 70,
+                                      ),
+                                      child: ElevatedEditButton(
+                                        onPressed: () {
+                                          controller
+                                              .setStudentDegree()
+                                              .then((value) {
+                                            if (value) {
+                                              MyFlashBar.showSuccess(
+                                                      'Degree set successfully',
+                                                      'Success')
+                                                  .show(context);
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ),
                             ],
                           )
                         : const SizedBox.shrink(),
