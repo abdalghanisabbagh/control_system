@@ -329,15 +329,6 @@ class CoversSheetsController extends GetxController {
     required String finalDegree,
   }) async {
     isLoadingAddExamMission = true;
-    print("addNewExamMission");
-    print(subjectId);
-    print(controlMissionId);
-    print(gradeId);
-    print(educationyearId);
-    print(year);
-    print(month);
-    print(finalDegree);
-
     update();
     bool addExamMissionHasBeenAdded = false;
     ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
@@ -358,18 +349,21 @@ class CoversSheetsController extends GetxController {
         type: ReqTypeEnum.POST,
         body: examMissionResModel.toJson());
 
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      addExamMissionHasBeenAdded = false;
-    }, (result) {
-      getAllExamMissionsByControlMission(selectedItemControlMission!.value);
+    response.fold(
+      (fauilr) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: "${fauilr.code} ::${fauilr.message}",
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        addExamMissionHasBeenAdded = false;
+      },
+      (result) {
+        // getAllExamMissionsByControlMission(selectedItemControlMission!.value);
 
-      addExamMissionHasBeenAdded = true;
-    });
+        addExamMissionHasBeenAdded = true;
+      },
+    );
     isLoadingAddExamMission = false;
 
     update();

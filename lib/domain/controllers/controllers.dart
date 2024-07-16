@@ -3,7 +3,7 @@ export 'auth_controller.dart';
 export 'barcode_controllers/barcode_controller.dart';
 export 'barcode_controllers/barcode_controllers.dart';
 export 'batch_documents.dart/batch_documents_controller.dart';
-export 'batch_documents.dart/cover_shetts_controller.dart';
+export 'batch_documents.dart/cover_sheets_controller.dart';
 export 'batch_documents.dart/create_covers_sheets_controller.dart';
 export 'class_room_controller.dart';
 export 'cohorts_settings_controller.dart';
