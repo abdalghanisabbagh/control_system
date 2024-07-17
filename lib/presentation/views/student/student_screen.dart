@@ -304,21 +304,11 @@ class StudentScreen extends GetView<StudentController> {
                                     },
                                   ),
                                   PlutoColumn(
-                                    readOnly: true,
                                     enableEditingMode: false,
                                     title: 'Second Language',
                                     field: 'LanguageField',
                                     type: PlutoColumnType.text(),
                                     cellPadding: EdgeInsets.zero,
-                                    footerRenderer: (footerRenderer) {
-                                      return PlutoAggregateColumnFooter(
-                                        rendererContext: footerRenderer,
-                                        type: PlutoAggregateColumnType.count,
-                                        filter: (cell) => true,
-                                        format: 'count : #,###',
-                                        alignment: Alignment.center,
-                                      );
-                                    },
                                     renderer: (rendererContext) {
                                       String? value = rendererContext
                                           .row.cells['LanguageField']?.value;
@@ -354,7 +344,6 @@ class StudentScreen extends GetView<StudentController> {
                                       return PlutoAggregateColumnFooter(
                                         rendererContext: footerRenderer,
                                         type: PlutoAggregateColumnType.count,
-                                        filter: (cell) => true,
                                         format: 'count : #,###',
                                         alignment: Alignment.center,
                                       );
