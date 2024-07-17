@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../controllers/batch_documents.dart/edit_cover_controller.dart';
 import '../controllers/controllers.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
@@ -43,6 +44,10 @@ class BatchDocumentsBindings extends Bindings {
 
     Get.lazyPut<CreateCoversSheetsController>(
       () => CreateCoversSheetsController(),
+      fenix: true,
+    );
+    Get.lazyPut<EditCoverSheetController>(
+      () => EditCoverSheetController(),
       fenix: true,
     );
 
