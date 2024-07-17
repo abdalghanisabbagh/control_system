@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../Data/Models/control_mission/control_mission_model.dart';
+import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../../domain/controllers/controllers.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';

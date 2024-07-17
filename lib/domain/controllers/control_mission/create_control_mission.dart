@@ -7,7 +7,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/cohort/cohort_res_model.dart';
-import '../../../Data/Models/control_mission/control_mission_model.dart';
+import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/education_year/education_year_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
 import '../../../Data/Models/school/grade_response/grade_res_model.dart';

@@ -4,7 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
-import '../../../Data/Models/control_mission/control_mission_model.dart';
+
+import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
 import '../../../Data/Models/school/grade_response/grade_res_model.dart';
@@ -57,7 +58,7 @@ class CreateCoversSheetsController extends GetxController {
   ValueItem? selectedItemGrade;
   ValueItem? selectedItemSubject;
 
-        ControlMissionResModel? controlMissionResModel;
+  ControlMissionResModel? controlMissionResModel;
 
   @override
   void onInit() {
@@ -66,7 +67,6 @@ class CreateCoversSheetsController extends GetxController {
     getGradesBySchoolId();
     getAllSubjects();
   }
-
 
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isNotEmpty) {
@@ -82,10 +82,9 @@ class CreateCoversSheetsController extends GetxController {
 
   void setSelectedItemControlMission(List<ValueItem> items) {
     if (items.isNotEmpty) {
-
-    controlMissionResModel = controlMissionList.firstWhereOrNull(
-      (element) => element.iD == selectedItemControlMission!.value,
-    );
+      controlMissionResModel = controlMissionList.firstWhereOrNull(
+        (element) => element.iD == selectedItemControlMission!.value,
+      );
     } else {
       selectedItemControlMission = null;
     }

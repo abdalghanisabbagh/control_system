@@ -1,4 +1,4 @@
-import 'control_mission_model.dart';
+import 'control_mission_res_model.dart';
 
 class ControlMissionsResModel {
   ControlMissionsResModel({this.data});

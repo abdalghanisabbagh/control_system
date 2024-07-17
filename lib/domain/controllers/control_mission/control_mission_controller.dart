@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../../Data/Models/control_mission/control_mission_model.dart';
+import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/education_year_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
