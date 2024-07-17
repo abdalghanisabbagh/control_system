@@ -2,7 +2,7 @@ import 'package:control_system/presentation/views/batch_documents/widgets/cover_
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
+import '../../../../domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
