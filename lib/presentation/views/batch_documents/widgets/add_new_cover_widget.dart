@@ -476,7 +476,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             ],
           ),
           GetBuilder<CoversSheetsController>(builder: (controllerCovers) {
-            if (controller.isLodingAddExamMission) {
+            if (controllerCovers.isLoadingAddExamMission) {
               return SizedBox(
                 width: 50,
                 height: 50,
