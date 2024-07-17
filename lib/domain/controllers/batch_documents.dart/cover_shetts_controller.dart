@@ -327,21 +327,23 @@ class CoversSheetsController extends GetxController {
     required String year,
     required String month,
     required String finalDegree,
+    required int duration,
   }) async {
     isLoadingAddExamMission = true;
+
     update();
     bool addExamMissionHasBeenAdded = false;
     ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
 
     ExamMissionResModel examMissionResModel = ExamMissionResModel(
-      subjectsID: subjectId,
-      controlMissionID: controlMissionId,
-      gradesID: gradeId,
-      educationYearID: educationyearId,
-      year: year,
-      month: month,
-      finalDegree: finalDegree,
-    );
+        subjectsID: subjectId,
+        controlMissionID: controlMissionId,
+        gradesID: gradeId,
+        educationYearID: educationyearId,
+        year: year,
+        month: month,
+        finalDegree: finalDegree,
+        duration: duration);
 
     var response = await responseHandler.getResponse(
         path: ExamLinks.examMission,
@@ -349,21 +351,18 @@ class CoversSheetsController extends GetxController {
         type: ReqTypeEnum.POST,
         body: examMissionResModel.toJson());
 
-    response.fold(
-      (fauilr) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: "${fauilr.code} ::${fauilr.message}",
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        addExamMissionHasBeenAdded = false;
-      },
-      (result) {
-        // getAllExamMissionsByControlMission(selectedItemControlMission!.value);
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      addExamMissionHasBeenAdded = false;
+    }, (result) {
+      getAllExamMissionsByControlMission(selectedItemControlMission!.value);
 
-        addExamMissionHasBeenAdded = true;
-      },
-    );
+      addExamMissionHasBeenAdded = true;
+    });
     isLoadingAddExamMission = false;
 
     update();

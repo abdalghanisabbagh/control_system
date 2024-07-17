@@ -1,13 +1,15 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../../../domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
+import '../../../../domain/controllers/batch_documents.dart/cover_shetts_controller.dart';
 import '../../../../domain/controllers/batch_documents.dart/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
@@ -15,24 +17,39 @@ import '../../../resource_manager/validations.dart';
 class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
   AddNewCoverWidget({super.key});
 
-  DateTime selectedDate = DateTime.now();
+  DateTime? selectedDate;
   String? selectedDay;
   String? selectedMonth;
   String? selectedYear;
-  Future<void> selectDate(BuildContext context) async {
+  Future<DateTime?> selectDate(BuildContext context) async {
+    if (controller.controlMissionResModel == null ||
+        controller.controlMissionResModel!.startDate == null ||
+        controller.controlMissionResModel!.endDate == null) {
+      return null;
+    }
+
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate: DateTime.parse(controller.controlMissionResModel!.startDate!
+          .substring(
+              0, controller.controlMissionResModel!.startDate!.length - 1)),
       initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime(2015),
-      lastDate: DateTime(2101),
+      firstDate: DateTime.parse(controller.controlMissionResModel!.startDate!
+          .substring(
+              0, controller.controlMissionResModel!.startDate!.length - 1)),
+      lastDate: DateTime.parse(controller.controlMissionResModel!.endDate!
+          .substring(
+              0, controller.controlMissionResModel!.endDate!.length - 1)),
     );
+
     if (picked != null) {
       selectedDate = picked;
       selectedDay = picked.day.toString();
       selectedMonth = picked.month.toString();
       selectedYear = picked.year.toString();
     }
+
+    return picked;
   }
 
   final TextEditingController dateController = TextEditingController();
@@ -162,6 +179,8 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                                         selectedItem.isNotEmpty
                                             ? selectedItem.first
                                             : null;
+                                    controller.setSelectedItemControlMission(
+                                        selectedItem);
                                     formFieldState.didChange(selectedItem);
                                   },
                                   options: controller.optionsControlMission,
@@ -331,10 +350,23 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                   height: 20,
                 ),
                 InkWell(
-                  onTap: () {
-                    selectDate(context);
-                    dateController.text =
-                        DateFormat('dd MMMM yyyy').format(selectedDate);
+                  onTap: () async {
+                    if (controller.selectedItemControlMission == null) {
+                      MyAwesomeDialogue(
+                        title: 'Error',
+                        desc: "Please select Control Mission",
+                        dialogType: DialogType.error,
+                      ).showDialogue(Get.key.currentContext!);
+                      return;
+                    }
+
+                    DateTime? selectedDate = await selectDate(context);
+                    if (selectedDate != null) {
+                      dateController.text =
+                          DateFormat('dd MMMM yyyy').format(selectedDate);
+                    } else {
+                      dateController.text = 'dd MMMM yyyy';
+                    }
                   },
                   child: TextFormField(
                     validator: Validations.requiredValidator,
@@ -444,7 +476,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             ],
           ),
           GetBuilder<CoversSheetsController>(builder: (controllerCovers) {
-            if (controller.isLodingAddExamMission) {
+            if (controllerCovers.isLoadingAddExamMission) {
               return SizedBox(
                 width: 50,
                 height: 50,
@@ -458,6 +490,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                 if (_formKey.currentState!.validate()) {
                   controllerCovers
                       .addNewExamMission(
+                          duration: controller.selectedIExamDuration!.value,
                           subjectId: controller.selectedItemSubject!.value,
                           controlMissionId:
                               controller.selectedItemControlMission!.value,
