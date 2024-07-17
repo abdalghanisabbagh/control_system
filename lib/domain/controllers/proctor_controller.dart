@@ -230,7 +230,11 @@ class ProctorController extends GetxController {
   void onEducationYearChange(List<ValueItem<dynamic>> selectedOptions) {
     selectedEducationYearId = selectedOptions.firstOrNull?.value;
     selectedEducationYearId != null
-        ? getControlMissionByEducationYearId()
+        ? {
+            getControlMissionByEducationYearId(),
+            selectedControlMissionsId = null,
+            examRooms = [],
+          }
         : {
             selectedControlMissionsId = null,
             examRooms = [],
