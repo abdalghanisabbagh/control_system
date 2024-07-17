@@ -327,30 +327,23 @@ class CoversSheetsController extends GetxController {
     required String year,
     required String month,
     required String finalDegree,
+    required int duration,
   }) async {
     isLoadingAddExamMission = true;
-    print("addNewExamMission");
-    print(subjectId);
-    print(controlMissionId);
-    print(gradeId);
-    print(educationyearId);
-    print(year);
-    print(month);
-    print(finalDegree);
 
     update();
     bool addExamMissionHasBeenAdded = false;
     ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
 
     ExamMissionResModel examMissionResModel = ExamMissionResModel(
-      subjectsID: subjectId,
-      controlMissionID: controlMissionId,
-      gradesID: gradeId,
-      educationYearID: educationyearId,
-      year: year,
-      month: month,
-      finalDegree: finalDegree,
-    );
+        subjectsID: subjectId,
+        controlMissionID: controlMissionId,
+        gradesID: gradeId,
+        educationYearID: educationyearId,
+        year: year,
+        month: month,
+        finalDegree: finalDegree,
+        duration: duration);
 
     var response = await responseHandler.getResponse(
         path: ExamLinks.examMission,

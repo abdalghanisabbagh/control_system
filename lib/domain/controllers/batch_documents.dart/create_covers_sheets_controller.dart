@@ -58,6 +58,7 @@ class CreateCoversSheetsController extends GetxController {
   ValueItem? selectedItemGrade;
   ValueItem? selectedItemSubject;
 
+        ControlMissionResModel? controlMissionResModel;
 
   @override
   void onInit() {
@@ -82,7 +83,10 @@ class CreateCoversSheetsController extends GetxController {
 
   void setSelectedItemControlMission(List<ValueItem> items) {
     if (items.isNotEmpty) {
-      selectedItemControlMission = items.first;
+
+    controlMissionResModel = controlMissionList.firstWhereOrNull(
+      (element) => element.iD == selectedItemControlMission!.value,
+    );
     } else {
       selectedItemControlMission = null;
     }
