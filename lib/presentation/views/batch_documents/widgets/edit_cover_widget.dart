@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../../../Data/Models/control_mission/control_mission_model.dart';
+import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../../Data/Models/exam_mission/exam_mission_res_model.dart';
 import '../../../../domain/controllers/batch_documents.dart/edit_cover_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
@@ -47,9 +47,8 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
           .substring(0, controlMissionObject.endDate!.length - 1)),
     );
 
-    if (pickedDate != null) {
+    if (pickedDate != null && context.mounted) {
       final TimeOfDay? pickedTime = await showTimePicker(
-        // ignore: use_build_context_synchronously
         context: context,
         initialTime: TimeOfDay.now(),
         builder: (BuildContext context, Widget? child) {
@@ -79,7 +78,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
         final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
         String formattedDateTime = formatter.format(selectedDateTime!);
         dateController.text = formattedDateTime;
-      //  print('Formatted Date and Time: ${dateController.text}');
+        //  print('Formatted Date and Time: ${dateController.text}');
       }
     }
   }
