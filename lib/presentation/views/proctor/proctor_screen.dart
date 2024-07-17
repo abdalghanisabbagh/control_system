@@ -9,7 +9,6 @@ import '../../resource_manager/color_manager.dart';
 import '../../resource_manager/styles_manager.dart';
 import '../base_screen.dart';
 import 'widgets/add_new_proctor.dart';
-import 'widgets/edit_proctor_widget.dart';
 
 class ProctorScreen extends GetView<ProctorController> {
   const ProctorScreen({super.key});
@@ -220,17 +219,18 @@ class ProctorScreen extends GetView<ProctorController> {
                                                         itemBuilder:
                                                             (context, index) {
                                                           return InkWell(
-                                                            onDoubleTap: () {
-                                                              MyDialogs
-                                                                  .showDialog(
-                                                                context,
-                                                                EditProctorWidget(
-                                                                  proctor: controller
-                                                                          .proctors[
-                                                                      index],
-                                                                ),
-                                                              );
-                                                            },
+                                                            onDoubleTap: () {},
+                                                            // onDoubleTap: () {
+                                                            //   MyDialogs
+                                                            //       .showDialog(
+                                                            //     context,
+                                                            //     EditProctorWidget(
+                                                            //       proctor: controller
+                                                            //               .proctors[
+                                                            //           index],
+                                                            //     ),
+                                                            //   );
+                                                            // },
                                                             child: Padding(
                                                               padding:
                                                                   const EdgeInsets
@@ -463,6 +463,7 @@ class ProctorScreen extends GetView<ProctorController> {
                                                     crossAxisCount: 6,
                                                     mainAxisSpacing: 5,
                                                     crossAxisSpacing: 5,
+                                                    childAspectRatio: 2,
                                                   ),
                                                   itemCount: controller
                                                       .examRooms.length,
