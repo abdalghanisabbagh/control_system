@@ -249,6 +249,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                       secondName: mnameController.text,
                                       thirdName: lnameController.text,
                                       secondLang: sLangController.text,
+                                      religion: religionController.text,
                                     )
                                         .then(
                                       (value) {

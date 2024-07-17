@@ -240,6 +240,7 @@ class StudentController extends GetxController {
     required String secondName,
     required String thirdName,
     required String secondLang,
+    required String religion,
   }) async {
     islodingEditStudent = true;
     update();
@@ -262,6 +263,7 @@ class StudentController extends GetxController {
           "Third_Name": thirdName,
           "Created_By": _userProfile?.iD,
           "Second_Lang": secondLang,
+          "Religion": religion,
         });
 
     response.fold((fauilr) {
@@ -651,7 +653,8 @@ class StudentController extends GetxController {
         'grade',
         'class',
         'cohort',
-        'second_language'
+        'second_language',
+        'religion',
       ];
 
       List<String> missingHeaders =

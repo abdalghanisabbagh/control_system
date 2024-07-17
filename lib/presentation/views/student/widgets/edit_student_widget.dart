@@ -225,7 +225,8 @@ class EditStudentWidget extends GetView<StudentController> {
                     title: "Last Name",
                     myValidation: Validations.requiredValidator),
                 MytextFormFiled(
-                    controller: religionController,
+                    controller: religionController
+                      ..text = studentResModel.religion.toString(),
                     title: "Religion",
                     myValidation: Validations.requiredValidator),
                 MytextFormFiled(
@@ -257,6 +258,7 @@ class EditStudentWidget extends GetView<StudentController> {
                                 secondName: mnameController.text,
                                 thirdName: lnameController.text,
                                 secondLang: sLangController.text,
+                                religion: religionController.text,
                               )
                                   .then(
                                 (value) {

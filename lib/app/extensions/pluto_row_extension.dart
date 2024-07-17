@@ -29,6 +29,7 @@ extension PlutoRowExtension on List<StudentResModel> {
               value: element.classRoomResModel!.name,
             ),
             'LanguageField': PlutoCell(value: element.secondLang),
+            'ReligionField': PlutoCell(value: element.religion),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),
@@ -57,7 +58,6 @@ extension PlutoRowExtension on List<StudentResModel> {
       String? schoolClassName;
       int? schoolClassId;
       String? blbId;
-      // bool hasError = false;
 
       try {
         final cohort =
@@ -113,13 +113,8 @@ extension PlutoRowExtension on List<StudentResModel> {
       String? secondLang = element.secondLang;
       if (secondLang == null || secondLang.isEmpty) {
         errors.add('LanguageField is empty');
-        //  hasError = true;
       }
-      // String? blbId = element.blbId.toString();
-      // if (blbId.isEmpty) {
-      //   errors.add('BLB ID is empty');
-      //   //  hasError = true;
-      // }
+     
       try {
         final blb = students.firstWhere((item) => item.blbId == element.blbId);
         blbId = blb.blbId.toString();
@@ -139,6 +134,7 @@ extension PlutoRowExtension on List<StudentResModel> {
             'GradeField': PlutoCell(value: gradeName),
             'ClassRoomField': PlutoCell(value: schoolClassName),
             'LanguageField': PlutoCell(value: secondLang ?? ''),
+            'ReligionField': PlutoCell(value: element.religion),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),
@@ -230,6 +226,7 @@ extension PlutoRowExtension on List<StudentResModel> {
             'GradeField': PlutoCell(value: gradeName),
             'ClassRoomField': PlutoCell(value: schoolClassName),
             'LanguageField': PlutoCell(value: element.secondLang),
+            'ReligionField': PlutoCell(value: element.religion),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),

@@ -163,6 +163,7 @@ class AddNewStudentController extends GetxController {
     required String secondName,
     required String thirdName,
     required String secondLang,
+    required String religion,
   }) async {
     isLodingAddStudent = true;
 
@@ -185,7 +186,8 @@ class AddNewStudentController extends GetxController {
           "Second_Name": secondName,
           "Third_Name": thirdName,
           "Created_By": _userProfile?.iD,
-          "Second_Lang": secondLang
+          "Second_Lang": secondLang,
+          "Religion": religion,
         });
 
     response.fold((fauilr) {

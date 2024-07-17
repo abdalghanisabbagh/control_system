@@ -7,30 +7,30 @@ import '../cohort/cohort_res_model.dart';
 import '../school/grade_response/grade_res_model.dart';
 
 class StudentResModel {
-  StudentResModel({
-    this.iD,
-    this.blbId,
-    this.gradesID,
-    this.gradeName,
-    this.schoolsID,
-    this.cohortID,
-    this.cohortName,
-    this.schoolClassID,
-    this.schoolClassName,
-    this.firstName,
-    this.secondName,
-    this.thirdName,
-    this.email,
-    this.secondLang,
-    this.createdBy,
-    this.createdAt,
-    this.updatedBy,
-    this.updatedAt,
-    this.gradeResModel,
-    this.classRoomResModel,
-    this.cohortResModel,
-    this.active,
-  });
+  StudentResModel(
+      {this.iD,
+      this.blbId,
+      this.gradesID,
+      this.gradeName,
+      this.schoolsID,
+      this.cohortID,
+      this.cohortName,
+      this.schoolClassID,
+      this.schoolClassName,
+      this.firstName,
+      this.secondName,
+      this.thirdName,
+      this.email,
+      this.secondLang,
+      this.createdBy,
+      this.createdAt,
+      this.updatedBy,
+      this.updatedAt,
+      this.gradeResModel,
+      this.classRoomResModel,
+      this.cohortResModel,
+      this.active,
+      this.religion});
 
   factory StudentResModel.fromCsvWithHeaders(
       List<dynamic> row, List<String> headers) {
@@ -51,6 +51,7 @@ class StudentResModel {
       schoolClassName: data.containsKey('class') ? data['class'] : null,
       secondLang:
           data.containsKey('second_language') ? data['second_language'] : null,
+      religion: data.containsKey('religion') ? data['religion'] : null,
     );
   }
 
@@ -70,6 +71,7 @@ class StudentResModel {
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
+    religion = json['Religion'];
     gradeResModel =
         json['grades'] == null ? null : GradeResModel.fromJson(json['grades']);
     classRoomResModel = json['school_class'] == null
@@ -102,6 +104,7 @@ class StudentResModel {
   String? thirdName;
   DateTime? updatedAt;
   int? updatedBy;
+  String? religion;
 
   @override
   bool operator ==(covariant StudentResModel other) {
@@ -166,6 +169,7 @@ class StudentResModel {
     data['Updated_At'] = updatedAt;
     data['grades'] = gradeResModel?.toJson();
     data['Active'] = active;
+    data['Religion'] = religion;
     return data;
   }
 
@@ -182,6 +186,7 @@ class StudentResModel {
     data['Third_Name'] = thirdName;
     data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
     data['Second_Lang'] = secondLang;
+    data['Religion'] = religion;
     return data;
   }
 }
