@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/views/proctor/widgets/assign_proctor_to_exam_by_room_id.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -219,7 +220,18 @@ class ProctorScreen extends GetView<ProctorController> {
                                                         itemBuilder:
                                                             (context, index) {
                                                           return InkWell(
-                                                            onDoubleTap: () {},
+                                                            onDoubleTap: () {
+                                                              MyDialogs
+                                                                  .showDialog(
+                                                                context,
+                                                                AssignProctorToExamByRoomId(
+                                                                  proctorId: controller
+                                                                      .proctors[
+                                                                          index]
+                                                                      .iD!,
+                                                                ),
+                                                              );
+                                                            },
                                                             // onDoubleTap: () {
                                                             //   MyDialogs
                                                             //       .showDialog(
