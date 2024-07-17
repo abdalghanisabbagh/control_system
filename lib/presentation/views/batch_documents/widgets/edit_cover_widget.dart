@@ -49,6 +49,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
 
     if (pickedDate != null) {
       final TimeOfDay? pickedTime = await showTimePicker(
+        // ignore: use_build_context_synchronously
         context: context,
         initialTime: TimeOfDay.now(),
         builder: (BuildContext context, Widget? child) {
