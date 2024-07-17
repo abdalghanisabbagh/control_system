@@ -77,7 +77,7 @@ class ProctorScreen extends GetView<ProctorController> {
                             : controller.selectedEducationYearId == null
                                 ? Center(
                                     child: Text(
-                                      "Please Select Education Year First",
+                                      "Please Select Education Year To View Control Missions",
                                       style: nunitoRegular,
                                     ),
                                   )
