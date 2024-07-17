@@ -320,13 +320,14 @@ class CoversSheetsController extends GetxController {
   }
 
   Future<bool> addNewExamMission({
+
     required int subjectId,
     required int controlMissionId,
     required int gradeId,
     required int educationyearId,
     required String year,
     required String month,
-    required String finalDegree,
+    required String finalDegree, required int duration,
   }) async {
     isLoadingAddExamMission = true;
     update();
@@ -341,6 +342,7 @@ class CoversSheetsController extends GetxController {
       year: year,
       month: month,
       finalDegree: finalDegree,
+      duration: duration
     );
 
     var response = await responseHandler.getResponse(
