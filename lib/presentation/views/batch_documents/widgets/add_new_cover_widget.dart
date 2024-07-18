@@ -66,16 +66,29 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Align(
-            alignment: AlignmentDirectional.topEnd,
-            child: IconButton(
-              alignment: AlignmentDirectional.topEnd,
-              color: Colors.black,
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                Get.back();
-              },
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "Add New Cover Sheet",
+                    style: nunitoBold.copyWith(
+                      color: ColorManager.primary,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                alignment: AlignmentDirectional.topEnd,
+                color: Colors.black,
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,
@@ -489,10 +502,6 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             return InkWell(
               onTap: () {
                 if (_formKey.currentState!.validate()) {
-                  print("selected date ${selectedDate}");
-                  print(
-                      "selected date ${selectedDate.toString().convertDateStringToIso8601String()}");
-
                   controllerCovers
                       .addNewExamMission(
                           startTime: selectedDate

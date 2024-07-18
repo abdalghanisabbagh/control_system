@@ -101,16 +101,29 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Align(
-            alignment: AlignmentDirectional.topEnd,
-            child: IconButton(
-              alignment: AlignmentDirectional.topEnd,
-              color: Colors.black,
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                Get.back();
-              },
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "Edit Cover Sheet",
+                    style: nunitoBold.copyWith(
+                      color: ColorManager.primary,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                alignment: AlignmentDirectional.topEnd,
+                color: Colors.black,
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,
