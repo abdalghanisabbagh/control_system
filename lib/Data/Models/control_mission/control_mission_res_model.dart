@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
+import '../exam_mission/exam_missions_res_model.dart';
 
 class ControlMissionResModel {
   ControlMissionResModel({
@@ -43,9 +43,9 @@ class ControlMissionResModel {
     endDate = json['End_Date'];
     active = json['Active'];
     count = json['_count'];
-    examMissionResModel = json['exam_mission'] == null
+    examMissionsResModel = json['exam_mission'] == null
         ? null
-        : ExamMissionResModel.fromJson(json['exam_mission']);
+        : ExamMissionsResModel.fromJson(json['exam_mission']);
   }
 
   int? active;
@@ -60,7 +60,7 @@ class ControlMissionResModel {
   String? updatedAt;
   int? updatedBy;
   Map<String, dynamic>? count;
-  ExamMissionResModel? examMissionResModel;
+  ExamMissionsResModel? examMissionsResModel;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -76,7 +76,7 @@ class ControlMissionResModel {
     data['End_Date'] = endDate;
     data['Active'] = active;
     data['_count'] = count;
-    data['exam_mission'] = examMissionResModel?.toJson();
+    data['exam_mission'] = examMissionsResModel?.toJson();
     return data;
   }
 
