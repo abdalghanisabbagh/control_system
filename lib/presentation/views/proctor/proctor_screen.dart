@@ -1,4 +1,3 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/constants/app_constatnts.dart';
 import 'package:control_system/presentation/views/proctor/widgets/assign_proctor_to_exam_by_room_id.dart';
 import 'package:flutter/material.dart';
@@ -210,11 +209,12 @@ class ProctorScreen extends GetView<ProctorController> {
                                                     ),
                                                   ),
                                                 ),
-                                                GetBuilder<ProctorController>(
-                                                  id: 'proctors',
-                                                  builder: (_) {
-                                                    return Expanded(
-                                                      child: RepaintBoundary(
+                                                Expanded(
+                                                  child: GetBuilder<
+                                                      ProctorController>(
+                                                    id: 'proctors',
+                                                    builder: (controller) {
+                                                      return RepaintBoundary(
                                                         child: ListView.builder(
                                                           scrollDirection:
                                                               Axis.vertical,
@@ -251,42 +251,16 @@ class ProctorScreen extends GetView<ProctorController> {
                                                                   ]);
                                                                   if (controller
                                                                       .canAssignProctorToExamRoom()) {
-                                                                    bool
-                                                                        isSuccess =
-                                                                        await controller
-                                                                            .assignProctorToExamRoom();
-                                                                    if (isSuccess &&
-                                                                        context
-                                                                            .mounted) {
-                                                                      MyFlashBar.showSuccess(
-                                                                              'Proctor assigned successfully',
-                                                                              'Success')
-                                                                          .show(
-                                                                              context);
-                                                                    } else if (!isSuccess &&
-                                                                        context
-                                                                            .mounted) {
-                                                                      MyFlashBar.showError(
-                                                                              'Failed to assign proctor',
-                                                                              'Error')
-                                                                          .show(
-                                                                              context);
-                                                                    }
+                                                                    MyDialogs
+                                                                        .showDialog(
+                                                                      context,
+                                                                      const AssignProctorToExamMission(),
+                                                                    );
                                                                   }
                                                                 }
                                                               },
-                                                              onDoubleTap: () {
-                                                                MyDialogs
-                                                                    .showDialog(
-                                                                  context,
-                                                                  AssignProctorToExamByRoomId(
-                                                                    proctorId: controller
-                                                                        .proctors[
-                                                                            index]
-                                                                        .iD!,
-                                                                  ),
-                                                                );
-                                                              },
+                                                              onDoubleTap:
+                                                                  () {},
                                                               // onDoubleTap: () {
                                                               //   MyDialogs
                                                               //       .showDialog(
@@ -352,9 +326,9 @@ class ProctorScreen extends GetView<ProctorController> {
                                                             );
                                                           },
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -579,26 +553,11 @@ class ProctorScreen extends GetView<ProctorController> {
                                                                 ['examRooms']);
                                                             if (controller
                                                                 .canAssignProctorToExamRoom()) {
-                                                              bool isSuccess =
-                                                                  await controller
-                                                                      .assignProctorToExamRoom();
-                                                              if (isSuccess &&
-                                                                  context
-                                                                      .mounted) {
-                                                                MyFlashBar.showSuccess(
-                                                                        'Proctor assigned successfully',
-                                                                        'Success')
-                                                                    .show(
-                                                                        context);
-                                                              } else if (!isSuccess &&
-                                                                  context
-                                                                      .mounted) {
-                                                                MyFlashBar.showError(
-                                                                        'Failed to assign proctor',
-                                                                        'Error')
-                                                                    .show(
-                                                                        context);
-                                                              }
+                                                              MyDialogs
+                                                                  .showDialog(
+                                                                context,
+                                                                const AssignProctorToExamMission(),
+                                                              );
                                                             }
                                                           }
                                                         },
