@@ -1,5 +1,6 @@
 import 'package:control_system/presentation/resource_manager/constants/app_constatnts.dart';
 import 'package:control_system/presentation/views/proctor/widgets/assign_proctor_to_exam_by_room_id.dart';
+import 'package:control_system/presentation/views/proctor/widgets/proctors_in_exam_room_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -530,7 +531,6 @@ class ProctorScreen extends GetView<ProctorController> {
                                                         (context, index) {
                                                       return InkWell(
                                                         onTap: () async {
-                                                          /// get exam missin in this room
                                                           if (controller
                                                                   .selectedExamRoom
                                                                   ?.id ==
@@ -560,6 +560,24 @@ class ProctorScreen extends GetView<ProctorController> {
                                                               );
                                                             }
                                                           }
+                                                        },
+                                                        onDoubleTap: () {
+                                                          controller.getProctorsByExamRoomId(
+                                                              examRoomId:
+                                                                  controller
+                                                                      .examRooms[
+                                                                          index]
+                                                                      .id!);
+                                                          MyDialogs.showDialog(
+                                                            context,
+                                                            ProctorsInExamRoomWidget(
+                                                              examRoomName:
+                                                                  controller
+                                                                      .examRooms[
+                                                                          index]
+                                                                      .name!,
+                                                            ),
+                                                          );
                                                         },
                                                         child:
                                                             AnimatedContainer(
