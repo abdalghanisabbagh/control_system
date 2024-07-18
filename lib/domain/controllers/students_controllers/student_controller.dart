@@ -683,6 +683,7 @@ class StudentController extends GetxController {
           grades: grades,
         );
         importedStudentsRows.assignAll(result['rows']);
+        print(importedStudentsRows.length);
         importedStudents.assignAll(result['students']);
         hasErrorInGrade = result['errorgrade'];
         hasErrorInCohort = result['errorcohort'];

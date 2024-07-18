@@ -34,7 +34,8 @@ class StudentScreen extends GetView<StudentController> {
                       ? Center(
                           child: LoadingIndicators.getLoadingIndicator(),
                         )
-                      : controller.studentsRows.isEmpty
+                      : controller.studentsRows.isEmpty &&
+                              controller.importedStudentsRows.isEmpty
                           ? Center(
                               child: Text(
                                 "No Student Found",

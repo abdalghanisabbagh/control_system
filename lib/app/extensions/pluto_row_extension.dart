@@ -39,7 +39,7 @@ extension PlutoRowExtension on List<StudentResModel> {
   }
 
   Map<String, dynamic> convertFileStudentsToPluto({
-    required List<StudentResModel> students,
+    required List<StudentResModel>? students,
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,
     required List<GradeResModel> grades,
@@ -114,9 +114,9 @@ extension PlutoRowExtension on List<StudentResModel> {
       if (secondLang == null || secondLang.isEmpty) {
         errors.add('LanguageField is empty');
       }
-     
+
       try {
-        final blb = students.firstWhere((item) => item.blbId == element.blbId);
+        final blb = students!.firstWhere((item) => item.blbId == element.blbId);
         blbId = blb.blbId.toString();
         blbId = "[ERROR] $blbId";
       } catch (e) {
