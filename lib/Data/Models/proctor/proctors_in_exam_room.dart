@@ -1,10 +1,12 @@
-class ProctorsInExamRoom {
-  List<ProctorsInExamRoom>? data;
+import 'package:control_system/Data/Models/proctor/proctor_in_exam_room_res_model.dart';
 
-  ProctorsInExamRoom({this.data});
+class ProctorsInExamRoomResModel {
+  List<ProctorInExamRoomResModel>? data;
 
-  ProctorsInExamRoom.fromJson(json) {
-    data = List<ProctorsInExamRoom>.from(
-        json.map((e) => ProctorsInExamRoom.fromJson(e)).toList());
+  ProctorsInExamRoomResModel({this.data});
+
+  ProctorsInExamRoomResModel.fromJson(json) {
+    data = List<ProctorInExamRoomResModel>.from(
+        json.map((e) => ProctorInExamRoomResModel.fromJson(e)).toList());
   }
 }

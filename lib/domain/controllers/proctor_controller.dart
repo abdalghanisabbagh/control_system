@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/proctor/proctor_in_room_res_model.dart';
+import 'package:control_system/Data/Models/proctor/proctor_in_exam_room_res_model.dart';
+import 'package:control_system/Data/Models/proctor/proctors_in_exam_room.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,9 @@ class ProctorController extends GetxController {
   ProctorResModel? selectedProctor;
 
   ExamRoomResModel? selectedExamRoom;
+
+  List<ProctorInExamRoomResModel> proctorsInExamRoom = [];
+  List<ProctorInExamRoomResModel> proctorHasExamRooms = [];
 
   List<ControlMissionResModel> controlMissions = [];
   bool controlMissionsAreLoading = false;
@@ -81,6 +85,35 @@ class ProctorController extends GetxController {
       ],
     );
     super.onInit();
+  }
+
+  Future<void> getProctorsByExamRoomId({required int examRoomId}) async {
+    isLoading = true;
+    update();
+
+    final response =
+        await ResponseHandler<ProctorsInExamRoomResModel>().getResponse(
+      path: "${ProctorsLinks.proctor}/exam-room/$examRoomId",
+      converter: ProctorsInExamRoomResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        proctorsInExamRoom.assignAll(r.data!);
+      },
+    );
+    isLoading = false;
+    update();
   }
 
   Future<void> getExamRoomByControlMissionId() async {
@@ -151,11 +184,12 @@ class ProctorController extends GetxController {
     isLoading = true;
     bool isSuccess = false;
     update(['examRooms']);
-    final response = await ResponseHandler<ProctorInRoomResModel>().getResponse(
-        path: "${ProctorsLinks.proctor}/assign",
-        converter: ProctorInRoomResModel.fromJson,
-        type: ReqTypeEnum.POST,
-        body: {
+    final response = await ResponseHandler<ProctorInExamRoomResModel>()
+        .getResponse(
+            path: "${ProctorsLinks.proctor}/assign",
+            converter: ProctorInExamRoomResModel.fromJson,
+            type: ReqTypeEnum.POST,
+            body: {
           "proctors_ID": selectedProctor?.iD,
           "exam_room_ID": selectedExamRoom?.id,
           "Month": selectedExamRoom
