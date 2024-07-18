@@ -6,6 +6,7 @@ import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../../Data/Models/exam_mission/exam_mission_res_model.dart';
+import '../../../../domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
 import '../../../../domain/controllers/batch_documents.dart/edit_cover_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -28,7 +29,9 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
   String? selectedDay;
   String? selectedMonth;
   String? selectedYear;
-  final TextEditingController dateController = TextEditingController();
+  late TextEditingController dateController = TextEditingController(
+      text: DateFormat('yyyy-MM-dd')
+          .format(DateTime.tryParse(examMissionObject.startTime!)!));
 
   Future<void> selectDate(BuildContext context) async {
     if (controlMissionObject.startDate == null ||
@@ -51,14 +54,18 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
       final TimeOfDay? pickedTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.now(),
+        initialEntryMode: TimePickerEntryMode.inputOnly,
         builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData(
-              colorScheme: Theme.of(context).colorScheme.copyWith(
-                    primary: ColorManager.primary,
-                  ),
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+            child: Theme(
+              data: ThemeData(
+                colorScheme: Theme.of(context).colorScheme.copyWith(
+                      primary: ColorManager.primary,
+                    ),
+              ),
+              child: child!,
             ),
-            child: child!,
           );
         },
       );
@@ -109,29 +116,47 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
           const SizedBox(
             height: 20,
           ),
-          InkWell(
-            onTap: () {
-              controller.uplodPdfInExamMission(id: examMissionObject.iD!);
-            },
-            child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(11),
+          GetBuilder<EditCoverSheetController>(builder: (_) {
+            if (controller.isLodingUploadPdf == true) {
+              return SizedBox(
+                width: 50,
+                height: 50,
+                child: FittedBox(
+                  child: LoadingIndicators.getLoadingIndicator(),
                 ),
-                color: ColorManager.glodenColor,
-              ),
-              child: Center(
-                child: Text(
-                  "Upload Exam Version A",
-                  style: nunitoRegular.copyWith(
-                    color: Colors.white,
-                    fontSize: 18,
+              );
+            }
+            return InkWell(
+              onTap: () {
+                controller.uplodPdfInExamMission().then((value) {
+                  if (value == true) {
+                    MyFlashBar.showSuccess(
+                      "Uploaded Successfully",
+                      "Success",
+                    ).show(Get.key.currentContext!);
+                  }
+                });
+              },
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(11),
+                  ),
+                  color: ColorManager.glodenColor,
+                ),
+                child: Center(
+                  child: Text(
+                    "Upload Exam Version A",
+                    style: nunitoRegular.copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
+            );
+          }),
           Form(
             key: _formKey,
             child: Column(
@@ -194,6 +219,9 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                       dateController.text = DateFormat('yyyy-MM-dd HH:mm')
                           .format(selectedDateTime!);
                     }
+                    // } else {
+                    //   dateController.text = examMissionObject.startTime!;
+                    // }
                   },
                   child: TextFormField(
                     validator: Validations.requiredValidator,
@@ -215,8 +243,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                         Icons.date_range_outlined,
                         color: Colors.black,
                       ),
-                      hintText:
-                          '${examMissionObject.year}/${examMissionObject.month}',
+                      // hintText: '${examMissionObject.startTime}',
                       hintStyle: nunitoRegularStyle(),
                     ),
                   ),
@@ -257,8 +284,9 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
               }),
             ],
           ),
-          GetBuilder<EditCoverSheetController>(builder: (_) {
-            if (controller.isLodingUpdateExamMission) {
+          GetBuilder<CoversSheetsController>(builder: (coversSheetsController) {
+            if (controller.isLodingUpdateExamMission ||
+                controller.isLodingUploadPdf) {
               return SizedBox(
                 width: 50,
                 height: 50,
@@ -271,11 +299,11 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
               onTap: () {
                 controller
                     .updateExamMission(
-                  id: examMissionObject.iD!,
-                  startTime:
-                      dateController.text.convertDateStringToIso8601String(),
-                  duration: controller.selectedIExamDuration?.value,
-                )
+                        id: examMissionObject.iD!,
+                        startTime: dateController.text
+                            .convertDateStringToIso8601String(),
+                        duration: controller.selectedIExamDuration?.value,
+                        pdfUrl: controller.pdfUrl)
                     .then((value) {
                   if (value) {
                     Get.back();

@@ -61,6 +61,7 @@ class ControlMissionLinks {
 
 class ExamLinks {
   static const examMission = 'exam-mission';
+  static const examMissionUpload = 'exam-mission/upload';
   static const examMissionControlMission = 'exam-mission/control-mission';
   static const examMissionSubject = 'exam-mission/subject';
   static const examRooms = 'exam-rooms';

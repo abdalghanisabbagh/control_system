@@ -1,12 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/controllers/controllers.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../Data/Models/exam_mission/exam_mission_res_model.dart';
+import '../../../Data/Models/exam_mission/upload_pdf_res_models.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
@@ -15,8 +17,10 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 class EditCoverSheetController extends GetxController {
   bool isNight = false;
   bool isLodingUpdateExamMission = false;
+  bool isLodingUploadPdf = false;
 
   ValueItem? selectedIExamDuration;
+  String? pdfUrl;
 
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
@@ -58,22 +62,21 @@ class EditCoverSheetController extends GetxController {
     return (null, null);
   }
 
-  Future<bool> uplodPdfInExamMission({
-    required int id,
-  }) async {
-    update();
+  Future<bool> uplodPdfInExamMission() async {
     bool uploadPdfFile = false;
-    ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
+    ResponseHandler<Pdf> responseHandler = ResponseHandler();
 
     (Uint8List?, String?) pdfData = await pickPdfFile();
+    isLodingUploadPdf = true;
+    update();
 
     var response = await responseHandler.getResponse(
-      path: '${ExamLinks.examMission}/$id',
-      converter: ExamMissionResModel.fromJson,
-      type: ReqTypeEnum.PATCH,
+      path: ExamLinks.examMissionUpload,
+      converter: Pdf.fromJson,
+      type: ReqTypeEnum.POST,
       body: FormData.fromMap(
         {
-          'pdf': pdfData.$1 == null
+          'file': pdfData.$1 == null
               ? null
               : MultipartFile.fromBytes(pdfData.$1!, filename: pdfData.$2),
         },
@@ -88,17 +91,19 @@ class EditCoverSheetController extends GetxController {
       ).showDialogue(Get.key.currentContext!);
       uploadPdfFile = false;
     }, (result) {
+      pdfUrl = result.data!;
       uploadPdfFile = true;
     });
-
+    isLodingUploadPdf = false;
     update();
     return uploadPdfFile;
   }
 
   Future<bool> updateExamMission({
     required int id,
-    required String startTime,
+    required String? startTime,
     required int? duration,
+    required String? pdfUrl,
   }) async {
     isLodingUpdateExamMission = true;
 
@@ -109,6 +114,7 @@ class EditCoverSheetController extends GetxController {
     ExamMissionResModel examMissionResModel = ExamMissionResModel(
       startTime: startTime,
       duration: duration,
+      pdf: pdfUrl,
     );
 
     var response = await responseHandler.getResponse(
@@ -125,6 +131,8 @@ class EditCoverSheetController extends GetxController {
       ).showDialogue(Get.key.currentContext!);
       updateExamMission = false;
     }, (result) {
+      Get.find<CoversSheetsController>()
+          .getAllExamMissionsByControlMission(result.controlMissionID!);
       updateExamMission = true;
     });
     isLodingUpdateExamMission = false;

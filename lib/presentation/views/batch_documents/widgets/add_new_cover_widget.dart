@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/app/extensions/convert_date_string_to_iso8601_string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -488,8 +489,15 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             return InkWell(
               onTap: () {
                 if (_formKey.currentState!.validate()) {
+                  print("selected date ${selectedDate}");
+                  print(
+                      "selected date ${selectedDate.toString().convertDateStringToIso8601String()}");
+
                   controllerCovers
                       .addNewExamMission(
+                          startTime: selectedDate
+                              .toString()
+                              .convertDateStringToIso8601String(),
                           duration: controller.selectedIExamDuration!.value,
                           subjectId: controller.selectedItemSubject!.value,
                           controlMissionId:

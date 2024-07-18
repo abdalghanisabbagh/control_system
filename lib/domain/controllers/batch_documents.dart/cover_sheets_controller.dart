@@ -328,6 +328,7 @@ class CoversSheetsController extends GetxController {
     required String month,
     required String finalDegree,
     required int duration,
+    required String? startTime,
   }) async {
     isLoadingAddExamMission = true;
     update();
@@ -342,6 +343,7 @@ class CoversSheetsController extends GetxController {
         year: year,
         month: month,
         finalDegree: finalDegree,
+        startTime: startTime,
         duration: duration);
 
     var response = await responseHandler.getResponse(
@@ -360,8 +362,9 @@ class CoversSheetsController extends GetxController {
         addExamMissionHasBeenAdded = false;
       },
       (result) {
-        getAllExamMissionsByControlMission(selectedItemControlMission!.value);
-
+        if (selectedItemControlMission != null) {
+          getAllExamMissionsByControlMission(selectedItemControlMission!.value);
+        }
 
         addExamMissionHasBeenAdded = true;
       },
