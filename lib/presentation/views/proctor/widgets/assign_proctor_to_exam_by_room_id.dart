@@ -77,19 +77,23 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                     ),
                   ),
                   const Spacer(),
-                  ElevatedButton(
-                    onPressed: () async {
-                      controller.assignProctorToExamRoom();
-                    },
-                    child: const Text('assign to proctor'),
-                  ),
+                  if (controller.selectedExamRoom!.controlMissionResModel!
+                      .examMissionsResModel!.data!
+                      .where((exam) => !exam.period!)
+                      .isNotEmpty)
+                    ElevatedButton(
+                      onPressed: () async {
+                        controller.assignProctorToExamRoom();
+                      },
+                      child: const Text('assign to proctor'),
+                    ),
                 ],
               ),
               ListBody(
                 mainAxis: Axis.vertical,
                 children: controller.selectedExamRoom!.controlMissionResModel!
                     .examMissionsResModel!.data!
-                    .where((exam) => exam.period == 0)
+                    .where((exam) => exam.period!)
                     .map(
                       (exam) => Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -188,7 +192,7 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                   const Spacer(),
                   if (controller.selectedExamRoom!.controlMissionResModel!
                       .examMissionsResModel!.data!
-                      .where((exam) => exam.period == 1)
+                      .where((exam) => !exam.period!)
                       .isNotEmpty)
                     ElevatedButton(
                       onPressed: () async {
@@ -229,7 +233,7 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                 mainAxis: Axis.vertical,
                 children: controller.selectedExamRoom!.controlMissionResModel!
                     .examMissionsResModel!.data!
-                    .where((exam) => exam.period == 1)
+                    .where((exam) => !exam.period!)
                     .map(
                       (exam) => Padding(
                         padding: const EdgeInsets.all(8.0),
