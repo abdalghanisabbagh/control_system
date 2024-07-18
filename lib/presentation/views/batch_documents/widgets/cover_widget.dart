@@ -139,7 +139,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         ),
                       ),
                       SizedBox(
-                        width: Get.width * 0.3,
+                        width: Get.width * 0.35,
                       ),
                       Text("Exam Duration :${examMissionObject.duration} min",
                           style: nunitoRegularStyle().copyWith(
