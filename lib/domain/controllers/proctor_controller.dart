@@ -150,7 +150,7 @@ class ProctorController extends GetxController {
   FutureOr<bool> assignProctorToExamRoom() async {
     isLoading = true;
     bool isSuccess = false;
-    update(['proctorEntryScreen']);
+    update(['examRooms']);
     final response = await ResponseHandler<ProctorInRoomResModel>().getResponse(
         path: "${ProctorsLinks.proctor}/assign",
         converter: ProctorInRoomResModel.fromJson,
@@ -188,7 +188,7 @@ class ProctorController extends GetxController {
     selectedProctor = null;
 
     isLoading = false;
-    update(['proctorEntryScreen']);
+    update(['examRooms']);
 
     return isSuccess;
   }
