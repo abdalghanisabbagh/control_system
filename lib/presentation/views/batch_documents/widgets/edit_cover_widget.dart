@@ -6,7 +6,6 @@ import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../../Data/Models/exam_mission/exam_mission_res_model.dart';
-import '../../../../domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
 import '../../../../domain/controllers/batch_documents.dart/edit_cover_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -284,7 +283,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
               }),
             ],
           ),
-          GetBuilder<CoversSheetsController>(builder: (coversSheetsController) {
+          GetBuilder<EditCoverSheetController>(builder: (_) {
             if (controller.isLodingUpdateExamMission ||
                 controller.isLodingUploadPdf) {
               return SizedBox(
