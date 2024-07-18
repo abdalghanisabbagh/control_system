@@ -231,9 +231,6 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                       dateController.text = DateFormat('yyyy-MM-dd HH:mm')
                           .format(selectedDateTime!);
                     }
-                    // } else {
-                    //   dateController.text = examMissionObject.startTime!;
-                    // }
                   },
                   child: TextFormField(
                     validator: Validations.requiredValidator,
@@ -255,7 +252,6 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                         Icons.date_range_outlined,
                         color: Colors.black,
                       ),
-                      // hintText: '${examMissionObject.startTime}',
                       hintStyle: nunitoRegularStyle(),
                     ),
                   ),
@@ -276,20 +272,22 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                     Text(
                       'Session One Exams',
                       style: TextStyle(
-                          color:
-                              !controller.isNight ? Colors.black : Colors.grey),
+                          color: examMissionObject.period!
+                              ? Colors.black
+                              : Colors.grey),
                     ),
                     Switch.adaptive(
-                        value: controller.isNight,
+                        value: examMissionObject.period!,
                         onChanged: (newValue) {
-                          controller.isNight = newValue;
+                          examMissionObject.period = newValue;
                           controller.update();
                         }),
                     Text(
                       'Session Two Exams',
                       style: TextStyle(
-                          color:
-                              controller.isNight ? Colors.black : Colors.grey),
+                          color: examMissionObject.period!
+                              ? Colors.black
+                              : Colors.grey),
                     ),
                   ],
                 );
@@ -311,6 +309,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
               onTap: () {
                 controller
                     .updateExamMission(
+                        period: examMissionObject.period,
                         id: examMissionObject.iD!,
                         startTime: dateController.text
                             .convertDateStringToIso8601String(),

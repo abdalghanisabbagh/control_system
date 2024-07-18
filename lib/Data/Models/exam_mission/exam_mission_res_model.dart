@@ -27,6 +27,7 @@ class ExamMissionResModel {
     this.gradeResModel,
     this.subjectResModel,
     this.active,
+    this.createOnly,
   });
 
   ExamMissionResModel.fromJson(json) {
@@ -92,10 +93,12 @@ class ExamMissionResModel {
     if (year != null) data['Year'] = year;
     if (finalDegree != null) data['FinalDegree'] = finalDegree;
     if (period != null) data['Period'] = period;
+    if (createOnly != null) data['Create_Only'] = createOnly;
     if (duration != null) data['duration'] = duration;
     if (startTime != null) data['start_time'] = startTime;
     if (endTime != null) data['end_time'] = endTime;
     if (pdf != null) data['pdf'] = pdf;
+
     if (pdfV2 != null) data['pdf_V2'] = pdfV2;
     if (Get.find<ProfileController>().cachedUserProfile?.iD != null) {
       data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;

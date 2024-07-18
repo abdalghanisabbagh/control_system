@@ -15,7 +15,6 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class EditCoverSheetController extends GetxController {
-  bool isNight = false;
   bool isLodingUpdateExamMission = false;
   bool isLodingUploadPdf = false;
 
@@ -104,6 +103,7 @@ class EditCoverSheetController extends GetxController {
     required String? startTime,
     required int? duration,
     required String? pdfUrl,
+    required bool? period,
   }) async {
     isLodingUpdateExamMission = true;
 
@@ -115,6 +115,7 @@ class EditCoverSheetController extends GetxController {
       startTime: startTime,
       duration: duration,
       pdf: pdfUrl,
+      period: period,
     );
 
     var response = await responseHandler.getResponse(

@@ -27,7 +27,7 @@ class CreateCoversSheetsController extends GetxController {
   bool isLodingGetExamMission = false;
   bool isLoadingGrades = false;
   bool isLoadingGetEducationYear = false;
-  bool isNight = false;
+  bool isPeriod = false;
 
   List<SubjectResModel> subjectsList = <SubjectResModel>[];
   List<ExamMissionResModel> examMissionsList = <ExamMissionResModel>[];

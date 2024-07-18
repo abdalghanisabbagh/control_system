@@ -469,20 +469,21 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                     Text(
                       'Session One Exams',
                       style: TextStyle(
-                          color:
-                              !controller.isNight ? Colors.black : Colors.grey),
+                          color: !controller.isPeriod
+                              ? Colors.black
+                              : Colors.grey),
                     ),
                     Switch.adaptive(
-                        value: controller.isNight,
+                        value: controller.isPeriod,
                         onChanged: (newValue) {
-                          controller.isNight = newValue;
+                          controller.isPeriod = newValue;
                           controller.update();
                         }),
                     Text(
                       'Session Two Exams',
                       style: TextStyle(
                           color:
-                              controller.isNight ? Colors.black : Colors.grey),
+                              controller.isPeriod ? Colors.black : Colors.grey),
                     ),
                   ],
                 );
@@ -501,9 +502,12 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             }
             return InkWell(
               onTap: () {
+                
                 if (_formKey.currentState!.validate()) {
                   controllerCovers
                       .addNewExamMission(
+                          createOnly: controller.is2Version,
+                          period: controller.isPeriod,
                           startTime: selectedDate
                               .toString()
                               .convertDateStringToIso8601String(),

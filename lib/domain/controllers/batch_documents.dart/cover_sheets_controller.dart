@@ -329,6 +329,8 @@ class CoversSheetsController extends GetxController {
     required String finalDegree,
     required int duration,
     required String? startTime,
+    required bool? period,
+    required bool? createOnly,
   }) async {
     isLoadingAddExamMission = true;
     update();
@@ -343,6 +345,8 @@ class CoversSheetsController extends GetxController {
         year: year,
         month: month,
         finalDegree: finalDegree,
+        createOnly: createOnly,
+        period: period,
         startTime: startTime,
         duration: duration);
 
