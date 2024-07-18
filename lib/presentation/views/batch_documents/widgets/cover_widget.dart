@@ -1,5 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/control_mission/control_mission_model.dart';
+import 'package:control_system/Data/Models/control_mission/control_mission_res_model.dart';
 import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:control_system/domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';

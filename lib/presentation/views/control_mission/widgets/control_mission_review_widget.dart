@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../../domain/controllers/controllers.dart';
@@ -46,10 +47,33 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                       style: nunitoBold.copyWith(
                           color: ColorManager.bgSideMenu, fontSize: 30),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       "Number Of Students: ${controlMission.count?['student_seat_numnbers']}",
                       style: nunitoRegular.copyWith(
                           color: ColorManager.bgSideMenu, fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Start Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.startDate!.substring(0, controlMission.startDate!.length - 1).toString()))}",
+                          style: nunitoRegular.copyWith(
+                              color: ColorManager.green, fontSize: 16),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "End Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.endDate!.substring(0, controlMission.endDate!.length - 1).toString()))}",
+                          style: nunitoRegular.copyWith(
+                              color: ColorManager.red, fontSize: 16),
+                        ),
+                      ],
                     ),
                   ],
                 ),
