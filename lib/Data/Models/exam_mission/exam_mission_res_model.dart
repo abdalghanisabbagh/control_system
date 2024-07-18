@@ -69,7 +69,7 @@ class ExamMissionResModel {
   String? month;
   String? pdf;
   String? pdfV2;
-  int? period;
+  bool? period;
   String? startTime;
   int? subjectsID;
   String? updatedAt;
