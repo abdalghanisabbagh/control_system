@@ -39,6 +39,7 @@ class ExamMissionResModel {
     year = json['Year'];
     finalDegree = json['FinalDegree'];
     period = json['Period'];
+    createOnly = json['Create_Only'];
     duration = json['duration'];
     startTime = json['start_time'];
     endTime = json['end_time'];
@@ -70,6 +71,7 @@ class ExamMissionResModel {
   String? pdf;
   String? pdfV2;
   bool? period;
+  bool? createOnly;
   String? startTime;
   int? subjectsID;
   String? updatedAt;
