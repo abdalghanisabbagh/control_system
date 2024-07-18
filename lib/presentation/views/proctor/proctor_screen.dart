@@ -1,6 +1,9 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
+import 'package:control_system/presentation/resource_manager/constants/app_constatnts.dart';
 import 'package:control_system/presentation/views/proctor/widgets/assign_proctor_to_exam_by_room_id.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../domain/controllers/proctor_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
@@ -24,9 +27,9 @@ class ProctorScreen extends GetView<ProctorController> {
     if (picked != null) {
       // controller.selectedDate = picked;
       // controller.onSelectDate();
+      controller.dateController.text =
+          DateFormat('dd MMMM yyyy').format(picked);
     }
-    // controller.dateController.text =
-    //     DateFormat('dd MMMM yyyy').format(controller.selectedDate);
   }
 
   @override
@@ -136,8 +139,8 @@ class ProctorScreen extends GetView<ProctorController> {
                                                 style: nunitoRegular.copyWith(
                                                   fontSize: 14,
                                                 ),
-                                                // controller:
-                                                //     controller.dateController,
+                                                controller:
+                                                    controller.dateController,
                                                 decoration: InputDecoration(
                                                   suffixIcon: const Icon(
                                                     Icons.date_range_outlined,
@@ -209,78 +212,146 @@ class ProctorScreen extends GetView<ProctorController> {
                                                 ),
                                                 GetBuilder<ProctorController>(
                                                   id: 'proctors',
-                                                  builder: (context) {
+                                                  builder: (_) {
                                                     return Expanded(
-                                                      child: ListView.builder(
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        shrinkWrap: true,
-                                                        itemCount: controller
-                                                            .proctors.length,
-                                                        itemBuilder:
-                                                            (context, index) {
-                                                          return InkWell(
-                                                            onDoubleTap: () {
-                                                              MyDialogs
-                                                                  .showDialog(
-                                                                context,
-                                                                AssignProctorToExamByRoomId(
-                                                                  proctorId: controller
-                                                                      .proctors[
-                                                                          index]
-                                                                      .iD!,
-                                                                ),
-                                                              );
-                                                            },
-                                                            // onDoubleTap: () {
-                                                            //   MyDialogs
-                                                            //       .showDialog(
-                                                            //     context,
-                                                            //     EditProctorWidget(
-                                                            //       proctor: controller
-                                                            //               .proctors[
-                                                            //           index],
-                                                            //     ),
-                                                            //   );
-                                                            // },
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: ColorManager
-                                                                      .ligthBlue,
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                      10,
+                                                      child: RepaintBoundary(
+                                                        child: ListView.builder(
+                                                          scrollDirection:
+                                                              Axis.vertical,
+                                                          shrinkWrap: true,
+                                                          itemCount: controller
+                                                              .proctors.length,
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return InkWell(
+                                                              onTap: () async {
+                                                                if (controller
+                                                                        .selectedProctor
+                                                                        ?.iD ==
+                                                                    controller
+                                                                        .proctors[
+                                                                            index]
+                                                                        .iD) {
+                                                                  controller
+                                                                          .selectedProctor =
+                                                                      null;
+                                                                  controller
+                                                                      .update([
+                                                                    'proctors'
+                                                                  ]);
+                                                                } else {
+                                                                  controller
+                                                                          .selectedProctor =
+                                                                      controller
+                                                                              .proctors[
+                                                                          index];
+                                                                  controller
+                                                                      .update([
+                                                                    'proctors'
+                                                                  ]);
+                                                                  if (controller
+                                                                      .canAssignProctorToExamRoom()) {
+                                                                    bool
+                                                                        isSuccess =
+                                                                        await controller
+                                                                            .assignProctorToExamRoom();
+                                                                    if (isSuccess &&
+                                                                        context
+                                                                            .mounted) {
+                                                                      MyFlashBar.showSuccess(
+                                                                              'Proctor assigned successfully',
+                                                                              'Success')
+                                                                          .show(
+                                                                              context);
+                                                                    } else if (!isSuccess &&
+                                                                        context
+                                                                            .mounted) {
+                                                                      MyFlashBar.showError(
+                                                                              'Failed to assign proctor',
+                                                                              'Error')
+                                                                          .show(
+                                                                              context);
+                                                                    }
+                                                                  }
+                                                                }
+                                                              },
+                                                              onDoubleTap: () {
+                                                                MyDialogs
+                                                                    .showDialog(
+                                                                  context,
+                                                                  AssignProctorToExamByRoomId(
+                                                                    proctorId: controller
+                                                                        .proctors[
+                                                                            index]
+                                                                        .iD!,
+                                                                  ),
+                                                                );
+                                                              },
+                                                              // onDoubleTap: () {
+                                                              //   MyDialogs
+                                                              //       .showDialog(
+                                                              //     context,
+                                                              //     EditProctorWidget(
+                                                              //       proctor: controller
+                                                              //               .proctors[
+                                                              //           index],
+                                                              //     ),
+                                                              //   );
+                                                              // },
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        8.0),
+                                                                child:
+                                                                    AnimatedContainer(
+                                                                  duration:
+                                                                      AppConstants
+                                                                          .mediumDuration,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: controller.selectedProctor?.iD ==
+                                                                            controller
+                                                                                .proctors[
+                                                                                    index]
+                                                                                .iD
+                                                                        ? ColorManager
+                                                                            .primary
+                                                                        : ColorManager
+                                                                            .ligthBlue,
+                                                                    borderRadius:
+                                                                        const BorderRadius
+                                                                            .all(
+                                                                      Radius
+                                                                          .circular(
+                                                                        10,
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                      horizontal:
-                                                                          8),
-                                                                  child: Text(
-                                                                    '${index + 1} - ${controller.proctors[index].userName}',
-                                                                    style: nunitoBold
-                                                                        .copyWith(
-                                                                      color: ColorManager
-                                                                          .black,
-                                                                      fontSize:
-                                                                          20,
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                        horizontal:
+                                                                            8),
+                                                                    child: Text(
+                                                                      '${index + 1} - ${controller.proctors[index].userName}',
+                                                                      style: nunitoBold
+                                                                          .copyWith(
+                                                                        color: controller.selectedProctor?.iD ==
+                                                                                controller.proctors[index].iD
+                                                                            ? ColorManager.white
+                                                                            : ColorManager.black,
+                                                                        fontSize:
+                                                                            20,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          );
-                                                        },
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
                                                     );
                                                   },
@@ -413,6 +484,7 @@ class ProctorScreen extends GetView<ProctorController> {
                                   Expanded(
                                     flex: 3,
                                     child: GetBuilder<ProctorController>(
+                                      id: 'examRooms',
                                       builder: (_) => controller
                                               .examRoomsAreLoading
                                           ? Center(
@@ -468,63 +540,133 @@ class ProctorScreen extends GetView<ProctorController> {
                                                         ),
                                                       ],
                                                     )
-                                              : GridView.builder(
-                                                  shrinkWrap: true,
-                                                  gridDelegate:
-                                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 6,
-                                                    mainAxisSpacing: 5,
-                                                    crossAxisSpacing: 5,
-                                                    childAspectRatio: 2,
-                                                  ),
-                                                  itemCount: controller
-                                                      .examRooms.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return InkWell(
-                                                      // onTap: () {
-                                                      //   /// get exam missin in this room
-                                                      //   ProctorExams
-                                                      //       .assignProctorToExamByRoomId(
-                                                      //           room
-                                                      //               .id!,
-                                                      //           controller
-                                                      //               .selectedProctor);
-                                                      // },
-                                                      child: Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors
-                                                              .lightBlueAccent,
-                                                          border: Border.all(
-                                                            color: Colors.blue,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            10,
-                                                          ),
-                                                        ),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Expanded(
-                                                              child: Text(
-                                                                  '${controller.examRooms[index].name}'),
+                                              : RepaintBoundary(
+                                                  child: GridView.builder(
+                                                    shrinkWrap: true,
+                                                    gridDelegate:
+                                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 6,
+                                                      mainAxisSpacing: 5,
+                                                      crossAxisSpacing: 5,
+                                                      childAspectRatio: 2,
+                                                    ),
+                                                    itemCount: controller
+                                                        .examRooms.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return InkWell(
+                                                        onTap: () async {
+                                                          /// get exam missin in this room
+                                                          if (controller
+                                                                  .selectedExamRoom
+                                                                  ?.id ==
+                                                              controller
+                                                                  .examRooms[
+                                                                      index]
+                                                                  .id) {
+                                                            controller
+                                                                    .selectedExamRoom =
+                                                                null;
+                                                            controller.update(
+                                                                ['examRooms']);
+                                                          } else {
+                                                            controller
+                                                                    .selectedExamRoom =
+                                                                controller
+                                                                        .examRooms[
+                                                                    index];
+                                                            controller.update(
+                                                                ['examRooms']);
+                                                            if (controller
+                                                                .canAssignProctorToExamRoom()) {
+                                                              bool isSuccess =
+                                                                  await controller
+                                                                      .assignProctorToExamRoom();
+                                                              if (isSuccess &&
+                                                                  context
+                                                                      .mounted) {
+                                                                MyFlashBar.showSuccess(
+                                                                        'Proctor assigned successfully',
+                                                                        'Success')
+                                                                    .show(
+                                                                        context);
+                                                              } else if (!isSuccess &&
+                                                                  context
+                                                                      .mounted) {
+                                                                MyFlashBar.showError(
+                                                                        'Failed to assign proctor',
+                                                                        'Error')
+                                                                    .show(
+                                                                        context);
+                                                              }
+                                                            }
+                                                          }
+                                                        },
+                                                        child:
+                                                            AnimatedContainer(
+                                                          duration: AppConstants
+                                                              .mediumDuration,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: controller
+                                                                        .selectedExamRoom
+                                                                        ?.id ==
+                                                                    controller
+                                                                        .examRooms[
+                                                                            index]
+                                                                        .id
+                                                                ? ColorManager
+                                                                    .primary
+                                                                : Colors
+                                                                    .lightBlueAccent,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                              10,
                                                             ),
-                                                            Text(
-                                                              '${controller.examRooms[index].stage}',
-                                                            )
-                                                          ],
+                                                          ),
+                                                          child:
+                                                              DefaultTextStyle(
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: nunitoRegular
+                                                                .copyWith(
+                                                              fontSize: 14,
+                                                              color: controller
+                                                                          .selectedExamRoom
+                                                                          ?.id ==
+                                                                      controller
+                                                                          .examRooms[
+                                                                              index]
+                                                                          .id
+                                                                  ? ColorManager
+                                                                      .white
+                                                                  : ColorManager
+                                                                      .black,
+                                                            ),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Text(
+                                                                      '${controller.examRooms[index].name}'),
+                                                                ),
+                                                                Text(
+                                                                  '${controller.examRooms[index].stage}',
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
                                     ),
                                   ),
