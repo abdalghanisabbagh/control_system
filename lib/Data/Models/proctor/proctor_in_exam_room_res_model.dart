@@ -1,3 +1,4 @@
+import 'package:control_system/Data/Models/exam_room/exam_room_res_model.dart';
 import 'package:control_system/Data/Models/proctor/proctor_res_model.dart';
 
 class ProctorInExamRoomResModel {
@@ -14,6 +15,7 @@ class ProctorInExamRoomResModel {
   int? updatedBy;
   String? updatedAt;
   ProctorResModel? proctor;
+  ExamRoomResModel? examRoom;
 
   ProctorInExamRoomResModel({
     this.id,
@@ -29,6 +31,7 @@ class ProctorInExamRoomResModel {
     this.updatedBy,
     this.updatedAt,
     this.proctor,
+    this.examRoom,
   });
 
   ProctorInExamRoomResModel.fromJson(json) {
@@ -46,6 +49,9 @@ class ProctorInExamRoomResModel {
     updatedAt = json['Updated_At'];
     proctor = json['proctors'] != null
         ? ProctorResModel.fromJson(json['proctors'])
+        : null;
+    examRoom = json['exam_room'] != null
+        ? ExamRoomResModel.fromJson(json['exam_room'])
         : null;
   }
 }
