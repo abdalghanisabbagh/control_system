@@ -145,6 +145,38 @@ class ProctorController extends GetxController {
     update();
   }
 
+  Future<bool> unAssignProctorFromExamRoom({required int proctorId}) async {
+    bool success = false;
+    isLoading = true;
+    update();
+
+    final response = await ResponseHandler<void>().getResponse(
+      path: "${ProctorsLinks.proctor}/unassign-from-exam-room/$proctorId",
+      converter: (_) {},
+      type: ReqTypeEnum.DELETE,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+        success = false;
+      },
+      (r) {
+        success = true;
+        getExamRoomsByProctorId(proctorId: proctorId);
+      },
+    );
+    isLoading = false;
+    update();
+    return success;
+  }
+
   Future<void> getExamRoomByControlMissionId() async {
     examRoomsAreLoading = true;
     update(['examRooms']);

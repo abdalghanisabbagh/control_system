@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -79,8 +80,31 @@ class ProctorsInExamRoomWidget extends GetView<ProctorController> {
                               .map(
                                 (proctors) => Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '${proctors.proctor!.userName} ',
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        '${proctors.proctor!.userName} ',
+                                      ),
+                                      const Spacer(),
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          await controller
+                                              .unAssignProctorFromExamRoom(
+                                            proctorId: proctors.id!,
+                                          )
+                                              .then((value) {
+                                            if (value) {
+                                              Get.back();
+                                              MyFlashBar.showSuccess(
+                                                'Unassigned Successfully',
+                                                'Success',
+                                              ).show(Get.key.currentContext!);
+                                            }
+                                          });
+                                        },
+                                        child: const Text('UnAssign'),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               )
