@@ -409,6 +409,8 @@ class ProctorController extends GetxController {
     selectedControlMissionsId = selectedOptions.firstOrNull?.value;
     selectedExamRoom = null;
     selectedProctor = null;
+    selectedDate = null;
+    dateController.text = '';
     examRooms = [];
     update(['proctorEntryScreen']);
   }
