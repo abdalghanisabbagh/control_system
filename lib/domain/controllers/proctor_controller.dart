@@ -102,8 +102,8 @@ class ProctorController extends GetxController {
             path: "${ProctorsLinks.proctor}/exam-room/$examRoomId",
             converter: ProctorsInExamRoomResModel.fromJson,
             type: ReqTypeEnum.GET,
-            body: {
-          "month": '${selectedDate!.day}/${selectedDate!.month}',
+            params: {
+          "month": '${selectedDate!.month}/${selectedDate!.day}',
           "year": '${selectedDate!.year}',
         });
 
