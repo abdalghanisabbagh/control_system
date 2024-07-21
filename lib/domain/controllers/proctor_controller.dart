@@ -26,6 +26,7 @@ import 'profile_controller.dart';
 
 class ProctorController extends GetxController {
   final dateController = TextEditingController();
+  DateTime? selectedDate;
 
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -87,16 +88,24 @@ class ProctorController extends GetxController {
     super.onInit();
   }
 
+  Future<void> onDateSelected() async {
+    getExamRoomByControlMissionId();
+    return;
+  }
+
   Future<void> getProctorsByExamRoomId({required int examRoomId}) async {
     isLoading = true;
     update();
 
-    final response =
-        await ResponseHandler<ProctorsInExamRoomResModel>().getResponse(
-      path: "${ProctorsLinks.proctor}/exam-room/$examRoomId",
-      converter: ProctorsInExamRoomResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
+    final response = await ResponseHandler<ProctorsInExamRoomResModel>()
+        .getResponse(
+            path: "${ProctorsLinks.proctor}/exam-room/$examRoomId",
+            converter: ProctorsInExamRoomResModel.fromJson,
+            type: ReqTypeEnum.GET,
+            body: {
+          "month": '${selectedDate!.day}/${selectedDate!.month}',
+          "year": '${selectedDate!.year}',
+        });
 
     response.fold(
       (l) {
@@ -398,10 +407,6 @@ class ProctorController extends GetxController {
 
   void onControlMissionsChange(List<ValueItem<dynamic>> selectedOptions) {
     selectedControlMissionsId = selectedOptions.firstOrNull?.value;
-    selectedControlMissionsId != null
-        ? getExamRoomByControlMissionId()
-        : examRooms = [];
-
     selectedExamRoom = null;
     selectedProctor = null;
     examRooms = [];
