@@ -155,7 +155,9 @@ class CoverWidget extends GetView<CoversSheetsController> {
                 controller.schoolTypeId == 1
                     ? Expanded(
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            controller.generateCoverSheet();
+                          },
                           child: Container(
                             height: 50,
                             width: double.infinity,
@@ -243,6 +245,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                             ));
                           },
                           child: Container(
+                            
                             height: 50,
                             width: double.infinity,
                             decoration: BoxDecoration(

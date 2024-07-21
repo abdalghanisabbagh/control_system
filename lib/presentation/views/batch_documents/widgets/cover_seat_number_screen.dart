@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../../resource_manager/styles_manager.dart';
 
 // ignore: must_be_immutable
 class CoverSeatNumberWidget extends GetView<CoversSheetsController> {
-  ExamMissionResModel examMissionObject;
-  ControlMissionResModel controlMissionObject;
-  CoverSeatNumberWidget({
+  final ExamMissionResModel examMissionObject;
+  final ControlMissionResModel controlMissionObject;
+
+  const CoverSeatNumberWidget({
     super.key,
     required this.examMissionObject,
     required this.controlMissionObject,
@@ -24,18 +24,18 @@ class CoverSeatNumberWidget extends GetView<CoversSheetsController> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 20,
-              offset: const Offset(2, 15),
-            ),
-          ],
-          color: ColorManager.ligthBlue,
-          borderRadius: BorderRadius.circular(11)),
-      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-      width: double.infinity,
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      margin: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           Padding(
@@ -46,9 +46,11 @@ class CoverSeatNumberWidget extends GetView<CoversSheetsController> {
                 Row(
                   children: [
                     Text(
-                      "Mission name:${controlMissionObject.name}",
-                      style: nunitoRegularStyle()
-                          .copyWith(color: ColorManager.primary, fontSize: 30),
+                      "Mission name: ${controlMissionObject.name}",
+                      style: const TextStyle(
+                        color: ColorManager.primary,
+                        fontSize: 16,
+                      ),
                     ),
                     const Spacer(),
                     IconButton(
@@ -92,27 +94,21 @@ class CoverSeatNumberWidget extends GetView<CoversSheetsController> {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
                 color: ColorManager.bgSideMenu,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Generate Pdf",
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.print,
-                    color: ColorManager.white,
-                  )
+                  const Text("Generate Pdf"),
+                  const SizedBox(width: 20),
+                  Icon(Icons.print, color: ColorManager.white),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

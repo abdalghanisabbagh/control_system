@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
@@ -377,5 +378,31 @@ class CoversSheetsController extends GetxController {
 
     update();
     return addExamMissionHasBeenAdded;
+  }
+
+  Future<void> generateCoverSheet() async {
+    final response = await ResponseHandler().getResponse(
+      path: 'generate-pdf/am-cover/136',
+      converter: (_) {},
+      type: ReqTypeEnum.GET,
+    );
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }, (result) {
+      if (result.data != null) {
+        downloadeTemp();
+      }
+    });
+  }
+
+  Future<void> downloadeTemp() async {
+    if (!await launchUrl(Uri.parse(
+        "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
+      throw 'Could not launch file';
+    }
   }
 }

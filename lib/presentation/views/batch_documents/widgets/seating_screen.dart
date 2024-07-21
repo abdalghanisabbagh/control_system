@@ -152,19 +152,23 @@ class SeatingScreen extends GetView<SeatNumberController> {
               );
             }
 
-            return Expanded(
-              child: ListView.builder(
-                  itemCount: controller.filteredExamMissionsList.length,
-                  itemBuilder: (context, index) {
-                    return CoverSeatNumberWidget(
-                      controlMissionObject: controller.controlMissionObject!,
-                      examMissionObject:
-                          controller.filteredExamMissionsList[index],
-                    );
-                  }),
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              elevation: 4,
+              margin: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 400,
+                height: 175,
+                child: CoverSeatNumberWidget(
+                  controlMissionObject: controller.controlMissionObject!,
+                  examMissionObject: controller.filteredExamMissionsList[0],
+                ),
+              ),
             );
           },
-        ),
+        )
       ],
     );
   }
