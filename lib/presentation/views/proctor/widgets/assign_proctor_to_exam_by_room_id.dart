@@ -79,7 +79,7 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                   const Spacer(),
                   if (controller.selectedExamRoom!.controlMissionResModel!
                       .examMissionsResModel!.data!
-                      .where((exam) => !exam.period!)
+                      .where((exam) => exam.period!)
                       .isNotEmpty)
                     ElevatedButton(
                       onPressed: () async {
