@@ -26,8 +26,8 @@ class ProctorScreen extends GetView<ProctorController> {
         firstDate: DateTime(2015),
         lastDate: DateTime(2101));
     if (picked != null) {
-      // controller.selectedDate = picked;
-      // controller.onSelectDate();
+      controller.selectedDate = picked;
+      controller.onDateSelected();
       controller.dateController.text =
           DateFormat('dd MMMM yyyy').format(picked);
     }
@@ -483,10 +483,13 @@ class ProctorScreen extends GetView<ProctorController> {
                                                   .getLoadingIndicator(),
                                             )
                                           : controller.examRooms.isEmpty
-                                              ? controller.selectedEducationYearId !=
+                                              ? controller
+                                                              .selectedEducationYearId !=
                                                           null &&
                                                       controller
                                                               .selectedControlMissionsId !=
+                                                          null &&
+                                                      controller.selectedDate !=
                                                           null
                                                   ? Center(
                                                       child: Text(
@@ -497,40 +500,7 @@ class ProctorScreen extends GetView<ProctorController> {
                                                         ),
                                                       ),
                                                     )
-                                                  : Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          'First Select Education Year',
-                                                          style: nunitoBold
-                                                              .copyWith(
-                                                            decoration: controller
-                                                                        .selectedEducationYearId !=
-                                                                    null
-                                                                ? TextDecoration
-                                                                    .lineThrough
-                                                                : null,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Text(
-                                                          'Second Select Control Mission',
-                                                          style: nunitoBold
-                                                              .copyWith(
-                                                            decoration: controller
-                                                                        .selectedControlMissionsId !=
-                                                                    null
-                                                                ? TextDecoration
-                                                                    .lineThrough
-                                                                : null,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
+                                                  : const SizedBox.shrink()
                                               : RepaintBoundary(
                                                   child: GridView.builder(
                                                     shrinkWrap: true,
