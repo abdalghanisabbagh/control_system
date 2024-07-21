@@ -1,5 +1,6 @@
 import 'package:control_system/presentation/resource_manager/constants/app_constatnts.dart';
 import 'package:control_system/presentation/views/proctor/widgets/assign_proctor_to_exam_by_room_id.dart';
+import 'package:control_system/presentation/views/proctor/widgets/edit_proctor_widget.dart';
 import 'package:control_system/presentation/views/proctor/widgets/exam_rooms_assigned_to_proctor.dart';
 import 'package:control_system/presentation/views/proctor/widgets/proctors_in_exam_room_widget.dart';
 import 'package:flutter/material.dart';
@@ -260,6 +261,17 @@ class ProctorScreen extends GetView<ProctorController> {
                                                                     );
                                                                   }
                                                                 }
+                                                              },
+                                                              onLongPress: () {
+                                                                MyDialogs
+                                                                    .showDialog(
+                                                                  context,
+                                                                  EditProctorWidget(
+                                                                    proctor: controller
+                                                                            .proctors[
+                                                                        index],
+                                                                  ),
+                                                                );
                                                               },
                                                               onDoubleTap: () {
                                                                 controller.getExamRoomsByProctorId(

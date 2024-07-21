@@ -108,7 +108,7 @@ class EditProctorWidget extends GetView<ProctorController> {
                   child: MytextFormFiled(
                     title: "NIS Id",
                     controller: proctorcontroller.nisIdController,
-                    myValidation: Validations.requiredValidator,
+                    // myValidation: Validations.requiredValidator,
                   ),
                 ),
                 const SizedBox(height: 16.0),
