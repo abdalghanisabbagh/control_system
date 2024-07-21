@@ -13,6 +13,7 @@ import '../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../Data/Models/education_year/education_year_model.dart';
 import '../../Data/Models/education_year/educations_years_res_model.dart';
+import '../../Data/Models/exam_mission/exam_mission_res_model.dart';
 import '../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../Data/Models/exam_room/exam_rooms_res_model.dart';
 import '../../Data/Models/proctor/proctor_res_model.dart';
@@ -103,8 +104,8 @@ class ProctorController extends GetxController {
             converter: ProctorsInExamRoomResModel.fromJson,
             type: ReqTypeEnum.GET,
             params: {
-          "month": '${selectedDate!.month}/${selectedDate!.day}',
-          "year": '${selectedDate!.year}',
+          "month": '${selectedDate?.month}/${selectedDate?.day}',
+          "year": '${selectedDate?.year}',
         });
 
     response.fold(
@@ -250,10 +251,11 @@ class ProctorController extends GetxController {
     update();
   }
 
-  FutureOr<bool> assignProctorToExamRoom() async {
+  Future<bool> assignProctorToExamRoom(
+      {required ExamMissionResModel examMission}) async {
     isLoading = true;
     bool isSuccess = false;
-    update(['examRooms']);
+    update(['examRooms', 'assignProctorToExamRoom']);
     final response = await ResponseHandler<ProctorInExamRoomResModel>()
         .getResponse(
             path: "${ProctorsLinks.proctor}/assign",
@@ -262,12 +264,9 @@ class ProctorController extends GetxController {
             body: {
           "proctors_ID": selectedProctor?.iD,
           "exam_room_ID": selectedExamRoom?.id,
-          "Month": selectedExamRoom
-              ?.controlMissionResModel?.examMissionsResModel?.data?.first.month,
-          "Year": selectedExamRoom
-              ?.controlMissionResModel?.examMissionsResModel?.data?.first.year,
-          "Period": selectedExamRoom?.controlMissionResModel
-              ?.examMissionsResModel?.data?.first.period,
+          "Month": examMission.month,
+          "Year": examMission.year,
+          "Period": examMission.period,
           "Created_By": Get.find<ProfileController>().cachedUserProfile?.iD,
         });
 
@@ -288,11 +287,8 @@ class ProctorController extends GetxController {
       },
     );
 
-    selectedExamRoom = null;
-    selectedProctor = null;
-
     isLoading = false;
-    update(['examRooms']);
+    update(['examRooms', 'assignProctorToExamRoom']);
 
     return isSuccess;
   }
@@ -407,6 +403,7 @@ class ProctorController extends GetxController {
 
   void onControlMissionsChange(List<ValueItem<dynamic>> selectedOptions) {
     selectedControlMissionsId = selectedOptions.firstOrNull?.value;
+    selectedControlMissionsId != null ? getExamRoomByControlMissionId() : null;
     selectedExamRoom = null;
     selectedProctor = null;
     selectedDate = null;
