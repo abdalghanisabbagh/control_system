@@ -1,7 +1,4 @@
-import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
-
-import '../../domain/controllers/proctor_controller.dart';
 
 abstract class Validations {
   /// Email Validator
@@ -48,10 +45,10 @@ abstract class Validations {
     return null;
   }
 
-  static String? validateConfirmPassword(String? value) {
+  static String? validateConfirmPassword(String? value, String? password) {
     if (value!.isEmpty) {
       return 'Please confirm password';
-    } else if (value != Get.find<ProctorController>().passwordController.text) {
+    } else if (value != password) {
       return 'Passwords do not match';
     }
     return null;
