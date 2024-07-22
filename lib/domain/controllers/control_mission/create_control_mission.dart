@@ -210,7 +210,7 @@ class CreateControlMissionController extends GetxController {
     excludedStudentsRows.removeWhere((element) =>
         element.cells['BlbIdField']!.value ==
         rendererContext.row.cells['BlbIdField']!.value);
-    includedStudentsStateManager?.notifyListeners();
+    includedStudentsStateManager?.setPage(1);
     excludedStudentsStateManager?.notifyListeners();
   }
 
