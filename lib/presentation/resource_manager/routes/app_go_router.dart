@@ -238,6 +238,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.adminScreenPath,
         name: AppRoutesNamesAndPaths.adminScreenName,
         builder: (context, state) {
+          AdminBindings().dependencies();
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const AdminScreen();
         },
