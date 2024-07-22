@@ -63,7 +63,7 @@ class EditCoverSheetController extends GetxController {
 
   Future<bool> uplodPdfInExamMission() async {
     bool uploadPdfFile = false;
-    ResponseHandler<Pdf> responseHandler = ResponseHandler();
+    ResponseHandler<UploadPdfResModel> responseHandler = ResponseHandler();
 
     (Uint8List?, String?) pdfData = await pickPdfFile();
     isLodingUploadPdf = true;
@@ -71,7 +71,7 @@ class EditCoverSheetController extends GetxController {
 
     var response = await responseHandler.getResponse(
       path: ExamLinks.examMissionUpload,
-      converter: Pdf.fromJson,
+      converter: UploadPdfResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: FormData.fromMap(
         {
@@ -90,7 +90,7 @@ class EditCoverSheetController extends GetxController {
       ).showDialogue(Get.key.currentContext!);
       uploadPdfFile = false;
     }, (result) {
-      pdfUrl = result.data!;
+      pdfUrl = result.url!;
       uploadPdfFile = true;
     });
     isLodingUploadPdf = false;

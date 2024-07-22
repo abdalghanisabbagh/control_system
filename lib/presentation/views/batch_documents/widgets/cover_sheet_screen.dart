@@ -229,11 +229,16 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
               child: ListView.builder(
                   itemCount: controller.filteredExamMissionsList.length,
                   itemBuilder: (context, index) {
-                    return CoverWidget(
-                      controlMissionObject: controller.controlMissionObject!,
-                      examMissionObject:
-                          controller.filteredExamMissionsList[index],
-                    );
+                    return GetBuilder<CoversSheetsController>(
+                        id: controller.filteredExamMissionsList[index].iD,
+                        builder: (_) {
+                          return CoverWidget(
+                            controlMissionObject:
+                                controller.controlMissionObject!,
+                            examMissionObject:
+                                controller.filteredExamMissionsList[index],
+                          );
+                        });
                   }),
             );
           },

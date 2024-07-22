@@ -1,15 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/control_mission/control_mission_res_model.dart';
 import 'package:dartz/dartz.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
 import '../../../Data/Models/exam_mission/exam_mission_res_model.dart';
 import '../../../Data/Models/exam_mission/exam_missions_res_model.dart';
+import '../../../Data/Models/exam_mission/upload_pdf_res_models.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/subject/subjects_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
@@ -37,6 +38,7 @@ class CoversSheetsController extends GetxController {
   bool isLoadingGetEducationYear = false;
   bool isLoading = false;
   bool isLoadingAddExamMission = false;
+  bool isLoadingGeneratePdf = false;
 
   ValueItem? selectedItemControlMission;
   ValueItem? selectedItemEducationYear;
@@ -380,29 +382,84 @@ class CoversSheetsController extends GetxController {
     return addExamMissionHasBeenAdded;
   }
 
-  Future<void> generateCoverSheet() async {
-    final response = await ResponseHandler().getResponse(
-      path: 'generate-pdf/am-cover/136',
-      converter: (_) {},
+  Future<void> generateCoverSheet({
+    required String controlMissionName,
+    required int examMissionId,
+    required String path,
+  }) async {
+    isLoadingGeneratePdf = true;
+    update([examMissionId]);
+
+    final response = await ResponseHandler<UploadPdfResModel>().getResponse(
+      path: path,
+      converter: UploadPdfResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
-    response.fold((fauilr) {
+
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
+      isLoadingGeneratePdf = false;
+      update([examMissionId]);
     }, (result) {
-      if (result.data != null) {
-        downloadeTemp();
+      if (result.url != null) {
+        downloadFilePdf(result.url!, controlMissionName);
+        isLoadingGeneratePdf = false;
+        update([examMissionId]);
       }
     });
   }
 
-  Future<void> downloadeTemp() async {
-    if (!await launchUrl(Uri.parse(
-        "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
-      throw 'Could not launch file';
+  Future<void> generateAmCoverSheet({
+    required String controlMissionName,
+    required int examMissionId,
+  }) async {
+    await generateCoverSheet(
+      controlMissionName: controlMissionName,
+      examMissionId: examMissionId,
+      path: '${GeneratePdfLinks.generatePdfAmCover}/$examMissionId',
+    );
+  }
+
+  Future<void> generateBrCoverSheet({
+    required String controlMissionName,
+    required int examMissionId,
+  }) async {
+    await generateCoverSheet(
+      controlMissionName: controlMissionName,
+      examMissionId: examMissionId,
+      path: '${GeneratePdfLinks.generatePdfBrCover}/$examMissionId',
+    );
+  }
+
+  Future<void> generateIBCoverSheet({
+    required String controlMissionName,
+    required int examMissionId,
+  }) async {
+    await generateCoverSheet(
+      controlMissionName: controlMissionName,
+      examMissionId: examMissionId,
+      path: '${GeneratePdfLinks.generatePdfIBCover}/$examMissionId',
+    );
+  }
+
+  Future<void> downloadFilePdf(String url, String controlMissionName) async {
+    try {
+      await FileSaver.instance.saveFile(
+        name: 'cover-sheet-$controlMissionName',
+        link: LinkDetails(link: url),
+        mimeType: MimeType.pdf,
+        ext: 'pdf',
+      );
+    } catch (e) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "$e",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
     }
   }
 }
