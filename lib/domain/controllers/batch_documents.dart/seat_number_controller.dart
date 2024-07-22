@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:dartz/dartz.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
@@ -9,6 +10,7 @@ import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
 import '../../../Data/Models/exam_mission/exam_missions_res_model.dart';
+import '../../../Data/Models/exam_mission/upload_pdf_res_models.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
@@ -22,6 +24,7 @@ class SeatNumberController extends GetxController {
   bool isLodingGetExamMission = false;
   bool isLoadingGrades = false;
   bool isLoading = false;
+  bool isLoadingGeneratePdf = false;
   List<ValueItem> optionsEducationYear = [];
   ValueItem? selectedItemEducationYear;
   List<ValueItem> optionsControlMission = [];
@@ -225,5 +228,51 @@ class SeatNumberController extends GetxController {
       optionsGrades = items;
     });
     isLoadingGrades = false;
+  }
+
+  Future<void> generatePdfSeatNumber(
+      {required String controlMissionName,
+      required int examMissionId,
+      required int gradeId}) async {
+    isLoadingGeneratePdf = true;
+    update([examMissionId]);
+    final response = await ResponseHandler<UploadPdfResModel>().getResponse(
+      path:
+          '${GeneratePdfLinks.generatePdfSeat}/$examMissionId?gradeid=$gradeId',
+      converter: UploadPdfResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      isLoadingGeneratePdf = false;
+      update([examMissionId]);
+    }, (result) {
+      if (result.url != null) {
+        downloadFilePdf(result.url!, controlMissionName);
+        isLoadingGeneratePdf = false;
+        update([examMissionId]);
+      }
+    });
+  }
+
+  Future<void> downloadFilePdf(String url, String controlMissionName) async {
+    try {
+      await FileSaver.instance.saveFile(
+        name: 'cover-sheet-$controlMissionName',
+        link: LinkDetails(link: url),
+        mimeType: MimeType.pdf,
+        ext: 'pdf',
+      );
+    } catch (e) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "$e",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }
   }
 }
