@@ -189,15 +189,12 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                   );
                 }
 
-                return Padding(
-                  padding: const EdgeInsets.only(right: 43.0),
-                  child: SizedBox(
-                    width: Get.width * 0.4,
-                    child: MultiSelectDropDownView(
-                      hintText: "Select Subject",
-                      onOptionSelected: controller.setSelectedItemSubject,
-                      options: controller.optionsSubjects,
-                    ),
+                return SizedBox(
+                  width: Get.width * 0.4,
+                  child: MultiSelectDropDownView(
+                    hintText: "Select Subject",
+                    onOptionSelected: controller.setSelectedItemSubject,
+                    options: controller.optionsSubjects,
                   ),
                 );
               },
