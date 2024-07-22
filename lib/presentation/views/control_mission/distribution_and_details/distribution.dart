@@ -131,33 +131,45 @@ class DistributionScreen extends GetView<DistributionController> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              "Exam Room: ${room.name}",
-                                              style: nunitoBold.copyWith(
-                                                  fontSize: 20,
-                                                  color:
-                                                      ColorManager.bgSideMenu),
+                                            Expanded(
+                                              child: Text(
+                                                "Exam Room: ${room.name}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: nunitoBold.copyWith(
+                                                    fontSize: 20,
+                                                    color: ColorManager
+                                                        .bgSideMenu),
+                                              ),
                                             ),
-                                            Text(
-                                              "Division : ${room.stage}",
-                                              style: nunitoBold.copyWith(
-                                                  fontSize: 20,
-                                                  color:
-                                                      ColorManager.bgSideMenu),
+                                            Expanded(
+                                              child: Text(
+                                                "Division : ${room.stage}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: nunitoBold.copyWith(
+                                                    fontSize: 20,
+                                                    color: ColorManager
+                                                        .bgSideMenu),
+                                              ),
                                             ),
-                                            Text(
-                                              "Class Name : ${room.name}",
-                                              style: nunitoBold.copyWith(
-                                                  fontSize: 20,
-                                                  color:
-                                                      ColorManager.bgSideMenu),
+                                            Expanded(
+                                              child: Text(
+                                                "Class Name : ${room.name}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: nunitoBold.copyWith(
+                                                    fontSize: 20,
+                                                    color: ColorManager
+                                                        .bgSideMenu),
+                                              ),
                                             ),
-                                            Text(
-                                              "Students Max Capacity : ${room.capacity}",
-                                              style: nunitoBold.copyWith(
-                                                  fontSize: 20,
-                                                  color:
-                                                      ColorManager.bgSideMenu),
+                                            Expanded(
+                                              child: Text(
+                                                "Students Max Capacity : ${room.capacity}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: nunitoBold.copyWith(
+                                                    fontSize: 20,
+                                                    color: ColorManager
+                                                        .bgSideMenu),
+                                              ),
                                             ),
                                           ],
                                         ),
