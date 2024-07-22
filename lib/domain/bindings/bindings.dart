@@ -205,3 +205,10 @@ class ProctorBindings extends Bindings {
     );
   }
 }
+
+class AdminBindings implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<AdminController>(() => AdminController(), fenix: true);
+  }
+}
