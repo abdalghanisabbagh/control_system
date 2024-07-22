@@ -1,10 +1,13 @@
+import 'package:control_system/domain/controllers/batch_documents.dart/seat_number_controller.dart';
+import 'package:control_system/presentation/views/batch_documents/widgets/cover_seat_number_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../domain/controllers/batch_documents.dart/create_covers_sheets_controller.dart';
+import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/index.dart';
 
-class SeatingScreen extends GetView<CreateCoversSheetsController> {
+class SeatingScreen extends GetView<SeatNumberController> {
   const SeatingScreen({super.key});
 
   @override
@@ -29,374 +32,143 @@ class SeatingScreen extends GetView<CreateCoversSheetsController> {
             ),
           ],
         ),
-        //const HeaderCoverWidget(text: "Seats number"),
         const SizedBox(
           height: 20,
         ),
+        GetBuilder<SeatNumberController>(
+          builder: (_) {
+            if (controller.isLoadingGetEducationYear) {
+              return Center(
+                child: SizedBox(
+                  width: Get.width * 0.4,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                ),
+              );
+            }
 
-        //   Obx(() => controller.creatMissionController.yearList.isEmpty
-        //       ? Center(
-        //           child: LoadingIndicators.getLoadingIndicator(),
-        //         )
-        //       : DropdownSearch<YearsResponse>(
-        //           items: controller.creatMissionController.yearList,
-        //           itemAsString: (item) => item.year,
-        //           selectedItem:
-        //               controller.creatMissionController.selectedyear != null
-        //                   ? controller.creatMissionController.selectedyear!.value
-        //                   : null,
-        //           dropdownDecoratorProps: DropDownDecoratorProps(
-        //             dropdownSearchDecoration: InputDecoration(
-        //                 focusedBorder: OutlineInputBorder(
-        //                     borderSide:
-        //                         BorderSide(color: ColorManager.glodenColor),
-        //                     borderRadius: BorderRadius.circular(10)),
-        //                 border: OutlineInputBorder(
-        //                     borderSide:
-        //                         BorderSide(color: ColorManager.glodenColor),
-        //                     borderRadius: BorderRadius.circular(10)),
-        //                 hintText: "Select Education Years",
-        //                 hintStyle: nunitoBoldStyle().copyWith(
-        //                     fontSize: 30, color: ColorManager.bgSideMenu)),
-        //           ),
-        //           onChanged: ((value) {
-        //             controller.selectedyear = value;
-        //             controller.onChangeYear(value!);
-        //           }),
-        //         )),
-        //   const SizedBox(
-        //     height: 20,
-        //   ),
-        //   /////
-        //   /*
-        //   GetBuilder<CreateCoversSheetsController>(
-        //       builder: (c) => controller.selectedyear == null
-        //           ? const SizedBox.shrink()
-        //           : Obx(
-        //               () => controller.missionsController.missionsLoader.value
-        //                   ? Expanded(
-        //                       child: Center(
-        //                         child: LoadingIndicators.getLoadingIndicator(),
-        //                       ),
-        //                     )
-        //                   : controller.missionsController.missions.isEmpty
-        //                       ? const Center(
-        //                           child: Text("No Missions"),
-        //                         )
-        //                       : Row(
-        //                           children: [
-        //                             Expanded(
-        //                               child:
-        //                                   DropdownSearch<MissionObjectResponse>(
-        //                                 popupProps: PopupProps.menu(
-        //                                   searchFieldProps: TextFieldProps(
-        //                                       decoration: InputDecoration(
-        //                                           hintText: "search",
-        //                                           hintStyle: AppTextStyle
-        //                                               .nunitoRegular
-        //                                               .copyWith(
-        //                                                   fontSize: 16,
-        //                                                   color: ColorManager.black),
-        //                                           focusedBorder: OutlineInputBorder(
-        //                                               borderSide: BorderSide(
-        //                                                   color: ColorManager.black),
-        //                                               borderRadius:
-        //                                                   BorderRadius.circular(
-        //                                                       10)),
-        //                                           enabledBorder: OutlineInputBorder(
-        //                                               borderSide: BorderSide(
-        //                                                   color: ColorManager.black),
-        //                                               borderRadius:
-        //                                                   BorderRadius.circular(
-        //                                                       10))),
-        //                                       cursorColor: ColorManager.glodenColor),
-        //                                   showSearchBox: true,
-        //                                 ),
-        //                                 items: controller
-        //                                     .missionsController.missions,
-        //                                 itemAsString: (item) => item.name!,
-        //                                 dropdownDecoratorProps:
-        //                                     DropDownDecoratorProps(
-        //                                   dropdownSearchDecoration:
-        //                                       InputDecoration(
-        //                                           focusedBorder:
-        //                                               OutlineInputBorder(
-        //                                                   borderSide: BorderSide(
-        //                                                       color:
-        //                                                           ColorManager.black),
-        //                                                   borderRadius:
-        //                                                       BorderRadius
-        //                                                           .circular(10)),
-        //                                           border: OutlineInputBorder(
-        //                                               borderSide: BorderSide(
-        //                                                   color: ColorManager.black),
-        //                                               borderRadius:
-        //                                                   BorderRadius.circular(
-        //                                                       10)),
-        //                                           hintText: "Select Mission",
-        //                                           hintStyle: AppTextStyle
-        //                                               .nunitoRegular
-        //                                               .copyWith(
-        //                                                   fontSize: 16,
-        //                                                   color: ColorManager.black)),
-        //                                 ),
-        //                                 onChanged: ((value) {
-        //                                   controller.onChangeMission(value!);
-        //                                 }),
-        //                                 selectedItem:
-        //                                     controller.selectedMission == null
-        //                                         ? null
-        //                                         : controller
-        //                                             .selectedMission!.value,
-        //                               ),
-        //                             ),
-        //                             TextButton(
-        //                                 onPressed: () {
-        //                                   controller.selectedGrade = null;
-        //                                   controller.selectedSubject = null;
-        //                                   controller.startFilter();
-        //                                 },
-        //                                 child: const Text("Reset Filters"))
-        //                           ],
-        //                         ),
-        //             )),
-        // */
-        //   const SizedBox(
-        //     height: 10,
-        //   ),
-        //   Obx(
-        //     () => controller.missionsController.missions.isEmpty
-        //         ? const SizedBox.shrink()
-        //         : DropdownSearch<MissionObjectResponse>(
-        //             popupProps: PopupProps.menu(
-        //               searchFieldProps: TextFieldProps(
-        //                   decoration: InputDecoration(
-        //                       hintText: "search",
-        //                       hintStyle: nunitoBoldStyle().copyWith(
-        //                           fontSize: 30, color: ColorManager.bgSideMenu),
-        //                       focusedBorder: OutlineInputBorder(
-        //                           borderSide:
-        //                               BorderSide(color: ColorManager.black),
-        //                           borderRadius: BorderRadius.circular(10)),
-        //                       enabledBorder: OutlineInputBorder(
-        //                           borderSide:
-        //                               BorderSide(color: ColorManager.black),
-        //                           borderRadius: BorderRadius.circular(10))),
-        //                   cursorColor: ColorManager.glodenColor),
-        //               showSearchBox: true,
-        //             ),
-        //             items: controller.missionsController.missions,
-        //             itemAsString: (item) => item.name!,
-        //             dropdownDecoratorProps: DropDownDecoratorProps(
-        //               dropdownSearchDecoration: InputDecoration(
-        //                   focusedBorder: OutlineInputBorder(
-        //                       borderSide: BorderSide(color: ColorManager.black),
-        //                       borderRadius: BorderRadius.circular(10)),
-        //                   border: OutlineInputBorder(
-        //                       borderSide: BorderSide(color: ColorManager.black),
-        //                       borderRadius: BorderRadius.circular(10)),
-        //                   hintText: "Select Mission",
-        //                   hintStyle: nunitoBoldStyle().copyWith(
-        //                       fontSize: 30, color: ColorManager.bgSideMenu)),
-        //             ),
-        //             onChanged: ((value) {
-        //               controller.selectMission = value;
+            if (controller.optionsEducationYear.isEmpty) {
+              return const Text('No items available');
+            }
 
-        //               controller.isLoading.value = false;
-        //             }),
-        //             selectedItem: controller.selectedMission == null
-        //                 ? null
-        //                 : controller.selectedMission!.value,
-        //           ),
-        //   ),
+            return MultiSelectDropDownView(
+              hintText: "Select Education Year",
+              onOptionSelected: controller.setSelectedItemEducationYear,
+              options: controller.optionsEducationYear,
+            );
+          },
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        GetBuilder<SeatNumberController>(
+          builder: (_) {
+            if (controller.isLoadingGetControlMission) {
+              return Center(
+                child: SizedBox(
+                  width: Get.width * 0.4,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                ),
+              );
+            }
+            if (controller.selectedItemEducationYear == null) {
+              return const SizedBox.shrink();
+            }
+            if (controller.optionsControlMission.isEmpty) {
+              return Text(
+                'No items available',
+                style: nunitoBoldStyle(),
+              );
+            }
 
-        //   const SizedBox(
-        //     height: 20,
-        //   ),
-        //   Obx(
-        //     () => controller.missionsController.missions.isEmpty
-        //         ? const SizedBox.shrink()
-        //         : controller.gradeController.grades.isEmpty
-        //             ? LoadingIndicators.getLoadingIndicator()
-        //             : DropdownSearch<GradeResponse>(
-        //                 popupProps: PopupProps.menu(
-        //                   searchFieldProps: TextFieldProps(
-        //                       decoration: InputDecoration(
-        //                           hintText: "search",
-        //                           hintStyle: nunitoBoldStyle().copyWith(
-        //                               fontSize: 30,
-        //                               color: ColorManager.bgSideMenu),
-        //                           focusedBorder: OutlineInputBorder(
-        //                               borderSide:
-        //                                   BorderSide(color: ColorManager.black),
-        //                               borderRadius: BorderRadius.circular(10)),
-        //                           enabledBorder: OutlineInputBorder(
-        //                               borderSide:
-        //                                   BorderSide(color: ColorManager.black),
-        //                               borderRadius: BorderRadius.circular(10))),
-        //                       cursorColor: ColorManager.glodenColor),
-        //                   showSearchBox: true,
-        //                 ),
-        //                 items: controller.gradeController.grades,
-        //                 itemAsString: (item) => item.name,
-        //                 dropdownDecoratorProps: DropDownDecoratorProps(
-        //                   dropdownSearchDecoration: InputDecoration(
-        //                       focusedBorder: OutlineInputBorder(
-        //                           borderSide:
-        //                               BorderSide(color: ColorManager.black),
-        //                           borderRadius: BorderRadius.circular(10)),
-        //                       border: OutlineInputBorder(
-        //                           borderSide:
-        //                               BorderSide(color: ColorManager.black),
-        //                           borderRadius: BorderRadius.circular(10)),
-        //                       hintText: "Select Grade",
-        //                       hintStyle: nunitoBoldStyle().copyWith(
-        //                           fontSize: 30, color: ColorManager.bgSideMenu)),
-        //                 ),
-        //                 onChanged: ((value) {
-        //                   controller.selectedGrade = value;
-        //                 }),
-        //                 selectedItem: controller.selectedGrade,
-        //               ),
-        //   ),
-        //   const SizedBox(
-        //     height: 20,
-        //   ),
-        //   Obx(
-        //     () => controller.missionsController.missions.isEmpty
-        //         ? const Center(
-        //             child: Text("No Data"),
-        //           )
-        //         : controller.isLoading.value
-        //             ? Center(
-        //                 child: LoadingIndicators.getLoadingIndicator(),
-        //               )
-        //             : controller.selectMission == null
-        //                 ? const Center(
-        //                     child: Text("Select Mission"),
-        //                   )
-        //                 : Expanded(
-        //                     child: ListView.builder(
-        //                       shrinkWrap: true,
-        //                       itemCount: 1,
-        //                       itemBuilder: (context, index) {
-        //                         return Container(
-        //                             decoration: BoxDecoration(
-        //                                 boxShadow: [
-        //                                   BoxShadow(
-        //                                     color: Colors.grey.withOpacity(0.5),
-        //                                     spreadRadius: 5,
-        //                                     blurRadius: 20,
-        //                                     offset: const Offset(2,
-        //                                         15), // changes position of shadow
-        //                                   ),
-        //                                 ],
-        //                                 color: ColorManager.ligthBlue,
-        //                                 borderRadius: BorderRadius.circular(11)),
-        //                             margin: const EdgeInsets.symmetric(
-        //                                 horizontal: 30, vertical: 20),
-        //                             width: double.infinity,
-        //                             child: bdg.Badge(
-        //                               padding: const EdgeInsets.all(10),
-        //                               badgeColor: ColorManager.red,
-        //                               badgeContent: IconButton(
-        //                                 onPressed: () {
-        //                                   showGeneralDialog(
-        //                                       context: context,
-        //                                       pageBuilder: (ctx, a1, a2) {
-        //                                         return Container();
-        //                                       },
-        //                                       transitionBuilder:
-        //                                           (ctx, a1, a2, child) {
-        //                                         var curve = Curves.easeInOut
-        //                                             .transform(a1.value);
+            return MultiSelectDropDownView(
+              hintText: "Select Control Mission",
+              onOptionSelected: (selectedItem) {
+                controller.setSelectedItemControlMission(selectedItem);
+              },
+              options: controller.optionsControlMission,
+            );
+          },
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        GetBuilder<SeatNumberController>(
+          builder: (_) {
+            if (controller.isLoadingGrades) {
+              return Center(
+                child: SizedBox(
+                  width: Get.width * 0.4,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                ),
+              );
+            }
+            if (controller.selectedItemEducationYear == null ||
+                controller.selectedItemControlMission == null) {
+              return const SizedBox.shrink();
+            }
+            if (controller.optionsGrades.isEmpty) {
+              return Text(
+                'No items available',
+                style: nunitoBoldStyle(),
+              );
+            }
 
-        //                                         return DeleteMissionDialog(
-        //                                             curve: curve);
-        //                                       });
-        //                                 },
-        //                                 icon: Icon(
-        //                                   Icons.delete_forever,
-        //                                   color: ColorManager.white,
-        //                                 ),
-        //                               ),
-        //                               child: Column(
-        //                                 crossAxisAlignment:
-        //                                     CrossAxisAlignment.start,
-        //                                 children: [
-        //                                   Padding(
-        //                                     padding: const EdgeInsets.all(20),
-        //                                     child: Column(
-        //                                       crossAxisAlignment:
-        //                                           CrossAxisAlignment.start,
-        //                                       children: [
-        //                                         Text(
-        //                                           "Mission name : ${controller.selectMission!.name}",
-        //                                           style: nunitoBoldStyle()
-        //                                               .copyWith(
-        //                                                   fontSize: 30,
-        //                                                   color: ColorManager
-        //                                                       .bgSideMenu),
-        //                                         ),
-        //                                         const SizedBox(
-        //                                           height: 20,
-        //                                         ),
-        //                                       ],
-        //                                     ),
-        //                                   ),
-        //                                   InkWell(
-        //                                     onTap: () {
-        //                                       if (controller.selectedGrade !=
-        //                                           null) {
-        //                                         controller.generateSeatsNumber();
-        //                                       } else {
-        //                                         MyReusbleWidget.mySnackBarError(
-        //                                             "Seat Number",
-        //                                             "please select grade");
-        //                                       }
-        //                                     },
-        //                                     child: Container(
-        //                                       height: 50,
-        //                                       width: double.infinity,
-        //                                       decoration: BoxDecoration(
-        //                                         borderRadius:
-        //                                             const BorderRadius.only(
-        //                                                 bottomLeft:
-        //                                                     Radius.circular(10),
-        //                                                 bottomRight:
-        //                                                     Radius.circular(10)),
-        //                                         color: ColorManager.bgSideMenu,
-        //                                       ),
-        //                                       child: Row(
-        //                                         mainAxisAlignment:
-        //                                             MainAxisAlignment.center,
-        //                                         children: [
-        //                                           Text(
-        //                                             "Generate PDF",
-        //                                             style: nunitoBoldStyle()
-        //                                                 .copyWith(
-        //                                                     fontSize: 30,
-        //                                                     color: ColorManager
-        //                                                         .bgSideMenu),
-        //                                           ),
-        //                                           const SizedBox(
-        //                                             width: 20,
-        //                                           ),
-        //                                           Icon(
-        //                                             Icons.print,
-        //                                             color: ColorManager.white,
-        //                                           )
-        //                                         ],
-        //                                       ),
-        //                                     ),
-        //                                   ),
-        //                                 ],
-        //                               ),
-        //                             ));
-        //                       },
-        //                     ),
-        //                   ),
-        //   )
+            return MultiSelectDropDownView(
+              hintText: "Select Grade",
+              onOptionSelected: (selectedItem) {
+                controller.setSelectedItemGrade(selectedItem);
+              },
+              options: controller.optionsGrades,
+            );
+          },
+        ),
+        GetBuilder<SeatNumberController>(
+          builder: (controller) {
+            if (controller.isLodingGetExamMission) {
+              return Expanded(
+                child: Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
+                ),
+              );
+            }
+
+            if (controller.filteredExamMissionsList.isEmpty) {
+              return Expanded(
+                child: Center(
+                  child: Text(
+                    'No items available',
+                    style: nunitoBoldStyle(),
+                  ),
+                ),
+              );
+            }
+
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              elevation: 4,
+              margin: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 400,
+                height: 175,
+                child: CoverSeatNumberWidget(
+                  controlMissionObject: controller.controlMissionObject!,
+                  examMissionObject: controller.filteredExamMissionsList[0],
+                ),
+              ),
+            );
+          },
+        )
       ],
     );
   }

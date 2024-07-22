@@ -83,3 +83,10 @@ class Stage {
 class ProctorsLinks {
   static const proctor = 'proctor';
 }
+
+class GeneratePdfLinks {
+  static const generatePdfAmCover = 'generate-pdf/am-cover';
+  static const generatePdfBrCover = 'generate-pdf/br-cover';
+  static const generatePdfIBCover = 'generate-pdf/IB-cover';
+  
+}

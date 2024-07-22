@@ -1,15 +1,15 @@
-class Pdf {
-  String? data;
+class UploadPdfResModel {
+  String? url;
 
-  Pdf({this.data});
+  UploadPdfResModel({this.url});
 
-  Pdf.fromJson(json) {
-    data = json;
+  UploadPdfResModel.fromJson(json) {
+    url = json['url'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['data'] = this.data;
+    data['url'] = url;
     return data;
   }
 }
