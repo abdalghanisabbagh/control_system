@@ -111,7 +111,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Exam Date : ${examMissionObject.startTime != null ? DateFormat('yyyy,MM,dd (HH:mm)').format(DateTime.parse(examMissionObject.startTime!)) : examMissionObject.month}  ( ${examMissionObject.period! ? 'Session One Exams' : 'Session Two Exams'} )",
+                        "Exam Date : ${examMissionObject.startTime != null ? DateFormat('yyyy,MM,dd (HH:mm)').format(DateTime.parse(examMissionObject.startTime!)) : "${examMissionObject.year},${examMissionObject.month} "}  ( ${examMissionObject.period! ? 'Session One Exams' : 'Session Two Exams'} )",
                         style: nunitoRegularStyle().copyWith(
                           color: ColorManager.primary,
                         ),

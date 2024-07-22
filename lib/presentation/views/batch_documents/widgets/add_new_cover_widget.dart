@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/app/extensions/convert_date_string_to_iso8601_string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -170,12 +169,20 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                               ),
                             );
                           }
-
-                          if (controller.optionsControlMission.isEmpty) {
-                            return const Text('No items available');
-                          }
                           if (controller.selectedItemEducationYear == null) {
                             return const SizedBox.shrink();
+                          }
+
+                          if (controller.optionsControlMission.isEmpty &&
+                              controller.selectedItemEducationYear != null) {
+                            return Center(
+                              child: Text(
+                                'No Control Mission Available For This Year',
+                                style: nunitoBoldStyle().copyWith(
+                                  fontSize: FontSize.s20,
+                                ),
+                              ),
+                            );
                           }
 
                           return Column(
@@ -502,15 +509,11 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             }
             return InkWell(
               onTap: () {
-                
                 if (_formKey.currentState!.validate()) {
                   controllerCovers
                       .addNewExamMission(
                           createOnly: controller.is2Version,
                           period: controller.isPeriod,
-                          startTime: selectedDate
-                              .toString()
-                              .convertDateStringToIso8601String(),
                           duration: controller.selectedIExamDuration!.value,
                           subjectId: controller.selectedItemSubject!.value,
                           controlMissionId:
@@ -519,7 +522,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                           educationyearId:
                               controller.selectedItemEducationYear!.value,
                           year: selectedYear!,
-                          month: '${selectedMonth!}/${selectedDay!}',
+                          month: '${selectedMonth!},${selectedDay!}',
                           finalDegree: 100.toString())
                       .then((value) {
                     if (value) {

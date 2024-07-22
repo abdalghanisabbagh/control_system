@@ -331,7 +331,6 @@ class CoversSheetsController extends GetxController {
     required String month,
     required String finalDegree,
     required int duration,
-    required String? startTime,
     required bool? period,
     required bool? createOnly,
   }) async {
@@ -350,7 +349,6 @@ class CoversSheetsController extends GetxController {
         finalDegree: finalDegree,
         createOnly: createOnly,
         period: period,
-        startTime: startTime,
         duration: duration);
 
     var response = await responseHandler.getResponse(
