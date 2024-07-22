@@ -99,7 +99,10 @@ class EditProctorWidget extends GetView<ProctorController> {
                         );
                       },
                     ),
-                    myValidation: Validations.validateConfirmPassword,
+                    myValidation: (value) {
+                      return Validations.validateConfirmPassword(
+                          value, proctorcontroller.passwordController.text);
+                    },
                   ),
                 ),
                 const SizedBox(height: 16.0),
