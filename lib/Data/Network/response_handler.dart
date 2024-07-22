@@ -29,7 +29,7 @@ class ResponseHandler<T> {
       String? newAccessToken = await Get.find<AuthController>().refreshToken();
       _dio = DioFactory().getDio(
         token: newAccessToken != null
-            ? TokenModel(
+            ? TokenModel( 
                 aToken: newAccessToken,
                 dToken: dtoken,
                 rToken: tokenService.tokenModel!.rToken,
