@@ -56,6 +56,23 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         ),
                       ),
                       const Spacer(),
+                      Visibility(
+                        visible: examMissionObject.pdf != null,
+                        child: IconButton(
+                          onPressed: () {
+                            controller.downloadFilePdf(examMissionObject.pdf!,
+                                controlMissionObject.name!);
+                          },
+                          icon: CircleAvatar(
+                            backgroundColor: ColorManager.glodenColor,
+                            child: Icon(Icons.picture_as_pdf_rounded,
+                                color: ColorManager.white),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
                       IconButton(
                         onPressed: () {
                           MyDialogs.showDialog(
@@ -71,7 +88,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         ),
                       ),
                       const SizedBox(
-                        width: 15,
+                        width: 5,
                       ),
                       IconButton(
                           onPressed: () {
@@ -111,7 +128,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Exam Date : ${examMissionObject.startTime != null ? DateFormat('yyyy,MM,dd (HH:mm)').format(DateTime.parse(examMissionObject.startTime!)) : "${examMissionObject.year},${examMissionObject.month} "}  ( ${examMissionObject.period! ? 'Session One Exams' : 'Session Two Exams'} )",
+                        "Exam Date : ${examMissionObject.startTime != null ? DateFormat('yyyy,MM,dd (HH:mm)').format(DateTime.parse(examMissionObject.startTime!)) : "${examMissionObject.month} "}  ( ${examMissionObject.period! ? 'Session One Exams' : 'Session Two Exams'} )",
                         style: nunitoRegularStyle().copyWith(
                           color: ColorManager.primary,
                         ),

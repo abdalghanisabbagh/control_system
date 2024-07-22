@@ -29,8 +29,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
   String? selectedMonth;
   String? selectedYear;
   late TextEditingController dateController = TextEditingController(
-      text: DateFormat('yyyy-MM-dd')
-          .format(DateTime.tryParse(examMissionObject.startTime!)!));
+      text: "${examMissionObject.month}${examMissionObject.year}");
 
   Future<void> selectDate(BuildContext context) async {
     if (controlMissionObject.startDate == null ||
@@ -311,8 +310,10 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                     .updateExamMission(
                         period: examMissionObject.period,
                         id: examMissionObject.iD!,
-                        startTime: dateController.text
-                            .convertDateStringToIso8601String(),
+                        startTime: selectedDateTime == null
+                            ? null
+                            : dateController.text
+                                .convertDateStringToIso8601String(),
                         duration: controller.selectedIExamDuration?.value,
                         pdfUrl: controller.pdfUrl)
                     .then((value) {

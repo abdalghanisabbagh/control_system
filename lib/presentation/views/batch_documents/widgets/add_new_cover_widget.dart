@@ -45,7 +45,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
     if (picked != null) {
       selectedDate = picked;
       selectedDay = picked.day.toString();
-      selectedMonth = picked.month.toString();
+      selectedMonth = DateFormat.MMMM().format(picked);
       selectedYear = picked.year.toString();
     }
 
@@ -522,7 +522,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                           educationyearId:
                               controller.selectedItemEducationYear!.value,
                           year: selectedYear!,
-                          month: '${selectedMonth!},${selectedDay!}',
+                          month: '${selectedDay!},${selectedMonth!}',
                           finalDegree: 100.toString())
                       .then((value) {
                     if (value) {
