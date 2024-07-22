@@ -88,6 +88,31 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                 ),
                               ),
                               const Spacer(),
+                              if (controller
+                                  .selectedExamRoom!
+                                  .controlMissionResModel!
+                                  .examMissionsResModel!
+                                  .data!
+                                  .where((exam) => exam.period!)
+                                  .isNotEmpty)
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    controller
+                                        .assignProctorToExamRoom(period: true)
+                                        .then(
+                                          (value) => value
+                                              ? {
+                                                  Get.back(),
+                                                  MyFlashBar.showSuccess(
+                                                          'proctor is assigned successfully',
+                                                          'Success')
+                                                      .show(context),
+                                                }
+                                              : null,
+                                        );
+                                  },
+                                  child: const Text('assign to proctor'),
+                                )
                             ],
                           ),
                           ListBody(
@@ -97,7 +122,10 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                 .controlMissionResModel!
                                 .examMissionsResModel!
                                 .data!
-                                .where((exam) => exam.period!)
+                                .where((exam) =>
+                                    exam.period! &&
+                                    exam.month ==
+                                        '${controller.selectedDate?.month}/${controller.selectedDate?.day}')
                                 .map(
                                   (exam) => Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -134,26 +162,6 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                               DateTime.parse(exam.startTime!),
                                             ),
                                           ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            controller
-                                                .assignProctorToExamRoom(
-                                                    examMission: exam)
-                                                .then(
-                                                  (value) => value
-                                                      ? {
-                                                          Get.back(),
-                                                          MyFlashBar.showSuccess(
-                                                                  'proctor is assigned successfully',
-                                                                  'Success')
-                                                              .show(context),
-                                                        }
-                                                      : null,
-                                                );
-                                          },
-                                          child:
-                                              const Text('assign to proctor'),
-                                        )
                                       ],
                                     ),
                                   ),
@@ -219,6 +227,31 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                 ),
                               ),
                               const Spacer(),
+                              if (controller
+                                  .selectedExamRoom!
+                                  .controlMissionResModel!
+                                  .examMissionsResModel!
+                                  .data!
+                                  .where((exam) => !exam.period!)
+                                  .isNotEmpty)
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    controller
+                                        .assignProctorToExamRoom(period: false)
+                                        .then(
+                                          (value) => value
+                                              ? {
+                                                  Get.back(),
+                                                  MyFlashBar.showSuccess(
+                                                          'proctor is assigned successfully',
+                                                          'Success')
+                                                      .show(context),
+                                                }
+                                              : null,
+                                        );
+                                  },
+                                  child: const Text('assign to proctor'),
+                                )
                             ],
                           ),
 
@@ -291,14 +324,6 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                               DateTime.parse(exam.startTime!),
                                             ),
                                           ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            controller.assignProctorToExamRoom(
-                                                examMission: exam);
-                                          },
-                                          child:
-                                              const Text('assign to proctor'),
-                                        )
                                       ],
                                     ),
                                   ),

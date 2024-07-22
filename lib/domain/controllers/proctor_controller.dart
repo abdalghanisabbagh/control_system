@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:collection/collection.dart';
 import 'package:control_system/Data/Models/proctor/proctor_in_exam_room_res_model.dart';
 import 'package:control_system/Data/Models/proctor/proctors_in_exam_room.dart';
 import 'package:dartz/dartz.dart';
@@ -13,7 +14,6 @@ import '../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../Data/Models/education_year/education_year_model.dart';
 import '../../Data/Models/education_year/educations_years_res_model.dart';
-import '../../Data/Models/exam_mission/exam_mission_res_model.dart';
 import '../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../Data/Models/exam_room/exam_rooms_res_model.dart';
 import '../../Data/Models/proctor/proctor_res_model.dart';
@@ -219,7 +219,12 @@ class ProctorController extends GetxController {
     return selectedProctor != null &&
         selectedExamRoom != null &&
         selectedControlMissionsId != null &&
-        selectedEducationYearId != null;
+        selectedEducationYearId != null &&
+        selectedExamRoom!.controlMissionResModel!.examMissionsResModel!.data!
+                .firstWhereOrNull((exam) =>
+                    exam.month ==
+                    '${selectedDate?.month}/${selectedDate?.day}') !=
+            null;
   }
 
   Future<void> getEducationYears() async {
@@ -251,8 +256,7 @@ class ProctorController extends GetxController {
     update();
   }
 
-  Future<bool> assignProctorToExamRoom(
-      {required ExamMissionResModel examMission}) async {
+  Future<bool> assignProctorToExamRoom({required bool period}) async {
     isLoading = true;
     bool isSuccess = false;
     update(['examRooms', 'assignProctorToExamRoom']);
@@ -264,9 +268,18 @@ class ProctorController extends GetxController {
             body: {
           "proctors_ID": selectedProctor?.iD,
           "exam_room_ID": selectedExamRoom?.id,
-          "Month": examMission.month,
-          "Year": examMission.year,
-          "Period": examMission.period,
+          "Month": selectedExamRoom!
+              .controlMissionResModel!.examMissionsResModel!.data!
+              .firstWhere((exam) =>
+                  exam.month == '${selectedDate?.month}/${selectedDate?.day}')
+              .month
+              .toString(),
+          "Year": selectedExamRoom!
+              .controlMissionResModel!.examMissionsResModel!.data!
+              .firstWhere((exam) => exam.year == '${selectedDate?.year}')
+              .year
+              .toString(),
+          "Period": period,
           "Created_By": Get.find<ProfileController>().cachedUserProfile?.iD,
         });
 
