@@ -329,7 +329,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                 const SizedBox(
                   height: 10,
                 ),
-                Text('Exam Date:', style: nunitoRegularStyle()),
+                Text('Exam Duration:', style: nunitoRegularStyle()),
                 const SizedBox(
                   height: 5,
                 ),
@@ -342,7 +342,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                           SizedBox(
                             width: 500,
                             child: MultiSelectDropDownView(
-                              hintText: "Select Exam Date",
+                              hintText: "Select Exam Duration",
                               onOptionSelected: (selectedItem) {
                                 controller.selectedIExamDuration =
                                     selectedItem.isNotEmpty

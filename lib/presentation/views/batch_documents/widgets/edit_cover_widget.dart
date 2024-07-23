@@ -134,47 +134,69 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
           const SizedBox(
             height: 20,
           ),
-          GetBuilder<EditCoverSheetController>(builder: (_) {
-            if (controller.isLodingUploadPdf == true) {
-              return SizedBox(
-                width: 50,
-                height: 50,
-                child: FittedBox(
-                  child: LoadingIndicators.getLoadingIndicator(),
-                ),
-              );
-            }
-            return InkWell(
-              onTap: () {
-                controller.uplodPdfInExamMission().then((value) {
-                  if (value == true) {
-                    MyFlashBar.showSuccess(
-                      "Uploaded Successfully",
-                      "Success",
-                    ).show(Get.key.currentContext!);
-                  }
-                });
+          GetBuilder<EditCoverSheetController>(
+              init: EditCoverSheetController(),
+              dispose: (_) {
+                Get.delete<EditCoverSheetController>();
               },
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(11),
-                  ),
-                  color: ColorManager.glodenColor,
-                ),
-                child: Center(
-                  child: Text(
-                    "Upload Exam Version A",
-                    style: nunitoRegular.copyWith(
-                      color: Colors.white,
-                      fontSize: 18,
+              builder: (_) {
+                if (controller.isLodingUploadPdf == true) {
+                  return SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: FittedBox(
+                      child: LoadingIndicators.getLoadingIndicator(),
                     ),
+                  );
+                }
+                return InkWell(
+                  onTap: () {
+                    controller.uplodPdfInExamMission().then((value) {
+                      if (value == true) {
+                        MyFlashBar.showSuccess(
+                          "Uploaded Successfully",
+                          "Success",
+                        ).show(Get.key.currentContext!);
+                      }
+                    });
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(11),
+                          ),
+                          color: ColorManager.glodenColor,
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Upload Exam Version A",
+                            style: nunitoRegular.copyWith(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (examMissionObject.pdf != null)
+                        SizedBox(
+                          width: Get.width * 0.3,
+                          child: Text("Old Exam :'${examMissionObject.pdf}' ",
+                              style: nunitoRegularStyle()),
+                        ),
+                      if (controller.isImportedFile == true)
+                        SizedBox(
+                          width: Get.width * 0.3,
+                          child: Text("New Exam :'${controller.pdfName}' ",
+                              style: nunitoRegularStyle()),
+                        )
+                    ],
                   ),
-                ),
-              ),
-            );
-          }),
+                );
+              }),
           Form(
             key: _formKey,
             child: Column(
@@ -183,7 +205,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                 const SizedBox(
                   height: 10,
                 ),
-                Text('Exam Date:', style: nunitoRegularStyle()),
+                Text('Exam Duration:', style: nunitoRegularStyle()),
                 const SizedBox(
                   height: 5,
                 ),
@@ -196,7 +218,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                         label: "${examMissionObject.duration.toString()} Mins",
                       )
                     ],
-                    hintText: "Select Exam Date",
+                    hintText: "Select Exam Duration",
                     onOptionSelected: (selectedItem) {
                       controller.selectedIExamDuration =
                           selectedItem.isNotEmpty ? selectedItem.first : null;
@@ -370,6 +392,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                       .then((value) {
                     if (value) {
                       Get.back();
+                      controller.onClose();
                       MyFlashBar.showSuccess(
                         "Exam Cover Sheet Updated Successfully",
                         "Success",

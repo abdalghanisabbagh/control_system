@@ -102,7 +102,7 @@ class OfficerEditCoverWidget extends GetView<EditCoverSheetController> {
                 const SizedBox(
                   height: 10,
                 ),
-                Text('Exam Date:', style: nunitoRegularStyle()),
+                Text('Exam Duration:', style: nunitoRegularStyle()),
                 const SizedBox(
                   height: 5,
                 ),
@@ -115,7 +115,7 @@ class OfficerEditCoverWidget extends GetView<EditCoverSheetController> {
                         label: "${examMissionObject.duration.toString()} Mins",
                       )
                     ],
-                    hintText: "Select Exam Date",
+                    hintText: "Select Exam Duration",
                     onOptionSelected: (selectedItem) {
                       controller.selectedIExamDuration =
                           selectedItem.isNotEmpty ? selectedItem.first : null;

@@ -20,9 +20,11 @@ class EditCoverSheetController extends GetxController {
 
   bool isLodingUpdateExamMission = false;
   bool isLodingUploadPdf = false;
+  bool isImportedFile = false;
 
   ValueItem? selectedIExamDuration;
   String? pdfUrl;
+  String? pdfName;
 
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
@@ -49,8 +51,12 @@ class EditCoverSheetController extends GetxController {
 
     if (pickedFile != null) {
       Uint8List? fileBytes = pickedFile.files.single.bytes;
+      isImportedFile = true;
+      update();
 
       if (fileBytes != null) {
+        pdfName = pickedFile.files.single.name;
+
         return (fileBytes, pickedFile.files.single.name);
       }
     } else {
@@ -140,6 +146,9 @@ class EditCoverSheetController extends GetxController {
       Get.find<CoversSheetsController>()
           .getAllExamMissionsByControlMission(result.controlMissionID!);
       updateExamMission = true;
+
+      isImportedFile = false;
+      update();
     });
     isLodingUpdateExamMission = false;
 
@@ -190,5 +199,10 @@ class EditCoverSheetController extends GetxController {
 
     update();
     return updateExamMission;
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
   }
 }
