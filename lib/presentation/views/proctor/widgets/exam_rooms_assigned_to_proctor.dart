@@ -37,17 +37,16 @@ class ExamRoomsAssignedToProctorWidget extends GetView<ProctorController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Spacer(
-                                flex: 5,
-                              ),
-                              Text(
-                                'Proctor Name: $proctorName',
-                                style: nunitoBold,
-                              ),
-                              const Spacer(
-                                flex: 4,
+                              Expanded(
+                                child: Text(
+                                  'Proctor Name: $proctorName',
+                                  style: nunitoBold.copyWith(
+                                    fontSize: AppSize.s25,
+                                  ),
+                                  maxLines: 1,
+                                ),
                               ),
                               IconButton(
                                 onPressed: () {
