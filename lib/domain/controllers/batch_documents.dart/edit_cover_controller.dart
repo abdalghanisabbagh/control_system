@@ -200,9 +200,4 @@ class EditCoverSheetController extends GetxController {
     update();
     return updateExamMission;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }
