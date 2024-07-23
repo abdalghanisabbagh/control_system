@@ -14,6 +14,7 @@ import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'profile_controller.dart';
 
 class SchoolController extends GetxController {
   List<GradeResModel> grades = <GradeResModel>[];
@@ -208,9 +209,20 @@ class SchoolController extends GetxController {
   }
 
   Future<void> saveToSchoolBox(SchoolResModel currentSchool) async {
-    await Hive.box('School').put('Id', currentSchool.iD);
-    await Hive.box('School').put('Name', currentSchool.name);
-    await Hive.box('School').put('SchoolTypeID', currentSchool.schoolTypeID);
+    ResponseHandler<void>().getResponse(
+      path:
+          '${AuthLinks.user}/${Get.find<ProfileController>().cachedUserProfile!.iD}',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "LastSelectSchoolId": currentSchool.iD,
+      },
+    );
+    await Future.wait([
+      Hive.box('School').put('Id', currentSchool.iD),
+      Hive.box('School').put('Name', currentSchool.name),
+      Hive.box('School').put('SchoolTypeID', currentSchool.schoolTypeID),
+    ]);
     await Hive.box('School').flush();
   }
 
