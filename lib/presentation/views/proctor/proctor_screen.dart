@@ -21,11 +21,20 @@ class ProctorScreen extends GetView<ProctorController> {
 
   Future _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        // initialDate: controller.selectedDate,
-        initialDatePickerMode: DatePickerMode.day,
-        firstDate: DateTime(2015),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: DateTime.now(),
+      initialDatePickerMode: DatePickerMode.day,
+      firstDate: DateTime.tryParse(controller.controlMissions
+              .firstWhereOrNull((element) =>
+                  element.iD == controller.selectedControlMissionsId)!
+              .startDate!) ??
+          DateTime.now(),
+      lastDate: DateTime.tryParse(controller.controlMissions
+              .firstWhereOrNull((element) =>
+                  element.iD == controller.selectedControlMissionsId)!
+              .endDate!) ??
+          DateTime.now(),
+    );
     if (picked != null) {
       controller.selectedDate = picked;
       controller.onDateSelected();
@@ -77,8 +86,14 @@ class ProctorScreen extends GetView<ProctorController> {
                       padding: const EdgeInsets.all(8.0),
                       child: GetBuilder<ProctorController>(
                         builder: (_) => controller.controlMissionsAreLoading
-                            ? Center(
-                                child: LoadingIndicators.getLoadingIndicator(),
+                            ? SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                ),
                               )
                             : controller.selectedEducationYearId == null
                                 ? Center(
@@ -109,58 +124,64 @@ class ProctorScreen extends GetView<ProctorController> {
                                                   "Select Control Missions",
                                             ),
                                           ),
-                                          InkWell(
-                                            onTap: () {
-                                              _selectDate(context);
-                                            },
-                                            child: Container(
-                                              width: 200,
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 10,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color:
-                                                      ColorManager.bgSideMenu,
-                                                  width: 0.5,
+                                          IgnorePointer(
+                                            ignoring: controller
+                                                    .selectedControlMissionsId ==
+                                                null,
+                                            child: InkWell(
+                                              onTap: () {
+                                                _selectDate(context);
+                                              },
+                                              child: Container(
+                                                width: 200,
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 10,
                                                 ),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(15),
-                                                ),
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 10,
-                                              ),
-                                              child: TextFormField(
-                                                cursorColor:
-                                                    ColorManager.bgSideMenu,
-                                                enabled: false,
-                                                style: nunitoRegular.copyWith(
-                                                  fontSize: 14,
-                                                ),
-                                                controller:
-                                                    controller.dateController,
-                                                decoration: InputDecoration(
-                                                  suffixIcon: const Icon(
-                                                    Icons.date_range_outlined,
-                                                    color: Colors.black,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color:
+                                                        ColorManager.bgSideMenu,
+                                                    width: 0.5,
                                                   ),
-                                                  focusedBorder:
-                                                      InputBorder.none,
-                                                  enabledBorder:
-                                                      InputBorder.none,
-                                                  errorBorder: InputBorder.none,
-                                                  disabledBorder:
-                                                      InputBorder.none,
-                                                  hintText:
-                                                      'Example: DD/MM/YYYY',
-                                                  hintStyle:
-                                                      nunitoRegular.copyWith(
-                                                    color: ColorManager.black,
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(15),
+                                                  ),
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 10,
+                                                ),
+                                                child: TextFormField(
+                                                  cursorColor:
+                                                      ColorManager.bgSideMenu,
+                                                  enabled: false,
+                                                  style: nunitoRegular.copyWith(
                                                     fontSize: 14,
+                                                  ),
+                                                  controller:
+                                                      controller.dateController,
+                                                  decoration: InputDecoration(
+                                                    suffixIcon: const Icon(
+                                                      Icons.date_range_outlined,
+                                                      color: Colors.black,
+                                                    ),
+                                                    focusedBorder:
+                                                        InputBorder.none,
+                                                    enabledBorder:
+                                                        InputBorder.none,
+                                                    errorBorder:
+                                                        InputBorder.none,
+                                                    disabledBorder:
+                                                        InputBorder.none,
+                                                    hintText:
+                                                        'Example: DD/MM/YYYY',
+                                                    hintStyle:
+                                                        nunitoRegular.copyWith(
+                                                      color: ColorManager.black,
+                                                      fontSize: 14,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
