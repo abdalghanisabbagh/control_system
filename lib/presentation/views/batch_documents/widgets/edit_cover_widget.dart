@@ -22,30 +22,34 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
       required this.examMissionObject,
       required this.controlMissionObject});
 
-  DateTime? selectedDate;
-  DateTime? selectedDateTime;
+  late TextEditingController startTimeController = TextEditingController(
+      text: examMissionObject.endTime == null
+          ? "${examMissionObject.month}${examMissionObject.year}"
+          : DateFormat('yyyy-MM-dd HH:mm')
+              .format(DateTime.parse(examMissionObject.startTime!)));
+  late TextEditingController endTimeController = TextEditingController(
+      text: examMissionObject.endTime == null
+          ? null
+          : DateFormat('yyyy-MM-dd HH:mm')
+              .format(DateTime.parse(examMissionObject.endTime!)));
 
-  String? selectedDay;
-  String? selectedMonth;
-  String? selectedYear;
-  late TextEditingController dateController = TextEditingController(
-      text: "${examMissionObject.month}${examMissionObject.year}");
-
-  Future<void> selectDate(BuildContext context) async {
+  Future<void> selectDate(BuildContext context, {required bool isStart}) async {
     if (controlMissionObject.startDate == null ||
         controlMissionObject.endDate == null) {
       return;
     }
 
+    final DateTime startDate = DateTime.parse(controlMissionObject.startDate!
+        .substring(0, controlMissionObject.startDate!.length - 1));
+    final DateTime endDate = DateTime.parse(controlMissionObject.endDate!
+        .substring(0, controlMissionObject.endDate!.length - 1));
+
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.parse(controlMissionObject.startDate!
-          .substring(0, controlMissionObject.startDate!.length - 1)),
+      initialDate: startDate,
       initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime.parse(controlMissionObject.startDate!
-          .substring(0, controlMissionObject.startDate!.length - 1)),
-      lastDate: DateTime.parse(controlMissionObject.endDate!
-          .substring(0, controlMissionObject.endDate!.length - 1)),
+      firstDate: startDate,
+      lastDate: endDate,
     );
 
     if (pickedDate != null && context.mounted) {
@@ -69,21 +73,24 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
       );
 
       if (pickedTime != null) {
-        selectedDateTime = DateTime(
+        final selectedDateTime = DateTime(
           pickedDate.year,
           pickedDate.month,
           pickedDate.day,
           pickedTime.hour,
           pickedTime.minute,
         );
-        selectedDay = pickedDate.day.toString();
-        selectedMonth = pickedDate.month.toString();
-        selectedYear = pickedDate.year.toString();
 
         final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
-        String formattedDateTime = formatter.format(selectedDateTime!);
-        dateController.text = formattedDateTime;
-        //  print('Formatted Date and Time: ${dateController.text}');
+        String formattedDateTime = formatter.format(selectedDateTime);
+
+        if (isStart) {
+          controller.selectedStartTime = selectedDateTime;
+          startTimeController.text = formattedDateTime;
+        } else {
+          controller.selectedEndTime = selectedDateTime;
+          endTimeController.text = formattedDateTime;
+        }
       }
     }
   }
@@ -180,55 +187,34 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                 const SizedBox(
                   height: 5,
                 ),
-                FormField<List<ValueItem<dynamic>>>(
-                    validator: Validations.multiSelectDropDownRequiredValidator,
-                    builder: (formFieldState) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 500,
-                            child: MultiSelectDropDownView(
-                              optionSelected: [
-                                ValueItem(
-                                  value: examMissionObject.duration!,
-                                  label:
-                                      "${examMissionObject.duration.toString()} Mins",
-                                )
-                              ],
-                              hintText: "Select Exam Date",
-                              onOptionSelected: (selectedItem) {
-                                controller.selectedIExamDuration =
-                                    selectedItem.isNotEmpty
-                                        ? selectedItem.first
-                                        : null;
-                              },
-                              options: controller.optionsExamDurations,
-                            ),
-                          ),
-                          if (formFieldState.hasError)
-                            Text(
-                              formFieldState.errorText!,
-                              style: nunitoRegular.copyWith(
-                                fontSize: FontSize.s14,
-                                color: ColorManager.error,
-                              ),
-                            ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      );
-                    }),
+                SizedBox(
+                  width: 500,
+                  child: MultiSelectDropDownView(
+                    optionSelected: [
+                      ValueItem(
+                        value: examMissionObject.duration!,
+                        label: "${examMissionObject.duration.toString()} Mins",
+                      )
+                    ],
+                    hintText: "Select Exam Date",
+                    onOptionSelected: (selectedItem) {
+                      controller.selectedIExamDuration =
+                          selectedItem.isNotEmpty ? selectedItem.first : null;
+                    },
+                    options: controller.optionsExamDurations,
+                  ),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
+                Text("Start Time:", style: nunitoRegularStyle()),
                 InkWell(
                   onTap: () async {
-                    await selectDate(context);
-                    if (selectedDateTime != null) {
-                      dateController.text = DateFormat('yyyy-MM-dd HH:mm')
-                          .format(selectedDateTime!);
+                    await selectDate(context, isStart: true);
+                    if (controller.selectedStartTime != null) {
+                      startTimeController.text = DateFormat('yyyy-MM-dd HH:mm')
+                          .format(controller.selectedStartTime!);
+                      controller.update();
                     }
                   },
                   child: TextFormField(
@@ -236,7 +222,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                     cursorColor: ColorManager.bgSideMenu,
                     enabled: false,
                     style: nunitoRegularStyle(),
-                    controller: dateController,
+                    controller: startTimeController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -255,6 +241,54 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GetBuilder<EditCoverSheetController>(builder: (_) {
+                  if (controller.selectedStartTime == null) {
+                    return const SizedBox.shrink();
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("End Time:", style: nunitoRegularStyle()),
+                      InkWell(
+                        onTap: () async {
+                          await selectDate(context, isStart: false);
+                          if (controller.selectedEndTime != null) {
+                            endTimeController.text =
+                                DateFormat('yyyy-MM-dd HH:mm')
+                                    .format(controller.selectedEndTime!);
+                            controller.update();
+                          }
+                        },
+                        child: TextFormField(
+                          validator: Validations.requiredValidator,
+                          cursorColor: ColorManager.bgSideMenu,
+                          enabled: false,
+                          style: nunitoRegularStyle(),
+                          controller: endTimeController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: ColorManager.bgSideMenu,
+                                width: 20,
+                                style: BorderStyle.solid,
+                              ),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                            ),
+                            suffixIcon: const Icon(
+                              Icons.date_range_outlined,
+                              color: Colors.black,
+                            ),
+                            hintStyle: nunitoRegularStyle(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
               ],
             ),
           ),
@@ -306,35 +340,54 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
             }
             return InkWell(
               onTap: () {
-                controller
-                    .updateExamMission(
-                        period: examMissionObject.period,
-                        id: examMissionObject.iD!,
-                        startTime: selectedDateTime == null
-                            ? null
-                            : dateController.text
-                                .convertDateStringToIso8601String(),
-                        duration: controller.selectedIExamDuration?.value,
-                        pdfUrl: controller.pdfUrl)
-                    .then((value) {
-                  if (value) {
-                    Get.back();
-                    MyFlashBar.showSuccess(
-                      "Exam Cover Sheet Updated Successfully",
-                      "Success",
+                String? endTimeIso;
+                if (controller.selectedEndTime != null) {
+                  if (controller.selectedStartTime != null &&
+                      controller.selectedEndTime!
+                          .isAtSameMomentAs(controller.selectedStartTime!)) {
+                    MyFlashBar.showError(
+                      "End Time cannot be the same as Start Time",
+                      "Error",
                     ).show(Get.key.currentContext!);
+                    return;
                   }
-                });
+                  endTimeIso =
+                      endTimeController.text.convertDateStringToIso8601String();
+                }
+                if (_formKey.currentState!.validate()) {
+                  controller
+                      .updateExamMission(
+                    endTime: endTimeIso,
+                    period: examMissionObject.period,
+                    id: examMissionObject.iD!,
+                    startTime: controller.selectedStartTime == null
+                        ? null
+                        : startTimeController.text
+                            .convertDateStringToIso8601String(),
+                    duration: controller.selectedIExamDuration?.value,
+                    pdfUrl: controller.pdfUrl,
+                  )
+                      .then((value) {
+                    if (value) {
+                      Get.back();
+                      MyFlashBar.showSuccess(
+                        "Exam Cover Sheet Updated Successfully",
+                        "Success",
+                      ).show(Get.key.currentContext!);
+                    }
+                  });
+                }
               },
               child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: ColorManager.bgSideMenu,
-                      borderRadius: BorderRadius.circular(11)),
-                  child: Center(
-                    child: Text("Update", style: nunitoSemiBoldStyle()),
-                  )),
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: ColorManager.bgSideMenu,
+                    borderRadius: BorderRadius.circular(11)),
+                child: Center(
+                  child: Text("Update", style: nunitoSemiBoldStyle()),
+                ),
+              ),
             );
           })
         ],

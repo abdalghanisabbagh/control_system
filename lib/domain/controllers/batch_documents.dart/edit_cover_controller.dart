@@ -15,6 +15,9 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class EditCoverSheetController extends GetxController {
+  DateTime? selectedStartTime;
+  DateTime? selectedEndTime;
+
   bool isLodingUpdateExamMission = false;
   bool isLodingUploadPdf = false;
 
@@ -101,6 +104,7 @@ class EditCoverSheetController extends GetxController {
   Future<bool> updateExamMission({
     required int id,
     required String? startTime,
+    required String? endTime,
     required int? duration,
     required String? pdfUrl,
     required bool? period,
@@ -116,6 +120,7 @@ class EditCoverSheetController extends GetxController {
       duration: duration,
       pdf: pdfUrl,
       period: period,
+      endTime: endTime,
     );
 
     var response = await responseHandler.getResponse(

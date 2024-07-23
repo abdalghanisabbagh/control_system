@@ -1,5 +1,5 @@
 import 'package:control_system/domain/controllers/batch_documents.dart/seat_number_controller.dart';
-import 'package:control_system/presentation/views/batch_documents/widgets/cover_seat_number_widget.dart';
+import 'package:control_system/presentation/views/batch_documents/widgets/seat_number_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
