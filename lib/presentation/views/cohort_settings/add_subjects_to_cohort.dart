@@ -22,7 +22,7 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 510,
-      width: 300,
+      width: 500,
       child: GetBuilder<SubjectsController>(
         init: SubjectsController(),
         builder: (subjectController) {
@@ -49,6 +49,7 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                           .toList(),
                       onOptionSelected: controller.onOptionSelected,
                       multiSelect: true,
+                      showChipSelect: true,
                     ),
                     const SizedBox(
                       height: 20,
@@ -78,9 +79,13 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                   ).showDialogue(context);
                           },
                           child: controller.addLoading
-                              ? Center(
-                                  child:
-                                      LoadingIndicators.getLoadingIndicator(),
+                              ? SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: Center(
+                                    child:
+                                        LoadingIndicators.getLoadingIndicator(),
+                                  ),
                                 )
                               : Container(
                                   height: 50,
