@@ -5,11 +5,13 @@ import 'package:file_saver/file_saver.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
 import '../../../Data/Models/exam_mission/exam_mission_res_model.dart';
 import '../../../Data/Models/exam_mission/exam_missions_res_model.dart';
+import '../../../Data/Models/exam_mission/preview_exam_res_model.dart';
 import '../../../Data/Models/exam_mission/upload_pdf_res_models.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/subject/subjects_res_model.dart';
@@ -459,5 +461,39 @@ class CoversSheetsController extends GetxController {
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }
+  }
+
+  Future<void> previewExamMission({
+    required int examMissionId,
+  }) async {
+    final response = await ResponseHandler<PreviewExamResModel>().getResponse(
+      path: "${ExamLinks.previewExamMission}/$examMissionId",
+      converter: PreviewExamResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold((failure) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${failure.code} ::${failure.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }, (result) async {
+      if (result.A != null) {
+        try {
+          if (await canLaunchUrl(Uri.parse(result.A!))) {
+            await launchUrl(Uri.parse(result.A!), webOnlyWindowName: '_blank');
+          } else {
+            throw 'Could not launch ${Uri.parse(result.A!)}';
+          }
+        } catch (e) {
+          MyAwesomeDialogue(
+            title: 'Error',
+            desc: "$e",
+            dialogType: DialogType.error,
+          ).showDialogue(Get.key.currentContext!);
+        }
+      }
+    });
   }
 }

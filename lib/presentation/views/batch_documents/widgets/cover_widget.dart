@@ -5,6 +5,7 @@ import 'package:control_system/domain/controllers/batch_documents.dart/cover_she
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:control_system/presentation/views/batch_documents/widgets/edit_cover_widget.dart';
+import 'package:control_system/presentation/views/batch_documents/widgets/officer_edit_cover_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -60,8 +61,8 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         visible: examMissionObject.pdf != null,
                         child: IconButton(
                           onPressed: () {
-                            controller.downloadFilePdf(examMissionObject.pdf!,
-                                controlMissionObject.name!);
+                            controller.previewExamMission(examMissionId: examMissionObject.iD!
+                                );
                           },
                           icon: CircleAvatar(
                             backgroundColor: ColorManager.glodenColor,
@@ -78,6 +79,20 @@ class CoverWidget extends GetView<CoversSheetsController> {
                           MyDialogs.showDialog(
                               context,
                               EditCoverWidget(
+                                examMissionObject: examMissionObject,
+                                controlMissionObject: controlMissionObject,
+                              ));
+                        },
+                        icon: CircleAvatar(
+                          backgroundColor: ColorManager.primary,
+                          child: Icon(Icons.edit, color: ColorManager.white),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          MyDialogs.showDialog(
+                              context,
+                              OfficerEditCoverWidget(
                                 examMissionObject: examMissionObject,
                                 controlMissionObject: controlMissionObject,
                               ));
