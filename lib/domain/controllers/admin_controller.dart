@@ -3,6 +3,7 @@ import 'package:control_system/Data/Models/user/users_res/user_res_model.dart';
 import 'package:control_system/app/configurations/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Network/response_handler.dart';
 import '../../Data/enums/req_type_enum.dart';
@@ -55,6 +56,7 @@ class AdminController extends GetxController {
       converter: UserResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
+        "School_Id": Hive.box('School').get('Id'),
         "Full_Name": fullNameController.text,
         "User_Name": usernameController.text,
         "Password": passwordController.text,
@@ -76,6 +78,11 @@ class AdminController extends GetxController {
       },
       (r) {
         success = true;
+        fullNameController.clear();
+        usernameController.clear();
+        passwordController.clear();
+        confirmPasswordController.clear();
+        nisIdController.clear();
       },
     );
 

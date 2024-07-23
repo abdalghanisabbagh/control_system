@@ -585,7 +585,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                           if (value) {
                                             controller.currentStep = 1;
                                             MyFlashBar.showSuccess(
-                                              'Student seat numbers created successfully',
+                                              'Control mission created successfully',
                                               'Success',
                                             ).show(context);
                                             await Future.delayed(
