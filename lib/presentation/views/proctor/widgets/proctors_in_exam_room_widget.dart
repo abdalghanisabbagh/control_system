@@ -36,19 +36,19 @@ class ProctorsInExamRoomWidget extends GetView<ProctorController> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Spacer(
-                                flex: 5,
-                              ),
-                              Text(
-                                'Exam Room Name: $examRoomName',
-                                style: nunitoBold,
-                              ),
-                              const Spacer(
-                                flex: 4,
+                              Expanded(
+                                child: Text(
+                                  'Exam Room Name: $examRoomName',
+                                  style: nunitoBold.copyWith(
+                                    fontSize: AppSize.s25,
+                                  ),
+                                  maxLines: 1,
+                                ),
                               ),
                               IconButton(
                                 onPressed: () {
