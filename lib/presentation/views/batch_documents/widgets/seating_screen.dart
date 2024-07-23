@@ -131,6 +131,7 @@ class SeatingScreen extends GetView<SeatNumberController> {
             );
           },
         ),
+        
         GetBuilder<SeatNumberController>(
           builder: (controller) {
             if (controller.isLodingGetExamMission) {

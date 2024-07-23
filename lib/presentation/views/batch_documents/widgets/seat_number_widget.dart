@@ -93,47 +93,43 @@ class CoverSeatNumberWidget extends GetView<SeatNumberController> {
               ],
             ),
           ),
-          GetBuilder<SeatNumberController>(builder: (_) {
-            if (controller.isLoadingGeneratePdf) {
-              Expanded(
-                child: Center(
+          controller.isLoadingGeneratePdf
+              ? Center(
                   child: SizedBox(
                     height: 50,
+                    width: 50,
                     child: FittedBox(
                       child: LoadingIndicators.getLoadingIndicator(),
                     ),
                   ),
-                ),
-              );
-            }
-            return InkWell(
-              onTap: () {
-                controller.generatePdfSeatNumber(
-                    gradeId: examMissionObject.gradesID!,
-                    controlMissionName: controlMissionObject.name!,
-                    examMissionId: examMissionObject.iD!);
-              },
-              child: Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+                )
+              : InkWell(
+                  onTap: () {
+                    controller.generatePdfSeatNumber(
+                        gradeId: examMissionObject.gradesID!,
+                        controlMissionName: controlMissionObject.name!,
+                        examMissionId: examMissionObject.iD!);
+                  },
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                      color: ColorManager.bgSideMenu,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Generate Pdf"),
+                        const SizedBox(width: 20),
+                        Icon(Icons.print, color: ColorManager.white),
+                      ],
+                    ),
                   ),
-                  color: ColorManager.bgSideMenu,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Generate Pdf"),
-                    const SizedBox(width: 20),
-                    Icon(Icons.print, color: ColorManager.white),
-                  ],
-                ),
-              ),
-            );
-          }),
+                )
         ],
       ),
     );
