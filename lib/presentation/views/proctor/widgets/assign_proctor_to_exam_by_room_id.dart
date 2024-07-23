@@ -1,3 +1,4 @@
+import 'package:control_system/app/extensions/date_time_extension.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/loading_indicators.dart';
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:control_system/presentation/resource_manager/color_manager.dart';
@@ -93,7 +94,10 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                   .controlMissionResModel!
                                   .examMissionsResModel!
                                   .data!
-                                  .where((exam) => exam.period!)
+                                  .where((exam) =>
+                                      exam.period! &&
+                                      exam.month ==
+                                          '${controller.selectedDate?.day} ${controller.selectedDate?.toMonthName}')
                                   .isNotEmpty)
                                 ElevatedButton(
                                   onPressed: () async {
@@ -125,7 +129,7 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                 .where((exam) =>
                                     exam.period! &&
                                     exam.month ==
-                                        '${controller.selectedDate?.month}/${controller.selectedDate?.day}')
+                                        '${controller.selectedDate?.day} ${controller.selectedDate?.toMonthName}')
                                 .map(
                                   (exam) => Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -232,7 +236,10 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                   .controlMissionResModel!
                                   .examMissionsResModel!
                                   .data!
-                                  .where((exam) => !exam.period!)
+                                  .where((exam) =>
+                                      !exam.period! &&
+                                      exam.month ==
+                                          '${controller.selectedDate?.day} ${controller.selectedDate?.toMonthName}')
                                   .isNotEmpty)
                                 ElevatedButton(
                                   onPressed: () async {
@@ -288,7 +295,10 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                 .controlMissionResModel!
                                 .examMissionsResModel!
                                 .data!
-                                .where((exam) => !exam.period!)
+                                .where((exam) =>
+                                    !exam.period! &&
+                                    exam.month ==
+                                        '${controller.selectedDate?.day} ${controller.selectedDate?.toMonthName}')
                                 .map(
                                   (exam) => Padding(
                                     padding: const EdgeInsets.all(8.0),

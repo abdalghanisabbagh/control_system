@@ -4,10 +4,12 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:control_system/Data/Models/proctor/proctor_in_exam_room_res_model.dart';
 import 'package:control_system/Data/Models/proctor/proctors_in_exam_room.dart';
+import 'package:control_system/app/extensions/date_time_extension.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../Data/Models/control_mission/control_mission_res_model.dart';
@@ -104,7 +106,7 @@ class ProctorController extends GetxController {
             converter: ProctorsInExamRoomResModel.fromJson,
             type: ReqTypeEnum.GET,
             params: {
-          "month": '${selectedDate?.month}/${selectedDate?.day}',
+          "month": '${selectedDate?.day} ${selectedDate?.toMonthName}',
           "year": '${selectedDate?.year}',
         });
 
@@ -223,7 +225,7 @@ class ProctorController extends GetxController {
         selectedExamRoom!.controlMissionResModel!.examMissionsResModel!.data!
                 .firstWhereOrNull((exam) =>
                     exam.month ==
-                    '${selectedDate?.month}/${selectedDate?.day}') !=
+                    '${selectedDate?.day} ${selectedDate?.toMonthName}') !=
             null;
   }
 
@@ -271,7 +273,8 @@ class ProctorController extends GetxController {
           "Month": selectedExamRoom!
               .controlMissionResModel!.examMissionsResModel!.data!
               .firstWhere((exam) =>
-                  exam.month == '${selectedDate?.month}/${selectedDate?.day}')
+                  exam.month ==
+                  '${selectedDate?.day} ${selectedDate?.toMonthName}')
               .month
               .toString(),
           "Year": selectedExamRoom!
@@ -416,11 +419,22 @@ class ProctorController extends GetxController {
 
   void onControlMissionsChange(List<ValueItem<dynamic>> selectedOptions) {
     selectedControlMissionsId = selectedOptions.firstOrNull?.value;
-    selectedControlMissionsId != null ? getExamRoomByControlMissionId() : null;
+    selectedControlMissionsId != null
+        ? {
+            selectedDate = DateTime.tryParse(controlMissions
+                .firstWhereOrNull(
+                    (element) => element.iD == selectedControlMissionsId)!
+                .startDate!),
+            dateController.text =
+                DateFormat('dd MMMM yyyy').format(selectedDate!),
+            getExamRoomByControlMissionId(),
+          }
+        : {
+            selectedDate = null,
+            dateController.text = '',
+          };
     selectedExamRoom = null;
     selectedProctor = null;
-    selectedDate = null;
-    dateController.text = '';
     examRooms = [];
     update(['proctorEntryScreen']);
   }
@@ -436,7 +450,7 @@ class ProctorController extends GetxController {
     ResponseHandler<ProctorsResModel> responseHandler = ResponseHandler();
     Either<Failure, ProctorsResModel> response =
         await responseHandler.getResponse(
-      path: ProctorsLinks.proctor,
+      path: '${ProctorsLinks.proctor}/school',
       converter: ProctorsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
