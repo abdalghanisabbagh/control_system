@@ -61,6 +61,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             MultiSelectDropDownView(
+                              hintText: "Select Role",
                               options: controller.roleTypes
                                   .map((e) => ValueItem(label: e, value: e))
                                   .toList(),
@@ -92,6 +93,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             MultiSelectDropDownView(
+                              hintText: "Select Division",
                               options: controller.schoolDivision
                                   .map((e) => ValueItem(label: e, value: e))
                                   .toList(),
@@ -169,8 +171,12 @@ class AddNewUserWidget extends GetView<AdminController> {
                       height: 20,
                     ),
                     userController.isLoading
-                        ? Center(
-                            child: LoadingIndicators.getLoadingIndicator(),
+                        ? SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: Center(
+                              child: LoadingIndicators.getLoadingIndicator(),
+                            ),
                           )
                         : Row(
                             children: [
