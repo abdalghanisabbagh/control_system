@@ -522,7 +522,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                           educationyearId:
                               controller.selectedItemEducationYear!.value,
                           year: selectedYear!,
-                          month: '${selectedDay!},${selectedMonth!}',
+                          month: '${selectedDay!} ${selectedMonth!}',
                           finalDegree: 100.toString())
                       .then((value) {
                     if (value) {

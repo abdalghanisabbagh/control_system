@@ -24,7 +24,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
 
   late TextEditingController startTimeController = TextEditingController(
       text: examMissionObject.endTime == null
-          ? "${examMissionObject.month}${examMissionObject.year}"
+          ? "${examMissionObject.month} ${examMissionObject.year}"
           : DateFormat('yyyy-MM-dd HH:mm')
               .format(DateTime.parse(examMissionObject.startTime!)));
   late TextEditingController endTimeController = TextEditingController(

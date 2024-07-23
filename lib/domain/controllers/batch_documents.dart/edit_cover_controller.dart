@@ -146,4 +146,49 @@ class EditCoverSheetController extends GetxController {
     update();
     return updateExamMission;
   }
+
+  Future<bool> updateExamMissionByOffice({
+    required int id,
+    required int? duration,
+    required bool? period,
+    required String? year,
+    required String? month,
+  }) async {
+    isLodingUpdateExamMission = true;
+
+    update();
+    bool updateExamMission = false;
+    ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
+
+    ExamMissionResModel examMissionResModel = ExamMissionResModel(
+      duration: duration,
+      pdf: pdfUrl,
+      period: period,
+      year: year,
+      month: month,
+    );
+
+    var response = await responseHandler.getResponse(
+        path: '${ExamLinks.examMission}/$id',
+        converter: ExamMissionResModel.fromJson,
+        type: ReqTypeEnum.PATCH,
+        body: examMissionResModel.toJson());
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      updateExamMission = false;
+    }, (result) {
+      Get.find<CoversSheetsController>()
+          .getAllExamMissionsByControlMission(result.controlMissionID!);
+      updateExamMission = true;
+    });
+    isLodingUpdateExamMission = false;
+
+    update();
+    return updateExamMission;
+  }
 }
