@@ -17,7 +17,7 @@ class AuthController extends GetxController {
   bool isLoading = false;
   bool isLogin = false;
   ProfileController profileController = Get.find<ProfileController>();
-  RxBool showPass = true.obs;
+  bool showPass = true;
   TokenService tokenService = Get.find<TokenService>();
 
   @override
@@ -27,7 +27,8 @@ class AuthController extends GetxController {
   }
 
   setShowPass() {
-    showPass.value = !showPass.value;
+    showPass = !showPass;
+    update(['pass_icon']);
   }
 
   Future<bool> login(String username, String password) async {
