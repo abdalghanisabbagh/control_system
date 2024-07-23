@@ -440,7 +440,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                     readOnly: true,
                     enableEditingMode: false,
                     title: 'Id',
-                    field: 'IdField',
+                    field: 'BlbIdField',
                     type: PlutoColumnType.text(),
                   ),
                   PlutoColumn(
