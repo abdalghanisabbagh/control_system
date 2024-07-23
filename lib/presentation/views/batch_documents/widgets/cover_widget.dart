@@ -52,8 +52,9 @@ class CoverWidget extends GetView<CoversSheetsController> {
                     children: [
                       Text(
                         "Mission name:${controlMissionObject.name}",
-                        style: nunitoRegularStyle().copyWith(
+                        style: nunitoBoldStyle().copyWith(
                           color: ColorManager.primary,
+                          fontSize: 25,
                         ),
                       ),
                       const Spacer(),
@@ -61,8 +62,8 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         visible: examMissionObject.pdf != null,
                         child: IconButton(
                           onPressed: () {
-                            controller.previewExamMission(examMissionId: examMissionObject.iD!
-                                );
+                            controller.previewExamMission(
+                                examMissionId: examMissionObject.iD!);
                           },
                           icon: CircleAvatar(
                             backgroundColor: ColorManager.glodenColor,
