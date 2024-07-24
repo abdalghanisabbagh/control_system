@@ -1,8 +1,10 @@
+import 'barcode_res_model.dart';
+
 class BarcodesResModel {
-  List<BarcodesResModel>? barcodes;
+  List<BarcodeResModel>? barcodes;
   BarcodesResModel({this.barcodes});
   BarcodesResModel.fromJson(json) {
-    barcodes = List<BarcodesResModel>.from(
-        json.map((e) => BarcodesResModel.fromJson(e)).toList());
+    barcodes = List<BarcodeResModel>.from(
+        json.map((e) => BarcodeResModel.fromJson(e)).toList());
   }
 }
