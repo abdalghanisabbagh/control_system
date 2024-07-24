@@ -232,13 +232,14 @@ class SeatNumberController extends GetxController {
 
   Future<void> generatePdfSeatNumber(
       {required String controlMissionName,
-      required int examMissionId,
+      required int controlMissionId,
       required int gradeId}) async {
     isLoadingGeneratePdf = true;
-    update([examMissionId]);
+    update([controlMissionId]);
+
     final response = await ResponseHandler<UploadPdfResModel>().getResponse(
       path:
-          '${GeneratePdfLinks.generatePdfSeat}/$examMissionId?gradeid=$gradeId',
+          '${GeneratePdfLinks.generatePdfSeat}/$controlMissionId?gradeid=$gradeId',
       converter: UploadPdfResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -249,12 +250,12 @@ class SeatNumberController extends GetxController {
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       isLoadingGeneratePdf = false;
-      update([examMissionId]);
+      update([controlMissionId]);
     }, (result) {
       if (result.url != null) {
         downloadFilePdf(result.url!, controlMissionName);
         isLoadingGeneratePdf = false;
-        update([examMissionId]);
+        update([controlMissionId]);
       }
     });
   }

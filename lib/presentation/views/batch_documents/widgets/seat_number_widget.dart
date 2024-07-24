@@ -108,7 +108,7 @@ class CoverSeatNumberWidget extends GetView<SeatNumberController> {
                     controller.generatePdfSeatNumber(
                         gradeId: examMissionObject.gradesID!,
                         controlMissionName: controlMissionObject.name!,
-                        examMissionId: examMissionObject.iD!);
+                        controlMissionId: controlMissionObject.iD!);
                   },
                   child: Container(
                     height: 50,
