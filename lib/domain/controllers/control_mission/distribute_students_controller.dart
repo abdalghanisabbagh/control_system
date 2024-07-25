@@ -32,9 +32,9 @@ import '../../../presentation/resource_manager/color_manager.dart';
 class DistributeStudentsController extends GetxController {
   List<StudentSeatNumberResModel> availableStudents = [];
   int availableStudentsCount = 0;
+  List<int> blockedClassDesks = [];
   Map<int?, List<ClassDeskResModel>> classDeskCollection = {};
   List<ClassDeskResModel> classDesks = [];
-  List<int> blockedClassDesks = [];
   Map<String, int> countByGrade = {};
   ExamRoomResModel examRoomResModel = ExamRoomResModel();
   List<GradeResModel> grades = [];
@@ -48,21 +48,54 @@ class DistributeStudentsController extends GetxController {
   int selectedItemGradeId = -1;
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
 
-  @override
-  void onInit() async {
-    super.onInit();
-    isLoading = true;
+  void addStudentToDesk(
+      {required int studentSeatNumberId, required int classDeskIndex}) async {
+    availableStudents
+        .firstWhere((element) => element.iD == studentSeatNumberId)
+        .classDeskID = classDesks[classDeskIndex].id;
+
     update();
-    await Future.wait([
-      getExamRoom().then((_) async => getGradesBySchoolId()).then((_) async {
-        await Future.wait([
-          getStudentsSeatNumbers(),
-          getClassDesks(),
-        ]);
-      }),
-    ]);
-    isLoading = false;
+    ResponseHandler responseHandler = ResponseHandler();
+    await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/$studentSeatNumberId',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Class_Desk_ID": classDesks[classDeskIndex].id,
+      },
+    );
+  }
+
+  void autoGenerateSimple() {
+    for (int i = 0; i < availableStudents.length; i++) {
+      if (availableStudents[i].classDeskID == null) {
+        availableStudents[i].classDeskID = availableStudents[i].classDeskID =
+            classDesks
+                .whereNot(
+                    (classDesk) => blockedClassDesks.contains(classDesk.id))
+                .whereNot((classDesk) => availableStudents
+                    .map((student) => student.classDeskID)
+                    .contains(classDesk.id))
+                .firstOrNull
+                ?.id;
+      }
+    }
     update();
+
+    ResponseHandler responseHandler = ResponseHandler();
+    responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: [
+        ...availableStudents.map((element) => {
+              "ID": element.iD,
+              "Class_Desk_ID": element.classDeskID,
+            }),
+      ],
+    );
+
+    return;
   }
 
   void blockClassDesk({required int classDeskId}) {
@@ -70,15 +103,21 @@ class DistributeStudentsController extends GetxController {
     update();
   }
 
-  void unBlockClassDesk({required int classDeskId}) {
-    blockedClassDesks.remove(classDeskId);
-    update();
+  bool canAddStudents() {
+    return (countByGrade[selectedItemGradeId.toString()]! -
+                int.parse(numberOfStudentsController.text) >=
+            0) &&
+        (int.parse(numberOfStudentsController.text) +
+                availableStudents.length) <=
+            examRoomResModel.capacity!;
   }
 
-  Future<void> saveExamRoom(ExamRoomResModel examRoomResModel) async {
-    this.examRoomResModel = examRoomResModel;
-    update();
-    Hive.box('ExamRoom').putAll(examRoomResModel.toJson());
+  bool canRemoveStudents() {
+    return availableStudents
+                .where((element) => (element.gradesID == selectedItemGradeId))
+                .length -
+            int.parse(numberOfStudentsController.text) >=
+        0;
   }
 
   Future<void> exportToPdf() async {
@@ -463,18 +502,56 @@ class DistributeStudentsController extends GetxController {
     ).show(Get.key.currentContext!);
   }
 
-  Future<void> getExamRoom() async {
-    examRoomResModel = Hive.box('ExamRoom').containsKey('ID')
-        ? ExamRoomResModel(
-            id: Hive.box('ExamRoom').get('ID'),
-            name: Hive.box('ExamRoom').get('Name'),
-            stage: Hive.box('ExamRoom').get('Stage'),
-            capacity: Hive.box('ExamRoom').get('Capacity'),
-            controlMissionID: Hive.box('ExamRoom').get('Control_Mission_ID'),
-            schoolClassID: Hive.box('ExamRoom').get('School_Class_ID'),
-          )
-        : ExamRoomResModel();
+  Future<bool> finish() async {
+    return true;
+  }
+
+  void getAvailableStudents() async {
+    availableStudents.addAll(studentsSeatNumbers
+        .where((element) => (element.gradesID == selectedItemGradeId))
+        .take(int.parse(numberOfStudentsController.text)));
+
+    ResponseHandler responseHandler = ResponseHandler();
+    await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: availableStudents
+          .map((e) => {
+                "ID": e.iD,
+                "Exam_Room_ID": examRoomResModel.id,
+                "Class_Desk_ID": e.classDeskID,
+              })
+          .toList(),
+    );
+
+    studentsSeatNumbers
+        .removeWhere((element) => availableStudents.contains(element));
+    removedStudentsFromExamRoom
+        .removeWhere((element) => availableStudents.contains(element));
+    availableStudents
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort(
+        (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
+      );
+    availableStudentsCount -= int.parse(numberOfStudentsController.text);
+    countByGrade[selectedItemGradeId.toString()] =
+        countByGrade[selectedItemGradeId.toString()]! -
+            int.parse(numberOfStudentsController.text);
+    optionsGradesInExamRoom.contains(ValueItem(
+            label: grades
+                .firstWhere((element) => element.iD == selectedItemGradeId)
+                .name!,
+            value: selectedItemGradeId))
+        ? null
+        : optionsGradesInExamRoom.add(ValueItem(
+            label: grades
+                .firstWhere((element) => element.iD == selectedItemGradeId)
+                .name!,
+            value: selectedItemGradeId));
+    numberOfStudentsController.clear();
     update();
+    return;
   }
 
   Future<void> getClassDesks() async {
@@ -507,81 +584,46 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
-  void autoGenerateSimple() {
-    for (int i = 0; i < availableStudents.length; i++) {
-      if (availableStudents[i].classDeskID == null) {
-        availableStudents[i].classDeskID = availableStudents[i].classDeskID =
-            classDesks
-                .whereNot(
-                    (classDesk) => blockedClassDesks.contains(classDesk.id))
-                .whereNot((classDesk) => availableStudents
-                    .map((student) => student.classDeskID)
-                    .contains(classDesk.id))
-                .firstOrNull
-                ?.id;
-      }
-    }
+  Future<void> getExamRoom() async {
+    examRoomResModel = Hive.box('ExamRoom').containsKey('ID')
+        ? ExamRoomResModel(
+            id: Hive.box('ExamRoom').get('ID'),
+            name: Hive.box('ExamRoom').get('Name'),
+            stage: Hive.box('ExamRoom').get('Stage'),
+            capacity: Hive.box('ExamRoom').get('Capacity'),
+            controlMissionID: Hive.box('ExamRoom').get('Control_Mission_ID'),
+            schoolClassID: Hive.box('ExamRoom').get('School_Class_ID'),
+          )
+        : ExamRoomResModel();
     update();
-
-    ResponseHandler responseHandler = ResponseHandler();
-    responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumbers}/many',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: [
-        ...availableStudents.map((element) => {
-              "ID": element.iD,
-              "Class_Desk_ID": element.classDeskID,
-            }),
-      ],
-    );
-
-    return;
   }
 
-  void removeStudentFromDesk({required int studentSeatNumberId}) {
-    availableStudents
-        .firstWhere((element) => element.iD == studentSeatNumberId)
-        .classDeskID = null;
-    update();
+  Future<bool> getGradesBySchoolId() async {
+    int schoolId = await Hive.box('School').get('Id');
 
-    ResponseHandler responseHandler = ResponseHandler();
-    responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumbers}/$studentSeatNumberId',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: {
-        "Class_Desk_ID": null,
-      },
-    );
-    return;
-  }
+    bool gotData = false;
+    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
 
-  void removeAllFromDesks() {
-    for (var element in availableStudents) {
-      element.classDeskID = null;
-    }
-
-    ResponseHandler responseHandler = ResponseHandler();
-
-    responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumbers}/many',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: [
-        ...availableStudents.map((element) => {
-              "ID": element.iD,
-              "Class_Desk_ID": null,
-            }),
-      ],
+    Either<Failure, GradesResModel> response =
+        await responseHandler.getResponse(
+      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      converter: GradesResModel.fromJson,
+      type: ReqTypeEnum.GET,
     );
 
-    update();
-    return;
-  }
+    response.fold((l) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: l.message,
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      gotData = false;
+    }, (r) {
+      grades = r.data!;
+      gotData = true;
+    });
 
-  Future<bool> finish() async {
-    return true;
+    return gotData;
   }
 
   Future<bool> getStudentsSeatNumbers() async {
@@ -669,67 +711,62 @@ class DistributeStudentsController extends GetxController {
     return gotData;
   }
 
-  void addStudentToDesk(
-      {required int studentSeatNumberId, required int classDeskIndex}) async {
-    availableStudents
-        .firstWhere((element) => element.iD == studentSeatNumberId)
-        .classDeskID = classDesks[classDeskIndex].id;
+  @override
+  void onInit() async {
+    super.onInit();
+    isLoading = true;
+    update();
+    await Future.wait([
+      getExamRoom().then((_) async => getGradesBySchoolId()).then((_) async {
+        await Future.wait([
+          getStudentsSeatNumbers(),
+          getClassDesks(),
+        ]);
+      }),
+    ]);
+    isLoading = false;
+    update();
+  }
+
+  void removeAllFromDesks() {
+    for (var element in availableStudents) {
+      element.classDeskID = null;
+    }
+
+    ResponseHandler responseHandler = ResponseHandler();
+
+    responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: [
+        ...availableStudents.map((element) => {
+              "ID": element.iD,
+              "Class_Desk_ID": null,
+            }),
+      ],
+    );
 
     update();
+    return;
+  }
+
+  void removeStudentFromDesk({required int studentSeatNumberId}) {
+    availableStudents
+        .firstWhere((element) => element.iD == studentSeatNumberId)
+        .classDeskID = null;
+    update();
+
     ResponseHandler responseHandler = ResponseHandler();
-    await responseHandler.getResponse(
+    responseHandler.getResponse(
       path: '${StudentsLinks.studentSeatNumbers}/$studentSeatNumberId',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
       body: {
-        "Class_Desk_ID": classDesks[classDeskIndex].id,
+        "Class_Desk_ID": null,
       },
     );
-  }
-
-  Future<bool> getGradesBySchoolId() async {
-    int schoolId = await Hive.box('School').get('Id');
-
-    bool gotData = false;
-    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
-
-    Either<Failure, GradesResModel> response =
-        await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$schoolId",
-      converter: GradesResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold((l) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: l.message,
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      gotData = false;
-    }, (r) {
-      grades = r.data!;
-      gotData = true;
-    });
-
-    return gotData;
-  }
-
-  bool canAddStudents() {
-    return (countByGrade[selectedItemGradeId.toString()]! -
-                int.parse(numberOfStudentsController.text) >=
-            0) &&
-        (int.parse(numberOfStudentsController.text) +
-                availableStudents.length) <=
-            examRoomResModel.capacity!;
-  }
-
-  bool canRemoveStudents() {
-    return availableStudents
-                .where((element) => (element.gradesID == selectedItemGradeId))
-                .length -
-            int.parse(numberOfStudentsController.text) >=
-        0;
+    return;
   }
 
   void removeStudentFromExamRoom({required int studentSeatNumberId}) {
@@ -837,51 +874,14 @@ class DistributeStudentsController extends GetxController {
     );
   }
 
-  void getAvailableStudents() async {
-    availableStudents.addAll(studentsSeatNumbers
-        .where((element) => (element.gradesID == selectedItemGradeId))
-        .take(int.parse(numberOfStudentsController.text)));
-
-    ResponseHandler responseHandler = ResponseHandler();
-    await responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumbers}/many',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: availableStudents
-          .map((e) => {
-                "ID": e.iD,
-                "Exam_Room_ID": examRoomResModel.id,
-                "Class_Desk_ID": e.classDeskID,
-              })
-          .toList(),
-    );
-
-    studentsSeatNumbers
-        .removeWhere((element) => availableStudents.contains(element));
-    removedStudentsFromExamRoom
-        .removeWhere((element) => availableStudents.contains(element));
-    availableStudents
-      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
-      ..sort(
-        (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
-      );
-    availableStudentsCount -= int.parse(numberOfStudentsController.text);
-    countByGrade[selectedItemGradeId.toString()] =
-        countByGrade[selectedItemGradeId.toString()]! -
-            int.parse(numberOfStudentsController.text);
-    optionsGradesInExamRoom.contains(ValueItem(
-            label: grades
-                .firstWhere((element) => element.iD == selectedItemGradeId)
-                .name!,
-            value: selectedItemGradeId))
-        ? null
-        : optionsGradesInExamRoom.add(ValueItem(
-            label: grades
-                .firstWhere((element) => element.iD == selectedItemGradeId)
-                .name!,
-            value: selectedItemGradeId));
-    numberOfStudentsController.clear();
+  Future<void> saveExamRoom(ExamRoomResModel examRoomResModel) async {
+    this.examRoomResModel = examRoomResModel;
     update();
-    return;
+    Hive.box('ExamRoom').putAll(examRoomResModel.toJson());
+  }
+
+  void unBlockClassDesk({required int classDeskId}) {
+    blockedClassDesks.remove(classDeskId);
+    update();
   }
 }
