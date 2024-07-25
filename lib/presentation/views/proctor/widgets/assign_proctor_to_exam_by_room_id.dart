@@ -1,14 +1,14 @@
-import 'package:control_system/app/extensions/date_time_extension.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/loading_indicators.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:control_system/presentation/resource_manager/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../app/extensions/date_time_extension.dart';
 import '../../../../domain/controllers/proctor_controller.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
+import '../../../resource_manager/values_manager.dart';
 
 class AssignProctorToExamMission extends GetView<ProctorController> {
   const AssignProctorToExamMission({
