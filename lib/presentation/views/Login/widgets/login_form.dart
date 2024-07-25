@@ -1,4 +1,3 @@
-import 'package:control_system/presentation/resource_manager/constants/app_constatnts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/assets_manager.dart';
 import '../../../resource_manager/color_manager.dart';
+import '../../../resource_manager/constants/app_constatnts.dart';
 import '../../../resource_manager/validations.dart';
 
 class LoginForm extends GetView<AuthController> {
