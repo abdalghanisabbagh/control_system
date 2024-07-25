@@ -20,19 +20,18 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 
 class CreateCoversSheetsController extends GetxController {
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
+  ControlMissionResModel? controlMissionResModel;
+  List<ExamMissionResModel> examMissionsList = <ExamMissionResModel>[];
   List<GradeResModel> gradesList = <GradeResModel>[];
   bool is2Version = false;
   bool isLoadingGetControlMission = false;
-  bool isLodingGetSubject = false;
-  bool isLodingGetExamMission = false;
-  bool isLoadingGrades = false;
   bool isLoadingGetEducationYear = false;
+  bool isLoadingGrades = false;
+  bool isLodingGetExamMission = false;
+  bool isLodingGetSubject = false;
   bool isPeriod = false;
-
-  List<SubjectResModel> subjectsList = <SubjectResModel>[];
-  List<ExamMissionResModel> examMissionsList = <ExamMissionResModel>[];
-  List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsControlMission = <ValueItem>[];
+  List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
     const ValueItem(value: 25, label: '25 Mins'),
@@ -57,8 +56,7 @@ class CreateCoversSheetsController extends GetxController {
   ValueItem? selectedItemEducationYear;
   ValueItem? selectedItemGrade;
   ValueItem? selectedItemSubject;
-
-  ControlMissionResModel? controlMissionResModel;
+  List<SubjectResModel> subjectsList = <SubjectResModel>[];
 
   Future<void> getAllSubjects() async {
     isLodingGetSubject = true;
