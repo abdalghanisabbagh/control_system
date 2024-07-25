@@ -18,14 +18,6 @@ class AuthMiddleWare extends GetMiddleware {
   @override
   int? get priority => 1;
 
-  @override
-  RouteSettings? redirect(String? route) {
-    checktoken();
-    if (!isAuthenticated) return const RouteSettings(name: '/login');
-    return null;
-    // return super.redirect(route);
-  }
-
   checktoken() async {
     if (loginObject == null) {
       TokenModel? tokenModel = Get.find<TokenService>().tokenModel;
@@ -48,6 +40,14 @@ class AuthMiddleWare extends GetMiddleware {
       /// valid time
       return isAuthenticated = await validateor();
     }
+  }
+
+  @override
+  RouteSettings? redirect(String? route) {
+    checktoken();
+    if (!isAuthenticated) return const RouteSettings(name: '/login');
+    return null;
+    // return super.redirect(route);
   }
 
   Future<bool> validateor() async {
