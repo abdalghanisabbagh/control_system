@@ -19,30 +19,6 @@ import 'widgets/proctors_in_exam_room_widget.dart';
 class ProctorScreen extends GetView<ProctorController> {
   const ProctorScreen({super.key});
 
-  Future _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime.tryParse(controller.controlMissions
-              .firstWhereOrNull((element) =>
-                  element.iD == controller.selectedControlMissionsId)!
-              .startDate!) ??
-          DateTime.now(),
-      lastDate: DateTime.tryParse(controller.controlMissions
-              .firstWhereOrNull((element) =>
-                  element.iD == controller.selectedControlMissionsId)!
-              .endDate!) ??
-          DateTime.now(),
-    );
-    if (picked != null) {
-      controller.selectedDate = picked;
-      controller.onDateSelected();
-      controller.dateController.text =
-          DateFormat('dd MMMM yyyy').format(picked);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
@@ -1185,5 +1161,29 @@ class ProctorScreen extends GetView<ProctorController> {
         },
       ),
     );
+  }
+
+  Future _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      initialDatePickerMode: DatePickerMode.day,
+      firstDate: DateTime.tryParse(controller.controlMissions
+              .firstWhereOrNull((element) =>
+                  element.iD == controller.selectedControlMissionsId)!
+              .startDate!) ??
+          DateTime.now(),
+      lastDate: DateTime.tryParse(controller.controlMissions
+              .firstWhereOrNull((element) =>
+                  element.iD == controller.selectedControlMissionsId)!
+              .endDate!) ??
+          DateTime.now(),
+    );
+    if (picked != null) {
+      controller.selectedDate = picked;
+      controller.onDateSelected();
+      controller.dateController.text =
+          DateFormat('dd MMMM yyyy').format(picked);
+    }
   }
 }

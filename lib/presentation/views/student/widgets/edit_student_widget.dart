@@ -12,12 +12,8 @@ import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
 class EditStudentWidget extends GetView<StudentController> {
-  EditStudentWidget({
-    super.key,
-    required this.studentResModel,
-  });
-
   final TextEditingController blbIdController = TextEditingController();
+
   final TextEditingController citizenshipController = TextEditingController();
   final TextEditingController fnameController = TextEditingController();
   final TextEditingController lnameController = TextEditingController();
@@ -25,6 +21,10 @@ class EditStudentWidget extends GetView<StudentController> {
   final TextEditingController religionController = TextEditingController();
   final TextEditingController sLangController = TextEditingController();
   final StudentResModel studentResModel;
+  EditStudentWidget({
+    super.key,
+    required this.studentResModel,
+  });
 
   @override
   Widget build(BuildContext context) {

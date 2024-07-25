@@ -1,4 +1,11 @@
 class StageModel {
+  int? active;
+
+  String? createdAt;
+
+  int? createdBy;
+  int? iD;
+  String? name;
   StageModel({
     this.iD,
     this.name,
@@ -6,7 +13,6 @@ class StageModel {
     this.createdBy,
     this.createdAt,
   });
-
   StageModel.fromJson(json) {
     iD = json['ID'];
     name = json['Name'];
@@ -14,12 +20,6 @@ class StageModel {
     createdBy = json['Created_By'];
     createdAt = json['Created_At'];
   }
-
-  int? active;
-  String? createdAt;
-  int? createdBy;
-  int? iD;
-  String? name;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

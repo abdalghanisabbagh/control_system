@@ -30,82 +30,6 @@ class SchoolController extends GetxController {
   int selectedSchoolIndex = (-1);
   String selectedSchoolName = "";
 
-  @override
-  void onInit() {
-    super.onInit();
-    getSchoolType();
-    getAllSchools();
-  }
-
-  void updateSelectedSchool(int index, int id) {
-    selectedSchoolIndex = index;
-    selectedSchoolId = id;
-    selectedSchoolName = schools[index].name!;
-    update();
-  }
-
-  getSchool() async {}
-
-  Future<bool> getAllSchools() async {
-    isLoadingSchools = true;
-    update();
-    ResponseHandler<SchoolsResModel> responseHandler = ResponseHandler();
-
-    var response = await responseHandler.getResponse(
-      path: SchoolsLinks.getAllSchools,
-      converter: SchoolsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold((fauilr) {
-      /// handel error
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-    }, (result) {
-// handel el response
-
-      schools = result.data!;
-      isLoadingSchools = false;
-      update();
-    });
-
-    isLoadingSchools = false;
-    return true;
-  }
-
-  Future<bool> getGradesBySchoolId() async {
-    isLoadingGrades = true;
-    update();
-    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
-
-    var response = await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$selectedSchoolId",
-      converter: GradesResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold((fauilr) {
-      /// handel error
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-    }, (result) {
-// handel el response
-
-      grades = result.data!;
-      isLoadingGrades = false;
-      update();
-    });
-    isLoadingGrades = false;
-
-    return true;
-  }
-
   Future<bool> addNewGrade({
     required String name,
   }) async {
@@ -180,6 +104,72 @@ class SchoolController extends GetxController {
     return schoolHasBeenAdded;
   }
 
+  Future<void> deleteFromSchoolBox() async {
+    await Hive.box('School').clear();
+  }
+
+  Future<bool> getAllSchools() async {
+    isLoadingSchools = true;
+    update();
+    ResponseHandler<SchoolsResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+      path: SchoolsLinks.getAllSchools,
+      converter: SchoolsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold((fauilr) {
+      /// handel error
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }, (result) {
+// handel el response
+
+      schools = result.data!;
+      isLoadingSchools = false;
+      update();
+    });
+
+    isLoadingSchools = false;
+    return true;
+  }
+
+  Future<bool> getGradesBySchoolId() async {
+    isLoadingGrades = true;
+    update();
+    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+      path: "${SchoolsLinks.gradesSchools}/$selectedSchoolId",
+      converter: GradesResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold((fauilr) {
+      /// handel error
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }, (result) {
+// handel el response
+
+      grades = result.data!;
+      isLoadingGrades = false;
+      update();
+    });
+    isLoadingGrades = false;
+
+    return true;
+  }
+
+  getSchool() async {}
+
   Future<bool> getSchoolType() async {
     ResponseHandler<SchoolsTypeResModel> responseHandler = ResponseHandler();
     Either<Failure, SchoolsTypeResModel> response =
@@ -208,6 +198,13 @@ class SchoolController extends GetxController {
     return true;
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    getSchoolType();
+    getAllSchools();
+  }
+
   Future<void> saveToSchoolBox(SchoolResModel currentSchool) async {
     ResponseHandler<void>().getResponse(
       path:
@@ -226,12 +223,15 @@ class SchoolController extends GetxController {
     await Hive.box('School').flush();
   }
 
-  Future<void> deleteFromSchoolBox() async {
-    await Hive.box('School').clear();
-  }
-
   void setSelectedItem(ValueItem item) {
     selectedItem = item;
+    update();
+  }
+
+  void updateSelectedSchool(int index, int id) {
+    selectedSchoolIndex = index;
+    selectedSchoolId = id;
+    selectedSchoolName = schools[index].name!;
     update();
   }
 }

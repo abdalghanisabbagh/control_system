@@ -7,12 +7,12 @@ import '../../../resource_manager/styles_manager.dart';
 import '../../../resource_manager/values_manager.dart';
 
 class ProctorsInExamRoomWidget extends GetView<ProctorController> {
+  final String examRoomName;
+
   const ProctorsInExamRoomWidget({
     super.key,
     required this.examRoomName,
   });
-
-  final String examRoomName;
 
   @override
   Widget build(BuildContext context) {

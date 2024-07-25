@@ -5,21 +5,6 @@ import 'dart:developer';
 import 'package:control_system/Data/Network/tools/failure_model.dart';
 import 'package:dio/dio.dart';
 
-class ErrorHandler implements Exception {
-  ErrorHandler.handle(dynamic error) {
-    log(error.toString());
-    if (error is DioException) {
-      // dio error so its an error from response of the API or from dio itself
-      failure = _handleError(error);
-    } else {
-      // default error
-      failure = DataSource.DEFAULT.getFailure();
-    }
-  }
-
-  late Failure failure;
-}
-
 Failure _handleError(DioException error) {
   return switch (error.type) {
     DioExceptionType.connectionError =>
@@ -35,45 +20,38 @@ Failure _handleError(DioException error) {
   };
 }
 
-extension DataSourceExtension on DataSource {
-  Failure getFailure() {
-    return switch (this) {
-      DataSource.SUCCESS =>
-        Failure(ResponseCode.SUCCESS, ResponseMessage.SUCCESS),
-      DataSource.NO_CONTENT =>
-        Failure(ResponseCode.NO_CONTENT, ResponseMessage.NO_CONTENT),
-      DataSource.BAD_REQUEST =>
-        Failure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST),
-      DataSource.FORBIDDEN =>
-        Failure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN),
-      DataSource.UNAUTORISED =>
-        Failure(ResponseCode.UNAUTORISED, ResponseMessage.UNAUTORISED),
-      DataSource.NOT_FOUND =>
-        Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND),
-      DataSource.INTERNAL_SERVER_ERROR => Failure(
-          ResponseCode.INTERNAL_SERVER_ERROR,
-          ResponseMessage.INTERNAL_SERVER_ERROR),
-      DataSource.CONNECT_TIMEOUT =>
-        Failure(ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT),
-      DataSource.CANCEL => Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL),
-      DataSource.RECIEVE_TIMEOUT =>
-        Failure(ResponseCode.RECIEVE_TIMEOUT, ResponseMessage.RECIEVE_TIMEOUT),
-      DataSource.SEND_TIMEOUT =>
-        Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT),
-      DataSource.CACHE_ERROR =>
-        Failure(ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR),
-      DataSource.NO_INTERNET_CONNECTION => Failure(
-          ResponseCode.NO_INTERNET_CONNECTION,
-          ResponseMessage.NO_INTERNET_CONNECTION),
-      DataSource.DEFAULT =>
-        Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT),
-      DataSource.CONNECTION_ERROR =>
-        Failure(ResponseCode.DEFAULT, ResponseMessage.CONNECTION_ERROR),
-      DataSource.BAD_CERTIFICATE =>
-        Failure(ResponseCode.BAD_CERTIFICATE, ResponseMessage.BAD_CERTIFICATE),
-      DataSource.BAD_RESPONSE =>
-        Failure(ResponseCode.BAD_RESPONSE, ResponseMessage.BAD_RESPONSE),
-    };
+enum DataSource {
+  SUCCESS,
+  NO_CONTENT,
+  BAD_REQUEST,
+  FORBIDDEN,
+  UNAUTORISED,
+  NOT_FOUND,
+  INTERNAL_SERVER_ERROR,
+  CONNECT_TIMEOUT,
+  CANCEL,
+  RECIEVE_TIMEOUT,
+  SEND_TIMEOUT,
+  CACHE_ERROR,
+  NO_INTERNET_CONNECTION,
+  DEFAULT,
+  CONNECTION_ERROR,
+  BAD_CERTIFICATE,
+  BAD_RESPONSE,
+}
+
+class ErrorHandler implements Exception {
+  late Failure failure;
+
+  ErrorHandler.handle(dynamic error) {
+    log(error.toString());
+    if (error is DioException) {
+      // dio error so its an error from response of the API or from dio itself
+      failure = _handleError(error);
+    } else {
+      // default error
+      failure = DataSource.DEFAULT.getFailure();
+    }
   }
 }
 
@@ -135,22 +113,44 @@ class ResponseMessage {
       "User is unauthorised, Try again later"; // failure, user is not authorised
 }
 
-enum DataSource {
-  SUCCESS,
-  NO_CONTENT,
-  BAD_REQUEST,
-  FORBIDDEN,
-  UNAUTORISED,
-  NOT_FOUND,
-  INTERNAL_SERVER_ERROR,
-  CONNECT_TIMEOUT,
-  CANCEL,
-  RECIEVE_TIMEOUT,
-  SEND_TIMEOUT,
-  CACHE_ERROR,
-  NO_INTERNET_CONNECTION,
-  DEFAULT,
-  CONNECTION_ERROR,
-  BAD_CERTIFICATE,
-  BAD_RESPONSE,
+extension DataSourceExtension on DataSource {
+  Failure getFailure() {
+    return switch (this) {
+      DataSource.SUCCESS =>
+        Failure(ResponseCode.SUCCESS, ResponseMessage.SUCCESS),
+      DataSource.NO_CONTENT =>
+        Failure(ResponseCode.NO_CONTENT, ResponseMessage.NO_CONTENT),
+      DataSource.BAD_REQUEST =>
+        Failure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST),
+      DataSource.FORBIDDEN =>
+        Failure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN),
+      DataSource.UNAUTORISED =>
+        Failure(ResponseCode.UNAUTORISED, ResponseMessage.UNAUTORISED),
+      DataSource.NOT_FOUND =>
+        Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND),
+      DataSource.INTERNAL_SERVER_ERROR => Failure(
+          ResponseCode.INTERNAL_SERVER_ERROR,
+          ResponseMessage.INTERNAL_SERVER_ERROR),
+      DataSource.CONNECT_TIMEOUT =>
+        Failure(ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT),
+      DataSource.CANCEL => Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL),
+      DataSource.RECIEVE_TIMEOUT =>
+        Failure(ResponseCode.RECIEVE_TIMEOUT, ResponseMessage.RECIEVE_TIMEOUT),
+      DataSource.SEND_TIMEOUT =>
+        Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT),
+      DataSource.CACHE_ERROR =>
+        Failure(ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR),
+      DataSource.NO_INTERNET_CONNECTION => Failure(
+          ResponseCode.NO_INTERNET_CONNECTION,
+          ResponseMessage.NO_INTERNET_CONNECTION),
+      DataSource.DEFAULT =>
+        Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT),
+      DataSource.CONNECTION_ERROR =>
+        Failure(ResponseCode.DEFAULT, ResponseMessage.CONNECTION_ERROR),
+      DataSource.BAD_CERTIFICATE =>
+        Failure(ResponseCode.BAD_CERTIFICATE, ResponseMessage.BAD_CERTIFICATE),
+      DataSource.BAD_RESPONSE =>
+        Failure(ResponseCode.BAD_RESPONSE, ResponseMessage.BAD_RESPONSE),
+    };
+  }
 }

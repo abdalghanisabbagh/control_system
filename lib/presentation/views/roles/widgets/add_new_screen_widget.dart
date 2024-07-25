@@ -12,10 +12,10 @@ import '../../../resource_manager/styles_manager.dart';
 import '../../../resource_manager/validations.dart';
 
 class AddNewScreenWidget extends StatelessWidget {
-  AddNewScreenWidget({super.key});
-
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController screenIdController = TextEditingController();
+  AddNewScreenWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

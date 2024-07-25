@@ -7,9 +7,9 @@ import '../../../resource_manager/index.dart';
 
 // ignore: must_be_immutable
 class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
-  ReviewWidget({super.key});
-
   FocusNode searchFoucs = FocusNode();
+
+  ReviewWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -243,11 +243,11 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
 }
 
 class _Header extends StatefulWidget {
+  final PlutoGridStateManager stateManager;
+
   const _Header({
     required this.stateManager,
   });
-
-  final PlutoGridStateManager stateManager;
 
   @override
   State<_Header> createState() => _HeaderState();

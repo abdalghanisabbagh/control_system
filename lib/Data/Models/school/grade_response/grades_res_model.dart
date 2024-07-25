@@ -1,14 +1,14 @@
 import 'grade_res_model.dart';
 
 class GradesResModel {
+  List<GradeResModel>? data;
+
   GradesResModel({this.data});
 
   GradesResModel.fromJson(json) {
     data = List<GradeResModel>.from(
         json.map((e) => GradeResModel.fromJson(e)).toList());
   }
-
-  List<GradeResModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

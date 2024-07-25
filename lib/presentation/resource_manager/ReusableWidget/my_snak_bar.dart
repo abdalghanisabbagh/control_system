@@ -54,11 +54,6 @@ class MyFlashBar {
     );
   }
 
-  static showSuccess(String message, String title) {
-    return FlushbarHelper.createSuccess(
-        message: message, title: title, duration: const Duration(seconds: 5));
-  }
-
   static showError(String message, String title) {
     return FlushbarHelper.createError(
         message: message, title: title, duration: const Duration(seconds: 5));
@@ -66,6 +61,11 @@ class MyFlashBar {
 
   static showInfo(String message, String title) {
     return FlushbarHelper.createInformation(
+        message: message, title: title, duration: const Duration(seconds: 5));
+  }
+
+  static showSuccess(String message, String title) {
+    return FlushbarHelper.createSuccess(
         message: message, title: title, duration: const Duration(seconds: 5));
   }
 }

@@ -17,8 +17,9 @@ import 'officer_edit_cover_widget.dart';
 
 // ignore: must_be_immutable
 class CoverWidget extends GetView<CoversSheetsController> {
-  ExamMissionResModel examMissionObject;
   ControlMissionResModel controlMissionObject;
+
+  ExamMissionResModel examMissionObject;
   CoverWidget({
     super.key,
     required this.examMissionObject,

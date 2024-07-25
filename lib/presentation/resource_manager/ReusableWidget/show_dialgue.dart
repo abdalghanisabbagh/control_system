@@ -6,6 +6,19 @@ import 'package:get/get.dart';
 import '../index.dart';
 
 class MyAwesomeDialogue {
+  final AnimType animType;
+
+  Duration? autoHideTimer;
+  VoidCallback? btnCancelOnPressed;
+  VoidCallback? btnOkOnPressed;
+  Widget? customBody;
+  final String desc;
+  final DialogType dialogType;
+  final bool dismissOnBackKeyPress;
+  final bool dismissOnTouchOutside;
+  final bool showCloseIcon;
+  final String title;
+  final bool useRootNavigator;
   MyAwesomeDialogue({
     required this.title,
     required this.desc,
@@ -20,19 +33,6 @@ class MyAwesomeDialogue {
     this.dismissOnTouchOutside = true,
     this.showCloseIcon = true,
   });
-
-  final AnimType animType;
-  Duration? autoHideTimer;
-  VoidCallback? btnCancelOnPressed;
-  VoidCallback? btnOkOnPressed;
-  Widget? customBody;
-  final String desc;
-  final DialogType dialogType;
-  final bool dismissOnBackKeyPress;
-  final bool dismissOnTouchOutside;
-  final bool showCloseIcon;
-  final String title;
-  final bool useRootNavigator;
 
   void showDialogue(BuildContext context) {
     AwesomeDialog(

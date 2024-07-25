@@ -14,6 +14,39 @@ class AuthLinks {
   static const usersAddSchools = 'users/add-schools';
 }
 
+class ControlMissionLinks {
+  static const controlMission = 'control-mission';
+  static const controlMissionEducationYear = 'education-year';
+  static const controlMissionSchool = '$controlMission/school';
+  static const studentSeatNumbers = '$controlMission/student-seat-numbers';
+}
+
+class EducationYearsLinks {
+  static const educationyear = 'education-year';
+}
+
+class ExamLinks {
+  static const examMission = 'exam-mission';
+  static const examMissionControlMission = 'exam-mission/control-mission';
+  static const examMissionSubject = 'exam-mission/subject';
+  static const examMissionUpload = 'exam-mission/upload';
+  static const examRooms = 'exam-rooms';
+  static const examRoomsControlMission = 'exam-rooms/control-mission';
+  static const examRoomsSchoolClass = 'exam-rooms/school-class';
+  static const previewExamMission = 'exam-mission/previewExam';
+}
+
+class GeneratePdfLinks {
+  static const generatePdfAmCover = 'generate-pdf/am-cover';
+  static const generatePdfBrCover = 'generate-pdf/br-cover';
+  static const generatePdfIBCover = 'generate-pdf/IB-cover';
+  static const generatePdfSeat = 'generate-pdf/seats';
+}
+
+class ProctorsLinks {
+  static const proctor = 'proctor';
+}
+
 class SchoolsLinks {
   static const classDesks = 'class-desk';
   static const cohort = 'cohort';
@@ -29,6 +62,10 @@ class SchoolsLinks {
   static const schoolsType = 'school-type';
   static const subject = 'subject';
   static const subjects = 'subjects';
+}
+
+class Stage {
+  static const stage = 'stage';
 }
 
 class StudentsLinks {
@@ -48,46 +85,9 @@ class StudentsLinks {
   static const studentsClass = 'student/class';
 }
 
-class EducationYearsLinks {
-  static const educationyear = 'education-year';
-}
-
-class ControlMissionLinks {
-  static const controlMission = 'control-mission';
-  static const controlMissionEducationYear = 'education-year';
-  static const controlMissionSchool = '$controlMission/school';
-  static const studentSeatNumbers = '$controlMission/student-seat-numbers';
-}
-
-class ExamLinks {
-  static const examMission = 'exam-mission';
-  static const previewExamMission = 'exam-mission/previewExam';
-  static const examMissionUpload = 'exam-mission/upload';
-  static const examMissionControlMission = 'exam-mission/control-mission';
-  static const examMissionSubject = 'exam-mission/subject';
-  static const examRooms = 'exam-rooms';
-  static const examRoomsControlMission = 'exam-rooms/control-mission';
-  static const examRoomsSchoolClass = 'exam-rooms/school-class';
-}
-
 class UserRolesSystemsLink {
   static const screen = 'user-roles-systems/screen';
   static const userRolesSystems = 'user-roles-systems';
   static const userRolesSystemsConnectRolesTOScreens =
       'user-roles-systems/connect-roles-to-screens';
-}
-
-class Stage {
-  static const stage = 'stage';
-}
-
-class ProctorsLinks {
-  static const proctor = 'proctor';
-}
-
-class GeneratePdfLinks {
-  static const generatePdfAmCover = 'generate-pdf/am-cover';
-  static const generatePdfBrCover = 'generate-pdf/br-cover';
-  static const generatePdfIBCover = 'generate-pdf/IB-cover';
-  static const generatePdfSeat = 'generate-pdf/seats';
 }

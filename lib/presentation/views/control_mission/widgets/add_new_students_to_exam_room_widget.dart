@@ -16,9 +16,9 @@ import '../../../resource_manager/validations.dart';
 
 class AddNewStudentsToExamRoomWidget
     extends GetView<DistributeStudentsController> {
-  AddNewStudentsToExamRoomWidget({super.key});
-
   final _formKey = GlobalKey<FormState>();
+
+  AddNewStudentsToExamRoomWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

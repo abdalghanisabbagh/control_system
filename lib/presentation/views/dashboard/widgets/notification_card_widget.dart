@@ -4,15 +4,15 @@ import '../../../resource_manager/assets_manager.dart';
 import '../../../resource_manager/index.dart';
 
 class NotificationCardWidget extends StatelessWidget {
+  final DateTime now = DateTime.now();
+
+  final String schoolName;
+  final String userName;
   NotificationCardWidget({
     super.key,
     required this.userName,
     required this.schoolName,
   });
-
-  final DateTime now = DateTime.now();
-  final String schoolName;
-  final String userName;
 
   String get welcomeMessage => now.hour < 12
       ? 'Good Morning, $userName'

@@ -64,252 +64,6 @@ class StudentController extends GetxController {
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
 
-  @override
-  void onInit() async {
-    isImportedNew = false;
-    isImportedPromot = false;
-
-    loading = true;
-    update();
-    await Future.wait([
-      getCohorts(),
-      getClassRooms(),
-      getGrades(),
-    ]).then((_) async {
-      await getStudents();
-    });
-    loading = false;
-    update();
-    super.onInit();
-  }
-
-  Future<bool> getStudents() async {
-    bool gotData = false;
-    update();
-
-    ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
-    Either<Failure, StudentsResModel> response =
-        await responseHandler.getResponse(
-      path: '${StudentsLinks.studentSchool}/${Hive.box('School').get('Id')}',
-      converter: StudentsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        students = r.students!;
-        studentsRows = r.students!.convertStudentsToRows();
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
-
-  Future<bool> getCohorts() async {
-    bool gotData = false;
-    update();
-    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
-
-    ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
-    Either<Failure, CohortsResModel> response =
-        await responseHandler.getResponse(
-      path: "${SchoolsLinks.getCohortBySchoolType}/$selectedSchoolId",
-      converter: CohortsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        cohorts = r.data!;
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.iD))
-            .toList();
-        optionsCohort = items;
-
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
-
-  void setSelectedItemGrade(List<ValueItem> items) {
-    selectedItemGrade = items.first;
-    update();
-  }
-
-  void setSelectedItemClassRoom(List<ValueItem> items) {
-    selectedItemClassRoom = items.first;
-    update();
-  }
-
-  void setSelectedItemCohort(List<ValueItem> items) {
-    selectedItemCohort = items.first;
-    update();
-  }
-
-  Future<bool> getClassRooms() async {
-    bool gotData = false;
-    update();
-    int schoolId = Hive.box('School').get('Id');
-
-    ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
-    Either<Failure, ClassesRoomsResModel> response =
-        await responseHandler.getResponse(
-      path: "${SchoolsLinks.getSchoolsClassesBySchoolId}/$schoolId",
-      converter: ClassesRoomsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        classRooms = r.data!;
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.iD))
-            .toList();
-        optionsClassRoom = items;
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
-
-  Future<bool> getGrades() async {
-    bool gotData = false;
-    update();
-    int schoolId = Hive.box('School').get('Id');
-
-    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
-    Either<Failure, GradesResModel> response =
-        await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$schoolId",
-      converter: GradesResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        grades = r.data!;
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.iD))
-            .toList();
-        optionsGrade = items;
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
-
-  Future<bool> patchEditStudent({
-    required int studentid,
-    required int gradesId,
-    required int cohortId,
-    required int schoolClassId,
-    required String firstName,
-    required String secondName,
-    required String thirdName,
-    required String secondLang,
-    required String religion,
-  }) async {
-    islodingEditStudent = true;
-    update();
-    bool editStudentHasBeenAdded = false;
-    int schoolId = Hive.box('School').get('Id');
-
-    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
-
-    var response = await responseHandler.getResponse(
-        path: "${StudentsLinks.student}/$studentid",
-        converter: StudentResModel.fromJson,
-        type: ReqTypeEnum.PATCH,
-        body: {
-          "Grades_ID": gradesId,
-          "Schools_ID": schoolId,
-          "Cohort_ID": cohortId,
-          "School_Class_ID": schoolClassId,
-          "First_Name": firstName,
-          "Second_Name": secondName,
-          "Third_Name": thirdName,
-          "Created_By": _userProfile?.iD,
-          "Second_Lang": secondLang,
-          "Religion": religion,
-        });
-
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      editStudentHasBeenAdded = false;
-    }, (result) {
-      getStudents();
-      editStudentHasBeenAdded = true;
-    });
-    islodingEditStudent = false;
-    update();
-    return editStudentHasBeenAdded;
-  }
-
-  Future<void> pickAndReadFile() async {
-    FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['csv'],
-      allowMultiple: false,
-    );
-
-    if (pickedFile != null) {
-      Uint8List? fileBytes = pickedFile.files.single.bytes;
-
-      if (fileBytes != null) {
-        await _processCsvFile(
-          fileBytes,
-          students: students,
-          cohorts: cohorts,
-          classesRooms: classRooms,
-          grades: grades,
-        );
-      }
-    } else {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: 'No file selected',
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-    }
-  }
-
   Future<bool> addManyStudents({
     required List<StudentResModel> students,
   }) async {
@@ -346,40 +100,75 @@ class StudentController extends GetxController {
     return addStudentsHasBeenAdded;
   }
 
-  Future<bool> updateManyStudents({
-    required List<StudentResModel> students,
-  }) async {
-    loading = true;
-    bool updateStudentsHasBeenAdded = false;
-    update();
+  Future<void> downloadeTemp() async {
+    if (!await launchUrl(Uri.parse(
+        "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
+      throw 'Could not launch file';
+    }
+  }
 
-    List<Map<String, dynamic>> studentData = importedStudents
-        .map((student) => student.importStudentByExcel())
-        .toList();
+  Future<void> downloadFile() async {
+    try {
+      final ByteData data = await rootBundle.load('assets/files/template.pdf');
+      final Uint8List bytes = data.buffer.asUint8List();
 
-    ResponseHandler<void> responseHandler = ResponseHandler();
-
-    var response = await responseHandler.getResponse(
-        path: StudentsLinks.studentMany,
-        converter: (_) {},
-        type: ReqTypeEnum.PATCH,
-        body: studentData);
-
-    response.fold((fauilr) {
+      await FileSaver.instance.saveFile(
+        name: 'student_template',
+        bytes: bytes,
+        mimeType: MimeType.pdf,
+        ext: 'pdf',
+      );
+    } catch (e) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "$e",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
-      updateStudentsHasBeenAdded = false;
-    }, (result) {
-      updateStudentsHasBeenAdded = true;
-      onInit();
-    });
-    loading = false;
+    }
+  }
 
-    update();
-    return updateStudentsHasBeenAdded;
+  void exportToCsv(BuildContext context, List<PlutoRow> studentsRows) {
+    List<List<dynamic>> csvData = [];
+
+    List<String> headers = [
+      'Blb Id',
+      'First Name',
+      'Second Name',
+      'Third Name',
+      'Cohort',
+      'Grade',
+      'Class Room',
+      'Second Language'
+    ];
+
+    csvData.add(headers);
+
+    for (var row in studentsRows) {
+      List<dynamic> rowData = [];
+      var cellsValues = row.cells.values.toList();
+      for (var i = 0; i < cellsValues.length - 1; i++) {
+        rowData.add(cellsValues[i].value.toString());
+      }
+      csvData.add(rowData);
+    }
+
+    String csvString = const csv.ListToCsvConverter().convert(csvData);
+
+    final bytes = utf8.encode(csvString);
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    html.AnchorElement(href: url)
+      ..setAttribute('download', 'pluto_grid_export.csv')
+      ..click();
+
+    html.Url.revokeObjectUrl(url);
+
+    MyAwesomeDialogue(
+      title: 'success',
+      desc: "CSV file exported successfully.",
+      dialogType: DialogType.success,
+    ).showDialogue(Get.key.currentContext!);
   }
 
   // void testCohort(
@@ -560,75 +349,286 @@ class StudentController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
-  void exportToCsv(BuildContext context, List<PlutoRow> studentsRows) {
-    List<List<dynamic>> csvData = [];
+  Future<bool> getClassRooms() async {
+    bool gotData = false;
+    update();
+    int schoolId = Hive.box('School').get('Id');
 
-    List<String> headers = [
-      'Blb Id',
-      'First Name',
-      'Second Name',
-      'Third Name',
-      'Cohort',
-      'Grade',
-      'Class Room',
-      'Second Language'
-    ];
-
-    csvData.add(headers);
-
-    for (var row in studentsRows) {
-      List<dynamic> rowData = [];
-      var cellsValues = row.cells.values.toList();
-      for (var i = 0; i < cellsValues.length - 1; i++) {
-        rowData.add(cellsValues[i].value.toString());
-      }
-      csvData.add(rowData);
-    }
-
-    String csvString = const csv.ListToCsvConverter().convert(csvData);
-
-    final bytes = utf8.encode(csvString);
-    final blob = html.Blob([bytes]);
-    final url = html.Url.createObjectUrlFromBlob(blob);
-
-    html.AnchorElement(href: url)
-      ..setAttribute('download', 'pluto_grid_export.csv')
-      ..click();
-
-    html.Url.revokeObjectUrl(url);
-
-    MyAwesomeDialogue(
-      title: 'success',
-      desc: "CSV file exported successfully.",
-      dialogType: DialogType.success,
-    ).showDialogue(Get.key.currentContext!);
+    ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
+    Either<Failure, ClassesRoomsResModel> response =
+        await responseHandler.getResponse(
+      path: "${SchoolsLinks.getSchoolsClassesBySchoolId}/$schoolId",
+      converter: ClassesRoomsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        classRooms = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsClassRoom = items;
+        gotData = true;
+      },
+    );
+    update();
+    return gotData;
   }
 
-  Future<void> downloadFile() async {
-    try {
-      final ByteData data = await rootBundle.load('assets/files/template.pdf');
-      final Uint8List bytes = data.buffer.asUint8List();
+  Future<bool> getCohorts() async {
+    bool gotData = false;
+    update();
+    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
 
-      await FileSaver.instance.saveFile(
-        name: 'student_template',
-        bytes: bytes,
-        mimeType: MimeType.pdf,
-        ext: 'pdf',
-      );
-    } catch (e) {
+    ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
+    Either<Failure, CohortsResModel> response =
+        await responseHandler.getResponse(
+      path: "${SchoolsLinks.getCohortBySchoolType}/$selectedSchoolId",
+      converter: CohortsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        cohorts = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsCohort = items;
+
+        gotData = true;
+      },
+    );
+    update();
+    return gotData;
+  }
+
+  Future<bool> getGrades() async {
+    bool gotData = false;
+    update();
+    int schoolId = Hive.box('School').get('Id');
+
+    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
+    Either<Failure, GradesResModel> response =
+        await responseHandler.getResponse(
+      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      converter: GradesResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        grades = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsGrade = items;
+        gotData = true;
+      },
+    );
+    update();
+    return gotData;
+  }
+
+  Future<bool> getStudents() async {
+    bool gotData = false;
+    update();
+
+    ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
+    Either<Failure, StudentsResModel> response =
+        await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSchool}/${Hive.box('School').get('Id')}',
+      converter: StudentsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        students = r.students!;
+        studentsRows = r.students!.convertStudentsToRows();
+        gotData = true;
+      },
+    );
+    update();
+    return gotData;
+  }
+
+  @override
+  void onInit() async {
+    isImportedNew = false;
+    isImportedPromot = false;
+
+    loading = true;
+    update();
+    await Future.wait([
+      getCohorts(),
+      getClassRooms(),
+      getGrades(),
+    ]).then((_) async {
+      await getStudents();
+    });
+    loading = false;
+    update();
+    super.onInit();
+  }
+
+  Future<bool> patchEditStudent({
+    required int studentid,
+    required int gradesId,
+    required int cohortId,
+    required int schoolClassId,
+    required String firstName,
+    required String secondName,
+    required String thirdName,
+    required String secondLang,
+    required String religion,
+  }) async {
+    islodingEditStudent = true;
+    update();
+    bool editStudentHasBeenAdded = false;
+    int schoolId = Hive.box('School').get('Id');
+
+    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+        path: "${StudentsLinks.student}/$studentid",
+        converter: StudentResModel.fromJson,
+        type: ReqTypeEnum.PATCH,
+        body: {
+          "Grades_ID": gradesId,
+          "Schools_ID": schoolId,
+          "Cohort_ID": cohortId,
+          "School_Class_ID": schoolClassId,
+          "First_Name": firstName,
+          "Second_Name": secondName,
+          "Third_Name": thirdName,
+          "Created_By": _userProfile?.iD,
+          "Second_Lang": secondLang,
+          "Religion": religion,
+        });
+
+    response.fold((fauilr) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "$e",
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      editStudentHasBeenAdded = false;
+    }, (result) {
+      getStudents();
+      editStudentHasBeenAdded = true;
+    });
+    islodingEditStudent = false;
+    update();
+    return editStudentHasBeenAdded;
+  }
+
+  Future<void> pickAndReadFile() async {
+    FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['csv'],
+      allowMultiple: false,
+    );
+
+    if (pickedFile != null) {
+      Uint8List? fileBytes = pickedFile.files.single.bytes;
+
+      if (fileBytes != null) {
+        await _processCsvFile(
+          fileBytes,
+          students: students,
+          cohorts: cohorts,
+          classesRooms: classRooms,
+          grades: grades,
+        );
+      }
+    } else {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: 'No file selected',
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }
   }
 
-  Future<void> downloadeTemp() async {
-    if (!await launchUrl(Uri.parse(
-        "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
-      throw 'Could not launch file';
-    }
+  void setSelectedItemClassRoom(List<ValueItem> items) {
+    selectedItemClassRoom = items.first;
+    update();
+  }
+
+  void setSelectedItemCohort(List<ValueItem> items) {
+    selectedItemCohort = items.first;
+    update();
+  }
+
+  void setSelectedItemGrade(List<ValueItem> items) {
+    selectedItemGrade = items.first;
+    update();
+  }
+
+  Future<bool> updateManyStudents({
+    required List<StudentResModel> students,
+  }) async {
+    loading = true;
+    bool updateStudentsHasBeenAdded = false;
+    update();
+
+    List<Map<String, dynamic>> studentData = importedStudents
+        .map((student) => student.importStudentByExcel())
+        .toList();
+
+    ResponseHandler<void> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+        path: StudentsLinks.studentMany,
+        converter: (_) {},
+        type: ReqTypeEnum.PATCH,
+        body: studentData);
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      updateStudentsHasBeenAdded = false;
+    }, (result) {
+      updateStudentsHasBeenAdded = true;
+      onInit();
+    });
+    loading = false;
+
+    update();
+    return updateStudentsHasBeenAdded;
   }
 
   Future<void> _processCsvFile(

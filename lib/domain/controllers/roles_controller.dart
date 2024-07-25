@@ -25,49 +25,21 @@ class RolesController extends GetxController {
   List<ScreenResModel> screens = [];
   List<int> selectedSreensIds = [];
 
-  @override
-  void onInit() {
-    getAllScreens();
-    getAllRoles();
-    super.onInit();
-  }
-
-  Future getAllScreens() async {
-    getAllLoading = true;
+  Future<bool> addNewRoles({
+    required String name,
+  }) async {
+    addLoading = true;
     update();
-    ResponseHandler<ScreensResModel> responseHandler = ResponseHandler();
-    Either<Failure, ScreensResModel> response =
-        await responseHandler.getResponse(
-      path: UserRolesSystemsLink.screen,
-      converter: ScreensResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        getAllLoading = false;
-        update();
-      },
-      (r) {
-        screens = r.data!;
-        getAllLoading = false;
-        update();
-      },
-    );
-  }
-
-  Future getAllRoles() async {
-    getAllLoading = true;
-    update();
-    ResponseHandler<RolesResModel> responseHandler = ResponseHandler();
-    Either<Failure, RolesResModel> response = await responseHandler.getResponse(
+    bool screenHasBeenAdded = false;
+    ResponseHandler<RoleResModel> responseHandler = ResponseHandler();
+    Either<Failure, RoleResModel> response = await responseHandler.getResponse(
       path: UserRolesSystemsLink.userRolesSystems,
-      converter: RolesResModel.fromJson,
-      type: ReqTypeEnum.GET,
+      converter: RoleResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: {
+        "Name": name,
+        // "Created_By": _userProfile?.iD,
+      },
     );
     response.fold(
       (l) {
@@ -76,15 +48,17 @@ class RolesController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        getAllLoading = false;
-        update();
+        screenHasBeenAdded = false;
       },
       (r) {
-        roles = r.data!;
-        getAllLoading = false;
+        getAllRoles();
+        screenHasBeenAdded = true;
         update();
       },
     );
+    addLoading = false;
+    update();
+    return screenHasBeenAdded;
   }
 
   Future<bool> addNewScreen({
@@ -126,42 +100,6 @@ class RolesController extends GetxController {
     return screenHasBeenAdded;
   }
 
-  Future<bool> addNewRoles({
-    required String name,
-  }) async {
-    addLoading = true;
-    update();
-    bool screenHasBeenAdded = false;
-    ResponseHandler<RoleResModel> responseHandler = ResponseHandler();
-    Either<Failure, RoleResModel> response = await responseHandler.getResponse(
-      path: UserRolesSystemsLink.userRolesSystems,
-      converter: RoleResModel.fromJson,
-      type: ReqTypeEnum.POST,
-      body: {
-        "Name": name,
-        // "Created_By": _userProfile?.iD,
-      },
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        screenHasBeenAdded = false;
-      },
-      (r) {
-        getAllRoles();
-        screenHasBeenAdded = true;
-        update();
-      },
-    );
-    addLoading = false;
-    update();
-    return screenHasBeenAdded;
-  }
-
   Future<bool> addScreensToRole(int roleId) async {
     connectLoading = true;
     update();
@@ -192,6 +130,68 @@ class RolesController extends GetxController {
     connectLoading = false;
     update();
     return screenHasBeenAdded;
+  }
+
+  Future getAllRoles() async {
+    getAllLoading = true;
+    update();
+    ResponseHandler<RolesResModel> responseHandler = ResponseHandler();
+    Either<Failure, RolesResModel> response = await responseHandler.getResponse(
+      path: UserRolesSystemsLink.userRolesSystems,
+      converter: RolesResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        getAllLoading = false;
+        update();
+      },
+      (r) {
+        roles = r.data!;
+        getAllLoading = false;
+        update();
+      },
+    );
+  }
+
+  Future getAllScreens() async {
+    getAllLoading = true;
+    update();
+    ResponseHandler<ScreensResModel> responseHandler = ResponseHandler();
+    Either<Failure, ScreensResModel> response =
+        await responseHandler.getResponse(
+      path: UserRolesSystemsLink.screen,
+      converter: ScreensResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        getAllLoading = false;
+        update();
+      },
+      (r) {
+        screens = r.data!;
+        getAllLoading = false;
+        update();
+      },
+    );
+  }
+
+  @override
+  void onInit() {
+    getAllScreens();
+    getAllRoles();
+    super.onInit();
   }
 
   void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {

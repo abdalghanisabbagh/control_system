@@ -6,12 +6,12 @@ import '../../../resource_manager/styles_manager.dart';
 import '../../../resource_manager/values_manager.dart';
 
 class ExamRoomsAssignedToProctorWidget extends GetView<ProctorController> {
+  final String proctorName;
+
   const ExamRoomsAssignedToProctorWidget({
     super.key,
     required this.proctorName,
   });
-
-  final String proctorName;
 
   @override
   Widget build(BuildContext context) {

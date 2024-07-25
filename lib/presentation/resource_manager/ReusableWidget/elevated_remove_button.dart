@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../index.dart';
 
 class ElevatedRemoveButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
   const ElevatedRemoveButton({
     super.key,
     required this.onPressed,
   });
-
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {

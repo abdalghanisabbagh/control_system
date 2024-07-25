@@ -8,18 +8,18 @@ import '../resource_manager/index.dart';
 import 'side_menue/side_menue.dart';
 
 class BaseScreen extends GetView<SideMenueGetController> {
+  final PreferredSizeWidget? appbar;
+
+  final Widget body;
+  // final Widget? drawer;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   BaseScreen({
     super.key,
     required this.body,
     this.appbar,
     // this.drawer
   });
-
-  final PreferredSizeWidget? appbar;
-  final Widget body;
-
-  // final Widget? drawer;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {

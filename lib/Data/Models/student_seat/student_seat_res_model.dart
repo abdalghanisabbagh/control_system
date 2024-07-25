@@ -1,6 +1,16 @@
 import '../student/student_res_model.dart';
 
 class StudentSeatNumberResModel {
+  int? classDeskID;
+
+  int? controlMissionID;
+
+  int? examRoomID;
+  int? gradesID;
+  int? iD;
+  String? seatNumber;
+  StudentResModel? student;
+  int? studentID;
   StudentSeatNumberResModel({
     this.iD,
     this.classDeskID,
@@ -11,7 +21,6 @@ class StudentSeatNumberResModel {
     this.seatNumber,
     this.student,
   });
-
   StudentSeatNumberResModel.fromJson(json) {
     iD = json['ID'];
     classDeskID = json['Class_Desk_ID'];
@@ -22,15 +31,6 @@ class StudentSeatNumberResModel {
     seatNumber = json['Seat_Number'];
     student = StudentResModel?.fromJson(json['student']);
   }
-
-  int? classDeskID;
-  int? controlMissionID;
-  int? examRoomID;
-  int? gradesID;
-  int? iD;
-  String? seatNumber;
-  StudentResModel? student;
-  int? studentID;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

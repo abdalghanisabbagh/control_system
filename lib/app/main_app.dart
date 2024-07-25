@@ -8,22 +8,17 @@ import '../presentation/resource_manager/theme_manager.dart';
 import 'configurations/scroll_configurations.dart';
 
 class MyApp extends StatefulWidget {
+  static const MyApp _instance = MyApp._internal(); // singlton instance
+
   factory MyApp() => _instance;
 
   const MyApp._internal();
-
-  static const MyApp _instance = MyApp._internal(); // singlton instance
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -43,5 +38,10 @@ class _MyAppState extends State<MyApp> {
       theme: getApplicationTheme(),
       initialBinding: SideMenuBindings(),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 }

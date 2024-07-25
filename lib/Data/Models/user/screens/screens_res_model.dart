@@ -1,13 +1,13 @@
 import 'screen_res_model.dart';
 
 class ScreensResModel {
+  List<ScreenResModel>? data;
+
   ScreensResModel({this.data});
 
   factory ScreensResModel.fromJson(json) => ScreensResModel(
       data: List<ScreenResModel>.from(
           json.map((e) => ScreenResModel.fromJson(e)).toList()));
-
-  List<ScreenResModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

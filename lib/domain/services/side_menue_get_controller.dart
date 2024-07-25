@@ -16,16 +16,8 @@ class SideMenueGetController extends GetxController {
   late final SideMenuController sideMenuController;
   List<SideMenuItem> userMenue = [];
 
-  @override
-  void onClose() {
-    sideMenuController.dispose();
-    super.onClose();
-  }
-
-  @override
-  void onInit() {
-    sideMenuController = SideMenuController();
-    super.onInit();
+  changePage(int currentIndex) {
+    sideMenuController.changePage(currentIndex);
   }
 
   List<SideMenuItem> getUserMenue(BuildContext context) {
@@ -86,8 +78,16 @@ class SideMenueGetController extends GetxController {
     return userMenue;
   }
 
-  changePage(int currentIndex) {
-    sideMenuController.changePage(currentIndex);
+  @override
+  void onClose() {
+    sideMenuController.dispose();
+    super.onClose();
+  }
+
+  @override
+  void onInit() {
+    sideMenuController = SideMenuController();
+    super.onInit();
   }
 
   onRouteChange(String name) {

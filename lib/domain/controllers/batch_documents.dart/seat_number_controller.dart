@@ -19,24 +19,23 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class SeatNumberController extends GetxController {
-  bool isLoadingGetEducationYear = false;
-  bool isLoadingGetControlMission = false;
-  bool isLodingGetExamMission = false;
-  bool isLoadingGrades = false;
-  bool isLoading = false;
-  bool isLoadingGeneratePdf = false;
-  List<ValueItem> optionsEducationYear = [];
-  ValueItem? selectedItemEducationYear;
-  List<ValueItem> optionsControlMission = [];
-  ValueItem? selectedItemControlMission;
-  List<ValueItem> optionsGrades = [];
+  List<ControlMissionResModel> controlMissionList = [];
+  ControlMissionResModel? controlMissionObject;
   List<ExamMissionResModel> examMissionsList = [];
   List<ExamMissionResModel> filteredExamMissionsList = [];
-  List<ControlMissionResModel> controlMissionList = [];
-  ValueItem? selectedItemGrade;
-  ControlMissionResModel? controlMissionObject;
-
+  bool isLoading = false;
+  bool isLoadingGeneratePdf = false;
+  bool isLoadingGetControlMission = false;
+  bool isLoadingGetEducationYear = false;
+  bool isLoadingGrades = false;
+  bool isLodingGetExamMission = false;
+  List<ValueItem> optionsControlMission = [];
+  List<ValueItem> optionsEducationYear = [];
+  List<ValueItem> optionsGrades = [];
   final int schoolId = Hive.box('School').get('Id');
+  ValueItem? selectedItemControlMission;
+  ValueItem? selectedItemEducationYear;
+  ValueItem? selectedItemGrade;
 
   Future<void> downloadFilePdf(String url, String controlMissionName) async {
     try {

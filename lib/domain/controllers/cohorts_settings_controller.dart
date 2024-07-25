@@ -23,35 +23,6 @@ class CohortsSettingsController extends GetxController {
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
 
-  @override
-  void onInit() {
-    getAllCohorts();
-    super.onInit();
-  }
-
-  Future getAllCohorts() async {
-    getAllLoading = true;
-    update();
-    final response = await ResponseHandler<CohortsResModel>().getResponse(
-      path: SchoolsLinks.cohort,
-      converter: CohortsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) => MyAwesomeDialogue(
-        title: 'Error',
-        desc: l.message,
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!),
-      (r) {
-        cohorts = r.data!;
-        update();
-      },
-    );
-    getAllLoading = false;
-    update();
-  }
-
   Future<bool> addnewCohort(String name) async {
     addLoading = true;
     update();
@@ -89,40 +60,6 @@ class CohortsSettingsController extends GetxController {
     return cohortHasBeenAdded;
   }
 
-  Future<bool> deleteCohort(int id) async {
-    bool cohortHasBeenDeleted = false;
-    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
-    Either<Failure, CohortResModel> response =
-        await responseHandler.getResponse(
-      path: '${SchoolsLinks.cohort}/$id',
-      converter: CohortResModel.fromJson,
-      type: ReqTypeEnum.DELETE,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        cohortHasBeenDeleted = false;
-      },
-      (r) {
-        getAllCohorts();
-        cohortHasBeenDeleted = true;
-        update();
-      },
-    );
-
-    return cohortHasBeenDeleted;
-  }
-
-  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
-    selectedSubjectsIds =
-        selectedOptions.map((e) => e.value as int).toList().cast<int>();
-    update();
-  }
-
   Future<bool> addNewsubjecstToCohort(int id) async {
     addLoading = true;
     bool cohortHasBeenAdded = false;
@@ -157,6 +94,34 @@ class CohortsSettingsController extends GetxController {
     return cohortHasBeenAdded;
   }
 
+  Future<bool> deleteCohort(int id) async {
+    bool cohortHasBeenDeleted = false;
+    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+    Either<Failure, CohortResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.cohort}/$id',
+      converter: CohortResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        cohortHasBeenDeleted = false;
+      },
+      (r) {
+        getAllCohorts();
+        cohortHasBeenDeleted = true;
+        update();
+      },
+    );
+
+    return cohortHasBeenDeleted;
+  }
+
   Future<bool> deleteSubjectFromCohort({
     required int cohortId,
     required int subjectId,
@@ -187,5 +152,40 @@ class CohortsSettingsController extends GetxController {
     );
     update();
     return subjectHasBeenDeleted;
+  }
+
+  Future getAllCohorts() async {
+    getAllLoading = true;
+    update();
+    final response = await ResponseHandler<CohortsResModel>().getResponse(
+      path: SchoolsLinks.cohort,
+      converter: CohortsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) => MyAwesomeDialogue(
+        title: 'Error',
+        desc: l.message,
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!),
+      (r) {
+        cohorts = r.data!;
+        update();
+      },
+    );
+    getAllLoading = false;
+    update();
+  }
+
+  @override
+  void onInit() {
+    getAllCohorts();
+    super.onInit();
+  }
+
+  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
+    selectedSubjectsIds =
+        selectedOptions.map((e) => e.value as int).toList().cast<int>();
+    update();
   }
 }

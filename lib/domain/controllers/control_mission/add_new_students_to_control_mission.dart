@@ -17,23 +17,18 @@ import '../../../app/extensions/pluto_row_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class AddNewStudentsToControlMissionController extends GetxController {
-  bool isLoading = false;
-
   int controlMissionId = Hive.box('ControlMission').get('Id') ?? 0;
   String controlMissionName = Hive.box('ControlMission').get('Name') ?? '';
-
   List<PlutoRow> excludedStudentsRows = [];
   PlutoGridStateManager? excludedStudentsStateManager;
   List<GradeResModel> grades = [];
-  List<ValueItem> optionsGrades = [];
-
-  List<int> selectedGradesIds = [];
-
-  List<StudentResModel> students = [];
-
   List<int> includedStudentsIds = [];
   List<PlutoRow> includedStudentsRows = [];
   PlutoGridStateManager? includedStudentsStateManager;
+  bool isLoading = false;
+  List<ValueItem> optionsGrades = [];
+  List<int> selectedGradesIds = [];
+  List<StudentResModel> students = [];
 
   Future<bool> addStudentsToControlMission() async {
     bool success = false;

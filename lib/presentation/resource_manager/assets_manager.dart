@@ -1,6 +1,4 @@
 class AssetsManager {
-  AssetsManager._();
-
   /// Assets for assetsFontsNunitoBlack
   /// assets/fonts/Nunito-Black.ttf
   static const String assetsFontsNunitoBlack = "assets/fonts/Nunito-Black.ttf";
@@ -46,11 +44,6 @@ class AssetsManager {
   /// assets/fonts/PlayfairDisplay-SemiBold.ttf
   static const String assetsFontsPlayfairDisplaySemiBold =
       "assets/fonts/PlayfairDisplay-SemiBold.ttf";
-
-  /// Assets for assetsIconsStudentDegree
-  /// assets/icons/student_degrees.png
-  static const String assetsIconsStudentDegrees =
-      "assets/icons/student_degrees.png";
 
   /// Assets for assetsIconsAdmin
   /// assets/icons/admin.png
@@ -117,6 +110,11 @@ class AssetsManager {
   /// assets/icons/student.png
   static const String assetsIconsStudent = "assets/icons/student.png";
 
+  /// Assets for assetsIconsStudentDegree
+  /// assets/icons/student_degrees.png
+  static const String assetsIconsStudentDegrees =
+      "assets/icons/student_degrees.png";
+
   /// Assets for assetsIconsSupject
   /// assets/icons/supject.png
   static const String assetsIconsSupject = "assets/icons/supject.png";
@@ -152,4 +150,6 @@ class AssetsManager {
   /// Assets for assetsLogosNisLogo22
   /// assets/logos/nis_logo22.png
   static const String assetsLogosNisLogo22 = "assets/logos/nis_logo22.png";
+
+  AssetsManager._();
 }

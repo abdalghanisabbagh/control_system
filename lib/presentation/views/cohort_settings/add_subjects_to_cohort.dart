@@ -14,9 +14,9 @@ import '../../resource_manager/color_manager.dart';
 import '../../resource_manager/styles_manager.dart';
 
 class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
-  const AddSubjectsToCohort({super.key, required this.item});
-
   final CohortResModel item;
+
+  const AddSubjectsToCohort({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

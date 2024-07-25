@@ -9,9 +9,9 @@ import '../../../resource_manager/index.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
 class ControlMissionReviewWidget extends GetView<ControlMissionController> {
-  const ControlMissionReviewWidget({super.key, required this.controlMission});
-
   final ControlMissionResModel controlMission;
+
+  const ControlMissionReviewWidget({super.key, required this.controlMission});
 
   @override
   Widget build(BuildContext context) {

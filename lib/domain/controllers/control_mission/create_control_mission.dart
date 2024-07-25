@@ -45,175 +45,6 @@ class CreateControlMissionController extends GetxController {
   String? selectedStartDate;
   List<StudentResModel> students = [];
 
-  @override
-  void onInit() async {
-    super.onInit();
-    isLoading = true;
-    update();
-    await Future.wait([
-      getEducationYears(),
-      getGrades(),
-    ]).then((_) async {
-      getStudents();
-    });
-    isLoading = false;
-    update();
-  }
-
-  Future<bool> getGrades() async {
-    bool gotData = false;
-    update();
-    int schoolId = Hive.box('School').get('Id');
-
-    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
-    Either<Failure, GradesResModel> response =
-        await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$schoolId",
-      converter: GradesResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        grades = r.data!;
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.iD))
-            .toList();
-        optionsGrades = items;
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
-
-  Future<void> getEducationYears() async {
-    isLodingGetEducationYears = true;
-    update();
-
-    final response = await ResponseHandler<EducationsYearsModel>().getResponse(
-      path: EducationYearsLinks.educationyear,
-      converter: EducationsYearsModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'title',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(
-          Get.key.currentContext!,
-        );
-      },
-      (r) {
-        educationYearList = r.data!;
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.id))
-            .toList();
-        optionsEducationYear = items;
-        update();
-      },
-    );
-
-    isLodingGetEducationYears = false;
-    update();
-  }
-
-  Future<bool> getStudents() async {
-    bool gotData = false;
-    update();
-
-    ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
-    Either<Failure, StudentsResModel> response =
-        await responseHandler.getResponse(
-      path: '${StudentsLinks.studentSchool}/${Hive.box('School').get('Id')}',
-      converter: StudentsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        students = r.students!;
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
-
-  void updateSelectedGrades(List<ValueItem> selectedOptions) {
-    selectedGradesIds = selectedOptions.map((e) => e.value as int).toList();
-    includedStudentsRows.assignAll(
-      students
-          .where((student) => selectedGradesIds.contains(student.gradesID))
-          .toList()
-          .convertStudentsToRows(),
-    );
-    update();
-    excludedStudentsRows.clear();
-    includedStudentsStateManager?.setPage(1);
-    excludedStudentsStateManager?.setPage(1);
-  }
-
-  bool canMoveToNextStep() {
-    return selectedEndDate != null &&
-        (batchName != null || batchName != null
-            ? batchName!.isNotEmpty
-            : false);
-  }
-
-  void continueToNextStep() {
-    if (currentStep == 0) {
-      currentStep++;
-    }
-    update();
-  }
-
-  void backToPreviousStep() {
-    if (currentStep == 1) {
-      currentStep--;
-    }
-    update();
-  }
-
-  void excludeStudent(PlutoColumnRendererContext rendererContext) {
-    excludedStudentsRows.add(includedStudentsRows.firstWhere((element) =>
-        element.cells['BlbIdField']!.value ==
-        rendererContext.row.cells['BlbIdField']!.value));
-    includedStudentsRows.removeWhere((element) =>
-        element.cells['BlbIdField']!.value ==
-        rendererContext.row.cells['BlbIdField']!.value);
-    includedStudentsStateManager?.notifyListeners();
-    excludedStudentsStateManager?.setPage(1);
-  }
-
-  void includeStudent(PlutoColumnRendererContext rendererContext) {
-    includedStudentsRows.add(excludedStudentsRows.firstWhere((element) =>
-        element.cells['BlbIdField']!.value ==
-        rendererContext.row.cells['BlbIdField']!.value));
-    excludedStudentsRows.removeWhere((element) =>
-        element.cells['BlbIdField']!.value ==
-        rendererContext.row.cells['BlbIdField']!.value);
-    includedStudentsStateManager?.setPage(1);
-    excludedStudentsStateManager?.notifyListeners();
-  }
-
   Future<bool> addControlMission() async {
     bool success = false;
     isLoading = true;
@@ -250,6 +81,27 @@ class CreateControlMissionController extends GetxController {
     isLoading = false;
     update();
     return success;
+  }
+
+  void backToPreviousStep() {
+    if (currentStep == 1) {
+      currentStep--;
+    }
+    update();
+  }
+
+  bool canMoveToNextStep() {
+    return selectedEndDate != null &&
+        (batchName != null || batchName != null
+            ? batchName!.isNotEmpty
+            : false);
+  }
+
+  void continueToNextStep() {
+    if (currentStep == 0) {
+      currentStep++;
+    }
+    update();
   }
 
   Future<bool> createStudentSeatNumbers() async {
@@ -294,5 +146,153 @@ class CreateControlMissionController extends GetxController {
     isLoading = false;
     update();
     return success;
+  }
+
+  void excludeStudent(PlutoColumnRendererContext rendererContext) {
+    excludedStudentsRows.add(includedStudentsRows.firstWhere((element) =>
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value));
+    includedStudentsRows.removeWhere((element) =>
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value);
+    includedStudentsStateManager?.notifyListeners();
+    excludedStudentsStateManager?.setPage(1);
+  }
+
+  Future<void> getEducationYears() async {
+    isLodingGetEducationYears = true;
+    update();
+
+    final response = await ResponseHandler<EducationsYearsModel>().getResponse(
+      path: EducationYearsLinks.educationyear,
+      converter: EducationsYearsModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        educationYearList = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.id))
+            .toList();
+        optionsEducationYear = items;
+        update();
+      },
+    );
+
+    isLodingGetEducationYears = false;
+    update();
+  }
+
+  Future<bool> getGrades() async {
+    bool gotData = false;
+    update();
+    int schoolId = Hive.box('School').get('Id');
+
+    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
+    Either<Failure, GradesResModel> response =
+        await responseHandler.getResponse(
+      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      converter: GradesResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        grades = r.data!;
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsGrades = items;
+        gotData = true;
+      },
+    );
+    update();
+    return gotData;
+  }
+
+  Future<bool> getStudents() async {
+    bool gotData = false;
+    update();
+
+    ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
+    Either<Failure, StudentsResModel> response =
+        await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSchool}/${Hive.box('School').get('Id')}',
+      converter: StudentsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        students = r.students!;
+        gotData = true;
+      },
+    );
+    update();
+    return gotData;
+  }
+
+  void includeStudent(PlutoColumnRendererContext rendererContext) {
+    includedStudentsRows.add(excludedStudentsRows.firstWhere((element) =>
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value));
+    excludedStudentsRows.removeWhere((element) =>
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value);
+    includedStudentsStateManager?.setPage(1);
+    excludedStudentsStateManager?.notifyListeners();
+  }
+
+  @override
+  void onInit() async {
+    super.onInit();
+    isLoading = true;
+    update();
+    await Future.wait([
+      getEducationYears(),
+      getGrades(),
+    ]).then((_) async {
+      getStudents();
+    });
+    isLoading = false;
+    update();
+  }
+
+  void updateSelectedGrades(List<ValueItem> selectedOptions) {
+    selectedGradesIds = selectedOptions.map((e) => e.value as int).toList();
+    includedStudentsRows.assignAll(
+      students
+          .where((student) => selectedGradesIds.contains(student.gradesID))
+          .toList()
+          .convertStudentsToRows(),
+    );
+    update();
+    excludedStudentsRows.clear();
+    includedStudentsStateManager?.setPage(1);
+    excludedStudentsStateManager?.setPage(1);
   }
 }

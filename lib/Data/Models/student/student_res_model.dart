@@ -7,6 +7,32 @@ import '../cohort/cohort_res_model.dart';
 import '../school/grade_response/grade_res_model.dart';
 
 class StudentResModel {
+  int? active;
+
+  int? blbId;
+
+  ClassRoomResModel? classRoomResModel;
+
+  int? cohortID;
+  String? cohortName;
+  CohortResModel? cohortResModel;
+  String? createdAt;
+  int? createdBy;
+  String? email;
+  String? firstName;
+  String? gradeName;
+  GradeResModel? gradeResModel;
+  int? gradesID;
+  int? iD;
+  String? religion;
+  int? schoolClassID;
+  String? schoolClassName;
+  int? schoolsID;
+  String? secondLang;
+  String? secondName;
+  String? thirdName;
+  DateTime? updatedAt;
+  int? updatedBy;
   StudentResModel(
       {this.iD,
       this.blbId,
@@ -31,7 +57,6 @@ class StudentResModel {
       this.cohortResModel,
       this.active,
       this.religion});
-
   factory StudentResModel.fromCsvWithHeaders(
       List<dynamic> row, List<String> headers) {
     Map<String, dynamic> data = {};
@@ -54,7 +79,6 @@ class StudentResModel {
       religion: data.containsKey('religion') ? data['religion'] : null,
     );
   }
-
   StudentResModel.fromJson(json) {
     iD = json['ID'];
     blbId = json['Blb_Id'];
@@ -82,29 +106,26 @@ class StudentResModel {
     active = json['Active'];
   }
 
-  int? active;
-  int? blbId;
-  ClassRoomResModel? classRoomResModel;
-  int? cohortID;
-  String? cohortName;
-  CohortResModel? cohortResModel;
-  String? createdAt;
-  int? createdBy;
-  String? email;
-  String? firstName;
-  String? gradeName;
-  GradeResModel? gradeResModel;
-  int? gradesID;
-  int? iD;
-  int? schoolClassID;
-  String? schoolClassName;
-  int? schoolsID;
-  String? secondLang;
-  String? secondName;
-  String? thirdName;
-  DateTime? updatedAt;
-  int? updatedBy;
-  String? religion;
+  @override
+  int get hashCode {
+    return iD.hashCode ^
+        blbId.hashCode ^
+        gradesID.hashCode ^
+        schoolsID.hashCode ^
+        cohortID.hashCode ^
+        schoolClassID.hashCode ^
+        firstName.hashCode ^
+        secondName.hashCode ^
+        thirdName.hashCode ^
+        email.hashCode ^
+        secondLang.hashCode ^
+        createdBy.hashCode ^
+        createdAt.hashCode ^
+        updatedBy.hashCode ^
+        updatedAt.hashCode ^
+        gradeResModel.hashCode ^
+        active.hashCode;
+  }
 
   @override
   bool operator ==(covariant StudentResModel other) {
@@ -129,25 +150,21 @@ class StudentResModel {
         other.active == active;
   }
 
-  @override
-  int get hashCode {
-    return iD.hashCode ^
-        blbId.hashCode ^
-        gradesID.hashCode ^
-        schoolsID.hashCode ^
-        cohortID.hashCode ^
-        schoolClassID.hashCode ^
-        firstName.hashCode ^
-        secondName.hashCode ^
-        thirdName.hashCode ^
-        email.hashCode ^
-        secondLang.hashCode ^
-        createdBy.hashCode ^
-        createdAt.hashCode ^
-        updatedBy.hashCode ^
-        updatedAt.hashCode ^
-        gradeResModel.hashCode ^
-        active.hashCode;
+  Map<String, dynamic> importStudentByExcel() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (iD != null) data['ID'] = iD;
+    data['Blb_Id'] = blbId;
+    data['Grades_ID'] = gradesID;
+    data['Schools_ID'] = schoolsID ?? Hive.box('School').get('Id');
+    data['Cohort_ID'] = cohortID;
+    data['School_Class_ID'] = schoolClassID;
+    data['First_Name'] = firstName;
+    data['Second_Name'] = secondName;
+    data['Third_Name'] = thirdName;
+    data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
+    data['Second_Lang'] = secondLang;
+    data['Religion'] = religion;
+    return data;
   }
 
   Map<String, dynamic> toJson() {
@@ -169,23 +186,6 @@ class StudentResModel {
     data['Updated_At'] = updatedAt;
     data['grades'] = gradeResModel?.toJson();
     data['Active'] = active;
-    data['Religion'] = religion;
-    return data;
-  }
-
-  Map<String, dynamic> importStudentByExcel() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (iD != null) data['ID'] = iD;
-    data['Blb_Id'] = blbId;
-    data['Grades_ID'] = gradesID;
-    data['Schools_ID'] = schoolsID ?? Hive.box('School').get('Id');
-    data['Cohort_ID'] = cohortID;
-    data['School_Class_ID'] = schoolClassID;
-    data['First_Name'] = firstName;
-    data['Second_Name'] = secondName;
-    data['Third_Name'] = thirdName;
-    data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
-    data['Second_Lang'] = secondLang;
     data['Religion'] = religion;
     return data;
   }

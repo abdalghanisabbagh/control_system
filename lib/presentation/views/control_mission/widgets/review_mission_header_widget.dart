@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../resource_manager/styles_manager.dart';
 
 class ReviewMissionHeaderWidget extends StatelessWidget {
-  const ReviewMissionHeaderWidget({super.key, required this.title});
-
   final String title;
+
+  const ReviewMissionHeaderWidget({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

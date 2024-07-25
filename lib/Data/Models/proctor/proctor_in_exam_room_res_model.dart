@@ -2,21 +2,22 @@ import '../exam_room/exam_room_res_model.dart';
 import 'proctor_res_model.dart';
 
 class ProctorInExamRoomResModel {
-  int? id;
-  int? proctorsId;
-  int? examRoomId;
-  String? month;
-  String? year;
-  bool? period;
-  String? attendance;
   String? active;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  String? updatedAt;
-  ProctorResModel? proctor;
-  ExamRoomResModel? examRoom;
 
+  String? attendance;
+
+  String? createdAt;
+  int? createdBy;
+  ExamRoomResModel? examRoom;
+  int? examRoomId;
+  int? id;
+  String? month;
+  bool? period;
+  ProctorResModel? proctor;
+  int? proctorsId;
+  String? updatedAt;
+  int? updatedBy;
+  String? year;
   ProctorInExamRoomResModel({
     this.id,
     this.proctorsId,
@@ -33,7 +34,6 @@ class ProctorInExamRoomResModel {
     this.proctor,
     this.examRoom,
   });
-
   ProctorInExamRoomResModel.fromJson(json) {
     id = json['ID'];
     proctorsId = json['proctors_ID'];
