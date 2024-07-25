@@ -45,8 +45,6 @@ class MultiSelectDropDownView extends StatelessWidget {
       searchLabel: "Search",
       showChipInSingleSelectMode: showChipSelect,
       hint: hintText,
-      
-      
     );
   }
 }
