@@ -13,9 +13,9 @@ import '../../../resource_manager/color_manager.dart';
 
 // ignore: must_be_immutable
 class CoverSeatNumberWidget extends GetView<SeatNumberController> {
-  final ExamMissionResModel examMissionObject;
   final ControlMissionResModel controlMissionObject;
 
+  final ExamMissionResModel examMissionObject;
   const CoverSeatNumberWidget({
     super.key,
     required this.examMissionObject,
