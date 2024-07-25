@@ -1,14 +1,14 @@
 import 'stage_model.dart';
 
 class StageResModel {
+  List<StageModel>? data;
+
   StageResModel({this.data});
 
   StageResModel.fromJson(json) {
     data =
         List<StageModel>.from(json.map((e) => StageModel.fromJson(e)).toList());
   }
-
-  List<StageModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
