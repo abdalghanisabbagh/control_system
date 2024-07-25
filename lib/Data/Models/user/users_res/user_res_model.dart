@@ -1,15 +1,16 @@
 class UserResModel {
-  int? iD;
-  String? fullName;
-  String? userName;
-  int? createdBy;
-  String? createdAt;
-  int? updatedBy;
-  String? updatedAt;
-  String? isFloorManager;
-  int? type;
   int? active;
 
+  String? createdAt;
+
+  int? createdBy;
+  String? fullName;
+  int? iD;
+  String? isFloorManager;
+  int? type;
+  String? updatedAt;
+  int? updatedBy;
+  String? userName;
   UserResModel({
     this.iD,
     this.fullName,
@@ -22,7 +23,6 @@ class UserResModel {
     this.type,
     this.active,
   });
-
   UserResModel.fromJson(json) {
     iD = json['ID'];
     fullName = json['Full_Name'];
