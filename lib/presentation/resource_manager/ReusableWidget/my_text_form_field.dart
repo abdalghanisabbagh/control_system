@@ -11,16 +11,16 @@ class MytextFormFiled extends StatelessWidget {
   final Function(String? value)? onFieldSubmitted;
   final TextEditingController controller;
   final Color? enableBorderColor;
+  final FocusNode? focusNode;
   final Color? foucsBorderColor;
   final bool? isEnable;
   final bool? isNumber;
-  final int maxlines;
   final int? maxLength;
+  final int maxlines;
   final bool obscureText;
   final Widget? suffixIcon;
   final List<TextInputFormatter>? textInputs;
   final String? title;
-  final FocusNode? focusNode;
   const MytextFormFiled({
     super.key,
     this.title,
