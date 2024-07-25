@@ -11,9 +11,9 @@ import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/validations.dart';
 
 class EditProctorWidget extends GetView<ProctorController> {
-  const EditProctorWidget({super.key, required this.proctor});
-
   final ProctorResModel proctor;
+
+  const EditProctorWidget({super.key, required this.proctor});
 
   @override
   Widget build(BuildContext context) {
