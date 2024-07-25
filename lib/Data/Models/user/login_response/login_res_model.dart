@@ -1,12 +1,16 @@
 import 'user_profile_model.dart';
 
 class LoginResModel {
+  String? accessToken;
+
+  String? refreshToken;
+
+  UserProfileModel? userProfile;
   LoginResModel({
     this.refreshToken,
     this.accessToken,
     this.userProfile,
   });
-
   LoginResModel.fromJson(json) {
     refreshToken = json['refreshToken'];
     accessToken = json['accessToken'];
@@ -14,10 +18,6 @@ class LoginResModel {
         ? UserProfileModel.fromJson(json['userProfile'])
         : null;
   }
-
-  String? accessToken;
-  String? refreshToken;
-  UserProfileModel? userProfile;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
