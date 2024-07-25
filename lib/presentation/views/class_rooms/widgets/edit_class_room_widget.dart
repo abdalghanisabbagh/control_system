@@ -16,14 +16,14 @@ import '../../class_room_seats/widgets/render_seat_widget.dart';
 final _formKey = GlobalKey<FormState>();
 
 class EditClassRoomWidget extends StatelessWidget {
-  EditClassRoomWidget({super.key, required this.classRoom});
-
   final TextEditingController buildingNameController = TextEditingController();
+
   final TextEditingController classNameController = TextEditingController();
   final ClassRoomResModel classRoom;
   final TextEditingController columnNumper = TextEditingController();
   final TextEditingController floorNameController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
+  EditClassRoomWidget({super.key, required this.classRoom});
 
   @override
   Widget build(BuildContext context) {
