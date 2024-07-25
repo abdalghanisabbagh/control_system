@@ -11,12 +11,36 @@ import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/constants/app_constatnts.dart';
 import '../../../resource_manager/validations.dart';
 
-class LoginForm extends GetView<AuthController> {
-  LoginForm({super.key});
+void _login(
+    Future<bool> Function(String email, String password) login,
+    String username,
+    String password,
+    GlobalKey<FormState> formKey,
+    BuildContext context) async {
+  if (formKey.currentState!.validate()) {
+    login(
+      username,
+      password,
+    ).then(
+      (value) {
+        value
+            ? {
+                MyFlashBar.showSuccess(
+                        'You have been logged in successfully', 'Success')
+                    .show(context)
+              }
+            : null;
+      },
+    );
+  }
+}
 
+class LoginForm extends GetView<AuthController> {
   final emailController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
+  LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -257,30 +281,6 @@ class LoginForm extends GetView<AuthController> {
           ),
         ),
       ),
-    );
-  }
-}
-
-void _login(
-    Future<bool> Function(String email, String password) login,
-    String username,
-    String password,
-    GlobalKey<FormState> formKey,
-    BuildContext context) async {
-  if (formKey.currentState!.validate()) {
-    login(
-      username,
-      password,
-    ).then(
-      (value) {
-        value
-            ? {
-                MyFlashBar.showSuccess(
-                        'You have been logged in successfully', 'Success')
-                    .show(context)
-              }
-            : null;
-      },
     );
   }
 }
