@@ -1,19 +1,19 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/control_mission/control_mission_res_model.dart';
-import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
-import 'package:control_system/domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
-import 'package:control_system/presentation/views/batch_documents/widgets/edit_cover_widget.dart';
-import 'package:control_system/presentation/views/batch_documents/widgets/officer_edit_cover_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
+import '../../../../Data/Models/exam_mission/exam_mission_res_model.dart';
+import '../../../../domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
+import 'edit_cover_widget.dart';
+import 'officer_edit_cover_widget.dart';
 
 // ignore: must_be_immutable
 class CoverWidget extends GetView<CoversSheetsController> {
