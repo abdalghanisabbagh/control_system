@@ -1,8 +1,8 @@
-import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
-import 'package:control_system/Data/Models/subject/subject_res_model.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/profile_controller.dart';
+import '../school/grade_response/grade_res_model.dart';
+import '../subject/subject_res_model.dart';
 
 class ExamMissionResModel {
   ExamMissionResModel({
