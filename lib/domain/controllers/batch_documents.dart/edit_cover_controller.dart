@@ -15,17 +15,10 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 import '../controllers.dart';
 
 class EditCoverSheetController extends GetxController {
-  DateTime? selectedStartTime;
-  DateTime? selectedEndTime;
+  bool isImportedFile = false;
 
   bool isLodingUpdateExamMission = false;
   bool isLodingUploadPdf = false;
-  bool isImportedFile = false;
-
-  ValueItem? selectedIExamDuration;
-  String? pdfUrl;
-  String? pdfName;
-
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
     const ValueItem(value: 25, label: '25 Mins'),
@@ -41,7 +34,12 @@ class EditCoverSheetController extends GetxController {
     const ValueItem(value: 130, label: '130 Mins'),
     const ValueItem(value: 150, label: '150 Mins')
   ];
+  String? pdfName;
 
+  String? pdfUrl;
+  DateTime? selectedEndTime;
+  ValueItem? selectedIExamDuration;
+  DateTime? selectedStartTime;
   Future<(Uint8List?, String?)> pickPdfFile() async {
     FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
       type: FileType.custom,
