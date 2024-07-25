@@ -15,90 +15,29 @@ import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
 class EditCoverWidget extends GetView<EditCoverSheetController> {
-  ExamMissionResModel examMissionObject;
   ControlMissionResModel controlMissionObject;
-  EditCoverWidget(
-      {super.key,
-      required this.examMissionObject,
-      required this.controlMissionObject});
+
+  late TextEditingController endTimeController = TextEditingController(
+      text: examMissionObject.endTime == null
+          ? null
+          : DateFormat('yyyy-MM-dd HH:mm')
+              .format(DateTime.parse(examMissionObject.endTime!)));
+  final TextEditingController examFinalDegreeController =
+      TextEditingController();
+
+  ExamMissionResModel examMissionObject;
 
   late TextEditingController startTimeController = TextEditingController(
       text: examMissionObject.endTime == null
           ? "${examMissionObject.month} ${examMissionObject.year}"
           : DateFormat('yyyy-MM-dd HH:mm')
               .format(DateTime.parse(examMissionObject.startTime!)));
-  late TextEditingController endTimeController = TextEditingController(
-      text: examMissionObject.endTime == null
-          ? null
-          : DateFormat('yyyy-MM-dd HH:mm')
-              .format(DateTime.parse(examMissionObject.endTime!)));
-
-  Future<void> selectDate(BuildContext context, {required bool isStart}) async {
-    if (controlMissionObject.startDate == null ||
-        controlMissionObject.endDate == null) {
-      return;
-    }
-
-    final DateTime startDate = DateTime.parse(controlMissionObject.startDate!
-        .substring(0, controlMissionObject.startDate!.length - 1));
-    final DateTime endDate = DateTime.parse(controlMissionObject.endDate!
-        .substring(0, controlMissionObject.endDate!.length - 1));
-
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: startDate,
-      initialDatePickerMode: DatePickerMode.day,
-      firstDate: startDate,
-      lastDate: endDate,
-    );
-
-    if (pickedDate != null && context.mounted) {
-      final TimeOfDay? pickedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-        initialEntryMode: TimePickerEntryMode.inputOnly,
-        builder: (BuildContext context, Widget? child) {
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-            child: Theme(
-              data: ThemeData(
-                colorScheme: Theme.of(context).colorScheme.copyWith(
-                      primary: ColorManager.primary,
-                    ),
-              ),
-              child: child!,
-            ),
-          );
-        },
-      );
-
-      if (pickedTime != null) {
-        final selectedDateTime = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
-
-        final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
-        String formattedDateTime = formatter.format(selectedDateTime);
-
-        if (isStart) {
-          controller.selectedStartTime = selectedDateTime;
-          startTimeController.text = formattedDateTime;
-        } else {
-          controller.selectedEndTime = selectedDateTime;
-          endTimeController.text = formattedDateTime;
-        }
-      }
-    }
-  }
-
-  final TextEditingController examFinalDegreeController =
-      TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  EditCoverWidget(
+      {super.key,
+      required this.examMissionObject,
+      required this.controlMissionObject});
 
   @override
   Widget build(BuildContext context) {
@@ -416,5 +355,67 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
         ],
       ),
     );
+  }
+
+  Future<void> selectDate(BuildContext context, {required bool isStart}) async {
+    if (controlMissionObject.startDate == null ||
+        controlMissionObject.endDate == null) {
+      return;
+    }
+
+    final DateTime startDate = DateTime.parse(controlMissionObject.startDate!
+        .substring(0, controlMissionObject.startDate!.length - 1));
+    final DateTime endDate = DateTime.parse(controlMissionObject.endDate!
+        .substring(0, controlMissionObject.endDate!.length - 1));
+
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: startDate,
+      initialDatePickerMode: DatePickerMode.day,
+      firstDate: startDate,
+      lastDate: endDate,
+    );
+
+    if (pickedDate != null && context.mounted) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        initialEntryMode: TimePickerEntryMode.inputOnly,
+        builder: (BuildContext context, Widget? child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+            child: Theme(
+              data: ThemeData(
+                colorScheme: Theme.of(context).colorScheme.copyWith(
+                      primary: ColorManager.primary,
+                    ),
+              ),
+              child: child!,
+            ),
+          );
+        },
+      );
+
+      if (pickedTime != null) {
+        final selectedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
+        String formattedDateTime = formatter.format(selectedDateTime);
+
+        if (isStart) {
+          controller.selectedStartTime = selectedDateTime;
+          startTimeController.text = formattedDateTime;
+        } else {
+          controller.selectedEndTime = selectedDateTime;
+          endTimeController.text = formattedDateTime;
+        }
+      }
+    }
   }
 }
