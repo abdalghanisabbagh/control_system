@@ -32,18 +32,88 @@ class AddNewStudentController extends GetxController {
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    isLoading = true;
+  Future<bool> addNewStudent({
+    required int blubID,
+    required int gradesId,
+    required int cohortId,
+    required int schoolClassId,
+    required String firstName,
+    required String secondName,
+    required String thirdName,
+    required String secondLang,
+    required String religion,
+  }) async {
+    isLodingAddStudent = true;
+
     update();
-    await Future.wait([
-      getGradesBySchoolId(),
-      getCohortBySchoolTypeId(),
-      getSchoolsClassBySchoolId()
-    ]);
-    isLoading = false;
+    bool addStudentHasBeenAdded = false;
+    int schoolId = Hive.box('School').get('Id');
+    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+        path: StudentsLinks.student,
+        converter: StudentResModel.fromJson,
+        type: ReqTypeEnum.POST,
+        body: {
+          "Blb_Id": blubID,
+          "Grades_ID": gradesId,
+          "Schools_ID": schoolId,
+          "Cohort_ID": cohortId,
+          "School_Class_ID": schoolClassId,
+          "First_Name": firstName,
+          "Second_Name": secondName,
+          "Third_Name": thirdName,
+          "Created_By": _userProfile?.iD,
+          "Second_Lang": secondLang,
+          "Religion": religion,
+        });
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      addStudentHasBeenAdded = false;
+    }, (result) {
+      studentController.getStudents();
+      addStudentHasBeenAdded = true;
+    });
+    isLodingAddStudent = false;
+
     update();
+    return addStudentHasBeenAdded;
+  }
+
+  Future<bool> getCohortBySchoolTypeId() async {
+    update();
+    bool cohortHasBeenAdded = false;
+
+    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
+    ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+      path: "${SchoolsLinks.getCohortBySchoolType}/$selectedSchoolId",
+      converter: CohortsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      cohortHasBeenAdded = false;
+    }, (result) {
+      List<ValueItem> items = result.data!
+          .map((item) => ValueItem(label: item.name!, value: item.iD))
+          .toList();
+      optionsCohort = items;
+      cohortHasBeenAdded = true;
+    });
+    update();
+    return cohortHasBeenAdded;
   }
 
   Future<bool> getGradesBySchoolId() async {
@@ -108,13 +178,17 @@ class AddNewStudentController extends GetxController {
     return classRoomHasBeenAdded;
   }
 
-  void setSelectedItemGrade(List<ValueItem> items) {
-    selectedItemGrade = items.first;
+  @override
+  void onInit() async {
+    super.onInit();
+    isLoading = true;
     update();
-  }
-
-  void setSelectedItemCohort(List<ValueItem> items) {
-    selectedItemCohort = items.first;
+    await Future.wait([
+      getGradesBySchoolId(),
+      getCohortBySchoolTypeId(),
+      getSchoolsClassBySchoolId()
+    ]);
+    isLoading = false;
     update();
   }
 
@@ -123,87 +197,13 @@ class AddNewStudentController extends GetxController {
     update();
   }
 
-  Future<bool> getCohortBySchoolTypeId() async {
+  void setSelectedItemCohort(List<ValueItem> items) {
+    selectedItemCohort = items.first;
     update();
-    bool cohortHasBeenAdded = false;
-
-    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
-    ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
-
-    var response = await responseHandler.getResponse(
-      path: "${SchoolsLinks.getCohortBySchoolType}/$selectedSchoolId",
-      converter: CohortsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      cohortHasBeenAdded = false;
-    }, (result) {
-      List<ValueItem> items = result.data!
-          .map((item) => ValueItem(label: item.name!, value: item.iD))
-          .toList();
-      optionsCohort = items;
-      cohortHasBeenAdded = true;
-    });
-    update();
-    return cohortHasBeenAdded;
   }
 
-  Future<bool> addNewStudent({
-    required int blubID,
-    required int gradesId,
-    required int cohortId,
-    required int schoolClassId,
-    required String firstName,
-    required String secondName,
-    required String thirdName,
-    required String secondLang,
-    required String religion,
-  }) async {
-    isLodingAddStudent = true;
-
+  void setSelectedItemGrade(List<ValueItem> items) {
+    selectedItemGrade = items.first;
     update();
-    bool addStudentHasBeenAdded = false;
-    int schoolId = Hive.box('School').get('Id');
-    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
-
-    var response = await responseHandler.getResponse(
-        path: StudentsLinks.student,
-        converter: StudentResModel.fromJson,
-        type: ReqTypeEnum.POST,
-        body: {
-          "Blb_Id": blubID,
-          "Grades_ID": gradesId,
-          "Schools_ID": schoolId,
-          "Cohort_ID": cohortId,
-          "School_Class_ID": schoolClassId,
-          "First_Name": firstName,
-          "Second_Name": secondName,
-          "Third_Name": thirdName,
-          "Created_By": _userProfile?.iD,
-          "Second_Lang": secondLang,
-          "Religion": religion,
-        });
-
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      addStudentHasBeenAdded = false;
-    }, (result) {
-      studentController.getStudents();
-      addStudentHasBeenAdded = true;
-    });
-    isLodingAddStudent = false;
-
-    update();
-    return addStudentHasBeenAdded;
   }
 }
