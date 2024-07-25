@@ -24,10 +24,37 @@ class ControlMissionController extends GetxController {
   List<ValueItem>? selectedEducationYear;
   ValueItem? selectedItemEducationYear;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    getEducationYears();
+  Future<bool> getControlMissionByEducationYear(int educationYearId) async {
+    bool gotData = false;
+    isLoading = true;
+    update();
+    ResponseHandler<ControlMissionsResModel> responseHandler =
+        ResponseHandler();
+    Either<Failure, ControlMissionsResModel> response =
+        await responseHandler.getResponse(
+      path:
+          "${ControlMissionLinks.controlMissionSchool}/${Hive.box('School').get('Id')}/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
+      converter: ControlMissionsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+
+        gotData = false;
+      },
+      (r) {
+        controlMissionList = r.data!;
+        gotData = true;
+      },
+    );
+    isLoading = false;
+    update();
+    return gotData;
   }
 
   // Future<void> getExamRoomByControlMissionId(int controlMissionId) async {
@@ -97,37 +124,10 @@ class ControlMissionController extends GetxController {
     update();
   }
 
-  Future<bool> getControlMissionByEducationYear(int educationYearId) async {
-    bool gotData = false;
-    isLoading = true;
-    update();
-    ResponseHandler<ControlMissionsResModel> responseHandler =
-        ResponseHandler();
-    Either<Failure, ControlMissionsResModel> response =
-        await responseHandler.getResponse(
-      path:
-          "${ControlMissionLinks.controlMissionSchool}/${Hive.box('School').get('Id')}/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
-      converter: ControlMissionsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-
-        gotData = false;
-      },
-      (r) {
-        controlMissionList = r.data!;
-        gotData = true;
-      },
-    );
-    isLoading = false;
-    update();
-    return gotData;
+  @override
+  void onInit() async {
+    super.onInit();
+    getEducationYears();
   }
 
   void setSelectedItemEducationYear(List<ValueItem> items) {
