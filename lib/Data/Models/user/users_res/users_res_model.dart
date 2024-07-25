@@ -1,6 +1,8 @@
 import '../login_response/user_profile_model.dart';
 
 class UsersResModel {
+  late final List<UserProfileModel> data;
+
   UsersResModel({
     required this.data,
   });
@@ -13,8 +15,6 @@ class UsersResModel {
       });
     }
   }
-
-  late final List<UserProfileModel> data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
