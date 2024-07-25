@@ -1,5 +1,5 @@
-import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
-import 'package:control_system/Data/Models/student/student_res_model.dart';
+import '../exam_mission/exam_mission_res_model.dart';
+import '../student/student_res_model.dart';
 
 class BarcodeResModel {
   int? iD;
