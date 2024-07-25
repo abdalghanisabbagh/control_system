@@ -5,9 +5,9 @@ import '../color_manager.dart';
 import '../styles_manager.dart';
 
 class ElevatedBackButton extends StatelessWidget {
-  const ElevatedBackButton({super.key, this.onPressed});
-
   final VoidCallback? onPressed;
+
+  const ElevatedBackButton({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
