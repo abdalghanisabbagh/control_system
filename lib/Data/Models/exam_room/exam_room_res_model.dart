@@ -1,6 +1,16 @@
 import '../control_mission/control_mission_res_model.dart';
 
 class ExamRoomResModel {
+  int? capacity;
+
+  int? controlMissionID;
+
+  ControlMissionResModel? controlMissionResModel;
+
+  int? id;
+  String? name;
+  int? schoolClassID;
+  String? stage;
   ExamRoomResModel({
     this.id,
     this.controlMissionID,
@@ -9,7 +19,6 @@ class ExamRoomResModel {
     this.stage,
     this.capacity,
   });
-
   ExamRoomResModel.fromExtra(Map<String, String>? extra) {
     id = int.parse(extra?['ID'] ?? '0');
     controlMissionID = int.parse(extra?['Control_Mission_ID'] ?? '0');
@@ -18,7 +27,6 @@ class ExamRoomResModel {
     stage = extra?['Stage'];
     capacity = int.parse(extra?['Capacity'] ?? '0');
   }
-
   ExamRoomResModel.fromJson(json) {
     id = json['ID'];
     controlMissionID = json['Control_Mission_ID'];
@@ -31,13 +39,16 @@ class ExamRoomResModel {
         : ControlMissionResModel.fromJson(json['control_mission']);
   }
 
-  int? capacity;
-  int? controlMissionID;
-  int? id;
-  String? name;
-  int? schoolClassID;
-  String? stage;
-  ControlMissionResModel? controlMissionResModel;
+  Map<String, String>? toExtra() {
+    return {
+      'ID': id.toString(),
+      'Control_Mission_ID': controlMissionID.toString(),
+      'School_Class_ID': schoolClassID.toString(),
+      'Name': name ?? '',
+      'Stage': stage ?? '',
+      'Capacity': capacity.toString(),
+    };
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -49,16 +60,5 @@ class ExamRoomResModel {
     data['Capacity'] = capacity;
     data['control_mission'] = controlMissionResModel?.toJson();
     return data;
-  }
-
-  Map<String, String>? toExtra() {
-    return {
-      'ID': id.toString(),
-      'Control_Mission_ID': controlMissionID.toString(),
-      'School_Class_ID': schoolClassID.toString(),
-      'Name': name ?? '',
-      'Stage': stage ?? '',
-      'Capacity': capacity.toString(),
-    };
   }
 }
