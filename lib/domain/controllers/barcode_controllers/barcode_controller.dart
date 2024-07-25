@@ -13,11 +13,8 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class BarcodeController extends GetxController {
-  BarcodeResModel? barcodeResModel;
-
   final TextEditingController barcodeController = TextEditingController();
-  final TextEditingController studentDegreeController = TextEditingController();
-
+  BarcodeResModel? barcodeResModel;
 //   String atoken = '';
 //   SchoolResponse? selectedSchool;
 //   EducationResponse? selectedEduction;
@@ -30,6 +27,8 @@ class BarcodeController extends GetxController {
 
 //   FocusNode degreeController = FocusNode();
   bool isLoading = false;
+
+  final TextEditingController studentDegreeController = TextEditingController();
 
   @override
   void dispose() {
