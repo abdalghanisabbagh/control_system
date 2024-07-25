@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 
 class AddNewSchoolTypeWidget extends StatelessWidget {
-  AddNewSchoolTypeWidget({super.key});
-
   final TextEditingController nameController = TextEditingController();
+
+  AddNewSchoolTypeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
