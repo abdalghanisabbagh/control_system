@@ -1,3 +1,19 @@
+Map<String, dynamic> toJson() {
+  final Map<String, dynamic> data = <String, dynamic>{};
+  data['data'] = data;
+  return data;
+}
+
+class PdfExamMissionResModel {
+  String? data;
+
+  PdfExamMissionResModel({this.data});
+
+  PdfExamMissionResModel.fromJson(json) {
+    data = json;
+  }
+}
+
 class UploadPdfResModel {
   String? url;
 
@@ -12,20 +28,4 @@ class UploadPdfResModel {
     data['url'] = url;
     return data;
   }
-}
-
-class PdfExamMissionResModel {
-  String? data;
-
-  PdfExamMissionResModel({this.data});
-
-  PdfExamMissionResModel.fromJson(json) {
-    data = json;
-  }
-}
-
-Map<String, dynamic> toJson() {
-  final Map<String, dynamic> data = <String, dynamic>{};
-  data['data'] = data;
-  return data;
 }
