@@ -12,9 +12,9 @@ import '../../../resource_manager/styles_manager.dart';
 import '../../../resource_manager/validations.dart';
 
 class AddNewRolesWidget extends StatelessWidget {
-  AddNewRolesWidget({super.key});
-
   final TextEditingController nameController = TextEditingController();
+
+  AddNewRolesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
