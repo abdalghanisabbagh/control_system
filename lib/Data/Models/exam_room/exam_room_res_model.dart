@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/control_mission/control_mission_res_model.dart';
+import '../control_mission/control_mission_res_model.dart';
 
 class ExamRoomResModel {
   ExamRoomResModel({
