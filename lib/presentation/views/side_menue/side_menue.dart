@@ -7,12 +7,12 @@ import '../../resource_manager/assets_manager.dart';
 import '../../resource_manager/index.dart';
 
 class SideMenueWidget extends GetView<SideMenueGetController> {
+  final bool isMobile;
+
   const SideMenueWidget({
     super.key,
     required this.isMobile,
   });
-
-  final bool isMobile;
 
   @override
   Widget build(BuildContext context) {
