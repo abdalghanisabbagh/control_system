@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/proctor/proctor_in_exam_room_res_model.dart';
+import 'proctor_in_exam_room_res_model.dart';
 
 class ProctorsInExamRoomResModel {
   List<ProctorInExamRoomResModel>? data;

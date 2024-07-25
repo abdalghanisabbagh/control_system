@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
-import 'package:control_system/Data/Models/proctor/proctor_in_exam_room_res_model.dart';
-import 'package:control_system/Data/Models/proctor/proctors_in_exam_room.dart';
-import 'package:control_system/app/extensions/date_time_extension.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,12 +15,15 @@ import '../../Data/Models/education_year/education_year_model.dart';
 import '../../Data/Models/education_year/educations_years_res_model.dart';
 import '../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../Data/Models/exam_room/exam_rooms_res_model.dart';
+import '../../Data/Models/proctor/proctor_in_exam_room_res_model.dart';
 import '../../Data/Models/proctor/proctor_res_model.dart';
+import '../../Data/Models/proctor/proctors_in_exam_room.dart';
 import '../../Data/Models/proctor/proctors_res_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
+import '../../app/extensions/date_time_extension.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'profile_controller.dart';
 
@@ -59,204 +59,6 @@ class ProctorController extends GetxController {
   int? selectedEducationYearId;
   bool showPassord = true;
   final TextEditingController usernameController = TextEditingController();
-
-  @override
-  void onClose() {
-    fullNameController.dispose();
-    usernameController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    nisIdController.dispose();
-    super.onClose();
-  }
-
-  @override
-  void onInit() async {
-    isLoading = true;
-    update(
-      [
-        'proctorEntryScreen',
-      ],
-    );
-    await Future.wait([
-      getProctors(),
-      getEducationYears(),
-    ]);
-    isLoading = false;
-    update(
-      [
-        'proctorEntryScreen',
-      ],
-    );
-    super.onInit();
-  }
-
-  Future<void> onDateSelected() async {
-    getExamRoomByControlMissionId();
-    return;
-  }
-
-  Future<void> getProctorsByExamRoomId({required int examRoomId}) async {
-    isLoading = true;
-    update();
-
-    final response = await ResponseHandler<ProctorsInExamRoomResModel>()
-        .getResponse(
-            path: "${ProctorsLinks.proctor}/exam-room/$examRoomId",
-            converter: ProctorsInExamRoomResModel.fromJson,
-            type: ReqTypeEnum.GET,
-            params: {
-          "month": '${selectedDate?.day} ${selectedDate?.toMonthName}',
-          "year": '${selectedDate?.year}',
-        });
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'title',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(
-          Get.key.currentContext!,
-        );
-      },
-      (r) {
-        proctorsInExamRoom.assignAll(r.data!);
-      },
-    );
-    isLoading = false;
-    update();
-  }
-
-  Future<void> getExamRoomsByProctorId({required int proctorId}) async {
-    isLoading = true;
-    update();
-
-    final response =
-        await ResponseHandler<ProctorsInExamRoomResModel>().getResponse(
-      path: "${ExamLinks.examRooms}/proctor/$proctorId",
-      converter: ProctorsInExamRoomResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'title',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(
-          Get.key.currentContext!,
-        );
-      },
-      (r) {
-        proctorHasExamRooms.assignAll(r.data!);
-      },
-    );
-    isLoading = false;
-    update();
-  }
-
-  Future<bool> unAssignProctorFromExamRoom({required int proctorId}) async {
-    bool success = false;
-    isLoading = true;
-    update();
-
-    final response = await ResponseHandler<void>().getResponse(
-      path: "${ProctorsLinks.proctor}/unassign-from-exam-room/$proctorId",
-      converter: (_) {},
-      type: ReqTypeEnum.DELETE,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'title',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(
-          Get.key.currentContext!,
-        );
-        success = false;
-      },
-      (r) {
-        success = true;
-        getExamRoomsByProctorId(proctorId: proctorId);
-      },
-    );
-    isLoading = false;
-    update();
-    return success;
-  }
-
-  Future<void> getExamRoomByControlMissionId() async {
-    examRoomsAreLoading = true;
-    update(['examRooms']);
-
-    final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-      path: "${ExamLinks.examRoomsControlMission}/$selectedControlMissionsId",
-      converter: ExamRoomsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'title',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(
-          Get.key.currentContext!,
-        );
-      },
-      (r) {
-        examRooms.assignAll(r.data!);
-      },
-    );
-    examRoomsAreLoading = false;
-    update(['examRooms']);
-  }
-
-  bool canAssignProctorToExamRoom() {
-    return selectedProctor != null &&
-        selectedExamRoom != null &&
-        selectedControlMissionsId != null &&
-        selectedEducationYearId != null &&
-        selectedExamRoom!.controlMissionResModel!.examMissionsResModel!.data!
-                .firstWhereOrNull((exam) =>
-                    exam.month ==
-                    '${selectedDate?.day} ${selectedDate?.toMonthName}') !=
-            null;
-  }
-
-  Future<void> getEducationYears() async {
-    final response = await ResponseHandler<EducationsYearsModel>().getResponse(
-      path: EducationYearsLinks.educationyear,
-      converter: EducationsYearsModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'title',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(
-          Get.key.currentContext!,
-        );
-      },
-      (r) {
-        educationYears = r.data!;
-        optionsEducationYear.assignAll(
-          educationYears.map(
-            (item) => ValueItem(label: item.name!, value: item.id),
-          ),
-        );
-      },
-    );
-    update();
-  }
 
   Future<bool> assignProctorToExamRoom({required bool period}) async {
     isLoading = true;
@@ -309,41 +111,16 @@ class ProctorController extends GetxController {
     return isSuccess;
   }
 
-  Future<void> getControlMissionByEducationYearId() async {
-    controlMissionsAreLoading = true;
-    update(['proctorEntryScreen']);
-    ResponseHandler<ControlMissionsResModel> responseHandler =
-        ResponseHandler();
-    Either<Failure, ControlMissionsResModel> response =
-        await responseHandler.getResponse(
-      path:
-          "${ControlMissionLinks.controlMissionSchool}/$schoolId/${ControlMissionLinks.controlMissionEducationYear}/$selectedEducationYearId",
-      converter: ControlMissionsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      },
-      (r) {
-        controlMissions = r.data!;
-        optionsControlMissions.assignAll(
-          controlMissions.map(
-            (e) => ValueItem(
-              label: e.name!,
-              value: e.iD,
-            ),
-          ),
-        );
-      },
-    );
-    controlMissionsAreLoading = false;
-    update(['proctorEntryScreen']);
-    return;
+  bool canAssignProctorToExamRoom() {
+    return selectedProctor != null &&
+        selectedExamRoom != null &&
+        selectedControlMissionsId != null &&
+        selectedEducationYearId != null &&
+        selectedExamRoom!.controlMissionResModel!.examMissionsResModel!.data!
+                .firstWhereOrNull((exam) =>
+                    exam.month ==
+                    '${selectedDate?.day} ${selectedDate?.toMonthName}') !=
+            null;
   }
 
   Future<bool> createNewProctor() async {
@@ -402,81 +179,6 @@ class ProctorController extends GetxController {
     return createdSuccessfully;
   }
 
-  void onEducationYearChange(List<ValueItem<dynamic>> selectedOptions) {
-    selectedEducationYearId = selectedOptions.firstOrNull?.value;
-    selectedEducationYearId != null
-        ? {
-            getControlMissionByEducationYearId(),
-          }
-        : null;
-
-    selectedControlMissionsId = null;
-    selectedExamRoom = null;
-    selectedProctor = null;
-    examRooms = [];
-    update(['proctorEntryScreen']);
-  }
-
-  void onControlMissionsChange(List<ValueItem<dynamic>> selectedOptions) {
-    selectedControlMissionsId = selectedOptions.firstOrNull?.value;
-    selectedControlMissionsId != null
-        ? {
-            selectedDate = DateTime.tryParse(controlMissions
-                .firstWhereOrNull(
-                    (element) => element.iD == selectedControlMissionsId)!
-                .startDate!),
-            dateController.text =
-                DateFormat('dd MMMM yyyy').format(selectedDate!),
-            getExamRoomByControlMissionId(),
-          }
-        : {
-            selectedDate = null,
-            dateController.text = '',
-          };
-    selectedExamRoom = null;
-    selectedProctor = null;
-    examRooms = [];
-    update(['proctorEntryScreen']);
-  }
-
-  Future<bool> getProctors() async {
-    bool gotData = false;
-    isLoading = true;
-    update(
-      [
-        'proctors',
-      ],
-    );
-    ResponseHandler<ProctorsResModel> responseHandler = ResponseHandler();
-    Either<Failure, ProctorsResModel> response =
-        await responseHandler.getResponse(
-      path: '${ProctorsLinks.proctor}/school',
-      converter: ProctorsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        proctors = r.data!;
-        gotData = true;
-      },
-    );
-    isLoading = false;
-    update(
-      [
-        'proctors',
-      ],
-    );
-    return gotData;
-  }
-
   Future<bool> editProctor(int proctorId) async {
     bool editedSuccessfully = false;
     isLoading = true;
@@ -523,5 +225,303 @@ class ProctorController extends GetxController {
     confirmPasswordController.clear();
     nisIdController.clear();
     return editedSuccessfully;
+  }
+
+  Future<void> getControlMissionByEducationYearId() async {
+    controlMissionsAreLoading = true;
+    update(['proctorEntryScreen']);
+    ResponseHandler<ControlMissionsResModel> responseHandler =
+        ResponseHandler();
+    Either<Failure, ControlMissionsResModel> response =
+        await responseHandler.getResponse(
+      path:
+          "${ControlMissionLinks.controlMissionSchool}/$schoolId/${ControlMissionLinks.controlMissionEducationYear}/$selectedEducationYearId",
+      converter: ControlMissionsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        controlMissions = r.data!;
+        optionsControlMissions.assignAll(
+          controlMissions.map(
+            (e) => ValueItem(
+              label: e.name!,
+              value: e.iD,
+            ),
+          ),
+        );
+      },
+    );
+    controlMissionsAreLoading = false;
+    update(['proctorEntryScreen']);
+    return;
+  }
+
+  Future<void> getEducationYears() async {
+    final response = await ResponseHandler<EducationsYearsModel>().getResponse(
+      path: EducationYearsLinks.educationyear,
+      converter: EducationsYearsModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        educationYears = r.data!;
+        optionsEducationYear.assignAll(
+          educationYears.map(
+            (item) => ValueItem(label: item.name!, value: item.id),
+          ),
+        );
+      },
+    );
+    update();
+  }
+
+  Future<void> getExamRoomByControlMissionId() async {
+    examRoomsAreLoading = true;
+    update(['examRooms']);
+
+    final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
+      path: "${ExamLinks.examRoomsControlMission}/$selectedControlMissionsId",
+      converter: ExamRoomsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        examRooms.assignAll(r.data!);
+      },
+    );
+    examRoomsAreLoading = false;
+    update(['examRooms']);
+  }
+
+  Future<void> getExamRoomsByProctorId({required int proctorId}) async {
+    isLoading = true;
+    update();
+
+    final response =
+        await ResponseHandler<ProctorsInExamRoomResModel>().getResponse(
+      path: "${ExamLinks.examRooms}/proctor/$proctorId",
+      converter: ProctorsInExamRoomResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        proctorHasExamRooms.assignAll(r.data!);
+      },
+    );
+    isLoading = false;
+    update();
+  }
+
+  Future<bool> getProctors() async {
+    bool gotData = false;
+    isLoading = true;
+    update(
+      [
+        'proctors',
+      ],
+    );
+    ResponseHandler<ProctorsResModel> responseHandler = ResponseHandler();
+    Either<Failure, ProctorsResModel> response =
+        await responseHandler.getResponse(
+      path: '${ProctorsLinks.proctor}/school',
+      converter: ProctorsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        proctors = r.data!;
+        gotData = true;
+      },
+    );
+    isLoading = false;
+    update(
+      [
+        'proctors',
+      ],
+    );
+    return gotData;
+  }
+
+  Future<void> getProctorsByExamRoomId({required int examRoomId}) async {
+    isLoading = true;
+    update();
+
+    final response = await ResponseHandler<ProctorsInExamRoomResModel>()
+        .getResponse(
+            path: "${ProctorsLinks.proctor}/exam-room/$examRoomId",
+            converter: ProctorsInExamRoomResModel.fromJson,
+            type: ReqTypeEnum.GET,
+            params: {
+          "month": '${selectedDate?.day} ${selectedDate?.toMonthName}',
+          "year": '${selectedDate?.year}',
+        });
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        proctorsInExamRoom.assignAll(r.data!);
+      },
+    );
+    isLoading = false;
+    update();
+  }
+
+  @override
+  void onClose() {
+    fullNameController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nisIdController.dispose();
+    super.onClose();
+  }
+
+  void onControlMissionsChange(List<ValueItem<dynamic>> selectedOptions) {
+    selectedControlMissionsId = selectedOptions.firstOrNull?.value;
+    selectedControlMissionsId != null
+        ? {
+            selectedDate = DateTime.tryParse(controlMissions
+                .firstWhereOrNull(
+                    (element) => element.iD == selectedControlMissionsId)!
+                .startDate!),
+            dateController.text =
+                DateFormat('dd MMMM yyyy').format(selectedDate!),
+            getExamRoomByControlMissionId(),
+          }
+        : {
+            selectedDate = null,
+            dateController.text = '',
+          };
+    selectedExamRoom = null;
+    selectedProctor = null;
+    examRooms = [];
+    update(['proctorEntryScreen']);
+  }
+
+  Future<void> onDateSelected() async {
+    getExamRoomByControlMissionId();
+    return;
+  }
+
+  void onEducationYearChange(List<ValueItem<dynamic>> selectedOptions) {
+    selectedEducationYearId = selectedOptions.firstOrNull?.value;
+    selectedEducationYearId != null
+        ? {
+            getControlMissionByEducationYearId(),
+          }
+        : null;
+
+    selectedControlMissionsId = null;
+    selectedExamRoom = null;
+    selectedProctor = null;
+    examRooms = [];
+    update(['proctorEntryScreen']);
+  }
+
+  @override
+  void onInit() async {
+    isLoading = true;
+    update(
+      [
+        'proctorEntryScreen',
+      ],
+    );
+    await Future.wait([
+      getProctors(),
+      getEducationYears(),
+    ]);
+    isLoading = false;
+    update(
+      [
+        'proctorEntryScreen',
+      ],
+    );
+    super.onInit();
+  }
+
+  Future<bool> unAssignProctorFromExamRoom({required int proctorId}) async {
+    bool success = false;
+    isLoading = true;
+    update();
+
+    final response = await ResponseHandler<void>().getResponse(
+      path: "${ProctorsLinks.proctor}/unassign-from-exam-room/$proctorId",
+      converter: (_) {},
+      type: ReqTypeEnum.DELETE,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+        success = false;
+      },
+      (r) {
+        success = true;
+        getExamRoomsByProctorId(proctorId: proctorId);
+      },
+    );
+    isLoading = false;
+    update();
+    return success;
   }
 }

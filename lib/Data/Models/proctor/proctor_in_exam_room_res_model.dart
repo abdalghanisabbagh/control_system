@@ -1,5 +1,5 @@
-import 'package:control_system/Data/Models/exam_room/exam_room_res_model.dart';
-import 'package:control_system/Data/Models/proctor/proctor_res_model.dart';
+import '../exam_room/exam_room_res_model.dart';
+import 'proctor_res_model.dart';
 
 class ProctorInExamRoomResModel {
   int? id;

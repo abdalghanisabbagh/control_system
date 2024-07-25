@@ -1,11 +1,11 @@
-import 'package:control_system/domain/controllers/batch_documents.dart/seat_number_controller.dart';
-import 'package:control_system/presentation/views/batch_documents/widgets/seat_number_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../domain/controllers/batch_documents.dart/seat_number_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/index.dart';
+import 'seat_number_widget.dart';
 
 class SeatingScreen extends GetView<SeatNumberController> {
   const SeatingScreen({super.key});
@@ -131,7 +131,6 @@ class SeatingScreen extends GetView<SeatNumberController> {
             );
           },
         ),
-        
         GetBuilder<SeatNumberController>(
           builder: (controller) {
             if (controller.isLodingGetExamMission) {

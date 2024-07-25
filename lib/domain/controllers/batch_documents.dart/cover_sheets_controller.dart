@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/control_mission/control_mission_res_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:get/get.dart';
@@ -7,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
 import '../../../Data/Models/exam_mission/exam_mission_res_model.dart';

@@ -1,7 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Network/response_handler.dart';
-import 'package:control_system/Data/Network/tools/failure_model.dart';
-import 'package:control_system/app/extensions/pluto_row_extension.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -12,8 +9,11 @@ import '../../../Data/Models/school/grade_response/grade_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/student/student_res_model.dart';
 import '../../../Data/Models/student/students_res_model.dart';
+import '../../../Data/Network/response_handler.dart';
+import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
+import '../../../app/extensions/pluto_row_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class AddNewStudentsToControlMissionController extends GetxController {
@@ -34,35 +34,6 @@ class AddNewStudentsToControlMissionController extends GetxController {
   List<int> includedStudentsIds = [];
   List<PlutoRow> includedStudentsRows = [];
   PlutoGridStateManager? includedStudentsStateManager;
-
-  Future<bool> getStudents() async {
-    bool gotData = false;
-    update();
-
-    ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
-    Either<Failure, StudentsResModel> response =
-        await responseHandler.getResponse(
-      path: '${StudentsLinks.student}/controlMission/$controlMissionId',
-      converter: StudentsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-      },
-      (r) {
-        students = r.students!;
-        gotData = true;
-      },
-    );
-    update();
-    return gotData;
-  }
 
   Future<bool> addStudentsToControlMission() async {
     bool success = false;
@@ -112,6 +83,17 @@ class AddNewStudentsToControlMissionController extends GetxController {
     return success;
   }
 
+  void excludeStudent(PlutoColumnRendererContext rendererContext) {
+    excludedStudentsRows.add(includedStudentsRows.firstWhere((element) =>
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value));
+    includedStudentsRows.removeWhere((element) =>
+        element.cells['BlbIdField']!.value ==
+        rendererContext.row.cells['BlbIdField']!.value);
+    includedStudentsStateManager?.notifyListeners();
+    excludedStudentsStateManager?.setPage(1);
+  }
+
   Future<bool> getGrades() async {
     bool gotData = false;
     update();
@@ -146,30 +128,33 @@ class AddNewStudentsToControlMissionController extends GetxController {
     return gotData;
   }
 
-  void updateSelectedGrades(List<ValueItem> selectedOptions) {
-    selectedGradesIds = selectedOptions.map((e) => e.value as int).toList();
+  Future<bool> getStudents() async {
+    bool gotData = false;
+    update();
 
-    includedStudentsRows.assignAll(
-      students
-          .where((student) => selectedGradesIds.contains(student.gradesID))
-          .toList()
-          .convertStudentsToRows(),
+    ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
+    Either<Failure, StudentsResModel> response =
+        await responseHandler.getResponse(
+      path: '${StudentsLinks.student}/controlMission/$controlMissionId',
+      converter: StudentsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+      },
+      (r) {
+        students = r.students!;
+        gotData = true;
+      },
     );
     update();
-    excludedStudentsRows.clear();
-    includedStudentsStateManager?.setPage(1);
-    excludedStudentsStateManager?.setPage(1);
-  }
-
-  void excludeStudent(PlutoColumnRendererContext rendererContext) {
-    excludedStudentsRows.add(includedStudentsRows.firstWhere((element) =>
-        element.cells['BlbIdField']!.value ==
-        rendererContext.row.cells['BlbIdField']!.value));
-    includedStudentsRows.removeWhere((element) =>
-        element.cells['BlbIdField']!.value ==
-        rendererContext.row.cells['BlbIdField']!.value);
-    includedStudentsStateManager?.notifyListeners();
-    excludedStudentsStateManager?.setPage(1);
+    return gotData;
   }
 
   void includeStudent(PlutoColumnRendererContext rendererContext) {
@@ -197,5 +182,20 @@ class AddNewStudentsToControlMissionController extends GetxController {
     isLoading = false;
     update();
     super.onInit();
+  }
+
+  void updateSelectedGrades(List<ValueItem> selectedOptions) {
+    selectedGradesIds = selectedOptions.map((e) => e.value as int).toList();
+
+    includedStudentsRows.assignAll(
+      students
+          .where((student) => selectedGradesIds.contains(student.gradesID))
+          .toList()
+          .convertStudentsToRows(),
+    );
+    update();
+    excludedStudentsRows.clear();
+    includedStudentsStateManager?.setPage(1);
+    excludedStudentsStateManager?.setPage(1);
   }
 }
