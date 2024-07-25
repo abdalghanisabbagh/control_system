@@ -20,15 +20,20 @@ class AuthController extends GetxController {
   bool showPass = true;
   TokenService tokenService = Get.find<TokenService>();
 
-  @override
-  void onInit() {
-    checkLogin();
-    super.onInit();
-  }
+  checkLogin() {
+    /// check token in local storage and it's time
+    ///
+    /// then forword to current page
 
-  setShowPass() {
-    showPass = !showPass;
-    update(['pass_icon']);
+    if (tokenService.tokenModel != null) {
+      if (DateTime.now()
+              .difference(DateTime.tryParse(tokenService.tokenModel!.dToken)!)
+              .inMinutes >
+          55) {
+        refreshToken();
+      }
+      isLogin = true;
+    }
   }
 
   Future<bool> login(String username, String password) async {
@@ -66,6 +71,12 @@ class AuthController extends GetxController {
     return isLogin;
   }
 
+  @override
+  void onInit() {
+    checkLogin();
+    super.onInit();
+  }
+
   Future<String?> refreshToken() async {
     if (tokenService.tokenModel == null) {
       return null;
@@ -92,20 +103,9 @@ class AuthController extends GetxController {
     return response.data['data'];
   }
 
-  checkLogin() {
-    /// check token in local storage and it's time
-    ///
-    /// then forword to current page
-
-    if (tokenService.tokenModel != null) {
-      if (DateTime.now()
-              .difference(DateTime.tryParse(tokenService.tokenModel!.dToken)!)
-              .inMinutes >
-          55) {
-        refreshToken();
-      }
-      isLogin = true;
-    }
+  setShowPass() {
+    showPass = !showPass;
+    update(['pass_icon']);
   }
 
   Future<void> signOut() async {
