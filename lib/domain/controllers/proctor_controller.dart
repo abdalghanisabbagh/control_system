@@ -28,21 +28,12 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'profile_controller.dart';
 
 class ProctorController extends GetxController {
-  final dateController = TextEditingController();
-  DateTime? selectedDate;
-
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
-  ProctorResModel? selectedProctor;
-
-  ExamRoomResModel? selectedExamRoom;
-
-  List<ProctorInExamRoomResModel> proctorsInExamRoom = [];
-  List<ProctorInExamRoomResModel> proctorHasExamRooms = [];
-
   List<ControlMissionResModel> controlMissions = [];
   bool controlMissionsAreLoading = false;
+  final dateController = TextEditingController();
   List<EducationYearModel> educationYears = [];
   List<ExamRoomResModel> examRooms = [];
   bool examRoomsAreLoading = false;
@@ -53,10 +44,15 @@ class ProctorController extends GetxController {
   List<ValueItem> optionsControlMissions = [];
   List<ValueItem> optionsEducationYear = [];
   final TextEditingController passwordController = TextEditingController();
+  List<ProctorInExamRoomResModel> proctorHasExamRooms = [];
   List<ProctorResModel> proctors = [];
+  List<ProctorInExamRoomResModel> proctorsInExamRoom = [];
   final int schoolId = Hive.box('School').get('Id');
   int? selectedControlMissionsId;
+  DateTime? selectedDate;
   int? selectedEducationYearId;
+  ExamRoomResModel? selectedExamRoom;
+  ProctorResModel? selectedProctor;
   bool showPassord = true;
   final TextEditingController usernameController = TextEditingController();
 
