@@ -10,16 +10,14 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class AdminController extends GetxController {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
-
-  final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-  final TextEditingController nisIdController = TextEditingController();
 
-  String? selectedRoleType;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController fullNameController = TextEditingController();
+  bool isLoading = false;
+  final TextEditingController nisIdController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   List<String> roleTypes = [
     'Control admin',
     'School Director',
@@ -28,8 +26,6 @@ class AdminController extends GetxController {
     'QR Reader',
     'Vice Principal'
   ];
-
-  String? selectedDivision;
 
   List<String> schoolDivision = [
     "Elementary",
@@ -41,9 +37,10 @@ class AdminController extends GetxController {
     "IGCSE",
   ];
 
-  bool isLoading = false;
-
+  String? selectedDivision;
+  String? selectedRoleType;
   bool showPassord = true;
+  final TextEditingController usernameController = TextEditingController();
 
   Future<bool> addNewUser() async {
     isLoading = true;
