@@ -1,24 +1,24 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/control_mission/control_mission_res_model.dart';
-import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
-import 'package:control_system/domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import 'package:control_system/presentation/resource_manager/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
+import '../../../../Data/Models/exam_mission/exam_mission_res_model.dart';
+import '../../../../domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
 import '../../../../domain/controllers/batch_documents.dart/seat_number_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/color_manager.dart';
 
 // ignore: must_be_immutable
 class CoverSeatNumberWidget extends GetView<SeatNumberController> {
-  final GradeResModel gradeObject;
   final ControlMissionResModel controlMissionObject;
 
+  final ExamMissionResModel examMissionObject;
   const CoverSeatNumberWidget({
     super.key,
-    required this.gradeObject,
+    required this.examMissionObject,
     required this.controlMissionObject,
   });
 
@@ -48,7 +48,7 @@ class CoverSeatNumberWidget extends GetView<SeatNumberController> {
                 Row(
                   children: [
                     Text(
-                      "Control Mission Name: ${controlMissionObject.name}",
+                      "Mission name: ${controlMissionObject.name}",
                       style: const TextStyle(
                         color: ColorManager.primary,
                         fontSize: 20,
@@ -67,7 +67,7 @@ class CoverSeatNumberWidget extends GetView<SeatNumberController> {
                             btnCancelOnPressed: () {},
                             btnOkOnPressed: () {
                               coversSheetsController
-                                  .deleteExamMission(id: gradeObject.iD!)
+                                  .deleteExamMission(id: examMissionObject.iD!)
                                   .then((value) {
                                 if (value) {
                                   MyFlashBar.showSuccess(
@@ -90,13 +90,6 @@ class CoverSeatNumberWidget extends GetView<SeatNumberController> {
                     }),
                   ],
                 ),
-                Text(
-                  "Grade: ${gradeObject.name}",
-                  style: const TextStyle(
-                    color: ColorManager.primary,
-                    fontSize: 20,
-                  ),
-                ),
               ],
             ),
           ),
@@ -113,7 +106,7 @@ class CoverSeatNumberWidget extends GetView<SeatNumberController> {
               : InkWell(
                   onTap: () {
                     controller.generatePdfSeatNumber(
-                        gradeId: gradeObject.iD!,
+                        gradeId: examMissionObject.gradesID!,
                         controlMissionName: controlMissionObject.name!,
                         controlMissionId: controlMissionObject.iD!);
                   },

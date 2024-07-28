@@ -15,48 +15,18 @@ import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
 class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
-  AddNewCoverWidget({super.key});
+  final TextEditingController dateController = TextEditingController();
 
+  final TextEditingController examFinalDegreeController =
+      TextEditingController();
   DateTime? selectedDate;
+
   String? selectedDay;
   String? selectedMonth;
   String? selectedYear;
-  Future<DateTime?> selectDate(BuildContext context) async {
-    if (controller.controlMissionResModel == null ||
-        controller.controlMissionResModel!.startDate == null ||
-        controller.controlMissionResModel!.endDate == null) {
-      return null;
-    }
-
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.parse(controller.controlMissionResModel!.startDate!
-          .substring(
-              0, controller.controlMissionResModel!.startDate!.length - 1)),
-      initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime.parse(controller.controlMissionResModel!.startDate!
-          .substring(
-              0, controller.controlMissionResModel!.startDate!.length - 1)),
-      lastDate: DateTime.parse(controller.controlMissionResModel!.endDate!
-          .substring(
-              0, controller.controlMissionResModel!.endDate!.length - 1)),
-    );
-
-    if (picked != null) {
-      selectedDate = picked;
-      selectedDay = picked.day.toString();
-      selectedMonth = DateFormat.MMMM().format(picked);
-      selectedYear = picked.year.toString();
-    }
-
-    return picked;
-  }
-
-  final TextEditingController dateController = TextEditingController();
-  final TextEditingController examFinalDegreeController =
-      TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  AddNewCoverWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -549,5 +519,36 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
         ],
       ),
     );
+  }
+
+  Future<DateTime?> selectDate(BuildContext context) async {
+    if (controller.controlMissionResModel == null ||
+        controller.controlMissionResModel!.startDate == null ||
+        controller.controlMissionResModel!.endDate == null) {
+      return null;
+    }
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.parse(controller.controlMissionResModel!.startDate!
+          .substring(
+              0, controller.controlMissionResModel!.startDate!.length - 1)),
+      initialDatePickerMode: DatePickerMode.day,
+      firstDate: DateTime.parse(controller.controlMissionResModel!.startDate!
+          .substring(
+              0, controller.controlMissionResModel!.startDate!.length - 1)),
+      lastDate: DateTime.parse(controller.controlMissionResModel!.endDate!
+          .substring(
+              0, controller.controlMissionResModel!.endDate!.length - 1)),
+    );
+
+    if (picked != null) {
+      selectedDate = picked;
+      selectedDay = picked.day.toString();
+      selectedMonth = DateFormat.MMMM().format(picked);
+      selectedYear = picked.year.toString();
+    }
+
+    return picked;
   }
 }

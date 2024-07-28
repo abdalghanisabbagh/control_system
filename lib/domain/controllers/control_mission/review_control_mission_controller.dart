@@ -40,28 +40,118 @@ class DetailsAndReviewMissionController extends GetxController {
   List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
   TabController? tabController;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    await Future.wait([
-      getControlMissionId(),
-      getControlMissionName(),
-    ]);
-    getExamRoomByControlMissionId();
-    getStudentsSeatNumberByControlMissionId();
+  void exportToCsv(
+      BuildContext context, List<PlutoRow> studentsSeatsNumberRows) {
+    List<List<dynamic>> csvData = [];
+
+    List<String> headers = [
+      'Blb Id',
+      'Student Name',
+      'Seat Number',
+      'Grade',
+      'Class Room',
+      'Cohort',
+    ];
+
+    csvData.add(headers);
+
+    for (var row in studentsSeatsNumberRows) {
+      List<dynamic> rowData = [];
+      var cellsValues = row.cells.values.toList();
+      for (var i = 0; i < cellsValues.length - 1; i++) {
+        rowData.add(cellsValues[i].value.toString());
+      }
+      csvData.add(rowData);
+    }
+
+    String csvString = const csv.ListToCsvConverter().convert(csvData);
+
+    final bytes = utf8.encode(csvString);
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    html.AnchorElement(href: url)
+      ..setAttribute('download', 'pluto_grid_export.csv')
+      ..click();
+
+    html.Url.revokeObjectUrl(url);
+
+    MyAwesomeDialogue(
+      title: 'success',
+      desc: "CSV file exported successfully.",
+      dialogType: DialogType.success,
+    ).showDialogue(Get.key.currentContext!);
   }
 
-  Future<void> saveControlMissionId(int id) async {
-    controlMissionId = id;
-    update();
-    Hive.box('ControlMission').put('Id', id);
-    getExamRoomByControlMissionId();
-  }
+  Future<void> exportToPdf(
+      BuildContext context, List<PlutoRow> studentsSeatsNumberRows) async {
+    final pdf = pw.Document();
 
-  Future<void> saveControlMissionName(String name) async {
-    controlMissionName = name;
-    update();
-    Hive.box('ControlMission').put('Name', name);
+    List<List<String>> tableData = [];
+
+    List<String> headers = [
+      'Blb Id',
+      'Student Name',
+      'Seat Number',
+      'Grade',
+      'Class Room',
+      'Cohort',
+    ];
+
+    for (var row in studentsSeatsNumberRows) {
+      List<String> rowData = [];
+      var cellsValues = row.cells.values.toList();
+      for (var i = 0; i < cellsValues.length - 1; i++) {
+        rowData.add(cellsValues[i].value.toString());
+      }
+      tableData.add(rowData);
+    }
+
+    const maxRowsPerPage = 30;
+    for (var i = 0; i < tableData.length; i += maxRowsPerPage) {
+      final end = i + maxRowsPerPage;
+      final dataSubset =
+          tableData.sublist(i, end > tableData.length ? tableData.length : end);
+
+      final pageData = [headers, ...dataSubset];
+
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Column(
+              children: [
+                pw.TableHelper.fromTextArray(
+                  context: context,
+                  data: pageData,
+                ),
+                pw.Spacer(),
+                pw.Align(
+                  alignment: pw.Alignment.bottomCenter,
+                  child: pw.Text(
+                    'Page ${context.pageNumber} of ${context.pagesCount}',
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    }
+
+    final Uint8List bytes = await pdf.save();
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    html.AnchorElement(href: url)
+      ..setAttribute('download', 'pluto_grid_export.pdf')
+      ..click();
+
+    MyAwesomeDialogue(
+      title: 'success',
+      desc: "PDF file exported successfully.",
+      dialogType: DialogType.success,
+    ).showDialogue(Get.key.currentContext!);
   }
 
   Future<void> getControlMissionId() async {
@@ -138,117 +228,27 @@ class DetailsAndReviewMissionController extends GetxController {
     return getData;
   }
 
-  Future<void> exportToPdf(
-      BuildContext context, List<PlutoRow> studentsSeatsNumberRows) async {
-    final pdf = pw.Document();
-
-    List<List<String>> tableData = [];
-
-    List<String> headers = [
-      'Blb Id',
-      'Student Name',
-      'Seat Number',
-      'Grade',
-      'Class Room',
-      'Cohort',
-    ];
-
-    for (var row in studentsSeatsNumberRows) {
-      List<String> rowData = [];
-      var cellsValues = row.cells.values.toList();
-      for (var i = 0; i < cellsValues.length - 1; i++) {
-        rowData.add(cellsValues[i].value.toString());
-      }
-      tableData.add(rowData);
-    }
-
-    const maxRowsPerPage = 30;
-    for (var i = 0; i < tableData.length; i += maxRowsPerPage) {
-      final end = i + maxRowsPerPage;
-      final dataSubset =
-          tableData.sublist(i, end > tableData.length ? tableData.length : end);
-
-      final pageData = [headers, ...dataSubset];
-
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Column(
-              children: [
-                pw.TableHelper.fromTextArray(
-                  context: context,
-                  data: pageData,
-                ),
-                pw.Spacer(),
-                pw.Align(
-                  alignment: pw.Alignment.bottomCenter,
-                  child: pw.Text(
-                    'Page ${context.pageNumber} of ${context.pagesCount}',
-                    style: const pw.TextStyle(fontSize: 10),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      );
-    }
-
-    final Uint8List bytes = await pdf.save();
-    final blob = html.Blob([bytes]);
-    final url = html.Url.createObjectUrlFromBlob(blob);
-
-    html.AnchorElement(href: url)
-      ..setAttribute('download', 'pluto_grid_export.pdf')
-      ..click();
-
-    MyAwesomeDialogue(
-      title: 'success',
-      desc: "PDF file exported successfully.",
-      dialogType: DialogType.success,
-    ).showDialogue(Get.key.currentContext!);
+  @override
+  void onInit() async {
+    super.onInit();
+    await Future.wait([
+      getControlMissionId(),
+      getControlMissionName(),
+    ]);
+    getExamRoomByControlMissionId();
+    getStudentsSeatNumberByControlMissionId();
   }
 
-  void exportToCsv(
-      BuildContext context, List<PlutoRow> studentsSeatsNumberRows) {
-    List<List<dynamic>> csvData = [];
+  Future<void> saveControlMissionId(int id) async {
+    controlMissionId = id;
+    update();
+    Hive.box('ControlMission').put('Id', id);
+    getExamRoomByControlMissionId();
+  }
 
-    List<String> headers = [
-      'Blb Id',
-      'Student Name',
-      'Seat Number',
-      'Grade',
-      'Class Room',
-      'Cohort',
-    ];
-
-    csvData.add(headers);
-
-    for (var row in studentsSeatsNumberRows) {
-      List<dynamic> rowData = [];
-      var cellsValues = row.cells.values.toList();
-      for (var i = 0; i < cellsValues.length - 1; i++) {
-        rowData.add(cellsValues[i].value.toString());
-      }
-      csvData.add(rowData);
-    }
-
-    String csvString = const csv.ListToCsvConverter().convert(csvData);
-
-    final bytes = utf8.encode(csvString);
-    final blob = html.Blob([bytes]);
-    final url = html.Url.createObjectUrlFromBlob(blob);
-
-    html.AnchorElement(href: url)
-      ..setAttribute('download', 'pluto_grid_export.csv')
-      ..click();
-
-    html.Url.revokeObjectUrl(url);
-
-    MyAwesomeDialogue(
-      title: 'success',
-      desc: "CSV file exported successfully.",
-      dialogType: DialogType.success,
-    ).showDialogue(Get.key.currentContext!);
+  Future<void> saveControlMissionName(String name) async {
+    controlMissionName = name;
+    update();
+    Hive.box('ControlMission').put('Name', name);
   }
 }

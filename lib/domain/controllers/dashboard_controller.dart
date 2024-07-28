@@ -18,6 +18,13 @@ class DashboardController extends GetxController {
     updateClock();
   }
 
+  updateClock() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      update(['clock']);
+      dateTime = DateTime.now();
+    });
+  }
+
   updateTime() {
     period = timeOfDay.period == DayPeriod.am ? "AM" : "PM";
     Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -25,13 +32,6 @@ class DashboardController extends GetxController {
         update(['clock']);
         timeOfDay = TimeOfDay.now();
       }
-    });
-  }
-
-  updateClock() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      update(['clock']);
-      dateTime = DateTime.now();
     });
   }
 }

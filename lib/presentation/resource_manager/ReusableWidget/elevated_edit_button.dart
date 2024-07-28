@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../index.dart';
 
 class ElevatedEditButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
   const ElevatedEditButton({
     super.key,
     required this.onPressed,
   });
-
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {

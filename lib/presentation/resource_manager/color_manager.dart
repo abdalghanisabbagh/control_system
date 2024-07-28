@@ -26,7 +26,6 @@ class ColorManager {
   // static Color shippedStatus = const Color(0xffAC2E9F);
 
   static Color deliverdStatus = const Color(0xff07CC66);
-  static Color green = const Color(0xff07CC66);
 
   static Color displayLargeText = Colors.black;
   static Color elevatedButtonColor = Colors.black;
@@ -48,6 +47,7 @@ class ColorManager {
     'Grade 12': const Color(0xff168aad),
   };
 
+  static Color green = const Color(0xff07CC66);
   static const Color grey = Color(0x99858585);
   static Color greyA8 = const Color(0xffA8A8A8);
   static Color headline1 = Colors.white;

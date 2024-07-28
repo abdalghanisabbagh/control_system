@@ -1,4 +1,13 @@
 class SubjectResModel {
+  String? active;
+
+  String? createdAt;
+
+  int? createdBy;
+  int? iD;
+  String? name;
+  DateTime? updatedAt;
+  int? updatedBy;
   SubjectResModel({
     this.iD,
     this.name,
@@ -8,7 +17,6 @@ class SubjectResModel {
     this.updatedBy,
     this.updatedAt,
   });
-
   SubjectResModel.fromJson(json) {
     iD = json['ID'];
     name = json['Name'];
@@ -18,14 +26,6 @@ class SubjectResModel {
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
   }
-
-  String? active;
-  String? createdAt;
-  int? createdBy;
-  int? iD;
-  String? name;
-  DateTime? updatedAt;
-  int? updatedBy;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

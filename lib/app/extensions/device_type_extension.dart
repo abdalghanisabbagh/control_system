@@ -17,9 +17,9 @@ extension DeviceTypeExtension on BuildContext {
     }
   }
 
+  bool get isDesktop => getDeviceType == DeviceTypeEnum.desktop;
+
   bool get isMobile => getDeviceType == DeviceTypeEnum.mobile;
 
   bool get isTablet => getDeviceType == DeviceTypeEnum.tablet;
-
-  bool get isDesktop => getDeviceType == DeviceTypeEnum.desktop;
 }

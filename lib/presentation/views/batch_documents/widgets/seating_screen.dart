@@ -1,11 +1,11 @@
-import 'package:control_system/domain/controllers/batch_documents.dart/seat_number_controller.dart';
-import 'package:control_system/presentation/views/batch_documents/widgets/seat_number_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../domain/controllers/batch_documents.dart/seat_number_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/index.dart';
+import 'seat_number_widget.dart';
 
 class SeatingScreen extends GetView<SeatNumberController> {
   const SeatingScreen({super.key});
@@ -141,7 +141,7 @@ class SeatingScreen extends GetView<SeatNumberController> {
               );
             }
 
-            if (controller.filteredGradesList.isEmpty) {
+            if (controller.filteredExamMissionsList.isEmpty) {
               return Expanded(
                 child: Center(
                   child: Text(
@@ -154,17 +154,18 @@ class SeatingScreen extends GetView<SeatNumberController> {
 
             return Expanded(
               child: ListView.builder(
-                itemCount: controller.filteredGradesList.length,
+                itemCount: controller.filteredExamMissionsList.length,
                 itemBuilder: (context, index) {
                   return GetBuilder<SeatNumberController>(
-                      id: controller.filteredGradesList[index].iD,
+                      id: controller.filteredExamMissionsList[index].iD,
                       builder: (context) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CoverSeatNumberWidget(
                             controlMissionObject:
                                 controller.controlMissionObject!,
-                            gradeObject: controller.filteredGradesList[index],
+                            examMissionObject:
+                                controller.filteredExamMissionsList[index],
                           ),
                         );
                       });

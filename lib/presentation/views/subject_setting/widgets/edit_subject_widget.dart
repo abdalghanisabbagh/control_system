@@ -12,12 +12,12 @@ import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
 class EditSubjectWidget extends StatelessWidget {
+  final SubjectResModel subject;
+
   const EditSubjectWidget({
     super.key,
     required this.subject,
   });
-
-  final SubjectResModel subject;
 
   @override
   Widget build(BuildContext context) {

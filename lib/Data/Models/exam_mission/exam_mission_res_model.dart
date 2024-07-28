@@ -1,10 +1,34 @@
-import 'package:control_system/Data/Models/school/grade_response/grade_res_model.dart';
-import 'package:control_system/Data/Models/subject/subject_res_model.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/profile_controller.dart';
+import '../school/grade_response/grade_res_model.dart';
+import '../subject/subject_res_model.dart';
 
 class ExamMissionResModel {
+  int? active;
+
+  int? controlMissionID;
+
+  bool? createOnly;
+  String? createdAt;
+  int? createdBy;
+  int? duration;
+  int? educationYearID;
+  String? endTime;
+  String? finalDegree;
+  GradeResModel? gradeResModel;
+  int? gradesID;
+  int? iD;
+  String? month;
+  String? pdf;
+  String? pdfV2;
+  bool? period;
+  String? startTime;
+  SubjectResModel? subjectResModel;
+  int? subjectsID;
+  String? updatedAt;
+  int? updatedBy;
+  String? year;
   ExamMissionResModel({
     this.iD,
     this.subjectsID,
@@ -29,7 +53,6 @@ class ExamMissionResModel {
     this.active,
     this.createOnly,
   });
-
   ExamMissionResModel.fromJson(json) {
     iD = json['ID'];
     subjectsID = json['Subjects_ID'];
@@ -57,29 +80,6 @@ class ExamMissionResModel {
         : SubjectResModel.fromJson(json['subjects']);
     active = json['Active'];
   }
-
-  int? active;
-  int? controlMissionID;
-  String? createdAt;
-  int? createdBy;
-  int? duration;
-  int? educationYearID;
-  String? endTime;
-  String? finalDegree;
-  int? gradesID;
-  int? iD;
-  String? month;
-  String? pdf;
-  String? pdfV2;
-  bool? period;
-  bool? createOnly;
-  String? startTime;
-  int? subjectsID;
-  String? updatedAt;
-  int? updatedBy;
-  GradeResModel? gradeResModel;
-  SubjectResModel? subjectResModel;
-  String? year;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

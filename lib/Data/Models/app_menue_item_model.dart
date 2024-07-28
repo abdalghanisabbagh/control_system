@@ -4,13 +4,6 @@ import '../../presentation/resource_manager/assets_manager.dart';
 import '../../presentation/resource_manager/routes/app_routes_names_and_paths.dart';
 
 class AppMenueItem {
-  AppMenueItem({
-    required this.pageName,
-    required this.pageNumber,
-    this.routeName,
-    this.iconWidget,
-  });
-
   static List<AppMenueItem> allMenue = [
     AppMenueItem(
         pageName: AppRoutesNamesAndPaths.studentScreenName,
@@ -75,7 +68,14 @@ class AppMenueItem {
   ];
 
   Widget? iconWidget;
+
   String pageName;
   String pageNumber;
   String? routeName;
+  AppMenueItem({
+    required this.pageName,
+    required this.pageNumber,
+    this.routeName,
+    this.iconWidget,
+  });
 }

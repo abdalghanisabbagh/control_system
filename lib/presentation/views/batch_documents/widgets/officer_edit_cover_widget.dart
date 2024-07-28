@@ -14,51 +14,25 @@ import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
 class OfficerEditCoverWidget extends GetView<EditCoverSheetController> {
-  ExamMissionResModel examMissionObject;
   ControlMissionResModel controlMissionObject;
-  OfficerEditCoverWidget(
-      {super.key,
-      required this.examMissionObject,
-      required this.controlMissionObject});
 
   late TextEditingController dateController = TextEditingController(
       text: "${examMissionObject.month} ${examMissionObject.year}");
+  final TextEditingController examFinalDegreeController =
+      TextEditingController();
+
+  ExamMissionResModel examMissionObject;
+
   DateTime? selectedDate;
   String? selectedDay;
   String? selectedMonth;
   String? selectedYear;
-
-  Future<DateTime?> selectDate(BuildContext context) async {
-    if (controlMissionObject.startDate == null ||
-        controlMissionObject.endDate == null) {
-      return null;
-    }
-
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.parse(controlMissionObject.startDate!
-          .substring(0, controlMissionObject.startDate!.length - 1)),
-      initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime.parse(controlMissionObject.startDate!
-          .substring(0, controlMissionObject.startDate!.length - 1)),
-      lastDate: DateTime.parse(controlMissionObject.endDate!
-          .substring(0, controlMissionObject.endDate!.length - 1)),
-    );
-
-    if (picked != null) {
-      selectedDate = picked;
-      selectedDay = picked.day.toString();
-      selectedMonth = DateFormat.MMMM().format(picked);
-      selectedYear = picked.year.toString();
-    }
-
-    return picked;
-  }
-
-  final TextEditingController examFinalDegreeController =
-      TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  OfficerEditCoverWidget(
+      {super.key,
+      required this.examMissionObject,
+      required this.controlMissionObject});
 
   @override
   Widget build(BuildContext context) {
@@ -255,5 +229,32 @@ class OfficerEditCoverWidget extends GetView<EditCoverSheetController> {
         ],
       ),
     );
+  }
+
+  Future<DateTime?> selectDate(BuildContext context) async {
+    if (controlMissionObject.startDate == null ||
+        controlMissionObject.endDate == null) {
+      return null;
+    }
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.parse(controlMissionObject.startDate!
+          .substring(0, controlMissionObject.startDate!.length - 1)),
+      initialDatePickerMode: DatePickerMode.day,
+      firstDate: DateTime.parse(controlMissionObject.startDate!
+          .substring(0, controlMissionObject.startDate!.length - 1)),
+      lastDate: DateTime.parse(controlMissionObject.endDate!
+          .substring(0, controlMissionObject.endDate!.length - 1)),
+    );
+
+    if (picked != null) {
+      selectedDate = picked;
+      selectedDay = picked.day.toString();
+      selectedMonth = DateFormat.MMMM().format(picked);
+      selectedYear = picked.year.toString();
+    }
+
+    return picked;
   }
 }

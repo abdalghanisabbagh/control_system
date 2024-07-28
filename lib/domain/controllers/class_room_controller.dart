@@ -28,109 +28,6 @@ class ClassRoomController extends GetxController {
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
 
-  @override
-  void onInit() async {
-    await getSchools().then((_) async {
-      await getClassesRooms();
-    });
-    super.onInit();
-  }
-
-  Future<bool> getClassesRooms() async {
-    isLoading = true;
-    bool gotData = false;
-    update();
-    ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
-    Either<Failure, ClassesRoomsResModel> response =
-        await responseHandler.getResponse(
-      path: SchoolsLinks.schoolsClasses,
-      converter: ClassesRoomsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        isLoading = false;
-        gotData = false;
-        update();
-      },
-      (r) {
-        classesRooms = r.data!;
-        isLoading = false;
-        gotData = true;
-        update();
-      },
-    );
-    return gotData;
-  }
-
-  Future<bool> getSchools() async {
-    isLoading = true;
-    bool gotData = false;
-    update();
-    ResponseHandler<SchoolsResModel> responseHandler = ResponseHandler();
-    Either<Failure, SchoolsResModel> response =
-        await responseHandler.getResponse(
-      path: SchoolsLinks.getAllSchools,
-      converter: SchoolsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        isLoading = false;
-        gotData = false;
-        update();
-      },
-      (r) {
-        schools = r.data!;
-        isLoading = false;
-        gotData = true;
-        update();
-      },
-    );
-    return gotData;
-  }
-
-  Future<bool> deleteClassRoom({
-    required int id,
-  }) async {
-    bool classRoomHasBeenDeleted = false;
-
-    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
-
-    Either<Failure, ClassRoomResModel> response =
-        await responseHandler.getResponse(
-      path: '${SchoolsLinks.schoolsClasses}/$id',
-      converter: ClassRoomResModel.fromJson,
-      type: ReqTypeEnum.DELETE,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        classRoomHasBeenDeleted = false;
-      },
-      (r) {
-        getClassesRooms();
-        classRoomHasBeenDeleted = true;
-      },
-    );
-    update();
-    return classRoomHasBeenDeleted;
-  }
-
   Future<bool> addNewClass({
     required String name,
     required String floorName,
@@ -242,6 +139,37 @@ class ClassRoomController extends GetxController {
     return deleted;
   }
 
+  Future<bool> deleteClassRoom({
+    required int id,
+  }) async {
+    bool classRoomHasBeenDeleted = false;
+
+    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
+
+    Either<Failure, ClassRoomResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.schoolsClasses}/$id',
+      converter: ClassRoomResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        classRoomHasBeenDeleted = false;
+      },
+      (r) {
+        getClassesRooms();
+        classRoomHasBeenDeleted = true;
+      },
+    );
+    update();
+    return classRoomHasBeenDeleted;
+  }
+
   Future<bool> editClassRoom({
     required int id,
     required String name,
@@ -294,5 +222,77 @@ class ClassRoomController extends GetxController {
     isLoadingEditClassRoom = false;
     update();
     return classRoomHasBeenEdited;
+  }
+
+  Future<bool> getClassesRooms() async {
+    isLoading = true;
+    bool gotData = false;
+    update();
+    ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
+    Either<Failure, ClassesRoomsResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.schoolsClasses,
+      converter: ClassesRoomsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        isLoading = false;
+        gotData = false;
+        update();
+      },
+      (r) {
+        classesRooms = r.data!;
+        isLoading = false;
+        gotData = true;
+        update();
+      },
+    );
+    return gotData;
+  }
+
+  Future<bool> getSchools() async {
+    isLoading = true;
+    bool gotData = false;
+    update();
+    ResponseHandler<SchoolsResModel> responseHandler = ResponseHandler();
+    Either<Failure, SchoolsResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.getAllSchools,
+      converter: SchoolsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        isLoading = false;
+        gotData = false;
+        update();
+      },
+      (r) {
+        schools = r.data!;
+        isLoading = false;
+        gotData = true;
+        update();
+      },
+    );
+    return gotData;
+  }
+
+  @override
+  void onInit() async {
+    await getSchools().then((_) async {
+      await getClassesRooms();
+    });
+    super.onInit();
   }
 }

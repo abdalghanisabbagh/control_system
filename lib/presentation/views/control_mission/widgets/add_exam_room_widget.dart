@@ -15,12 +15,12 @@ import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
 class AddExamRoomWidget extends GetView<DistributionController> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  TextEditingController newRoomName = TextEditingController();
   AddExamRoomWidget({
     super.key,
   });
-
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController newRoomName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

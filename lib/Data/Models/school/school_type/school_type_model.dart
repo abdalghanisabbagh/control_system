@@ -1,4 +1,13 @@
 class SchoolTypeResModel {
+  int? active;
+
+  String? createdAt;
+
+  int? createdBy;
+  int? iD;
+  String? name;
+  DateTime? updatedAt;
+  int? updatedBy;
   SchoolTypeResModel({
     this.iD,
     this.name,
@@ -8,7 +17,6 @@ class SchoolTypeResModel {
     this.updatedAt,
     this.active,
   });
-
   SchoolTypeResModel.fromJson(json) {
     iD = json['ID'];
     name = json['Name'];
@@ -18,14 +26,6 @@ class SchoolTypeResModel {
     updatedAt = json['Updated_At'];
     active = json['Active'];
   }
-
-  int? active;
-  String? createdAt;
-  int? createdBy;
-  int? iD;
-  String? name;
-  DateTime? updatedAt;
-  int? updatedBy;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -7,37 +7,6 @@ import '../../Data/Models/student/student_res_model.dart';
 import '../../Data/Models/student_seat/student_seat_res_model.dart';
 
 extension PlutoRowExtension on List<StudentResModel> {
-  List<PlutoRow> convertStudentsToRows() {
-    List<PlutoRow> rows = [];
-    for (var element in this) {
-      rows.add(
-        PlutoRow(
-          cells: {
-            'BlbIdField': PlutoCell(value: element.blbId.toString()),
-            'FirstNameField': PlutoCell(value: element.firstName),
-            'SecondNameField': PlutoCell(value: element.secondName),
-            'ThirdNameField': PlutoCell(
-              value: element.thirdName,
-            ),
-            'CohortField': PlutoCell(
-              value: element.cohortResModel!.name,
-            ),
-            'GradeField': PlutoCell(
-              value: element.gradeResModel!.name,
-            ),
-            'ClassRoomField': PlutoCell(
-              value: element.classRoomResModel!.name,
-            ),
-            'LanguageField': PlutoCell(value: element.secondLang),
-            'ReligionField': PlutoCell(value: element.religion),
-            'ActionsField': PlutoCell(value: 'Actions'),
-          },
-        ),
-      );
-    }
-    return rows;
-  }
-
   Map<String, dynamic> convertFileStudentsToPluto({
     required List<StudentResModel>? students,
     required List<CohortResModel> cohorts,
@@ -241,6 +210,37 @@ extension PlutoRowExtension on List<StudentResModel> {
       'errorclass': errorclass,
       'errorBlbID': errorBlbID
     };
+  }
+
+  List<PlutoRow> convertStudentsToRows() {
+    List<PlutoRow> rows = [];
+    for (var element in this) {
+      rows.add(
+        PlutoRow(
+          cells: {
+            'BlbIdField': PlutoCell(value: element.blbId.toString()),
+            'FirstNameField': PlutoCell(value: element.firstName),
+            'SecondNameField': PlutoCell(value: element.secondName),
+            'ThirdNameField': PlutoCell(
+              value: element.thirdName,
+            ),
+            'CohortField': PlutoCell(
+              value: element.cohortResModel!.name,
+            ),
+            'GradeField': PlutoCell(
+              value: element.gradeResModel!.name,
+            ),
+            'ClassRoomField': PlutoCell(
+              value: element.classRoomResModel!.name,
+            ),
+            'LanguageField': PlutoCell(value: element.secondLang),
+            'ReligionField': PlutoCell(value: element.religion),
+            'ActionsField': PlutoCell(value: 'Actions'),
+          },
+        ),
+      );
+    }
+    return rows;
   }
 }
 

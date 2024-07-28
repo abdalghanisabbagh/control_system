@@ -1,14 +1,14 @@
 import 'class_desk_res_model.dart';
 
 class ClassDesksResModel {
+  List<ClassDeskResModel>? data;
+
   ClassDesksResModel({this.data});
 
   ClassDesksResModel.fromJson(json) {
     data = List<ClassDeskResModel>.from(
         json.map((e) => ClassDeskResModel.fromJson(e)).toList());
   }
-
-  List<ClassDeskResModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

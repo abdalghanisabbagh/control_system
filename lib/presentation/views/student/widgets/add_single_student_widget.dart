@@ -12,17 +12,17 @@ import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
 class AddSingleStudentWidget extends GetView<AddNewStudentController> {
-  AddSingleStudentWidget({super.key});
-
   final TextEditingController blbIdController = TextEditingController();
+
   final TextEditingController citizenshipController = TextEditingController();
   final TextEditingController fnameController = TextEditingController();
   final TextEditingController lnameController = TextEditingController();
   final TextEditingController mnameController = TextEditingController();
   final TextEditingController religionController = TextEditingController();
   final TextEditingController sLangController = TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  AddSingleStudentWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

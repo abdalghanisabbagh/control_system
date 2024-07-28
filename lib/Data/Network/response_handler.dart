@@ -10,9 +10,9 @@ import 'tools/dio_factory.dart';
 import 'tools/failure_model.dart';
 
 class ResponseHandler<T> {
-  ResponseHandler() : _dio = DioFactory().getDio();
-
   Dio _dio;
+
+  ResponseHandler() : _dio = DioFactory().getDio();
 
   Future<Either<Failure, T>> getResponse({
     required String path,
@@ -29,7 +29,7 @@ class ResponseHandler<T> {
       String? newAccessToken = await Get.find<AuthController>().refreshToken();
       _dio = DioFactory().getDio(
         token: newAccessToken != null
-            ? TokenModel( 
+            ? TokenModel(
                 aToken: newAccessToken,
                 dToken: dtoken,
                 rToken: tokenService.tokenModel!.rToken,
@@ -52,6 +52,32 @@ class ResponseHandler<T> {
     }
   }
 
+  Future<Either<Failure, T>> _delete(
+    String path,
+    T Function(dynamic) converter,
+    Map<String, dynamic>? params,
+    dynamic body,
+  ) async {
+    return await _request(
+      converter,
+      () => _dio
+          .delete(
+        path,
+        queryParameters: params,
+        data: body,
+      )
+          .catchError(
+        (error) {
+          return Response(
+            statusCode: error.response.statusCode,
+            data: {"message": error.response.data['message']},
+            requestOptions: RequestOptions(),
+          );
+        },
+      ),
+    );
+  }
+
   Future<Either<Failure, T>> _get(
     String path,
     T Function(dynamic) converter,
@@ -62,6 +88,32 @@ class ResponseHandler<T> {
       converter,
       () => _dio
           .get(
+        path,
+        queryParameters: params,
+        data: body,
+      )
+          .catchError(
+        (error) {
+          return Response(
+            statusCode: error.response.statusCode,
+            data: {"message": error.response.data['message']},
+            requestOptions: RequestOptions(),
+          );
+        },
+      ),
+    );
+  }
+
+  Future<Either<Failure, T>> _patch(
+    String path,
+    T Function(dynamic) converter,
+    Map<String, dynamic>? params,
+    dynamic body,
+  ) async {
+    return await _request(
+      converter,
+      () => _dio
+          .patch(
         path,
         queryParameters: params,
         data: body,
@@ -114,58 +166,6 @@ class ResponseHandler<T> {
       converter,
       () => _dio
           .put(
-        path,
-        queryParameters: params,
-        data: body,
-      )
-          .catchError(
-        (error) {
-          return Response(
-            statusCode: error.response.statusCode,
-            data: {"message": error.response.data['message']},
-            requestOptions: RequestOptions(),
-          );
-        },
-      ),
-    );
-  }
-
-  Future<Either<Failure, T>> _delete(
-    String path,
-    T Function(dynamic) converter,
-    Map<String, dynamic>? params,
-    dynamic body,
-  ) async {
-    return await _request(
-      converter,
-      () => _dio
-          .delete(
-        path,
-        queryParameters: params,
-        data: body,
-      )
-          .catchError(
-        (error) {
-          return Response(
-            statusCode: error.response.statusCode,
-            data: {"message": error.response.data['message']},
-            requestOptions: RequestOptions(),
-          );
-        },
-      ),
-    );
-  }
-
-  Future<Either<Failure, T>> _patch(
-    String path,
-    T Function(dynamic) converter,
-    Map<String, dynamic>? params,
-    dynamic body,
-  ) async {
-    return await _request(
-      converter,
-      () => _dio
-          .patch(
         path,
         queryParameters: params,
         data: body,

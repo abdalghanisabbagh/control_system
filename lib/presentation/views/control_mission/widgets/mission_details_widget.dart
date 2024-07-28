@@ -11,9 +11,9 @@ import '../../../resource_manager/index.dart';
 
 // ignore: must_be_immutable
 class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
-  MissionDetailsWidget({super.key});
-
   late PlutoGridStateManager stateManager;
+
+  MissionDetailsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,18 +1,18 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../domain/controllers/proctor_controller.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/styles_manager.dart';
 import '../../../resource_manager/values_manager.dart';
 
 class ProctorsInExamRoomWidget extends GetView<ProctorController> {
+  final String examRoomName;
+
   const ProctorsInExamRoomWidget({
     super.key,
     required this.examRoomName,
   });
-
-  final String examRoomName;
 
   @override
   Widget build(BuildContext context) {

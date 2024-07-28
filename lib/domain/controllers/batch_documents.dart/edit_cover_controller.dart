@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/controllers/controllers.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
@@ -13,19 +12,13 @@ import '../../../Data/Network/response_handler.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../controllers.dart';
 
 class EditCoverSheetController extends GetxController {
-  DateTime? selectedStartTime;
-  DateTime? selectedEndTime;
+  bool isImportedFile = false;
 
   bool isLodingUpdateExamMission = false;
   bool isLodingUploadPdf = false;
-  bool isImportedFile = false;
-
-  ValueItem? selectedIExamDuration;
-  String? pdfUrl;
-  String? pdfName;
-
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
     const ValueItem(value: 25, label: '25 Mins'),
@@ -41,7 +34,12 @@ class EditCoverSheetController extends GetxController {
     const ValueItem(value: 130, label: '130 Mins'),
     const ValueItem(value: 150, label: '150 Mins')
   ];
+  String? pdfName;
 
+  String? pdfUrl;
+  DateTime? selectedEndTime;
+  ValueItem? selectedIExamDuration;
+  DateTime? selectedStartTime;
   Future<(Uint8List?, String?)> pickPdfFile() async {
     FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -68,43 +66,6 @@ class EditCoverSheetController extends GetxController {
     }
 
     return (null, null);
-  }
-
-  Future<bool> uplodPdfInExamMission() async {
-    bool uploadPdfFile = false;
-    ResponseHandler<PdfExamMissionResModel> responseHandler = ResponseHandler();
-
-    (Uint8List?, String?) pdfData = await pickPdfFile();
-    isLodingUploadPdf = true;
-    update();
-
-    var response = await responseHandler.getResponse(
-      path: ExamLinks.examMissionUpload,
-      converter: PdfExamMissionResModel.fromJson,
-      type: ReqTypeEnum.POST,
-      body: FormData.fromMap(
-        {
-          'file': pdfData.$1 == null
-              ? null
-              : MultipartFile.fromBytes(pdfData.$1!, filename: pdfData.$2),
-        },
-      ),
-    );
-
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      uploadPdfFile = false;
-    }, (result) {
-      pdfUrl = result.data!;
-      uploadPdfFile = true;
-    });
-    isLodingUploadPdf = false;
-    update();
-    return uploadPdfFile;
   }
 
   Future<bool> updateExamMission({
@@ -199,5 +160,42 @@ class EditCoverSheetController extends GetxController {
 
     update();
     return updateExamMission;
+  }
+
+  Future<bool> uplodPdfInExamMission() async {
+    bool uploadPdfFile = false;
+    ResponseHandler<PdfExamMissionResModel> responseHandler = ResponseHandler();
+
+    (Uint8List?, String?) pdfData = await pickPdfFile();
+    isLodingUploadPdf = true;
+    update();
+
+    var response = await responseHandler.getResponse(
+      path: ExamLinks.examMissionUpload,
+      converter: PdfExamMissionResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: FormData.fromMap(
+        {
+          'file': pdfData.$1 == null
+              ? null
+              : MultipartFile.fromBytes(pdfData.$1!, filename: pdfData.$2),
+        },
+      ),
+    );
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      uploadPdfFile = false;
+    }, (result) {
+      pdfUrl = result.data!;
+      uploadPdfFile = true;
+    });
+    isLodingUploadPdf = false;
+    update();
+    return uploadPdfFile;
   }
 }

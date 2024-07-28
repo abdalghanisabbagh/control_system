@@ -37,9 +37,7 @@ class BarCodeSubjects extends StatelessWidget {
                   text: 'Grade : ',
                   style: nunitoBlack.copyWith(
                       color: ColorManager.bgSideMenu, fontSize: 16),
-                  children: const <TextSpan>[
-                 
-                  ],
+                  children: const <TextSpan>[],
                 ),
               ),
               RichText(
@@ -47,9 +45,7 @@ class BarCodeSubjects extends StatelessWidget {
                   text: 'Class : ',
                   style: nunitoBlack.copyWith(
                       color: ColorManager.bgSideMenu, fontSize: 16),
-                  children: const <TextSpan>[
-                   
-                  ],
+                  children: const <TextSpan>[],
                 ),
               ),
             ],

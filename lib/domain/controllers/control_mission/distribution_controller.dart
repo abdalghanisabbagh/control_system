@@ -27,179 +27,6 @@ class DistributionController extends GetxController {
   ValueItem? selectedItemClassRoom;
   ValueItem? selectedItemStage;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    await Future.wait([
-      getControlMissionId(),
-      getControlMissionName(),
-    ]);
-    getExamRoomByControlMissionId();
-  }
-
-  Future<void> saveControlMissionId(int id) async {
-    controlMissionId = id;
-    update();
-    Hive.box('ControlMission').put('Id', id);
-    getExamRoomByControlMissionId();
-  }
-
-  Future<void> saveControlMissionName(String name) async {
-    controlMissionName = name;
-    update();
-    Hive.box('ControlMission').put('Name', name);
-  }
-
-  Future<void> getControlMissionId() async {
-    controlMissionId = Hive.box('ControlMission').get('Id') ?? 0;
-    update();
-  }
-
-  Future<void> getControlMissionName() async {
-    controlMissionName = Hive.box('ControlMission').get('Name') ?? '';
-    update();
-  }
-
-  Future<void> getExamRoomByControlMissionId() async {
-    isLodingGetExamRooms = true;
-    update();
-
-    final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-      path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
-      converter: ExamRoomsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'title',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(
-          Get.key.currentContext!,
-        );
-      },
-      (r) {
-        listExamRoom = r.data!;
-      },
-    );
-    isLodingGetExamRooms = false;
-    update();
-  }
-
-  Future<bool> getClassesRoomsBySchoolId() async {
-    bool gotData = false;
-    ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
-    Either<Failure, ClassesRoomsResModel> response =
-        await responseHandler.getResponse(
-      path:
-          "${SchoolsLinks.schoolsClasses}/school/${Hive.box('School').get('Id')}",
-      converter: ClassesRoomsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        gotData = false;
-        update();
-      },
-      (r) {
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.iD))
-            .toList();
-        optionsClassRoom = items;
-        gotData = true;
-        update();
-      },
-    );
-    return gotData;
-  }
-
-  void setSelectedItemClassRoom(List<ValueItem> items) {
-    selectedItemClassRoom = items.first;
-    update();
-  }
-
-  void setSelectedItemStage(List<ValueItem> items) {
-    selectedItemStage = items.first;
-    update();
-  }
-
-  Future<bool> deleteExamRoom(int idExamRoom) async {
-    isLoadingDeleteClassRoom = true;
-    bool succDel = false;
-    update();
-    ResponseHandler<ExamRoomResModel> responseHandler = ResponseHandler();
-    Either<Failure, ExamRoomResModel> response =
-        await responseHandler.getResponse(
-      path: "${ExamLinks.examRooms}/$idExamRoom",
-      converter: ExamRoomResModel.fromJson,
-      type: ReqTypeEnum.DELETE,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        succDel = false;
-        update();
-      },
-      (r) {
-        getExamRoomByControlMissionId();
-        isLoadingDeleteClassRoom = false;
-        succDel = true;
-        update();
-      },
-    );
-    return succDel;
-  }
-
-  Future<bool> getStage() async {
-    bool getData = false;
-    ResponseHandler<StageResModel> responseHandler = ResponseHandler();
-    Either<Failure, StageResModel> response = await responseHandler.getResponse(
-      path: Stage.stage,
-      converter: StageResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        // isLoadingGetStage = false;
-        getData = false;
-        update();
-      },
-      (r) {
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.iD))
-            .toList();
-        optionsStage = items;
-        getData = true;
-        update();
-      },
-    );
-    return getData;
-  }
-
-  void getStageAndClassRoom() async {
-    isLodingGetStageAndClassRoom = true;
-    update();
-    await Future.wait([getStage(), getClassesRoomsBySchoolId()]);
-    isLodingGetStageAndClassRoom = false;
-    update();
-  }
-
   Future<bool> addNewExamRoom({
     required int controlMissionId,
     required int schoolClassId,
@@ -244,5 +71,178 @@ class DistributionController extends GetxController {
 
     update();
     return addExamRoomHasBeenAdded;
+  }
+
+  Future<bool> deleteExamRoom(int idExamRoom) async {
+    isLoadingDeleteClassRoom = true;
+    bool succDel = false;
+    update();
+    ResponseHandler<ExamRoomResModel> responseHandler = ResponseHandler();
+    Either<Failure, ExamRoomResModel> response =
+        await responseHandler.getResponse(
+      path: "${ExamLinks.examRooms}/$idExamRoom",
+      converter: ExamRoomResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        succDel = false;
+        update();
+      },
+      (r) {
+        getExamRoomByControlMissionId();
+        isLoadingDeleteClassRoom = false;
+        succDel = true;
+        update();
+      },
+    );
+    return succDel;
+  }
+
+  Future<bool> getClassesRoomsBySchoolId() async {
+    bool gotData = false;
+    ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
+    Either<Failure, ClassesRoomsResModel> response =
+        await responseHandler.getResponse(
+      path:
+          "${SchoolsLinks.schoolsClasses}/school/${Hive.box('School').get('Id')}",
+      converter: ClassesRoomsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        gotData = false;
+        update();
+      },
+      (r) {
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsClassRoom = items;
+        gotData = true;
+        update();
+      },
+    );
+    return gotData;
+  }
+
+  Future<void> getControlMissionId() async {
+    controlMissionId = Hive.box('ControlMission').get('Id') ?? 0;
+    update();
+  }
+
+  Future<void> getControlMissionName() async {
+    controlMissionName = Hive.box('ControlMission').get('Name') ?? '';
+    update();
+  }
+
+  Future<void> getExamRoomByControlMissionId() async {
+    isLodingGetExamRooms = true;
+    update();
+
+    final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
+      path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
+      converter: ExamRoomsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        listExamRoom = r.data!;
+      },
+    );
+    isLodingGetExamRooms = false;
+    update();
+  }
+
+  Future<bool> getStage() async {
+    bool getData = false;
+    ResponseHandler<StageResModel> responseHandler = ResponseHandler();
+    Either<Failure, StageResModel> response = await responseHandler.getResponse(
+      path: Stage.stage,
+      converter: StageResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        // isLoadingGetStage = false;
+        getData = false;
+        update();
+      },
+      (r) {
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.iD))
+            .toList();
+        optionsStage = items;
+        getData = true;
+        update();
+      },
+    );
+    return getData;
+  }
+
+  void getStageAndClassRoom() async {
+    isLodingGetStageAndClassRoom = true;
+    update();
+    await Future.wait([getStage(), getClassesRoomsBySchoolId()]);
+    isLodingGetStageAndClassRoom = false;
+    update();
+  }
+
+  @override
+  void onInit() async {
+    super.onInit();
+    await Future.wait([
+      getControlMissionId(),
+      getControlMissionName(),
+    ]);
+    getExamRoomByControlMissionId();
+  }
+
+  Future<void> saveControlMissionId(int id) async {
+    controlMissionId = id;
+    update();
+    Hive.box('ControlMission').put('Id', id);
+    getExamRoomByControlMissionId();
+  }
+
+  Future<void> saveControlMissionName(String name) async {
+    controlMissionName = name;
+    update();
+    Hive.box('ControlMission').put('Name', name);
+  }
+
+  void setSelectedItemClassRoom(List<ValueItem> items) {
+    selectedItemClassRoom = items.first;
+    update();
+  }
+
+  void setSelectedItemStage(List<ValueItem> items) {
+    selectedItemStage = items.first;
+    update();
   }
 }

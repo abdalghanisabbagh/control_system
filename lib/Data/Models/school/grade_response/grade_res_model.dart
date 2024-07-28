@@ -1,4 +1,12 @@
 class GradeResModel {
+  String? createdAt;
+
+  int? createdBy;
+
+  int? iD;
+  String? name;
+  int? nextGrade;
+  int? schoolsID;
   GradeResModel({
     this.iD,
     this.schoolsID,
@@ -7,7 +15,6 @@ class GradeResModel {
     this.createdBy,
     this.createdAt,
   });
-
   GradeResModel.fromJson(json) {
     iD = json['ID'];
     schoolsID = json['Schools_ID'];
@@ -16,13 +23,6 @@ class GradeResModel {
     createdBy = json['Created_By'];
     createdAt = json['Created_At'];
   }
-
-  String? createdAt;
-  int? createdBy;
-  int? iD;
-  String? name;
-  int? nextGrade;
-  int? schoolsID;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -6,11 +6,20 @@ import '../controllers/controllers.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
 
-class HomeBindings extends Bindings {
+class AddNewStudentsToControlMissionBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController());
-    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+    Get.lazyPut<AddNewStudentsToControlMissionController>(
+      () => AddNewStudentsToControlMissionController(),
+      fenix: true,
+    );
+  }
+}
+
+class AdminBindings implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<AdminController>(() => AdminController(), fenix: true);
   }
 }
 
@@ -22,16 +31,13 @@ class AuthBindings extends Bindings {
   }
 }
 
-class SideMenuBindings extends Bindings {
+class BarcodeBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SideMenueGetController>(
-      () => SideMenueGetController(),
+    Get.lazyPut<BarcodeController>(
+      () => BarcodeController(),
       fenix: true,
     );
-    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
-
-    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
   }
 }
 
@@ -64,54 +70,6 @@ class BatchDocumentsBindings extends Bindings {
   }
 }
 
-class DashBoardBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<DashboardController>(
-      () => DashboardController(),
-      fenix: true,
-    );
-    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
-  }
-}
-
-class TokenBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.put(TokenService(), permanent: true);
-  }
-}
-
-class SchoolSettingBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<SchoolController>(
-      () => SchoolController(),
-      fenix: true,
-    );
-  }
-}
-
-class SubjectSettingBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<SubjectsController>(
-      () => SubjectsController(),
-      fenix: true,
-    );
-  }
-}
-
-class CohortSettingsBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<CohortsSettingsController>(
-      () => CohortsSettingsController(),
-      fenix: true,
-    );
-  }
-}
-
 class ClassRoomBindings extends Bindings {
   @override
   void dependencies() {
@@ -122,16 +80,11 @@ class ClassRoomBindings extends Bindings {
   }
 }
 
-class StudentsBindings extends Bindings {
+class CohortSettingsBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AddNewStudentController>(
-      () => AddNewStudentController(),
-      fenix: true,
-    );
-
-    Get.lazyPut<StudentController>(
-      () => StudentController(),
+    Get.lazyPut<CohortsSettingsController>(
+      () => CohortsSettingsController(),
       fenix: true,
     );
   }
@@ -160,16 +113,6 @@ class ControlMissingBindings extends Bindings {
   }
 }
 
-class BarcodeBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<BarcodeController>(
-      () => BarcodeController(),
-      fenix: true,
-    );
-  }
-}
-
 class CreateControlMissionBindings extends Bindings {
   @override
   void dependencies() {
@@ -180,11 +123,30 @@ class CreateControlMissionBindings extends Bindings {
   }
 }
 
-class AddNewStudentsToControlMissionBindings extends Bindings {
+class DashBoardBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AddNewStudentsToControlMissionController>(
-      () => AddNewStudentsToControlMissionController(),
+    Get.lazyPut<DashboardController>(
+      () => DashboardController(),
+      fenix: true,
+    );
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+  }
+}
+
+class HomeBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+  }
+}
+
+class ProctorBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<ProctorController>(
+      () => ProctorController(),
       fenix: true,
     );
   }
@@ -200,19 +162,57 @@ class RolesBinidings extends Bindings {
   }
 }
 
-class ProctorBindings extends Bindings {
+class SchoolSettingBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ProctorController>(
-      () => ProctorController(),
+    Get.lazyPut<SchoolController>(
+      () => SchoolController(),
       fenix: true,
     );
   }
 }
 
-class AdminBindings implements Bindings {
+class SideMenuBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AdminController>(() => AdminController(), fenix: true);
+    Get.lazyPut<SideMenueGetController>(
+      () => SideMenueGetController(),
+      fenix: true,
+    );
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+
+    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
+  }
+}
+
+class StudentsBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<AddNewStudentController>(
+      () => AddNewStudentController(),
+      fenix: true,
+    );
+
+    Get.lazyPut<StudentController>(
+      () => StudentController(),
+      fenix: true,
+    );
+  }
+}
+
+class SubjectSettingBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SubjectsController>(
+      () => SubjectsController(),
+      fenix: true,
+    );
+  }
+}
+
+class TokenBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(TokenService(), permanent: true);
   }
 }

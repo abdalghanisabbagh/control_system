@@ -4,8 +4,6 @@ import '../../resource_manager/index.dart';
 import '../control_mission/widgets/review_mission_header_widget.dart';
 
 class ExamRoomScreen extends StatelessWidget {
-  const ExamRoomScreen({super.key});
-
   static List<Color> mycolors = const [
     Color.fromARGB(255, 222, 12, 12),
     Color.fromARGB(255, 238, 158, 21),
@@ -20,6 +18,8 @@ class ExamRoomScreen extends StatelessWidget {
     Color.fromARGB(255, 146, 98, 14),
     Color.fromARGB(255, 88, 3, 22),
   ];
+
+  const ExamRoomScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

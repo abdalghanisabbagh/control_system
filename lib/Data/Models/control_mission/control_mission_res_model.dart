@@ -1,6 +1,22 @@
 import '../exam_mission/exam_missions_res_model.dart';
 
 class ControlMissionResModel {
+  int? active;
+
+  Map<String, dynamic>? count;
+
+  String? createdAt;
+
+  int? createdBy;
+  int? educationYearID;
+  String? endDate;
+  ExamMissionsResModel? examMissionsResModel;
+  int? iD;
+  String? name;
+  int? schoolsID;
+  String? startDate;
+  String? updatedAt;
+  int? updatedBy;
   ControlMissionResModel({
     this.iD,
     this.educationYearID,
@@ -15,7 +31,6 @@ class ControlMissionResModel {
     this.active,
     this.count,
   });
-
   ControlMissionResModel.fromExtra(Map<String, String>? extra) {
     iD = int.parse(extra?['ID'] ?? '0');
     educationYearID = int.parse(extra?['Education_year_ID'] ?? '0');
@@ -29,7 +44,6 @@ class ControlMissionResModel {
     endDate = extra?['End_Date'];
     active = int.parse(extra?['Active'] ?? '0');
   }
-
   ControlMissionResModel.fromJson(json) {
     iD = json['ID'];
     educationYearID = json['Education_year_ID'];
@@ -48,19 +62,21 @@ class ControlMissionResModel {
         : ExamMissionsResModel.fromJson(json['exam_mission']);
   }
 
-  int? active;
-  String? createdAt;
-  int? createdBy;
-  int? educationYearID;
-  String? endDate;
-  int? iD;
-  String? name;
-  int? schoolsID;
-  String? startDate;
-  String? updatedAt;
-  int? updatedBy;
-  Map<String, dynamic>? count;
-  ExamMissionsResModel? examMissionsResModel;
+  Map<String, String>? toExtra() {
+    return {
+      'ID': iD.toString(),
+      'Education_year_ID': educationYearID.toString(),
+      'Schools_ID': schoolsID.toString(),
+      'Name': name ?? '',
+      'Created_By': createdBy.toString(),
+      'Created_At': createdAt ?? '',
+      'Updated_By': updatedBy.toString(),
+      'Updated_At': updatedAt ?? '',
+      'Start_Date': startDate ?? '',
+      'End_Date': endDate ?? '',
+      'Active': active.toString(),
+    };
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -78,21 +94,5 @@ class ControlMissionResModel {
     data['_count'] = count;
     data['exam_mission'] = examMissionsResModel?.toJson();
     return data;
-  }
-
-  Map<String, String>? toExtra() {
-    return {
-      'ID': iD.toString(),
-      'Education_year_ID': educationYearID.toString(),
-      'Schools_ID': schoolsID.toString(),
-      'Name': name ?? '',
-      'Created_By': createdBy.toString(),
-      'Created_At': createdAt ?? '',
-      'Updated_By': updatedBy.toString(),
-      'Updated_At': updatedAt ?? '',
-      'Start_Date': startDate ?? '',
-      'End_Date': endDate ?? '',
-      'Active': active.toString(),
-    };
   }
 }

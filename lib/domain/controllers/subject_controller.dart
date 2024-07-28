@@ -20,40 +20,6 @@ class SubjectsController extends GetxController {
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
 
-  @override
-  void onInit() {
-    getAllSubjects();
-    super.onInit();
-  }
-
-  Future getAllSubjects() async {
-    getAllLoading = true;
-    update();
-    ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
-    Either<Failure, SubjectsResModel> response =
-        await responseHandler.getResponse(
-      path: SchoolsLinks.subjects,
-      converter: SubjectsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        getAllLoading = false;
-        update();
-      },
-      (r) {
-        subjects = r.data!;
-        getAllLoading = false;
-        update();
-      },
-    );
-  }
-
   Future<bool> addNewSubject({
     required String name,
     // required String title,
@@ -94,6 +60,32 @@ class SubjectsController extends GetxController {
     addLoading = false;
     update();
     return subjectHasBeenAdded;
+  }
+
+  Future<bool> deleteSubject({required int id}) async {
+    bool subjectHasBeenDeleted = false;
+    ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
+    Either<Failure, SubjectResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.subjects}/$id',
+      converter: SubjectResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        subjectHasBeenDeleted = false;
+      },
+      (r) {
+        getAllSubjects();
+        update();
+      },
+    );
+    return subjectHasBeenDeleted;
   }
 
   Future<bool> editSubject({
@@ -138,14 +130,15 @@ class SubjectsController extends GetxController {
     return subjectHasBeenUpdated;
   }
 
-  Future<bool> deleteSubject({required int id}) async {
-    bool subjectHasBeenDeleted = false;
-    ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
-    Either<Failure, SubjectResModel> response =
+  Future getAllSubjects() async {
+    getAllLoading = true;
+    update();
+    ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
+    Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.subjects}/$id',
-      converter: SubjectResModel.fromJson,
-      type: ReqTypeEnum.DELETE,
+      path: SchoolsLinks.subjects,
+      converter: SubjectsResModel.fromJson,
+      type: ReqTypeEnum.GET,
     );
     response.fold(
       (l) {
@@ -154,13 +147,20 @@ class SubjectsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        subjectHasBeenDeleted = false;
+        getAllLoading = false;
+        update();
       },
       (r) {
-        getAllSubjects();
+        subjects = r.data!;
+        getAllLoading = false;
         update();
       },
     );
-    return subjectHasBeenDeleted;
+  }
+
+  @override
+  void onInit() {
+    getAllSubjects();
+    super.onInit();
   }
 }

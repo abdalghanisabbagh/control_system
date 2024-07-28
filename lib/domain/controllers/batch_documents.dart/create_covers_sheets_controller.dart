@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,6 +7,7 @@ import 'package:multi_dropdown/models/value_item.dart';
 import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
+import '../../../Data/Models/exam_mission/exam_mission_res_model.dart';
 import '../../../Data/Models/school/grade_response/grade_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/subject/subject_res_model.dart';
@@ -20,19 +20,18 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 
 class CreateCoversSheetsController extends GetxController {
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
+  ControlMissionResModel? controlMissionResModel;
+  List<ExamMissionResModel> examMissionsList = <ExamMissionResModel>[];
   List<GradeResModel> gradesList = <GradeResModel>[];
   bool is2Version = false;
   bool isLoadingGetControlMission = false;
-  bool isLodingGetSubject = false;
-  bool isLodingGetExamMission = false;
-  bool isLoadingGrades = false;
   bool isLoadingGetEducationYear = false;
+  bool isLoadingGrades = false;
+  bool isLodingGetExamMission = false;
+  bool isLodingGetSubject = false;
   bool isPeriod = false;
-
-  List<SubjectResModel> subjectsList = <SubjectResModel>[];
-  List<ExamMissionResModel> examMissionsList = <ExamMissionResModel>[];
-  List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsControlMission = <ValueItem>[];
+  List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
     const ValueItem(value: 25, label: '25 Mins'),
@@ -57,59 +56,17 @@ class CreateCoversSheetsController extends GetxController {
   ValueItem? selectedItemEducationYear;
   ValueItem? selectedItemGrade;
   ValueItem? selectedItemSubject;
+  List<SubjectResModel> subjectsList = <SubjectResModel>[];
 
-  ControlMissionResModel? controlMissionResModel;
-
-  @override
-  void onInit() {
-    super.onInit();
-    geteducationyear();
-    getGradesBySchoolId();
-    getAllSubjects();
-  }
-
-  void setSelectedItemEducationYear(List<ValueItem> items) {
-    if (items.isNotEmpty) {
-      selectedItemEducationYear = items.first;
-      int educationYearId = selectedItemEducationYear!.value;
-      getControlMissionByEducationYearAndBySchool(educationYearId);
-    } else {
-      selectedItemEducationYear = null;
-    }
+  Future<void> getAllSubjects() async {
+    isLodingGetSubject = true;
 
     update();
-  }
-
-  void setSelectedItemControlMission(List<ValueItem> items) {
-    if (items.isNotEmpty) {
-      controlMissionResModel = controlMissionList.firstWhereOrNull(
-        (element) => element.iD == selectedItemControlMission!.value,
-      );
-    } else {
-      selectedItemControlMission = null;
-    }
-
-    update();
-  }
-
-  void setSelectedItemGrade(List<ValueItem> items) {
-    selectedItemGrade = items.first;
-    update();
-  }
-
-  void setSelectedItemSubject(List<ValueItem> items) {
-    selectedItemSubject = items.first;
-    update();
-  }
-
-  Future<void> geteducationyear() async {
-    isLoadingGetEducationYear = true;
-    update();
-    ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
-    Either<Failure, EducationsYearsModel> response =
+    ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
+    Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
-      path: EducationYearsLinks.educationyear,
-      converter: EducationsYearsModel.fromJson,
+      path: SchoolsLinks.subjects,
+      converter: SubjectsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
     response.fold(
@@ -119,17 +76,24 @@ class CreateCoversSheetsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
+        isLodingGetSubject = false;
+        update();
       },
       (r) {
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.id))
-            .toList();
-        optionsEducationYear = items;
+        subjectsList = r.data!;
+        optionsSubjects.assignAll(
+          subjectsList.map(
+            (e) => ValueItem(
+              label: e.name!,
+              value: e.iD,
+            ),
+          ),
+        );
+
+        isLodingGetSubject = false;
+        update();
       },
     );
-
-    isLoadingGetEducationYear = false;
-    update();
   }
 
   Future<void> getControlMissionByEducationYearAndBySchool(
@@ -171,6 +135,36 @@ class CreateCoversSheetsController extends GetxController {
     update();
   }
 
+  Future<void> geteducationyear() async {
+    isLoadingGetEducationYear = true;
+    update();
+    ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
+    Either<Failure, EducationsYearsModel> response =
+        await responseHandler.getResponse(
+      path: EducationYearsLinks.educationyear,
+      converter: EducationsYearsModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.id))
+            .toList();
+        optionsEducationYear = items;
+      },
+    );
+
+    isLoadingGetEducationYear = false;
+    update();
+  }
+
   Future<void> getGradesBySchoolId() async {
     isLoadingGrades = true;
 
@@ -205,42 +199,46 @@ class CreateCoversSheetsController extends GetxController {
     isLoadingGrades = false;
   }
 
-  Future<void> getAllSubjects() async {
-    isLodingGetSubject = true;
+  @override
+  void onInit() {
+    super.onInit();
+    geteducationyear();
+    getGradesBySchoolId();
+    getAllSubjects();
+  }
+
+  void setSelectedItemControlMission(List<ValueItem> items) {
+    if (items.isNotEmpty) {
+      controlMissionResModel = controlMissionList.firstWhereOrNull(
+        (element) => element.iD == selectedItemControlMission!.value,
+      );
+    } else {
+      selectedItemControlMission = null;
+    }
 
     update();
-    ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
-    Either<Failure, SubjectsResModel> response =
-        await responseHandler.getResponse(
-      path: SchoolsLinks.subjects,
-      converter: SubjectsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        isLodingGetSubject = false;
-        update();
-      },
-      (r) {
-        subjectsList = r.data!;
-        optionsSubjects.assignAll(
-          subjectsList.map(
-            (e) => ValueItem(
-              label: e.name!,
-              value: e.iD,
-            ),
-          ),
-        );
+  }
 
-        isLodingGetSubject = false;
-        update();
-      },
-    );
+  void setSelectedItemEducationYear(List<ValueItem> items) {
+    if (items.isNotEmpty) {
+      selectedItemEducationYear = items.first;
+      int educationYearId = selectedItemEducationYear!.value;
+      getControlMissionByEducationYearAndBySchool(educationYearId);
+    } else {
+      selectedItemEducationYear = null;
+    }
+
+    update();
+  }
+
+  void setSelectedItemGrade(List<ValueItem> items) {
+    selectedItemGrade = items.first;
+    update();
+  }
+
+  void setSelectedItemSubject(List<ValueItem> items) {
+    selectedItemSubject = items.first;
+    update();
   }
 
   // @override

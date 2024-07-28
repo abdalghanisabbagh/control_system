@@ -1,4 +1,9 @@
 class AppRoutesNamesAndPaths {
+  static const String addNewStudentsToControlMissionName = 'Add New Students';
+  // addNewStudentsToControlMission
+  static const String addNewStudentsToControlMissionPath =
+      'add-new-students-to-control-mission';
+
   static const String adminScreenName = 'Admin';
   // adminScreen
   static const String adminScreenPath = '/admin';
@@ -38,11 +43,6 @@ class AppRoutesNamesAndPaths {
   static const String distributeStudentsScreenName = 'Distribute Students';
   // distributeStudentScreen
   static const String distributeStudentsScreenPath = 'distribute-students';
-
-  static const String addNewStudentsToControlMissionName = 'Add New Students';
-  // addNewStudentsToControlMission
-  static const String addNewStudentsToControlMissionPath =
-      'add-new-students-to-control-mission';
 
   static const String distributioncreateMissionScreenName =
       'distributioncreateMissionScreenName';
