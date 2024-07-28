@@ -131,7 +131,6 @@ class SeatingScreen extends GetView<SeatNumberController> {
             );
           },
         ),
-        
         GetBuilder<SeatNumberController>(
           builder: (controller) {
             if (controller.isLodingGetExamMission) {
@@ -142,7 +141,7 @@ class SeatingScreen extends GetView<SeatNumberController> {
               );
             }
 
-            if (controller.filteredExamMissionsList.isEmpty) {
+            if (controller.filteredGradesList.isEmpty) {
               return Expanded(
                 child: Center(
                   child: Text(
@@ -155,18 +154,17 @@ class SeatingScreen extends GetView<SeatNumberController> {
 
             return Expanded(
               child: ListView.builder(
-                itemCount: controller.filteredExamMissionsList.length,
+                itemCount: controller.filteredGradesList.length,
                 itemBuilder: (context, index) {
                   return GetBuilder<SeatNumberController>(
-                      id: controller.filteredExamMissionsList[index].iD,
+                      id: controller.filteredGradesList[index].iD,
                       builder: (context) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CoverSeatNumberWidget(
                             controlMissionObject:
                                 controller.controlMissionObject!,
-                            examMissionObject:
-                                controller.filteredExamMissionsList[index],
+                            gradeObject: controller.filteredGradesList[index],
                           ),
                         );
                       });

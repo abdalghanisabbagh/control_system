@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:get/get.dart';
@@ -9,8 +8,8 @@ import 'package:multi_dropdown/models/value_item.dart';
 import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
-import '../../../Data/Models/exam_mission/exam_missions_res_model.dart';
 import '../../../Data/Models/exam_mission/upload_pdf_res_models.dart';
+import '../../../Data/Models/school/grade_response/grade_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
@@ -30,9 +29,11 @@ class SeatNumberController extends GetxController {
   List<ValueItem> optionsControlMission = [];
   ValueItem? selectedItemControlMission;
   List<ValueItem> optionsGrades = [];
-  List<ExamMissionResModel> examMissionsList = [];
-  List<ExamMissionResModel> filteredExamMissionsList = [];
+  // List<ExamMissionResModel> examMissionsList = [];
+  List<GradeResModel> filteredGradesList = [];
   List<ControlMissionResModel> controlMissionList = [];
+  List<GradeResModel> gradesList = [];
+
   ValueItem? selectedItemGrade;
   ControlMissionResModel? controlMissionObject;
 
@@ -46,10 +47,10 @@ class SeatNumberController extends GetxController {
 
   Future<void> updateFilteredList(ValueItem? selectedItemGrade) async {
     if (selectedItemGrade == null) {
-      filteredExamMissionsList = examMissionsList;
+      filteredGradesList = gradesList;
     } else {
-      filteredExamMissionsList = examMissionsList.where((mission) {
-        bool matchesGrade = mission.gradesID == selectedItemGrade.value;
+      filteredGradesList = gradesList.where((grade) {
+        bool matchesGrade = grade.iD == selectedItemGrade.value;
 
         return matchesGrade;
       }).toList();
@@ -68,7 +69,8 @@ class SeatNumberController extends GetxController {
       update();
       await Future.wait([
         getGradesBySchoolId(),
-        getAllExamMissionsByControlMission(selectedItemControlMission!.value)
+        getGradesByControlMission(selectedItemControlMission!.value),
+        //  getAllExamMissionsByControlMission(selectedItemControlMission!.value)
       ]);
       isLoading = false;
       update();
@@ -76,8 +78,9 @@ class SeatNumberController extends GetxController {
       updateFilteredList(null);
     } else {
       selectedItemControlMission = null;
-      examMissionsList.clear();
-      filteredExamMissionsList.clear();
+      gradesList.clear();
+   //   examMissionsList.clear();
+      filteredGradesList.clear();
     }
 
     update();
@@ -94,34 +97,34 @@ class SeatNumberController extends GetxController {
     update();
   }
 
-  Future<void> getAllExamMissionsByControlMission(int controlMissionId) async {
-    isLodingGetExamMission = true;
+  // Future<void> getAllExamMissionsByControlMission(int controlMissionId) async {
+  //   isLodingGetExamMission = true;
 
-    update();
-    ResponseHandler<ExamMissionsResModel> responseHandler = ResponseHandler();
-    Either<Failure, ExamMissionsResModel> response =
-        await responseHandler.getResponse(
-      path: "${ExamLinks.examMissionControlMission}/$controlMissionId",
-      converter: ExamMissionsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        update();
-      },
-      (r) {
-        examMissionsList = r.data!;
-        updateFilteredList(null);
-        isLodingGetExamMission = false;
-        update();
-      },
-    );
-  }
+  //   update();
+  //   ResponseHandler<ExamMissionsResModel> responseHandler = ResponseHandler();
+  //   Either<Failure, ExamMissionsResModel> response =
+  //       await responseHandler.getResponse(
+  //     path: "${ExamLinks.examMissionControlMission}/$controlMissionId",
+  //     converter: ExamMissionsResModel.fromJson,
+  //     type: ReqTypeEnum.GET,
+  //   );
+  //   response.fold(
+  //     (l) {
+  //       MyAwesomeDialogue(
+  //         title: 'Error',
+  //         desc: l.message,
+  //         dialogType: DialogType.error,
+  //       ).showDialogue(Get.key.currentContext!);
+  //       update();
+  //     },
+  //     (r) {
+  //       examMissionsList = r.data!;
+  //       updateFilteredList(null);
+  //       isLodingGetExamMission = false;
+  //       update();
+  //     },
+  //   );
+  // }
 
   Future<void> geteducationyear() async {
     isLoadingGetEducationYear = true;
@@ -160,8 +163,9 @@ class SeatNumberController extends GetxController {
       getControlMissionByEducationYearAndBySchool(educationYearId);
     } else {
       selectedItemEducationYear = null;
-      examMissionsList.clear();
-      filteredExamMissionsList.clear();
+      gradesList.clear();
+      //examMissionsList.clear();
+      filteredGradesList.clear();
       selectedItemControlMission = null;
     }
 
@@ -275,5 +279,31 @@ class SeatNumberController extends GetxController {
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }
+  }
+
+  Future<void> getGradesByControlMission(int controlMissionId) async {
+    isLoadingGrades = true;
+    update();
+    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+      path:
+          "${ControlMissionLinks.getGradesByControlMission}/$controlMissionId",
+      converter: GradesResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }, (result) {
+      gradesList = result.data!;
+      isLoadingGrades = false;
+      update();
+    });
+    isLoadingGrades = false;
   }
 }
