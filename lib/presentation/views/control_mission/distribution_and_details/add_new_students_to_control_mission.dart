@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../domain/controllers/controllers.dart';

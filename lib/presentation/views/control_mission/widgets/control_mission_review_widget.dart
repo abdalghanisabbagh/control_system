@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
@@ -83,6 +84,9 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
           const Spacer(),
           InkWell(
             onTap: () {
+              Hive.box('ControlMission').put('Id',controlMission.iD);
+              Hive.box('ControlMission').put('Name',controlMission.name);
+
               context.goNamed(
                   AppRoutesNamesAndPaths.addNewStudentsToControlMissionName);
             },
@@ -90,14 +94,15 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
               width: 200,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
                 ),
                 color: ColorManager.bgSideMenu,
               ),
               child: Center(
                 child: Text(
-                  "Add New Students To Control Mission",
+                  "Add New Students",
                   style: nunitoRegular.copyWith(
                     color: Colors.white,
                     fontSize: 18,
@@ -105,9 +110,6 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                 ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 10,
           ),
           Column(
             children: [
@@ -137,7 +139,7 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                         width: 200,
                         decoration: BoxDecoration(
                             borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10),
+                              // topLeft: Radius.circular(10),
                               topRight: Radius.circular(10),
                             ),
                             color: ColorManager.glodenColor),
@@ -181,8 +183,9 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                         width: 200,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10)),
+                            // bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
                           color: ColorManager.red,
                         ),
                         child: Center(
