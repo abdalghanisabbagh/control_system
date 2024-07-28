@@ -69,7 +69,6 @@ class SeatNumberController extends GetxController {
       await Future.wait([
         getGradesBySchoolId(),
         getGradesByControlMission(selectedItemControlMission!.value),
-        //  getAllExamMissionsByControlMission(selectedItemControlMission!.value)
       ]);
       isLoading = false;
       update();
@@ -78,7 +77,6 @@ class SeatNumberController extends GetxController {
     } else {
       selectedItemControlMission = null;
       gradesList.clear();
-      //   examMissionsList.clear();
       filteredGradesList.clear();
     }
 
@@ -95,35 +93,6 @@ class SeatNumberController extends GetxController {
     }
     update();
   }
-
-  // Future<void> getAllExamMissionsByControlMission(int controlMissionId) async {
-  //   isLodingGetExamMission = true;
-
-  //   update();
-  //   ResponseHandler<ExamMissionsResModel> responseHandler = ResponseHandler();
-  //   Either<Failure, ExamMissionsResModel> response =
-  //       await responseHandler.getResponse(
-  //     path: "${ExamLinks.examMissionControlMission}/$controlMissionId",
-  //     converter: ExamMissionsResModel.fromJson,
-  //     type: ReqTypeEnum.GET,
-  //   );
-  //   response.fold(
-  //     (l) {
-  //       MyAwesomeDialogue(
-  //         title: 'Error',
-  //         desc: l.message,
-  //         dialogType: DialogType.error,
-  //       ).showDialogue(Get.key.currentContext!);
-  //       update();
-  //     },
-  //     (r) {
-  //       examMissionsList = r.data!;
-  //       updateFilteredList(null);
-  //       isLodingGetExamMission = false;
-  //       update();
-  //     },
-  //   );
-  // }
 
   Future<void> geteducationyear() async {
     isLoadingGetEducationYear = true;
@@ -238,7 +207,7 @@ class SeatNumberController extends GetxController {
       required int controlMissionId,
       required int gradeId}) async {
     isLoadingGeneratePdf = true;
-    update([controlMissionId]);
+    update([gradeId]);
 
     final response = await ResponseHandler<UploadPdfResModel>().getResponse(
       path:
@@ -253,12 +222,12 @@ class SeatNumberController extends GetxController {
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       isLoadingGeneratePdf = false;
-      update([controlMissionId]);
+      update([gradeId]);
     }, (result) {
       if (result.url != null) {
         downloadFilePdf(result.url!, controlMissionName);
         isLoadingGeneratePdf = false;
-        update([controlMissionId]);
+        update([gradeId]);
       }
     });
   }

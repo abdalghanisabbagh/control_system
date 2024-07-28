@@ -12,14 +12,15 @@ import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../../resource_manager/color_manager.dart';
 
 // ignore: must_be_immutable
-class CoverSeatNumberWidget extends GetView<SeatNumberController> {
+class SeatNumberWidget extends GetView<SeatNumberController> {
   final ControlMissionResModel controlMissionObject;
-
+  final int id;
   final GradeResModel gradeObject;
-  const CoverSeatNumberWidget({
+  const SeatNumberWidget({
     super.key,
     required this.gradeObject,
     required this.controlMissionObject,
+    required this.id,
   });
 
   @override
@@ -91,17 +92,20 @@ class CoverSeatNumberWidget extends GetView<SeatNumberController> {
                   ],
                 ),
                 Text(
-                      "Grade: ${gradeObject.name}",
-                      style: const TextStyle(
-                        color: ColorManager.primary,
-                        fontSize: 20,
-                      ),
-                    ),
+                  "Grade: ${gradeObject.name}",
+                  style: const TextStyle(
+                    color: ColorManager.primary,
+                    fontSize: 20,
+                  ),
+                ),
               ],
             ),
           ),
-          controller.isLoadingGeneratePdf
-              ? Center(
+          GetBuilder<SeatNumberController>(
+            id: id,
+            builder: (_) {
+              if (controller.isLoadingGeneratePdf) {
+                return Center(
                   child: SizedBox(
                     height: 50,
                     width: 50,
@@ -109,34 +113,37 @@ class CoverSeatNumberWidget extends GetView<SeatNumberController> {
                       child: LoadingIndicators.getLoadingIndicator(),
                     ),
                   ),
-                )
-              : InkWell(
-                  onTap: () {
-                    controller.generatePdfSeatNumber(
-                        gradeId: gradeObject.iD!,
-                        controlMissionName: controlMissionObject.name!,
-                        controlMissionId: controlMissionObject.iD!);
-                  },
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      ),
-                      color: ColorManager.bgSideMenu,
+                );
+              }
+              return InkWell(
+                onTap: () {
+                  controller.generatePdfSeatNumber(
+                      gradeId: gradeObject.iD!,
+                      controlMissionName: controlMissionObject.name!,
+                      controlMissionId: controlMissionObject.iD!);
+                },
+                child: Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Generate Pdf"),
-                        const SizedBox(width: 20),
-                        Icon(Icons.print, color: ColorManager.white),
-                      ],
-                    ),
+                    color: ColorManager.bgSideMenu,
                   ),
-                )
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Generate Pdf"),
+                      const SizedBox(width: 20),
+                      Icon(Icons.print, color: ColorManager.white),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

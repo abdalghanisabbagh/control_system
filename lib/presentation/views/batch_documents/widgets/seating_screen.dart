@@ -132,7 +132,7 @@ class SeatingScreen extends GetView<SeatNumberController> {
           },
         ),
         GetBuilder<SeatNumberController>(
-          builder: (controller) {
+          builder: (_) {
             if (controller.isLodingGetExamMission) {
               return Expanded(
                 child: Center(
@@ -161,7 +161,8 @@ class SeatingScreen extends GetView<SeatNumberController> {
                       builder: (context) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CoverSeatNumberWidget(
+                          child: SeatNumberWidget(
+                            id: controller.filteredGradesList[index].iD!,
                             controlMissionObject:
                                 controller.controlMissionObject!,
                             gradeObject: controller.filteredGradesList[index],
