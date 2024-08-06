@@ -44,6 +44,7 @@ class GeneratePdfLinks {
   static const generatePdfBrCover = 'generate-pdf/br-cover';
   static const generatePdfIBCover = 'generate-pdf/IB-cover';
   static const generatePdfSeat = 'generate-pdf/seats';
+  static const generatePdfAttendence = 'generate-pdf/attendance';
 }
 
 class ProctorsLinks {
