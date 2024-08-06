@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../domain/controllers/barcode_controllers/barcode_controller.dart';
+import '../../../domain/controllers/profile_controller.dart';
 import '../../resource_manager/ReusableWidget/elevated_edit_button.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -62,7 +63,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Name : ${controller.barcodeResModel?.student?.firstName}+ ${controller.barcodeResModel?.student?.secondName} ${controller.barcodeResModel?.student?.thirdName}',
+                                      'Name : ${controller.barcodeResModel?.student?.firstName} ${controller.barcodeResModel?.student?.secondName} ${controller.barcodeResModel?.student?.thirdName}',
                                       style: nunitoBold.copyWith(
                                         color: ColorManager.bgSideMenu,
                                         fontSize: 35,
@@ -159,22 +160,9 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                   ),
                                   controller.barcodeResModel?.studentDegree !=
                                               null &&
-                                          !controller.isEdit
-                                      ? Text(
-                                          controller.barcodeResModel
-                                                  ?.studentDegree ??
-                                              '0',
-                                          style: nunitoRegular.copyWith(
-                                              fontSize: 24,
-                                              color: int.parse(controller
-                                                              .barcodeResModel
-                                                              ?.studentDegree ??
-                                                          '0') >
-                                                      59
-                                                  ? ColorManager.green
-                                                  : ColorManager.red),
-                                        )
-                                      : Container(
+                                          Get.find<ProfileController>()
+                                              .canAccessWidget(widgetId: '4020')
+                                      ? Container(
                                           alignment: Alignment.center,
                                           width: Get.width * 0.05,
                                           decoration: BoxDecoration(
@@ -193,8 +181,8 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                 MyFlashBar.showInfo('Degree',
                                                         'Please enter Valid degree')
                                                     .show(context);
-                                              }
-                                              if (int.parse(value) > 100) {
+                                              } else if (int.parse(value) >
+                                                  100) {
                                                 controller
                                                     .studentDegreeController
                                                     .clear();
@@ -216,19 +204,12 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                               }
                                             },
                                             style: nunitoRegular.copyWith(
-                                              color: controller.barcodeResModel
-                                                              ?.studentDegree !=
-                                                          null &&
-                                                      controller.barcodeResModel
-                                                              ?.studentDegree! !=
-                                                          ''
-                                                  ? int.parse(controller
-                                                              .barcodeResModel!
-                                                              .studentDegree!) >=
-                                                          60
-                                                      ? ColorManager.green
-                                                      : ColorManager.red
-                                                  : ColorManager.bgSideMenu,
+                                              color: int.parse(controller
+                                                          .barcodeResModel!
+                                                          .studentDegree!) >=
+                                                      60
+                                                  ? ColorManager.green
+                                                  : ColorManager.red,
                                             ),
                                             decoration: const InputDecoration(
                                               counter: SizedBox.shrink(),
@@ -237,7 +218,6 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                               enabledBorder: InputBorder.none,
                                               focusedBorder: InputBorder.none,
                                             ),
-                                            // maxLength: 3,
                                             maxLines: 1,
                                             keyboardType: TextInputType.number,
                                             inputFormatters: [
@@ -249,18 +229,116 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                             controller: controller
                                                 .studentDegreeController
                                               ..text = controller
-                                                              .barcodeResModel
-                                                              ?.studentDegree !=
-                                                          null &&
-                                                      controller
-                                                          .barcodeResModel!
-                                                          .studentDegree!
-                                                          .isNotEmpty
-                                                  ? controller.barcodeResModel!
-                                                      .studentDegree!
-                                                  : '',
+                                                  .barcodeResModel!
+                                                  .studentDegree!,
                                           ),
-                                        ),
+                                        )
+                                      : controller.barcodeResModel
+                                                  ?.studentDegree !=
+                                              null
+                                          ? Text(
+                                              controller.barcodeResModel
+                                                      ?.studentDegree ??
+                                                  '0',
+                                              style: nunitoRegular.copyWith(
+                                                  fontSize: 24,
+                                                  color: int.parse(controller
+                                                                  .barcodeResModel
+                                                                  ?.studentDegree ??
+                                                              '0') >
+                                                          59
+                                                      ? ColorManager.green
+                                                      : ColorManager.red),
+                                            )
+                                          : Get.find<ProfileController>()
+                                                  .canAccessWidget(
+                                                      widgetId: '4010')
+                                              ? Container(
+                                                  alignment: Alignment.center,
+                                                  width: Get.width * 0.05,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: ColorManager
+                                                          .bgSideMenu,
+                                                    ),
+                                                  ),
+                                                  child: TextField(
+                                                    onSubmitted: (value) {
+                                                      if (value.isEmpty ||
+                                                          value.length > 3) {
+                                                        controller
+                                                            .studentDegreeController
+                                                            .clear();
+                                                        foucsnode
+                                                            .requestFocus();
+                                                        MyFlashBar.showInfo(
+                                                                'Degree',
+                                                                'Please enter Valid degree')
+                                                            .show(context);
+                                                      } else if (int.parse(
+                                                              value) >
+                                                          100) {
+                                                        controller
+                                                            .studentDegreeController
+                                                            .clear();
+                                                        foucsnode
+                                                            .requestFocus();
+                                                        MyFlashBar.showInfo(
+                                                                'Degree',
+                                                                'Please enter Valid degree')
+                                                            .show(context);
+                                                      } else {
+                                                        controller
+                                                            .setStudentDegree()
+                                                            .then((value) {
+                                                          if (value) {
+                                                            MyFlashBar.showSuccess(
+                                                                    'Degree set successfully',
+                                                                    'Success')
+                                                                .show(context);
+                                                          }
+                                                        });
+                                                      }
+                                                    },
+                                                    style:
+                                                        nunitoRegular.copyWith(
+                                                      color: ColorManager
+                                                          .bgSideMenu,
+                                                    ),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      counter:
+                                                          SizedBox.shrink(),
+                                                      border: InputBorder.none,
+                                                      errorBorder:
+                                                          InputBorder.none,
+                                                      enabledBorder:
+                                                          InputBorder.none,
+                                                      focusedBorder:
+                                                          InputBorder.none,
+                                                    ),
+                                                    maxLines: 1,
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter
+                                                          .digitsOnly,
+                                                    ],
+                                                    focusNode: foucsnode
+                                                      ..requestFocus(),
+                                                    controller: controller
+                                                        .studentDegreeController,
+                                                  ),
+                                                )
+                                              : Text(
+                                                  controller.barcodeResModel
+                                                          ?.studentDegree ??
+                                                      'N/A',
+                                                  style: nunitoRegular.copyWith(
+                                                      fontSize: 24,
+                                                      color: ColorManager
+                                                          .bgSideMenu),
+                                                ),
                                   const SizedBox(
                                     width: 5,
                                   ),
@@ -280,11 +358,13 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                         maxWidth: 100,
                                         maxHeight: 70,
                                       ),
-                                      child: controller.isEdit &&
-                                              controller.barcodeResModel
+                                      child: controller.barcodeResModel
                                                       ?.studentDegree !=
-                                                  null
-                                          ? ElevatedAddButton(
+                                                  null &&
+                                              Get.find<ProfileController>()
+                                                  .canAccessWidget(
+                                                      widgetId: '4020')
+                                          ? ElevatedEditButton(
                                               onPressed: () {
                                                 String? value = controller
                                                     .studentDegreeController
@@ -298,8 +378,8 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                   MyFlashBar.showInfo('Degree',
                                                           'Please enter Valid degree')
                                                       .show(context);
-                                                }
-                                                if (int.parse(value) > 100) {
+                                                } else if (int.parse(value) >
+                                                    100) {
                                                   controller
                                                       .studentDegreeController
                                                       .clear();
@@ -321,14 +401,56 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                 }
                                               },
                                             )
-                                          : ElevatedEditButton(
-                                              onPressed: () {
-                                                controller.isEdit =
-                                                    !controller.isEdit;
-                                                controller.update();
-                                              },
+                                          : Visibility(
+                                              visible:
+                                                  Get.find<ProfileController>()
+                                                          .canAccessWidget(
+                                                              widgetId:
+                                                                  '4010') &&
+                                                      controller.barcodeResModel
+                                                              ?.studentDegree ==
+                                                          null,
+                                              child: ElevatedAddButton(
+                                                onPressed: () {
+                                                  String? value = controller
+                                                      .studentDegreeController
+                                                      .text;
+                                                  if (value.isEmpty ||
+                                                      value.length > 3) {
+                                                    controller
+                                                        .studentDegreeController
+                                                        .clear();
+                                                    foucsnode.requestFocus();
+                                                    MyFlashBar.showInfo(
+                                                            'Degree',
+                                                            'Please enter Valid degree')
+                                                        .show(context);
+                                                  } else if (int.parse(value) >
+                                                      100) {
+                                                    controller
+                                                        .studentDegreeController
+                                                        .clear();
+                                                    foucsnode.requestFocus();
+                                                    MyFlashBar.showInfo(
+                                                            'Degree',
+                                                            'Please enter Valid degree')
+                                                        .show(context);
+                                                  } else {
+                                                    controller
+                                                        .setStudentDegree()
+                                                        .then((value) {
+                                                      if (value) {
+                                                        MyFlashBar.showSuccess(
+                                                                'Degree set successfully',
+                                                                'Success')
+                                                            .show(context);
+                                                      }
+                                                    });
+                                                  }
+                                                },
+                                              ),
                                             ),
-                                    ),
+                                    )
                             ],
                           )
                         : Lottie.asset(AssetsManager.barcodeScanner),
