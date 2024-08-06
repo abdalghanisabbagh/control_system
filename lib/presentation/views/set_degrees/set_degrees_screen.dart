@@ -1,6 +1,8 @@
+import 'package:control_system/presentation/resource_manager/assets_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../domain/controllers/barcode_controllers/barcode_controller.dart';
 import '../../resource_manager/ReusableWidget/elevated_edit_button.dart';
@@ -51,93 +53,96 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                         ? Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 50,
+                                padding: const EdgeInsets.all(20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Name : ${controller.barcodeResModel?.student?.firstName}+ ${controller.barcodeResModel?.student?.secondName} ${controller.barcodeResModel?.student?.thirdName}',
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.bgSideMenu,
+                                        fontSize: 35,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      "Class : ${controller.barcodeResModel?.student?.classRoomResModel?.name}",
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.bgSideMenu,
+                                        fontSize: 35,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Name : ${controller.barcodeResModel?.student?.firstName}+ ${controller.barcodeResModel?.student?.secondName} ${controller.barcodeResModel?.student?.thirdName}',
-                                        style: nunitoBold.copyWith(
-                                          color: ColorManager.bgSideMenu,
-                                          fontSize: 35,
-                                        ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Subject : ${controller.barcodeResModel?.examMission?.subjectResModel?.name}",
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.bgSideMenu,
+                                        fontSize: 35,
                                       ),
-                                      const SizedBox(
-                                        height: 5,
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      "Grade : ${controller.barcodeResModel?.student?.gradeResModel?.name}",
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.bgSideMenu,
+                                        fontSize: 35,
                                       ),
-                                      Text(
-                                        "Class : ${controller.barcodeResModel?.student?.classRoomResModel?.name}",
-                                        style: nunitoBold.copyWith(
-                                          color: ColorManager.bgSideMenu,
-                                          fontSize: 35,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Subject : ${controller.barcodeResModel?.examMission?.subjectResModel?.name}",
-                                        style: nunitoBold.copyWith(
-                                          color: ColorManager.bgSideMenu,
-                                          fontSize: 35,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        "Grade : ${controller.barcodeResModel?.student?.gradeResModel?.name}",
-                                        style: nunitoBold.copyWith(
-                                          color: ColorManager.bgSideMenu,
-                                          fontSize: 35,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      controller.barcodeResModel
-                                                      ?.studentDegree !=
-                                                  null &&
-                                              controller.barcodeResModel!
-                                                  .studentDegree!.isNotEmpty
-                                          ? Row(
-                                              children: [
-                                                Text(
-                                                  'Degree : ',
-                                                  style: nunitoBold.copyWith(
-                                                    color:
-                                                        ColorManager.bgSideMenu,
-                                                    fontSize: 35,
-                                                  ),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    controller.barcodeResModel?.studentDegree !=
+                                                null &&
+                                            controller.barcodeResModel!
+                                                .studentDegree!.isNotEmpty
+                                        ? Row(
+                                            children: [
+                                              Text(
+                                                'Degree : ',
+                                                style: nunitoBold.copyWith(
+                                                  color:
+                                                      ColorManager.bgSideMenu,
+                                                  fontSize: 35,
                                                 ),
-                                                Text(
-                                                  "${controller.barcodeResModel?.studentDegree}",
-                                                  style: nunitoRegular.copyWith(
-                                                    color: int.parse(controller
-                                                                .barcodeResModel!
-                                                                .studentDegree!) <
-                                                            60
-                                                        ? ColorManager.red
-                                                        : ColorManager.green,
-                                                    fontSize: 35,
-                                                  ),
+                                              ),
+                                              Text(
+                                                "${controller.barcodeResModel?.studentDegree}",
+                                                style: nunitoRegular.copyWith(
+                                                  color: int.parse(controller
+                                                              .barcodeResModel!
+                                                              .studentDegree!) <
+                                                          60
+                                                      ? ColorManager.red
+                                                      : ColorManager.green,
+                                                  fontSize: 35,
                                                 ),
-                                              ],
-                                            )
-                                          : const SizedBox.shrink(),
-                                      const SizedBox(
-                                        height: 30,
-                                      ),
-                                    ],
-                                  ),
+                                              ),
+                                            ],
+                                          )
+                                        : const SizedBox.shrink(),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                  ],
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 50,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -251,7 +256,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                     ),
                             ],
                           )
-                        : const SizedBox.shrink(),
+                        : Lottie.asset(AssetsManager.barcodeScanner),
               ),
             ],
           ).paddingSymmetric(horizontal: 20);

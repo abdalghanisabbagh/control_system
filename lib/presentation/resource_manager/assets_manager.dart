@@ -151,5 +151,7 @@ class AssetsManager {
   /// assets/logos/nis_logo22.png
   static const String assetsLogosNisLogo22 = "assets/logos/nis_logo22.png";
 
+  static const String barcodeScanner= "assets/animation/scanner.json";
+
   AssetsManager._();
 }

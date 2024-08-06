@@ -40,6 +40,7 @@ dependencies:
   url_launcher: ^6.3.0
   loading_indicator: ^3.1.1
   badges: ^3.1.2
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -52,10 +53,13 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/animation/
     - assets/images/
     - assets/icons/
     - assets/logos/
     - assets/files/template.pdf
+
+
 
   fonts:
     - family: Nunito
