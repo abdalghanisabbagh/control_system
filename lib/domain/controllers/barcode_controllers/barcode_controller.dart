@@ -27,7 +27,7 @@ class BarcodeController extends GetxController {
 
 //   FocusNode degreeController = FocusNode();
   bool isLoading = false;
-
+bool isEdit = false;
   final TextEditingController studentDegreeController = TextEditingController();
 
   @override
