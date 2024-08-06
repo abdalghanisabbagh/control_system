@@ -9,7 +9,7 @@ class UserProfileModel {
   String? fullName;
   int? iD;
   List<RoleResModel>? roles;
-  DateTime? updatedAt;
+  String? updatedAt;
   int? updatedBy;
   String? userName;
   UserProfileModel({
