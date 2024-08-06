@@ -153,5 +153,7 @@ class AssetsManager {
 
   static const String barcodeScanner= "assets/animation/scanner.json";
 
+  static const String loadingAnimation= "assets/animation/loading_aimation.json";
+
   AssetsManager._();
 }
