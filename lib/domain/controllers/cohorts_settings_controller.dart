@@ -28,6 +28,10 @@ class CohortsSettingsController extends GetxController {
     update();
     bool cohortHasBeenAdded = false;
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+
+
+
+    /// TODO  : This is wrog  , must be like Subject ( only 1 type of school)
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
       path: SchoolsLinks.cohort,
@@ -39,6 +43,7 @@ class CohortsSettingsController extends GetxController {
         "Created_By": _userProfile?.iD,
       },
     );
+    ////////
     response.fold(
       (l) {
         MyAwesomeDialogue(
