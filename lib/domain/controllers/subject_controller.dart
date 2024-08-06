@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/subject/subject_res_model.dart';
 import '../../Data/Models/subject/subjects_res_model.dart';
@@ -16,14 +17,15 @@ class SubjectsController extends GetxController {
   bool addLoading = false;
   bool getAllLoading = false;
   List<SubjectResModel> subjects = <SubjectResModel>[];
-
+  RxBool inExam = true.obs;
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
 
   Future<bool> addNewSubject({
     required String name,
     // required String title,
-    // required bool inExam,
+    required bool inExam,
+    required List schholTypeIds,
   }) async {
     addLoading = true;
     update();
@@ -38,7 +40,8 @@ class SubjectsController extends GetxController {
         "Name": name,
         "Created_By": _userProfile?.iD,
         // "title": title,
-        // "inExam": inExam,
+        "InExam": inExam ? 1 : 0,
+        'school_type_has_subjects': schholTypeIds
       },
     );
     response.fold(
@@ -136,7 +139,8 @@ class SubjectsController extends GetxController {
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.subjects,
+      path:
+          '${SchoolsLinks.subjectsBySchoolType}${Hive.box('School').get('SchoolTypeID')}',
       converter: SubjectsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

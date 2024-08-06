@@ -1,3 +1,5 @@
+import 'package:control_system/domain/controllers/controllers.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/drop_down_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -63,6 +65,28 @@ class EditSubjectWidget extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
+
+        GetBuilder<SchoolController>(builder: (controller) {
+          return controller.isLoadingAddGrades
+              ? Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
+                )
+              : SizedBox(
+                  width: 300,
+                  child: MultiSelectDropDownView(
+                    onOptionSelected: (selected) {},
+                    options: controller.options,
+                  ),
+                );
+        }),
+
+
+        const SizedBox(
+          height: 20,
+        ),
+
+
+
         Row(
           children: [
             Text(

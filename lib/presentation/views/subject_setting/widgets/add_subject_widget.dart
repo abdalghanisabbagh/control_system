@@ -1,6 +1,8 @@
+import 'package:control_system/domain/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../../../domain/controllers/subject_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
@@ -11,27 +13,17 @@ import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
 class AddSubjectWidget extends StatelessWidget {
-  const AddSubjectWidget({
+  AddSubjectWidget({
     super.key,
   });
-
+  SubjectsController subjectsController = Get.find();
+  List schoolTypes = [];
   @override
   Widget build(BuildContext context) {
     TextEditingController subjectNameController = TextEditingController();
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          "Add New Subject",
-          style: nunitoRegular.copyWith(
-            color: ColorManager.bgSideMenu,
-            fontSize: 25,
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
         // GetBuilder<SubjectsControllers>(
         //   builder: (subjectsControllers) =>
         //       Container(
@@ -183,6 +175,28 @@ class AddSubjectWidget extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
+
+        GetBuilder<SchoolController>(builder: (controller) {
+          return controller.isLoadingAddGrades
+              ? Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
+                )
+              : SizedBox(
+                  width: 300,
+                  child: MultiSelectDropDown(
+                    onOptionSelected: (selected) {
+                      schoolTypes = selected.map((type) => type.value).toList();
+                          print(schoolTypes);
+                    },
+                    options: controller.options,
+                  ),
+                );
+        }),
+
+        const SizedBox(
+          height: 20,
+        ),
+
         Row(
           children: [
             Text(
@@ -190,14 +204,14 @@ class AddSubjectWidget extends StatelessWidget {
               style: nunitoRegular.copyWith(
                   fontSize: 14, color: ColorManager.bgSideMenu),
             ),
-            // Obx(
-            //   () => Checkbox(
-            //     value: inExam.value,
-            //     onChanged: (newVal) {
-            //       inExam.value = newVal!;
-            //     },
-            //   ),
-            // )
+            Obx(
+              () => Checkbox(
+                value: subjectsController.inExam.value,
+                onChanged: (newVal) {
+                  subjectsController.inExam.value = newVal!;
+                },
+              ),
+            )
           ],
         ),
         const SizedBox(
@@ -221,7 +235,10 @@ class AddSubjectWidget extends StatelessWidget {
                         child: ElevatedAddButton(
                           onPressed: () async {
                             await controller
-                                .addNewSubject(name: subjectNameController.text)
+                                .addNewSubject(
+                                    name: subjectNameController.text,
+                                    inExam: subjectsController.inExam.value,
+                                    schholTypeIds: schoolTypes)
                                 .then(
                               (value) {
                                 value
