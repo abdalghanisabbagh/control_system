@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/subject/subject_res_model.dart';
 import '../../Data/Models/subject/subjects_res_model.dart';
@@ -136,7 +137,8 @@ class SubjectsController extends GetxController {
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.subjects,
+      path: '${SchoolsLinks.subjectsBySchoolType}${Hive.box('School').get('SchoolTypeID')}'
+          ,
       converter: SubjectsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

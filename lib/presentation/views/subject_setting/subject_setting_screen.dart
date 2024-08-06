@@ -172,6 +172,9 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                 //                 .bgSideMenu,
                                                 //             fontSize:
                                                 //                 20),),
+                                               
+                                               
+                                               
                                                 Row(
                                                   children: [
                                                     Text(

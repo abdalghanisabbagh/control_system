@@ -1,12 +1,12 @@
 class SubjectResModel {
-  String? active;
+  int? active,inExam;
 
   String? createdAt;
 
   int? createdBy;
   int? iD;
   String? name;
-  DateTime? updatedAt;
+  String? updatedAt;
   int? updatedBy;
   SubjectResModel({
     this.iD,
@@ -21,6 +21,7 @@ class SubjectResModel {
     iD = json['ID'];
     name = json['Name'];
     active = json['Active'];
+    inExam = json["InExam"];
     createdBy = json['Created_By'];
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
