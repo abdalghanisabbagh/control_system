@@ -49,10 +49,13 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                           // RxBool inExam = true.obs;
                           // TextEditingController subjectTitleController =
                           //     TextEditingController();
-
-                          MyDialogs.showDialog(
-                            context,
-                            const AddSubjectWidget(),
+                          Get.defaultDialog(
+                            title: "Add New Subject",
+                            titleStyle: nunitoRegular.copyWith(
+                              color: ColorManager.bgSideMenu,
+                              fontSize: 25,
+                            ),
+                            content: AddSubjectWidget(),
                           );
                         },
                         child: Container(
@@ -172,9 +175,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                 //                 .bgSideMenu,
                                                 //             fontSize:
                                                 //                 20),),
-                                               
-                                               
-                                               
+
                                                 Row(
                                                   children: [
                                                     Text(

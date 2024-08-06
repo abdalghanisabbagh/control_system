@@ -18,7 +18,7 @@ import 'profile_controller.dart';
 
 class SchoolController extends GetxController {
   List<GradeResModel> grades = <GradeResModel>[];
-  bool isLoadingAddGrades = false;
+  bool isLoadingAddGrades = true;
   bool isLoadingAddSchool = false;
   bool isLoadingGrades = false;
   bool isLoadingSchools = false;

@@ -212,6 +212,11 @@ class SubjectSettingBindings extends Bindings {
       () => SubjectsController(),
       fenix: true,
     );
+
+    Get.lazyPut<SchoolController>(
+      () => SchoolController(),
+      fenix: true,
+    );
   }
 }
 
