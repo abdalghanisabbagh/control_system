@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../domain/controllers/batch_documents.dart/create_covers_sheets_controller.dart';
+import '../../../../domain/controllers/batch_documents.dart/attendance_controller.dart';
+import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/color_manager.dart';
 import '../../../resource_manager/styles_manager.dart';
 
-class AttendanceScreen extends GetView<CreateCoversSheetsController> {
+class AttendanceScreen extends GetView<AttendanceController> {
   const AttendanceScreen({super.key});
 
   @override
@@ -38,159 +40,149 @@ class AttendanceScreen extends GetView<CreateCoversSheetsController> {
         const SizedBox(
           height: 20,
         ),
-        // Obx(() => controller.creatMissionController.yearList.isEmpty
-        //     ? Center(
-        //         child: LoadingIndicators.getLoadingIndicator(),
-        //       )
-        //     : DropdownSearch<YearsResponse>(
-        //         items: controller.creatMissionController.yearList,
-        //         itemAsString: (item) => item.year,
-        //         selectedItem:
-        //             controller.creatMissionController.selectedyear != null
-        //                 ? controller.creatMissionController.selectedyear!.value
-        //                 : null,
-        //         dropdownDecoratorProps: DropDownDecoratorProps(
-        //           dropdownSearchDecoration: InputDecoration(
-        //               focusedBorder: OutlineInputBorder(
-        //                   borderSide:
-        //                       BorderSide(color: ColorManager.glodenColor),
-        //                   borderRadius: BorderRadius.circular(10)),
-        //               border: OutlineInputBorder(
-        //                   borderSide:
-        //                       BorderSide(color: ColorManager.glodenColor),
-        //                   borderRadius: BorderRadius.circular(10)),
-        //               hintText: "Select Education Years",
-        //               hintStyle: nunitoBoldStyle().copyWith(
-        //                   fontSize: 30, color: ColorManager.bgSideMenu)),
-        //         ),
-        //         onChanged: ((value) {
-        //           controller.selectedyear = value;
-        //           controller.onChangeYear(value!);
-        //         }),
-        //       )),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        // Obx(
-        //   () => controller.missionsController.missions.isEmpty
-        //       ? const SizedBox.shrink()
-        //       : DropdownSearch<MissionObjectResponse>(
-        //           popupProps: PopupProps.menu(
-        //             searchFieldProps: TextFieldProps(
-        //                 decoration: InputDecoration(
-        //                     hintText: "search",
-        //                     hintStyle: nunitoBoldStyle().copyWith(
-        //                         fontSize: 30, color: ColorManager.bgSideMenu),
-        //                     focusedBorder: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.black),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     enabledBorder: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.black),
-        //                         borderRadius: BorderRadius.circular(10))),
-        //                 cursorColor: ColorManager.glodenColor),
-        //             showSearchBox: true,
-        //           ),
-        //           items: controller.missionsController.missions,
-        //           itemAsString: (item) => item.name!,
-        //           dropdownDecoratorProps: DropDownDecoratorProps(
-        //             dropdownSearchDecoration: InputDecoration(
-        //                 focusedBorder: OutlineInputBorder(
-        //                     borderSide: BorderSide(color: ColorManager.black),
-        //                     borderRadius: BorderRadius.circular(10)),
-        //                 border: OutlineInputBorder(
-        //                     borderSide: BorderSide(color: ColorManager.black),
-        //                     borderRadius: BorderRadius.circular(10)),
-        //                 hintText: "Select Mission",
-        //                 hintStyle: nunitoBoldStyle().copyWith(
-        //                     fontSize: 30, color: ColorManager.bgSideMenu)),
-        //           ),
-        //           onChanged: ((value) {
-        //             // controller.selectedExamRoom = null;
-        //             // controller.getExamRooms(value!.id!);
-        //             // controller.selectMission = value;
-        //             CompleteMissionsController completeMissionsController =
-        //                 Get.find();
-        //             completeMissionsController.getDetialsControlMissionById(
-        //                 missionId: value!.id!);
-        //           }),
-        //           selectedItem: controller.selectedMission == null
-        //               ? null
-        //               : controller.selectedMission!.value,
-        //         ),
-        // ),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        // GetBuilder<CompleteMissionsController>(
-        //   builder: (controller) => controller.missionDetials == null
-        //       ? const SizedBox.shrink()
-        //       : DropdownSearch<Examroom>(
-        //           popupProps: PopupProps.menu(
-        //             searchFieldProps: TextFieldProps(
-        //                 decoration: InputDecoration(
-        //                     hintText: "search",
-        //                     hintStyle: nunitoBoldStyle().copyWith(
-        //                         fontSize: 30, color: ColorManager.bgSideMenu),
-        //                     focusedBorder: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.black),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     enabledBorder: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.black),
-        //                         borderRadius: BorderRadius.circular(10))),
-        //                 cursorColor: ColorManager.glodenColor),
-        //             showSearchBox: true,
-        //           ),
-        //           items: controller.missionDetials!.examrooms!,
-        //           itemAsString: (item) => item.name!,
-        //           dropdownDecoratorProps: DropDownDecoratorProps(
-        //             dropdownSearchDecoration: InputDecoration(
-        //                 focusedBorder: OutlineInputBorder(
-        //                     borderSide: BorderSide(color: ColorManager.black),
-        //                     borderRadius: BorderRadius.circular(10)),
-        //                 border: OutlineInputBorder(
-        //                     borderSide: BorderSide(color: ColorManager.black),
-        //                     borderRadius: BorderRadius.circular(10)),
-        //                 hintText: "Select Exam Room ",
-        //                 hintStyle: AppTextStyle.nunitoRegular
-        //                     .copyWith(fontSize: 16, color: ColorManager.black)),
-        //           ),
-        //           onChanged: ((value) {
-        //             controller.selectedExamroom = value;
-        //             controller.update();
-        //           }),
-        //           selectedItem: controller.selectedExamroom,
-        //         ),
-        // ),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        // GetBuilder<CompleteMissionsController>(
-        //     builder: (completeMissionsController) {
-        //   if (completeMissionsController.selectedExamroom != null) {
-        //     return InkWell(
-        //         onTap: () {
-        //           completeMissionsController.generateAttendance();
-        //         },
-        //         child: Container(
-        //           decoration: BoxDecoration(
-        //               color: ColorManager.bgSideMenu,
-        //               borderRadius: BorderRadius.circular(10)),
-        //           padding: const EdgeInsets.all(20),
-        //           child: Text("Generate Attendance",
-        //               style: nunitoBoldStyle().copyWith(
-        //                   fontSize: 30, color: ColorManager.bgSideMenu)),
-        //         ));
-        //   } else {
-        //     return const SizedBox.shrink();
-        //   }
-        // })
+        GetBuilder<AttendanceController>(
+          builder: (_) {
+            if (controller.isLoadingGetEducationYear) {
+              return Center(
+                child: SizedBox(
+                  width: Get.width * 0.4,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                ),
+              );
+            }
+
+            if (controller.optionsEducationYear.isEmpty) {
+              return const Text('No items available');
+            }
+
+            return MultiSelectDropDownView(
+              hintText: "Select Education Year",
+              onOptionSelected: controller.setSelectedItemEducationYear,
+              options: controller.optionsEducationYear,
+            );
+          },
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        GetBuilder<AttendanceController>(
+          builder: (_) {
+            if (controller.isLoadingGetControlMission) {
+              return Center(
+                child: SizedBox(
+                  width: Get.width * 0.4,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                ),
+              );
+            }
+            if (controller.selectedItemEducationYear == null) {
+              return const SizedBox.shrink();
+            }
+            if (controller.optionsControlMission.isEmpty) {
+              return Text(
+                'No items available',
+                style: nunitoBoldStyle(),
+              );
+            }
+
+            return MultiSelectDropDownView(
+              hintText: "Select Control Mission",
+              onOptionSelected: (selectedItem) {
+                controller.setSelectedItemControlMission(selectedItem);
+              },
+              options: controller.optionsControlMission,
+            );
+          },
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        GetBuilder<AttendanceController>(
+          builder: (_) {
+            if (controller.isLoadingGetExamRoom) {
+              return Center(
+                child: SizedBox(
+                  width: Get.width * 0.4,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                ),
+              );
+            }
+            if (controller.selectedItemEducationYear == null ||
+                controller.selectedItemControlMission == null) {
+              return const SizedBox.shrink();
+            }
+            if (controller.optionsExamRoom.isEmpty) {
+              return Text(
+                'No items available',
+                style: nunitoBoldStyle(),
+              );
+            }
+
+            return MultiSelectDropDownView(
+              hintText: "Select Exam Room",
+              onOptionSelected: (selectedItem) {
+                controller.setSelectedItemExamRoom(selectedItem);
+              },
+              options: controller.optionsExamRoom,
+            );
+          },
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        GetBuilder<AttendanceController>(
+          builder: (_) {
+            if (controller.selectedItemExamRoom == null) {
+              return const SizedBox.shrink();
+            }
+            if (controller.isLoadingGeneratePdf) {
+              return Center(
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                ),
+              );
+            }
+
+            return InkWell(
+              onTap: () {
+                controller.generatePdfAttendance(
+                    roomId: controller.selectedItemExamRoom!.value);
+              },
+              child: Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                  color: ColorManager.bgSideMenu,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Generate Attendance"),
+                    const SizedBox(width: 20),
+                    Icon(Icons.print, color: ColorManager.white),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       ],
     );
   }

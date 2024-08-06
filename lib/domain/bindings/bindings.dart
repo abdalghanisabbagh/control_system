@@ -1,3 +1,4 @@
+import 'package:control_system/domain/controllers/batch_documents.dart/attendance_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/batch_documents.dart/edit_cover_controller.dart';
@@ -59,6 +60,10 @@ class BatchDocumentsBindings extends Bindings {
     );
     Get.lazyPut<SeatNumberController>(
       () => SeatNumberController(),
+      fenix: true,
+    );
+    Get.lazyPut<AttendanceController>(
+      () => AttendanceController(),
       fenix: true,
     );
     Get.lazyPut<CoversSheetsController>(
