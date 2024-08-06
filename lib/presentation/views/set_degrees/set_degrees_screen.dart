@@ -14,13 +14,13 @@ import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../resource_manager/index.dart';
 import '../base_screen.dart';
 
+// ignore: must_be_immutable
 class SetDegreesScreen extends GetView<BarcodeController> {
   SetDegreesScreen({super.key});
 
   var foucsnode = FocusNode();
   @override
   Widget build(BuildContext context) {
-    // controller.brCodeFoucs.requestFocus();
     return BaseScreen(
       body: GetBuilder<BarcodeController>(
         builder: (_) {
