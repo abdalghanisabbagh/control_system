@@ -10,3 +10,10 @@ abstract class LoadingIndicators {
         ),
       );
 }
+// abstract class LoadingIndicators {
+//   static Widget getLoadingIndicator() => SizedBox(
+//         height: 100,
+//         width: 100,
+//         child: Lottie.asset(AssetsManager.loadingAnimation),
+//       );
+// }
