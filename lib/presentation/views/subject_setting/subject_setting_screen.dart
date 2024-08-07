@@ -116,9 +116,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                   .toList(),
                               itemBuilder: (SubjectResModel item) {
                                 bool inExam = true;
-                                // bool inExam = controller.subjects[index].inExam == 0
-                                //     ? false
-                                //     : true;
+
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Stack(
@@ -163,19 +161,39 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                   ),
                                                 ),
                                                 const SizedBox(
-                                                  height: 20,
+                                                  height: 10,
                                                 ),
-                                                // Text(
-                                                //     controller
-                                                //         .selectedSchool!
-                                                //         .name,
-                                                //     style:                                                     nunitoRegular
-                                                //         .copyWith(
-                                                //             color: ColorManager
-                                                //                 .bgSideMenu,
-                                                //             fontSize:
-                                                //                 20),),
+                                                SizedBox(
+                                                  width: double.infinity,
+                                                  height: 25,
+                                                  child: ListView.builder(
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    itemCount: 1,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      var schoolTypes = item
+                                                          .schoolTypeHasSubjectsResModel!
+                                                          .schooltypeHasSubjects!
+                                                          .map((e) => e
+                                                              .schoolType!.name)
+                                                          .join(', ');
 
+                                                      return Text(
+                                                        'School type ($schoolTypes)',
+                                                        style: nunitoRegular
+                                                            .copyWith(
+                                                          color: ColorManager
+                                                              .bgSideMenu,
+                                                          fontSize: 20,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
                                                 Row(
                                                   children: [
                                                     Text(
