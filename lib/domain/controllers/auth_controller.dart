@@ -99,7 +99,12 @@ class AuthController extends GetxController {
     // if response is good we get new access token need to replace
     //  update refresh token in local storage and profile controller
 
-    tokenService.saveNewAccessToken(response.data['data']);
+    TokenModel tokenModel = TokenModel(
+      aToken: response.data['data']['accessToken'],
+      rToken: response.data['data']['refreshToken'],
+      dToken: DateTime.now().toIso8601String(),
+    );
+    tokenService.saveNewAccessToken(tokenModel);
     return response.data['data'];
   }
 
