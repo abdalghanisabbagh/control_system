@@ -8,6 +8,30 @@ class ColorManager {
   static Color background = Colors.white; // ff=>CC opactiy 80%
   //static Color textFormFiledIcon = const Color(0xff956fd6);
 
+  static const List<Color> rolesColors = [
+    Color(0xFFB3C6FF), // Soft Blue
+    Color(0xFFE0E0E0), // Warm Grey
+    Color(0xFFB2DFDB), // Mint Green
+    Color(0xFFD8CAB8), // Pale Taupe
+    Color(0xFFFFDAB9), // Light Coral
+    Color(0xFF87CEEB), // Sky Blue
+    Color(0xFFE6E6FA), // Pastel Lavender
+    Color(0xFFFFF5E1), // Light Peach
+    Color(0xFFB9D8C2), // Soft Sage
+  ];
+
+  static const List<Color> screensColors = [
+    Color(0xFFFAD6D0), // Soft Peach
+    Color(0xFFB2DFDB), // Pale Aqua
+    Color(0xFFE6E6FA), // Light Lavender
+    Color(0xFFFAF0F0), // Pale Grey
+    Color(0xFFFFF9C4), // Pastel Yellow
+    Color(0xFFFFE0E0), // Blush Pink
+    Color(0xFF20B2AA), // Light Sea Green
+    Color(0xFFFFFDD0), // Cream
+    Color(0xFF98FF98), // Light Mint
+  ];
+
   static Color bgColor = const Color(0xfff8f7f3);
 
   static Color bgSideMenu = const Color(0xff131e29);
