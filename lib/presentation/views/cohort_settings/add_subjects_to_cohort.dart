@@ -5,7 +5,7 @@ import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../../Data/Models/cohort/cohort_res_model.dart';
 import '../../../domain/controllers/cohorts_settings_controller.dart';
-import '../../../domain/controllers/subject_controller.dart';
+import '../../../domain/controllers/subject/subject_controller.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';

@@ -24,4 +24,4 @@ export 'school_controller.dart';
 export 'students_controllers/add_new_student_controller.dart';
 export 'students_controllers/student_controller.dart';
 export 'students_controllers/students_controllers.dart';
-export 'subject_controller.dart';
+export 'subject/subject_controller.dart';

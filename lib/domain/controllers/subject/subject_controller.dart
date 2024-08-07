@@ -2,20 +2,27 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../Data/Models/subject/subject_res_model.dart';
-import '../../Data/Models/subject/subjects_res_model.dart';
-import '../../Data/Network/response_handler.dart';
-import '../../Data/Network/tools/failure_model.dart';
-import '../../Data/enums/req_type_enum.dart';
-import '../../app/configurations/app_links.dart';
-import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../Data/Models/school/school_type/school_type_model.dart';
+import '../../../Data/Models/school/school_type/schools_type_res_model.dart';
+import '../../../Data/Models/subject/subject_res_model.dart';
+import '../../../Data/Models/subject/subjects_res_model.dart';
+import '../../../Data/Network/response_handler.dart';
+import '../../../Data/Network/tools/failure_model.dart';
+import '../../../Data/enums/req_type_enum.dart';
+import '../../../app/configurations/app_links.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class SubjectsController extends GetxController {
   bool addLoading = false;
+  bool editLoading = false;
   bool getAllLoading = false;
+  bool getSchoolTypeLoading = false;
   List<SubjectResModel> subjects = <SubjectResModel>[];
+  List<SchoolTypeResModel> schoolsType = <SchoolTypeResModel>[];
   RxBool inExam = true.obs;
+  List<int> selectedSchoolTypeIds = <int>[];
 
   Future<bool> addNewSubject({
     required String name,
@@ -85,13 +92,13 @@ class SubjectsController extends GetxController {
 
   Future<bool> editSubject({
     required int id,
-    required String name,
+    // required String name,
     required List schholTypeIds,
-    required int inExam,
+    // required int inExam,
     // required String title,
     // required bool inExam,
   }) async {
-    addLoading = true;
+    editLoading = true;
     update();
     bool subjectHasBeenUpdated = false;
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
@@ -101,9 +108,9 @@ class SubjectsController extends GetxController {
       converter: SubjectResModel.fromJson,
       type: ReqTypeEnum.PATCH,
       body: {
-        "Name": name,
+        //"Name": name,
         'schools_type_ID': schholTypeIds,
-        "InExam": inExam,
+        "InExam": 1,
       },
     );
     response.fold(
@@ -121,7 +128,7 @@ class SubjectsController extends GetxController {
         update();
       },
     );
-    addLoading = false;
+    editLoading = false;
     update();
     return subjectHasBeenUpdated;
   }
@@ -155,8 +162,41 @@ class SubjectsController extends GetxController {
     );
   }
 
+  Future<void> getSchoolType() async {
+    getSchoolTypeLoading = true;
+    update();
+    ResponseHandler<SchoolsTypeResModel> responseHandler = ResponseHandler();
+    Either<Failure, SchoolsTypeResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.schoolsType,
+      converter: SchoolsTypeResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        schoolsType = r.data!;
+      },
+    );
+    getSchoolTypeLoading = false;
+    update();
+  }
+
+  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
+    selectedSchoolTypeIds =
+        selectedOptions.map((e) => e.value).toList().cast<int>();
+    update();
+  }
+
   @override
   void onInit() {
+    getSchoolType();
     getAllSubjects();
     super.onInit();
   }

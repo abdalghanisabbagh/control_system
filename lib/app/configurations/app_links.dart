@@ -69,6 +69,9 @@ class SchoolsLinks {
   static const subjectsDeactivate = 'subjects/deactivate';
   static const subjectsBySchoolType = 'subjects/school-type/';
 
+  static const deleteSchoolTypeinSubjects = 'subjects/remove-school-type';
+
+
 
 }
 

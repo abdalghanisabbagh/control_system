@@ -1,11 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/views/subject_setting/widgets/edit_Subjects_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../Data/Models/subject/subject_res_model.dart';
 import '../../../domain/controllers/profile_controller.dart';
-import '../../../domain/controllers/subject_controller.dart';
+import '../../../domain/controllers/subject/subject_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/elevated_edit_button.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -15,7 +16,6 @@ import '../../resource_manager/assets_manager.dart';
 import '../../resource_manager/index.dart';
 import '../base_screen.dart';
 import "widgets/add_subject_widget.dart";
-import 'widgets/edit_subject_widget.dart';
 
 class SubjectSettingScreen extends GetView<SubjectsController> {
   const SubjectSettingScreen({super.key});
@@ -308,8 +308,9 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                               MyDialogs
                                                                   .showDialog(
                                                             context,
-                                                            EditSubjectWidget(
-                                                              subject: item,
+                                                            EditSubject(
+                                                              subjectResModel:
+                                                                  item,
                                                             ),
                                                           ),
                                                         ),
@@ -340,7 +341,6 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                 ),
               ],
             ),
-
           );
         },
       ),
