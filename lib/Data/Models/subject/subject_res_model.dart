@@ -1,5 +1,8 @@
+import 'package:control_system/Data/Models/subject/school_type_has_subjects_res_model.dart';
+
+
 class SubjectResModel {
-  int? active,inExam;
+  int? active, inExam;
 
   String? createdAt;
 
@@ -8,15 +11,18 @@ class SubjectResModel {
   String? name;
   String? updatedAt;
   int? updatedBy;
-  SubjectResModel({
-    this.iD,
-    this.name,
-    this.active,
-    this.createdBy,
-    this.createdAt,
-    this.updatedBy,
-    this.updatedAt,
-  });
+  SchoolTypeHasSubjectsResModel? schoolTypeHasSubjectsResModel;
+
+  SubjectResModel(
+      {this.iD,
+      this.name,
+      this.active,
+      this.createdBy,
+      this.createdAt,
+      this.updatedBy,
+      this.updatedAt,
+      this.schoolTypeHasSubjectsResModel,
+      this.inExam});
   SubjectResModel.fromJson(json) {
     iD = json['ID'];
     name = json['Name'];
@@ -26,6 +32,10 @@ class SubjectResModel {
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
+    schoolTypeHasSubjectsResModel = json['school_type_has_subjects'] == null
+        ? null
+        : SchoolTypeHasSubjectsResModel.fromJson(
+            json['school_type_has_subjects']);
   }
 
   Map<String, dynamic> toJson() {
@@ -37,6 +47,11 @@ class SubjectResModel {
     data['Created_At'] = createdAt;
     data['Updated_By'] = updatedBy;
     data['Updated_At'] = updatedAt;
+    if (schoolTypeHasSubjectsResModel != null) {
+      data['school_type_has_subjects'] =
+          schoolTypeHasSubjectsResModel!.toJson();
+    }
+    data["InExam"] = inExam;
     return data;
   }
 }

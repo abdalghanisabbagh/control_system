@@ -66,6 +66,7 @@ class SchoolsLinks {
   static const schoolsType = 'school-type';
   static const subject = 'subject';
   static const subjects = 'subjects';
+  static const subjectsDeactivate = 'subjects/deactivate';
   static const subjectsBySchoolType = 'subjects/school-type/';
 
 

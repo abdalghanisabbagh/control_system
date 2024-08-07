@@ -5,25 +5,20 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/subject/subject_res_model.dart';
 import '../../Data/Models/subject/subjects_res_model.dart';
-import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'profile_controller.dart';
 
 class SubjectsController extends GetxController {
   bool addLoading = false;
   bool getAllLoading = false;
   List<SubjectResModel> subjects = <SubjectResModel>[];
   RxBool inExam = true.obs;
-  final UserProfileModel? _userProfile =
-      Get.find<ProfileController>().cachedUserProfile;
 
   Future<bool> addNewSubject({
     required String name,
-    // required String title,
     required bool inExam,
     required List schholTypeIds,
   }) async {
@@ -38,10 +33,8 @@ class SubjectsController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        "Created_By": _userProfile?.iD,
-        // "title": title,
         "InExam": inExam ? 1 : 0,
-        'school_type_has_subjects': schholTypeIds
+        'schools_type_ID': schholTypeIds
       },
     );
     response.fold(
@@ -56,7 +49,6 @@ class SubjectsController extends GetxController {
       (r) {
         getAllSubjects();
         subjectHasBeenAdded = true;
-        update();
       },
     );
     // getSubjectsFromServerbyGradeId();
@@ -70,9 +62,9 @@ class SubjectsController extends GetxController {
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.subjects}/$id',
+      path: '${SchoolsLinks.subjectsDeactivate}/$id',
       converter: SubjectResModel.fromJson,
-      type: ReqTypeEnum.DELETE,
+      type: ReqTypeEnum.PATCH,
     );
     response.fold(
       (l) {
@@ -94,6 +86,8 @@ class SubjectsController extends GetxController {
   Future<bool> editSubject({
     required int id,
     required String name,
+    required List schholTypeIds,
+    required int inExam,
     // required String title,
     // required bool inExam,
   }) async {
@@ -108,9 +102,8 @@ class SubjectsController extends GetxController {
       type: ReqTypeEnum.PATCH,
       body: {
         "Name": name,
-        "Created_By": _userProfile?.iD,
-        // "title": title,
-        // "inExam": inExam,
+        'schools_type_ID': schholTypeIds,
+        "InExam": inExam,
       },
     );
     response.fold(
@@ -155,7 +148,7 @@ class SubjectsController extends GetxController {
         update();
       },
       (r) {
-        subjects = r.data!;
+        subjects.assignAll(r.data!);
         getAllLoading = false;
         update();
       },
