@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:transformable_list_view/transformable_list_view.dart';
 
 import '../../../domain/controllers/profile_controller.dart';
 import '../../../domain/controllers/roles_controller.dart';
@@ -72,6 +73,7 @@ class RolesScreen extends GetView<RolesController> {
                         ),
                         Expanded(
                           child: Container(
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(10),
@@ -84,43 +86,78 @@ class RolesScreen extends GetView<RolesController> {
                                             .getLoadingIndicator(),
                                       )
                                     : controller.roles.isEmpty
-                                        ? const Center(
-                                            child: Text("No Roles Found"),
+                                        ? Center(
+                                            child: Text(
+                                              "No Roles Found",
+                                              style: nunitoBold.copyWith(
+                                                color: ColorManager.black,
+                                              ),
+                                            ),
                                           )
-                                        : ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: controller.roles.length,
-                                            itemBuilder: (context, index) {
-                                              return Card(
-                                                color: Colors.grey,
-                                                elevation: 10,
-                                                child: ListTile(
-                                                  title: Text(controller
-                                                      .roles[index].name),
-                                                  trailing: Visibility(
-                                                    visible: Get.find<
-                                                            ProfileController>()
-                                                        .canAccessWidget(
-                                                      widgetId: '11100',
+                                        : Scrollbar(
+                                            thumbVisibility: true,
+                                            trackVisibility: true,
+                                            controller: controller
+                                                .rolesScrollController,
+                                            child:
+                                                TransformableListView.builder(
+                                              getTransformMatrix:
+                                                  controller.getTransformMatrix,
+                                              controller: controller
+                                                  .rolesScrollController,
+                                              itemCount:
+                                                  controller.roles.length,
+                                              itemBuilder: (context, index) {
+                                                return Card(
+                                                  color:
+                                                      ColorManager.rolesColors[
+                                                          index %
+                                                              ColorManager
+                                                                  .rolesColors
+                                                                  .length],
+                                                  elevation: 10,
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      controller
+                                                          .roles[index].name,
+                                                      style:
+                                                          nunitoBold.copyWith(
+                                                        fontSize: 22,
+                                                        color:
+                                                            ColorManager.black,
+                                                      ),
                                                     ),
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        MyDialogs.showDialog(
-                                                          context,
-                                                          AddScreensToRolesWidget(
-                                                            role: controller
-                                                                .roles[index],
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: const Text(
-                                                        "Add Screen",
+                                                    trailing: Visibility(
+                                                      visible: Get.find<
+                                                              ProfileController>()
+                                                          .canAccessWidget(
+                                                        widgetId: '11100',
+                                                      ),
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              const Color(
+                                                                  0xFF003366),
+                                                        ),
+                                                        onPressed: () {
+                                                          MyDialogs.showDialog(
+                                                            context,
+                                                            AddScreensToRolesWidget(
+                                                              role: controller
+                                                                  .roles[index],
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: const Text(
+                                                          "Add Screen",
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              );
-                                            },
+                                                );
+                                              },
+                                            ),
                                           );
                               },
                             ),
@@ -129,6 +166,7 @@ class RolesScreen extends GetView<RolesController> {
                       ],
                     ),
                   ),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: Column(
                       children: [
@@ -172,6 +210,7 @@ class RolesScreen extends GetView<RolesController> {
                         ),
                         Expanded(
                           child: Container(
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
                               borderRadius: BorderRadius.circular(10),
@@ -187,26 +226,53 @@ class RolesScreen extends GetView<RolesController> {
                                         ? const Center(
                                             child: Text("No Screens Found"),
                                           )
-                                        : ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount:
-                                                controller.screens.length,
-                                            itemBuilder: (context, index) {
-                                              return Card(
-                                                color: Colors.grey,
-                                                elevation: 10,
-                                                child: ListTile(
-                                                  title: Text(
-                                                    controller
-                                                        .screens[index].name,
+                                        : Scrollbar(
+                                            thumbVisibility: true,
+                                            trackVisibility: true,
+                                            controller: controller
+                                                .screensScrollController,
+                                            child:
+                                                TransformableListView.builder(
+                                              getTransformMatrix:
+                                                  controller.getTransformMatrix,
+                                              controller: controller
+                                                  .screensScrollController,
+                                              itemCount:
+                                                  controller.screens.length,
+                                              itemBuilder: (context, index) {
+                                                return Card(
+                                                  margin: const EdgeInsets.only(
+                                                    left: 5,
+                                                    top: 5,
+                                                    bottom: 5,
+                                                    right: 20,
                                                   ),
-                                                  subtitle: Text(
-                                                    controller
-                                                        .screens[index].frontId,
+                                                  color: ColorManager
+                                                          .screensColors[
+                                                      index %
+                                                          ColorManager
+                                                              .screensColors
+                                                              .length],
+                                                  elevation: 10,
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      controller
+                                                          .screens[index].name,
+                                                      style:
+                                                          nunitoBold.copyWith(
+                                                        color:
+                                                            ColorManager.black,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    subtitle: Text(
+                                                      controller.screens[index]
+                                                          .frontId,
+                                                    ),
                                                   ),
-                                                ),
-                                              );
-                                            },
+                                                );
+                                              },
+                                            ),
                                           );
                               },
                             ),
