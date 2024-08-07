@@ -18,61 +18,72 @@ class AddNewRolesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "Add New Roles",
-            style: nunitoBlack.copyWith(
-              color: ColorManager.bgSideMenu,
-              fontSize: 30,
+    return SizedBox(
+      child: IntrinsicHeight(
+        child: IntrinsicWidth(
+          child: Form(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Add New Roles",
+                  style: nunitoBlack.copyWith(
+                    color: ColorManager.bgSideMenu,
+                    fontSize: 30,
+                  ),
+                ),
+                MytextFormFiled(
+                  myValidation: Validations.requiredValidator,
+                  controller: nameController,
+                  title: "Role Name",
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GetBuilder<RolesController>(
+                  builder: (controller) {
+                    return controller.addLoading
+                        ? Center(
+                            child: LoadingIndicators.getLoadingIndicator(),
+                          )
+                        : Row(
+                            children: [
+                              const Expanded(
+                                child: ElevatedBackButton(),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: ElevatedAddButton(
+                                  onPressed: () async {
+                                    controller
+                                        .addNewRoles(
+                                      name: nameController.text,
+                                    )
+                                        .then(
+                                      (added) {
+                                        if (added) {
+                                          nameController.clear();
+                                          Get.back();
+                                          MyFlashBar.showSuccess(
+                                                  'Roles has ben added',
+                                                  'Roles')
+                                              .show(Get.key.currentContext);
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                  },
+                ),
+              ],
             ),
           ),
-          MytextFormFiled(
-            myValidation: Validations.requiredValidator,
-            controller: nameController,
-            title: "Role Name",
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          GetBuilder<RolesController>(builder: (controller) {
-            return controller.addLoading
-                ? Center(
-                    child: LoadingIndicators.getLoadingIndicator(),
-                  )
-                : Row(
-                    children: [
-                      const Expanded(
-                        child: ElevatedBackButton(),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: ElevatedAddButton(
-                          onPressed: () async {
-                            controller
-                                .addNewRoles(
-                              name: nameController.text,
-                            )
-                                .then((added) {
-                              if (added) {
-                                nameController.clear();
-                                Get.back();
-                                MyFlashBar.showSuccess(
-                                        'Roles has ben added', 'Roles')
-                                    .show(Get.key.currentContext);
-                              }
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-          }),
-        ],
+        ),
       ),
     );
   }
