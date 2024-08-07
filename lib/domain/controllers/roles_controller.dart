@@ -1,7 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
+import 'package:transformable_list_view/transformable_list_view.dart';
 
 import '../../Data/Models/user/roles/role_res_model.dart';
 import '../../Data/Models/user/roles/roleres_model.dart';
@@ -16,6 +18,8 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 class RolesController extends GetxController {
   bool addLoading = false;
   bool connectLoading = false;
+  final ScrollController rolesScrollController = ScrollController();
+  final ScrollController screensScrollController = ScrollController();
   // final UserProfileModel? _userProfile =
   //     Get.find<ProfileController>().cachedUserProfile;
 
@@ -133,8 +137,6 @@ class RolesController extends GetxController {
   }
 
   Future getAllRoles() async {
-    getAllLoading = true;
-    update();
     ResponseHandler<RolesResModel> responseHandler = ResponseHandler();
     Either<Failure, RolesResModel> response = await responseHandler.getResponse(
       path: UserRolesSystemsLink.userRolesSystems,
@@ -148,20 +150,14 @@ class RolesController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        getAllLoading = false;
-        update();
       },
       (r) {
         roles = r.data!;
-        getAllLoading = false;
-        update();
       },
     );
   }
 
   Future getAllScreens() async {
-    getAllLoading = true;
-    update();
     ResponseHandler<ScreensResModel> responseHandler = ResponseHandler();
     Either<Failure, ScreensResModel> response =
         await responseHandler.getResponse(
@@ -176,21 +172,54 @@ class RolesController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        getAllLoading = false;
-        update();
       },
       (r) {
         screens = r.data!;
-        getAllLoading = false;
-        update();
       },
     );
   }
 
+  Matrix4 getTransformMatrix(TransformableListItem item) {
+    /// final scale of child when the animation is completed
+    const endScaleBound = 0.3;
+
+    /// 0 when animation completed and [scale] == [endScaleBound]
+    /// 1 when animation starts and [scale] == 1
+    final animationProgress = item.visibleExtent / item.size.height;
+
+    /// result matrix
+    final paintTransform = Matrix4.identity();
+
+    /// animate only if item is on edge
+    if (item.position != TransformableListItemPosition.middle) {
+      final scale = endScaleBound + ((1 - endScaleBound) * animationProgress);
+
+      paintTransform
+        ..translate(item.size.width / 2)
+        ..scale(scale)
+        ..translate(-item.size.width / 2);
+    }
+
+    return paintTransform;
+  }
+
   @override
-  void onInit() {
-    getAllScreens();
-    getAllRoles();
+  void onClose() {
+    rolesScrollController.dispose();
+    screensScrollController.dispose();
+    super.onClose();
+  }
+
+  @override
+  void onInit() async {
+    getAllLoading = true;
+    update();
+    await Future.wait([
+      getAllScreens(),
+      getAllRoles(),
+    ]);
+    getAllLoading = false;
+    update();
     super.onInit();
   }
 
