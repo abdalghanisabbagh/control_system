@@ -19,61 +19,67 @@ class AddScreensToRolesWidget extends GetView<RolesController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          "Add ScreenS To > ${role.name} < Role",
-          style: nunitoBlack.copyWith(
-            color: ColorManager.bgSideMenu,
-            fontSize: 30,
+    return IntrinsicWidth(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Add ScreenS To > ${role.name} < Role",
+            style: nunitoBlack.copyWith(
+              color: ColorManager.bgSideMenu,
+              fontSize: 30,
+            ),
           ),
-        ),
-        MultiSelectDropDownView(
-          hintText: "Select Screens",
-          searchEnabled: true,
-          options: controller.screens
-              .map((e) => ValueItem(label: e.name, value: e.id))
-              .toList(),
-          onOptionSelected: controller.onOptionSelected,
-          multiSelect: true,
-          showChipSelect: true,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        GetBuilder<RolesController>(builder: (controller) {
-          return controller.addLoading
-              ? Center(
-                  child: LoadingIndicators.getLoadingIndicator(),
-                )
-              : Row(
-                  children: [
-                    const Expanded(
-                      child: ElevatedBackButton(),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: ElevatedAddButton(
-                        onPressed: () async {
-                          controller.addScreensToRole(role.id).then((isAdded) {
-                            if (isAdded) {
-                              Get.back();
-                              MyFlashBar.showSuccess(
-                                      'Screen has ben added to ${role.name}',
-                                      role.name)
-                                  .show(Get.key.currentContext);
-                            }
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                );
-        }),
-      ],
+          MultiSelectDropDownView(
+            hintText: "Select Screens",
+            searchEnabled: true,
+            options: controller.screens
+                .map((e) => ValueItem(label: e.name, value: e.id))
+                .toList(),
+            onOptionSelected: controller.onOptionSelected,
+            multiSelect: true,
+            showChipSelect: true,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          GetBuilder<RolesController>(
+            builder: (controller) {
+              return controller.addLoading
+                  ? Center(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    )
+                  : Row(
+                      children: [
+                        const Expanded(
+                          child: ElevatedBackButton(),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: ElevatedAddButton(
+                            onPressed: () async {
+                              controller.addScreensToRole(role.id).then(
+                                (isAdded) {
+                                  if (isAdded) {
+                                    Get.back();
+                                    MyFlashBar.showSuccess(
+                                            'Screen has ben added to ${role.name}',
+                                            role.name)
+                                        .show(Get.key.currentContext);
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
