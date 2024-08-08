@@ -1,10 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/auth_controller.dart';
-import '../../resource_manager/assets_manager.dart';
-import '../../resource_manager/index.dart';
 import 'widgets/login_form.dart';
 import 'widgets/select_school_form.dart';
 
@@ -78,9 +77,13 @@ class LoginScreen extends GetView<AuthController> {
                     const SizedBox(
                       width: 8,
                     ),
-                    Text("Copyright 2024",
-                        style: nunitoBoldStyle().copyWith(
-                            fontSize: 22, color: ColorManager.primary)),
+                    Text(
+                      "Copyright 2024",
+                      style: nunitoBoldStyle().copyWith(
+                        fontSize: 22,
+                        color: ColorManager.primary,
+                      ),
+                    ),
                   ],
                 ),
               ),
