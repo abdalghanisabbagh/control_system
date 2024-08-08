@@ -4,6 +4,7 @@ import 'package:control_system/presentation/views/base_screen.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../Data/Models/user/users_res/user_res_model.dart';
@@ -149,7 +150,7 @@ class AdminScreen extends GetView<AdminController> {
                                             ),
                                             const SizedBox(height: 5),
                                             Text(
-                                              "Created At: ${item.createdAt ?? "Unknown"}",
+                                              "Created At: ${DateFormat("dd-MM-yyyy HH:mm").format(DateTime.parse(item.createdAt!))}",
                                               style: nunitoRegular.copyWith(
                                                 color: ColorManager.bgSideMenu
                                                     .withOpacity(0.7),
