@@ -1,20 +1,21 @@
-import 'package:control_system/Data/Models/user/roles/roleres_model.dart';
-
 class UserHasRolesResModel {
-  List<RolesResModel>? roles;
+  List<String>? roles;
 
   UserHasRolesResModel({this.roles});
 
   UserHasRolesResModel.fromJson(json) {
-    roles = json['roles'] != null
-        ? (json['roles'] as List).map((i) => RolesResModel.fromJson(i)).toList()
-        : null;
+    if (json is List) {
+      roles = <String>[];
+      for (var v in json) {
+        roles!.add((v['roles']['Name']));
+      }
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     if (roles != null) {
-      data['roles'] = roles!.map((v) => v.toJson()).toList();
+      data['roles'] = roles!.map((e) => {'Name': e}).toList();
     }
     return data;
   }
