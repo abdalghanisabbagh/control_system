@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
-import '../../../Data/Models/user/users_res/roles.dart';
 import '../../../Data/Models/user/users_res/user_res_model.dart';
 import '../../../domain/controllers/admin_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
@@ -68,7 +67,7 @@ class AdminScreen extends GetView<AdminController> {
                   ? Center(
                       child: LoadingIndicators.getLoadingIndicator(),
                     )
-                  : controller.usersResModel.data!.isEmpty
+                  : controller.usersList.isEmpty
                       ? Center(
                           child: Text(
                             "No Users Found",
@@ -78,8 +77,8 @@ class AdminScreen extends GetView<AdminController> {
                             ),
                           ),
                         )
-                      : SearchableList<Data>(
-                          initialList: controller.usersResModel.data!,
+                      : SearchableList<UserResModel>(
+                          initialList: controller.usersList,
                           emptyWidget: Center(
                             child: Text(
                               "No data found",
@@ -89,12 +88,12 @@ class AdminScreen extends GetView<AdminController> {
                               ),
                             ),
                           ),
-                          filter: (value) => controller.usersResModel.data!
+                          filter: (value) => controller.usersList
                               .where((element) => element.fullName!
                                   .toLowerCase()
                                   .contains(value.toLowerCase()))
                               .toList(),
-                          itemBuilder: (Data item) {
+                          itemBuilder: (UserResModel item) {
                             return Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Card(
@@ -133,7 +132,15 @@ class AdminScreen extends GetView<AdminController> {
                                             ),
                                             const SizedBox(height: 5),
                                             Text(
-                                              "Role: ${controller.usersResModel.data?.map((e) => e.usersHasRoles?.map((e) => e.roles?.name))}",
+                                              item.userHasRoles?.roles
+                                                          ?.isEmpty ==
+                                                      null
+                                                  ? "User has no roles"
+                                                  : item.userHasRoles?.roles
+                                                              ?.isEmpty ==
+                                                          true
+                                                      ? "User has no roles"
+                                                      : "Roles: ${item.userHasRoles?.roles?.join(",")}",
                                               style: nunitoRegular.copyWith(
                                                 color: ColorManager.bgSideMenu
                                                     .withOpacity(0.7),
@@ -142,7 +149,7 @@ class AdminScreen extends GetView<AdminController> {
                                             ),
                                             const SizedBox(height: 5),
                                             Text(
-                                              "Created: ${item.createdAt ?? "Unknown"}",
+                                              "Created At: ${item.createdAt ?? "Unknown"}",
                                               style: nunitoRegular.copyWith(
                                                 color: ColorManager.bgSideMenu
                                                     .withOpacity(0.7),
@@ -151,7 +158,7 @@ class AdminScreen extends GetView<AdminController> {
                                             ),
                                             const SizedBox(height: 5),
                                             Text(
-                                              "Created by: ${item.createdById?.fullName ?? "Unknown"}",
+                                              "Created by: ${item.createdByUserResModel?.fullName ?? "Unknown"}",
                                               style: nunitoRegular.copyWith(
                                                 color: ColorManager.bgSideMenu
                                                     .withOpacity(0.7),
@@ -173,7 +180,7 @@ class AdminScreen extends GetView<AdminController> {
                                         },
                                       ),
                                       IconButton(
-                                        icon: Icon(Icons.delete,
+                                        icon: const Icon(Icons.delete,
                                             color: Colors.red),
                                         onPressed: () {
                                           MyAwesomeDialogue(
