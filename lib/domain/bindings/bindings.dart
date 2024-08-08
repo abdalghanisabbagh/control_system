@@ -1,11 +1,11 @@
-import 'package:control_system/domain/controllers/batch_documents.dart/attendance_controller.dart';
-import 'package:control_system/domain/controllers/subject/operation_controoler.dart';
 import 'package:get/get.dart';
 
+import '../controllers/batch_documents.dart/attendance_controller.dart';
 import '../controllers/batch_documents.dart/edit_cover_controller.dart';
 import '../controllers/batch_documents.dart/seat_number_controller.dart';
 import '../controllers/controllers.dart';
 import '../controllers/subject/edit_subject_controller.dart';
+import '../controllers/subject/operation_controoler.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
 
@@ -214,7 +214,7 @@ class SubjectSettingBindings extends Bindings {
       () => SubjectsController(),
       fenix: true,
     );
-     Get.lazyPut<EditSubjectsController>(
+    Get.lazyPut<EditSubjectsController>(
       () => EditSubjectsController(),
       fenix: true,
     );
@@ -223,7 +223,7 @@ class SubjectSettingBindings extends Bindings {
       () => SchoolController(),
       fenix: true,
     );
-     Get.lazyPut<OperationController>(
+    Get.lazyPut<OperationController>(
       () => OperationController(),
       fenix: true,
     );

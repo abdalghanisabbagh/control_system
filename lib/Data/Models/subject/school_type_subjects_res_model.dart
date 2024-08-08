@@ -1,8 +1,6 @@
-import 'package:control_system/Data/Models/school/school_type/school_type_model.dart';
-
+import '../school/school_type/school_type_model.dart';
 
 class SchoolTypeSubjectsResModel {
-
   SchoolTypeResModel? schoolType;
 
   SchoolTypeSubjectsResModel({

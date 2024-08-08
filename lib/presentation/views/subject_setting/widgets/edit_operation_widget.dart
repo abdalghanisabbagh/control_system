@@ -1,12 +1,12 @@
-import 'package:control_system/domain/controllers/subject/edit_subject_controller.dart';
-import 'package:control_system/domain/controllers/subject/operation_controoler.dart';
-import 'package:control_system/domain/controllers/subject/subject_controller.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../../../Data/Models/subject/subject_res_model.dart';
+import '../../../../domain/controllers/subject/edit_subject_controller.dart';
+import '../../../../domain/controllers/subject/operation_controoler.dart';
+import '../../../../domain/controllers/subject/subject_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
@@ -134,7 +134,6 @@ class EditOperationWidget extends GetView<EditSubjectsController> {
                                                   Get.back(),
                                                   MyFlashBar.showSuccess(
                                                           "Subjects Updated",
-                                                          
                                                           "Success")
                                                       .show(context),
                                                   Get.delete<
