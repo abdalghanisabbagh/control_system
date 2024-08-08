@@ -1,4 +1,5 @@
 import 'package:control_system/domain/controllers/batch_documents.dart/attendance_controller.dart';
+import 'package:control_system/domain/controllers/subject/operation_controoler.dart';
 import 'package:get/get.dart';
 
 import '../controllers/batch_documents.dart/edit_cover_controller.dart';
@@ -220,6 +221,10 @@ class SubjectSettingBindings extends Bindings {
 
     Get.lazyPut<SchoolController>(
       () => SchoolController(),
+      fenix: true,
+    );
+     Get.lazyPut<OperationController>(
+      () => OperationController(),
       fenix: true,
     );
   }

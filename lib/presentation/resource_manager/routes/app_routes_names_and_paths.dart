@@ -36,6 +36,10 @@ class AppRoutesNamesAndPaths {
   // createMissionScreen
   static const String createMissionScreenPath = 'create-mission';
 
+  static const String oprerationsScreenName = 'Operations';
+  // oprerationsScreen
+  static const String oprerationsScreenPath = 'operations';
+
   static const String dashBoardScreenName = 'Dashboard';
   // dashBoardScreen
   static const String dashBoardScreenPath = '/dashboard';

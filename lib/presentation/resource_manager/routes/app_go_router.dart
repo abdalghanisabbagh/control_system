@@ -10,6 +10,7 @@ import '../../views/control_mission/distribution_and_details/distribution.dart';
 import '../../views/control_mission/widgets/create_mission_widget.dart';
 import '../../views/control_mission/widgets/distribute_students.dart';
 import '../../views/index.dart';
+import '../../views/subject_setting/widgets/operation_widget.dart';
 import 'app_routes_names_and_paths.dart';
 
 class AppGoRouter {
@@ -203,7 +204,7 @@ class AppGoRouter {
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           BarcodeBindings().dependencies();
-          return  SetDegreesScreen();
+          return SetDegreesScreen();
         },
         onExit: (context, state) {
           Get.delete<BarcodeController>();
@@ -230,6 +231,16 @@ class AppGoRouter {
           SubjectSettingBindings().dependencies();
           return const SubjectSettingScreen();
         },
+        routes: [
+          GoRoute(
+            path: AppRoutesNamesAndPaths.oprerationsScreenPath,
+            name: AppRoutesNamesAndPaths.oprerationsScreenName,
+            builder: (context, state) {
+              SubjectSettingBindings().dependencies();
+              return const OperationWidget();
+            },
+          ),
+        ],
         onExit: (context, state) {
           return true;
         },

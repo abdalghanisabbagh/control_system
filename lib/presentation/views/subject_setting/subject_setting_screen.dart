@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/presentation/views/subject_setting/widgets/edit_Subjects_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../Data/Models/subject/subject_res_model.dart';
@@ -14,6 +15,7 @@ import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../resource_manager/assets_manager.dart';
 import '../../resource_manager/index.dart';
+import '../../resource_manager/routes/app_routes_names_and_paths.dart';
 import '../base_screen.dart';
 import "widgets/add_subject_widget.dart";
 
@@ -31,7 +33,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
                       "Subject",
@@ -40,15 +42,42 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                         fontSize: 30,
                       ),
                     ),
+                    SizedBox(
+                      width: Get.width * 0.6,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        context.goNamed(
+                            AppRoutesNamesAndPaths.oprerationsScreenName);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorManager.bgSideMenu,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              " Operation ",
+                              style: nunitoBold.copyWith(
+                                color: ColorManager.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Get.width * 0.02,
+                    ),
                     Visibility(
                       visible: Get.find<ProfileController>().canAccessWidget(
                         widgetId: '7100',
                       ),
                       child: InkWell(
                         onTap: () {
-                          // RxBool inExam = true.obs;
-                          // TextEditingController subjectTitleController =
-                          //     TextEditingController();
                           Get.defaultDialog(
                             title: "Add New Subject",
                             titleStyle: nunitoRegular.copyWith(
@@ -116,6 +145,11 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                   .toList(),
                               itemBuilder: (SubjectResModel item) {
                                 bool inExam = true;
+                                var schoolTypes = item
+                                    .schoolTypeHasSubjectsResModel!
+                                    .schooltypeHasSubjects!
+                                    .map((e) => e.schoolType!.name)
+                                    .join(', ');
 
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -161,38 +195,18 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                   ),
                                                 ),
                                                 const SizedBox(
-                                                  height: 10,
+                                                  height: 8,
                                                 ),
-                                                SizedBox(
-                                                  width: double.infinity,
-                                                  height: 25,
-                                                  child: ListView.builder(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemCount: 1,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      var schoolTypes = item
-                                                          .schoolTypeHasSubjectsResModel!
-                                                          .schooltypeHasSubjects!
-                                                          .map((e) => e
-                                                              .schoolType!.name)
-                                                          .join(', ');
-
-                                                      return Text(
-                                                        'School type ($schoolTypes)',
-                                                        style: nunitoRegular
-                                                            .copyWith(
-                                                          color: ColorManager
-                                                              .bgSideMenu,
-                                                          fontSize: 20,
-                                                        ),
-                                                      );
-                                                    },
+                                                Text(
+                                                  'School type ($schoolTypes)',
+                                                  style: nunitoRegular.copyWith(
+                                                    color:
+                                                        ColorManager.bgSideMenu,
+                                                    fontSize: 20,
                                                   ),
                                                 ),
                                                 const SizedBox(
-                                                  height: 10,
+                                                  height: 8,
                                                 ),
                                                 Row(
                                                   children: [
@@ -343,12 +357,12 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                       ),
                                       Positioned(
                                         right: 100,
-                                        bottom: 150,
+                                        bottom: 100,
                                         child: Image.asset(
                                           AssetsManager.assetsIconsArabic,
                                           fit: BoxFit.fill,
-                                          height: 200,
-                                          width: 200,
+                                          height: 150,
+                                          width: 150,
                                         ),
                                       ),
                                     ],
