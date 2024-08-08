@@ -1,10 +1,8 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../app/extensions/device_type_extension.dart';
 import '../../domain/services/side_menue_get_controller.dart';
-import '../resource_manager/color_manager.dart';
-import '../resource_manager/index.dart';
 import 'side_menue/side_menue.dart';
 
 class BaseScreen extends GetView<SideMenueGetController> {
