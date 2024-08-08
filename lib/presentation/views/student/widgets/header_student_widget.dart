@@ -1,14 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
-import '../../../../app/extensions/device_type_extension.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../../resource_manager/index.dart';
 import 'add_single_student_widget.dart';
 
 class HeaderStudentWidget extends GetView<StudentController> {
