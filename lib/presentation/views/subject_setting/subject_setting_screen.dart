@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/presentation/views/subject_setting/widgets/edit_subjects_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +16,7 @@ import '../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../resource_manager/routes/app_routes_names_and_paths.dart';
 import '../base_screen.dart';
 import "widgets/add_subject_widget.dart";
+import 'widgets/edit_subjects_widget.dart';
 
 class SubjectSettingScreen extends GetView<SubjectsController> {
   const SubjectSettingScreen({super.key});
