@@ -67,12 +67,12 @@ class SubjectsController extends GetxController {
   Future<bool> deleteSubject({required int id}) async {
     bool subjectHasBeenDeleted = false;
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
-    Either<Failure, SubjectResModel> response =
-        await responseHandler.getResponse(
-      path: '${SchoolsLinks.subjectsDeactivate}/$id',
-      converter: SubjectResModel.fromJson,
-      type: ReqTypeEnum.PATCH,
-    );
+    Either<Failure, SubjectResModel> response = await responseHandler
+        .getResponse(
+            path: '${SchoolsLinks.subjectsDeactivate}/$id',
+            converter: SubjectResModel.fromJson,
+            type: ReqTypeEnum.PATCH,
+            body: {});
     response.fold(
       (l) {
         MyAwesomeDialogue(

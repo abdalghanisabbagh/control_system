@@ -25,12 +25,10 @@ class EditSubjectsController extends GetxController {
 
   Future<bool> editSubject({
     required int id,
-    // required String name,
     required List schholTypeIds,
     required String name,
-    // required int inExam,
-    // required String title,
-    // required bool inExam,
+    required int inexam,
+    required int active,
   }) async {
     editLoading = true;
     update();
@@ -44,7 +42,8 @@ class EditSubjectsController extends GetxController {
       body: {
         "Name": name,
         'schools_type_ID': schholTypeIds,
-        "InExam": 1,
+        "InExam": inexam,
+        "Active": active
       },
     );
     response.fold(
@@ -132,6 +131,7 @@ class EditSubjectsController extends GetxController {
         selectedOptions.map((e) => e.value).toList().cast<int>();
     update();
   }
+
 
   @override
   void onInit() {

@@ -1,4 +1,5 @@
 import 'package:control_system/domain/controllers/subject/edit_subject_controller.dart';
+import 'package:control_system/domain/controllers/subject/operation_controoler.dart';
 import 'package:control_system/domain/controllers/subject/subject_controller.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,10 @@ import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 
-class EditSubject extends GetView<EditSubjectsController> {
+class EditOperationWidget extends GetView<EditSubjectsController> {
   final SubjectResModel subjectResModel;
 
-  const EditSubject({super.key, required this.subjectResModel});
+  const EditOperationWidget({super.key, required this.subjectResModel});
 
   @override
   Widget build(BuildContext context) {
@@ -125,19 +126,23 @@ class EditSubject extends GetView<EditSubjectsController> {
                                             name: subjectNameController.text,
                                             schholTypeIds: controller
                                                 .selectedSchoolTypeIds,
-                                            active: subjectResModel.active!,
-                                            inexam: subjectResModel.inExam!)
+                                            inexam: subjectResModel.inExam!,
+                                            active: subjectResModel.active!)
                                         .then(
                                           (value) => value
                                               ? {
                                                   Get.back(),
                                                   MyFlashBar.showSuccess(
-                                                          "Subjects Added",
+                                                          "Subjects Updated",
+                                                          
                                                           "Success")
                                                       .show(context),
                                                   Get.delete<
                                                       EditSubjectsController>(),
                                                   Get.find<SubjectsController>()
+                                                      .getAllSubjects(),
+                                                  Get.find<
+                                                          OperationController>()
                                                       .getAllSubjects(),
                                                   controller.onDelete()
                                                 }
@@ -223,6 +228,9 @@ class EditSubject extends GetView<EditSubjectsController> {
                                                         Get.find<
                                                                 SubjectsController>()
                                                             .getAllSubjects(),
+                                                        Get.find<
+                                                                OperationController>()
+                                                            .getAllSubjects(),
                                                       }
                                                     : null,
                                               );
@@ -250,6 +258,26 @@ class EditSubject extends GetView<EditSubjectsController> {
                                       : false,
                                   onChanged: (newVal) {
                                     subjectResModel.inExam = newVal! ? 1 : 0;
+                                    controller.update();
+                                  },
+                                );
+                              }),
+                              SizedBox(
+                                width: Get.width * 0.05,
+                              ),
+                              Text(
+                                "Active",
+                                style: nunitoBoldStyle().copyWith(
+                                    color: ColorManager.bgSideMenu,
+                                    fontSize: 25),
+                              ),
+                              GetBuilder<EditSubjectsController>(builder: (_) {
+                                return Checkbox(
+                                  value: subjectResModel.active == 1
+                                      ? true
+                                      : false,
+                                  onChanged: (newVal) {
+                                    subjectResModel.active = newVal! ? 1 : 0;
                                     controller.update();
                                   },
                                 );

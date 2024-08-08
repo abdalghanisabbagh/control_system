@@ -1,15 +1,18 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/controllers/controllers.dart';
 import 'package:control_system/domain/controllers/subject/operation_controoler.dart';
+import 'package:control_system/presentation/views/subject_setting/widgets/edit_operation_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../../Data/Models/subject/subject_res_model.dart';
+import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
-
 
 class OperationWidget extends GetView<OperationController> {
   const OperationWidget({super.key});
@@ -254,58 +257,75 @@ class OperationWidget extends GetView<OperationController> {
                                                                           .center,
                                                                   children: [
                                                                     Expanded(
-                                                                      child:
-                                                                          InkWell(
-                                                                        onTap:
-                                                                            () {
-                                                                          MyAwesomeDialogue(
-                                                                            title:
-                                                                                'You are about to delete this subject',
-                                                                            desc:
-                                                                                'Are you sure?',
-                                                                            dialogType:
-                                                                                DialogType.warning,
-                                                                            btnOkOnPressed:
-                                                                                () {},
-                                                                            btnCancelOnPressed:
-                                                                                () {
-                                                                              Get.back();
-                                                                            },
-                                                                          ).showDialogue(
-                                                                              context);
-                                                                        },
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              50,
-                                                                          width:
-                                                                              150,
-                                                                          decoration:
-                                                                              const BoxDecoration(
-                                                                            color:
-                                                                                Colors.red,
-                                                                            borderRadius:
-                                                                                BorderRadius.horizontal(left: Radius.circular(11)),
-                                                                          ),
+                                                                      child: GetBuilder<
+                                                                              SubjectsController>(
+                                                                          builder:
+                                                                              (subjectsController) {
+                                                                        return InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            MyAwesomeDialogue(
+                                                                              title: 'You are about to delete this subject',
+                                                                              desc: 'Are you sure?',
+                                                                              dialogType: DialogType.warning,
+                                                                              btnOkOnPressed: () async {
+                                                                                await subjectsController.deleteSubject(id: item.iD!).then(
+                                                                                  (value) {
+                                                                                    value
+                                                                                        ? {
+                                                                                            MyFlashBar.showSuccess(
+                                                                                              "Subject has been deleted successfully",
+                                                                                              "Subject Deleted",
+                                                                                            ).show(context),
+                                                                                          }
+                                                                                        : null;
+                                                                                    controller.onInit();
+                                                                                  },
+                                                                                );
+                                                                              },
+                                                                              btnCancelOnPressed: () {
+                                                                                Get.back();
+                                                                              },
+                                                                            ).showDialogue(context);
+                                                                          },
                                                                           child:
-                                                                              Center(
+                                                                              Container(
+                                                                            height:
+                                                                                50,
+                                                                            width:
+                                                                                150,
+                                                                            decoration:
+                                                                                const BoxDecoration(
+                                                                              color: Colors.red,
+                                                                              borderRadius: BorderRadius.horizontal(left: Radius.circular(11)),
+                                                                            ),
                                                                             child:
-                                                                                Text(
-                                                                              "Delete Subject",
-                                                                              style: nunitoBold.copyWith(
-                                                                                color: ColorManager.white,
-                                                                                fontSize: 16,
+                                                                                Center(
+                                                                              child: Text(
+                                                                                "Delete Subject",
+                                                                                style: nunitoBold.copyWith(
+                                                                                  color: ColorManager.white,
+                                                                                  fontSize: 16,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      ),
+                                                                        );
+                                                                      }),
                                                                     ),
                                                                     Expanded(
                                                                       child:
                                                                           InkWell(
                                                                         onTap:
-                                                                            () {},
+                                                                            () {
+                                                                          MyDialogs
+                                                                              .showDialog(
+                                                                            context,
+                                                                            EditOperationWidget(
+                                                                              subjectResModel: item,
+                                                                            ),
+                                                                          );
+                                                                        },
                                                                         child:
                                                                             Container(
                                                                           height:

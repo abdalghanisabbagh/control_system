@@ -261,8 +261,9 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                             dialogType:
                                                                 DialogType
                                                                     .warning,
-                                                            btnOkOnPressed: () {
-                                                              controller
+                                                            btnOkOnPressed:
+                                                                () async {
+                                                              await controller
                                                                   .deleteSubject(
                                                                 id: item.iD!,
                                                               )
