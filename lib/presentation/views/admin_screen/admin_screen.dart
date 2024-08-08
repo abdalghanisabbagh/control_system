@@ -1,8 +1,7 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
-import '../../resource_manager/color_manager.dart';
-import '../../resource_manager/styles_manager.dart';
 import '../base_screen.dart';
 import 'widgets/add_new_user_widget.dart';
 
