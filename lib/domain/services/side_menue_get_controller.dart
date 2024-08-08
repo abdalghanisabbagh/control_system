@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../Data/Models/app_menue_item_model.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../presentation/resource_manager/assets_manager.dart';
 import '../../presentation/resource_manager/routes/index.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/profile_controller.dart';

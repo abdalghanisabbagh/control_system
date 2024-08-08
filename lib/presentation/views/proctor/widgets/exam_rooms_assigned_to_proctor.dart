@@ -1,9 +1,8 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../domain/controllers/proctor_controller.dart';
-import '../../../resource_manager/styles_manager.dart';
-import '../../../resource_manager/values_manager.dart';
 
 class ExamRoomsAssignedToProctorWidget extends GetView<ProctorController> {
   final String proctorName;

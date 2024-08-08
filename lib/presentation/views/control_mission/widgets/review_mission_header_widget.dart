@@ -1,6 +1,5 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
-
-import '../../../resource_manager/styles_manager.dart';
 
 class ReviewMissionHeaderWidget extends StatelessWidget {
   final String title;

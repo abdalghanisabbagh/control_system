@@ -36,12 +36,16 @@ dependencies:
   enhance_stepper: ^1.0.1
   collection: ^1.18.0
   pdf: ^3.11.0
-  file_saver : ^0.2.13 
+  file_saver: ^0.2.13
   url_launcher: ^6.3.0
   loading_indicator: ^3.1.1
   badges: ^3.1.2
   lottie: ^3.1.2
   transformable_list_view: ^0.5.0
+  custom_theme:
+    git:
+      url: https://github.com/Mahmoud-Saeed-Mahmoud/custom_theme.git
+      ref: v1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -59,8 +63,6 @@ flutter:
     - assets/icons/
     - assets/logos/
     - assets/files/template.pdf
-
-
 
   fonts:
     - family: Nunito

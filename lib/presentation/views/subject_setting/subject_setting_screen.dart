@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/presentation/views/subject_setting/widgets/edit_Subjects_widget.dart';
+import 'package:control_system/presentation/views/subject_setting/widgets/edit_subjects_widget.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

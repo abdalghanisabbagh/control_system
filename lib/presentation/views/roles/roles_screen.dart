@@ -1,3 +1,4 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:transformable_list_view/transformable_list_view.dart';
@@ -7,8 +8,6 @@ import '../../../domain/controllers/roles_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../resource_manager/color_manager.dart';
-import '../../resource_manager/styles_manager.dart';
 import '../base_screen.dart';
 import 'widgets/add_new_roles_widget.dart';
 import 'widgets/add_new_screen_widget.dart';

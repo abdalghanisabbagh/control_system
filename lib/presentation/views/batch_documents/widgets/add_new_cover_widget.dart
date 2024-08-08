@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,6 @@ import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
@@ -506,14 +506,18 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                 }
               },
               child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: ColorManager.bgSideMenu,
-                      borderRadius: BorderRadius.circular(11)),
-                  child: Center(
-                    child: Text("Add", style: nunitoSemiBoldStyle()),
-                  )),
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: ColorManager.bgSideMenu,
+                    borderRadius: BorderRadius.circular(11)),
+                child: Center(
+                  child: Text(
+                    "Add",
+                    style: nunitoSemiBoldStyle(),
+                  ),
+                ),
+              ),
             );
           })
         ],

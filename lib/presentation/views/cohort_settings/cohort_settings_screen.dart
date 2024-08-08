@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:searchable_listview/searchable_listview.dart';
@@ -10,8 +11,6 @@ import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../resource_manager/assets_manager.dart';
-import '../../resource_manager/index.dart';
 import '../base_screen.dart';
 import "add_subjects_to_cohort.dart";
 import "widgets/add_cohort_widget.dart";

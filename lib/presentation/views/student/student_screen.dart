@@ -1,3 +1,4 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -5,7 +6,6 @@ import 'package:pluto_grid/pluto_grid.dart';
 import '../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../resource_manager/index.dart';
 import '../base_screen.dart';
 import 'widgets/edit_student_widget.dart';
 import 'widgets/header_student_widget.dart';

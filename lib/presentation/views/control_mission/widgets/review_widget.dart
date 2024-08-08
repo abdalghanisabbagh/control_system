@@ -1,9 +1,9 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
-import '../../../resource_manager/index.dart';
 
 // ignore: must_be_immutable
 class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
@@ -299,14 +299,16 @@ class _HeaderState extends State<_Header> {
                     borderRadius: BorderRadius.circular(10),
                     color: ColorManager.red),
                 child: const Center(
-                    child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          "Export to PDF",
-                          // style: AppTextStyle.nunitoRegular.copyWith(
-                          //   color: ColorManager.white,
-                          // ),
-                        ))),
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "Export to PDF",
+                      // style: AppTextStyle.nunitoRegular.copyWith(
+                      //   color: ColorManager.white,
+                      // ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -322,14 +324,16 @@ class _HeaderState extends State<_Header> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.green),
                 child: const Center(
-                    child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          "Export to Excel",
-                          // style: AppTextStyle.nunitoRegular.copyWith(
-                          //   color: AppColor.white,
-                          // ),
-                        ))),
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "Export to Excel",
+                      // style: AppTextStyle.nunitoRegular.copyWith(
+                      //   color: AppColor.white,
+                      // ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

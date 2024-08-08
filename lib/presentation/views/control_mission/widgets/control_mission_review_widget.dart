@@ -1,3 +1,4 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +7,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../../domain/controllers/controllers.dart';
-import '../../../resource_manager/index.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
 class ControlMissionReviewWidget extends GetView<ControlMissionController> {
@@ -84,8 +84,8 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
           const Spacer(),
           InkWell(
             onTap: () {
-              Hive.box('ControlMission').put('Id',controlMission.iD);
-              Hive.box('ControlMission').put('Name',controlMission.name);
+              Hive.box('ControlMission').put('Id', controlMission.iD);
+              Hive.box('ControlMission').put('Name', controlMission.name);
 
               context.goNamed(
                   AppRoutesNamesAndPaths.addNewStudentsToControlMissionName);

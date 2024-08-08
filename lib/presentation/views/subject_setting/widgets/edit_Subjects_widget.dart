@@ -1,6 +1,6 @@
 import 'package:control_system/domain/controllers/subject/edit_subject_controller.dart';
 import 'package:control_system/domain/controllers/subject/subject_controller.dart';
-import 'package:control_system/presentation/resource_manager/index.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';

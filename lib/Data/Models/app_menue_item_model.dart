@@ -1,6 +1,6 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 
-import '../../presentation/resource_manager/assets_manager.dart';
 import '../../presentation/resource_manager/routes/app_routes_names_and_paths.dart';
 
 class AppMenueItem {

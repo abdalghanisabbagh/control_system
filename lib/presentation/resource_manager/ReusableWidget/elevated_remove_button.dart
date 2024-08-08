@@ -1,6 +1,5 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
-
-import '../index.dart';
 
 class ElevatedRemoveButton extends StatelessWidget {
   final VoidCallback onPressed;

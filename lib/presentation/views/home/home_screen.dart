@@ -1,10 +1,9 @@
+import 'package:custom_theme/lib.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/home_controller.dart';
-import '../../resource_manager/assets_manager.dart';
-import '../../resource_manager/index.dart';
 import 'widgets/home_screen_test.dart';
 import 'widgets/main_widget.dart';
 
