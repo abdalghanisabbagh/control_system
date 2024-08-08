@@ -1,4 +1,5 @@
 import 'package:control_system/domain/controllers/controllers.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -8,17 +9,15 @@ import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/color_manager.dart';
-import '../../../resource_manager/styles_manager.dart';
 
 // ignore: must_be_immutable
 class AddSubjectWidget extends StatelessWidget {
-  AddSubjectWidget({
-    super.key,
-  });
   final SubjectsController subjectsController = Get.find();
   List schoolTypes = [];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AddSubjectWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
