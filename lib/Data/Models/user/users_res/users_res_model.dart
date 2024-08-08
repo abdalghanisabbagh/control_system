@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/user/users_res/user_res_model.dart';
+import 'user_res_model.dart';
 
 class UsersResModel {
   List<UserResModel>? users;
