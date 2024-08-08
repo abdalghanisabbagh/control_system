@@ -262,7 +262,7 @@ packages:
     description:
       path: "."
       ref: "v1.0.0"
-      resolved-ref: "2b5ccd30701279d46e86750aa1f22d41d828cefa"
+      resolved-ref: "94f428303639df065f54b7f00cc8e7e12c4caaa0"
       url: "https://github.com/Mahmoud-Saeed-Mahmoud/custom_theme.git"
     source: git
     version: "0.0.1"
