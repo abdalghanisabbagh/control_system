@@ -1,10 +1,10 @@
 import 'dart:math' show pi;
 
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../domain/controllers/dashboard_controller.dart';
-import '../../../resource_manager/index.dart';
 import 'clock_painter.dart';
 
 class ClockWidget extends StatelessWidget {
