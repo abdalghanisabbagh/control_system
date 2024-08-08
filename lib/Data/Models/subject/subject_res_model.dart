@@ -1,5 +1,4 @@
-import 'package:control_system/Data/Models/subject/school_type_has_subjects_res_model.dart';
-
+import 'school_type_has_subjects_res_model.dart';
 
 class SubjectResModel {
   int? active, inExam;
