@@ -1,5 +1,5 @@
 import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_add_button.dart';
-import 'package:control_system/presentation/resource_manager/assets_manager.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,14 +12,13 @@ import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../resource_manager/index.dart';
 import '../base_screen.dart';
 
 // ignore: must_be_immutable
 class SetDegreesScreen extends GetView<BarcodeController> {
-  SetDegreesScreen({super.key});
-
   var foucsnode = FocusNode();
+
+  SetDegreesScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return BaseScreen(

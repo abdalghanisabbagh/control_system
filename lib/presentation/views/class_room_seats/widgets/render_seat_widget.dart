@@ -1,12 +1,10 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/state_manager.dart';
 
 import '../../../../Data/Models/student_seat/student_seat_res_model.dart';
 import '../../../../domain/controllers/class_room_controller.dart';
-import '../../../resource_manager/assets_manager.dart';
-import '../../../resource_manager/color_manager.dart';
-import '../../../resource_manager/styles_manager.dart';
 
 // ignore: must_be_immutable
 class RendarSeats extends StatelessWidget {

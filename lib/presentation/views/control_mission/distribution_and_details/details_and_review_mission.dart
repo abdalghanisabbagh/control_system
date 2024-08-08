@@ -1,10 +1,10 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
 import '../../../resource_manager/ReusableWidget/header_widget.dart';
-import '../../../resource_manager/index.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 import '../widgets/mission_details_widget.dart';
 import '../widgets/review_widget.dart';
@@ -52,17 +52,18 @@ class DetailsAndReviewMission
                           borderRadius: BorderRadius.circular(10),
                           color: ColorManager.primary),
                       child: TabBar(
-                          overlayColor:
-                              WidgetStateProperty.all(ColorManager.primary),
-                          labelStyle: nunitoRegularStyle(),
-                          automaticIndicatorColorAdjustment: true,
-                          labelColor: ColorManager.primary,
-                          labelPadding: const EdgeInsets.symmetric(vertical: 5),
-                          indicator: BoxDecoration(color: ColorManager.white),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          unselectedLabelColor: ColorManager.white,
-                          controller: controller.tabController,
-                          tabs: controller.myTabs),
+                        overlayColor:
+                            WidgetStateProperty.all(ColorManager.primary),
+                        labelStyle: nunitoRegularStyle(),
+                        automaticIndicatorColorAdjustment: true,
+                        labelColor: ColorManager.primary,
+                        labelPadding: const EdgeInsets.symmetric(vertical: 5),
+                        indicator: BoxDecoration(color: ColorManager.white),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        unselectedLabelColor: ColorManager.white,
+                        controller: controller.tabController,
+                        tabs: controller.myTabs,
+                      ),
                     ),
                     Expanded(
                       child: TabBarView(

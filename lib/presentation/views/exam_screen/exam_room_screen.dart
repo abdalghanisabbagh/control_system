@@ -1,6 +1,6 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 
-import '../../resource_manager/index.dart';
 import '../control_mission/widgets/review_mission_header_widget.dart';
 
 class ExamRoomScreen extends StatelessWidget {

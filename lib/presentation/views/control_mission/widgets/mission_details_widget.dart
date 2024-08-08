@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -7,7 +8,6 @@ import '../../../../domain/controllers/control_mission/review_control_mission_co
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../../resource_manager/index.dart';
 
 // ignore: must_be_immutable
 class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {

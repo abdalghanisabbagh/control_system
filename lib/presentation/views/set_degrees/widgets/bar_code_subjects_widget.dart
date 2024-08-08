@@ -1,6 +1,5 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
-
-import '../../../resource_manager/index.dart';
 
 class BarCodeSubjects extends StatelessWidget {
   const BarCodeSubjects({super.key});

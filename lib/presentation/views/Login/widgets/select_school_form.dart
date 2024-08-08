@@ -1,3 +1,4 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +7,6 @@ import '../../../../Data/Models/school/school_response/school_res_model.dart';
 import '../../../../domain/controllers/school_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/index.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
 class SelectSchoolForm extends GetView<SchoolController> {

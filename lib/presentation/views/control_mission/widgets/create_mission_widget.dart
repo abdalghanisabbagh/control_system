@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:enhance_stepper/enhance_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,6 @@ import '../../../resource_manager/ReusableWidget/my_back_button.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
 class CreateMissionScreen extends GetView<CreateControlMissionController> {

@@ -1,7 +1,6 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../resource_manager/index.dart';
 
 class DeleteMissionWidget extends StatelessWidget {
   final double? curve;

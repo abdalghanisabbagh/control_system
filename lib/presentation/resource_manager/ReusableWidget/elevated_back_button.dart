@@ -1,8 +1,6 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../color_manager.dart';
-import '../styles_manager.dart';
 
 class ElevatedBackButton extends StatelessWidget {
   final VoidCallback? onPressed;

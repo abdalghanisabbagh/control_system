@@ -1,8 +1,5 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../app/extensions/device_type_extension.dart';
-import '../../../resource_manager/assets_manager.dart';
-import '../../../resource_manager/index.dart';
 
 class RecruitmentDataWidget extends StatefulWidget {
   const RecruitmentDataWidget({super.key});

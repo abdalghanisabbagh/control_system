@@ -1,3 +1,4 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -6,9 +7,6 @@ import '../../../../domain/controllers/controllers.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/color_manager.dart';
-import '../../../resource_manager/styles_manager.dart';
-import '../../../resource_manager/values_manager.dart';
 
 class AddStudentsToControlMissionScreen
     extends GetView<AddNewStudentsToControlMissionController> {
