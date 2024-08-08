@@ -1,8 +1,7 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-import '../index.dart';
 
 class MytextFormFiled extends StatelessWidget {
   final String? Function(String? newValue)? myValidation;
