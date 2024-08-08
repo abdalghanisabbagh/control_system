@@ -14,8 +14,6 @@ import '../../resource_manager/ReusableWidget/elevated_edit_button.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../resource_manager/assets_manager.dart';
-import '../../resource_manager/index.dart';
 import '../../resource_manager/routes/app_routes_names_and_paths.dart';
 import '../base_screen.dart';
 import "widgets/add_subject_widget.dart";
