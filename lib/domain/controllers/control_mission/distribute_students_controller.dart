@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
+import 'package:control_system/app/extensions/convert_material_color_to_pdf_color_extension.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,11 +25,8 @@ import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
-import '../../../app/extensions/convert_material_color_to_pdf_color_extension.dart';
 import '../../../presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../../presentation/resource_manager/assets_manager.dart';
-import '../../../presentation/resource_manager/color_manager.dart';
 
 class DistributeStudentsController extends GetxController {
   List<StudentSeatNumberResModel> availableStudents = [];
