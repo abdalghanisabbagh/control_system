@@ -105,7 +105,7 @@ class AuthController extends GetxController {
       dToken: DateTime.now().toIso8601String(),
     );
     tokenService.saveNewAccessToken(tokenModel);
-    return response.data['data'];
+    return response.data['data']['accessToken'];
   }
 
   setShowPass() {
