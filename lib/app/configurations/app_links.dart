@@ -12,6 +12,7 @@ class AuthLinks {
   static const user = 'users';
   static const userAddRoles = 'users/add-roles';
   static const usersAddSchools = 'users/add-schools';
+  static const getUsersByCreated = 'users/created-by';
 }
 
 class ControlMissionLinks {
@@ -20,8 +21,6 @@ class ControlMissionLinks {
   static const controlMissionSchool = '$controlMission/school';
   static const studentSeatNumbers = '$controlMission/student-seat-numbers';
   static const getGradesByControlMission = 'control-mission/grades';
-  
-
 }
 
 class EducationYearsLinks {
@@ -70,9 +69,6 @@ class SchoolsLinks {
   static const subjectsBySchoolType = 'subjects/school-type/';
 
   static const deleteSchoolTypeinSubjects = 'subjects/remove-school-type';
-
-
-
 }
 
 class Stage {

@@ -1,3 +1,8 @@
+import 'package:control_system/Data/Models/user/roles/roleres_model.dart';
+import 'package:control_system/Data/Models/user/users_res/created_by_user_res_model.dart';
+
+import 'user_has_roles_res_model.dart';
+
 class UserResModel {
   int? active;
 
@@ -11,6 +16,9 @@ class UserResModel {
   String? updatedAt;
   int? updatedBy;
   String? userName;
+  CreatedByUserResModel? createdByUserResModel;
+  UserHasRolesResModel? userHasRoles;
+
   UserResModel({
     this.iD,
     this.fullName,
@@ -22,6 +30,8 @@ class UserResModel {
     this.isFloorManager,
     this.type,
     this.active,
+    this.createdByUserResModel,
+    this.userHasRoles,
   });
   UserResModel.fromJson(json) {
     iD = json['ID'];
@@ -34,6 +44,13 @@ class UserResModel {
     isFloorManager = json['IsFloorManager'];
     type = json['Type'];
     active = json['Active'];
+    createdByUserResModel = json['CreatedById'] != null
+        ? CreatedByUserResModel.fromJson(json['CreatedById'])
+        : null;
+
+    if (json['users_has_roles'] != null) {
+      userHasRoles = UserHasRolesResModel.fromJson(json['users_has_roles']);
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +65,13 @@ class UserResModel {
     data['IsFloorManager'] = isFloorManager;
     data['Type'] = type;
     data['Active'] = active;
+    if (createdByUserResModel != null) {
+      data['CreatedById'] = createdByUserResModel!.toJson();
+    }
+
+    if (userHasRoles != null) {
+      data['users_has_roles'] = userHasRoles!.toJson();
+    }
     return data;
   }
 }

@@ -1,24 +1,21 @@
-import '../login_response/user_profile_model.dart';
+import 'package:control_system/Data/Models/user/users_res/user_res_model.dart';
+import 'package:flutter/material.dart';
 
 class UsersResModel {
-  late final List<UserProfileModel> data;
+  List<UserResModel>? users;
 
-  UsersResModel({
-    required this.data,
-  });
+  UsersResModel({this.users});
 
-  UsersResModel.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      data = <UserProfileModel>[];
-      json['data'].forEach((v) {
-        data.add(UserProfileModel.fromJson(v));
-      });
-    }
+  UsersResModel.fromJson(json) {
+    users = List<UserResModel>.from(
+        json.map((e) => UserResModel.fromJson(e)).toList());
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['data'] = this.data.map((v) => v.toJson()).toList();
+    if (users != null) {
+      data['data'] = users!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
