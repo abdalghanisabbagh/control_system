@@ -85,6 +85,7 @@ class SubjectsController extends GetxController {
       (r) {
         getAllSubjects();
         update();
+        subjectHasBeenDeleted = true;
       },
     );
     return subjectHasBeenDeleted;
