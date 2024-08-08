@@ -1,4 +1,3 @@
-import 'package:control_system/Data/Models/user/roles/roleres_model.dart';
 import 'package:control_system/Data/Models/user/users_res/created_by_user_res_model.dart';
 
 import 'user_has_roles_res_model.dart';
