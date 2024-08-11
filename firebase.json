@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "target": "control_system_2025",
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
+  }
+}
