@@ -2,140 +2,45 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:searchable_listview/searchable_listview.dart';
+import '../../../../Data/Models/user/users_res/user_res_model.dart';
+import '../../../../domain/controllers/controllers.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_back_button.dart';
+import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 
-import '../../../Data/Models/user/users_res/user_res_model.dart';
-import '../../../domain/controllers/admin_controller.dart';
-import '../../resource_manager/ReusableWidget/app_dialogs.dart';
-import '../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../resource_manager/routes/app_routes_names_and_paths.dart';
-import '../base_screen.dart';
-import 'widgets/add_new_user_widget.dart';
-
-class AdminScreen extends GetView<AdminController> {
-  const AdminScreen({super.key});
+class EmployInSchoolWidget extends GetView<AdminController> {
+  const EmployInSchoolWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
-      key: key,
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(children: [
-          Row(
-            children: [
-              Text(
-                "Admin",
-                style: nunitoBlack.copyWith(
-                  color: ColorManager.bgSideMenu,
-                  fontSize: 30,
-                ),
-              ),
-              SizedBox(
-                width: Get.width * 0.5,
-              ),
-              InkWell(
-                onTap: () {
-                  context.goNamed(AppRoutesNamesAndPaths.allEmployScreenName);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ColorManager.bgSideMenu,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        "All Employees",
-                        style: nunitoBold.copyWith(
-                          color: ColorManager.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: Get.width * 0.01,
-              ),
-              InkWell(
-                onTap: () {
-                  context
-                      .goNamed(AppRoutesNamesAndPaths.employInSchoolScreenName);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ColorManager.newStatus,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        " Employ in This School",
-                        style: nunitoBold.copyWith(
-                          color: ColorManager.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: Get.width * 0.01,
-              ),
-              InkWell(
-                onTap: () {
-                  MyDialogs.showDialog(
-                    context,
-                    const AddNewUserWidget(),
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ColorManager.glodenColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        "Add New User",
-                        style: nunitoBold.copyWith(
-                          color: ColorManager.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          GetBuilder<AdminController>(builder: (_) {
-            return Expanded(
-              child: controller.isLoadingGetUsers
-                  ? Center(
-                      child: LoadingIndicators.getLoadingIndicator(),
-                    )
-                  : controller.usersList.isEmpty
-                      ? Center(
-                          child: Text(
-                            "No Users Found",
-                            style: nunitoBold.copyWith(
-                              color: ColorManager.bgSideMenu,
-                              fontSize: 16,
-                            ),
+    return Scaffold(
+        body: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MyBackButton(
+          onPressed: () {},
+        ),
+        GetBuilder<AdminController>(builder: (_) {
+          return Expanded(
+            child: controller.isLoadingGetUsers
+                ? Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  )
+                : controller.usersList.isEmpty
+                    ? Center(
+                        child: Text(
+                          "No Users Found",
+                          style: nunitoBold.copyWith(
+                            color: ColorManager.bgSideMenu,
+                            fontSize: 16,
                           ),
-                        )
-                      : SearchableList<UserResModel>(
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SearchableList<UserResModel>(
                           initialList: controller.usersList,
                           emptyWidget: Center(
                             child: Text(
@@ -266,10 +171,10 @@ class AdminScreen extends GetView<AdminController> {
                             );
                           },
                         ),
-            );
-          }),
-        ]),
-      ),
-    );
+                      ),
+          );
+        }),
+      ],
+    ));
   }
 }

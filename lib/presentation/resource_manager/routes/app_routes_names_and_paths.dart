@@ -7,6 +7,12 @@ class AppRoutesNamesAndPaths {
   static const String adminScreenName = 'Admin';
   // adminScreen
   static const String adminScreenPath = '/admin';
+  static const String employInSchoolScreenPath = 'employ-in-school';
+  static const String employInSchoolScreenName = 'Employ In School';
+
+    static const String allEmployScreenPath = 'all-employ';
+  static const String allEmployScreenName = 'All Employ';
+
 
   static const String batchDocumentsScreenName = 'Batch Documents';
   // batchDocumentsScreen

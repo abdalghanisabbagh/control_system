@@ -1,3 +1,5 @@
+import 'package:control_system/presentation/views/admin_screen/widgets/all_employ_widget%20.dart';
+import 'package:control_system/presentation/views/admin_screen/widgets/employ_in_school_widget.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -256,6 +258,31 @@ class AppGoRouter {
         onExit: (context, state) {
           return true;
         },
+        routes:[
+            GoRoute(
+        path: AppRoutesNamesAndPaths.employInSchoolScreenPath,
+        name: AppRoutesNamesAndPaths.employInSchoolScreenName,
+        builder: (context, state) {
+          AdminBindings().dependencies();
+          return const EmployInSchoolWidget();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+            ),
+             GoRoute(
+        path: AppRoutesNamesAndPaths.allEmployScreenPath,
+        name: AppRoutesNamesAndPaths.allEmployScreenName,
+        builder: (context, state) {
+          AdminBindings().dependencies();
+          return const AllEmployWidget();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+            ),
+            
+        ]
       ),
       GoRoute(
         path: AppRoutesNamesAndPaths.batchDocumentsScreenPath,

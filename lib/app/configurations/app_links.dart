@@ -2,7 +2,9 @@ class AppLinks {
   /// `http://localhost:3333/`
   static const baseUrlDev = 'http://localhost:80/';
 
-  static const baseUrl = 'https://control-o5xlbifnea-uc.a.run.app';
+  static const baseUrl = 'http://localhost:80/';
+
+  static const baseUrlProd = 'https://control-o5xlbifnea-uc.a.run.app';
 }
 
 class AuthLinks {
