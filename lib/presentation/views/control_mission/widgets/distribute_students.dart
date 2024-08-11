@@ -307,18 +307,21 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.end,
                                                     children: [
-                                                      IconButton(
-                                                        onPressed: () {
-                                                          controller.removeStudentFromExamRoom(
-                                                              studentSeatNumberId:
-                                                                  controller
-                                                                      .availableStudents[
-                                                                          i]
-                                                                      .iD!);
-                                                        },
-                                                        icon: const Icon(
-                                                          FontAwesomeIcons
-                                                              .trashCan,
+                                                      FittedBox(
+                                                        fit: BoxFit.contain,
+                                                        child: IconButton(
+                                                          onPressed: () {
+                                                            controller.removeStudentFromExamRoom(
+                                                                studentSeatNumberId:
+                                                                    controller
+                                                                        .availableStudents[
+                                                                            i]
+                                                                        .iD!);
+                                                          },
+                                                          icon: const Icon(
+                                                            FontAwesomeIcons
+                                                                .trashCan,
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
@@ -334,8 +337,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                   feedback: child,
                                                   child: child)
                                               .paddingAll(
-                                            5,
-                                          );
+                                                5,
+                                              )
+                                              .paddingOnly(right: 15);
                                         },
                                       ),
                                     ),
