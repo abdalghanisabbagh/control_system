@@ -11,49 +11,26 @@ import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../presentation/resource_manager/constants/app_constatnts.dart';
 
 class AdminController extends GetxController {
   bool isLoadingGetUsers = false;
-
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController fullNameController = TextEditingController();
   bool isLoading = false;
-  final TextEditingController nisIdController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  List<UserResModel> usersList = <UserResModel>[];
-
-  List<String> roleTypes = [
-    'Control admin',
-    'School Director',
-    'Academic Dean',
-    'Principal',
-    'QR Reader',
-    'Vice Principal'
-  ];
-
-  List<String> schoolDivision = [
-    "Elementary",
-    "Middle",
-    "High",
-    "Key Stage 1",
-    "Key Stage 2",
-    "Key Stage 3",
-    "IGCSE",
-  ];
-
   String? selectedDivision;
   String? selectedRoleType;
   bool showPassord = true;
+
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController nisIdController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  List<UserResModel> usersList = <UserResModel>[];
 
   Future<bool> addNewUser() async {
     isLoading = true;
-    bool success = false;
-
     update();
 
     final response = await ResponseHandler<UserResModel>().getResponse(
@@ -65,37 +42,34 @@ class AdminController extends GetxController {
         "Full_Name": fullNameController.text,
         "User_Name": usernameController.text,
         "Password": passwordController.text,
-        "IsFloorManager": selectedRoleType == 'Principal' ||
-                selectedRoleType == 'Vice Principal'
+        "IsFloorManager": selectedRoleType == 'Principal' || selectedRoleType == 'Vice Principal'
             ? selectedDivision
             : null,
-        "Type": roleTypes.indexOf(selectedRoleType!),
+        "Type": AppConstants.roleTypes.indexOf(selectedRoleType!),
       },
     );
 
-    response.fold(
+    isLoading = false;
+    update();
+
+    return response.fold(
       (l) {
         MyAwesomeDialogue(
           title: 'Error',
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
+        return false;
       },
       (r) {
-        success = true;
         fullNameController.clear();
         usernameController.clear();
         passwordController.clear();
         confirmPasswordController.clear();
         nisIdController.clear();
+        return true;
       },
     );
-
-    isLoading = false;
-
-    update();
-
-    return success;
   }
 
   Future<void> getUser() async {
@@ -108,6 +82,7 @@ class AdminController extends GetxController {
       converter: UsersResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
+    
     response.fold(
       (l) {
         MyAwesomeDialogue(
@@ -118,8 +93,7 @@ class AdminController extends GetxController {
       },
       (r) {
         usersList = r.users!.map((user) {
-          user.roleType =
-              getRoleType(user.type!); 
+          user.roleType = AppConstants.roleTypes[user.type ?? 0];
           return user;
         }).toList();
       },
@@ -127,13 +101,6 @@ class AdminController extends GetxController {
 
     isLoadingGetUsers = false;
     update();
-  }
-
-  String getRoleType(int type) {
-    if (type < 0 || type >= roleTypes.length) {
-      return 'Unknown'; // Return a default value if the type is out of range
-    }
-    return roleTypes[type];
   }
 
   @override

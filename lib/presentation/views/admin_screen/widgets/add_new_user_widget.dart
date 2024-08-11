@@ -10,6 +10,7 @@ import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
+import '../../../resource_manager/constants/app_constatnts.dart';
 import '../../../resource_manager/validations.dart';
 
 class AddNewUserWidget extends GetView<AdminController> {
@@ -62,7 +63,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                             children: [
                               MultiSelectDropDownView(
                                 hintText: "Select Role",
-                                options: controller.roleTypes
+                                options: AppConstants.roleTypes
                                     .map((e) => ValueItem(label: e, value: e))
                                     .toList(),
                                 onOptionSelected: (value) {
@@ -95,7 +96,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                             children: [
                               MultiSelectDropDownView(
                                 hintText: "Select Division",
-                                options: controller.schoolDivision
+                                options: AppConstants.schoolDivision
                                     .map((e) => ValueItem(label: e, value: e))
                                     .toList(),
                                 onOptionSelected: (value) {

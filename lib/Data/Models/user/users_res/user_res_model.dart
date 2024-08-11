@@ -1,3 +1,4 @@
+import '../../../../presentation/resource_manager/constants/app_constatnts.dart';
 import 'created_by_user_res_model.dart';
 import 'user_has_roles_res_model.dart';
 
@@ -30,10 +31,10 @@ class UserResModel {
     this.active,
     this.createdByUserResModel,
     this.userHasRoles,
-    this.roleType, // Initialize new property
+    this.roleType,
   });
 
-  UserResModel.fromJson(json) {
+  UserResModel.fromJson( json) {
     iD = json['ID'];
     fullName = json['Full_Name'];
     userName = json['User_Name'];
@@ -82,17 +83,9 @@ class UserResModel {
   }
 
   String getRoleType(int type) {
-    List<String> roleTypes = [
-      'Control admin',
-      'School Director',
-      'Academic Dean',
-      'Principal',
-      'QR Reader',
-      'Vice Principal'
-    ];
-
+    const roleTypes = AppConstants.roleTypes;
     if (type < 0 || type >= roleTypes.length) {
-      return 'Unknown'; 
+      return 'Unknown'; // Return a default value if the type is out of range
     }
     return roleTypes[type];
   }

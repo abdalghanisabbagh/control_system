@@ -136,15 +136,7 @@ class AdminScreen extends GetView<AdminController> {
                                                 ),
                                                 const SizedBox(width: 10),
                                                 Text(
-                                                  item.userHasRoles?.roles
-                                                              ?.isEmpty ==
-                                                          null
-                                                      ? "User has no roles"
-                                                      : item.userHasRoles?.roles
-                                                                  ?.isEmpty ==
-                                                              true
-                                                          ? "User has no roles"
-                                                          : "Roles: ${item.userHasRoles?.roles?.join(",")} - ${item.roleType}",
+                                                  "Roles: ${item.userHasRoles?.roles?.isNotEmpty == true ? item.userHasRoles?.roles?.join(", ") : "User has no roles"} - ${item.roleType ?? "Unknown"}",
                                                   style: nunitoRegular.copyWith(
                                                     color: ColorManager
                                                         .bgSideMenu
