@@ -117,12 +117,23 @@ class AdminController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
-        usersList = r.users!;
+        usersList = r.users!.map((user) {
+          user.roleType =
+              getRoleType(user.type!); 
+          return user;
+        }).toList();
       },
     );
 
     isLoadingGetUsers = false;
     update();
+  }
+
+  String getRoleType(int type) {
+    if (type < 0 || type >= roleTypes.length) {
+      return 'Unknown'; // Return a default value if the type is out of range
+    }
+    return roleTypes[type];
   }
 
   @override

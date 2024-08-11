@@ -96,9 +96,9 @@ class AdminScreen extends GetView<AdminController> {
                               .toList(),
                           itemBuilder: (UserResModel item) {
                             return Padding(
-                              padding: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.only(right: 15.0),
                               child: Card(
-                                elevation: 5,
+                                elevation: 3,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
@@ -124,47 +124,59 @@ class AdminScreen extends GetView<AdminController> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              item.fullName ?? "Unknown",
-                                              style: nunitoBold.copyWith(
-                                                color: ColorManager.bgSideMenu,
-                                                fontSize: 22,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Text(
-                                              item.userHasRoles?.roles
-                                                          ?.isEmpty ==
-                                                      null
-                                                  ? "User has no roles"
-                                                  : item.userHasRoles?.roles
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  item.fullName ?? "Unknown",
+                                                  style: nunitoBold.copyWith(
+                                                    color:
+                                                        ColorManager.bgSideMenu,
+                                                    fontSize: 22,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Text(
+                                                  item.userHasRoles?.roles
                                                               ?.isEmpty ==
-                                                          true
+                                                          null
                                                       ? "User has no roles"
-                                                      : "Roles: ${item.userHasRoles?.roles?.join(",")}",
-                                              style: nunitoRegular.copyWith(
-                                                color: ColorManager.bgSideMenu
-                                                    .withOpacity(0.7),
-                                                fontSize: 16,
-                                              ),
+                                                      : item.userHasRoles?.roles
+                                                                  ?.isEmpty ==
+                                                              true
+                                                          ? "User has no roles"
+                                                          : "Roles: ${item.userHasRoles?.roles?.join(",")} - ${item.roleType}",
+                                                  style: nunitoRegular.copyWith(
+                                                    color: ColorManager
+                                                        .bgSideMenu
+                                                        .withOpacity(0.7),
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                             const SizedBox(height: 5),
-                                            Text(
-                                              "Created At: ${DateFormat("dd-MM-yyyy HH:mm").format(DateTime.parse(item.createdAt!))}",
-                                              style: nunitoRegular.copyWith(
-                                                color: ColorManager.bgSideMenu
-                                                    .withOpacity(0.7),
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Text(
-                                              "Created by: ${item.createdByUserResModel?.fullName ?? "Unknown"}",
-                                              style: nunitoRegular.copyWith(
-                                                color: ColorManager.bgSideMenu
-                                                    .withOpacity(0.7),
-                                                fontSize: 16,
-                                              ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Created At: ${DateFormat("dd-MM-yyyy HH:mm").format(DateTime.parse(item.createdAt!))}",
+                                                  style: nunitoRegular.copyWith(
+                                                    color: ColorManager
+                                                        .bgSideMenu
+                                                        .withOpacity(0.7),
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Text(
+                                                  "Created by: ${item.createdByUserResModel?.fullName ?? "Unknown"}",
+                                                  style: nunitoRegular.copyWith(
+                                                    color: ColorManager
+                                                        .bgSideMenu
+                                                        .withOpacity(0.7),
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),

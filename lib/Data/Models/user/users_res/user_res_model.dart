@@ -3,9 +3,7 @@ import 'user_has_roles_res_model.dart';
 
 class UserResModel {
   int? active;
-
   String? createdAt;
-
   int? createdBy;
   String? fullName;
   int? iD;
@@ -16,6 +14,8 @@ class UserResModel {
   String? userName;
   CreatedByUserResModel? createdByUserResModel;
   UserHasRolesResModel? userHasRoles;
+
+  String? roleType;
 
   UserResModel({
     this.iD,
@@ -30,7 +30,9 @@ class UserResModel {
     this.active,
     this.createdByUserResModel,
     this.userHasRoles,
+    this.roleType, // Initialize new property
   });
+
   UserResModel.fromJson(json) {
     iD = json['ID'];
     fullName = json['Full_Name'];
@@ -49,6 +51,8 @@ class UserResModel {
     if (json['users_has_roles'] != null) {
       userHasRoles = UserHasRolesResModel.fromJson(json['users_has_roles']);
     }
+
+    roleType = getRoleType(type ?? 0);
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +74,26 @@ class UserResModel {
     if (userHasRoles != null) {
       data['users_has_roles'] = userHasRoles!.toJson();
     }
+
+    if (roleType != null) {
+      data['Role'] = roleType;
+    }
     return data;
+  }
+
+  String getRoleType(int type) {
+    List<String> roleTypes = [
+      'Control admin',
+      'School Director',
+      'Academic Dean',
+      'Principal',
+      'QR Reader',
+      'Vice Principal'
+    ];
+
+    if (type < 0 || type >= roleTypes.length) {
+      return 'Unknown'; 
+    }
+    return roleTypes[type];
   }
 }
