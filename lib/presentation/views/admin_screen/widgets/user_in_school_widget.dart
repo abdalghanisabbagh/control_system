@@ -3,6 +3,7 @@ import 'package:control_system/presentation/views/admin_screen/widgets/edit_user
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import '../../../../Data/Models/user/users_res/user_res_model.dart';
@@ -21,8 +22,23 @@ class UserInSchoolWidget extends GetView<AdminController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          MyBackButton(
-            onPressed: () {},
+          Row(
+            children: [
+              MyBackButton(
+                onPressed: () {},
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "School Is : ${Hive.box('School').get('Name')}",
+                    style: nunitoBold.copyWith(
+                      color: ColorManager.bgSideMenu,
+                      fontSize: 35,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
           GetBuilder<AdminController>(builder: (_) {
             return Expanded(

@@ -21,8 +21,23 @@ class AllUserWidget extends GetView<AdminController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          MyBackButton(
-            onPressed: () {},
+          Row(
+            children: [
+              MyBackButton(
+                onPressed: () {},
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    "All Users",
+                    style: nunitoBold.copyWith(
+                      color: ColorManager.bgSideMenu,
+                      fontSize: 35,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
           GetBuilder<AdminController>(builder: (_) {
             return Expanded(
