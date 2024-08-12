@@ -35,174 +35,198 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${controlMission.name}",
-                      style: nunitoBold.copyWith(
-                          color: ColorManager.bgSideMenu, fontSize: 30),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Number Of Students: ${controlMission.count?['student_seat_numnbers']}",
-                      style: nunitoRegular.copyWith(
-                          color: ColorManager.bgSideMenu, fontSize: 16),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "Start Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.startDate!.substring(0, controlMission.startDate!.length - 1).toString()))}",
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.contain,
+                        child: Text(
+                          "${controlMission.name}",
+                          style: nunitoBold.copyWith(
+                              color: ColorManager.bgSideMenu, fontSize: 30),
+                        ),
+                      ),
+                      FittedBox(
+                        fit: BoxFit.contain,
+                        child: Text(
+                          "Number Of Students: ${controlMission.count?['student_seat_numnbers']}",
                           style: nunitoRegular.copyWith(
-                              color: ColorManager.green, fontSize: 16),
+                              color: ColorManager.bgSideMenu, fontSize: 16),
                         ),
-                        const SizedBox(
-                          width: 10,
+                      ),
+                      FittedBox(
+                        fit: BoxFit.fill,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                "Start Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.startDate!.substring(0, controlMission.startDate!.length - 1).toString()))}",
+                                style: nunitoRegular.copyWith(
+                                    color: ColorManager.green, fontSize: 16),
+                              ),
+                            ),
+                            FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                "End Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.endDate!.substring(0, controlMission.endDate!.length - 1).toString()))}",
+                                style: nunitoRegular.copyWith(
+                                    color: ColorManager.red, fontSize: 16),
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "End Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.endDate!.substring(0, controlMission.endDate!.length - 1).toString()))}",
-                          style: nunitoRegular.copyWith(
-                              color: ColorManager.red, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const Spacer(),
-          InkWell(
-            onTap: () {
-              Hive.box('ControlMission').put('Id', controlMission.iD);
-              Hive.box('ControlMission').put('Name', controlMission.name);
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Hive.box('ControlMission').put('Id', controlMission.iD);
+                Hive.box('ControlMission').put('Name', controlMission.name);
 
-              context.goNamed(
-                  AppRoutesNamesAndPaths.addNewStudentsToControlMissionName);
-            },
-            child: Container(
-              width: 200,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
+                context.goNamed(
+                    AppRoutesNamesAndPaths.addNewStudentsToControlMissionName);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                  color: ColorManager.bgSideMenu,
                 ),
-                color: ColorManager.bgSideMenu,
-              ),
-              child: Center(
-                child: Text(
-                  "Add New Students",
-                  style: nunitoRegular.copyWith(
-                    color: Colors.white,
-                    fontSize: 18,
+                child: Center(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(
+                      "Add New Students",
+                      style: nunitoRegular.copyWith(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-          Column(
-            children: [
-              Visibility(
-                visible: Get.find<ProfileController>().canAccessWidget(
-                  widgetId: '2200',
-                ),
-                child: Expanded(
-                  child: GetBuilder<DistributionController>(
-                      builder: (distributionController) {
-                    return InkWell(
-                      onTap: () async {
-                        await Future.wait([
-                          distributionController
-                              .saveControlMissionId(controlMission.iD!),
-                          distributionController
-                              .saveControlMissionName(controlMission.name!),
-                        ]);
-                        context.mounted
-                            ? context.goNamed(
-                                AppRoutesNamesAndPaths
-                                    .distributioncreateMissionScreenName,
-                              )
-                            : null;
-                      },
-                      child: Container(
-                        width: 200,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                              // topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
-                            color: ColorManager.glodenColor),
-                        child: Center(
-                          child: Text(
-                            "Distribution",
-                            style: nunitoRegular.copyWith(
-                              color: Colors.white,
-                              fontSize: 18,
+          Expanded(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Visibility(
+                    visible: Get.find<ProfileController>().canAccessWidget(
+                      widgetId: '2200',
+                    ),
+                    child: GetBuilder<DistributionController>(
+                        builder: (distributionController) {
+                      return InkWell(
+                        onTap: () async {
+                          await Future.wait([
+                            distributionController
+                                .saveControlMissionId(controlMission.iD!),
+                            distributionController
+                                .saveControlMissionName(controlMission.name!),
+                          ]);
+                          context.mounted
+                              ? context.goNamed(
+                                  AppRoutesNamesAndPaths
+                                      .distributioncreateMissionScreenName,
+                                )
+                              : null;
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                // topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                              color: ColorManager.glodenColor),
+                          child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                "Distribution",
+                                style: nunitoRegular.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+                  ),
                 ),
-              ),
-              Visibility(
-                visible: Get.find<ProfileController>().canAccessWidget(
-                  widgetId: '2300',
-                ),
-                child: Expanded(
-                  child: GetBuilder<DetailsAndReviewMissionController>(
+                Expanded(
+                  child: Visibility(
+                    visible: Get.find<ProfileController>().canAccessWidget(
+                      widgetId: '2300',
+                    ),
+                    child: GetBuilder<DetailsAndReviewMissionController>(
                       builder: (detailsAndReviewMissionController) {
-                    return InkWell(
-                      onTap: () async {
-                        await Future.wait([
-                          detailsAndReviewMissionController
-                              .saveControlMissionId(controlMission.iD!),
-                          detailsAndReviewMissionController
-                              .saveControlMissionName(controlMission.name!),
-                        ]);
-                        context.mounted
-                            ? context.goNamed(
-                                AppRoutesNamesAndPaths
-                                    .reviewAndDetailsMissionName,
-                              )
-                            : null;
-                      },
-                      child: Container(
-                        width: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                            // bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                          ),
-                          color: ColorManager.red,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Details And Review",
-                            style: nunitoRegular.copyWith(
-                              color: Colors.white,
-                              fontSize: 18,
+                        return InkWell(
+                          onTap: () async {
+                            await Future.wait(
+                              [
+                                detailsAndReviewMissionController
+                                    .saveControlMissionId(controlMission.iD!),
+                                detailsAndReviewMissionController
+                                    .saveControlMissionName(
+                                        controlMission.name!),
+                              ],
+                            );
+                            context.mounted
+                                ? context.goNamed(
+                                    AppRoutesNamesAndPaths
+                                        .reviewAndDetailsMissionName,
+                                  )
+                                : null;
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                // bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                              ),
+                              color: ColorManager.red,
+                            ),
+                            child: Center(
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text(
+                                  "Details And Review",
+                                  style: nunitoRegular.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    );
-                  }),
+                        );
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
