@@ -82,9 +82,10 @@ class AuthController extends GetxController {
       return null;
     }
     String refresh = tokenService.tokenModel!.rToken;
+
     var dio = Dio(
       BaseOptions(
-        baseUrl: AppLinks.baseUrl,
+        baseUrl: AppLinks.baseUrlProd,
       ),
     );
 
