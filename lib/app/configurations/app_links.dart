@@ -12,6 +12,7 @@ class AuthLinks {
   static const logout = 'auth/logout';
   static const refresh = 'auth/refresh';
   static const user = 'users';
+  static const usersInSchool = '/users/school';
   static const userAddRoles = 'users/add-roles';
   static const usersAddSchools = 'users/add-schools';
   static const getUsersByCreated = 'users/created-by';

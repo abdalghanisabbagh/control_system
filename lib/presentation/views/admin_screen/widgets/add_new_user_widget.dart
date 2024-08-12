@@ -19,8 +19,8 @@ class AddNewUserWidget extends GetView<AdminController> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 400,
-      height: 550,
+      width: Get.width * 0.25,
+      height: Get.height * 0.6,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
@@ -70,6 +70,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                                   formFieldState.didChange(value);
                                   controller.selectedRoleType =
                                       value.first.value;
+                                  controller.update();
                                 },
                               ),
                               if (formFieldState.hasError)
@@ -84,39 +85,48 @@ class AddNewUserWidget extends GetView<AdminController> {
                           );
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      FormField<List<ValueItem<dynamic>>>(
-                        validator:
-                            Validations.multiSelectDropDownRequiredValidator,
-                        builder: (formFieldState) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MultiSelectDropDownView(
-                                hintText: "Select Division",
-                                options: AppConstants.schoolDivision
-                                    .map((e) => ValueItem(label: e, value: e))
-                                    .toList(),
-                                onOptionSelected: (value) {
-                                  formFieldState.didChange(value);
-                                  controller.selectedDivision =
-                                      value.first.value;
-                                },
-                              ),
-                              if (formFieldState.hasError)
-                                Text(
-                                  formFieldState.errorText!,
-                                  style: nunitoRegular.copyWith(
-                                    fontSize: FontSize.s10,
-                                    color: ColorManager.error,
-                                  ),
-                                ).paddingOnly(left: 10),
-                            ],
-                          );
-                        },
-                      ),
+                      controller.selectedRoleType == "Principal" ||
+                              controller.selectedRoleType == "Vice Principal"
+                          ? Column(
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                FormField<List<ValueItem<dynamic>>>(
+                                  validator: Validations
+                                      .multiSelectDropDownRequiredValidator,
+                                  builder: (formFieldState) {
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        MultiSelectDropDownView(
+                                          hintText: "Select Division",
+                                          options: AppConstants.schoolDivision
+                                              .map((e) =>
+                                                  ValueItem(label: e, value: e))
+                                              .toList(),
+                                          onOptionSelected: (value) {
+                                            formFieldState.didChange(value);
+                                            controller.selectedDivision =
+                                                value.first.value;
+                                          },
+                                        ),
+                                        if (formFieldState.hasError)
+                                          Text(
+                                            formFieldState.errorText!,
+                                            style: nunitoRegular.copyWith(
+                                              fontSize: FontSize.s10,
+                                              color: ColorManager.error,
+                                            ),
+                                          ).paddingOnly(left: 10),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
                       SizedBox(
                         width: 450,
                         child: MytextFormFiled(
@@ -162,24 +172,16 @@ class AddNewUserWidget extends GetView<AdminController> {
                           },
                         ),
                       ),
-                      SizedBox(
-                        width: 450,
-                        child: MytextFormFiled(
-                          title: "NIS Id",
-                          controller: userController.nisIdController,
-                          // myValidation: Validations.requiredValidator,
-                        ),
-                      ),
                       const SizedBox(
                         height: 20,
                       ),
                       userController.isLoading
-                          ? SizedBox(
-                              height: 50,
-                              width: 50,
-                              child: Center(
-                                child: LoadingIndicators.getLoadingIndicator(),
-                              ),
+                          ? Center(
+                              child: SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator()),
                             )
                           : Row(
                               children: [
@@ -210,6 +212,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                                                       'Success')
                                                   .show(
                                                       Get.key.currentContext!);
+                                              controller.onInit();
                                             }
                                           },
                                         );

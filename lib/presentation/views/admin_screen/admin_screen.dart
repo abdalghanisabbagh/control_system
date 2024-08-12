@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/views/admin_screen/widgets/edit_user_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +40,8 @@ class AdminScreen extends GetView<AdminController> {
               ),
               InkWell(
                 onTap: () {
-                  context.goNamed(AppRoutesNamesAndPaths.allEmployScreenName);
+                  controller.getAllUsers();
+                  context.goNamed(AppRoutesNamesAndPaths.allUsersScreenName);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -65,8 +67,10 @@ class AdminScreen extends GetView<AdminController> {
               ),
               InkWell(
                 onTap: () {
+                  controller.getUserInSchool();
+
                   context
-                      .goNamed(AppRoutesNamesAndPaths.employInSchoolScreenName);
+                      .goNamed(AppRoutesNamesAndPaths.usersInSchoolScreenName);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -77,7 +81,7 @@ class AdminScreen extends GetView<AdminController> {
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        " Employ in This School",
+                        "Users in School",
                         style: nunitoBold.copyWith(
                           color: ColorManager.white,
                           fontSize: 16,
@@ -121,11 +125,11 @@ class AdminScreen extends GetView<AdminController> {
           const SizedBox(height: 20),
           GetBuilder<AdminController>(builder: (_) {
             return Expanded(
-              child: controller.isLoadingGetUsers
+              child: controller.isLoadingGetUsersCreatedBy
                   ? Center(
                       child: LoadingIndicators.getLoadingIndicator(),
                     )
-                  : controller.usersList.isEmpty
+                  : controller.userCreatedList.isEmpty
                       ? Center(
                           child: Text(
                             "No Users Found",
@@ -136,7 +140,7 @@ class AdminScreen extends GetView<AdminController> {
                           ),
                         )
                       : SearchableList<UserResModel>(
-                          initialList: controller.usersList,
+                          initialList: controller.userCreatedList,
                           emptyWidget: Center(
                             child: Text(
                               "No data found",
@@ -146,7 +150,7 @@ class AdminScreen extends GetView<AdminController> {
                               ),
                             ),
                           ),
-                          filter: (value) => controller.usersList
+                          filter: (value) => controller.userCreatedList
                               .where((element) => element.fullName!
                                   .toLowerCase()
                                   .contains(value.toLowerCase()))
@@ -234,11 +238,12 @@ class AdminScreen extends GetView<AdminController> {
                                         icon: Icon(Icons.edit,
                                             color: ColorManager.glodenColor),
                                         onPressed: () {
-                                          // Open edit user dialog
-                                          // MyDialogs.showDialog(
-                                          //   context,
-                                          //   EditUserWidget(user: item),
-                                          // );
+                                          MyDialogs.showDialog(
+                                            context,
+                                            EditUserWidget(
+                                              userResModel: item,
+                                            ),
+                                          );
                                         },
                                       ),
                                       IconButton(

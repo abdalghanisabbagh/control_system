@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/views/admin_screen/widgets/edit_user_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,12 +7,13 @@ import 'package:intl/intl.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import '../../../../Data/Models/user/users_res/user_res_model.dart';
 import '../../../../domain/controllers/controllers.dart';
+import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 
-class AllEmployWidget  extends GetView<AdminController> {
-  const AllEmployWidget({super.key});
+class AllUserWidget extends GetView<AdminController> {
+  const AllUserWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +26,11 @@ class AllEmployWidget  extends GetView<AdminController> {
         ),
         GetBuilder<AdminController>(builder: (_) {
           return Expanded(
-            child: controller.isLoadingGetUsers
+            child: controller.isLoadingGetAllUsers
                 ? Center(
                     child: LoadingIndicators.getLoadingIndicator(),
                   )
-                : controller.usersList.isEmpty
+                : controller.allUsersList.isEmpty
                     ? Center(
                         child: Text(
                           "No Users Found",
@@ -41,7 +43,7 @@ class AllEmployWidget  extends GetView<AdminController> {
                     : Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SearchableList<UserResModel>(
-                          initialList: controller.usersList,
+                          initialList: controller.allUsersList,
                           emptyWidget: Center(
                             child: Text(
                               "No data found",
@@ -51,7 +53,7 @@ class AllEmployWidget  extends GetView<AdminController> {
                               ),
                             ),
                           ),
-                          filter: (value) => controller.usersList
+                          filter: (value) => controller.allUsersList
                               .where((element) => element.fullName!
                                   .toLowerCase()
                                   .contains(value.toLowerCase()))
@@ -139,11 +141,12 @@ class AllEmployWidget  extends GetView<AdminController> {
                                         icon: Icon(Icons.edit,
                                             color: ColorManager.glodenColor),
                                         onPressed: () {
-                                          // Open edit user dialog
-                                          // MyDialogs.showDialog(
-                                          //   context,
-                                          //   EditUserWidget(user: item),
-                                          // );
+                                             MyDialogs.showDialog(
+                                            context,
+                                            EditUserWidget(
+                                              userResModel: item,
+                                            ),
+                                          );
                                         },
                                       ),
                                       IconButton(

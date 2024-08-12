@@ -15,7 +15,6 @@ class UserResModel {
   String? userName;
   CreatedByUserResModel? createdByUserResModel;
   UserHasRolesResModel? userHasRoles;
-
   String? roleType;
 
   UserResModel({
@@ -34,7 +33,7 @@ class UserResModel {
     this.roleType,
   });
 
-  UserResModel.fromJson( json) {
+  UserResModel.fromJson(json) {
     iD = json['ID'];
     fullName = json['Full_Name'];
     userName = json['User_Name'];
@@ -45,13 +44,14 @@ class UserResModel {
     isFloorManager = json['IsFloorManager'];
     type = json['Type'];
     active = json['Active'];
+
     createdByUserResModel = json['CreatedById'] != null
         ? CreatedByUserResModel.fromJson(json['CreatedById'])
         : null;
 
-    if (json['users_has_roles'] != null) {
-      userHasRoles = UserHasRolesResModel.fromJson(json['users_has_roles']);
-    }
+    userHasRoles = json['users_has_roles'] != null
+        ? UserHasRolesResModel.fromJson(json['users_has_roles'])
+        : null;
 
     roleType = getRoleType(type ?? 0);
   }
@@ -85,7 +85,7 @@ class UserResModel {
   String getRoleType(int type) {
     const roleTypes = AppConstants.roleTypes;
     if (type < 0 || type >= roleTypes.length) {
-      return 'Unknown'; // Return a default value if the type is out of range
+      return 'Unknown';
     }
     return roleTypes[type];
   }
