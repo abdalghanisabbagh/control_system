@@ -25,7 +25,7 @@ class ResponseHandler<T> {
     String dtoken =
         tokenService.tokenModel?.dToken ?? DateTime.now().toIso8601String();
     DateTime? tokenTime = DateTime.tryParse(dtoken);
-    if (DateTime.now().difference(tokenTime!).inMinutes > 55) {
+    if (DateTime.now().difference(tokenTime!).inMinutes > 50) {
       String? newAccessToken = await Get.find<AuthController>().refreshToken();
       _dio = DioFactory().getDio(
         token: newAccessToken != null
