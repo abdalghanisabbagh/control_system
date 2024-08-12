@@ -25,11 +25,10 @@ class AdminController extends GetxController {
   bool showOldPassord = true;
   bool showNewPassword = true;
 
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController nisIdController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController oldPasswordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -49,7 +48,7 @@ class AdminController extends GetxController {
         "School_Id": Hive.box('School').get('Id'),
         "Full_Name": fullNameController.text,
         "User_Name": usernameController.text,
-        "Password": passwordController.text,
+        "Password": oldPasswordController.text,
         "IsFloorManager": selectedDivision,
         "Type": AppConstants.roleTypes.indexOf(selectedRoleType!),
       },
@@ -70,8 +69,8 @@ class AdminController extends GetxController {
       (r) {
         fullNameController.clear();
         usernameController.clear();
-        passwordController.clear();
-        confirmPasswordController.clear();
+        oldPasswordController.clear();
+        newPasswordController.clear();
         nisIdController.clear();
         return true;
       },
@@ -173,7 +172,7 @@ class AdminController extends GetxController {
     update();
   }
 
-  Future<bool> editUser(Map<String, dynamic> data,int id) async {
+  Future<bool> editUser(Map<String, dynamic> data, int id) async {
     isLodingEditUser = true;
     update();
 
@@ -200,8 +199,8 @@ class AdminController extends GetxController {
       (r) {
         fullNameController.clear();
         usernameController.clear();
-        passwordController.clear();
-        confirmPasswordController.clear();
+        oldPasswordController.clear();
+        newPasswordController.clear();
         nisIdController.clear();
         isLodingEditUser = false;
         onInit();

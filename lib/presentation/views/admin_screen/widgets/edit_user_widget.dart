@@ -23,8 +23,8 @@ class EditUserWidget extends GetView<AdminController> {
   Widget build(BuildContext context) {
     controller.fullNameController.text = userResModel.fullName ?? '';
     controller.usernameController.text = userResModel.userName ?? '';
-    controller.passwordController.text = '';
-    controller.confirmPasswordController.text = '';
+    controller.oldPasswordController.text = '';
+    controller.newPasswordController.text = '';
     controller.selectedDivision = userResModel.isFloorManager;
 
     return SizedBox(
@@ -60,7 +60,7 @@ class EditUserWidget extends GetView<AdminController> {
                     if (userResModel.isFloorManager != null)
                       _buildDivisionDropdown(),
                     _buildPasswordField(),
-                    _buildConfirmPasswordField(),
+                    _buildNewPasswordField(),
                     const SizedBox(height: 20),
                     controller.isLodingEditUser
                         ? Center(
@@ -145,7 +145,7 @@ class EditUserWidget extends GetView<AdminController> {
       width: 450,
       child: MytextFormFiled(
         title: "Old Password",
-        controller: controller.passwordController,
+        controller: controller.oldPasswordController,
         obscureText: controller.showOldPassord,
         suffixIcon: IconButton(
           icon: Icon(
@@ -158,10 +158,10 @@ class EditUserWidget extends GetView<AdminController> {
         ),
         myValidation: (value) {
           if (value != null && value.isNotEmpty) {
-            if (controller.confirmPasswordController.text.isEmpty) {
+            if (controller.newPasswordController.text.isEmpty) {
               return 'Please enter the new password';
             }
-            if (value == controller.confirmPasswordController.text) {
+            if (value == controller.newPasswordController.text) {
               return 'New password must be different from the old password';
             }
           }
@@ -171,12 +171,12 @@ class EditUserWidget extends GetView<AdminController> {
     );
   }
 
-  Widget _buildConfirmPasswordField() {
+  Widget _buildNewPasswordField() {
     return SizedBox(
       width: 450,
       child: MytextFormFiled(
         title: "New Password",
-        controller: controller.confirmPasswordController,
+        controller: controller.newPasswordController,
         obscureText: controller.showNewPassword,
         suffixIcon: IconButton(
           icon: Icon(
@@ -190,12 +190,13 @@ class EditUserWidget extends GetView<AdminController> {
           },
         ),
         myValidation: (value) {
-          if (controller.passwordController.text.isNotEmpty && value!.isEmpty) {
+          if (controller.oldPasswordController.text.isNotEmpty &&
+              value!.isEmpty) {
             return 'Please enter the new password';
           }
           if (value != null &&
               value.isNotEmpty &&
-              value == controller.passwordController.text) {
+              value == controller.oldPasswordController.text) {
             return 'New password must be different from the old password';
           }
           return null;
@@ -211,8 +212,8 @@ class EditUserWidget extends GetView<AdminController> {
         Expanded(
           child: ElevatedBackButton(
             onPressed: () {
-              controller.confirmPasswordController.clear();
-              controller.passwordController.clear();
+              controller.newPasswordController.clear();
+              controller.oldPasswordController.clear();
               controller.fullNameController.clear();
               controller.usernameController.clear();
               Get.back();
@@ -224,8 +225,8 @@ class EditUserWidget extends GetView<AdminController> {
           child: ElevatedEditButton(
             onPressed: () {
               if (controller.formKey.currentState?.validate() ?? false) {
-                final oldPassword = controller.passwordController.text;
-                final newPassword = controller.confirmPasswordController.text;
+                final oldPassword = controller.oldPasswordController.text;
+                final newPassword = controller.newPasswordController.text;
 
                 final data = {
                   'Full_Name': controller.fullNameController.text,

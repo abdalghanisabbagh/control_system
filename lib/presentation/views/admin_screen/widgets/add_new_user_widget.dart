@@ -131,7 +131,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                         width: 450,
                         child: MytextFormFiled(
                           title: "Password",
-                          controller: userController.passwordController,
+                          controller: userController.oldPasswordController,
                           myValidation: Validations.requiredValidator,
                           obscureText: userController.showOldPassord,
                           suffixIcon: IconButton(
@@ -152,7 +152,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                         width: 450,
                         child: MytextFormFiled(
                           title: "Confirm Password",
-                          controller: userController.confirmPasswordController,
+                          controller: userController.newPasswordController,
                           obscureText: userController.showOldPassord,
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -167,8 +167,8 @@ class AddNewUserWidget extends GetView<AdminController> {
                             },
                           ),
                           myValidation: (value) {
-                            return Validations.validateConfirmPassword(
-                                value, userController.passwordController.text);
+                            return Validations.validateConfirmPassword(value,
+                                userController.oldPasswordController.text);
                           },
                         ),
                       ),
@@ -190,8 +190,9 @@ class AddNewUserWidget extends GetView<AdminController> {
                                     onPressed: () {
                                       userController.fullNameController.clear();
                                       userController.usernameController.clear();
-                                      userController.passwordController.clear();
-                                      userController.confirmPasswordController
+                                      userController.oldPasswordController
+                                          .clear();
+                                      userController.newPasswordController
                                           .clear();
                                       userController.nisIdController.clear();
                                     },
