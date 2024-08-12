@@ -32,70 +32,36 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      "Subject",
-                      style: nunitoBlack.copyWith(
-                        color: ColorManager.bgSideMenu,
-                        fontSize: 30,
-                      ),
-                    ),
-                    SizedBox(
-                      width: Get.width * 0.6,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        context.goNamed(
-                            AppRoutesNamesAndPaths.oprerationsScreenName);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        "Subject",
+                        style: nunitoBlack.copyWith(
                           color: ColorManager.bgSideMenu,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              " Operation ",
-                              style: nunitoBold.copyWith(
-                                color: ColorManager.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
+                          fontSize: 30,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: Get.width * 0.02,
-                    ),
-                    Visibility(
-                      visible: Get.find<ProfileController>().canAccessWidget(
-                        widgetId: '7100',
-                      ),
+                    const Spacer(),
+                    Expanded(
+                      flex: 1,
                       child: InkWell(
                         onTap: () {
-                          Get.defaultDialog(
-                            title: "Add New Subject",
-                            titleStyle: nunitoRegular.copyWith(
-                              color: ColorManager.bgSideMenu,
-                              fontSize: 25,
-                            ),
-                            content: AddSubjectWidget(),
+                          context.goNamed(
+                            AppRoutesNamesAndPaths.oprerationsScreenName,
                           );
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            color: ColorManager.glodenColor,
+                            color: ColorManager.bgSideMenu,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: Text(
-                                "Add Subject",
+                                "Operation",
                                 style: nunitoBold.copyWith(
                                   color: ColorManager.white,
                                   fontSize: 16,
@@ -105,12 +71,49 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    SizedBox(width: Get.width * 0.02),
+                    Visibility(
+                      visible: Get.find<ProfileController>().canAccessWidget(
+                        widgetId: '7100',
+                      ),
+                      child: Expanded(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            Get.defaultDialog(
+                              title: "Add New Subject",
+                              titleStyle: nunitoRegular.copyWith(
+                                color: ColorManager.bgSideMenu,
+                                fontSize: 25,
+                              ),
+                              content: AddSubjectWidget(),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: ColorManager.glodenColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Text(
+                                  "Add Subject",
+                                  style: nunitoBold.copyWith(
+                                    color: ColorManager.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Expanded(
                   child: controller.getAllLoading
                       ? Center(
@@ -168,10 +171,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                     .withOpacity(0.5),
                                                 spreadRadius: 5,
                                                 blurRadius: 20,
-                                                offset: const Offset(
-                                                  2,
-                                                  15,
-                                                ), // changes position of shadow
+                                                offset: const Offset(2, 15),
                                               ),
                                             ],
                                             color: ColorManager.ligthBlue,
@@ -193,9 +193,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                     fontSize: 35,
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 8,
-                                                ),
+                                                const SizedBox(height: 8),
                                                 Text(
                                                   'School type ($schoolTypes)',
                                                   style: nunitoRegular.copyWith(
@@ -204,13 +202,11 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                     fontSize: 20,
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 8,
-                                                ),
+                                                const SizedBox(height: 8),
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      "In Exam ",
+                                                      "In Exam",
                                                       style: nunitoRegular
                                                           .copyWith(
                                                         color: ColorManager
@@ -228,11 +224,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                                 .bgSideMenu,
                                                         value: inExam,
                                                         onChanged: (value) {
-                                                          if (inExam) {
-                                                            inExam = false;
-                                                          } else {
-                                                            inExam = true;
-                                                          }
+                                                          inExam = value;
                                                           subjectsControllers
                                                               .update();
                                                         },
@@ -240,9 +232,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                     ),
                                                   ],
                                                 ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
+                                                const SizedBox(height: 10),
                                                 Row(
                                                   children: [
                                                     Visibility(
@@ -269,16 +259,14 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                               )
                                                                   .then(
                                                                 (value) {
-                                                                  value
-                                                                      ? {
-                                                                          MyFlashBar
-                                                                              .showSuccess(
-                                                                            "Subject has been deleted successfully",
-                                                                            "Subject Deleted",
-                                                                          ).show(
-                                                                              context),
-                                                                        }
-                                                                      : null;
+                                                                  if (value) {
+                                                                    MyFlashBar
+                                                                        .showSuccess(
+                                                                      "Subject has been deleted successfully",
+                                                                      "Subject Deleted",
+                                                                    ).show(
+                                                                        context);
+                                                                  }
                                                                 },
                                                               );
                                                             },
@@ -322,9 +310,7 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                         ),
                                                       ),
                                                     ),
-                                                    const SizedBox(
-                                                      width: 20,
-                                                    ),
+                                                    const SizedBox(width: 20),
                                                     Visibility(
                                                       visible: Get.find<
                                                               ProfileController>()
@@ -356,7 +342,9 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                         ),
                                       ),
                                       Positioned(
-                                        right: 100,
+                                        right:
+                                            MediaQuery.of(context).size.width *
+                                                0.01,
                                         bottom: 100,
                                         child: Image.asset(
                                           AssetsManager.assetsIconsArabic,
