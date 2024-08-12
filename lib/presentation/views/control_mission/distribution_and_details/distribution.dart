@@ -32,6 +32,7 @@ class DistributionScreen extends GetView<DistributionController> {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   onPressed: () {
@@ -44,28 +45,33 @@ class DistributionScreen extends GetView<DistributionController> {
                   text: "Distribution: ${controller.controlMissionName}",
                 ),
                 const Spacer(),
-                Visibility(
-                  visible: Get.find<ProfileController>().canAccessWidget(
-                    widgetId: '2201',
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      MyDialogs.showDialog(
-                        context,
-                        AddExamRoomWidget(),
-                      );
-                      controller.getStageAndClassRoom();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: ColorManager.bgSideMenu,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.all(20),
-                      child: Text(
-                        "Create new exam room",
-                        style: nunitoLight.copyWith(
-                          color: Colors.white,
+                Flexible(
+                  child: Visibility(
+                    visible: Get.find<ProfileController>().canAccessWidget(
+                      widgetId: '2201',
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        MyDialogs.showDialog(
+                          context,
+                          AddExamRoomWidget(),
+                        );
+                        controller.getStageAndClassRoom();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorManager.bgSideMenu,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.all(20),
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: Text(
+                            "Create new exam room",
+                            style: nunitoLight.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),
