@@ -219,16 +219,6 @@ class AdminScreen extends GetView<AdminController> {
                                                     fontSize: 16,
                                                   ),
                                                 ),
-                                                const SizedBox(width: 10),
-                                                Text(
-                                                  "Created by: ${item.createdByUserResModel?.fullName ?? "Unknown"}",
-                                                  style: nunitoRegular.copyWith(
-                                                    color: ColorManager
-                                                        .bgSideMenu
-                                                        .withOpacity(0.7),
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
                                               ],
                                             ),
                                           ],

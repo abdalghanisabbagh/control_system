@@ -146,17 +146,27 @@ class EditUserWidget extends GetView<AdminController> {
       child: MytextFormFiled(
         title: "Old Password",
         controller: controller.passwordController,
-        myValidation: Validations.requiredValidator,
-        obscureText: controller.showPassord,
+        obscureText: controller.showOldPassord,
         suffixIcon: IconButton(
           icon: Icon(
-            controller.showPassord ? Icons.visibility : Icons.visibility_off,
+            controller.showOldPassord ? Icons.visibility : Icons.visibility_off,
           ),
           onPressed: () {
-            controller.showPassord = !controller.showPassord;
+            controller.showOldPassord = !controller.showOldPassord;
             controller.update();
           },
         ),
+        myValidation: (value) {
+          if (value != null && value.isNotEmpty) {
+            if (controller.confirmPasswordController.text.isEmpty) {
+              return 'Please enter the new password';
+            }
+            if (value == controller.confirmPasswordController.text) {
+              return 'New password must be different from the old password';
+            }
+          }
+          return null;
+        },
       ),
     );
   }
@@ -167,23 +177,26 @@ class EditUserWidget extends GetView<AdminController> {
       child: MytextFormFiled(
         title: "New Password",
         controller: controller.confirmPasswordController,
-        obscureText: controller.showConfirmPassword,
+        obscureText: controller.showNewPassword,
         suffixIcon: IconButton(
           icon: Icon(
-            controller.showConfirmPassword
+            controller.showNewPassword
                 ? Icons.visibility
                 : Icons.visibility_off,
           ),
           onPressed: () {
-            controller.showConfirmPassword = !controller.showConfirmPassword;
+            controller.showNewPassword = !controller.showNewPassword;
             controller.update();
           },
         ),
         myValidation: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Please confirm your password';
-          } else if (value != controller.passwordController.text) {
-            return 'Passwords do not match';
+          if (controller.passwordController.text.isNotEmpty && value!.isEmpty) {
+            return 'Please enter the new password';
+          }
+          if (value != null &&
+              value.isNotEmpty &&
+              value == controller.passwordController.text) {
+            return 'New password must be different from the old password';
           }
           return null;
         },
@@ -202,7 +215,6 @@ class EditUserWidget extends GetView<AdminController> {
               controller.passwordController.clear();
               controller.fullNameController.clear();
               controller.usernameController.clear();
-              // controller.selectedDivision.clear();
               Get.back();
             },
           ),
@@ -212,15 +224,18 @@ class EditUserWidget extends GetView<AdminController> {
           child: ElevatedEditButton(
             onPressed: () {
               if (controller.formKey.currentState?.validate() ?? false) {
-                controller
-                    .editUser(
-                  id: userResModel.iD,
-                  fullName: controller.fullNameController.text,
-                  username: controller.usernameController.text,
-                  oldPassword: controller.passwordController.text,
-                  isFloorManager: controller.selectedDivision,
-                )
-                    .then((value) {
+                final oldPassword = controller.passwordController.text;
+                final newPassword = controller.confirmPasswordController.text;
+
+                final data = {
+                  'Full_Name': controller.fullNameController.text,
+                  'User_Name': controller.usernameController.text,
+                  if (oldPassword.isNotEmpty) 'OldPassword': oldPassword,
+                  if (newPassword.isNotEmpty) 'NewPassword': newPassword,
+                  'IsFloorManager': controller.selectedDivision,
+                };
+
+                controller.editUser(data, userResModel.iD!).then((value) {
                   if (value) {
                     Get.back();
                     MyFlashBar.showSuccess(

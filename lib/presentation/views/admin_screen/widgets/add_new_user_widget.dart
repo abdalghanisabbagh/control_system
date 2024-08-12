@@ -133,16 +133,16 @@ class AddNewUserWidget extends GetView<AdminController> {
                           title: "Password",
                           controller: userController.passwordController,
                           myValidation: Validations.requiredValidator,
-                          obscureText: userController.showPassord,
+                          obscureText: userController.showOldPassord,
                           suffixIcon: IconButton(
                             icon: Icon(
-                              userController.showPassord
+                              userController.showOldPassord
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                             ),
                             onPressed: () {
-                              userController.showPassord =
-                                  !userController.showPassord;
+                              userController.showOldPassord =
+                                  !userController.showOldPassord;
                               userController.update();
                             },
                           ),
@@ -153,16 +153,16 @@ class AddNewUserWidget extends GetView<AdminController> {
                         child: MytextFormFiled(
                           title: "Confirm Password",
                           controller: userController.confirmPasswordController,
-                          obscureText: userController.showPassord,
+                          obscureText: userController.showOldPassord,
                           suffixIcon: IconButton(
                             icon: Icon(
-                              userController.showPassord
+                              userController.showOldPassord
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                             ),
                             onPressed: () {
-                              userController.showPassord =
-                                  !userController.showPassord;
+                              userController.showOldPassord =
+                                  !userController.showOldPassord;
                               userController.update();
                             },
                           ),

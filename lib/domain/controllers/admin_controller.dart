@@ -22,8 +22,8 @@ class AdminController extends GetxController {
 
   String? selectedDivision;
   String? selectedRoleType;
-  bool showPassord = true;
-  bool showConfirmPassword = true;
+  bool showOldPassord = true;
+  bool showNewPassword = true;
 
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -173,28 +173,15 @@ class AdminController extends GetxController {
     update();
   }
 
-  Future<bool> editUser({
-    int? id,
-    String? fullName,
-    String? username,
-    String? oldPassword,
-    String? newPassword,
-    String? isFloorManager,
-  }) async {
+  Future<bool> editUser(Map<String, dynamic> data,int id) async {
     isLodingEditUser = true;
     update();
 
     final response = await ResponseHandler<UserResModel>().getResponse(
-      path: "${AuthLinks.user}/$id",
-      converter: UserResModel.fromJson,
-      type: ReqTypeEnum.PATCH,
-      body: {
-        "Full_Name": fullNameController.text,
-        "User_Name": usernameController.text,
-        "Password": passwordController.text,
-        "IsFloorManager": selectedDivision,
-      },
-    );
+        path: "${AuthLinks.user}/$id",
+        converter: UserResModel.fromJson,
+        type: ReqTypeEnum.PATCH,
+        body: data);
 
     isLodingEditUser = false;
     update();
@@ -227,6 +214,8 @@ class AdminController extends GetxController {
   @override
   void onInit() {
     getUserCreatedBy();
+    getAllUsers();
+    getUserInSchool();
     super.onInit();
   }
 }
