@@ -1,7 +1,6 @@
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../domain/controllers/school_controller.dart';
@@ -101,11 +100,13 @@ class AddNewSchoolWidget extends GetView<SchoolController> {
                           .then((value) {
                           value
                               ? {
-                                  context.pop(),
+                                  context.mounted ? context.pop() : null,
                                   MyFlashBar.showSuccess(
                                           'The School Has Been Added Successfully',
                                           'Success')
-                                      .show(context)
+                                      .show(context.mounted
+                                          ? context
+                                          : Get.key.currentContext!)
                                 }
                               : null;
                         });
