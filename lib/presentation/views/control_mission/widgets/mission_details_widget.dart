@@ -130,8 +130,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                 color: Colors.grey.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 20,
-                                offset: const Offset(
-                                    2, 15), // changes position of shadow
+                                offset: const Offset(2, 15),
                               ),
                             ],
                             color: ColorManager.ligthBlue,
@@ -165,18 +164,12 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    controller
-                                                        .listExamRoom[index]
-                                                        .name!,
-                                                    style: nunitoBlackStyle(),
+                                                    "Class Room : ${controller.listExamRoom[index].name!}",
+                                                    style: nunitoBlackStyle()
+                                                        .copyWith(
+                                                      fontSize: 20,
+                                                    ),
                                                   ),
-                                                  Text(
-                                                    controller
-                                                        .listExamRoom[index]
-                                                        .capacity!
-                                                        .toString(),
-                                                    style: nunitoBlackStyle(),
-                                                  )
                                                 ],
                                               ),
                                             ],
