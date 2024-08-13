@@ -29,9 +29,6 @@ class CohortsSettingsController extends GetxController {
     bool cohortHasBeenAdded = false;
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
 
-
-
-    /// TODO  : This is wrog  , must be like Subject ( only 1 type of school)
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
       path: SchoolsLinks.cohort,
