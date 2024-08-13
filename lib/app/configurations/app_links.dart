@@ -24,6 +24,7 @@ class ControlMissionLinks {
   static const controlMissionSchool = '$controlMission/school';
   static const studentSeatNumbers = '$controlMission/student-seat-numbers';
   static const getGradesByControlMission = 'control-mission/grades';
+  static const getSubjectsByControlMission = 'subjects/controlMission';
 }
 
 class EducationYearsLinks {
@@ -93,6 +94,7 @@ class StudentsLinks {
   static const studentSeatNumbersExamRoom = '$studentSeatNumbers/exam-rooms';
   static const studentSeatNumbersStudent = '$studentSeatNumbers/student';
   static const studentsClass = 'student/class';
+  static const getStudentsByControlMission = 'student/controlMission';
 }
 
 class UserRolesSystemsLink {

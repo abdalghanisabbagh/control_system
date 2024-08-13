@@ -74,7 +74,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                             ));
                           } else {
                             return ListView.builder(
-                              itemCount: controller.listExamRoom.length,
+                              itemCount: controller.listSubject.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -89,7 +89,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Subject : ${controller.listExamRoom[index].name}",
+                                            "Subject : ${controller.listSubject[index].name}",
                                             style: nunitoRegular.copyWith(
                                               fontSize: 20,
                                             ),
