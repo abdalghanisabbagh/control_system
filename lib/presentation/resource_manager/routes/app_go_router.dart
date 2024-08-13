@@ -317,36 +317,8 @@ class AppGoRouter {
           return true;
         },
       ),
-      GoRoute(
-        path: AppRoutesNamesAndPaths.examRoomScreenPath,
-        name: AppRoutesNamesAndPaths.examRoomScreenName,
-        builder: (context, state) {
-          return const ExamRoomScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
-      // GoRoute(
-      //   path: AppRoutesNamesAndPaths.distributionScreenPath,
-      //   name: AppRoutesNamesAndPaths.distributionScreenName,
-      //   builder: (context, state) {
-      //     return const DistributionScreen();
-      //   },
-      //   onExit: (context, state) {
-      //     return true;
-      //   },
-      // ),
+    
     ],
   );
 }
 
-// final pagess = [
-//   GetPage(
-//     name: 'test',
-//     page: () => HomeScreen(),
-//     bindings: [],
-//     title: 'test',
-//     children: []
-//   ),
-// ];

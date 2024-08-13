@@ -182,18 +182,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                     ),
                                                     Row(
                                                       children: [
-                                                        // Text(
-                                                        //   "Building : ${classRoom.buildingName}",
-                                                        //   style:
-                                                        //       nunitoRegular
-                                                        //           .copyWith(
-                                                        //     color: ColorManager
-                                                        //         .bgSideMenu,
-                                                        //   ),
-                                                        // ),
-                                                        // const SizedBox(
-                                                        //   width: 20,
-                                                        // ),
+                                                       
                                                         Text(
                                                           "Floor : ${classRoom.floor}",
                                                           style: nunitoRegular
