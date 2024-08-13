@@ -4,6 +4,7 @@ import 'dart:html' as html;
 import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/student/students_graes_res_model.dart';
 import 'package:control_system/Data/Models/student_seat/student_seat_res_model.dart';
 import 'package:control_system/Data/Models/student_seat/students_seats_numbers_res_model.dart';
 import 'package:control_system/Data/Models/subject/subjects_res_model.dart';
@@ -30,7 +31,10 @@ class DetailsAndReviewMissionController extends GetxController {
   String controlMissionName = '';
   bool isLodingGetExamRooms = false;
   bool isLodingGetSubjects = false;
+  bool isLoadingGetStudentsGrades = false;
   bool isLodingGetStudentsSeatNumbers = false;
+  PlutoGridStateManager? studentsGradesPlutoGridStateManager;
+  StudentsGraesResModel? studentsGradesResModel;
   List<ExamRoomResModel> listExamRoom = [];
   List<SubjectResModel> listSubject = [];
   final List<Tab> myTabs = const <Tab>[
@@ -42,7 +46,10 @@ class DetailsAndReviewMissionController extends GetxController {
       <StudentSeatNumberResModel>[];
 
   List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
+  List<PlutoRow> studentsGradesRows = <PlutoRow>[];
   TabController? tabController;
+
+  void convertStudentsGradesToPlutoGridRows() {}
 
   void exportToCsv(
       BuildContext context, List<PlutoRow> studentsSeatsNumberRows) {
@@ -196,21 +203,22 @@ class DetailsAndReviewMissionController extends GetxController {
     isLodingGetExamRooms = false;
   }
 
-  Future<void> getSubjectByControlMissionId() async {
-    isLodingGetSubjects = true;
+  void getStudentsGrades() async {
+    isLoadingGetStudentsGrades = true;
     update();
+    final ResponseHandler<StudentsGraesResModel> responseHandler =
+        ResponseHandler<StudentsGraesResModel>();
 
-    final response = await ResponseHandler<SubjectsResModel>().getResponse(
-      path:
-          "${ControlMissionLinks.getSubjectsByControlMission}/$controlMissionId",
-      converter: SubjectsResModel.fromJson,
+    var response = await responseHandler.getResponse(
+      path: '${StudentsLinks.studentsGrades}/$controlMissionId',
+      converter: StudentsGraesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
 
     response.fold(
       (l) {
         MyAwesomeDialogue(
-          title: 'title',
+          title: 'Error',
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(
@@ -218,11 +226,14 @@ class DetailsAndReviewMissionController extends GetxController {
         );
       },
       (r) {
-        listSubject = r.data!;
-        update();
+        studentsGradesResModel = r;
+        debugPrint(
+            'students grades ${studentsGradesResModel!.toJson().toString()}');
       },
     );
-    isLodingGetSubjects = false;
+
+    isLoadingGetStudentsGrades = false;
+    update();
   }
 
   Future<bool> getStudentsSeatNumberByControlMissionId() async {
@@ -261,6 +272,35 @@ class DetailsAndReviewMissionController extends GetxController {
     return getData;
   }
 
+  Future<void> getSubjectByControlMissionId() async {
+    isLodingGetSubjects = true;
+    update();
+
+    final response = await ResponseHandler<SubjectsResModel>().getResponse(
+      path:
+          "${ControlMissionLinks.getSubjectsByControlMission}/$controlMissionId",
+      converter: SubjectsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        listSubject = r.data!;
+        update();
+      },
+    );
+    isLodingGetSubjects = false;
+  }
+
   @override
   void onInit() async {
     super.onInit();
@@ -271,6 +311,7 @@ class DetailsAndReviewMissionController extends GetxController {
     getExamRoomByControlMissionId();
     getSubjectByControlMissionId();
     getStudentsSeatNumberByControlMissionId();
+    getStudentsGrades();
   }
 
   Future<void> saveControlMissionId(int id) async {
