@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../domain/controllers/controllers.dart';
-import '../../../domain/controllers/proctor_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
