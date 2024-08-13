@@ -264,8 +264,12 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                                                                         .showSuccess(
                                                                       "Subject has been deleted successfully",
                                                                       "Subject Deleted",
-                                                                    ).show(
-                                                                        context);
+                                                                    ).show(context
+                                                                            .mounted
+                                                                        ? context
+                                                                        : Get
+                                                                            .key
+                                                                            .currentContext!);
                                                                   }
                                                                 },
                                                               );
