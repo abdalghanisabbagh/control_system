@@ -74,7 +74,9 @@ class SeatNumberWidget extends GetView<SeatNumberController> {
                                   MyFlashBar.showSuccess(
                                     'Success',
                                     'Students have been distributed successfully',
-                                  ).show(context);
+                                  ).show(context.mounted
+                                      ? context
+                                      : Get.key.currentContext!);
                                 }
                               });
                             },
