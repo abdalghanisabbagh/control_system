@@ -67,7 +67,9 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                               MyFlashBar.showSuccess(
                                                       "Subjects Added Successfully",
                                                       "Success")
-                                                  .show(context)
+                                                  .show(context.mounted
+                                                      ? context
+                                                      : Get.key.currentContext!)
                                             }
                                           : null,
                                     )
@@ -142,7 +144,10 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                                   MyFlashBar.showSuccess(
                                                           "Subject Deleted Successfully",
                                                           "Success")
-                                                      .show(context)
+                                                      .show(context.mounted
+                                                          ? context
+                                                          : Get.key
+                                                              .currentContext!)
                                                 }
                                               : null,
                                         );
