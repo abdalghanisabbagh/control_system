@@ -26,7 +26,7 @@ void _login(
             ? {
                 MyFlashBar.showSuccess(
                         'You have been logged in successfully', 'Success')
-                    .show(context)
+                    .show(context.mounted ? context : Get.key.currentContext!)
               }
             : null;
       },
