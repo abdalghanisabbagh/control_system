@@ -207,7 +207,11 @@ class DistributionScreen extends GetView<DistributionController> {
                                                               ? MyFlashBar.showSuccess(
                                                                       'Exam Room Deleted Successfully',
                                                                       "Success")
-                                                                  .show(context)
+                                                                  .show(context
+                                                                          .mounted
+                                                                      ? context
+                                                                      : Get.key
+                                                                          .currentContext!)
                                                               : null;
                                                         },
                                                       );
