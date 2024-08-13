@@ -276,7 +276,7 @@ class OperationWidget extends GetView<OperationController> {
                                                                                             MyFlashBar.showSuccess(
                                                                                               "Subject has been deleted successfully",
                                                                                               "Subject Deleted",
-                                                                                            ).show(context),
+                                                                                            ).show(context.mounted ? context : Get.key.currentContext!),
                                                                                           }
                                                                                         : null;
                                                                                     controller.onInit();
