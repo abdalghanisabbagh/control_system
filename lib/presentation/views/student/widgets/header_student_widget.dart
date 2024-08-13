@@ -42,14 +42,17 @@ class HeaderStudentWidget extends GetView<StudentController> {
                 },
               ),
             ),
-            IconButton(
-                tooltip: "Download excel template",
-                icon: const Icon(FontAwesomeIcons.cloudArrowDown),
-                onPressed: () {
-                  controller.downloadeTemp();
-
-                  //   controller.downloadFile();
-                }),
+            Visibility(
+              visible: Get.find<ProfileController>().canAccessWidget(
+                widgetId: '1600',
+              ),
+              child: IconButton(
+                  tooltip: "Download excel template",
+                  icon: const Icon(FontAwesomeIcons.cloudArrowDown),
+                  onPressed: () {
+                    controller.downloadeTemp();
+                  }),
+            ),
             Visibility(
               visible: Get.find<ProfileController>().canAccessWidget(
                 widgetId: '1200',

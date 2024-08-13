@@ -171,16 +171,22 @@ class AllUserWidget extends GetView<AdminController> {
                                             ],
                                           ),
                                         ),
-                                        IconButton(
-                                          icon: Icon(Icons.edit,
-                                              color: ColorManager.glodenColor),
-                                          onPressed: () {
-                                            MyDialogs.showDialog(
-                                              context,
-                                              EditUserWidget(
-                                                  userResModel: item),
-                                            );
-                                          },
+                                        Visibility(
+                                          visible: Get.find<ProfileController>()
+                                              .canAccessWidget(
+                                                  widgetId: '9400'),
+                                          child: IconButton(
+                                            icon: Icon(Icons.edit,
+                                                color:
+                                                    ColorManager.glodenColor),
+                                            onPressed: () {
+                                              MyDialogs.showDialog(
+                                                context,
+                                                EditUserWidget(
+                                                    userResModel: item),
+                                              );
+                                            },
+                                          ),
                                         ),
                                         IconButton(
                                           icon: const Icon(Icons.delete,

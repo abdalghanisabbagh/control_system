@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../domain/controllers/controllers.dart';
 import '../../../domain/controllers/proctor_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
@@ -37,14 +38,20 @@ class ProctorScreen extends GetView<ProctorController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              MyDialogs.showDialog(
-                                context,
-                                const CreateNewProctor(),
-                              );
-                            },
-                            child: const Text("Create new proctor"),
+                          Visibility(
+                            visible:
+                                Get.find<ProfileController>().canAccessWidget(
+                              widgetId: '10100',
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                MyDialogs.showDialog(
+                                  context,
+                                  const CreateNewProctor(),
+                                );
+                              },
+                              child: const Text("Create new proctor"),
+                            ),
                           )
                         ],
                       ),

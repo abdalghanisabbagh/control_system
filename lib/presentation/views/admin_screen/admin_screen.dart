@@ -9,6 +9,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../Data/Models/user/users_res/user_res_model.dart';
 import '../../../domain/controllers/admin_controller.dart';
+import '../../../domain/controllers/profile_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
@@ -37,27 +38,32 @@ class AdminScreen extends GetView<AdminController> {
                   ),
                 ),
                 const Spacer(),
-                Expanded(
-                  flex: 1,
-                  child: InkWell(
-                    onTap: () {
-                      controller.getAllUsers();
-                      context
-                          .goNamed(AppRoutesNamesAndPaths.allUsersScreenName);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: ColorManager.bgSideMenu,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            "All Employees",
-                            style: nunitoBold.copyWith(
-                              color: ColorManager.white,
-                              fontSize: 20,
+                Visibility(
+                  visible: Get.find<ProfileController>().canAccessWidget(
+                    widgetId: '9100',
+                  ),
+                  child: Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () {
+                        controller.getAllUsers();
+                        context
+                            .goNamed(AppRoutesNamesAndPaths.allUsersScreenName);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorManager.bgSideMenu,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              "All Users",
+                              style: nunitoBold.copyWith(
+                                color: ColorManager.white,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),
@@ -68,27 +74,32 @@ class AdminScreen extends GetView<AdminController> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.005,
                 ),
-                Expanded(
-                  flex: 1,
-                  child: InkWell(
-                    onTap: () {
-                      controller.getUserInSchool();
-                      context.goNamed(
-                          AppRoutesNamesAndPaths.usersInSchoolScreenName);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: ColorManager.newStatus,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            "Users in School",
-                            style: nunitoBold.copyWith(
-                              color: ColorManager.white,
-                              fontSize: 20,
+                Visibility(
+                  visible: Get.find<ProfileController>().canAccessWidget(
+                    widgetId: '9200',
+                  ),
+                  child: Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () {
+                        controller.getUserInSchool();
+                        context.goNamed(
+                            AppRoutesNamesAndPaths.usersInSchoolScreenName);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorManager.newStatus,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              "Users in School",
+                              style: nunitoBold.copyWith(
+                                color: ColorManager.white,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),
@@ -99,28 +110,33 @@ class AdminScreen extends GetView<AdminController> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.005,
                 ),
-                Expanded(
-                  flex: 1,
-                  child: InkWell(
-                    onTap: () {
-                      MyDialogs.showDialog(
-                        context,
-                        const AddNewUserWidget(),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: ColorManager.glodenColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(
-                            "Add New User",
-                            style: nunitoBold.copyWith(
-                              color: ColorManager.white,
-                              fontSize: 20,
+                Visibility(
+                  visible: Get.find<ProfileController>().canAccessWidget(
+                    widgetId: '9300',
+                  ),
+                  child: Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () {
+                        MyDialogs.showDialog(
+                          context,
+                          const AddNewUserWidget(),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorManager.glodenColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              "Add New User",
+                              style: nunitoBold.copyWith(
+                                color: ColorManager.white,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),
@@ -263,35 +279,46 @@ class AdminScreen extends GetView<AdminController> {
                                             ],
                                           ),
                                         ),
-                                        IconButton(
-                                          icon: Icon(Icons.edit,
-                                              color: ColorManager.glodenColor),
-                                          onPressed: () {
-                                            MyDialogs.showDialog(
-                                              context,
-                                              EditUserWidget(
-                                                userResModel: item,
-                                              ),
-                                            );
-                                          },
+                                        Visibility(
+                                          visible: Get.find<ProfileController>()
+                                              .canAccessWidget(
+                                                  widgetId: '9400'),
+                                          child: IconButton(
+                                            icon: Icon(Icons.edit,
+                                                color:
+                                                    ColorManager.glodenColor),
+                                            onPressed: () {
+                                              MyDialogs.showDialog(
+                                                context,
+                                                EditUserWidget(
+                                                  userResModel: item,
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
-                                        IconButton(
-                                          icon: const Icon(Icons.delete,
-                                              color: Colors.red),
-                                          onPressed: () {
-                                            MyAwesomeDialogue(
-                                              title: 'Delete User',
-                                              desc:
-                                                  'Are you sure you want to delete this user?',
-                                              dialogType: DialogType.warning,
-                                              btnOkOnPressed: () {
-                                                // Delete user
-                                              },
-                                              btnCancelOnPressed: () {
-                                                Get.back();
-                                              },
-                                            ).showDialogue(context);
-                                          },
+                                        Visibility(
+                                          visible: Get.find<ProfileController>()
+                                              .canAccessWidget(
+                                                  widgetId: '9500'),
+                                          child: IconButton(
+                                            icon: const Icon(Icons.delete,
+                                                color: Colors.red),
+                                            onPressed: () {
+                                              MyAwesomeDialogue(
+                                                title: 'Delete User',
+                                                desc:
+                                                    'Are you sure you want to delete this user?',
+                                                dialogType: DialogType.warning,
+                                                btnOkOnPressed: () {
+                                                  // Delete user
+                                                },
+                                                btnCancelOnPressed: () {
+                                                  Get.back();
+                                                },
+                                              ).showDialogue(context);
+                                            },
+                                          ),
                                         ),
                                       ],
                                     ),

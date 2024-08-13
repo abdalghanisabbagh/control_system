@@ -44,27 +44,32 @@ class SubjectSettingScreen extends GetView<SubjectsController> {
                       ),
                     ),
                     const Spacer(),
-                    Expanded(
-                      flex: 1,
-                      child: InkWell(
-                        onTap: () {
-                          context.goNamed(
-                            AppRoutesNamesAndPaths.oprerationsScreenName,
-                          );
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: ColorManager.bgSideMenu,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                "Operation",
-                                style: nunitoBold.copyWith(
-                                  color: ColorManager.white,
-                                  fontSize: 16,
+                    Visibility(
+                      visible: Get.find<ProfileController>().canAccessWidget(
+                        widgetId: '7400',
+                      ),
+                      child: Expanded(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            context.goNamed(
+                              AppRoutesNamesAndPaths.oprerationsScreenName,
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: ColorManager.bgSideMenu,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Text(
+                                  "Operation",
+                                  style: nunitoBold.copyWith(
+                                    color: ColorManager.white,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                             ),
