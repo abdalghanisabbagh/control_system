@@ -339,13 +339,13 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                           ),
                                         ),
                                         Positioned(
-                                          right: 100,
-                                          bottom: 150,
+                                          right: Get.width * 0.05,
+                                          bottom: 100,
                                           child: Image.asset(
                                             AssetsManager.assetsIconsArabic,
                                             fit: BoxFit.fill,
-                                            height: 200,
-                                            width: 200,
+                                            height: 150,
+                                            width: 150,
                                           ),
                                         ),
                                       ],
