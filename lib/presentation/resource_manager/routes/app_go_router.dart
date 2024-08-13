@@ -1,4 +1,4 @@
-import 'package:control_system/presentation/views/admin_screen/widgets/all_user_widget%20.dart';
+import 'package:control_system/presentation/views/admin_screen/widgets/all_user_widget.dart';
 import 'package:control_system/presentation/views/admin_screen/widgets/user_in_school_widget.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';

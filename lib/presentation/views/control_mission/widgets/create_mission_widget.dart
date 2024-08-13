@@ -68,7 +68,9 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                             MyFlashBar.showSuccess(
                                               'Control mission created successfully',
                                               'Success',
-                                            ).show(context);
+                                            ).show(context.mounted
+                                                ? context
+                                                : Get.key.currentContext!);
                                             await Future.delayed(
                                               const Duration(seconds: 2),
                                             );
@@ -100,7 +102,9 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                                 MyFlashBar.showSuccess(
                                                   'Mission created successfully',
                                                   'Success',
-                                                ).show(context);
+                                                ).show(context.mounted
+                                                    ? context
+                                                    : Get.key.currentContext!);
                                                 await Future.delayed(
                                                   const Duration(seconds: 2),
                                                 );
@@ -318,7 +322,9 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                     controller.update();
                                   },
                                   btnCancelOnPressed: () {},
-                                ).showDialogue(context);
+                                ).showDialogue(context.mounted
+                                    ? context
+                                    : Get.key.currentContext!);
                                 return;
                               }
                               controller.selectedEndDate =

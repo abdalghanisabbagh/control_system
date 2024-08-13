@@ -137,16 +137,22 @@ class AddSubjectWidget extends StatelessWidget {
                                     (value) {
                                       value
                                           ? {
-                                              context.pop(),
+                                              context.mounted
+                                                  ? context.pop()
+                                                  : null,
                                               MyFlashBar.showSuccess(
                                                       'The Subject Has Been Added Successfully',
                                                       'Success')
-                                                  .show(context)
+                                                  .show(context.mounted
+                                                      ? context
+                                                      : Get.key.currentContext!)
                                             }
                                           : MyFlashBar.showError(
                                                   'Something went wrong',
                                                   'Error')
-                                              .show(context);
+                                              .show(context.mounted
+                                                  ? context
+                                                  : Get.key.currentContext!);
                                     },
                                   );
                                 }

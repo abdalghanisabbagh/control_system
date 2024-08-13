@@ -287,9 +287,9 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                                                                     .then(
                                                                   (value) {
                                                                     value
-                                                                        ? MyFlashBar.showSuccess('Cohort deleted successfully',
-                                                                                'Success')
-                                                                            .show(context)
+                                                                        ? MyFlashBar.showSuccess('Cohort deleted successfully', 'Success').show(context.mounted
+                                                                            ? context
+                                                                            : Get.key.currentContext!)
                                                                         : null;
                                                                   },
                                                                 );

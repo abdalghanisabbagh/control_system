@@ -751,7 +751,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                           MyFlashBar.showSuccess(
                                             'Success',
                                             'Students have been distributed successfully',
-                                          ).show(context);
+                                          ).show(context.mounted
+                                              ? context
+                                              : Get.key.currentContext!);
                                         }
                                       });
                                     },
@@ -770,7 +772,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                           MyFlashBar.showSuccess(
                                             'Success',
                                             'Students have been distributed successfully',
-                                          ).show(context);
+                                          ).show(context.mounted
+                                              ? context
+                                              : Get.key.currentContext!);
                                         }
                                       });
                                     },
@@ -781,7 +785,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                       MyFlashBar.showSuccess(
                                         'Success',
                                         'Students have been distributed successfully',
-                                      ).show(context);
+                                      ).show(context.mounted
+                                          ? context
+                                          : Get.key.currentContext!);
                                     }
                                   });
                                 }

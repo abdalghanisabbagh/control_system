@@ -134,7 +134,10 @@ class EditSubject extends GetView<EditSubjectsController> {
                                                   MyFlashBar.showSuccess(
                                                           "Subjects Added",
                                                           "Success")
-                                                      .show(context),
+                                                      .show(context.mounted
+                                                          ? context
+                                                          : Get.key
+                                                              .currentContext!),
                                                   Get.delete<
                                                       EditSubjectsController>(),
                                                   Get.find<SubjectsController>()
@@ -217,7 +220,11 @@ class EditSubject extends GetView<EditSubjectsController> {
                                                         MyFlashBar.showSuccess(
                                                                 "School Type Deleted In Subject",
                                                                 "Success")
-                                                            .show(context),
+                                                            .show(context
+                                                                    .mounted
+                                                                ? context
+                                                                : Get.key
+                                                                    .currentContext!),
                                                         Get.delete<
                                                             EditSubjectsController>(),
                                                         Get.find<

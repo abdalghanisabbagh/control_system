@@ -77,11 +77,13 @@ class AddNewGradeToSchool extends GetView<SchoolController> {
                               .then((value) {
                             value
                                 ? {
-                                    context.pop(),
+                                    context.mounted ? context.pop() : null,
                                     MyFlashBar.showSuccess(
                                             'The Grade Has Been Added Successfully',
                                             'Success')
-                                        .show(context)
+                                        .show(context.mounted
+                                            ? context
+                                            : Get.key.currentContext!)
                                   }
                                 : null;
                           });

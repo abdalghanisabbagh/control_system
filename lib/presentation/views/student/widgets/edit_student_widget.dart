@@ -264,11 +264,15 @@ class EditStudentWidget extends GetView<StudentController> {
                                 (value) {
                                   value
                                       ? {
-                                          context.pop(),
+                                          context.mounted
+                                              ? context.pop()
+                                              : null,
                                           MyFlashBar.showSuccess(
                                             "The Student has been Edited successfully",
                                             "Success",
-                                          ).show(context),
+                                          ).show(context.mounted
+                                              ? context
+                                              : Get.key.currentContext!),
                                         }
                                       : null;
                                 },

@@ -197,7 +197,10 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                     MyFlashBar.showSuccess(
                                                             'Degree set successfully',
                                                             'Success')
-                                                        .show(context);
+                                                        .show(context.mounted
+                                                            ? context
+                                                            : Get.key
+                                                                .currentContext!);
                                                   }
                                                 });
                                               }
@@ -294,7 +297,11 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                             MyFlashBar.showSuccess(
                                                                     'Degree set successfully',
                                                                     'Success')
-                                                                .show(context);
+                                                                .show(context
+                                                                        .mounted
+                                                                    ? context
+                                                                    : Get.key
+                                                                        .currentContext!);
                                                           }
                                                         });
                                                       }
@@ -394,7 +401,10 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                       MyFlashBar.showSuccess(
                                                               'Degree set successfully',
                                                               'Success')
-                                                          .show(context);
+                                                          .show(context.mounted
+                                                              ? context
+                                                              : Get.key
+                                                                  .currentContext!);
                                                     }
                                                   });
                                                 }
@@ -442,7 +452,11 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                         MyFlashBar.showSuccess(
                                                                 'Degree set successfully',
                                                                 'Success')
-                                                            .show(context);
+                                                            .show(context
+                                                                    .mounted
+                                                                ? context
+                                                                : Get.key
+                                                                    .currentContext!);
                                                       }
                                                     });
                                                   }

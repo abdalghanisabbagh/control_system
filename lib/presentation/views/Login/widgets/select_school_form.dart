@@ -98,10 +98,12 @@ class SelectSchoolForm extends GetView<SchoolController> {
                                             await controller
                                                 .saveToSchoolBox(currentSchool)
                                                 .then((_) {
-                                              context.goNamed(
-                                                AppRoutesNamesAndPaths
-                                                    .dashBoardScreenName,
-                                              );
+                                              context.mounted
+                                                  ? context.goNamed(
+                                                      AppRoutesNamesAndPaths
+                                                          .dashBoardScreenName,
+                                                    )
+                                                  : null;
                                             });
                                           },
                                           title: Text(

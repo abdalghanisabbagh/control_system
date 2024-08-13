@@ -143,7 +143,9 @@ class HeaderStudentWidget extends GetView<StudentController> {
                             title: "Success",
                             desc: "Students Added Successfully",
                             dialogType: DialogType.success,
-                          ).showDialogue(context);
+                          ).showDialogue(context.mounted
+                              ? context
+                              : Get.key.currentContext!);
                         }
                       });
                     } else if (controller.isImportedPromot) {
@@ -155,7 +157,9 @@ class HeaderStudentWidget extends GetView<StudentController> {
                             title: "Success",
                             desc: "Students Promoted Successfully",
                             dialogType: DialogType.success,
-                          ).showDialogue(context);
+                          ).showDialogue(context.mounted
+                              ? context
+                              : Get.key.currentContext!);
                         }
                       });
                     }

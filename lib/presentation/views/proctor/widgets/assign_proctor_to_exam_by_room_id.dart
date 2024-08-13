@@ -108,7 +108,10 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                                   MyFlashBar.showSuccess(
                                                           'proctor is assigned successfully',
                                                           'Success')
-                                                      .show(context),
+                                                      .show(context.mounted
+                                                          ? context
+                                                          : Get.key
+                                                              .currentContext!),
                                                 }
                                               : null,
                                         );
@@ -250,7 +253,10 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                                   MyFlashBar.showSuccess(
                                                           'proctor is assigned successfully',
                                                           'Success')
-                                                      .show(context),
+                                                      .show(context.mounted
+                                                          ? context
+                                                          : Get.key
+                                                              .currentContext!),
                                                 }
                                               : null,
                                         );

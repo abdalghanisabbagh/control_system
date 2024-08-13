@@ -235,7 +235,10 @@ class EditClassRoomWidget extends StatelessWidget {
                                                       MyFlashBar.showSuccess(
                                                         'The class has been updated successfully',
                                                         'Class Room',
-                                                      ).show(context),
+                                                      ).show(context.mounted
+                                                          ? context
+                                                          : Get.key
+                                                              .currentContext!),
                                                     }
                                                   : MyFlashBar.showError(
                                                       'Could not update the class room',
