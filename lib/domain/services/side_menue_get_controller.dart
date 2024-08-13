@@ -64,7 +64,9 @@ class SideMenueGetController extends GetxController {
             dialogType: DialogType.warning,
             btnOkOnPressed: () async {
               await Get.find<AuthController>().signOut().then((value) {
-                context.goNamed(AppRoutesNamesAndPaths.loginScreenName);
+                context.mounted
+                    ? context.goNamed(AppRoutesNamesAndPaths.loginScreenName)
+                    : null;
               });
             },
             btnCancelOnPressed: () {},
