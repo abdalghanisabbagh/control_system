@@ -95,6 +95,7 @@ class StudentsLinks {
   static const studentSeatNumbersStudent = '$studentSeatNumbers/student';
   static const studentsClass = 'student/class';
   static const getStudentsByControlMission = 'student/controlMission';
+  static const studentsGrades = '$student/students-grades/control-mission/';
 }
 
 class UserRolesSystemsLink {
