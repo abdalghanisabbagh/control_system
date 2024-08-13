@@ -119,6 +119,8 @@ class RolesScreen extends GetView<RolesController> {
                                                     title: Text(
                                                       controller
                                                           .roles[index].name,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       style:
                                                           nunitoBold.copyWith(
                                                         fontSize: 22,
@@ -172,32 +174,42 @@ class RolesScreen extends GetView<RolesController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const HeaderWidget(text: "Screens"),
-                            Visibility(
-                              visible:
-                                  Get.find<ProfileController>().canAccessWidget(
-                                widgetId: '11100',
+                            const Flexible(
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: HeaderWidget(text: "Screens"),
                               ),
-                              child: InkWell(
-                                onTap: () {
-                                  MyDialogs.showDialog(
-                                    context,
-                                    AddNewScreenWidget(),
-                                  );
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: ColorManager.glodenColor,
-                                    borderRadius: BorderRadius.circular(10),
+                            ),
+                            Flexible(
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Visibility(
+                                  visible: Get.find<ProfileController>()
+                                      .canAccessWidget(
+                                    widgetId: '11100',
                                   ),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Text(
-                                        "Add New Screen",
-                                        style: nunitoBold.copyWith(
-                                          color: ColorManager.white,
-                                          fontSize: 16,
+                                  child: InkWell(
+                                    onTap: () {
+                                      MyDialogs.showDialog(
+                                        context,
+                                        AddNewScreenWidget(),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: ColorManager.glodenColor,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: Text(
+                                            "Add New Screen",
+                                            style: nunitoBold.copyWith(
+                                              color: ColorManager.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
