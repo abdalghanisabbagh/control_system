@@ -50,6 +50,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                               ),
                             ),
                             SizedBox(
+                              width: Get.width * 0.1,
+                            ),
+                            SizedBox(
                               width: Get.width * 0.4,
                               child: SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
