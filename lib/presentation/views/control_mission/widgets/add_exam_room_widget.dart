@@ -145,11 +145,16 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                                         (value) {
                                           value
                                               ? {
-                                                  context.pop(),
+                                                  context.mounted
+                                                      ? context.pop()
+                                                      : null,
                                                   MyFlashBar.showSuccess(
                                                     "The Student has been added successfully",
                                                     "Success",
-                                                  ).show(context),
+                                                  ).show(context.mounted
+                                                      ? context
+                                                      : Get
+                                                          .key.currentContext!),
                                                 }
                                               : null;
                                         },
