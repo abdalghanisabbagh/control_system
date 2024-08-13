@@ -13,7 +13,7 @@ class ProfileCardWidget extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 20,
-            offset: const Offset(2, 15), // changes position of shadow
+            offset: const Offset(2, 15), 
           ),
         ],
         color: ColorManager.white,
@@ -30,32 +30,14 @@ class ProfileCardWidget extends StatelessWidget {
                   Icons.person,
                 ),
               ),
-              // const SizedBox(width: 10),
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     Text(
-              //       userController.user == null
-              //           ? ""
-              //           : controller.user!.userName,
-              //       style: const TextStyle(fontWeight: FontWeight.bold),
-              //     ),
-              //     const Text("Super Admin"),
-              //   ],
-              // )
+           
             ],
           ),
           const Divider(
             thickness: 0.5,
             color: Colors.grey,
           ),
-          // profileListTile(
-          //     "Joined Date",
-          //     userController.user == null
-          //         ? ""
-          //         : DateFormat('EEEE, MMM d, yyyy').format(
-          //             DateTime.parse(
-          //                 userController.user!.createdDate))),
+        
           profileListTile("Role", "Admin"),
         ],
       ),

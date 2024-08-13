@@ -19,88 +19,60 @@ import '../../../resource_manager/validations.dart';
 
 class CreateMissionScreen extends GetView<CreateControlMissionController> {
   final TextEditingController missionNameController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
 
   CreateMissionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RepaintBoundary(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: GetBuilder<CreateControlMissionController>(
-            builder: (controller) => controller.isLoading
-                ? Center(
-                    child: LoadingIndicators.getLoadingIndicator(),
-                  )
-                : Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: RepaintBoundary(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            MyBackButton(
-                              onPressed: () {
-                                controller.batchName = null;
-                                controller.selectedEducationYear = null;
-                                controller.currentStep = 0;
-                                controller.selectedStartDate = null;
-                                controller.selectedEndDate = null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            EnhanceStepper(
-                              type: StepperType.vertical,
-                              currentStep: controller.currentStep,
-                              onStepContinue: () => controller.currentStep == 0
-                                  ? {
-                                      controller.addControlMission().then(
-                                        (value) async {
-                                          if (value) {
-                                            controller.currentStep = 1;
-                                            MyFlashBar.showSuccess(
-                                              'Control mission created successfully',
-                                              'Success',
-                                            ).show(context.mounted
-                                                ? context
-                                                : Get.key.currentContext!);
-                                            await Future.delayed(
-                                              const Duration(seconds: 2),
-                                            );
-                                          } else {
-                                            MyFlashBar.showError(
-                                              'Failed to create mission',
-                                              'Error',
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    }
-                                  : controller.currentStep == 1
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Scaffold(
+          body: RepaintBoundary(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              padding: EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: constraints.maxWidth > 600 ? 40 : 20,
+              ),
+              child: GetBuilder<CreateControlMissionController>(
+                builder: (controller) => controller.isLoading
+                    ? Center(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      )
+                    : Form(
+                        key: _formKey,
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: RepaintBoundary(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                MyBackButton(
+                                  onPressed: () {
+                                    controller.batchName = null;
+                                    controller.selectedEducationYear = null;
+                                    controller.currentStep = 0;
+                                    controller.selectedStartDate = null;
+                                    controller.selectedEndDate = null;
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+                                EnhanceStepper(
+                                  type: StepperType.vertical,
+                                  currentStep: controller.currentStep,
+                                  onStepContinue: () => controller
+                                              .currentStep ==
+                                          0
                                       ? {
-                                          controller
-                                              .createStudentSeatNumbers()
-                                              .then(
+                                          controller.addControlMission().then(
                                             (value) async {
                                               if (value) {
-                                                controller.currentStep = 0;
-                                                controller.batchName = null;
-                                                controller
-                                                        .selectedEducationYear =
-                                                    null;
-                                                controller.selectedStartDate =
-                                                    null;
-                                                controller.selectedEndDate =
-                                                    null;
+                                                controller.currentStep = 1;
                                                 MyFlashBar.showSuccess(
-                                                  'Mission created successfully',
+                                                  'Control mission created successfully',
                                                   'Success',
                                                 ).show(context.mounted
                                                     ? context
@@ -108,7 +80,6 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                                 await Future.delayed(
                                                   const Duration(seconds: 2),
                                                 );
-                                                window.history.back();
                                               } else {
                                                 MyFlashBar.showError(
                                                   'Failed to create mission',
@@ -118,24 +89,65 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                             },
                                           ),
                                         }
-                                      : controller.canMoveToNextStep()
-                                          ? controller.continueToNextStep()
-                                          : null,
-                              onStepCancel: () =>
-                                  controller.backToPreviousStep(),
-                              steps: [
-                                _firstStep(context),
-                                _secondStep(context),
+                                      : controller.currentStep == 1
+                                          ? {
+                                              controller
+                                                  .createStudentSeatNumbers()
+                                                  .then(
+                                                (value) async {
+                                                  if (value) {
+                                                    controller.currentStep = 0;
+                                                    controller.batchName = null;
+                                                    controller
+                                                            .selectedEducationYear =
+                                                        null;
+                                                    controller
+                                                            .selectedStartDate =
+                                                        null;
+                                                    controller.selectedEndDate =
+                                                        null;
+                                                    MyFlashBar.showSuccess(
+                                                      'Mission created successfully',
+                                                      'Success',
+                                                    ).show(context.mounted
+                                                        ? context
+                                                        : Get.key
+                                                            .currentContext!);
+                                                    await Future.delayed(
+                                                      const Duration(
+                                                          seconds: 2),
+                                                    );
+                                                    window.history.back();
+                                                  } else {
+                                                    MyFlashBar.showError(
+                                                      'Failed to create mission',
+                                                      'Error',
+                                                    );
+                                                  }
+                                                },
+                                              ),
+                                            }
+                                          : controller.canMoveToNextStep()
+                                              ? controller.continueToNextStep()
+                                              : null,
+                                  onStepCancel: () =>
+                                      controller.backToPreviousStep(),
+                                  steps: [
+                                    _firstStep(context),
+                                    _secondStep(context),
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ).paddingSymmetric(
+                            horizontal: constraints.maxWidth > 600 ? 40 : 20),
                       ),
-                    ).paddingSymmetric(horizontal: 20),
-                  ),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -172,7 +184,9 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                           formFieldState.errorText!,
                           style: nunitoRegular.copyWith(
                             color: ColorManager.red,
-                            fontSize: FontSize.s10,
+                            fontSize: MediaQuery.of(context).size.width > 600
+                                ? FontSize.s12
+                                : FontSize.s10,
                           ),
                         ).paddingOnly(left: 10),
                       ]
@@ -189,25 +203,31 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
               ),
               const SizedBox(height: 20),
               Visibility(
-                visible: controller.selectedEducationYear != null ||
-                        controller.selectedEducationYear != null
-                    ? controller.selectedEducationYear!.isNotEmpty
-                    : false,
+                visible: controller.selectedEducationYear != null &&
+                    controller.selectedEducationYear!.isNotEmpty,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Start Date: ${controller.selectedStartDate == null ? "Please Select Start Date" : controller.selectedStartDate.toString()}",
-                      style: nunitoBold.copyWith(
-                        color: ColorManager.primary,
-                        fontSize: FontSize.s16,
+                    Flexible(
+                      child: Text(
+                        "Start Date: ${controller.selectedStartDate == null ? "Please Select Start Date" : controller.selectedStartDate.toString()}",
+                        style: nunitoBold.copyWith(
+                          color: ColorManager.primary,
+                          fontSize: MediaQuery.of(context).size.width > 600
+                              ? FontSize.s18
+                              : FontSize.s16,
+                        ),
                       ),
                     ),
-                    Text(
-                      "End Date: ${controller.selectedEndDate == null ? "Please Select End Date" : controller.selectedEndDate.toString()}",
-                      style: nunitoBold.copyWith(
-                        color: ColorManager.primary,
-                        fontSize: FontSize.s16,
+                    Flexible(
+                      child: Text(
+                        "End Date: ${controller.selectedEndDate == null ? "Please Select End Date" : controller.selectedEndDate.toString()}",
+                        style: nunitoBold.copyWith(
+                          color: ColorManager.primary,
+                          fontSize: MediaQuery.of(context).size.width > 600
+                              ? FontSize.s18
+                              : FontSize.s16,
+                        ),
                       ),
                     ),
                   ],
@@ -215,10 +235,8 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
               ),
               const SizedBox(height: 20),
               Visibility(
-                visible: controller.selectedEducationYear != null ||
-                        controller.selectedEducationYear != null
-                    ? controller.selectedEducationYear!.isNotEmpty
-                    : false,
+                visible: controller.selectedEducationYear != null &&
+                    controller.selectedEducationYear!.isNotEmpty,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -272,8 +290,13 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                           controller.update();
                         }
                       },
-                      child: const Text(
+                      child: Text(
                         "Select Start Date",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width > 600
+                              ? FontSize.s16
+                              : FontSize.s14,
+                        ),
                       ),
                     ),
                     ElevatedButton(
@@ -307,36 +330,20 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                         ).then(
                           (picked) {
                             if (picked != null) {
-                              if (picked.subtract(const Duration(days: 7)).day <
-                                  DateTime.tryParse(
-                                          controller.selectedStartDate!)!
-                                      .day) {
-                                MyAwesomeDialogue(
-                                  title: "Warning",
-                                  desc:
-                                      "End Date should be greater than 7 days from Start Date.\n Are you sure you want to proceed?",
-                                  dialogType: DialogType.warning,
-                                  btnOkOnPressed: () {
-                                    controller.selectedEndDate =
-                                        DateFormat('yyyy-MM-dd').format(picked);
-                                    controller.update();
-                                  },
-                                  btnCancelOnPressed: () {},
-                                ).showDialogue(context.mounted
-                                    ? context
-                                    : Get.key.currentContext!);
-                                return;
-                              }
                               controller.selectedEndDate =
                                   DateFormat('yyyy-MM-dd').format(picked);
                               controller.update();
                             }
-                            return null;
                           },
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         "Select End Date",
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width > 600
+                              ? FontSize.s16
+                              : FontSize.s14,
+                        ),
                       ),
                     ),
                   ],
