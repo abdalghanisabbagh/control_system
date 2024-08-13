@@ -132,7 +132,8 @@ class AddNewStudentsToControlMissionController extends GetxController {
     ResponseHandler<StudentsResModel> responseHandler = ResponseHandler();
     Either<Failure, StudentsResModel> response =
         await responseHandler.getResponse(
-      path: '${StudentsLinks.student}/controlMission/$controlMissionId',
+      path:
+          '${StudentsLinks.student}/excluded/controlMission/$controlMissionId',
       converter: StudentsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
