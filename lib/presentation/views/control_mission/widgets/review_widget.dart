@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 
 // ignore: must_be_immutable
 class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
@@ -16,9 +17,9 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
     return Container(
       color: ColorManager.bgColor,
       margin: const EdgeInsets.all(10),
-      child: const Column(
+      child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           // Row(
@@ -147,95 +148,93 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
           //     ),
           //   ],
           // ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          // Expanded(
-          //   child: GetBuilder<DetailsAndReviewMissionController>(
-          //     builder: (completeMissionsController) =>
-          //         completeMissionsController.rows.isEmpty
-          //             ? Center(
-          //                 child: LoadingIndicators.getLoadingIndicator(),
-          //               )
-          //             : PlutoGrid(
-          //                 configuration: PlutoGridConfiguration(
-          //                   enterKeyAction:
-          //                       PlutoGridEnterKeyAction.toggleEditing,
-          //                   style: PlutoGridStyleConfig(
-          //                       gridBorderRadius: BorderRadius.circular(10)),
-          //                   columnSize: const PlutoGridColumnSizeConfig(
-          //                       autoSizeMode: PlutoAutoSizeMode.equal),
-          //                   columnFilter: const PlutoGridColumnFilterConfig(
-          //                     filters: FilterHelper.defaultFilters,
-          //                   ),
-          //                   scrollbar: const PlutoGridScrollbarConfig(
-          //                     isAlwaysShown: false,
-          //                     scrollbarThickness: 8,
-          //                     scrollbarThicknessWhileDragging: 10,
-          //                   ),
-          //                 ),
-          //                 columns: [
-          //                   PlutoColumn(
-          //                     readOnly: true,
-          //                     enableEditingMode: false,
-          //                     title: 'Name',
-          //                     field: 'name_field',
-          //                     type: PlutoColumnType.text(),
-          //                   ),
-          //                   PlutoColumn(
-          //                     readOnly: true,
-          //                     enableEditingMode: false,
-          //                     title: 'Grade',
-          //                     field: 'grade_field',
-          //                     type: PlutoColumnType.text(),
-          //                   ),
-          //                   PlutoColumn(
-          //                     readOnly: true,
-          //                     enableEditingMode: false,
-          //                     title: 'Class',
-          //                     field: 'Class',
-          //                     type: PlutoColumnType.text(),
-          //                   ),
-          //                   ...List.generate(
-          //                       completeMissionsController
-          //                           .selectedSubjectExams.length, (index) {
-          //                     final subject = completeMissionsController
-          //                         .selectedSubjectExams[index];
-          //                     return PlutoColumn(
-          //                       readOnly: true,
-          //                       enableEditingMode: false,
-          //                       title: subject.name,
-          //                       field: "${subject.name}_${subject.id}",
-          //                       type: PlutoColumnType.text(),
-          //                     );
-          //                   })
-          //                 ],
-          //                 rows: completeMissionsController.rows,
-          //                 onChanged: (PlutoGridOnChangedEvent event) {
-          //                   if (kDebugMode) {
-          //                     print(event);
-          //                   }
-
-          //                   completeMissionsController.stateManager!
-          //                       .notifyListeners();
-          //                 },
-          //                 createHeader: (stateManager) =>
-          //                     _Header(stateManager: stateManager),
-          //                 onLoaded: (PlutoGridOnLoadedEvent event) {
-          //                   completeMissionsController.getRows();
-          //                   if (kDebugMode) {
-          //                     print(event);
-          //                   }
-          //                   event.stateManager
-          //                       .setSelectingMode(PlutoGridSelectingMode.cell);
-
-          //                   completeMissionsController.stateManager =
-          //                       event.stateManager;
-          //                   event.stateManager
-          //                       .setSelectingMode(PlutoGridSelectingMode.cell);
-          //                 }),
-          //   ),
-          // ),
+          Expanded(
+            child: GetBuilder<DetailsAndReviewMissionController>(
+              builder: (completeMissionsController) =>
+                  completeMissionsController.isLoadingGetStudentsGrades
+                      ? Center(
+                          child: LoadingIndicators.getLoadingIndicator(),
+                        )
+                      : PlutoGrid(
+                          configuration: PlutoGridConfiguration(
+                            enterKeyAction:
+                                PlutoGridEnterKeyAction.toggleEditing,
+                            style: PlutoGridStyleConfig(
+                              gridBorderRadius: BorderRadius.circular(10),
+                            ),
+                            columnSize: const PlutoGridColumnSizeConfig(
+                              autoSizeMode: PlutoAutoSizeMode.equal,
+                            ),
+                            columnFilter: const PlutoGridColumnFilterConfig(
+                              filters: FilterHelper.defaultFilters,
+                            ),
+                            scrollbar: const PlutoGridScrollbarConfig(
+                              isAlwaysShown: false,
+                              scrollbarThickness: 8,
+                              scrollbarThicknessWhileDragging: 10,
+                            ),
+                          ),
+                          columns: [
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: 'Name',
+                              field: 'name_field',
+                              type: PlutoColumnType.text(),
+                            ),
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: 'Grade',
+                              field: 'grade_field',
+                              type: PlutoColumnType.text(),
+                            ),
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: 'Class',
+                              field: 'Class',
+                              type: PlutoColumnType.text(),
+                            ),
+                            // ...List.generate(
+                            //   completeMissionsController
+                            //       .selectedSubjectExams.length,
+                            //   (index) {
+                            //     final subject = completeMissionsController
+                            //         .selectedSubjectExams[index];
+                            //     return PlutoColumn(
+                            //       readOnly: true,
+                            //       enableEditingMode: false,
+                            //       title: subject.name,
+                            //       field: "${subject.name}_${subject.id}",
+                            //       type: PlutoColumnType.text(),
+                            //     );
+                            //   },
+                            // )
+                          ],
+                          rows: const [],
+                          //  completeMissionsController.rows,
+                          onChanged: (PlutoGridOnChangedEvent event) {
+                            // completeMissionsController.stateManager!
+                            //     .notifyListeners();
+                          },
+                          createHeader: (stateManager) =>
+                              _Header(stateManager: stateManager),
+                          onLoaded: (PlutoGridOnLoadedEvent event) {
+                            // completeMissionsController.getRows();
+                            event.stateManager
+                                .setSelectingMode(PlutoGridSelectingMode.cell);
+                            completeMissionsController
+                                    .studentsGradesPlutoGridStateManager =
+                                event.stateManager;
+                            event.stateManager
+                                .setSelectingMode(PlutoGridSelectingMode.cell);
+                          }),
+            ),
+          ),
         ],
       ),
     );
