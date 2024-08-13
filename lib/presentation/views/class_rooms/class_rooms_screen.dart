@@ -307,8 +307,9 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                                                                       .then(
                                                                     (value) {
                                                                       value
-                                                                          ? MyFlashBar.showSuccess("Class deleted successfully", "Success")
-                                                                              .show(context)
+                                                                          ? MyFlashBar.showSuccess("Class deleted successfully", "Success").show(context.mounted
+                                                                              ? context
+                                                                              : Get.key.currentContext!)
                                                                           : null;
                                                                     },
                                                                   );
