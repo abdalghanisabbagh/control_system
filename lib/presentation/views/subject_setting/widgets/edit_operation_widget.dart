@@ -135,7 +135,10 @@ class EditOperationWidget extends GetView<EditSubjectsController> {
                                                   MyFlashBar.showSuccess(
                                                           "Subjects Updated",
                                                           "Success")
-                                                      .show(context),
+                                                      .show(context.mounted
+                                                          ? context
+                                                          : Get.key
+                                                              .currentContext!),
                                                   Get.delete<
                                                       EditSubjectsController>(),
                                                   Get.find<SubjectsController>()
@@ -221,7 +224,11 @@ class EditOperationWidget extends GetView<EditSubjectsController> {
                                                         MyFlashBar.showSuccess(
                                                                 "School Type Deleted In Subject",
                                                                 "Success")
-                                                            .show(context),
+                                                            .show(context
+                                                                    .mounted
+                                                                ? context
+                                                                : Get.key
+                                                                    .currentContext!),
                                                         Get.delete<
                                                             EditSubjectsController>(),
                                                         Get.find<
