@@ -1,9 +1,16 @@
+import 'package:control_system/Data/Models/barcodes/barcode_res_model.dart';
+import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
+
 class Cohort {
+  int? iD;
+  String? name;
   List<CohortHasSubjects>? cohortHasSubjects;
 
-  Cohort({this.cohortHasSubjects});
+  Cohort({this.iD, this.name, this.cohortHasSubjects});
 
   Cohort.fromJson(json) {
+    iD = json['ID'];
+    name = json['Name'];
     if (json['cohort_has_subjects'] != null) {
       cohortHasSubjects = <CohortHasSubjects>[];
       json['cohort_has_subjects'].forEach((v) {
@@ -14,6 +21,8 @@ class Cohort {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['ID'] = iD;
+    data['Name'] = name;
     if (cohortHasSubjects != null) {
       data['cohort_has_subjects'] =
           cohortHasSubjects!.map((v) => v.toJson()).toList();
@@ -23,13 +32,13 @@ class Cohort {
 }
 
 class CohortHasSubjects {
-  Grades? subjects;
+  ExamRoom? subjects;
 
   CohortHasSubjects({this.subjects});
 
   CohortHasSubjects.fromJson(json) {
     subjects =
-        json['subjects'] != null ? Grades.fromJson(json['subjects']) : null;
+        json['subjects'] != null ? ExamRoom.fromJson(json['subjects']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -41,13 +50,37 @@ class CohortHasSubjects {
   }
 }
 
-class Grades {
+class ExamMission {
+  ExamRoom? subjects;
+  ExamRoom? grades;
+
+  ExamMission({this.subjects, this.grades});
+
+  ExamMission.fromJson(json) {
+    subjects =
+        json['subjects'] != null ? ExamRoom.fromJson(json['subjects']) : null;
+    grades = json['grades'] != null ? ExamRoom.fromJson(json['grades']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (subjects != null) {
+      data['subjects'] = subjects!.toJson();
+    }
+    if (grades != null) {
+      data['grades'] = grades!.toJson();
+    }
+    return data;
+  }
+}
+
+class ExamRoom {
   int? iD;
   String? name;
 
-  Grades({this.iD, this.name});
+  ExamRoom({this.iD, this.name});
 
-  Grades.fromJson(json) {
+  ExamRoom.fromJson(json) {
     iD = json['ID'];
     name = json['Name'];
   }
@@ -60,56 +93,70 @@ class Grades {
   }
 }
 
-class StudentBarcode {
-  Null studentDegree;
-  CohortHasSubjects? examMission;
+class Student {
+  String? firstName;
+  String? secondName;
+  String? thirdName;
+  int? iD;
+  Cohort? cohort;
+  ClassRoomResModel? classRoom;
 
-  StudentBarcode({this.studentDegree, this.examMission});
+  Student(
+      {this.firstName,
+      this.secondName,
+      this.thirdName,
+      this.iD,
+      this.cohort,
+      this.classRoom});
 
-  StudentBarcode.fromJson(json) {
-    studentDegree = json['StudentDegree'];
-    examMission = json['exam_mission'] != null
-        ? CohortHasSubjects.fromJson(json['exam_mission'])
+  Student.fromJson(json) {
+    firstName = json['First_Name'];
+    secondName = json['Second_Name'];
+    thirdName = json['Third_Name'];
+    iD = json['ID'];
+    cohort = json['cohort'] != null ? Cohort.fromJson(json['cohort']) : null;
+    classRoom = json['school_class'] != null
+        ? ClassRoomResModel.fromJson(json['school_class'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['StudentDegree'] = studentDegree;
-    if (examMission != null) {
-      data['exam_mission'] = examMission!.toJson();
+    data['First_Name'] = firstName;
+    data['Second_Name'] = secondName;
+    data['Third_Name'] = thirdName;
+    data['ID'] = iD;
+    if (cohort != null) {
+      data['cohort'] = cohort!.toJson();
+    }
+    if (classRoom != null) {
+      data['school_class'] = classRoom!.toJson();
     }
     return data;
   }
 }
 
 class StudentGradesResModel {
-  String? firstName;
-  String? secondName;
-  String? thirdName;
-  Grades? grades;
-  Grades? schoolClass;
-  Cohort? cohort;
+  List<ExamRoom>? examRoom;
+  List<ExamMission>? examMission;
   List<StudentSeatNumnbers>? studentSeatNumnbers;
 
   StudentGradesResModel(
-      {this.firstName,
-      this.secondName,
-      this.thirdName,
-      this.grades,
-      this.schoolClass,
-      this.cohort,
-      this.studentSeatNumnbers});
+      {this.examRoom, this.examMission, this.studentSeatNumnbers});
 
   StudentGradesResModel.fromJson(json) {
-    firstName = json['First_Name'];
-    secondName = json['Second_Name'];
-    thirdName = json['Third_Name'];
-    grades = json['grades'] != null ? Grades.fromJson(json['grades']) : null;
-    schoolClass = json['school_class'] != null
-        ? Grades.fromJson(json['school_class'])
-        : null;
-    cohort = json['cohort'] != null ? Cohort.fromJson(json['cohort']) : null;
+    if (json['exam_room'] != null) {
+      examRoom = <ExamRoom>[];
+      json['exam_room'].forEach((v) {
+        examRoom!.add(ExamRoom.fromJson(v));
+      });
+    }
+    if (json['exam_mission'] != null) {
+      examMission = <ExamMission>[];
+      json['exam_mission'].forEach((v) {
+        examMission!.add(ExamMission.fromJson(v));
+      });
+    }
     if (json['student_seat_numnbers'] != null) {
       studentSeatNumnbers = <StudentSeatNumnbers>[];
       json['student_seat_numnbers'].forEach((v) {
@@ -120,17 +167,11 @@ class StudentGradesResModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['First_Name'] = firstName;
-    data['Second_Name'] = secondName;
-    data['Third_Name'] = thirdName;
-    if (grades != null) {
-      data['grades'] = grades!.toJson();
+    if (examRoom != null) {
+      data['exam_room'] = examRoom!.map((v) => v.toJson()).toList();
     }
-    if (schoolClass != null) {
-      data['school_class'] = schoolClass!.toJson();
-    }
-    if (cohort != null) {
-      data['cohort'] = cohort!.toJson();
+    if (examMission != null) {
+      data['exam_mission'] = examMission!.map((v) => v.toJson()).toList();
     }
     if (studentSeatNumnbers != null) {
       data['student_seat_numnbers'] =
@@ -141,29 +182,27 @@ class StudentGradesResModel {
 }
 
 class StudentSeatNumnbers {
-  List<StudentBarcode>? studentBarcode;
-  Grades? examRoom;
+  Student? student;
+  List<BarcodeResModel>? barcode;
 
-  StudentSeatNumnbers({this.studentBarcode, this.examRoom});
+  StudentSeatNumnbers({this.student, this.barcode});
 
   StudentSeatNumnbers.fromJson(json) {
-    if (json['student_barcode'] != null) {
-      studentBarcode = <StudentBarcode>[];
-      json['student_barcode'].forEach((v) {
-        studentBarcode!.add(StudentBarcode.fromJson(v));
-      });
-    }
-    examRoom =
-        json['exam_room'] != null ? Grades.fromJson(json['exam_room']) : null;
+    student =
+        json['student'] != null ? Student.fromJson(json['student']) : null;
+    barcode = List<BarcodeResModel>.from(
+      json['student_barcode']
+          .map((student) => BarcodeResModel.fromJson(student)),
+    );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (studentBarcode != null) {
-      data['student_barcode'] = studentBarcode!.map((v) => v.toJson()).toList();
+    if (student != null) {
+      data['student'] = student!.toJson();
     }
-    if (examRoom != null) {
-      data['exam_room'] = examRoom!.toJson();
+    if (barcode != null) {
+      data['student_barcode'] = barcode!.map((v) => v.toJson()).toList();
     }
     return data;
   }
