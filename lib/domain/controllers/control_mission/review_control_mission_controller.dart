@@ -4,7 +4,7 @@ import 'dart:html' as html;
 import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/student/students_graes_res_model.dart';
+import 'package:control_system/Data/Models/student/student_grades_res_model.dart';
 import 'package:control_system/Data/Models/student_seat/student_seat_res_model.dart';
 import 'package:control_system/Data/Models/student_seat/students_seats_numbers_res_model.dart';
 import 'package:control_system/Data/Models/subject/subjects_res_model.dart';
@@ -34,7 +34,7 @@ class DetailsAndReviewMissionController extends GetxController {
   bool isLoadingGetStudentsGrades = false;
   bool isLodingGetStudentsSeatNumbers = false;
   PlutoGridStateManager? studentsGradesPlutoGridStateManager;
-  StudentsGraesResModel? studentsGradesResModel;
+  StudentGradesResModel? studentGradesResModel;
   List<ExamRoomResModel> listExamRoom = [];
   List<SubjectResModel> listSubject = [];
   final List<Tab> myTabs = const <Tab>[
@@ -49,7 +49,78 @@ class DetailsAndReviewMissionController extends GetxController {
   List<PlutoRow> studentsGradesRows = <PlutoRow>[];
   TabController? tabController;
 
-  void convertStudentsGradesToPlutoGridRows() {}
+  void convertStudentsGradesToPlutoGridRows() {
+    studentsGradesRows.clear();
+
+    if (studentGradesResModel != null) {
+      for (var studentSeatNumber
+          in studentGradesResModel!.studentSeatNumnbers!) {
+        studentsGradesRows.add(
+          PlutoRow(
+            cells: {
+              'name_field': PlutoCell(
+                  value:
+                      '${studentSeatNumber.student?.firstName} ${studentSeatNumber.student?.secondName} ${studentSeatNumber.student?.thirdName}'),
+              'grade_field': PlutoCell(
+                  value:
+                      '${studentGradesResModel?.examMission?.first.grades?.name}'),
+              'class_field': PlutoCell(
+                  value: '${studentSeatNumber.student?.classRoom?.name}'),
+              'exam_room_field': PlutoCell(
+                  value: '${studentGradesResModel?.examRoom?.first.name}'),
+              ...Map.fromEntries(
+                List.generate(
+                  studentGradesResModel!.studentSeatNumnbers!
+                      .map(
+                        (element) =>
+                            element.student!.cohort!.cohortHasSubjects!.map(
+                          (element) =>
+                              (element.subjects!.name, element.subjects!.iD),
+                        ),
+                      )
+                      .expand((element) => element)
+                      .toSet()
+                      .toList()
+                      .length,
+                  (index) {
+                    final subject = studentGradesResModel!.studentSeatNumnbers!
+                        .map(
+                          (element) =>
+                              element.student!.cohort!.cohortHasSubjects!.map(
+                            (element) => (
+                              name: element.subjects!.name,
+                              id: element.subjects!.iD
+                            ),
+                          ),
+                        )
+                        .expand((element) => element)
+                        .toSet()
+                        .toList()[index];
+                    return MapEntry(
+                      "${subject.name}_${subject.id}",
+                      PlutoCell(
+                          value: studentSeatNumber
+                                  .student!.cohort!.cohortHasSubjects!
+                                  .map((element) => element.subjects!.name)
+                                  .contains(subject.name)
+                              ? studentSeatNumber
+                                          .barcode!.first.studentDegree ==
+                                      null
+                                  ? 'Need to scan'
+                                  : '${studentSeatNumber.barcode!.first.studentDegree}'
+                              : 'Exampt'),
+                    );
+                  },
+                ),
+              ),
+            },
+          ),
+        );
+      }
+    }
+    studentsGradesPlutoGridStateManager!.setPage(1);
+    return;
+  }
 
   void exportToCsv(
       BuildContext context, List<PlutoRow> studentsSeatsNumberRows) {
@@ -206,12 +277,12 @@ class DetailsAndReviewMissionController extends GetxController {
   void getStudentsGrades() async {
     isLoadingGetStudentsGrades = true;
     update();
-    final ResponseHandler<StudentsGraesResModel> responseHandler =
-        ResponseHandler<StudentsGraesResModel>();
+    final ResponseHandler<StudentGradesResModel> responseHandler =
+        ResponseHandler<StudentGradesResModel>();
 
     var response = await responseHandler.getResponse(
       path: '${StudentsLinks.studentsGrades}/$controlMissionId',
-      converter: StudentsGraesResModel.fromJson,
+      converter: StudentGradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
 
@@ -226,9 +297,7 @@ class DetailsAndReviewMissionController extends GetxController {
         );
       },
       (r) {
-        studentsGradesResModel = r;
-        debugPrint(
-            'students grades ${studentsGradesResModel!.toJson().toString()}');
+        studentGradesResModel = r;
       },
     );
 
