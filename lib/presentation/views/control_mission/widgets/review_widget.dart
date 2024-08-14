@@ -196,35 +196,106 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                               readOnly: true,
                               enableEditingMode: false,
                               title: 'Class',
-                              field: 'Class',
+                              field: 'class_field',
                               type: PlutoColumnType.text(),
                             ),
-                            // ...List.generate(
-                            //   completeMissionsController
-                            //       .selectedSubjectExams.length,
-                            //   (index) {
-                            //     final subject = completeMissionsController
-                            //         .selectedSubjectExams[index];
-                            //     return PlutoColumn(
-                            //       readOnly: true,
-                            //       enableEditingMode: false,
-                            //       title: subject.name,
-                            //       field: "${subject.name}_${subject.id}",
-                            //       type: PlutoColumnType.text(),
-                            //     );
-                            //   },
-                            // )
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: 'Exam Room',
+                              field: 'exam_room_field',
+                              type: PlutoColumnType.text(),
+                            ),
+                            ...List.generate(
+                              completeMissionsController
+                                  .studentGradesResModel!.studentSeatNumnbers!
+                                  .map(
+                                    (element) => element
+                                        .student!.cohort!.cohortHasSubjects!
+                                        .map(
+                                      (element) => (
+                                        element.subjects!.name,
+                                        element.subjects!.iD
+                                      ),
+                                    ),
+                                  )
+                                  .expand((element) => element)
+                                  .toSet()
+                                  .toList()
+                                  .length,
+                              (index) {
+                                final subject = completeMissionsController
+                                    .studentGradesResModel!.studentSeatNumnbers!
+                                    .map(
+                                      (element) => element
+                                          .student!.cohort!.cohortHasSubjects!
+                                          .map(
+                                        (element) => (
+                                          name: element.subjects!.name,
+                                          id: element.subjects!.iD
+                                        ),
+                                      ),
+                                    )
+                                    .expand((element) => element)
+                                    .toSet()
+                                    .toList()[index];
+                                return PlutoColumn(
+                                  readOnly: true,
+                                  enableEditingMode: false,
+                                  title: subject.name!,
+                                  field: "${subject.name}_${subject.id}",
+                                  type: PlutoColumnType.text(),
+                                  footerRenderer: index ==
+                                          completeMissionsController
+                                                  .studentGradesResModel!
+                                                  .studentSeatNumnbers!
+                                                  .map(
+                                                    (element) => element
+                                                        .student!
+                                                        .cohort!
+                                                        .cohortHasSubjects!
+                                                        .map(
+                                                      (element) => (
+                                                        element.subjects!.name,
+                                                        element.subjects!.iD
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .expand((element) => element)
+                                                  .toSet()
+                                                  .toList()
+                                                  .length -
+                                              1
+                                      ? (footerRenderer) {
+                                          return PlutoAggregateColumnFooter(
+                                            rendererContext: footerRenderer,
+                                            type:
+                                                PlutoAggregateColumnType.count,
+                                            format: 'count : #,###',
+                                            alignment: Alignment.center,
+                                          );
+                                        }
+                                      : null,
+                                );
+                              },
+                            ),
                           ],
-                          rows: const [],
-                          //  completeMissionsController.rows,
+                          rows: completeMissionsController.studentsGradesRows,
                           onChanged: (PlutoGridOnChangedEvent event) {
-                            // completeMissionsController.stateManager!
+                            // completeMissionsController
+                            //     .studentsGradesPlutoGridStateManager!
                             //     .notifyListeners();
+                          },
+                          createFooter: (stateManager) {
+                            stateManager.setPageSize(50, notify: false);
+                            return PlutoPagination(
+                              stateManager,
+                              pageSizeToMove: 1,
+                            );
                           },
                           createHeader: (stateManager) =>
                               _Header(stateManager: stateManager),
                           onLoaded: (PlutoGridOnLoadedEvent event) {
-                            // completeMissionsController.getRows();
                             event.stateManager
                                 .setSelectingMode(PlutoGridSelectingMode.cell);
                             completeMissionsController
@@ -232,7 +303,13 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                                 event.stateManager;
                             event.stateManager
                                 .setSelectingMode(PlutoGridSelectingMode.cell);
-                          }),
+                            completeMissionsController
+                                    .studentsGradesPlutoGridStateManager =
+                                event.stateManager;
+                            completeMissionsController
+                                .convertStudentsGradesToPlutoGridRows();
+                          },
+                        ),
             ),
           ),
         ],
