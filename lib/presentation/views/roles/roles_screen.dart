@@ -163,22 +163,104 @@ class RolesScreen extends GetView<RolesController> {
                                                                 .roles[index]
                                                                 .screens!
                                                                 .isNotEmpty
-                                                        ? controller
-                                                            .roles[index]
-                                                            .screens!
-                                                            .map(
-                                                              (screen) => Text(
-                                                                screen.name,
-                                                                style: nunitoBold
-                                                                    .copyWith(
+                                                        ? [
+                                                            Column(
+                                                              children: [
+                                                                const Divider(
                                                                   color:
                                                                       ColorManager
                                                                           .black,
-                                                                  fontSize: 18,
                                                                 ),
+                                                                Row(
+                                                                  children: [
+                                                                    FittedBox(
+                                                                      child:
+                                                                          Text(
+                                                                        "Front Id",
+                                                                        style: nunitoBold
+                                                                            .copyWith(
+                                                                          color:
+                                                                              ColorManager.black,
+                                                                          fontSize:
+                                                                              20,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    const Spacer(),
+                                                                    FittedBox(
+                                                                      child:
+                                                                          Text(
+                                                                        "Screens",
+                                                                        style: nunitoBold
+                                                                            .copyWith(
+                                                                          color:
+                                                                              ColorManager.black,
+                                                                          fontSize:
+                                                                              20,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ).paddingSymmetric(
+                                                                  horizontal:
+                                                                      10,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            ...controller
+                                                                .roles[index]
+                                                                .screens!
+                                                                .map(
+                                                              (screen) =>
+                                                                  Column(
+                                                                children: [
+                                                                  const Divider(
+                                                                    color: ColorManager
+                                                                        .black,
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      FittedBox(
+                                                                        child:
+                                                                            Text(
+                                                                          screen
+                                                                              .frontId,
+                                                                          style:
+                                                                              nunitoBold.copyWith(
+                                                                            color:
+                                                                                ColorManager.black,
+                                                                            fontSize:
+                                                                                18,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      const Spacer(),
+                                                                      FittedBox(
+                                                                        child:
+                                                                            Text(
+                                                                          screen
+                                                                              .name,
+                                                                          style:
+                                                                              nunitoBold.copyWith(
+                                                                            color:
+                                                                                ColorManager.black,
+                                                                            fontSize:
+                                                                                18,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ).paddingSymmetric(
+                                                                    horizontal:
+                                                                        10,
+                                                                  ),
+                                                                ],
                                                               ),
-                                                            )
-                                                            .toList()
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 15,
+                                                            ),
+                                                          ]
                                                         : [
                                                             const SizedBox(
                                                               height: 10,
