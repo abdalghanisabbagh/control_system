@@ -15,9 +15,13 @@ class RoleResModel {
         id: json["ID"],
         name: json["Name"],
         screens: json["roles_has_screens"] != null
-            ? List<ScreenResModel>.from(json["roles_has_screens"]
-                .map((x) => ScreenResModel.fromJson(x['screens'] ?? x)))
-            : null,
+            ? List<ScreenResModel>.from(json["roles_has_screens"].map(
+                (element) => ScreenResModel.fromJson(
+                    element['roles_has_screens'] ?? element)))
+            : json["screens"] != null
+                ? List<ScreenResModel>.from(json["screens"].map((element) =>
+                    ScreenResModel.fromJson(element['screens'] ?? element)))
+                : null,
       );
 
   toJson() => {

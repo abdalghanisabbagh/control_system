@@ -98,16 +98,14 @@ class RolesScreen extends GetView<RolesController> {
                                             trackVisibility: true,
                                             controller: controller
                                                 .rolesScrollController,
-                                            child:
-                                                TransformableListView.builder(
-                                              getTransformMatrix:
-                                                  controller.getTransformMatrix,
+                                            child: ListView.builder(
                                               controller: controller
                                                   .rolesScrollController,
                                               itemCount:
                                                   controller.roles.length,
                                               itemBuilder: (context, index) {
                                                 return Card(
+                                                  clipBehavior: Clip.antiAlias,
                                                   color:
                                                       ColorManager.rolesColors[
                                                           index %
@@ -115,7 +113,7 @@ class RolesScreen extends GetView<RolesController> {
                                                                   .rolesColors
                                                                   .length],
                                                   elevation: 10,
-                                                  child: ListTile(
+                                                  child: ExpansionTile(
                                                     title: Text(
                                                       controller
                                                           .roles[index].name,
@@ -139,7 +137,8 @@ class RolesScreen extends GetView<RolesController> {
                                                             .styleFrom(
                                                           backgroundColor:
                                                               const Color(
-                                                                  0xFF003366),
+                                                            0xFF003366,
+                                                          ),
                                                         ),
                                                         onPressed: () {
                                                           MyDialogs.showDialog(
@@ -155,8 +154,51 @@ class RolesScreen extends GetView<RolesController> {
                                                         ),
                                                       ),
                                                     ),
+                                                    children: controller
+                                                                    .roles[
+                                                                        index]
+                                                                    .screens !=
+                                                                null &&
+                                                            controller
+                                                                .roles[index]
+                                                                .screens!
+                                                                .isNotEmpty
+                                                        ? controller
+                                                            .roles[index]
+                                                            .screens!
+                                                            .map(
+                                                              (screen) => Text(
+                                                                screen.name,
+                                                                style: nunitoBold
+                                                                    .copyWith(
+                                                                  color:
+                                                                      ColorManager
+                                                                          .black,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                            )
+                                                            .toList()
+                                                        : [
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Text(
+                                                              'No Screens Found For This Role',
+                                                              style: nunitoBold
+                                                                  .copyWith(
+                                                                color:
+                                                                    ColorManager
+                                                                        .black,
+                                                                fontSize: 18,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                          ],
                                                   ),
-                                                );
+                                                ).paddingOnly(right: 15);
                                               },
                                             ),
                                           );
