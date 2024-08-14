@@ -57,39 +57,6 @@ class ControlMissionController extends GetxController {
     return gotData;
   }
 
-  // Future<void> getExamRoomByControlMissionId(int controlMissionId) async {
-  //   isLodingGetClassesRooms = true;
-  //   update();
-  //   final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-  //     path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
-  //     converter: ExamRoomsResModel.fromJson,
-  //     type: ReqTypeEnum.GET,
-  //   );
-
-  //   response.fold(
-  //     (l) {
-  //       MyAwesomeDialogue(
-  //         title: 'title',
-  //         desc: l.message,
-  //         dialogType: DialogType.error,
-  //       ).showDialogue(
-  //         Get.key.currentContext!,
-  //       );
-  //     },
-  //     (r) {
-  //       //  print("dfghjk");
-  //       // educationYearList = r.data!;
-  //       // List<ValueItem> items = r.data!
-  //       //     .map((item) => ValueItem(label: item.name!, value: item.id))
-  //       //     .toList();
-  //       // optionsEducationYear = items;
-  //       update();
-  //     },
-  //   );
-
-  //   isLodingGetClassesRooms = false;
-  //   update();
-  // }
 
   Future<void> getEducationYears() async {
     isLodingGetEducationYears = true;

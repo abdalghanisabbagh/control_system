@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../Data/Models/user/roles/role_res_model.dart';
+import '../../Data/Models/user/roles/roleres_model.dart';
 import '../../Data/Models/user/users_res/user_res_model.dart';
 import '../../Data/Models/user/users_res/users_res_model.dart';
 import '../../Data/Network/response_handler.dart';
@@ -19,6 +21,8 @@ class AdminController extends GetxController {
   bool isLoadingGetUsersCreatedBy = false;
   bool isLoading = false;
   bool isLodingEditUser = false;
+    bool isLodingGetRoles = false;
+
 
   String? selectedDivision;
   String? selectedRoleType;
@@ -35,6 +39,7 @@ class AdminController extends GetxController {
   List<UserResModel> userCreatedList = <UserResModel>[];
   List<UserResModel> allUsersList = <UserResModel>[];
   List<UserResModel> userInSchoolList = <UserResModel>[];
+  List<RoleResModel> rolesList = <RoleResModel>[];
 
   Future<bool> addNewUser() async {
     isLoading = true;
@@ -208,6 +213,32 @@ class AdminController extends GetxController {
         return true;
       },
     );
+  }
+
+Future getAllRoles() async {
+  isLodingGetRoles = true;
+  update();
+    ResponseHandler<RolesResModel> responseHandler = ResponseHandler();
+    Either<Failure, RolesResModel> response = await responseHandler.getResponse(
+      path: UserRolesSystemsLink.userRolesSystems,
+      converter: RolesResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        rolesList = r.data!;
+      },
+    );
+
+    isLodingGetRoles = false;
+    update();
   }
 
   @override

@@ -20,8 +20,6 @@ class RolesController extends GetxController {
   bool connectLoading = false;
   final ScrollController rolesScrollController = ScrollController();
   final ScrollController screensScrollController = ScrollController();
-  // final UserProfileModel? _userProfile =
-  //     Get.find<ProfileController>().cachedUserProfile;
 
   bool getAllLoading = false;
 
@@ -42,7 +40,6 @@ class RolesController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        // "Created_By": _userProfile?.iD,
       },
     );
     response.fold(
@@ -81,7 +78,6 @@ class RolesController extends GetxController {
       body: {
         "Name": name,
         "Front_Id": frontId,
-        // "Created_By": _userProfile?.iD,
       },
     );
     response.fold(

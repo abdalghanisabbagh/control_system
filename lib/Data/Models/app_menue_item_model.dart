@@ -20,11 +20,7 @@ class AppMenueItem {
         pageNumber: '3000',
         routeName: AppRoutesNamesAndPaths.batchDocumentsScreenName,
         iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc)),
-    // AppMenueItem(
-    //     pageName: AppRoutesNamesAndPaths.certificateScreenName,
-    //     pageNumber: '4000',
-    //     routeName: AppRoutesNamesAndPaths.certificateScreenName,
-    //     iconWidget: Image.asset(AssetsManager.assetsIconsCertificates)),
+    
     AppMenueItem(
         pageName: AppRoutesNamesAndPaths.setDegreesScreenName,
         pageNumber: '4000',

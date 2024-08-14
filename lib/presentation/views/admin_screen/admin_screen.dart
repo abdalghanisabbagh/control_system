@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/views/admin_screen/widgets/add_role_user.dart';
 import 'package:control_system/presentation/views/admin_screen/widgets/edit_user_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
@@ -260,24 +261,22 @@ class AdminScreen extends GetView<AdminController> {
                                                     ),
                                                   ),
                                                   const SizedBox(width: 10),
-                                                  Flexible(
-                                                    child: Text(
-                                                      "Created by: ${item.createdByUserResModel?.fullName ?? "Unknown"}",
-                                                      style: nunitoRegular
-                                                          .copyWith(
-                                                        color: ColorManager
-                                                            .bgSideMenu
-                                                            .withOpacity(0.7),
-                                                        fontSize: 16,
-                                                      ),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
                                                 ],
                                               ),
                                             ],
                                           ),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.add,
+                                              color: ColorManager.glodenColor),
+                                          onPressed: () {
+                                            MyDialogs.showDialog(
+                                              context,
+                                              AddRoleUser(
+                                                userResModel: item,
+                                              ),
+                                            );
+                                          },
                                         ),
                                         Visibility(
                                           visible: Get.find<ProfileController>()

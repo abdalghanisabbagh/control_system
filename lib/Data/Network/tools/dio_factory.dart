@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
-// import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../../domain/services/token_service.dart';
 import '../../Models/token/token_model.dart';
@@ -39,19 +39,13 @@ class DioFactory {
       sendTimeout: timeOut,
     );
 
-    //its debug mode so print app logs
-    // if (!kReleaseMode) {
-    //   dio.interceptors.add(PrettyDioLogger(
-    //     requestHeader: true,
-    //     requestBody: true,
-    //     responseHeader: true,
     if (!kReleaseMode) {
       // its debug mode so print app logs
-      // dio.interceptors.add(PrettyDioLogger(
-      //   requestHeader: true,
-      //   requestBody: true,
-      //   responseHeader: true,
-      // ));
+      dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+      ));
     }
     return dio;
   }
