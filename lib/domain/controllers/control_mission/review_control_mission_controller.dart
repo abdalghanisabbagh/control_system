@@ -122,6 +122,72 @@ class DetailsAndReviewMissionController extends GetxController {
     return;
   }
 
+  void exportStudentDegreesToExcel(BuildContext context) {
+    List<List<dynamic>> csvData = [];
+
+    List<String> headers = [
+      'Name',
+      'Grade',
+      'Class',
+      'Grade',
+      'Exam Room',
+      ...List.generate(
+        studentGradesResModel!.studentSeatNumnbers!
+            .map(
+              (element) => element.student!.cohort!.cohortHasSubjects!.map(
+                (element) => (element.subjects!.name, element.subjects!.iD),
+              ),
+            )
+            .expand((element) => element)
+            .toSet()
+            .toList()
+            .length,
+        (index) {
+          final subject = studentGradesResModel!.studentSeatNumnbers!
+              .map(
+                (element) => element.student!.cohort!.cohortHasSubjects!.map(
+                  (element) =>
+                      (name: element.subjects!.name, id: element.subjects!.iD),
+                ),
+              )
+              .expand((element) => element)
+              .toSet()
+              .toList()[index];
+          return subject.name!;
+        },
+      )
+    ];
+
+    csvData.add(headers);
+
+    for (var row in studentsGradesRows) {
+      List<dynamic> rowData = [];
+      var cellsValues = row.cells.values.toList();
+      for (var i = 0; i < cellsValues.length; i++) {
+        rowData.add(cellsValues[i].value.toString());
+      }
+      csvData.add(rowData);
+    }
+
+    String csvString = const csv.ListToCsvConverter().convert(csvData);
+
+    final bytes = utf8.encode(csvString);
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    html.AnchorElement(href: url)
+      ..setAttribute('download', 'students_degrees.csv')
+      ..click();
+
+    html.Url.revokeObjectUrl(url);
+
+    MyAwesomeDialogue(
+      title: 'success',
+      desc: "CSV file exported successfully.",
+      dialogType: DialogType.success,
+    ).showDialogue(Get.key.currentContext!);
+  }
+
   void exportToCsv(
       BuildContext context, List<PlutoRow> studentsSeatsNumberRows) {
     List<List<dynamic>> csvData = [];
