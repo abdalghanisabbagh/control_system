@@ -368,8 +368,8 @@ class _HeaderState extends State<_Header> {
         children: [
           Expanded(
             child: InkWell(
-              // onTap: () => Get.find<DetailsAndReviewMissionController>()
-              //     .exportStudentDegreesToExcel(context),
+              onTap: () => Get.find<DetailsAndReviewMissionController>()
+                  .exportStudentDegreesToPdf(context),
               child: Container(
                 height: 55,
                 decoration: BoxDecoration(

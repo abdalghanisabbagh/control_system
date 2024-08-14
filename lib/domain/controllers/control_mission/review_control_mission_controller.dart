@@ -129,7 +129,6 @@ class DetailsAndReviewMissionController extends GetxController {
       'Name',
       'Grade',
       'Class',
-      'Grade',
       'Exam Room',
       ...List.generate(
         studentGradesResModel!.studentSeatNumnbers!
@@ -184,6 +183,99 @@ class DetailsAndReviewMissionController extends GetxController {
     MyAwesomeDialogue(
       title: 'success',
       desc: "CSV file exported successfully.",
+      dialogType: DialogType.success,
+    ).showDialogue(Get.key.currentContext!);
+  }
+
+  void exportStudentDegreesToPdf(BuildContext context) async {
+    final pdf = pw.Document();
+
+    List<List<String>> tableData = [];
+
+    List<String> headers = [
+      'Name',
+      'Grade',
+      'Class',
+      'Exam Room',
+      ...List.generate(
+        studentGradesResModel!.studentSeatNumnbers!
+            .map(
+              (element) => element.student!.cohort!.cohortHasSubjects!.map(
+                (element) => (element.subjects!.name, element.subjects!.iD),
+              ),
+            )
+            .expand((element) => element)
+            .toSet()
+            .toList()
+            .length,
+        (index) {
+          final subject = studentGradesResModel!.studentSeatNumnbers!
+              .map(
+                (element) => element.student!.cohort!.cohortHasSubjects!.map(
+                  (element) =>
+                      (name: element.subjects!.name, id: element.subjects!.iD),
+                ),
+              )
+              .expand((element) => element)
+              .toSet()
+              .toList()[index];
+          return subject.name!;
+        },
+      )
+    ];
+
+    for (var row in studentsGradesRows) {
+      List<String> rowData = [];
+      var cellsValues = row.cells.values.toList();
+      for (var i = 0; i < cellsValues.length; i++) {
+        rowData.add(cellsValues[i].value.toString());
+      }
+      tableData.add(rowData);
+    }
+
+    const maxRowsPerPage = 30;
+    for (var i = 0; i < tableData.length; i += maxRowsPerPage) {
+      final end = i + maxRowsPerPage;
+      final dataSubset =
+          tableData.sublist(i, end > tableData.length ? tableData.length : end);
+
+      final pageData = [headers, ...dataSubset];
+
+      pdf.addPage(
+        pw.Page(
+          build: (pw.Context context) {
+            return pw.Column(
+              children: [
+                pw.TableHelper.fromTextArray(
+                  context: context,
+                  data: pageData,
+                ),
+                pw.Spacer(),
+                pw.Align(
+                  alignment: pw.Alignment.bottomCenter,
+                  child: pw.Text(
+                    'Page ${context.pageNumber} of ${context.pagesCount}',
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    }
+
+    final Uint8List bytes = await pdf.save();
+    final blob = html.Blob([bytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+
+    html.AnchorElement(href: url)
+      ..setAttribute('download', 'students_degrees.pdf')
+      ..click();
+
+    MyAwesomeDialogue(
+      title: 'success',
+      desc: "PDF file exported successfully.",
       dialogType: DialogType.success,
     ).showDialogue(Get.key.currentContext!);
   }
