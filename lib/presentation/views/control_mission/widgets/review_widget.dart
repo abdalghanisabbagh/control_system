@@ -368,7 +368,8 @@ class _HeaderState extends State<_Header> {
         children: [
           Expanded(
             child: InkWell(
-              // onTap: printToPdfAndShareOrSave,
+              // onTap: () => Get.find<DetailsAndReviewMissionController>()
+              //     .exportStudentDegreesToExcel(context),
               child: Container(
                 height: 55,
                 decoration: BoxDecoration(
@@ -393,7 +394,8 @@ class _HeaderState extends State<_Header> {
           ),
           Expanded(
             child: InkWell(
-              //  onTap: defaultExportGridAsCSV,
+              onTap: () => Get.find<DetailsAndReviewMissionController>()
+                  .exportStudentDegreesToExcel(context),
               child: Container(
                 height: 55,
                 decoration: BoxDecoration(
