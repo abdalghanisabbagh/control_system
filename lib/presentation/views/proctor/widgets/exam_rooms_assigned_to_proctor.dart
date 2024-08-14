@@ -75,7 +75,7 @@ class ExamRoomsAssignedToProctorWidget extends GetView<ProctorController> {
                           ListBody(
                             mainAxis: Axis.vertical,
                             children: controller.proctorHasExamRooms
-                                .where((examRoom) => examRoom.period!)
+                                .where((examRoom) => !examRoom.period!)
                                 .map(
                                   (examRoom) => Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -112,7 +112,7 @@ class ExamRoomsAssignedToProctorWidget extends GetView<ProctorController> {
                           ListBody(
                             mainAxis: Axis.vertical,
                             children: controller.proctorHasExamRooms
-                                .where((examRoom) => !examRoom.period!)
+                                .where((examRoom) => examRoom.period!)
                                 .map(
                                   (examRoom) => Padding(
                                     padding: const EdgeInsets.all(8.0),
