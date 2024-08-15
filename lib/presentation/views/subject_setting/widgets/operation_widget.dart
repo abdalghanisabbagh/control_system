@@ -333,11 +333,11 @@ class OperationWidget extends GetView<OperationController> {
                                                                           width:
                                                                               150,
                                                                           decoration:
-                                                                              BoxDecoration(
+                                                                              const BoxDecoration(
                                                                             color:
                                                                                 ColorManager.glodenColor,
                                                                             borderRadius:
-                                                                                const BorderRadius.horizontal(right: Radius.circular(11)),
+                                                                                BorderRadius.horizontal(right: Radius.circular(11)),
                                                                           ),
                                                                           child:
                                                                               Center(
