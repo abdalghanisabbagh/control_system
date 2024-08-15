@@ -81,8 +81,8 @@ class ControlMissionQuickReviewWidget
                   },
                   child: Container(
                     width: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10),
                         ),
@@ -115,8 +115,8 @@ class ControlMissionQuickReviewWidget
                   },
                   child: Container(
                     width: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10)),
                       color: ColorManager.red,
