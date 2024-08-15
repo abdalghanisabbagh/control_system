@@ -33,6 +33,8 @@ class AddScreensToRolesWidget extends GetView<RolesController> {
             hintText: "Select Screens",
             searchEnabled: true,
             options: controller.screens
+                .where((screen) =>
+                    !role.screens!.map((e) => e.id).contains(screen.id))
                 .map((e) => ValueItem(label: e.name, value: e.id))
                 .toList(),
             onOptionSelected: controller.onOptionSelected,
@@ -44,7 +46,7 @@ class AddScreensToRolesWidget extends GetView<RolesController> {
           ),
           GetBuilder<RolesController>(
             builder: (controller) {
-              return controller.addLoading
+              return controller.connectLoading
                   ? Center(
                       child: LoadingIndicators.getLoadingIndicator(),
                     )
