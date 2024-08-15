@@ -201,7 +201,7 @@ class CreateControlMissionController extends GetxController {
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
     Either<Failure, GradesResModel> response =
         await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      path: "${GradeLinks.gradesSchools}/$schoolId",
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
