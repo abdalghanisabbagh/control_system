@@ -20,6 +20,7 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'profile_controller.dart';
 
 class SchoolController extends GetxController {
+  bool isLoading = false;
   List<GradeResModel> grades = <GradeResModel>[];
   bool isLoadingAddGrades = true;
   bool isLoadingAddSchool = false;
@@ -41,7 +42,7 @@ class SchoolController extends GetxController {
     bool gradeHasBeenAdded = false;
     ResponseHandler<GradeResModel> responseHandler = ResponseHandler();
     Either<Failure, GradeResModel> response = await responseHandler.getResponse(
-      path: SchoolsLinks.grades,
+      path: GradeLinks.grades,
       converter: GradeResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
@@ -147,7 +148,7 @@ class SchoolController extends GetxController {
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$selectedSchoolId",
+      path: "${GradeLinks.gradesSchools}/$selectedSchoolId",
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -213,7 +214,7 @@ class SchoolController extends GetxController {
     ProfileController profileController = Get.find<ProfileController>();
     await ResponseHandler<void>().getResponse(
       path:
-          '${AuthLinks.user}/${Get.find<ProfileController>().cachedUserProfile!.iD}',
+          '${UserLinks.users}/${Get.find<ProfileController>().cachedUserProfile!.iD}',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
       body: {
