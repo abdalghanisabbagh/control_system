@@ -224,9 +224,9 @@ class DistributionScreen extends GetView<DistributionController> {
                                                   },
                                                   child: Container(
                                                     height: 45,
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       borderRadius:
-                                                          const BorderRadius
+                                                          BorderRadius
                                                               .only(
                                                         bottomLeft:
                                                             Radius.circular(11),
@@ -270,9 +270,9 @@ class DistributionScreen extends GetView<DistributionController> {
                                                   },
                                                   child: Container(
                                                     height: 45,
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       borderRadius:
-                                                          const BorderRadius
+                                                          BorderRadius
                                                               .only(
                                                         bottomRight:
                                                             Radius.circular(11),
