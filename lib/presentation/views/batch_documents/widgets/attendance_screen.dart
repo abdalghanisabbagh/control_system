@@ -163,18 +163,18 @@ class AttendanceScreen extends GetView<AttendanceController> {
               child: Container(
                 height: 50,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10),
                   ),
                   color: ColorManager.bgSideMenu,
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Generate Attendance"),
-                    const SizedBox(width: 20),
+                    Text("Generate Attendance"),
+                    SizedBox(width: 20),
                     Icon(Icons.print, color: ColorManager.white),
                   ],
                 ),
