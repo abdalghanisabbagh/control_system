@@ -50,8 +50,8 @@ class DeleteMissionWidget extends StatelessWidget {
                   },
                   child: Container(
                     height: 45,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(11),
                       ),
                       color: ColorManager.bgSideMenu,
@@ -76,8 +76,8 @@ class DeleteMissionWidget extends StatelessWidget {
                   onTap: () {},
                   child: Container(
                     height: 45,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(11),
                       ),
                       color: ColorManager.glodenColor,
