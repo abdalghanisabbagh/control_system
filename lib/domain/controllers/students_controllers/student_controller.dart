@@ -391,7 +391,7 @@ class StudentController extends GetxController {
     ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortsResModel> response =
         await responseHandler.getResponse(
-      path: "${SchoolsLinks.getCohortBySchoolType}/$selectedSchoolId",
+      path: "${CohortLinks.getCohortBySchoolType}/$selectedSchoolId",
       converter: CohortsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -426,7 +426,7 @@ class StudentController extends GetxController {
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
     Either<Failure, GradesResModel> response =
         await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      path: "${GradeLinks.gradesSchools}/$schoolId",
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

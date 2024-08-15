@@ -216,7 +216,6 @@ class EditUserWidget extends GetView<AdminController> {
               controller.oldPasswordController.clear();
               controller.fullNameController.clear();
               controller.usernameController.clear();
-              Get.back();
             },
           ),
         ),

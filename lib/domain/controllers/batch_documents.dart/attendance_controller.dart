@@ -81,7 +81,7 @@ class AttendanceController extends GetxController {
     ResponseHandler<ExamRoomsResModel> responseHandler = ResponseHandler();
     Either<Failure, ExamRoomsResModel> response =
         await responseHandler.getResponse(
-      path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
+      path: "${ExamRoomLinks.examRoomsControlMission}/$controlMissionId",
       converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

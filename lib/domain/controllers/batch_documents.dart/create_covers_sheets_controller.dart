@@ -65,7 +65,7 @@ class CreateCoversSheetsController extends GetxController {
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.subjects,
+      path: SubjectsLinks.subjects,
       converter: SubjectsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -172,7 +172,7 @@ class CreateCoversSheetsController extends GetxController {
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      path: "${GradeLinks.gradesSchools}/$schoolId",
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

@@ -294,7 +294,7 @@ class ProctorController extends GetxController {
     update(['examRooms']);
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-      path: "${ExamLinks.examRoomsControlMission}/$selectedControlMissionsId",
+      path: "${ExamRoomLinks.examRoomsControlMission}/$selectedControlMissionsId",
       converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -323,7 +323,7 @@ class ProctorController extends GetxController {
 
     final response =
         await ResponseHandler<ProctorsInExamRoomResModel>().getResponse(
-      path: "${ExamLinks.examRooms}/proctor/$proctorId",
+      path: "${ExamRoomLinks.examRooms}/proctor/$proctorId",
       converter: ProctorsInExamRoomResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

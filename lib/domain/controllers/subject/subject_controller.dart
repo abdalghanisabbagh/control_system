@@ -35,7 +35,7 @@ class SubjectsController extends GetxController {
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.subjects,
+      path: SubjectsLinks.subjects,
       converter: SubjectResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
@@ -69,7 +69,7 @@ class SubjectsController extends GetxController {
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectResModel> response = await responseHandler
         .getResponse(
-            path: '${SchoolsLinks.subjectsDeactivate}/$id',
+            path: '${SubjectsLinks.subjectsDeactivate}/$id',
             converter: SubjectResModel.fromJson,
             type: ReqTypeEnum.PATCH,
             body: {});
@@ -105,7 +105,7 @@ class SubjectsController extends GetxController {
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.subjects}/$id',
+      path: '${SubjectsLinks.subjects}/$id',
       converter: SubjectResModel.fromJson,
       type: ReqTypeEnum.PATCH,
       body: {
@@ -141,7 +141,7 @@ class SubjectsController extends GetxController {
     Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
       path:
-          '${SchoolsLinks.subjectsBySchoolType}${Hive.box('School').get('SchoolTypeID')}',
+          '${SubjectsLinks.subjectsBySchoolType}${Hive.box('School').get('SchoolTypeID')}',
       converter: SubjectsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

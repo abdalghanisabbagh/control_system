@@ -409,7 +409,7 @@ class DetailsAndReviewMissionController extends GetxController {
     update();
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-      path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
+      path: "${ExamRoomLinks.examRoomsControlMission}/$controlMissionId",
       converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

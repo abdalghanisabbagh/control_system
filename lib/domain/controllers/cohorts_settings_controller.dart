@@ -31,7 +31,7 @@ class CohortsSettingsController extends GetxController {
 
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.cohort,
+      path: CohortLinks.cohort,
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
@@ -69,7 +69,7 @@ class CohortsSettingsController extends GetxController {
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.connectSubjectToCohort}/$id',
+      path: '${CohortLinks.connectSubjectToCohort}/$id',
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: selectedSubjectsIds,
@@ -101,7 +101,7 @@ class CohortsSettingsController extends GetxController {
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.cohort}/$id',
+      path: '${CohortLinks.cohort}/$id',
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.DELETE,
     );
@@ -133,7 +133,7 @@ class CohortsSettingsController extends GetxController {
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.disConnectSubjectFromCohort}/$cohortId',
+      path: '${CohortLinks.disConnectSubjectFromCohort}/$cohortId',
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: subjectId,
@@ -160,7 +160,7 @@ class CohortsSettingsController extends GetxController {
     getAllLoading = true;
     update();
     final response = await ResponseHandler<CohortsResModel>().getResponse(
-      path: SchoolsLinks.cohort,
+      path: CohortLinks.cohort,
       converter: CohortsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

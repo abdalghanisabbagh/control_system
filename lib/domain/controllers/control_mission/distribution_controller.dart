@@ -42,7 +42,7 @@ class DistributionController extends GetxController {
     ResponseHandler<ExamRoomResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
-        path: ExamLinks.examRooms,
+        path: ExamRoomLinks.examRooms,
         converter: ExamRoomResModel.fromJson,
         type: ReqTypeEnum.POST,
         body: {
@@ -80,7 +80,7 @@ class DistributionController extends GetxController {
     ResponseHandler<ExamRoomResModel> responseHandler = ResponseHandler();
     Either<Failure, ExamRoomResModel> response =
         await responseHandler.getResponse(
-      path: "${ExamLinks.examRooms}/$idExamRoom",
+      path: "${ExamRoomLinks.examRooms}/$idExamRoom",
       converter: ExamRoomResModel.fromJson,
       type: ReqTypeEnum.DELETE,
     );
@@ -151,7 +151,7 @@ class DistributionController extends GetxController {
     update();
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-      path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
+      path: "${ExamRoomLinks.examRoomsControlMission}/$controlMissionId",
       converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

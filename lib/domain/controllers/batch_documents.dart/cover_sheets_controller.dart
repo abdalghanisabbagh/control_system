@@ -75,7 +75,7 @@ class CoversSheetsController extends GetxController {
         duration: duration);
 
     var response = await responseHandler.getResponse(
-        path: ExamLinks.examMission,
+        path: ExamMissionLinks.examMission,
         converter: ExamMissionResModel.fromJson,
         type: ReqTypeEnum.POST,
         body: examMissionResModel.toJson());
@@ -112,7 +112,7 @@ class CoversSheetsController extends GetxController {
 
     Either<Failure, ExamMissionResModel> response =
         await responseHandler.getResponse(
-      path: '${ExamLinks.examMission}/$id',
+      path: '${ExamMissionLinks.examMission}/$id',
       converter: ExamMissionResModel.fromJson,
       type: ReqTypeEnum.DELETE,
     );
@@ -222,7 +222,7 @@ class CoversSheetsController extends GetxController {
     ResponseHandler<ExamMissionsResModel> responseHandler = ResponseHandler();
     Either<Failure, ExamMissionsResModel> response =
         await responseHandler.getResponse(
-      path: "${ExamLinks.examMissionControlMission}/$controlMissionId",
+      path: "${ExamMissionLinks.examMissionControlMission}/$controlMissionId",
       converter: ExamMissionsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -252,7 +252,7 @@ class CoversSheetsController extends GetxController {
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.subjects,
+      path: SubjectsLinks.subjects,
       converter: SubjectsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -352,7 +352,7 @@ class CoversSheetsController extends GetxController {
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      path: "${GradeLinks.gradesSchools}/$schoolId",
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -382,7 +382,7 @@ class CoversSheetsController extends GetxController {
     required int examMissionId,
   }) async {
     final response = await ResponseHandler<PreviewExamResModel>().getResponse(
-      path: "${ExamLinks.previewExamMission}/$examMissionId",
+      path: "${ExamMissionLinks.previewExamMission}/$examMissionId",
       converter: PreviewExamResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

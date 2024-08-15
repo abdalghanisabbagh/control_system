@@ -36,7 +36,7 @@ class EditSubjectsController extends GetxController {
     ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.subjects}/$id',
+      path: '${SubjectsLinks.subjects}/$id',
       converter: SubjectResModel.fromJson,
       type: ReqTypeEnum.PATCH,
       body: {
@@ -76,7 +76,7 @@ class EditSubjectsController extends GetxController {
     Either<Failure, SubjectResModel> response =
         await responseHandler.getResponse(
       path:
-          '${SchoolsLinks.deleteSchoolTypeinSubjects}/$idSubject/$idSchoolType',
+          '${SubjectsLinks.deleteSchoolTypeinSubjects}/$idSubject/$idSchoolType',
       converter: SubjectResModel.fromJson,
       type: ReqTypeEnum.PATCH,
       body: {},
