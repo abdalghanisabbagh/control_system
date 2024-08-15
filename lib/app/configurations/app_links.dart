@@ -104,6 +104,8 @@ class StudentsLinks {
 class UserRolesSystemsLink {
   static const screen = 'user-roles-systems/screen';
   static const userRolesSystems = 'user-roles-systems';
-  static const userRolesSystemsConnectRolesTOScreens =
+  static const userRolesSystemsConnectRolesToScreens =
       'user-roles-systems/connect-roles-to-screens';
+  static const userRolesSystemsDisconnectRolesFromScreens =
+      'user-roles-systems/disconnect-roles-from-screens';
 }
