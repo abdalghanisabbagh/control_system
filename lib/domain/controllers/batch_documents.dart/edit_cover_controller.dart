@@ -91,7 +91,7 @@ class EditCoverSheetController extends GetxController {
     );
 
     var response = await responseHandler.getResponse(
-        path: '${ExamLinks.examMission}/$id',
+        path: '${ExamMissionLinks.examMission}/$id',
         converter: ExamMissionResModel.fromJson,
         type: ReqTypeEnum.PATCH,
         body: examMissionResModel.toJson());
@@ -139,7 +139,7 @@ class EditCoverSheetController extends GetxController {
     );
 
     var response = await responseHandler.getResponse(
-        path: '${ExamLinks.examMission}/$id',
+        path: '${ExamMissionLinks.examMission}/$id',
         converter: ExamMissionResModel.fromJson,
         type: ReqTypeEnum.PATCH,
         body: examMissionResModel.toJson());
@@ -171,7 +171,7 @@ class EditCoverSheetController extends GetxController {
     update();
 
     var response = await responseHandler.getResponse(
-      path: ExamLinks.examMissionUpload,
+      path: ExamMissionLinks.examMissionUpload,
       converter: PdfExamMissionResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: FormData.fromMap(
