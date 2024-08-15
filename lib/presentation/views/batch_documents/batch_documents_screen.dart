@@ -34,7 +34,7 @@ class BatchDocumentsScreen extends GetView<BatchDocumentsController> {
                       automaticIndicatorColorAdjustment: true,
                       labelColor: ColorManager.primary,
                       labelPadding: const EdgeInsets.symmetric(vertical: 15),
-                      indicator: BoxDecoration(color: ColorManager.white),
+                      indicator: const BoxDecoration(color: ColorManager.white),
                       indicatorSize: TabBarIndicatorSize.tab,
                       unselectedLabelColor: ColorManager.white,
                       controller: controller.tabController,
