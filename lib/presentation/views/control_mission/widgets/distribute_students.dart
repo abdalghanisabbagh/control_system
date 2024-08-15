@@ -250,7 +250,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                               RemoveStudentsFromExamRoomWidget(),
                                             );
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.person_remove_alt_1,
                                             color: ColorManager.white,
                                           ),
@@ -265,7 +265,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                               AddNewStudentsToExamRoomWidget(),
                                             );
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.person_add_alt_1,
                                             color: ColorManager.white,
                                           ),
@@ -467,7 +467,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                               classDeskId: controller.classDesks[i * 6 + j].id!);
                                                                         },
                                                                         icon:
-                                                                            Icon(
+                                                                            const Icon(
                                                                           FontAwesomeIcons
                                                                               .arrowRotateLeft,
                                                                           color:
@@ -675,7 +675,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                               onPressed: () {
                                                                                 controller.blockClassDesk(classDeskId: controller.classDesks[i * 6 + j].id!);
                                                                               },
-                                                                              icon: Icon(
+                                                                              icon: const Icon(
                                                                                 FontAwesomeIcons.ban,
                                                                                 color: ColorManager.red,
                                                                               ),
