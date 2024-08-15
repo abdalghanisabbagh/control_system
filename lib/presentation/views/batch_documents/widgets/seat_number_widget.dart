@@ -82,7 +82,7 @@ class SeatNumberWidget extends GetView<SeatNumberController> {
                             },
                           ).showDialogue(context);
                         },
-                        icon: CircleAvatar(
+                        icon: const CircleAvatar(
                           backgroundColor: ColorManager.red,
                           child: Icon(
                             Icons.delete_forever,
@@ -127,18 +127,18 @@ class SeatNumberWidget extends GetView<SeatNumberController> {
                 child: Container(
                   height: 50,
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     ),
                     color: ColorManager.bgSideMenu,
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Generate Pdf"),
-                      const SizedBox(width: 20),
+                      Text("Generate Pdf"),
+                      SizedBox(width: 20),
                       Icon(Icons.print, color: ColorManager.white),
                     ],
                   ),

@@ -180,7 +180,7 @@ class UserInSchoolWidget extends GetView<AdminController> {
                                               .canAccessWidget(
                                                   widgetId: '9600'),
                                           child: IconButton(
-                                            icon: Icon(Icons.add,
+                                            icon: const Icon(Icons.add,
                                                 color:
                                                     ColorManager.glodenColor),
                                             onPressed: () {
@@ -201,7 +201,7 @@ class UserInSchoolWidget extends GetView<AdminController> {
                                               .canAccessWidget(
                                                   widgetId: '9400'),
                                           child: IconButton(
-                                            icon: Icon(Icons.edit,
+                                            icon: const Icon(Icons.edit,
                                                 color:
                                                     ColorManager.glodenColor),
                                             onPressed: () {

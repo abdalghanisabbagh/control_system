@@ -120,14 +120,14 @@ class OfficerEditCoverWidget extends GetView<EditCoverSheetController> {
                       style: nunitoRegularStyle(),
                       controller: dateController,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: ColorManager.bgSideMenu,
                             width: 20,
                             style: BorderStyle.solid,
                           ),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
+                              BorderRadius.all(Radius.circular(20)),
                         ),
                         suffixIcon: const Icon(
                           Icons.date_range_outlined,

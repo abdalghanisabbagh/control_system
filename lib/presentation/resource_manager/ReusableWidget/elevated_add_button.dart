@@ -15,8 +15,8 @@ class ElevatedAddButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         height: 50,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
             Radius.circular(11),
           ),
           color: ColorManager.glodenColor,

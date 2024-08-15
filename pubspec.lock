@@ -261,11 +261,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v1.0.0"
-      resolved-ref: "94f428303639df065f54b7f00cc8e7e12c4caaa0"
+      ref: "v1.0.1"
+      resolved-ref: cda46dd5422f26c5e73c0d574d80da186e0da802
       url: "https://github.com/Mahmoud-Saeed-Mahmoud/custom_theme.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
   dart_style:
     dependency: transitive
     description:

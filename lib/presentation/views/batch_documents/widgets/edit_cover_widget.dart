@@ -104,8 +104,8 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                     children: [
                       Container(
                         height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
                             Radius.circular(11),
                           ),
                           color: ColorManager.glodenColor,
@@ -185,14 +185,14 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                     style: nunitoRegularStyle(),
                     controller: startTimeController,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: ColorManager.bgSideMenu,
                           width: 20,
                           style: BorderStyle.solid,
                         ),
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
+                            BorderRadius.all(Radius.circular(20)),
                       ),
                       suffixIcon: const Icon(
                         Icons.date_range_outlined,
@@ -230,14 +230,14 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                           style: nunitoRegularStyle(),
                           controller: endTimeController,
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: ColorManager.bgSideMenu,
                                 width: 20,
                                 style: BorderStyle.solid,
                               ),
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
+                                  BorderRadius.all(Radius.circular(20)),
                             ),
                             suffixIcon: const Icon(
                               Icons.date_range_outlined,

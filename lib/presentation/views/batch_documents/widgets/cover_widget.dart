@@ -69,7 +69,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                             controller.previewExamMission(
                                 examMissionId: examMissionObject.iD!);
                           },
-                          icon: CircleAvatar(
+                          icon: const CircleAvatar(
                             backgroundColor: ColorManager.glodenColor,
                             child: Icon(Icons.picture_as_pdf_rounded,
                                 color: ColorManager.white),
@@ -92,7 +92,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                                   controlMissionObject: controlMissionObject,
                                 ));
                           },
-                          icon: CircleAvatar(
+                          icon: const CircleAvatar(
                             backgroundColor: ColorManager.primary,
                             child: Icon(Icons.edit, color: ColorManager.white),
                           ),
@@ -111,7 +111,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                                   controlMissionObject: controlMissionObject,
                                 ));
                           },
-                          icon: CircleAvatar(
+                          icon: const CircleAvatar(
                             backgroundColor: ColorManager.primary,
                             child: Icon(Icons.edit, color: ColorManager.white),
                           ),
@@ -149,7 +149,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                                 },
                               ).showDialogue(context);
                             },
-                            icon: CircleAvatar(
+                            icon: const CircleAvatar(
                                 backgroundColor: ColorManager.red,
                                 child: Icon(
                                   Icons.delete_forever,
@@ -232,19 +232,19 @@ class CoverWidget extends GetView<CoversSheetsController> {
                               child: Container(
                                 height: 50,
                                 width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10)),
                                   color: ColorManager.bgSideMenu,
                                 ),
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
+                                    Text(
                                       "American Cover Sheet",
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 20,
                                     ),
                                     Icon(
@@ -288,13 +288,13 @@ class CoverWidget extends GetView<CoversSheetsController> {
                                       bottomRight: Radius.circular(10)),
                                   color: Colors.lightBlue,
                                 ),
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
+                                    Text(
                                       "IB Cover Sheet",
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 20,
                                     ),
                                     Icon(
@@ -332,19 +332,19 @@ class CoverWidget extends GetView<CoversSheetsController> {
                               child: Container(
                                 height: 50,
                                 width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(10),
                                       bottomRight: Radius.circular(10)),
                                   color: ColorManager.red,
                                 ),
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
+                                    Text(
                                       "British Cover Sheet",
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       width: 20,
                                     ),
                                     Icon(

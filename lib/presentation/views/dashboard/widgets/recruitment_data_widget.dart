@@ -47,7 +47,7 @@ class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
                   vertical: 10,
                   horizontal: 20,
                 ),
-                child: Text(
+                child: const Text(
                   "View All",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(1000),
-                child: Icon(
+                child: const Icon(
                   Icons.person,
                   color: ColorManager.bgSideMenu,
                 ),

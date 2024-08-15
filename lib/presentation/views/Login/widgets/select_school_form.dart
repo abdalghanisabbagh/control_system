@@ -83,7 +83,7 @@ class SelectSchoolForm extends GetView<SchoolController> {
                                           ],
                                         ),
                                         child: ListTile(
-                                          leading: Icon(
+                                          leading: const Icon(
                                             Icons.school,
                                             color: ColorManager.white,
                                           ),
