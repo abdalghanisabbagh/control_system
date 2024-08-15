@@ -605,7 +605,7 @@ class DistributeStudentsController extends GetxController {
 
     Either<Failure, GradesResModel> response =
         await responseHandler.getResponse(
-      path: "${SchoolsLinks.gradesSchools}/$schoolId",
+      path: "${GradeLinks.gradesSchools}/$schoolId",
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
