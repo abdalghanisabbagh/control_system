@@ -18,6 +18,8 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 class RolesController extends GetxController {
   bool addLoading = false;
   bool connectLoading = false;
+  bool deleteScreenLoading = false;
+  bool rolesLoading = false;
   final ScrollController rolesScrollController = ScrollController();
   final ScrollController screensScrollController = ScrollController();
 
@@ -26,6 +28,7 @@ class RolesController extends GetxController {
   List<RoleResModel> roles = [];
   List<ScreenResModel> screens = [];
   List<int> selectedSreensIds = [];
+  List<int> removedSreensIds = [];
 
   Future<bool> addNewRoles({
     required String name,
@@ -104,11 +107,11 @@ class RolesController extends GetxController {
     connectLoading = true;
     update();
     bool screenHasBeenAdded = false;
-    ResponseHandler<RoleResModel> responseHandler = ResponseHandler();
-    Either<Failure, RoleResModel> response = await responseHandler.getResponse(
+    ResponseHandler<void> responseHandler = ResponseHandler();
+    Either<Failure, void> response = await responseHandler.getResponse(
       path:
-          '${UserRolesSystemsLink.userRolesSystemsConnectRolesTOScreens}/$roleId',
-      converter: RoleResModel.fromJson,
+          '${UserRolesSystemsLink.userRolesSystemsConnectRolesToScreens}/$roleId',
+      converter: (_) {},
       type: ReqTypeEnum.PATCH,
       body: selectedSreensIds,
     );
@@ -132,7 +135,41 @@ class RolesController extends GetxController {
     return screenHasBeenAdded;
   }
 
+  Future<bool> deleteScreensFromRole(int roleId) async {
+    deleteScreenLoading = true;
+    update();
+    bool screenHasBeenRemoved = false;
+    ResponseHandler<void> responseHandler = ResponseHandler();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path:
+          '${UserRolesSystemsLink.userRolesSystemsDisconnectRolesFromScreens}/$roleId',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: removedSreensIds,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        screenHasBeenRemoved = false;
+      },
+      (r) {
+        getAllRoles();
+        screenHasBeenRemoved = true;
+        update();
+      },
+    );
+    deleteScreenLoading = false;
+    update();
+    return screenHasBeenRemoved;
+  }
+
   Future getAllRoles() async {
+    rolesLoading = true;
+    update();
     ResponseHandler<RolesResModel> responseHandler = ResponseHandler();
     Either<Failure, RolesResModel> response = await responseHandler.getResponse(
       path: UserRolesSystemsLink.userRolesSystems,
@@ -151,6 +188,8 @@ class RolesController extends GetxController {
         roles = r.data!;
       },
     );
+    rolesLoading = false;
+    update();
   }
 
   Future getAllScreens() async {
