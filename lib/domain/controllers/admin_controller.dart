@@ -47,7 +47,7 @@ class AdminController extends GetxController {
     update();
 
     final response = await ResponseHandler<UserResModel>().getResponse(
-      path: AuthLinks.user,
+      path: UserLinks.users,
       converter: UserResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
@@ -90,7 +90,7 @@ class AdminController extends GetxController {
 
     ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
     Either<Failure, UsersResModel> response = await responseHandler.getResponse(
-      path: AuthLinks.usersInSchool,
+      path: UserLinks.usersInSchool,
       converter: UsersResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -122,7 +122,7 @@ class AdminController extends GetxController {
 
     ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
     Either<Failure, UsersResModel> response = await responseHandler.getResponse(
-      path: AuthLinks.user,
+      path: UserLinks.users,
       converter: UsersResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -153,7 +153,7 @@ class AdminController extends GetxController {
 
     ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
     Either<Failure, UsersResModel> response = await responseHandler.getResponse(
-      path: AuthLinks.getUsersByCreated,
+      path: UserLinks.getUsersByCreated,
       converter: UsersResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -183,7 +183,7 @@ class AdminController extends GetxController {
     update();
 
     final response = await ResponseHandler<UserResModel>().getResponse(
-        path: "${AuthLinks.user}/$id",
+        path: "${UserLinks.users}/$id",
         converter: UserResModel.fromJson,
         type: ReqTypeEnum.PATCH,
         body: data);
@@ -221,7 +221,7 @@ class AdminController extends GetxController {
     update();
 
     final response = await ResponseHandler<UserResModel>().getResponse(
-      path: "${AuthLinks.userEditRoles}/$roleId",
+      path: "${UserLinks.userEditRoles}/$roleId",
       converter: UserResModel.fromJson,
       type: ReqTypeEnum.PATCH,
       body: selectedRoles.map((e) => {'Roles_ID': e}).toList(),
