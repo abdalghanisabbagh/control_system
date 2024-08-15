@@ -409,7 +409,7 @@ class DetailsAndReviewMissionController extends GetxController {
     update();
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-      path: "${ExamLinks.examRoomsControlMission}/$controlMissionId",
+      path: "${ExamRoomLinks.examRoomsControlMission}/$controlMissionId",
       converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -432,7 +432,7 @@ class DetailsAndReviewMissionController extends GetxController {
     isLodingGetExamRooms = false;
   }
 
-  void getStudentsGrades() async {
+  Future<void> getStudentsGrades() async {
     isLoadingGetStudentsGrades = true;
     update();
     final ResponseHandler<StudentGradesResModel> responseHandler =
@@ -538,7 +538,6 @@ class DetailsAndReviewMissionController extends GetxController {
     getExamRoomByControlMissionId();
     getSubjectByControlMissionId();
     getStudentsSeatNumberByControlMissionId();
-    getStudentsGrades();
   }
 
   Future<void> saveControlMissionId(int id) async {
