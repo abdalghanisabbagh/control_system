@@ -276,6 +276,9 @@ class AdminScreen extends GetView<AdminController> {
                                                 userResModel: item,
                                               ),
                                             );
+                                            controller.getAllRoles(
+                                              userResModel: item
+                                            );
                                           },
                                         ),
                                         Visibility(

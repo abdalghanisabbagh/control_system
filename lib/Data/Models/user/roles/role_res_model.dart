@@ -1,9 +1,9 @@
 import '../screens/screen_res_model.dart';
 
 class RoleResModel {
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
   List<ScreenResModel>? screens = [];
   RoleResModel({

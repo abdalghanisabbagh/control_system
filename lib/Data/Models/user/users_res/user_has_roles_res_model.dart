@@ -1,13 +1,16 @@
 class UserHasRolesResModel {
   List<String>? roles;
+  List<int>? roleID;
 
   UserHasRolesResModel({this.roles});
 
   UserHasRolesResModel.fromJson(json) {
     if (json is List) {
       roles = <String>[];
+      roleID = <int>[];
       for (var v in json) {
         roles!.add((v['roles']['Name']));
+        roleID!.add(v['roles']['ID']);
       }
     }
   }

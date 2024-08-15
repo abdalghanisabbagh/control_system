@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/views/admin_screen/widgets/add_role_user.dart';
 import 'package:control_system/presentation/views/admin_screen/widgets/edit_user_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
@@ -173,6 +174,21 @@ class UserInSchoolWidget extends GetView<AdminController> {
                                               ),
                                             ],
                                           ),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.add,
+                                              color: ColorManager.glodenColor),
+                                          onPressed: () {
+                                            MyDialogs.showDialog(
+                                              context,
+                                              AddRoleUser(
+                                                userResModel: item,
+                                              ),
+                                            );
+                                            controller.getAllRoles(
+                                              userResModel: item,
+                                            );
+                                          },
                                         ),
                                         Visibility(
                                           visible: Get.find<ProfileController>()

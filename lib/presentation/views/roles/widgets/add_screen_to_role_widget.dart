@@ -59,13 +59,13 @@ class AddScreensToRolesWidget extends GetView<RolesController> {
                         Expanded(
                           child: ElevatedAddButton(
                             onPressed: () async {
-                              controller.addScreensToRole(role.id).then(
+                              controller.addScreensToRole(role.id!).then(
                                 (isAdded) {
                                   if (isAdded) {
                                     Get.back();
                                     MyFlashBar.showSuccess(
                                             'Screen has ben added to ${role.name}',
-                                            role.name)
+                                            role.name!)
                                         .show(Get.key.currentContext);
                                   }
                                 },

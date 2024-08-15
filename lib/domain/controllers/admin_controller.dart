@@ -21,8 +21,8 @@ class AdminController extends GetxController {
   bool isLoadingGetUsersCreatedBy = false;
   bool isLoading = false;
   bool isLodingEditUser = false;
-    bool isLodingGetRoles = false;
-
+  bool isLodingGetRoles = false;
+  bool isLodingEditUserRoles = false;
 
   String? selectedDivision;
   String? selectedRoleType;
@@ -40,6 +40,7 @@ class AdminController extends GetxController {
   List<UserResModel> allUsersList = <UserResModel>[];
   List<UserResModel> userInSchoolList = <UserResModel>[];
   List<RoleResModel> rolesList = <RoleResModel>[];
+  List<int> selectedRoles = <int>[];
 
   Future<bool> addNewUser() async {
     isLoading = true;
@@ -215,9 +216,45 @@ class AdminController extends GetxController {
     );
   }
 
-Future getAllRoles() async {
-  isLodingGetRoles = true;
-  update();
+  Future<bool> editUserRoles(int roleId) async {
+    isLodingEditUserRoles = true;
+    update();
+
+    final response = await ResponseHandler<UserResModel>().getResponse(
+      path: "${AuthLinks.userEditRoles}/$roleId",
+      converter: UserResModel.fromJson,
+      type: ReqTypeEnum.PATCH,
+      body: selectedRoles.map((e) => {'Roles_ID': e}).toList(),
+    );
+
+    isLodingEditUserRoles = false;
+    update();
+
+    return response.fold(
+      (l) {
+        isLodingEditUserRoles = false;
+
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        update();
+        return false;
+      },
+      (r) {
+        onInit();
+        isLodingEditUserRoles = false;
+        update();
+
+        return true;
+      },
+    );
+  }
+
+  Future getAllRoles({required UserResModel userResModel}) async {
+    isLodingGetRoles = true;
+    update();
     ResponseHandler<RolesResModel> responseHandler = ResponseHandler();
     Either<Failure, RolesResModel> response = await responseHandler.getResponse(
       path: UserRolesSystemsLink.userRolesSystems,
@@ -233,7 +270,9 @@ Future getAllRoles() async {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
+        selectedRoles.clear();
         rolesList = r.data!;
+        selectedRoles.addAll(userResModel.userHasRoles!.roleID ?? []);
       },
     );
 

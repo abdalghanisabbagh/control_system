@@ -16,6 +16,9 @@ class AuthLinks {
   static const userAddRoles = 'users/add-roles';
   static const usersAddSchools = 'users/add-schools';
   static const getUsersByCreated = 'users/created-by';
+    static const userEditRoles = 'users/edit-roles';
+
+
 }
 
 class ControlMissionLinks {

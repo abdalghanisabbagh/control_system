@@ -116,7 +116,7 @@ class RolesScreen extends GetView<RolesController> {
                                                   child: ExpansionTile(
                                                     title: Text(
                                                       controller
-                                                          .roles[index].name,
+                                                          .roles[index].name!,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style:
