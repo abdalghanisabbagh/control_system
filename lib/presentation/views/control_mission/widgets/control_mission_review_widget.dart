@@ -192,6 +192,8 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                                         controlMission.name!),
                               ],
                             );
+                            detailsAndReviewMissionController
+                                .getStudentsGrades();
                             context.mounted
                                 ? context.goNamed(
                                     AppRoutesNamesAndPaths

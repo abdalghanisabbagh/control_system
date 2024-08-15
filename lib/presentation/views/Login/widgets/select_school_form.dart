@@ -51,7 +51,8 @@ class SelectSchoolForm extends GetView<SchoolController> {
                 Expanded(
                   child: GetBuilder<SchoolController>(
                     init: SchoolController(),
-                    builder: (controller) => controller.isLoadingSchools
+                    builder: (controller) => controller.isLoadingSchools ||
+                            controller.isLoading
                         ? Center(
                             child: LoadingIndicators.getLoadingIndicator(),
                           )
@@ -89,6 +90,8 @@ class SelectSchoolForm extends GetView<SchoolController> {
                                           focusColor: ColorManager.bgSideMenu,
                                           hoverColor: ColorManager.bgSideMenu,
                                           onTap: () async {
+                                            controller.isLoading = true;
+                                            controller.update();
                                             MyFlashBar.showSuccess(
                                               currentSchool.name!,
                                               "School Selected",
@@ -97,14 +100,20 @@ class SelectSchoolForm extends GetView<SchoolController> {
                                                 Durations.long2);
                                             await controller
                                                 .saveToSchoolBox(currentSchool)
-                                                .then((_) {
-                                              context.mounted
-                                                  ? context.goNamed(
-                                                      AppRoutesNamesAndPaths
-                                                          .dashBoardScreenName,
-                                                    )
-                                                  : null;
-                                            });
+                                                .then(
+                                              (_) {
+                                                context.mounted
+                                                    ? context.goNamed(
+                                                        AppRoutesNamesAndPaths
+                                                            .dashBoardScreenName,
+                                                      )
+                                                    : Get.key.currentContext
+                                                        ?.goNamed(
+                                                        AppRoutesNamesAndPaths
+                                                            .dashBoardScreenName,
+                                                      );
+                                              },
+                                            );
                                           },
                                           title: Text(
                                             "${currentSchool.schoolType!.name ?? ""} ${currentSchool.name ?? ""}",

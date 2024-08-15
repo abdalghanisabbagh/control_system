@@ -10,16 +10,15 @@ class AuthLinks {
   static const auth = 'auth';
   static const login = '$auth/login';
   static const logout = '$auth/logout';
+  static const getNewAccessToken = '$auth/get-new-access-token';
   static const refresh = '$auth/refresh';
 }
 
-class UserLinks {
-  static const users = 'users';
-  static const usersInSchool = '/$users/school';
-  static const userAddRoles = '$users/add-roles';
-  static const usersAddSchools = '$users/add-schools';
-  static const getUsersByCreated = '$users/created-by';
-  static const userEditRoles = '$users/edit-roles';
+class CohortLinks {
+  static const cohort = 'cohort';
+  static const connectSubjectToCohort = '$cohort/Connect-Subject';
+  static const disConnectSubjectFromCohort = '$cohort/disconnect-Subject';
+  static const getCohortBySchoolType = '$cohort/school-type';
 }
 
 class ControlMissionLinks {
@@ -58,28 +57,13 @@ class GeneratePdfLinks {
   static const generatePdfAttendence = '$generatePdf/attendance';
 }
 
-class ProctorsLinks {
-  static const proctor = 'proctor';
-}
-
 class GradeLinks {
   static const grades = 'grades';
   static const gradesSchools = '$grades/school';
 }
 
-class SubjectsLinks {
-  static const subject = 'subject';
-  static const subjects = 'subjects';
-  static const subjectsDeactivate = '$subjects/deactivate';
-  static const subjectsBySchoolType = '$subjects/school-type/';
-  static const deleteSchoolTypeinSubjects = '$subjects/remove-school-type';
-}
-
-class CohortLinks {
-  static const cohort = 'cohort';
-  static const connectSubjectToCohort = '$cohort/Connect-Subject';
-  static const disConnectSubjectFromCohort = '$cohort/disconnect-Subject';
-  static const getCohortBySchoolType = '$cohort/school-type';
+class ProctorsLinks {
+  static const proctor = 'proctor';
 }
 
 class SchoolsLinks {
@@ -112,6 +96,28 @@ class StudentsLinks {
   static const studentsClass = '$student/class';
   static const getStudentsByControlMission = '$student/controlMission';
   static const studentsGrades = '$student/students-grades/control-mission/';
+}
+
+class SubjectsLinks {
+  static const subject = 'subject';
+  static const subjects = 'subjects';
+  static const subjectsDeactivate = '$subjects/deactivate';
+  static const subjectsBySchoolType = '$subjects/school-type/';
+  static const deleteSchoolTypeinSubjects = '$subjects/remove-school-type';
+}
+
+class UserLinks {
+  static const users = 'users';
+  static const usersInSchool = '/$users/school';
+  static const userAddRoles = '$users/add-roles';
+  static const usersAddSchools = '$users/add-schools';
+  static const getUsersByCreated = '$users/created-by';
+  static const userEditRoles = '$users/edit-roles';
+  static const login = 'auth/login';
+  static const String getNewAccessToken = 'auth/get-new-access-token';
+  static const logout = 'auth/logout';
+  static const refresh = 'auth/refresh';
+  static const user = 'users';
 }
 
 class UserRolesSystemsLink {

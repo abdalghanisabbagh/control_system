@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/services/token_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -9,6 +10,8 @@ import '../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../Data/Models/school/school_response/school_res_model.dart';
 import '../../Data/Models/school/school_response/schools_res_model.dart';
 import '../../Data/Models/school/school_type/schools_type_res_model.dart';
+import '../../Data/Models/token/token_model.dart';
+import '../../Data/Models/user/login_response/login_res_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
@@ -17,6 +20,7 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import 'profile_controller.dart';
 
 class SchoolController extends GetxController {
+  bool isLoading = false;
   List<GradeResModel> grades = <GradeResModel>[];
   bool isLoadingAddGrades = true;
   bool isLoadingAddSchool = false;
@@ -206,7 +210,9 @@ class SchoolController extends GetxController {
   }
 
   Future<void> saveToSchoolBox(SchoolResModel currentSchool) async {
-    ResponseHandler<void>().getResponse(
+    TokenService tokenService = Get.find<TokenService>();
+    ProfileController profileController = Get.find<ProfileController>();
+    await ResponseHandler<void>().getResponse(
       path:
           '${UserLinks.users}/${Get.find<ProfileController>().cachedUserProfile!.iD}',
       converter: (_) {},
@@ -215,6 +221,27 @@ class SchoolController extends GetxController {
         "LastSelectSchoolId": currentSchool.iD,
       },
     );
+    ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+      path: AuthLinks.getNewAccessToken,
+      converter: LoginResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+        (l) => MyAwesomeDialogue(
+              title: 'Error',
+              desc: l.message,
+              dialogType: DialogType.error,
+            ).showDialogue(Get.key.currentContext!), (r) {
+      tokenService.saveTokenModelToHiveBox(TokenModel(
+        aToken: r.accessToken!,
+        rToken: r.refreshToken!,
+        dToken: DateTime.now().toIso8601String(),
+      ));
+      profileController.saveProfileToHiveBox(r.userProfile!);
+    });
     await Future.wait([
       Hive.box('School').put('Id', currentSchool.iD),
       Hive.box('School').put('Name', currentSchool.name),
