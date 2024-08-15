@@ -19,7 +19,7 @@ class OperationController extends GetxController {
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.subjects,
+      path: SubjectsLinks.subjects,
       converter: SubjectsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
