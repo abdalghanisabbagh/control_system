@@ -107,8 +107,8 @@ class CalendarWidgetState extends State<CalendarWidget> {
               _focusedDay = day;
               setState(() {});
             },
-            calendarStyle: CalendarStyle(
-              defaultTextStyle: const TextStyle(
+            calendarStyle: const CalendarStyle(
+              defaultTextStyle: TextStyle(
                 color: ColorManager.black,
                 fontWeight: FontWeight.bold,
               ),
