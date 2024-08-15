@@ -23,7 +23,7 @@ class AddScreensToRolesWidget extends GetView<RolesController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Add ScreenS To > ${role.name} < Role",
+            "Add Screens To ${role.name} Role",
             style: nunitoBlack.copyWith(
               color: ColorManager.bgSideMenu,
               fontSize: 30,
