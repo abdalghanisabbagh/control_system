@@ -101,12 +101,12 @@ class AuthController extends GetxController {
     //  update refresh token in local storage and profile controller
 
     TokenModel tokenModel = TokenModel(
-      aToken: response.data['data']['accessToken'],
-      rToken: response.data['data']['refreshToken'],
+      aToken: response.data['data'],
+      rToken: tokenService.tokenModel!.rToken,
       dToken: DateTime.now().toIso8601String(),
     );
     tokenService.saveNewAccessToken(tokenModel);
-    return response.data['data']['accessToken'];
+    return response.data['data'];
   }
 
   setShowPass() {
