@@ -20,7 +20,7 @@ class SchoolWidget extends GetView<SchoolController> {
           return Text(
             controller.selectedSchoolIndex == -1
                 ? "Choose a school"
-                : "School (${controller.selectedSchoolName})",
+                : "School ${controller.selectedSchoolName}",
             style: nunitoRegular.copyWith(
               color: ColorManager.bgSideMenu,
               fontSize: 25,
