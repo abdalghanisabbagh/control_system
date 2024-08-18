@@ -56,43 +56,47 @@ class AddNewGradeToSchool extends GetView<SchoolController> {
         const SizedBox(
           height: 20,
         ),
-        GetBuilder<SchoolController>(builder: (_) {
-          return controller.isLoadingAddGrades
-              ? Center(
-                  child: LoadingIndicators.getLoadingIndicator(),
-                )
-              : Row(
-                  children: [
-                    const Expanded(
-                      child: ElevatedBackButton(),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: ElevatedAddButton(
-                        onPressed: () async {
-                          await controller
-                              .addNewGrade(name: gradeNameController.text)
-                              .then((value) {
-                            value
-                                ? {
-                                    context.mounted ? context.pop() : null,
-                                    MyFlashBar.showSuccess(
-                                            'The Grade Has Been Added Successfully',
-                                            'Success')
-                                        .show(context.mounted
-                                            ? context
-                                            : Get.key.currentContext!)
-                                  }
-                                : null;
-                          });
-                        },
+        GetBuilder<SchoolController>(
+          builder: (_) {
+            return controller.isLoadingAddGrades
+                ? Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  )
+                : Row(
+                    children: [
+                      const Expanded(
+                        child: ElevatedBackButton(),
                       ),
-                    ),
-                  ],
-                );
-        })
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: ElevatedAddButton(
+                          onPressed: () async {
+                            await controller
+                                .addNewGrade(name: gradeNameController.text)
+                                .then(
+                              (value) {
+                                value
+                                    ? {
+                                        context.mounted ? context.pop() : null,
+                                        MyFlashBar.showSuccess(
+                                                'The Grade Has Been Added Successfully',
+                                                'Success')
+                                            .show(context.mounted
+                                                ? context
+                                                : Get.key.currentContext!)
+                                      }
+                                    : null;
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+          },
+        )
       ],
     );
   }
