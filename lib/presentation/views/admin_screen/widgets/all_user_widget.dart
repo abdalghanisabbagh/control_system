@@ -170,19 +170,57 @@ class AllUserWidget extends GetView<AdminController> {
                                                     ),
                                                   ),
                                                   const SizedBox(width: 10),
-                                                  Flexible(
-                                                    child: Text(
-                                                      "Status: ${item.active == 0 ? "Inactive" : "Active"}",
-                                                      style: nunitoRegular
-                                                          .copyWith(
-                                                              color: ColorManager
-                                                                  .bgSideMenu
-                                                                  .withOpacity(
-                                                                      0.7),
-                                                              fontSize: 20),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                  Text(
+                                                    "Status: ",
+                                                    style:
+                                                        nunitoRegular.copyWith(
+                                                      color: ColorManager
+                                                          .bgSideMenu
+                                                          .withOpacity(0.7),
+                                                      fontSize: 20,
                                                     ),
+                                                  ),
+                                                  Switch(
+                                                    value: item.active == 1,
+                                                    onChanged: (newValue) {
+                                                      if (newValue) {
+                                                        controller
+                                                            .activateUser(
+                                                                userId:
+                                                                    item.iD!)
+                                                            .then((value) {
+                                                          if (value) {
+                                                            MyFlashBar
+                                                                .showSuccess(
+                                                              "User activated successfully",
+                                                              "Success",
+                                                            ).show(Get.key
+                                                                .currentContext!);
+                                                          }
+                                                        });
+                                                      } else {
+                                                        controller
+                                                            .deactivateUser(
+                                                                userId:
+                                                                    item.iD!)
+                                                            .then((value) {
+                                                          if (value) {
+                                                            MyFlashBar
+                                                                .showSuccess(
+                                                              "User deactivated successfully",
+                                                              "Success",
+                                                            ).show(Get.key
+                                                                .currentContext!);
+                                                          }
+                                                        });
+                                                      }
+                                                    },
+                                                    activeColor: Colors.green,
+                                                    inactiveThumbColor:
+                                                        Colors.red,
+                                                    inactiveTrackColor: Colors
+                                                        .red
+                                                        .withOpacity(0.3),
                                                   ),
                                                 ],
                                               ),
