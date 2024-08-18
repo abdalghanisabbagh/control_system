@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class NotificationCardWidget extends StatelessWidget {
   final DateTime now = DateTime.now();
+
   final String schoolName;
   final String userName;
-
   NotificationCardWidget({
     super.key,
     required this.userName,

@@ -16,7 +16,6 @@ export 'control_mission/distribute_students_controller.dart';
 export 'control_mission/distribution_controller.dart';
 export 'control_mission/review_control_mission_controller.dart';
 export 'dashboard_controller.dart';
-export 'home_controller.dart';
 export 'proctor_controller.dart';
 export 'profile_controller.dart';
 export 'roles_controller.dart';

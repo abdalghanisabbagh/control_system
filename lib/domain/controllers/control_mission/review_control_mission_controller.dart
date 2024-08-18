@@ -29,12 +29,10 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 class DetailsAndReviewMissionController extends GetxController {
   int controlMissionId = 0;
   String controlMissionName = '';
-  bool isLodingGetExamRooms = false;
-  bool isLodingGetSubjects = false;
   bool isLoadingGetStudentsGrades = false;
+  bool isLodingGetExamRooms = false;
   bool isLodingGetStudentsSeatNumbers = false;
-  PlutoGridStateManager? studentsGradesPlutoGridStateManager;
-  StudentGradesResModel? studentGradesResModel;
+  bool isLodingGetSubjects = false;
   List<ExamRoomResModel> listExamRoom = [];
   List<SubjectResModel> listSubject = [];
   final List<Tab> myTabs = const <Tab>[
@@ -42,11 +40,13 @@ class DetailsAndReviewMissionController extends GetxController {
     Tab(text: 'Review Students Grades'),
   ];
 
+  StudentGradesResModel? studentGradesResModel;
+  PlutoGridStateManager? studentsGradesPlutoGridStateManager;
+  List<PlutoRow> studentsGradesRows = <PlutoRow>[];
   List<StudentSeatNumberResModel> studentsSeatNumbers =
       <StudentSeatNumberResModel>[];
 
   List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
-  List<PlutoRow> studentsGradesRows = <PlutoRow>[];
   TabController? tabController;
 
   void convertStudentsGradesToPlutoGridRows() {

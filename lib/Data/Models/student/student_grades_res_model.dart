@@ -1,13 +1,13 @@
-import 'package:control_system/Data/Models/barcodes/barcode_res_model.dart';
-import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
+import '../barcodes/barcode_res_model.dart';
+import '../class_room/class_room_res_model.dart';
 
 class Cohort {
-  int? iD;
-  String? name;
   List<CohortHasSubjects>? cohortHasSubjects;
 
-  Cohort({this.iD, this.name, this.cohortHasSubjects});
+  int? iD;
 
+  String? name;
+  Cohort({this.iD, this.name, this.cohortHasSubjects});
   Cohort.fromJson(json) {
     iD = json['ID'];
     name = json['Name'];
@@ -51,11 +51,11 @@ class CohortHasSubjects {
 }
 
 class ExamMission {
-  ExamRoom? subjects;
   ExamRoom? grades;
 
-  ExamMission({this.subjects, this.grades});
+  ExamRoom? subjects;
 
+  ExamMission({this.subjects, this.grades});
   ExamMission.fromJson(json) {
     subjects =
         json['subjects'] != null ? ExamRoom.fromJson(json['subjects']) : null;
@@ -76,10 +76,10 @@ class ExamMission {
 
 class ExamRoom {
   int? iD;
+
   String? name;
 
   ExamRoom({this.iD, this.name});
-
   ExamRoom.fromJson(json) {
     iD = json['ID'];
     name = json['Name'];
@@ -94,13 +94,14 @@ class ExamRoom {
 }
 
 class Student {
-  String? firstName;
-  String? secondName;
-  String? thirdName;
-  int? iD;
-  Cohort? cohort;
   ClassRoomResModel? classRoom;
 
+  Cohort? cohort;
+
+  String? firstName;
+  int? iD;
+  String? secondName;
+  String? thirdName;
   Student(
       {this.firstName,
       this.secondName,
@@ -108,7 +109,6 @@ class Student {
       this.iD,
       this.cohort,
       this.classRoom});
-
   Student.fromJson(json) {
     firstName = json['First_Name'];
     secondName = json['Second_Name'];
@@ -137,13 +137,13 @@ class Student {
 }
 
 class StudentGradesResModel {
-  List<ExamRoom>? examRoom;
   List<ExamMission>? examMission;
-  List<StudentSeatNumnbers>? studentSeatNumnbers;
 
+  List<ExamRoom>? examRoom;
+
+  List<StudentSeatNumnbers>? studentSeatNumnbers;
   StudentGradesResModel(
       {this.examRoom, this.examMission, this.studentSeatNumnbers});
-
   StudentGradesResModel.fromJson(json) {
     if (json['exam_room'] != null) {
       examRoom = <ExamRoom>[];
@@ -182,11 +182,11 @@ class StudentGradesResModel {
 }
 
 class StudentSeatNumnbers {
-  Student? student;
   List<BarcodeResModel>? barcode;
 
-  StudentSeatNumnbers({this.student, this.barcode});
+  Student? student;
 
+  StudentSeatNumnbers({this.student, this.barcode});
   StudentSeatNumnbers.fromJson(json) {
     student =
         json['student'] != null ? Student.fromJson(json['student']) : null;

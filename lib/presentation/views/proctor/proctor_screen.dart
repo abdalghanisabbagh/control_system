@@ -7,13 +7,10 @@ import '../../../domain/controllers/controllers.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../resource_manager/constants/app_constatnts.dart';
 import '../base_screen.dart';
 import 'widgets/add_new_proctor.dart';
-import 'widgets/assign_proctor_to_exam_by_room_id.dart';
-import 'widgets/edit_proctor_widget.dart';
-import 'widgets/exam_rooms_assigned_to_proctor.dart';
-import 'widgets/proctors_in_exam_room_widget.dart';
+import 'widgets/exam_rooms_widget.dart';
+import 'widgets/proctors_widget.dart';
 
 class ProctorScreen extends GetView<ProctorController> {
   const ProctorScreen({super.key});
@@ -211,141 +208,8 @@ class ProctorScreen extends GetView<ProctorController> {
                                                     ),
                                                   ),
                                                 ),
-                                                Expanded(
-                                                  child: GetBuilder<
-                                                      ProctorController>(
-                                                    id: 'proctors',
-                                                    builder: (controller) {
-                                                      return RepaintBoundary(
-                                                        child: ListView.builder(
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          shrinkWrap: true,
-                                                          itemCount: controller
-                                                              .proctors.length,
-                                                          itemBuilder:
-                                                              (context, index) {
-                                                            return InkWell(
-                                                              onTap: () async {
-                                                                if (controller
-                                                                        .selectedProctor
-                                                                        ?.iD ==
-                                                                    controller
-                                                                        .proctors[
-                                                                            index]
-                                                                        .iD) {
-                                                                  controller
-                                                                          .selectedProctor =
-                                                                      null;
-                                                                  controller
-                                                                      .update([
-                                                                    'proctors'
-                                                                  ]);
-                                                                } else {
-                                                                  controller
-                                                                          .selectedProctor =
-                                                                      controller
-                                                                              .proctors[
-                                                                          index];
-                                                                  controller
-                                                                      .update([
-                                                                    'proctors'
-                                                                  ]);
-                                                                  if (controller
-                                                                      .canAssignProctorToExamRoom()) {
-                                                                    MyDialogs
-                                                                        .showDialog(
-                                                                      context,
-                                                                      const AssignProctorToExamMission(),
-                                                                    );
-                                                                  }
-                                                                }
-                                                              },
-                                                              onLongPress: () {
-                                                                MyDialogs
-                                                                    .showDialog(
-                                                                  context,
-                                                                  EditProctorWidget(
-                                                                    proctor: controller
-                                                                            .proctors[
-                                                                        index],
-                                                                  ),
-                                                                );
-                                                              },
-                                                              onDoubleTap: () {
-                                                                controller.getExamRoomsByProctorId(
-                                                                    proctorId: controller
-                                                                        .proctors[
-                                                                            index]
-                                                                        .iD!);
-                                                                MyDialogs
-                                                                    .showDialog(
-                                                                  context,
-                                                                  ExamRoomsAssignedToProctorWidget(
-                                                                    proctorName: controller
-                                                                        .proctors[
-                                                                            index]
-                                                                        .userName!,
-                                                                  ),
-                                                                );
-                                                              },
-                                                              child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .all(
-                                                                        8.0),
-                                                                child:
-                                                                    AnimatedContainer(
-                                                                  duration:
-                                                                      AppConstants
-                                                                          .mediumDuration,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: controller.selectedProctor?.iD ==
-                                                                            controller
-                                                                                .proctors[
-                                                                                    index]
-                                                                                .iD
-                                                                        ? ColorManager
-                                                                            .primary
-                                                                        : ColorManager
-                                                                            .ligthBlue,
-                                                                    borderRadius:
-                                                                        const BorderRadius
-                                                                            .all(
-                                                                      Radius
-                                                                          .circular(
-                                                                        10,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                        horizontal:
-                                                                            8),
-                                                                    child: Text(
-                                                                      '${index + 1} - ${controller.proctors[index].userName}',
-                                                                      style: nunitoBold
-                                                                          .copyWith(
-                                                                        color: controller.selectedProctor?.iD ==
-                                                                                controller.proctors[index].iD
-                                                                            ? ColorManager.white
-                                                                            : ColorManager.black,
-                                                                        fontSize:
-                                                                            20,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
+                                                const Expanded(
+                                                  child: ProctorsWidget(),
                                                 ),
                                               ],
                                             ),
@@ -361,173 +225,14 @@ class ProctorScreen extends GetView<ProctorController> {
                                   const SizedBox(
                                     width: 20,
                                   ),
-                                  Expanded(
+                                  const Expanded(
                                     flex: 3,
-                                    child: GetBuilder<ProctorController>(
-                                      id: 'examRooms',
-                                      builder: (_) => controller
-                                              .examRoomsAreLoading
-                                          ? Center(
-                                              child: LoadingIndicators
-                                                  .getLoadingIndicator(),
-                                            )
-                                          : controller.examRooms.isEmpty
-                                              ? controller
-                                                              .selectedEducationYearId !=
-                                                          null &&
-                                                      controller
-                                                              .selectedControlMissionsId !=
-                                                          null &&
-                                                      controller.selectedDate !=
-                                                          null
-                                                  ? Center(
-                                                      child: Text(
-                                                        'No Exam Rooms Available. Please Create At Least One Exam Room',
-                                                        style:
-                                                            nunitoBold.copyWith(
-                                                          fontSize: 18,
-                                                        ),
-                                                      ),
-                                                    )
-                                                  : const SizedBox.shrink()
-                                              : RepaintBoundary(
-                                                  child: GridView.builder(
-                                                    shrinkWrap: true,
-                                                    gridDelegate:
-                                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                                      crossAxisCount: 6,
-                                                      mainAxisSpacing: 5,
-                                                      crossAxisSpacing: 5,
-                                                      childAspectRatio: 2,
-                                                    ),
-                                                    itemCount: controller
-                                                        .examRooms.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return InkWell(
-                                                        onTap: () async {
-                                                          if (controller
-                                                                  .selectedExamRoom
-                                                                  ?.id ==
-                                                              controller
-                                                                  .examRooms[
-                                                                      index]
-                                                                  .id) {
-                                                            controller
-                                                                    .selectedExamRoom =
-                                                                null;
-                                                            controller.update(
-                                                                ['examRooms']);
-                                                          } else {
-                                                            controller
-                                                                    .selectedExamRoom =
-                                                                controller
-                                                                        .examRooms[
-                                                                    index];
-                                                            controller.update(
-                                                                ['examRooms']);
-                                                            if (controller
-                                                                .canAssignProctorToExamRoom()) {
-                                                              MyDialogs
-                                                                  .showDialog(
-                                                                context,
-                                                                const AssignProctorToExamMission(),
-                                                              );
-                                                            }
-                                                          }
-                                                        },
-                                                        onDoubleTap: () {
-                                                          controller.getProctorsByExamRoomId(
-                                                              examRoomId:
-                                                                  controller
-                                                                      .examRooms[
-                                                                          index]
-                                                                      .id!);
-                                                          MyDialogs.showDialog(
-                                                            context,
-                                                            ProctorsInExamRoomWidget(
-                                                              examRoomName:
-                                                                  controller
-                                                                      .examRooms[
-                                                                          index]
-                                                                      .name!,
-                                                            ),
-                                                          );
-                                                        },
-                                                        child:
-                                                            AnimatedContainer(
-                                                          duration: AppConstants
-                                                              .mediumDuration,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: controller
-                                                                        .selectedExamRoom
-                                                                        ?.id ==
-                                                                    controller
-                                                                        .examRooms[
-                                                                            index]
-                                                                        .id
-                                                                ? ColorManager
-                                                                    .primary
-                                                                : Colors
-                                                                    .lightBlueAccent,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                              10,
-                                                            ),
-                                                          ),
-                                                          child:
-                                                              DefaultTextStyle(
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: nunitoRegular
-                                                                .copyWith(
-                                                              fontSize: 14,
-                                                              color: controller
-                                                                          .selectedExamRoom
-                                                                          ?.id ==
-                                                                      controller
-                                                                          .examRooms[
-                                                                              index]
-                                                                          .id
-                                                                  ? ColorManager
-                                                                      .white
-                                                                  : ColorManager
-                                                                      .black,
-                                                            ),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Text(
-                                                                      '${controller.examRooms[index].name}'),
-                                                                ),
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    '${controller.examRooms[index].stage}',
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                    ),
+                                    child: ExamRoomsWidget(),
                                   ),
                                 ],
                               ),
                       ),
-                    )
+                    ),
                   ],
                 ).paddingSymmetric(
                   horizontal: 10,

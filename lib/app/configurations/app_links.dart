@@ -1,16 +1,14 @@
 class AppLinks {
-  static const baseUrlDev = 'http://localhost:3333/';
-
   static const baseUrl = 'http://localhost:80/';
-
+  static const baseUrlDev = 'http://localhost:3333/';
   static const baseUrlProd = 'https://control-o5xlbifnea-uc.a.run.app/';
 }
 
 class AuthLinks {
   static const auth = 'auth';
+  static const getNewAccessToken = '$auth/get-new-access-token';
   static const login = '$auth/login';
   static const logout = '$auth/logout';
-  static const getNewAccessToken = '$auth/get-new-access-token';
   static const refresh = '$auth/refresh';
 }
 
@@ -25,9 +23,9 @@ class ControlMissionLinks {
   static const controlMission = 'control-mission';
   static const controlMissionEducationYear = 'education-year';
   static const controlMissionSchool = '$controlMission/school';
-  static const studentSeatNumbers = '$controlMission/student-seat-numbers';
   static const getGradesByControlMission = '$controlMission/grades';
   static const getSubjectsByControlMission = 'subjects/controlMission';
+  static const studentSeatNumbers = '$controlMission/student-seat-numbers';
 }
 
 class EducationYearsLinks {
@@ -51,10 +49,10 @@ class ExamRoomLinks {
 class GeneratePdfLinks {
   static const generatePdf = 'generate-pdf';
   static const generatePdfAmCover = '$generatePdf/am-cover';
+  static const generatePdfAttendence = '$generatePdf/attendance';
   static const generatePdfBrCover = '$generatePdf/br-cover';
   static const generatePdfIBCover = '$generatePdf/IB-cover';
   static const generatePdfSeat = '$generatePdf/seats';
-  static const generatePdfAttendence = '$generatePdf/attendance';
 }
 
 class GradeLinks {
@@ -68,9 +66,9 @@ class ProctorsLinks {
 
 class SchoolsLinks {
   static const classDesks = 'class-desk';
-  static const schools = 'schools';
   static const getAllSchools = '$schools/all';
   static const getSchoolsClassesBySchoolId = '$schoolsClasses/school';
+  static const schools = 'schools';
   static const schoolsClasses = 'school-classes';
   static const schoolsType = 'school-type';
 }
@@ -80,6 +78,7 @@ class Stage {
 }
 
 class StudentsLinks {
+  static const getStudentsByControlMission = '$student/controlMission';
   static const student = 'student';
   static const studentBarcodes = 'student-barcodes';
   static const studentBarcodesExamMission = 'student-barcodes/exam-mission';
@@ -94,30 +93,29 @@ class StudentsLinks {
   static const studentSeatNumbersExamRoom = '$studentSeatNumbers/exam-rooms';
   static const studentSeatNumbersStudent = '$studentSeatNumbers/student';
   static const studentsClass = '$student/class';
-  static const getStudentsByControlMission = '$student/controlMission';
   static const studentsGrades = '$student/students-grades/control-mission/';
 }
 
 class SubjectsLinks {
+  static const deleteSchoolTypeinSubjects = '$subjects/remove-school-type';
   static const subject = 'subject';
   static const subjects = 'subjects';
-  static const subjectsDeactivate = '$subjects/deactivate';
   static const subjectsBySchoolType = '$subjects/school-type/';
-  static const deleteSchoolTypeinSubjects = '$subjects/remove-school-type';
+  static const subjectsDeactivate = '$subjects/deactivate';
 }
 
 class UserLinks {
-  static const users = 'users';
-  static const usersInSchool = '/$users/school';
-  static const userAddRoles = '$users/add-roles';
-  static const usersAddSchools = '$users/add-schools';
-  static const getUsersByCreated = '$users/created-by';
-  static const userEditRoles = '$users/edit-roles';
-  static const login = 'auth/login';
   static const String getNewAccessToken = 'auth/get-new-access-token';
+  static const getUsersByCreated = '$users/created-by';
+  static const login = 'auth/login';
   static const logout = 'auth/logout';
   static const refresh = 'auth/refresh';
   static const user = 'users';
+  static const userAddRoles = '$users/add-roles';
+  static const userEditRoles = '$users/edit-roles';
+  static const users = 'users';
+  static const usersAddSchools = '$users/add-schools';
+  static const usersInSchool = '/$users/school';
 }
 
 class UserRolesSystemsLink {
@@ -125,6 +123,7 @@ class UserRolesSystemsLink {
   static const userRolesSystems = 'user-roles-systems';
   static const userRolesSystemsConnectRolesToScreens =
       'user-roles-systems/connect-roles-to-screens';
+
   static const userRolesSystemsDisconnectRolesFromScreens =
       'user-roles-systems/disconnect-roles-from-screens';
 }

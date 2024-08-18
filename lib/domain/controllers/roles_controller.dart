@@ -19,16 +19,14 @@ class RolesController extends GetxController {
   bool addLoading = false;
   bool connectLoading = false;
   bool deleteScreenLoading = false;
+  bool getAllLoading = false;
+  List<int> removedSreensIds = [];
+  List<RoleResModel> roles = [];
   bool rolesLoading = false;
   final ScrollController rolesScrollController = ScrollController();
-  final ScrollController screensScrollController = ScrollController();
-
-  bool getAllLoading = false;
-
-  List<RoleResModel> roles = [];
   List<ScreenResModel> screens = [];
+  final ScrollController screensScrollController = ScrollController();
   List<int> selectedSreensIds = [];
-  List<int> removedSreensIds = [];
 
   Future<bool> addNewRoles({
     required String name,

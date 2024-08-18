@@ -14,8 +14,9 @@ import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 // ignore: must_be_immutable
 class SeatNumberWidget extends GetView<SeatNumberController> {
   final ControlMissionResModel controlMissionObject;
-  final int id;
+
   final GradeResModel gradeObject;
+  final int id;
   const SeatNumberWidget({
     super.key,
     required this.gradeObject,

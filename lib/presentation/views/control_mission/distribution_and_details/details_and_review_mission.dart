@@ -58,7 +58,8 @@ class DetailsAndReviewMission
                         automaticIndicatorColorAdjustment: true,
                         labelColor: ColorManager.primary,
                         labelPadding: const EdgeInsets.symmetric(vertical: 5),
-                        indicator: const BoxDecoration(color: ColorManager.white),
+                        indicator:
+                            const BoxDecoration(color: ColorManager.white),
                         indicatorSize: TabBarIndicatorSize.tab,
                         unselectedLabelColor: ColorManager.white,
                         controller: controller.tabController,

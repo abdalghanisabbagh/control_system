@@ -13,6 +13,7 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 class OperationController extends GetxController {
   bool getAllLoading = false;
   List<SubjectResModel> subjects = <SubjectResModel>[].obs;
+
   Future getAllSubjects() async {
     getAllLoading = true;
     update();

@@ -18,126 +18,69 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class SeatNumberController extends GetxController {
-  bool isLoadingGetEducationYear = false;
-  bool isLoadingGetControlMission = false;
-  bool isLodingGetExamMission = false;
-  bool isLoadingGrades = false;
+  List<ControlMissionResModel> controlMissionList = [];
+  ControlMissionResModel? controlMissionObject;
+  List<GradeResModel> filteredGradesList = [];
+  List<GradeResModel> gradesList = [];
   bool isLoading = false;
   bool isLoadingGeneratePdf = false;
-  List<ValueItem> optionsEducationYear = [];
-  ValueItem? selectedItemEducationYear;
+  bool isLoadingGetControlMission = false;
+  bool isLoadingGetEducationYear = false;
+  bool isLoadingGrades = false;
+  bool isLodingGetExamMission = false;
   List<ValueItem> optionsControlMission = [];
-  ValueItem? selectedItemControlMission;
+  List<ValueItem> optionsEducationYear = [];
   List<ValueItem> optionsGrades = [];
-  List<GradeResModel> filteredGradesList = [];
-  List<ControlMissionResModel> controlMissionList = [];
-  List<GradeResModel> gradesList = [];
-
-  ValueItem? selectedItemGrade;
-  ControlMissionResModel? controlMissionObject;
-
   final int schoolId = Hive.box('School').get('Id');
+  ValueItem? selectedItemControlMission;
+  ValueItem? selectedItemEducationYear;
+  ValueItem? selectedItemGrade;
 
-  @override
-  void onInit() {
-    geteducationyear();
-    super.onInit();
-  }
-
-  Future<void> updateFilteredList(ValueItem? selectedItemGrade) async {
-    if (selectedItemGrade == null) {
-      filteredGradesList = gradesList;
-    } else {
-      filteredGradesList = gradesList.where((grade) {
-        bool matchesGrade = grade.iD == selectedItemGrade.value;
-
-        return matchesGrade;
-      }).toList();
-    }
-    update();
-  }
-
-  void setSelectedItemControlMission(List<ValueItem> items) async {
-    if (items.isNotEmpty) {
-      selectedItemControlMission = items.first;
-      controlMissionObject = controlMissionList.firstWhereOrNull(
-        (element) => element.iD == selectedItemControlMission!.value,
+  Future<void> downloadFilePdf(String url, String controlMissionName) async {
+    try {
+      await FileSaver.instance.saveFile(
+        name: 'cover-sheet-$controlMissionName',
+        link: LinkDetails(link: url),
+        mimeType: MimeType.pdf,
+        ext: 'pdf',
       );
-
-      isLoading = true;
-      update();
-      await Future.wait([
-        getGradesBySchoolId(),
-        getGradesByControlMission(selectedItemControlMission!.value),
-      ]);
-      isLoading = false;
-      update();
-
-      updateFilteredList(null);
-    } else {
-      selectedItemControlMission = null;
-      gradesList.clear();
-      filteredGradesList.clear();
+    } catch (e) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "$e",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
     }
-
-    update();
   }
 
-  void setSelectedItemGrade(List<ValueItem> items) {
-    if (items.isNotEmpty) {
-      selectedItemGrade = items.first;
-      updateFilteredList(selectedItemGrade);
-    } else {
-      updateFilteredList(null);
-      selectedItemGrade = null;
-    }
-    update();
-  }
+  Future<void> generatePdfSeatNumber(
+      {required String controlMissionName,
+      required int controlMissionId,
+      required int gradeId}) async {
+    isLoadingGeneratePdf = true;
+    update([gradeId]);
 
-  Future<void> geteducationyear() async {
-    isLoadingGetEducationYear = true;
-    update();
-    ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
-    Either<Failure, EducationsYearsModel> response =
-        await responseHandler.getResponse(
-      path: EducationYearsLinks.educationyear,
-      converter: EducationsYearsModel.fromJson,
+    final response = await ResponseHandler<UploadPdfResModel>().getResponse(
+      path:
+          '${GeneratePdfLinks.generatePdfSeat}/$controlMissionId?gradeid=$gradeId',
+      converter: UploadPdfResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      },
-      (r) {
-        List<ValueItem> items = r.data!
-            .map((item) => ValueItem(label: item.name!, value: item.id))
-            .toList();
-        optionsEducationYear = items;
-      },
-    );
-
-    isLoadingGetEducationYear = false;
-    update();
-  }
-
-  void setSelectedItemEducationYear(List<ValueItem> items) {
-    if (items.isNotEmpty) {
-      selectedItemEducationYear = items.first;
-      int educationYearId = selectedItemEducationYear!.value;
-      getControlMissionByEducationYearAndBySchool(educationYearId);
-    } else {
-      selectedItemEducationYear = null;
-      gradesList.clear();
-      //examMissionsList.clear();
-      filteredGradesList.clear();
-      selectedItemControlMission = null;
-    }
-
-    update();
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      isLoadingGeneratePdf = false;
+      update([gradeId]);
+    }, (result) {
+      if (result.url != null) {
+        downloadFilePdf(result.url!, controlMissionName);
+        isLoadingGeneratePdf = false;
+        update([gradeId]);
+      }
+    });
   }
 
   Future<void> getControlMissionByEducationYearAndBySchool(
@@ -175,6 +118,62 @@ class SeatNumberController extends GetxController {
     update();
   }
 
+  Future<void> geteducationyear() async {
+    isLoadingGetEducationYear = true;
+    update();
+    ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
+    Either<Failure, EducationsYearsModel> response =
+        await responseHandler.getResponse(
+      path: EducationYearsLinks.educationyear,
+      converter: EducationsYearsModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        List<ValueItem> items = r.data!
+            .map((item) => ValueItem(label: item.name!, value: item.id))
+            .toList();
+        optionsEducationYear = items;
+      },
+    );
+
+    isLoadingGetEducationYear = false;
+    update();
+  }
+
+  Future<void> getGradesByControlMission(int controlMissionId) async {
+    isLoadingGrades = true;
+    update();
+    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
+
+    var response = await responseHandler.getResponse(
+      path:
+          "${ControlMissionLinks.getGradesByControlMission}/$controlMissionId",
+      converter: GradesResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold((fauilr) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "${fauilr.code} ::${fauilr.message}",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }, (result) {
+      gradesList = result.data!;
+      isLoadingGrades = false;
+      update();
+    });
+    isLoadingGrades = false;
+  }
+
   Future<void> getGradesBySchoolId() async {
     isLoadingGrades = true;
 
@@ -202,76 +201,75 @@ class SeatNumberController extends GetxController {
     isLoadingGrades = false;
   }
 
-  Future<void> generatePdfSeatNumber(
-      {required String controlMissionName,
-      required int controlMissionId,
-      required int gradeId}) async {
-    isLoadingGeneratePdf = true;
-    update([gradeId]);
-
-    final response = await ResponseHandler<UploadPdfResModel>().getResponse(
-      path:
-          '${GeneratePdfLinks.generatePdfSeat}/$controlMissionId?gradeid=$gradeId',
-      converter: UploadPdfResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      isLoadingGeneratePdf = false;
-      update([gradeId]);
-    }, (result) {
-      if (result.url != null) {
-        downloadFilePdf(result.url!, controlMissionName);
-        isLoadingGeneratePdf = false;
-        update([gradeId]);
-      }
-    });
+  @override
+  void onInit() {
+    geteducationyear();
+    super.onInit();
   }
 
-  Future<void> downloadFilePdf(String url, String controlMissionName) async {
-    try {
-      await FileSaver.instance.saveFile(
-        name: 'cover-sheet-$controlMissionName',
-        link: LinkDetails(link: url),
-        mimeType: MimeType.pdf,
-        ext: 'pdf',
+  void setSelectedItemControlMission(List<ValueItem> items) async {
+    if (items.isNotEmpty) {
+      selectedItemControlMission = items.first;
+      controlMissionObject = controlMissionList.firstWhereOrNull(
+        (element) => element.iD == selectedItemControlMission!.value,
       );
-    } catch (e) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "$e",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
+
+      isLoading = true;
+      update();
+      await Future.wait([
+        getGradesBySchoolId(),
+        getGradesByControlMission(selectedItemControlMission!.value),
+      ]);
+      isLoading = false;
+      update();
+
+      updateFilteredList(null);
+    } else {
+      selectedItemControlMission = null;
+      gradesList.clear();
+      filteredGradesList.clear();
     }
+
+    update();
   }
 
-  Future<void> getGradesByControlMission(int controlMissionId) async {
-    isLoadingGrades = true;
+  void setSelectedItemEducationYear(List<ValueItem> items) {
+    if (items.isNotEmpty) {
+      selectedItemEducationYear = items.first;
+      int educationYearId = selectedItemEducationYear!.value;
+      getControlMissionByEducationYearAndBySchool(educationYearId);
+    } else {
+      selectedItemEducationYear = null;
+      gradesList.clear();
+      //examMissionsList.clear();
+      filteredGradesList.clear();
+      selectedItemControlMission = null;
+    }
+
     update();
-    ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
+  }
 
-    var response = await responseHandler.getResponse(
-      path:
-          "${ControlMissionLinks.getGradesByControlMission}/$controlMissionId",
-      converter: GradesResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
+  void setSelectedItemGrade(List<ValueItem> items) {
+    if (items.isNotEmpty) {
+      selectedItemGrade = items.first;
+      updateFilteredList(selectedItemGrade);
+    } else {
+      updateFilteredList(null);
+      selectedItemGrade = null;
+    }
+    update();
+  }
 
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-    }, (result) {
-      gradesList = result.data!;
-      isLoadingGrades = false;
-      update();
-    });
-    isLoadingGrades = false;
+  Future<void> updateFilteredList(ValueItem? selectedItemGrade) async {
+    if (selectedItemGrade == null) {
+      filteredGradesList = gradesList;
+    } else {
+      filteredGradesList = gradesList.where((grade) {
+        bool matchesGrade = grade.iD == selectedItemGrade.value;
+
+        return matchesGrade;
+      }).toList();
+    }
+    update();
   }
 }

@@ -141,14 +141,6 @@ class DashBoardBindings extends Bindings {
   }
 }
 
-class HomeBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController());
-    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
-  }
-}
-
 class ProctorBindings extends Bindings {
   @override
   void dependencies() {

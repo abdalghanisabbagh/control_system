@@ -17,11 +17,46 @@ class EditSubjectsController extends GetxController {
   bool editLoading = false;
   bool getAllLoading = false;
   bool getSchoolTypeLoading = false;
-  List<SubjectResModel> subjects = <SubjectResModel>[];
-  List<SchoolTypeResModel> schoolsType = <SchoolTypeResModel>[];
   RxBool inExam = true.obs;
-  List<int> selectedSchoolTypeIds = <int>[];
   List<int> initialSelectedSchoolTypeIds = <int>[];
+  List<SchoolTypeResModel> schoolsType = <SchoolTypeResModel>[];
+  List<int> selectedSchoolTypeIds = <int>[];
+  List<SubjectResModel> subjects = <SubjectResModel>[];
+
+  Future<bool> deleteSchoolTypeInSubject({
+    required int idSubject,
+    required int idSchoolType,
+  }) async {
+    editLoading = true;
+    update();
+    bool subjectHasBeenUpdated = false;
+    ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
+    Either<Failure, SubjectResModel> response =
+        await responseHandler.getResponse(
+      path:
+          '${SubjectsLinks.deleteSchoolTypeinSubjects}/$idSubject/$idSchoolType',
+      converter: SubjectResModel.fromJson,
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        subjectHasBeenUpdated = false;
+      },
+      (r) {
+        subjectHasBeenUpdated = true;
+        update();
+      },
+    );
+    editLoading = false;
+    update();
+    return subjectHasBeenUpdated;
+  }
 
   Future<bool> editSubject({
     required int id,
@@ -45,41 +80,6 @@ class EditSubjectsController extends GetxController {
         "InExam": inexam,
         "Active": active
       },
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        subjectHasBeenUpdated = false;
-      },
-      (r) {
-        subjectHasBeenUpdated = true;
-        update();
-      },
-    );
-    editLoading = false;
-    update();
-    return subjectHasBeenUpdated;
-  }
-
-  Future<bool> deleteSchoolTypeInSubject({
-    required int idSubject,
-    required int idSchoolType,
-  }) async {
-    editLoading = true;
-    update();
-    bool subjectHasBeenUpdated = false;
-    ResponseHandler<SubjectResModel> responseHandler = ResponseHandler();
-    Either<Failure, SubjectResModel> response =
-        await responseHandler.getResponse(
-      path:
-          '${SubjectsLinks.deleteSchoolTypeinSubjects}/$idSubject/$idSchoolType',
-      converter: SubjectResModel.fromJson,
-      type: ReqTypeEnum.PATCH,
-      body: {},
     );
     response.fold(
       (l) {
@@ -126,16 +126,15 @@ class EditSubjectsController extends GetxController {
     update();
   }
 
-  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
-    selectedSchoolTypeIds =
-        selectedOptions.map((e) => e.value).toList().cast<int>();
-    update();
-  }
-
-
   @override
   void onInit() {
     getSchoolType();
     super.onInit();
+  }
+
+  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
+    selectedSchoolTypeIds =
+        selectedOptions.map((e) => e.value).toList().cast<int>();
+    update();
   }
 }

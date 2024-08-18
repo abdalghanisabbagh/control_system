@@ -57,7 +57,6 @@ class ControlMissionController extends GetxController {
     return gotData;
   }
 
-
   Future<void> getEducationYears() async {
     isLodingGetEducationYears = true;
     update();

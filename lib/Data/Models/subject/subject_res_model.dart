@@ -1,17 +1,16 @@
 import 'school_type_has_subjects_res_model.dart';
 
 class SubjectResModel {
-  int? active, inExam;
-
   String? createdAt;
 
   int? createdBy;
+
   int? iD;
+  int? active, inExam;
   String? name;
+  SchoolTypeHasSubjectsResModel? schoolTypeHasSubjectsResModel;
   String? updatedAt;
   int? updatedBy;
-  SchoolTypeHasSubjectsResModel? schoolTypeHasSubjectsResModel;
-
   SubjectResModel(
       {this.iD,
       this.name,

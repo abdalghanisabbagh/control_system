@@ -13,7 +13,7 @@ class ProfileCardWidget extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 20,
-            offset: const Offset(2, 15), 
+            offset: const Offset(2, 15),
           ),
         ],
         color: ColorManager.white,
@@ -30,14 +30,12 @@ class ProfileCardWidget extends StatelessWidget {
                   Icons.person,
                 ),
               ),
-           
             ],
           ),
           const Divider(
             thickness: 0.5,
             color: Colors.grey,
           ),
-        
           profileListTile("Role", "Admin"),
         ],
       ),

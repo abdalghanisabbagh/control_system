@@ -12,9 +12,11 @@ import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 
 // ignore: must_be_immutable
 class AddSubjectWidget extends StatelessWidget {
-  final SubjectsController subjectsController = Get.find();
   List schoolTypes = [];
+
+  final SubjectsController subjectsController = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   AddSubjectWidget({
     super.key,
   });
