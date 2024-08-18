@@ -19,6 +19,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
   var foucsnode = FocusNode();
 
   SetDegreesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen(

@@ -6,6 +6,7 @@ class SchoolTypeSubjectsResModel {
   SchoolTypeSubjectsResModel({
     this.schoolType,
   });
+
   SchoolTypeSubjectsResModel.fromJson(json) {
     schoolType = json['school_type'] != null
         ? SchoolTypeResModel.fromJson(json['school_type'])

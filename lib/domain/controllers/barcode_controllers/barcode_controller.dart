@@ -15,6 +15,7 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 class BarcodeController extends GetxController {
   final TextEditingController barcodeController = TextEditingController();
   BarcodeResModel? barcodeResModel;
+  bool isEdit = false;
 //   String atoken = '';
 //   SchoolResponse? selectedSchool;
 //   EducationResponse? selectedEduction;
@@ -27,7 +28,7 @@ class BarcodeController extends GetxController {
 
 //   FocusNode degreeController = FocusNode();
   bool isLoading = false;
-bool isEdit = false;
+
   final TextEditingController studentDegreeController = TextEditingController();
 
   @override

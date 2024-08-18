@@ -7,12 +7,9 @@ class AppRoutesNamesAndPaths {
   static const String adminScreenName = 'Admin';
   // adminScreen
   static const String adminScreenPath = '/admin';
-  static const String usersInSchoolScreenPath = 'users-in-school';
-  static const String usersInSchoolScreenName = 'Users In School';
 
-  static const String allusersScreenPath = 'all-users';
   static const String allUsersScreenName = 'All Users';
-
+  static const String allusersScreenPath = 'all-users';
   static const String batchDocumentsScreenName = 'Batch Documents';
   // batchDocumentsScreen
   static const String batchDocumentsScreenPath = '/batch-documents';
@@ -40,10 +37,6 @@ class AppRoutesNamesAndPaths {
   static const String createMissionScreenName = 'Create Mission';
   // createMissionScreen
   static const String createMissionScreenPath = 'create-mission';
-
-  static const String oprerationsScreenName = 'Operations';
-  // oprerationsScreen
-  static const String oprerationsScreenPath = 'operations';
 
   static const String dashBoardScreenName = 'Dashboard';
   // dashBoardScreen
@@ -75,6 +68,10 @@ class AppRoutesNamesAndPaths {
   static const String loginScreenName = 'Auth';
   // loginScreen
   static const String loginScreenPath = '/login';
+
+  static const String oprerationsScreenName = 'Operations';
+  // oprerationsScreen
+  static const String oprerationsScreenPath = 'operations';
 
   static const String proctorScreenName = 'Proctor';
   // proctorScreen
@@ -109,4 +106,7 @@ class AppRoutesNamesAndPaths {
   static const String subjectSettingScreenName = 'Subject Settings';
   // subjectSettingScreen
   static const String subjectSettingScreenPath = '/subject-settings';
+
+  static const String usersInSchoolScreenName = 'Users In School';
+  static const String usersInSchoolScreenPath = 'users-in-school';
 }

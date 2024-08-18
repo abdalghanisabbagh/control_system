@@ -16,31 +16,28 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 import '../../presentation/resource_manager/constants/app_constatnts.dart';
 
 class AdminController extends GetxController {
-  bool isLoadingGetUsersInSchool = false;
+  List<UserResModel> allUsersList = <UserResModel>[];
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController fullNameController = TextEditingController();
+  bool isLoading = false;
   bool isLoadingGetAllUsers = false;
   bool isLoadingGetUsersCreatedBy = false;
-  bool isLoading = false;
+  bool isLoadingGetUsersInSchool = false;
   bool isLodingEditUser = false;
-  bool isLodingGetRoles = false;
   bool isLodingEditUserRoles = false;
-
-  String? selectedDivision;
-  String? selectedRoleType;
-  bool showOldPassord = true;
-  bool showNewPassword = true;
-
+  bool isLodingGetRoles = false;
   final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController nisIdController = TextEditingController();
   final TextEditingController oldPasswordController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  List<UserResModel> userCreatedList = <UserResModel>[];
-  List<UserResModel> allUsersList = <UserResModel>[];
-  List<UserResModel> userInSchoolList = <UserResModel>[];
   List<RoleResModel> rolesList = <RoleResModel>[];
+  String? selectedDivision;
+  String? selectedRoleType;
   List<int> selectedRoles = <int>[];
+  bool showNewPassword = true;
+  bool showOldPassord = true;
+  List<UserResModel> userCreatedList = <UserResModel>[];
+  List<UserResModel> userInSchoolList = <UserResModel>[];
+  final TextEditingController usernameController = TextEditingController();
 
   Future<bool> addNewUser() async {
     isLoading = true;
@@ -81,101 +78,6 @@ class AdminController extends GetxController {
         return true;
       },
     );
-  }
-
-  Future<void> getUserInSchool() async {
-    debugPrint('get user in school');
-    isLoadingGetUsersInSchool = true;
-    update();
-
-    ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
-    Either<Failure, UsersResModel> response = await responseHandler.getResponse(
-      path: UserLinks.usersInSchool,
-      converter: UsersResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        debugPrint('user in school error ${l.message}');
-      },
-      (r) {
-        debugPrint('user in school ${r.users!.length}');
-        userInSchoolList = r.users!.map((user) {
-          user.roleType = AppConstants.roleTypes[user.type ?? 0];
-          return user;
-        }).toList();
-      },
-    );
-    isLoadingGetUsersInSchool = false;
-    update();
-  }
-
-  Future<void> getAllUsers() async {
-    isLoadingGetAllUsers = true;
-    update();
-
-    ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
-    Either<Failure, UsersResModel> response = await responseHandler.getResponse(
-      path: UserLinks.users,
-      converter: UsersResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      },
-      (r) {
-        allUsersList = r.users!.map((user) {
-          user.roleType = AppConstants.roleTypes[user.type ?? 0];
-          return user;
-        }).toList();
-      },
-    );
-
-    isLoadingGetAllUsers = false;
-    update();
-  }
-
-  Future<void> getUserCreatedBy() async {
-    isLoadingGetUsersCreatedBy = true;
-    update();
-
-    ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
-    Either<Failure, UsersResModel> response = await responseHandler.getResponse(
-      path: UserLinks.getUsersByCreated,
-      converter: UsersResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      },
-      (r) {
-        userCreatedList = r.users!.map((user) {
-          user.roleType = AppConstants.roleTypes[user.type ?? 0];
-          return user;
-        }).toList();
-      },
-    );
-
-    isLoadingGetUsersCreatedBy = false;
-    update();
   }
 
   Future<bool> editUser(Map<String, dynamic> data, int id) async {
@@ -277,6 +179,101 @@ class AdminController extends GetxController {
     );
 
     isLodingGetRoles = false;
+    update();
+  }
+
+  Future<void> getAllUsers() async {
+    isLoadingGetAllUsers = true;
+    update();
+
+    ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
+    Either<Failure, UsersResModel> response = await responseHandler.getResponse(
+      path: UserLinks.users,
+      converter: UsersResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        allUsersList = r.users!.map((user) {
+          user.roleType = AppConstants.roleTypes[user.type ?? 0];
+          return user;
+        }).toList();
+      },
+    );
+
+    isLoadingGetAllUsers = false;
+    update();
+  }
+
+  Future<void> getUserCreatedBy() async {
+    isLoadingGetUsersCreatedBy = true;
+    update();
+
+    ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
+    Either<Failure, UsersResModel> response = await responseHandler.getResponse(
+      path: UserLinks.getUsersByCreated,
+      converter: UsersResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        userCreatedList = r.users!.map((user) {
+          user.roleType = AppConstants.roleTypes[user.type ?? 0];
+          return user;
+        }).toList();
+      },
+    );
+
+    isLoadingGetUsersCreatedBy = false;
+    update();
+  }
+
+  Future<void> getUserInSchool() async {
+    debugPrint('get user in school');
+    isLoadingGetUsersInSchool = true;
+    update();
+
+    ResponseHandler<UsersResModel> responseHandler = ResponseHandler();
+    Either<Failure, UsersResModel> response = await responseHandler.getResponse(
+      path: UserLinks.usersInSchool,
+      converter: UsersResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        debugPrint('user in school error ${l.message}');
+      },
+      (r) {
+        debugPrint('user in school ${r.users!.length}');
+        userInSchoolList = r.users!.map((user) {
+          user.roleType = AppConstants.roleTypes[user.type ?? 0];
+          return user;
+        }).toList();
+      },
+    );
+    isLoadingGetUsersInSchool = false;
     update();
   }
 

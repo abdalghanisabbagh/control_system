@@ -1,4 +1,3 @@
-
 import 'school_type_subjects_res_model.dart';
 
 class SchoolTypeHasSubjectsResModel {
@@ -19,5 +18,4 @@ class SchoolTypeHasSubjectsResModel {
     }
     return data;
   }
-  
 }

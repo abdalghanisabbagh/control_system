@@ -191,8 +191,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
                           width: 20,
                           style: BorderStyle.solid,
                         ),
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20)),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       suffixIcon: const Icon(
                         Icons.date_range_outlined,

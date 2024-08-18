@@ -19,10 +19,10 @@ class SubjectsController extends GetxController {
   bool editLoading = false;
   bool getAllLoading = false;
   bool getSchoolTypeLoading = false;
-  List<SubjectResModel> subjects = <SubjectResModel>[];
-  List<SchoolTypeResModel> schoolsType = <SchoolTypeResModel>[];
   RxBool inExam = true.obs;
+  List<SchoolTypeResModel> schoolsType = <SchoolTypeResModel>[];
   List<int> selectedSchoolTypeIds = <int>[];
+  List<SubjectResModel> subjects = <SubjectResModel>[];
 
   Future<bool> addNewSubject({
     required String name,
@@ -189,16 +189,16 @@ class SubjectsController extends GetxController {
     update();
   }
 
-  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
-    selectedSchoolTypeIds =
-        selectedOptions.map((e) => e.value).toList().cast<int>();
-    update();
-  }
-
   @override
   void onInit() {
     getSchoolType();
     getAllSubjects();
     super.onInit();
+  }
+
+  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
+    selectedSchoolTypeIds =
+        selectedOptions.map((e) => e.value).toList().cast<int>();
+    update();
   }
 }

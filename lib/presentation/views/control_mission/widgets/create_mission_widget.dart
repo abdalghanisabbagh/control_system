@@ -19,6 +19,7 @@ import '../../../resource_manager/validations.dart';
 
 class CreateMissionScreen extends GetView<CreateControlMissionController> {
   final TextEditingController missionNameController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   CreateMissionScreen({super.key});

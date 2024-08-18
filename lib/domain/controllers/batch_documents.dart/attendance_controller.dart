@@ -16,20 +16,17 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class AttendanceController extends GetxController {
+  bool isLoadingGeneratePdf = false;
+  bool isLoadingGetControlMission = false;
   bool isLoadingGetEducationYear = false;
   bool isLoadingGetExamRoom = false;
-  bool isLoadingGetControlMission = false;
-  bool isLoadingGeneratePdf = false;
-
-  List<ValueItem> optionsEducationYear = [];
-  ValueItem? selectedItemEducationYear;
   List<ValueItem> optionsControlMission = [];
+  List<ValueItem> optionsEducationYear = [];
   List<ValueItem> optionsExamRoom = [];
-
-  ValueItem? selectedItemControlMission;
-  ValueItem? selectedItemExamRoom;
-
   final int schoolId = Hive.box('School').get('Id');
+  ValueItem? selectedItemControlMission;
+  ValueItem? selectedItemEducationYear;
+  ValueItem? selectedItemExamRoom;
 
   Future<void> downloadFilePdf(String url, String attendanceName) async {
     try {

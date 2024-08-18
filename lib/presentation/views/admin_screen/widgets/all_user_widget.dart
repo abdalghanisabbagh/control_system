@@ -1,17 +1,18 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/presentation/views/admin_screen/widgets/add_role_user.dart';
-import 'package:control_system/presentation/views/admin_screen/widgets/edit_user_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:searchable_listview/searchable_listview.dart';
+
 import '../../../../Data/Models/user/users_res/user_res_model.dart';
 import '../../../../domain/controllers/controllers.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import 'add_role_user.dart';
+import 'edit_user_widget.dart';
 
 class AllUserWidget extends GetView<AdminController> {
   const AllUserWidget({super.key});

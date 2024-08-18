@@ -294,7 +294,8 @@ class ProctorController extends GetxController {
     update(['examRooms']);
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
-      path: "${ExamRoomLinks.examRoomsControlMission}/$selectedControlMissionsId",
+      path:
+          "${ExamRoomLinks.examRoomsControlMission}/$selectedControlMissionsId",
       converter: ExamRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

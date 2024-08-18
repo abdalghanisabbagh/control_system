@@ -4,19 +4,20 @@ import 'user_has_roles_res_model.dart';
 
 class UserResModel {
   int? active;
+
   String? createdAt;
+
   int? createdBy;
+  CreatedByUserResModel? createdByUserResModel;
   String? fullName;
   int? iD;
   String? isFloorManager;
+  String? roleType;
   int? type;
   String? updatedAt;
   int? updatedBy;
-  String? userName;
-  CreatedByUserResModel? createdByUserResModel;
   UserHasRolesResModel? userHasRoles;
-  String? roleType;
-
+  String? userName;
   UserResModel({
     this.iD,
     this.fullName,
@@ -32,7 +33,6 @@ class UserResModel {
     this.userHasRoles,
     this.roleType,
   });
-
   UserResModel.fromJson(json) {
     iD = json['ID'];
     fullName = json['Full_Name'];
@@ -54,6 +54,14 @@ class UserResModel {
         : null;
 
     roleType = getRoleType(type ?? 0);
+  }
+
+  String getRoleType(int type) {
+    const roleTypes = AppConstants.roleTypes;
+    if (type < 0 || type >= roleTypes.length) {
+      return 'Unknown';
+    }
+    return roleTypes[type];
   }
 
   Map<String, dynamic> toJson() {
@@ -80,13 +88,5 @@ class UserResModel {
       data['Role'] = roleType;
     }
     return data;
-  }
-
-  String getRoleType(int type) {
-    const roleTypes = AppConstants.roleTypes;
-    if (type < 0 || type >= roleTypes.length) {
-      return 'Unknown';
-    }
-    return roleTypes[type];
   }
 }

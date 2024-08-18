@@ -6,7 +6,6 @@ abstract class AppConstants {
   static const Duration durationThreeSeconds = Duration(seconds: 3);
   static const Duration durationTwoSeconds = Duration(seconds: 2);
   static const Duration mediumDuration = Durations.medium1;
-
   static const List<String> roleTypes = [
     'Control admin',
     'School Director',

@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/services/token_service.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -17,11 +16,12 @@ import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../services/token_service.dart';
 import 'profile_controller.dart';
 
 class SchoolController extends GetxController {
-  bool isLoading = false;
   List<GradeResModel> grades = <GradeResModel>[];
+  bool isLoading = false;
   bool isLoadingAddGrades = true;
   bool isLoadingAddSchool = false;
   bool isLoadingGrades = false;
