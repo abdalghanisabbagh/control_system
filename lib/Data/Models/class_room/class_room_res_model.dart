@@ -13,7 +13,7 @@ class ClassRoomResModel {
   String? name;
   List<int>? rows;
   int? schoolsID;
-  DateTime? updatedAt;
+  String? updatedAt;
   int? updatedBy;
   ClassRoomResModel({
     this.iD,

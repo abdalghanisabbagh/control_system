@@ -331,8 +331,27 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                         ).then(
                           (picked) {
                             if (picked != null) {
-                              controller.selectedEndDate =
-                                  DateFormat('yyyy-MM-dd').format(picked);
+                              if (picked
+                                      .difference(DateTime.tryParse(
+                                          controller.selectedStartDate!)!)
+                                      .inDays
+                                      .abs() <
+                                  7) {
+                                MyAwesomeDialogue(
+                                  title: "Warning",
+                                  desc:
+                                      "End Date should be atleast 7 days after Start Date",
+                                  dialogType: DialogType.warning,
+                                  btnOkOnPressed: () {
+                                    controller.selectedEndDate =
+                                        DateFormat('yyyy-MM-dd').format(picked);
+                                  },
+                                  btnCancelOnPressed: () {},
+                                ).showDialogue(Get.key.currentContext!);
+                              } else {
+                                controller.selectedEndDate =
+                                    DateFormat('yyyy-MM-dd').format(picked);
+                              }
                               controller.update();
                             }
                           },
