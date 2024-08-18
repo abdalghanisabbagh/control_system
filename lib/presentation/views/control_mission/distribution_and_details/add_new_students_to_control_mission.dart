@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_back_button.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,13 @@ class AddStudentsToControlMissionScreen
     return GetBuilder<AddNewStudentsToControlMissionController>(
       builder: (context) {
         return Scaffold(
+          appBar: AppBar(
+            leading: const MyBackButton(),
+            title: Text(
+              'Add Students',
+              style: nunitoBold.copyWith(color: ColorManager.black),
+            ),
+          ),
           body: controller.isLoading
               ? Center(
                   child: LoadingIndicators.getLoadingIndicator(),
