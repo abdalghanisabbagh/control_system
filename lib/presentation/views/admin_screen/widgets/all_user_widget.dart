@@ -10,6 +10,7 @@ import '../../../../domain/controllers/controllers.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import 'add_role_user.dart';
 import 'edit_user_widget.dart';
@@ -168,6 +169,21 @@ class AllUserWidget extends GetView<AdminController> {
                                                           TextOverflow.ellipsis,
                                                     ),
                                                   ),
+                                                  const SizedBox(width: 10),
+                                                  Flexible(
+                                                    child: Text(
+                                                      "Status: ${item.active == 0 ? "Inactive" : "Active"}",
+                                                      style: nunitoRegular
+                                                          .copyWith(
+                                                              color: ColorManager
+                                                                  .bgSideMenu
+                                                                  .withOpacity(
+                                                                      0.7),
+                                                              fontSize: 20),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ],
@@ -220,7 +236,21 @@ class AllUserWidget extends GetView<AdminController> {
                                               desc:
                                                   'Are you sure you want to delete this user?',
                                               dialogType: DialogType.warning,
-                                              btnOkOnPressed: () {},
+                                              btnOkOnPressed: () {
+                                                controller
+                                                    .deactivateUser(
+                                                        userId: item.iD!)
+                                                    .then((value) {
+                                                  if (value) {
+                                                    Get.back();
+                                                    MyFlashBar.showSuccess(
+                                                      "User deleted successfully",
+                                                      "Success",
+                                                    ).show(Get
+                                                        .key.currentContext!);
+                                                  }
+                                                });
+                                              },
                                               btnCancelOnPressed: () {
                                                 Get.back();
                                               },

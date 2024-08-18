@@ -11,6 +11,7 @@ import '../../../../domain/controllers/controllers.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import 'add_role_user.dart';
 import 'edit_user_widget.dart';
@@ -49,12 +50,14 @@ class UserInSchoolWidget extends GetView<AdminController> {
                       child: LoadingIndicators.getLoadingIndicator(),
                     )
                   : controller.userInSchoolList.isEmpty
-                      ? Center(
-                          child: Text(
-                            "No Users Found",
-                            style: nunitoBold.copyWith(
-                              color: ColorManager.bgSideMenu,
-                              fontSize: 16,
+                      ? Expanded(
+                          child: Center(
+                            child: Text(
+                              "No Users Found",
+                              style: nunitoBold.copyWith(
+                                color: ColorManager.bgSideMenu,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         )
@@ -225,7 +228,19 @@ class UserInSchoolWidget extends GetView<AdminController> {
                                                   'Are you sure you want to delete this user?',
                                               dialogType: DialogType.warning,
                                               btnOkOnPressed: () {
-                                                // Delete user
+                                                controller
+                                                    .deactivateUser(
+                                                        userId: item.iD!)
+                                                    .then((value) {
+                                                  if (value) {
+                                                    Get.back();
+                                                    MyFlashBar.showSuccess(
+                                                      "User deleted successfully",
+                                                      "Success",
+                                                    ).show(Get
+                                                        .key.currentContext!);
+                                                  }
+                                                });
                                               },
                                               btnCancelOnPressed: () {
                                                 Get.back();

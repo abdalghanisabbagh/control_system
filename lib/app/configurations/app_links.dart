@@ -116,6 +116,8 @@ class UserLinks {
   static const users = 'users';
   static const usersAddSchools = '$users/add-schools';
   static const usersInSchool = '/$users/school';
+    static const deactivateUser = '/$users/deactivate';
+
 }
 
 class UserRolesSystemsLink {
