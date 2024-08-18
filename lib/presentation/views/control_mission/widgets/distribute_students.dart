@@ -1,4 +1,3 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,8 +8,6 @@ import '../../../../domain/controllers/control_mission/distribute_students_contr
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import 'add_new_students_to_exam_room_widget.dart';
 import 'remove_students_from_exam_room_widget.dart';
 
@@ -765,60 +762,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                           Expanded(
                             child: ElevatedButton.icon(
                               onPressed: () {
-                                if (controller.availableStudents.any(
-                                    (element) => element.classDeskID == null)) {
-                                  MyAwesomeDialogue(
-                                    title: 'Error',
-                                    desc:
-                                        'Some students are not distributed. Are you sure you want to finish ?',
-                                    dialogType: DialogType.warning,
-                                    btnCancelOnPressed: () {},
-                                    btnOkOnPressed: () {
-                                      controller.finish().then((value) {
-                                        if (value) {
-                                          MyFlashBar.showSuccess(
-                                            'Success',
-                                            'Students have been distributed successfully',
-                                          ).show(context.mounted
-                                              ? context
-                                              : Get.key.currentContext!);
-                                        }
-                                      });
-                                    },
-                                  ).showDialogue(context);
-                                } else if (controller
-                                    .availableStudents.isEmpty) {
-                                  MyAwesomeDialogue(
-                                    title: 'Error',
-                                    desc:
-                                        'No students added yet. Are you sure you want to finish ?',
-                                    dialogType: DialogType.warning,
-                                    btnCancelOnPressed: () {},
-                                    btnOkOnPressed: () {
-                                      controller.finish().then((value) {
-                                        if (value) {
-                                          MyFlashBar.showSuccess(
-                                            'Success',
-                                            'Students have been distributed successfully',
-                                          ).show(context.mounted
-                                              ? context
-                                              : Get.key.currentContext!);
-                                        }
-                                      });
-                                    },
-                                  ).showDialogue(context);
-                                } else {
-                                  controller.finish().then((value) {
-                                    if (value) {
-                                      MyFlashBar.showSuccess(
-                                        'Success',
-                                        'Students have been distributed successfully',
-                                      ).show(context.mounted
-                                          ? context
-                                          : Get.key.currentContext!);
-                                    }
-                                  });
-                                }
+                                Get.key.currentState?.pop();
                               },
                               icon: const Icon(Icons.done, color: Colors.white),
                               label: const Text('Finish'),

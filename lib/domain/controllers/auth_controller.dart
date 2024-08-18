@@ -29,7 +29,7 @@ class AuthController extends GetxController {
       if (DateTime.now()
               .difference(DateTime.tryParse(tokenService.tokenModel!.dToken)!)
               .inMinutes >
-          55) {
+          50) {
         refreshToken();
       }
       isLogin = true;
@@ -52,19 +52,23 @@ class AuthController extends GetxController {
     );
 
     response.fold(
-        (l) => MyAwesomeDialogue(
-              title: 'Error',
-              desc: l.message,
-              dialogType: DialogType.error,
-            ).showDialogue(Get.key.currentContext!), (r) {
-      tokenService.saveTokenModelToHiveBox(TokenModel(
-        aToken: r.accessToken!,
-        rToken: r.refreshToken!,
-        dToken: DateTime.now().toIso8601String(),
-      ));
-      profileController.saveProfileToHiveBox(r.userProfile!);
-      isLogin = true;
-    });
+      (l) => MyAwesomeDialogue(
+        title: 'Error',
+        desc: l.message,
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!),
+      (r) {
+        tokenService.saveTokenModelToHiveBox(
+          TokenModel(
+            aToken: r.accessToken!,
+            rToken: r.refreshToken!,
+            dToken: DateTime.now().toIso8601String(),
+          ),
+        );
+        profileController.saveProfileToHiveBox(r.userProfile!);
+        isLogin = true;
+      },
+    );
 
     isLoading = false;
     update();
@@ -85,7 +89,7 @@ class AuthController extends GetxController {
 
     var dio = Dio(
       BaseOptions(
-        baseUrl: AppLinks.baseUrlProd,
+        baseUrl: AppLinks.baseUrlDev,
       ),
     );
 
