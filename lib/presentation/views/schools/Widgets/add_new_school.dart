@@ -97,19 +97,21 @@ class AddNewSchoolWidget extends GetView<SchoolController> {
                           .addNewSchool(
                               name: schoolNameController.text,
                               schoolTypeId: controller.selectedItem!.value)
-                          .then((value) {
-                          value
-                              ? {
-                                  context.mounted ? context.pop() : null,
-                                  MyFlashBar.showSuccess(
-                                          'The School Has Been Added Successfully',
-                                          'Success')
-                                      .show(context.mounted
-                                          ? context
-                                          : Get.key.currentContext!)
-                                }
-                              : null;
-                        });
+                          .then(
+                          (value) {
+                            value
+                                ? {
+                                    context.mounted ? context.pop() : null,
+                                    MyFlashBar.showSuccess(
+                                            'The School Has Been Added Successfully',
+                                            'Success')
+                                        .show(context.mounted
+                                            ? context
+                                            : Get.key.currentContext!)
+                                  }
+                                : null;
+                          },
+                        );
                 },
               ),
             ),
