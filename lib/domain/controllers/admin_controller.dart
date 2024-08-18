@@ -305,6 +305,34 @@ class AdminController extends GetxController {
     return deactivateUser;
   }
 
+  Future<bool> activateUser({required int userId}) async {
+    bool activateUser = false;
+    update();
+    ResponseHandler<void> responseHandler = ResponseHandler<void>();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${UserLinks.activateUser}/$userId',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        activateUser = false;
+      },
+      (r) {
+        activateUser = true;
+        onInit();
+      },
+    );
+    update();
+    return activateUser;
+  }
+
   @override
   void onInit() {
     getUserCreatedBy();

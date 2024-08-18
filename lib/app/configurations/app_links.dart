@@ -110,14 +110,14 @@ class UserLinks {
   static const login = 'auth/login';
   static const logout = 'auth/logout';
   static const refresh = 'auth/refresh';
-  static const user = 'users';
+  //static const user = 'users';
   static const userAddRoles = '$users/add-roles';
   static const userEditRoles = '$users/edit-roles';
   static const users = 'users';
   static const usersAddSchools = '$users/add-schools';
   static const usersInSchool = '/$users/school';
-    static const deactivateUser = '/$users/deactivate';
-
+  static const deactivateUser = '/$users/deactivate';
+  static const activateUser = 'users/activate';
 }
 
 class UserRolesSystemsLink {
