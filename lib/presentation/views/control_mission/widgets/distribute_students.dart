@@ -312,26 +312,26 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                 Text(
                                                   'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
                                                   style: nunitoBold.copyWith(
-                                                    fontSize: 10,
+                                                    fontSize: 15,
                                                   ),
                                                   maxLines: 1,
                                                 ),
                                                 Text(
                                                   'Seat NO: ${controller.availableStudents[i].seatNumber}',
                                                   style: nunitoBold.copyWith(
-                                                    fontSize: 12,
+                                                    fontSize: 15,
                                                   ),
                                                 ),
                                                 Text(
                                                   'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
                                                   style: nunitoBold.copyWith(
-                                                    fontSize: 12,
+                                                    fontSize: 15,
                                                   ),
                                                 ),
                                                 Text(
                                                   'Desk NO : ${controller.classDesks.indexWhere((element) => element.id == controller.availableStudents[i].classDeskID) + 1}',
                                                   style: nunitoBold.copyWith(
-                                                    fontSize: 12,
+                                                    fontSize: 15,
                                                   ),
                                                 ),
                                                 Expanded(
@@ -591,7 +591,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                               Text(
                                                                                 'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.thirdName!} ',
                                                                                 style: nunitoBold.copyWith(
-                                                                                  fontSize: 12,
+                                                                                  fontSize: 14,
                                                                                 ),
                                                                                 maxLines: 3,
                                                                               ),

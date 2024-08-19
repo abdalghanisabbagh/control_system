@@ -37,7 +37,33 @@ class EditClassRoomWidget extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text("Edit Class Room"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          "Edit Class Room",
+                          style: nunitoBold.copyWith(
+                            color: ColorManager.primary,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        alignment: AlignmentDirectional.topEnd,
+                        color: Colors.black,
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          Get.back();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
                 Row(
                   children: [
                     Expanded(
