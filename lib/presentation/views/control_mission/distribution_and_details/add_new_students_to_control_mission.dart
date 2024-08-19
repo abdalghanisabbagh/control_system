@@ -2,12 +2,14 @@ import 'package:control_system/presentation/resource_manager/ReusableWidget/my_b
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../domain/controllers/controllers.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
 class AddStudentsToControlMissionScreen
     extends GetView<AddNewStudentsToControlMissionController> {
@@ -16,7 +18,7 @@ class AddStudentsToControlMissionScreen
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AddNewStudentsToControlMissionController>(
-      builder: (context) {
+      builder: (_) {
         return Scaffold(
           appBar: AppBar(
             leading: const MyBackButton(),
@@ -350,7 +352,12 @@ class AddStudentsToControlMissionScreen
                             await controller.addStudentsToControlMission().then(
                               (value) {
                                 if (value) {
-                                  Get.back();
+                                  context.mounted
+                                      ? context.goNamed(
+                                          AppRoutesNamesAndPaths
+                                              .distributioncreateMissionScreenName,
+                                        )
+                                      : null;
                                 }
                               },
                             );
