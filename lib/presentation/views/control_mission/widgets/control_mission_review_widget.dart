@@ -205,7 +205,6 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                           child: Container(
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                // bottomLeft: Radius.circular(10),
                                 bottomRight: Radius.circular(10),
                               ),
                               color: ColorManager.red,

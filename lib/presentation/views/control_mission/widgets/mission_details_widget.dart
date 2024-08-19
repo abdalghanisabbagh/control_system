@@ -7,6 +7,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 
 // ignore: must_be_immutable
@@ -355,6 +356,94 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                       field: 'CohortField',
                                       type: PlutoColumnType.text(),
                                       cellPadding: EdgeInsets.zero,
+                                    ),
+                                    PlutoColumn(
+                                      enableEditingMode: false,
+                                      title: 'Actions',
+                                      field: 'ActionsField',
+                                      type: PlutoColumnType.text(),
+                                      renderer: (rendererContext) {
+                                        final isActive = rendererContext.row
+                                                .cells['ActionsField']!.value ==
+                                            '1';
+
+                                        return Row(
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                if (isActive) {
+                                                  MyAwesomeDialogue(
+                                                    title: 'Deactivate Student',
+                                                    desc:
+                                                        'Are you sure you want to deactivate this student?',
+                                                    dialogType:
+                                                        DialogType.warning,
+                                                    btnOkOnPressed: () {
+                                                      controller
+                                                          .deactiveStudentInControlMission(
+                                                              idSeat: rendererContext
+                                                                  .row
+                                                                  .cells[
+                                                                      'IdField']!
+                                                                  .value)
+                                                          .then((value) {
+                                                        if (value) {
+                                                          MyFlashBar
+                                                              .showSuccess(
+                                                            "Student deactivated successfully",
+                                                            "Success",
+                                                          ).show(Get.key
+                                                              .currentContext!);
+                                                        }
+                                                      });
+                                                    },
+                                                    btnCancelOnPressed: () {
+                                                      Get.back();
+                                                    },
+                                                  ).showDialogue(context);
+                                                } else {
+                                                    MyAwesomeDialogue(
+                                                    title: 'Activate Student',
+                                                    desc:
+                                                        'Are you sure you want to activate this student?',
+                                                    dialogType:
+                                                        DialogType.warning,
+                                                    btnOkOnPressed: () {
+                                                      controller
+                                                          .activeStudentInControlMission(
+                                                              idSeat: rendererContext
+                                                                  .row
+                                                                  .cells[
+                                                                      'IdField']!
+                                                                  .value)
+                                                          .then((value) {
+                                                        if (value) {
+                                                          MyFlashBar
+                                                              .showSuccess(
+                                                            "Student activated successfully",
+                                                            "Success",
+                                                          ).show(Get.key
+                                                              .currentContext!);
+                                                        }
+                                                      });
+                                                    },
+                                                    btnCancelOnPressed: () {
+                                                      Get.back();
+                                                    },
+                                                  ).showDialogue(context);
+                                                }
+                                              },
+                                              icon: Icon(
+                                                  isActive
+                                                      ? Icons.check_circle
+                                                      : Icons.cancel,
+                                                  color: isActive
+                                                      ? ColorManager.green
+                                                      : ColorManager.red),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     ),
                                   ],
                                   rows: controller.studentsSeatNumbersRows,

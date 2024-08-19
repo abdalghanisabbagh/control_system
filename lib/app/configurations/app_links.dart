@@ -89,9 +89,13 @@ class StudentsLinks {
   static const studentSeatNumbers = 'student-seat-numbers';
   static const studentSeatNumbersControlMission =
       '$studentSeatNumbers/control-mission';
+  static const studentSeatNumberActive = '$studentSeatNumbers/activate';
+    static const studentSeatNumberDeactive = '$studentSeatNumbers/deactivate';
+
 
   static const studentSeatNumbersExamRoom = '$studentSeatNumbers/exam-rooms';
   static const studentSeatNumbersStudent = '$studentSeatNumbers/student';
+
   static const studentsClass = '$student/class';
   static const studentsGrades = '$student/students-grades/control-mission/';
 }
@@ -110,7 +114,6 @@ class UserLinks {
   static const login = 'auth/login';
   static const logout = 'auth/logout';
   static const refresh = 'auth/refresh';
-  //static const user = 'users';
   static const userAddRoles = '$users/add-roles';
   static const userEditRoles = '$users/edit-roles';
   static const users = 'users';

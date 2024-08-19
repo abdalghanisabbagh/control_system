@@ -9,6 +9,7 @@ class StudentSeatNumberResModel {
   int? gradesID;
   int? iD;
   String? seatNumber;
+  int? active;
   StudentResModel? student;
   int? studentID;
   StudentSeatNumberResModel({
@@ -29,6 +30,7 @@ class StudentSeatNumberResModel {
     studentID = json['Student_ID'];
     controlMissionID = json['Control_Mission_ID'];
     seatNumber = json['Seat_Number'];
+    active = json['Active'];
     student = StudentResModel?.fromJson(json['student']);
   }
 
@@ -41,6 +43,7 @@ class StudentSeatNumberResModel {
     data['Student_ID'] = studentID;
     data['Control_Mission_ID'] = controlMissionID;
     data['Seat_Number'] = seatNumber;
+    data['Active'] = active;
     data['student'] = student?.toJson();
     return data;
   }

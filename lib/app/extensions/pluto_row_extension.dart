@@ -253,6 +253,7 @@ extension PlutoRowStudentSeatsNumbersExtansion
       rows.add(
         PlutoRow(
           cells: {
+            'IdField': PlutoCell(value: element.iD.toString()),
             'BlbIdField': PlutoCell(value: element.student!.blbId.toString()),
             'StudentNameField': PlutoCell(
                 value:
@@ -267,7 +268,8 @@ extension PlutoRowStudentSeatsNumbersExtansion
             ),
             'CohortField': PlutoCell(
                 value: element.student!.cohortResModel!.name.toString()),
-            'ActionsField': PlutoCell(value: 'Actions'),
+            'ActionsField':
+                PlutoCell(value: element.active.toString()),
           },
         ),
       );

@@ -528,6 +528,62 @@ class DetailsAndReviewMissionController extends GetxController {
     isLodingGetSubjects = false;
   }
 
+  Future<bool> activeStudentInControlMission({required String idSeat}) async {
+    bool activateStudents = false;
+    update();
+    ResponseHandler<void> responseHandler = ResponseHandler<void>();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumberActive}/$idSeat',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        activateStudents = false;
+      },
+      (r) {
+        activateStudents = true;
+        getStudentsSeatNumberByControlMissionId();
+      },
+    );
+    update();
+    return activateStudents;
+  }
+
+  Future<bool> deactiveStudentInControlMission({required String idSeat}) async {
+    bool deactivateStudents = false;
+    update();
+    ResponseHandler<void> responseHandler = ResponseHandler<void>();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumberDeactive}/$idSeat',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        deactivateStudents = false;
+      },
+      (r) {
+        deactivateStudents = true;
+        getStudentsSeatNumberByControlMissionId();
+      },
+    );
+    update();
+    return deactivateStudents;
+  }
+
   @override
   void onInit() async {
     super.onInit();
