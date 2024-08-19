@@ -1,3 +1,5 @@
+import 'package:control_system/Data/Models/user/users_res/user_has_school_res_model.dart';
+
 import '../../../../presentation/resource_manager/constants/app_constatnts.dart';
 import 'created_by_user_res_model.dart';
 import 'user_has_roles_res_model.dart';
@@ -17,6 +19,7 @@ class UserResModel {
   String? updatedAt;
   int? updatedBy;
   UserHasRolesResModel? userHasRoles;
+  UserHasSchoolResModel? userHasSchoolResModel;
   String? userName;
   UserResModel({
     this.iD,
@@ -32,6 +35,7 @@ class UserResModel {
     this.createdByUserResModel,
     this.userHasRoles,
     this.roleType,
+    this.userHasSchoolResModel,
   });
   UserResModel.fromJson(json) {
     iD = json['ID'];
@@ -45,6 +49,7 @@ class UserResModel {
     type = json['Type'];
     active = json['Active'];
 
+
     createdByUserResModel = json['CreatedById'] != null
         ? CreatedByUserResModel.fromJson(json['CreatedById'])
         : null;
@@ -52,7 +57,9 @@ class UserResModel {
     userHasRoles = json['users_has_roles'] != null
         ? UserHasRolesResModel.fromJson(json['users_has_roles'])
         : null;
-
+   userHasSchoolResModel = json['users_has_schools'] != null
+        ? UserHasSchoolResModel.fromJson(json['users_has_schools'])
+        : null;
     roleType = getRoleType(type ?? 0);
   }
 

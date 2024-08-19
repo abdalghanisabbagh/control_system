@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/presentation/views/admin_screen/widgets/add_school_user%20.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -182,8 +183,13 @@ class AllUserWidget extends GetView<AdminController> {
                                                   ),
                                                   Switch(
                                                     value: item.active == 1,
-                                                    onChanged: (newValue) {
+                                                    onChanged:
+                                                        (newValue) async {
                                                       if (newValue) {
+                                                        controller
+                                                                .isLodingEditUserRoles =
+                                                            true;
+                                                        controller.update();
                                                         controller
                                                             .activateUser(
                                                                 userId:
@@ -226,6 +232,21 @@ class AllUserWidget extends GetView<AdminController> {
                                               ),
                                             ],
                                           ),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.school,
+                                              color: ColorManager.bgSideMenu),
+                                          onPressed: () {
+                                            MyDialogs.showDialog(
+                                              context,
+                                              AddSchoolUser(
+                                                userResModel: item,
+                                              ),
+                                            );
+                                            controller.getAllSchool(
+                                              userResModel: item,
+                                            );
+                                          },
                                         ),
                                         Visibility(
                                           visible: Get.find<ProfileController>()

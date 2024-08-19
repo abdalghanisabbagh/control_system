@@ -10,10 +10,10 @@ import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 
 // ignore: must_be_immutable
-class AddRoleUser extends GetView<AdminController> {
+class AddSchoolUser extends GetView<AdminController> {
   final UserResModel userResModel;
 
-  const AddRoleUser({super.key, required this.userResModel});
+  const AddSchoolUser({super.key, required this.userResModel});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class AddRoleUser extends GetView<AdminController> {
           children: [
             Center(
               child: Text(
-                'Add Role to User',
+                'Add School to User',
                 style: nunitoBold.copyWith(
                   fontSize: 25,
                   color: ColorManager.bgSideMenu,
@@ -37,7 +37,7 @@ class AddRoleUser extends GetView<AdminController> {
             const Divider(),
             const SizedBox(height: 20),
             GetBuilder<AdminController>(builder: (_) {
-              if (controller.isLodingGetRoles) {
+              if (controller.isloadingGetSchools) {
                 return Expanded(
                   child: Center(
                     child: LoadingIndicators.getLoadingIndicator(),
@@ -45,7 +45,7 @@ class AddRoleUser extends GetView<AdminController> {
                 );
               }
 
-              if (controller.rolesList.isEmpty) {
+              if (controller.schoolsList.isEmpty) {
                 return Expanded(
                   child: Center(
                     child: Text(
@@ -61,20 +61,21 @@ class AddRoleUser extends GetView<AdminController> {
 
               return Expanded(
                 child: ListView.builder(
-                  itemCount: controller.rolesList.length,
+                  itemCount: controller.schoolsList.length,
                   itemBuilder: (context, index) {
-                    final role = controller.rolesList[index];
+                    final school = controller.schoolsList[index];
                     final isChecked =
-                        controller.selectedRolesID.contains(role.id);
+                        controller.selectedSchoolID.contains(school.iD);
 
                     return CheckboxListTile(
-                      title: Text(role.name ?? 'Unknown Role'),
+                      title:
+                          Text('${school.schoolType!.name}' '${school.name}'),
                       value: isChecked,
                       onChanged: (bool? value) {
                         if (value == true) {
-                          controller.selectedRolesID.add(role.id!);
+                          controller.selectedSchoolID.add(school.iD!);
                         } else {
-                          controller.selectedRolesID.remove(role.id!);
+                          controller.selectedSchoolID.remove(school.iD!);
                         }
                         controller.update();
                       },
@@ -84,7 +85,7 @@ class AddRoleUser extends GetView<AdminController> {
               );
             }),
             GetBuilder<AdminController>(builder: (_) {
-              if (controller.isLodingEditUserRoles) {
+              if (controller.isLodingEditUserSchools) {
                 return Center(
                   child: SizedBox(
                     width: 50,
@@ -106,7 +107,7 @@ class AddRoleUser extends GetView<AdminController> {
                     child: ElevatedEditButton(
                       onPressed: () {
                         controller
-                            .editUserRoles(userResModel.iD!)
+                            .editUserSchool(userResModel.iD!)
                             .then((value) {
                           if (value) {
                             Get.back();

@@ -116,6 +116,7 @@ class UserLinks {
   static const refresh = 'auth/refresh';
   static const userAddRoles = '$users/add-roles';
   static const userEditRoles = '$users/edit-roles';
+  static const userEditUserHasSchools = '$users/edi-user-has-schools';
   static const users = 'users';
   static const usersAddSchools = '$users/add-schools';
   static const usersInSchool = '/$users/school';

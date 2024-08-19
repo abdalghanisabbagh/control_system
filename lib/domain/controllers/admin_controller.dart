@@ -1,9 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Models/school/school_response/schools_res_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../Data/Models/school/school_response/school_res_model.dart';
 import '../../Data/Models/user/roles/role_res_model.dart';
 import '../../Data/Models/user/roles/roleres_model.dart';
 import '../../Data/Models/user/users_res/user_res_model.dart';
@@ -17,22 +19,30 @@ import '../../presentation/resource_manager/constants/app_constatnts.dart';
 
 class AdminController extends GetxController {
   List<UserResModel> allUsersList = <UserResModel>[];
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController fullNameController = TextEditingController();
+
   bool isLoading = false;
   bool isLoadingGetAllUsers = false;
   bool isLoadingGetUsersCreatedBy = false;
   bool isLoadingGetUsersInSchool = false;
   bool isLodingEditUser = false;
   bool isLodingEditUserRoles = false;
+  bool isLodingEditUserSchools = false;
   bool isLodingGetRoles = false;
+  bool isloadingGetSchools = false;
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController nisIdController = TextEditingController();
   final TextEditingController oldPasswordController = TextEditingController();
+
   List<RoleResModel> rolesList = <RoleResModel>[];
+  List<int> selectedRolesID = <int>[];
+  List<SchoolResModel> schoolsList = <SchoolResModel>[];
+  List<int> selectedSchoolID = <int>[];
+
   String? selectedDivision;
   String? selectedRoleType;
-  List<int> selectedRoles = <int>[];
   bool showNewPassword = true;
   bool showOldPassord = true;
   List<UserResModel> userCreatedList = <UserResModel>[];
@@ -126,7 +136,7 @@ class AdminController extends GetxController {
       path: "${UserLinks.userEditRoles}/$roleId",
       converter: UserResModel.fromJson,
       type: ReqTypeEnum.PATCH,
-      body: selectedRoles.map((e) => {'Roles_ID': e}).toList(),
+      body: selectedRolesID.map((e) => {'Roles_ID': e}).toList(),
     );
 
     isLodingEditUserRoles = false;
@@ -154,6 +164,42 @@ class AdminController extends GetxController {
     );
   }
 
+  Future<bool> editUserSchool(int userId) async {
+    isLodingEditUserSchools = true;
+    update();
+
+    final response = await ResponseHandler<UserResModel>().getResponse(
+      path: "${UserLinks.userEditUserHasSchools}/$userId",
+      converter: UserResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: selectedSchoolID,
+    );
+
+    isLodingEditUserSchools = false;
+    update();
+
+    return response.fold(
+      (l) {
+        isLodingEditUserSchools = false;
+
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        update();
+        return false;
+      },
+      (r) {
+        onInit();
+        isLodingEditUserSchools = false;
+        update();
+
+        return true;
+      },
+    );
+  }
+
   Future getAllRoles({required UserResModel userResModel}) async {
     isLodingGetRoles = true;
     update();
@@ -172,13 +218,43 @@ class AdminController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
-        selectedRoles.clear();
+        selectedRolesID.clear();
         rolesList = r.data!;
-        selectedRoles.addAll(userResModel.userHasRoles!.roleID ?? []);
+        selectedRolesID.addAll(userResModel.userHasRoles!.roleID ?? []);
       },
     );
 
     isLodingGetRoles = false;
+    update();
+  }
+
+  Future getAllSchool({required UserResModel userResModel}) async {
+    isloadingGetSchools = true;
+    update();
+    ResponseHandler<SchoolsResModel> responseHandler = ResponseHandler();
+    Either<Failure, SchoolsResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.getAllSchools,
+      converter: SchoolsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        selectedSchoolID.clear();
+        schoolsList = r.data!;
+        selectedSchoolID
+            .addAll(userResModel.userHasSchoolResModel!.schoolId ?? []);
+      },
+    );
+
+    isloadingGetSchools = false;
     update();
   }
 

@@ -12,7 +12,8 @@ abstract class AppConstants {
     'Academic Dean',
     'Principal',
     'QR Reader',
-    'Vice Principal'
+    'Vice Principal',
+    'Super Admin'
   ];
 
   static const List<String> schoolDivision = [
