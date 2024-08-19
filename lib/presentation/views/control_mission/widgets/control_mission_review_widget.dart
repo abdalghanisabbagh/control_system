@@ -24,7 +24,7 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 20,
-            offset: const Offset(2, 15), // changes position of shadow
+            offset: const Offset(2, 15), 
           ),
         ],
         color: ColorManager.ligthBlue,
@@ -74,6 +74,7 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                                     color: ColorManager.green, fontSize: 16),
                               ),
                             ),
+                            const SizedBox(width: 10),
                             FittedBox(
                               fit: BoxFit.contain,
                               child: Text(

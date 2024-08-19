@@ -57,36 +57,29 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                         .toList(),
                     itemBuilder: (CohortResModel item) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: Stack(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 50,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 6),
                               child: Container(
-                                height: 250,
+                                height: 180,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 20,
-                                      offset: const Offset(
-                                        2,
-                                        15,
-                                      ), // changes position of shadow
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      offset: const Offset(2, 8),
                                     ),
                                   ],
                                   color: ColorManager.white,
-                                  borderRadius: BorderRadius.circular(
-                                    11,
-                                  ),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 padding: const EdgeInsets.all(10),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(20),
+                                  padding: const EdgeInsets.all(12),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -95,27 +88,15 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                                         item.name ?? "no name",
                                         style: nunitoBold.copyWith(
                                           color: ColorManager.bgSideMenu,
-                                          fontSize: 35,
+                                          fontSize: 28,
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      // Text(
-                                      //     controller
-                                      //         .selectedSchool
-                                      //         .name,
-                                      //     style:                                                       .nunitoReguler
-                                      //         .copyWith(
-                                      //             color: ColorManager
-                                      //                 .bgSideMenu,
-                                      //             fontSize:
-                                      //                 20)),
+                                      const SizedBox(height: 8),
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 .6,
-                                        height: 50,
+                                        height: 40,
                                         child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
                                           itemCount: item.cohortsSubjects!
@@ -140,14 +121,14 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                                           },
                                         ),
                                       ),
+                                      const SizedBox(height: 8),
                                       Row(
                                         children: [
                                           Visibility(
                                             visible:
                                                 Get.find<ProfileController>()
                                                     .canAccessWidget(
-                                              widgetId: '8300',
-                                            ),
+                                                        widgetId: '8300'),
                                             child: InkWell(
                                               onTap: () {
                                                 MyDialogs.showDialog(
@@ -162,15 +143,12 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                                                   color:
                                                       ColorManager.glodenColor,
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                    10,
-                                                  ),
+                                                      BorderRadius.circular(10),
                                                 ),
                                                 child: Center(
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                            10),
+                                                        const EdgeInsets.all(8),
                                                     child: Text(
                                                       "Add subjects",
                                                       style:
@@ -185,15 +163,12 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
+                                          const SizedBox(width: 10),
                                           Visibility(
                                             visible:
                                                 Get.find<ProfileController>()
                                                     .canAccessWidget(
-                                              widgetId: '8200',
-                                            ),
+                                                        widgetId: '8200'),
                                             child: InkWell(
                                               onTap: () {
                                                 MyAwesomeDialogue(
@@ -205,20 +180,18 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                                                   btnOkOnPressed: () {
                                                     controller
                                                         .deleteCohort(item.iD!)
-                                                        .then(
-                                                      (value) {
-                                                        value
-                                                            ? MyFlashBar.showSuccess(
-                                                                    'Cohort deleted successfully',
-                                                                    'Success')
-                                                                .show(context
-                                                                        .mounted
-                                                                    ? context
-                                                                    : Get.key
-                                                                        .currentContext!)
-                                                            : null;
-                                                      },
-                                                    );
+                                                        .then((value) {
+                                                      value
+                                                          ? MyFlashBar.showSuccess(
+                                                                  'Cohort deleted successfully',
+                                                                  'Success')
+                                                              .show(context
+                                                                      .mounted
+                                                                  ? context
+                                                                  : Get.key
+                                                                      .currentContext!)
+                                                          : null;
+                                                    });
                                                   },
                                                   btnCancelOnPressed: () {
                                                     Get.back();
@@ -234,8 +207,7 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                                                 child: Center(
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                            10),
+                                                        const EdgeInsets.all(8),
                                                     child: Text(
                                                       "Delete Cohort",
                                                       style:
@@ -259,12 +231,12 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                             ),
                             Positioned(
                               right: Get.width * 0.05,
-                              bottom: 100,
+                              bottom: 60,
                               child: Image.asset(
                                 AssetsManager.assetsIconsArabic,
                                 fit: BoxFit.fill,
-                                height: 150,
-                                width: 150,
+                                height: 100,
+                                width: 100,
                               ),
                             ),
                           ],
