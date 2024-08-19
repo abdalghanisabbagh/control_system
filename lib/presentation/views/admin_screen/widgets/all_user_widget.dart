@@ -181,54 +181,40 @@ class AllUserWidget extends GetView<AdminController> {
                                                       fontSize: 20,
                                                     ),
                                                   ),
-                                                  Switch(
+                                                   Switch(
                                                     value: item.active == 1,
-                                                    onChanged:
-                                                        (newValue) async {
-                                                      bool wasActivated =
-                                                          item.active == 1;
-                                                      item.active =
-                                                          newValue ? 1 : 0;
-
-                                                      bool success;
+                                                    onChanged: (newValue) {
                                                       if (newValue) {
-                                                        success =
-                                                            await controller
-                                                                .activateUser(
-                                                                    userId: item
-                                                                        .iD!);
+                                                        controller
+                                                            .activateUser(
+                                                                userId:
+                                                                    item.iD!)
+                                                            .then((value) {
+                                                          if (value) {
+                                                            MyFlashBar
+                                                                .showSuccess(
+                                                              "User activated successfully",
+                                                              "Success",
+                                                            ).show(Get.key
+                                                                .currentContext!);
+                                                          }
+                                                        });
                                                       } else {
-                                                        success =
-                                                            await controller
-                                                                .deactivateUser(
-                                                                    userId: item
-                                                                        .iD!);
+                                                        controller
+                                                            .deactivateUser(
+                                                                userId:
+                                                                    item.iD!)
+                                                            .then((value) {
+                                                          if (value) {
+                                                            MyFlashBar
+                                                                .showSuccess(
+                                                              "User deactivated successfully",
+                                                              "Success",
+                                                            ).show(Get.key
+                                                                .currentContext!);
+                                                          }
+                                                        });
                                                       }
-
-                                                      if (!success) {
-                                                        item.active =
-                                                            wasActivated
-                                                                ? 1
-                                                                : 0;
-
-                                                        MyFlashBar.showError(
-                                                          newValue
-                                                              ? "Failed to activate user"
-                                                              : "Failed to deactivate user",
-                                                          "Error",
-                                                        ).show(Get.key
-                                                            .currentContext!);
-                                                      } else {
-                                                        MyFlashBar.showSuccess(
-                                                          newValue
-                                                              ? "User activated successfully"
-                                                              : "User deactivated successfully",
-                                                          "Success",
-                                                        ).show(Get.key
-                                                            .currentContext!);
-                                                      }
-
-                                                      controller.update();
                                                     },
                                                     activeColor: Colors.green,
                                                     inactiveThumbColor:
@@ -236,7 +222,7 @@ class AllUserWidget extends GetView<AdminController> {
                                                     inactiveTrackColor: Colors
                                                         .red
                                                         .withOpacity(0.3),
-                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ],
