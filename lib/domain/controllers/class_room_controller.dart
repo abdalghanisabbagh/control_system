@@ -71,72 +71,7 @@ class ClassRoomController extends GetxController {
     count = 1;
     isLoadingAddClassRoom = false;
     update();
-    if (added) {
-      await createClassDesks(
-        schoolClassID: response.getOrElse(() => ClassRoomResModel()).iD!,
-        rows: rows,
-      );
-    }
     return added;
-  }
-
-  Future<bool> createClassDesks({
-    required int schoolClassID,
-    required List<int> rows,
-  }) async {
-    bool created = false;
-    update();
-    ResponseHandler<void> responseHandler = ResponseHandler<void>();
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${SchoolsLinks.classDesks}/many',
-      converter: (_) {},
-      type: ReqTypeEnum.POST,
-      body: {
-        "School_Class_ID": schoolClassID,
-        "Rows": rows,
-      },
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        created = false;
-      },
-      (r) {
-        created = true;
-      },
-    );
-    update();
-    return created;
-  }
-
-  Future<bool> deleteAllClassDesks({required int schoolClassID}) async {
-    bool deleted = false;
-    update();
-    ResponseHandler<void> responseHandler = ResponseHandler<void>();
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${SchoolsLinks.classDesks}/class/$schoolClassID',
-      converter: (_) {},
-      type: ReqTypeEnum.DELETE,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        deleted = false;
-      },
-      (r) {
-        deleted = true;
-      },
-    );
-    update();
-    return deleted;
   }
 
   Future<bool> deleteClassRoom({
@@ -212,13 +147,6 @@ class ClassRoomController extends GetxController {
         update();
       },
     );
-    if (classRoomHasBeenEdited) {
-      await deleteAllClassDesks(schoolClassID: id);
-      await createClassDesks(
-        schoolClassID: response.getOrElse(() => ClassRoomResModel()).iD!,
-        rows: rows,
-      );
-    }
     isLoadingEditClassRoom = false;
     update();
     return classRoomHasBeenEdited;

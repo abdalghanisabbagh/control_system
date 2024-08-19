@@ -21,38 +21,39 @@ class LoginScreen extends GetView<AuthController> {
         child: Stack(
           children: [
             Opacity(
-                opacity: .5,
-                child: CarouselSlider(
-                  items: [
-                    Image.asset(
-                      width: size.width,
-                      height: size.height,
-                      AssetsManager.assetsImagesNis1,
-                      fit: BoxFit.fill,
-                    ),
-                    Image.asset(
-                      width: size.width,
-                      height: size.height,
-                      AssetsManager.assetsImagesNis2,
-                      fit: BoxFit.fill,
-                    ),
-                    Image.asset(
-                      width: size.width,
-                      height: size.height,
-                      AssetsManager.assetsImagesNis3,
-                      fit: BoxFit.fill,
-                    )
-                  ],
-                  options: CarouselOptions(
+              opacity: .5,
+              child: CarouselSlider(
+                items: [
+                  Image.asset(
+                    width: size.width,
                     height: size.height,
-                    viewportFraction: 1.0,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    enlargeCenterPage: false,
-                    scrollPhysics: const NeverScrollableScrollPhysics(),
-                    autoPlay: true,
-                    reverse: false,
+                    AssetsManager.assetsImagesNis1,
+                    fit: BoxFit.fill,
                   ),
-                )),
+                  Image.asset(
+                    width: size.width,
+                    height: size.height,
+                    AssetsManager.assetsImagesNis2,
+                    fit: BoxFit.fill,
+                  ),
+                  Image.asset(
+                    width: size.width,
+                    height: size.height,
+                    AssetsManager.assetsImagesNis3,
+                    fit: BoxFit.fill,
+                  )
+                ],
+                options: CarouselOptions(
+                  height: size.height,
+                  viewportFraction: 1.0,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  enlargeCenterPage: false,
+                  scrollPhysics: const NeverScrollableScrollPhysics(),
+                  autoPlay: true,
+                  reverse: false,
+                ),
+              ),
+            ),
             Align(
               alignment: Alignment.topLeft,
               child: Padding(

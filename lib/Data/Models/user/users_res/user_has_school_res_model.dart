@@ -1,10 +1,10 @@
-class UserHasSchoolResModel {
+class UserHasSchoolsResModel {
   List<int>? schoolId;
 
   List<String>? schoolName;
 
-  UserHasSchoolResModel({this.schoolName});
-  UserHasSchoolResModel.fromJson(json) {
+  UserHasSchoolsResModel({this.schoolName});
+  UserHasSchoolsResModel.fromJson(json) {
     if (json is List) {
       schoolName = <String>[];
       schoolId = <int>[];
@@ -15,5 +15,11 @@ class UserHasSchoolResModel {
     }
   }
 
- 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (schoolId != null) {
+      data['data'] = schoolId!.map((v) => v).toList();
+    }
+    return data;
+  }
 }

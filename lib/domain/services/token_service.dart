@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/token/token_model.dart';
 
-class TokenService extends GetxController {
+class TokenService extends FullLifeCycleController with FullLifeCycleMixin {
   TokenModel? _tokenModel;
 
   TokenModel? get tokenModel => _tokenModel ?? getTokenModelFromHiveBox();
@@ -21,6 +22,23 @@ class TokenService extends GetxController {
         : null;
     return _tokenModel;
   }
+
+  @override
+  void onDetached() {
+    Get.find<AuthController>().checkLogin();
+  }
+
+  @override
+  void onHidden() {}
+
+  @override
+  void onInactive() {}
+
+  @override
+  void onPaused() {}
+
+  @override
+  void onResumed() {}
 
   Future<void> saveNewAccessToken(TokenModel tokenModel) async {
     _tokenModel = tokenModel;

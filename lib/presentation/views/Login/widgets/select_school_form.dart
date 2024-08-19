@@ -1,15 +1,11 @@
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../Data/Models/school/school_response/school_res_model.dart';
-import '../../../../domain/controllers/school_controller.dart';
-import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../../domain/controllers/user_has_schools_controller.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
-class SelectSchoolForm extends GetView<SchoolController> {
+class SelectSchoolForm extends GetView<UserHasSchoolsController> {
   const SelectSchoolForm({super.key});
 
   @override
@@ -49,21 +45,21 @@ class SelectSchoolForm extends GetView<SchoolController> {
                 ),
                 const Divider(),
                 Expanded(
-                  child: GetBuilder<SchoolController>(
-                    init: SchoolController(),
-                    builder: (controller) => controller.isLoadingSchools ||
-                            controller.isLoading
-                        ? Center(
-                            child: LoadingIndicators.getLoadingIndicator(),
-                          )
-                        : controller.schools.isEmpty
+                  child: GetBuilder<UserHasSchoolsController>(
+                    builder: (controller) =>
+                        controller.userHasSchoolsResModel!.schoolId!.isEmpty
                             ? const Center(child: Text('No Schools available'))
                             : Center(
                                 child: ListView.builder(
-                                  itemCount: controller.schools.length,
+                                  itemCount: controller
+                                      .userHasSchoolsResModel!.schoolId!.length,
                                   itemBuilder: (context, index) {
-                                    SchoolResModel currentSchool =
-                                        controller.schools[index];
+                                    (String, int) currentSchool = (
+                                      controller.userHasSchoolsResModel!
+                                          .schoolName![index],
+                                      controller.userHasSchoolsResModel!
+                                          .schoolId![index]
+                                    );
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
@@ -90,38 +86,37 @@ class SelectSchoolForm extends GetView<SchoolController> {
                                           focusColor: ColorManager.bgSideMenu,
                                           hoverColor: ColorManager.bgSideMenu,
                                           onTap: () async {
-                                            controller.isLoading = true;
                                             controller.update();
                                             MyFlashBar.showSuccess(
-                                              currentSchool.name!,
+                                              currentSchool.$1,
                                               "School Selected",
                                             ).show(context);
-                                            await Future.delayed(
-                                                Durations.long2);
-                                            await controller
-                                                .saveToSchoolBox(currentSchool)
-                                                .then(
-                                              (_) {
-                                                context.mounted
-                                                    ? context.goNamed(
-                                                        AppRoutesNamesAndPaths
-                                                            .dashBoardScreenName,
-                                                      )
-                                                    : Get.key.currentContext
-                                                        ?.goNamed(
-                                                        AppRoutesNamesAndPaths
-                                                            .dashBoardScreenName,
-                                                      );
-                                              },
-                                            );
+                                            // await Future.delayed(
+                                            //     Durations.long2);
+                                            // await controller
+                                            //     .(currentSchool)
+                                            //     .then(
+                                            //   (_) {
+                                            //     context.mounted
+                                            //         ? context.goNamed(
+                                            //             AppRoutesNamesAndPaths
+                                            //                 .dashBoardScreenName,
+                                            //           )
+                                            //         : Get.key.currentContext
+                                            //             ?.goNamed(
+                                            //             AppRoutesNamesAndPaths
+                                            //                 .dashBoardScreenName,
+                                            //           );
+                                            //   },
+                                            // );
                                           },
-                                          title: Text(
-                                            "${currentSchool.schoolType!.name ?? ""} ${currentSchool.name ?? ""}",
-                                            style: nunitoRegularStyle(
-                                              color: ColorManager.white,
-                                              fontSize: 16,
-                                            ),
-                                          ),
+                                          // title: Text(
+                                          //   "${currentSchool.schoolType!.name ?? ""} ${currentSchool.name ?? ""}",
+                                          //   style: nunitoRegularStyle(
+                                          //     color: ColorManager.white,
+                                          //     fontSize: 16,
+                                          //   ),
+                                          // ),
                                         ),
                                       ),
                                     );

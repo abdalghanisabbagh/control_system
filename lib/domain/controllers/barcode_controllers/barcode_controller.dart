@@ -28,8 +28,6 @@ class BarcodeController extends GetxController {
     super.dispose();
   }
 
- 
-
   Future<void> getDataFromBarcode() async {
     isLoading = true;
     update();
@@ -63,6 +61,8 @@ class BarcodeController extends GetxController {
   }
 
   Future<bool> setStudentDegree() async {
+    barcodeController.clear();
+    studentDegreeController.clear();
     isLoading = true;
     bool setDegreeSuccess = false;
     update();
@@ -85,8 +85,6 @@ class BarcodeController extends GetxController {
       },
       (r) {
         barcodeResModel = null;
-        barcodeController.clear();
-        studentDegreeController.clear();
         setDegreeSuccess = true;
       },
     );
@@ -95,5 +93,4 @@ class BarcodeController extends GetxController {
 
     return setDegreeSuccess;
   }
-
 }
