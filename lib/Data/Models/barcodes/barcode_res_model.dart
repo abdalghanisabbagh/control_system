@@ -5,6 +5,9 @@ class BarcodeResModel {
   int? attendanceStatusId;
 
   String? barcode;
+  int? studentsWithoutDegrees;
+  int? studentsWithDegrees;
+  int? totalStudents;
 
   ExamMissionResModel? examMission;
   int? examMissionID;
@@ -19,6 +22,9 @@ class BarcodeResModel {
     this.iD,
     this.examMissionID,
     this.studentID,
+    this.studentsWithoutDegrees,
+    this.studentsWithDegrees,
+    this.totalStudents,
     this.studentSeatNumnbersID,
     this.barcode,
     this.attendanceStatusId,
@@ -30,6 +36,9 @@ class BarcodeResModel {
   });
   BarcodeResModel.fromJson(json) {
     iD = json['ID'];
+    studentsWithoutDegrees = json['StudentsWithoutDegrees'];
+    studentsWithDegrees = json['StudentsWithDegrees'];
+    totalStudents = json['TotalStudents'];
     examMissionID = json['Exam_Mission_ID'];
     studentID = json['Student_ID'];
     studentSeatNumnbersID = json['student_seat_numnbers_ID'];
@@ -50,6 +59,9 @@ class BarcodeResModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ID'] = iD;
+    data['StudentsWithoutDegrees'] = studentsWithoutDegrees;
+    data['StudentsWithDegrees'] = studentsWithDegrees;
+    data['TotalStudents'] = totalStudents;
     data['Exam_Mission_ID'] = examMissionID;
     data['Student_ID'] = studentID;
     data['student_seat_numnbers_ID'] = studentSeatNumnbersID;

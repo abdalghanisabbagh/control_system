@@ -56,7 +56,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                         ? Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(20),
+                                padding: const EdgeInsets.all(5),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -72,11 +72,14 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
-                                      "Class : ${controller.barcodeResModel?.student?.classRoomResModel?.name}",
-                                      style: nunitoBold.copyWith(
-                                        color: ColorManager.bgSideMenu,
-                                        fontSize: 35,
+                                    FittedBox(
+                                      fit: BoxFit.contain,
+                                      child: Text(
+                                        "Grade : ${controller.barcodeResModel?.student?.gradeResModel?.name}",
+                                        style: nunitoBold.copyWith(
+                                          color: ColorManager.bgSideMenu,
+                                          fontSize: 35,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -87,10 +90,10 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Text(
-                                      "Subject : ${controller.barcodeResModel?.examMission?.subjectResModel?.name}",
+                                      "Class : ${controller.barcodeResModel?.student?.classRoomResModel?.name}",
                                       style: nunitoBold.copyWith(
                                         color: ColorManager.bgSideMenu,
                                         fontSize: 35,
@@ -100,46 +103,11 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                       width: 20,
                                     ),
                                     Text(
-                                      "Grade : ${controller.barcodeResModel?.student?.gradeResModel?.name}",
+                                      "Subject : ${controller.barcodeResModel?.examMission?.subjectResModel?.name} (${controller.barcodeResModel?.studentsWithDegrees}/${controller.barcodeResModel?.totalStudents})",
                                       style: nunitoBold.copyWith(
                                         color: ColorManager.bgSideMenu,
                                         fontSize: 35,
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    controller.barcodeResModel?.studentDegree !=
-                                                null &&
-                                            controller.barcodeResModel!
-                                                .studentDegree!.isNotEmpty
-                                        ? Row(
-                                            children: [
-                                              Text(
-                                                'Degree : ',
-                                                style: nunitoBold.copyWith(
-                                                  color:
-                                                      ColorManager.bgSideMenu,
-                                                  fontSize: 35,
-                                                ),
-                                              ),
-                                              Text(
-                                                "${controller.barcodeResModel?.studentDegree}",
-                                                style: nunitoRegular.copyWith(
-                                                  color: int.parse(controller
-                                                              .barcodeResModel!
-                                                              .studentDegree!) <
-                                                          60
-                                                      ? ColorManager.red
-                                                      : ColorManager.green,
-                                                  fontSize: 35,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : const SizedBox.shrink(),
-                                    const SizedBox(
-                                      height: 30,
                                     ),
                                   ],
                                 ),
@@ -193,17 +161,19 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                               } else {
                                                 controller
                                                     .setStudentDegree()
-                                                    .then((value) {
-                                                  if (value) {
-                                                    MyFlashBar.showSuccess(
-                                                            'Degree set successfully',
-                                                            'Success')
-                                                        .show(context.mounted
-                                                            ? context
-                                                            : Get.key
-                                                                .currentContext!);
-                                                  }
-                                                });
+                                                    .then(
+                                                  (value) {
+                                                    if (value) {
+                                                      MyFlashBar.showSuccess(
+                                                              'Degree set successfully',
+                                                              'Success')
+                                                          .show(context.mounted
+                                                              ? context
+                                                              : Get.key
+                                                                  .currentContext!);
+                                                    }
+                                                  },
+                                                );
                                               }
                                             },
                                             style: nunitoRegular.copyWith(
@@ -293,18 +263,20 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                       } else {
                                                         controller
                                                             .setStudentDegree()
-                                                            .then((value) {
-                                                          if (value) {
-                                                            MyFlashBar.showSuccess(
-                                                                    'Degree set successfully',
-                                                                    'Success')
-                                                                .show(context
-                                                                        .mounted
-                                                                    ? context
-                                                                    : Get.key
-                                                                        .currentContext!);
-                                                          }
-                                                        });
+                                                            .then(
+                                                          (value) {
+                                                            if (value) {
+                                                              MyFlashBar.showSuccess(
+                                                                      'Degree set successfully',
+                                                                      'Success')
+                                                                  .show(context
+                                                                          .mounted
+                                                                      ? context
+                                                                      : Get.key
+                                                                          .currentContext!);
+                                                            }
+                                                          },
+                                                        );
                                                       }
                                                     },
                                                     style:
@@ -342,9 +314,10 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                           ?.studentDegree ??
                                                       'N/A',
                                                   style: nunitoRegular.copyWith(
-                                                      fontSize: 24,
-                                                      color: ColorManager
-                                                          .bgSideMenu),
+                                                    fontSize: 24,
+                                                    color:
+                                                        ColorManager.bgSideMenu,
+                                                  ),
                                                 ),
                                   const SizedBox(
                                     width: 5,
@@ -397,17 +370,21 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                 } else {
                                                   controller
                                                       .setStudentDegree()
-                                                      .then((value) {
-                                                    if (value) {
-                                                      MyFlashBar.showSuccess(
-                                                              'Degree set successfully',
-                                                              'Success')
-                                                          .show(context.mounted
+                                                      .then(
+                                                    (value) {
+                                                      if (value) {
+                                                        MyFlashBar.showSuccess(
+                                                                'Degree set successfully',
+                                                                'Success')
+                                                            .show(
+                                                          context.mounted
                                                               ? context
                                                               : Get.key
-                                                                  .currentContext!);
-                                                    }
-                                                  });
+                                                                  .currentContext!,
+                                                        );
+                                                      }
+                                                    },
+                                                  );
                                                 }
                                               },
                                             )
@@ -448,18 +425,20 @@ class SetDegreesScreen extends GetView<BarcodeController> {
                                                   } else {
                                                     controller
                                                         .setStudentDegree()
-                                                        .then((value) {
-                                                      if (value) {
-                                                        MyFlashBar.showSuccess(
-                                                                'Degree set successfully',
-                                                                'Success')
-                                                            .show(context
-                                                                    .mounted
-                                                                ? context
-                                                                : Get.key
-                                                                    .currentContext!);
-                                                      }
-                                                    });
+                                                        .then(
+                                                      (value) {
+                                                        if (value) {
+                                                          MyFlashBar.showSuccess(
+                                                                  'Degree set successfully',
+                                                                  'Success')
+                                                              .show(context
+                                                                      .mounted
+                                                                  ? context
+                                                                  : Get.key
+                                                                      .currentContext!);
+                                                        }
+                                                      },
+                                                    );
                                                   }
                                                 },
                                               ),

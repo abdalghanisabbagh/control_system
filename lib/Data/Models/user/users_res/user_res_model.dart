@@ -19,7 +19,7 @@ class UserResModel {
   String? updatedAt;
   int? updatedBy;
   UserHasRolesResModel? userHasRoles;
-  UserHasSchoolResModel? userHasSchoolResModel;
+  UserHasSchoolsResModel? userHasSchoolResModel;
   String? userName;
   UserResModel({
     this.iD,
@@ -49,7 +49,6 @@ class UserResModel {
     type = json['Type'];
     active = json['Active'];
 
-
     createdByUserResModel = json['CreatedById'] != null
         ? CreatedByUserResModel.fromJson(json['CreatedById'])
         : null;
@@ -57,8 +56,8 @@ class UserResModel {
     userHasRoles = json['users_has_roles'] != null
         ? UserHasRolesResModel.fromJson(json['users_has_roles'])
         : null;
-   userHasSchoolResModel = json['users_has_schools'] != null
-        ? UserHasSchoolResModel.fromJson(json['users_has_schools'])
+    userHasSchoolResModel = json['users_has_schools'] != null
+        ? UserHasSchoolsResModel.fromJson(json['users_has_schools'])
         : null;
     roleType = getRoleType(type ?? 0);
   }

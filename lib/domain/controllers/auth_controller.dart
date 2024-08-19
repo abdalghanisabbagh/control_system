@@ -21,6 +21,8 @@ class AuthController extends GetxController {
   TokenService tokenService = Get.find<TokenService>();
 
   checkLogin() {
+    isLogin = false;
+
     /// check token in local storage and it's time
     ///
     /// then forword to current page
@@ -34,6 +36,8 @@ class AuthController extends GetxController {
       }
       isLogin = true;
     }
+
+    update();
   }
 
   Future<bool> login(String username, String password) async {
