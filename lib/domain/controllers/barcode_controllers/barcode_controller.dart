@@ -16,17 +16,7 @@ class BarcodeController extends GetxController {
   final TextEditingController barcodeController = TextEditingController();
   BarcodeResModel? barcodeResModel;
   bool isEdit = false;
-//   String atoken = '';
-//   SchoolResponse? selectedSchool;
-//   EducationResponse? selectedEduction;
-//   StudentExamBRCResponseModel? stdExBRCResMod;
-//   bool buildwidget = false;
-//   bool edit = false;
-//   TextEditingController degreeTextController = TextEditingController();
 
-//   final FocusNode brCodeFoucs = FocusNode();
-
-//   FocusNode degreeController = FocusNode();
   bool isLoading = false;
 
   final TextEditingController studentDegreeController = TextEditingController();
@@ -38,21 +28,7 @@ class BarcodeController extends GetxController {
     super.dispose();
   }
 
-  //   @override
-//   void onReady() {
-//     super.onReady();
-//     brCodeFoucs.requestFocus();
-//     atoken = Hive.box('Token').get('token');
-//     selectedSchool = SchoolResponse(
-//         id: Hive.box('School').get("Id"), name: Hive.box('School').get("Name"));
-//     selectedEduction = EducationResponse(
-//       id: Hive.box('Education').get("Id"),
-//       name: Hive.box('Education').get("Name"),
-//     );
-
-//     GradesControllers gradesControllers = Get.find();
-//     ClassesControllers classesControllers = Get.find();
-//   }
+ 
 
   Future<void> getDataFromBarcode() async {
     isLoading = true;
@@ -120,28 +96,4 @@ class BarcodeController extends GetxController {
     return setDegreeSuccess;
   }
 
-//   editStudentGrades() {
-//     edit = true;
-//     stdExBRCResMod!.studentDegree = null;
-//     update();
-//   }
-
-//   updateSubjectGrade(String gradeData) async {
-//     await StudentExamBarcodeService.updateDegree(
-//         token: atoken, barCode: stdExBRCResMod!.barCode, degree: gradeData);
-
-//     buildwidget = false;
-//     barcodeController.clear();
-//     brCodeFoucs.requestFocus();
-//     update();
-//   }
-// }
-
-// class SubjectDegrees {
-//   String title;
-//   String degree;
-//   SubjectDegrees({
-//     required this.title,
-//     required this.degree,
-//   });
 }
