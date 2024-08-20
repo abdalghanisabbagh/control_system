@@ -1,5 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/presentation/views/admin_screen/widgets/add_school_user%20.dart';
+import 'package:control_system/presentation/views/admin_screen/widgets/add_school_user.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -181,7 +181,7 @@ class AllUserWidget extends GetView<AdminController> {
                                                       fontSize: 20,
                                                     ),
                                                   ),
-                                                   Switch(
+                                                  Switch(
                                                     value: item.active == 1,
                                                     onChanged: (newValue) {
                                                       if (newValue) {

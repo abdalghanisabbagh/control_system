@@ -19,7 +19,6 @@ class AuthController extends GetxController {
   ProfileController profileController = Get.find<ProfileController>();
   bool showPass = true;
   TokenService tokenService = Get.find<TokenService>();
-
   checkLogin() {
     isLogin = false;
 
@@ -69,7 +68,9 @@ class AuthController extends GetxController {
             dToken: DateTime.now().toIso8601String(),
           ),
         );
+
         profileController.saveProfileToHiveBox(r.userProfile!);
+
         isLogin = true;
       },
     );

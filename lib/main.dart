@@ -8,12 +8,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   TokenBindings().dependencies();
-  await Hive.initFlutter();
-  await Hive.openBox('Token');
-  await Hive.openBox('School'); // Id   --- Name
-  await Hive.openBox('Profile'); // Id   --- profile
-  await Hive.openBox('ControlMission');
-  await Hive.openBox('ExamRoom');
-
+  await Future.wait([
+    Hive.initFlutter(),
+    Hive.openBox('Token'),
+    Hive.openBox('School'), // Id   --- Name
+    Hive.openBox('Profile'), // Id   --- profile
+    Hive.openBox('ControlMission'),
+    Hive.openBox('ExamRoom'),
+  ]);
   runApp(MyApp());
 }

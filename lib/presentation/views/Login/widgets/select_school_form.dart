@@ -1,11 +1,17 @@
+import 'package:control_system/Data/Models/school/school_response/school_res_model.dart';
+import 'package:control_system/Data/Models/school/school_type/school_type_model.dart';
+import 'package:control_system/domain/controllers/profile_controller.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/loading_indicators.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../../domain/controllers/user_has_schools_controller.dart';
+import '../../../../domain/controllers/school_controller.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
-class SelectSchoolForm extends GetView<UserHasSchoolsController> {
+class SelectSchoolForm extends GetView<ProfileController> {
   const SelectSchoolForm({super.key});
 
   @override
@@ -45,84 +51,136 @@ class SelectSchoolForm extends GetView<UserHasSchoolsController> {
                 ),
                 const Divider(),
                 Expanded(
-                  child: GetBuilder<UserHasSchoolsController>(
-                    builder: (controller) =>
-                        controller.userHasSchoolsResModel!.schoolId!.isEmpty
-                            ? const Center(child: Text('No Schools available'))
-                            : Center(
-                                child: ListView.builder(
-                                  itemCount: controller
-                                      .userHasSchoolsResModel!.schoolId!.length,
-                                  itemBuilder: (context, index) {
-                                    (String, int) currentSchool = (
-                                      controller.userHasSchoolsResModel!
-                                          .schoolName![index],
-                                      controller.userHasSchoolsResModel!
-                                          .schoolId![index]
-                                    );
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: ColorManager.bgSideMenu,
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(25),
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: ColorManager.white
-                                                  .withOpacity(0.2),
-                                              spreadRadius: 4,
-                                              blurRadius: 7,
-                                              offset: const Offset(0, 3),
-                                            ),
-                                          ],
-                                        ),
-                                        child: ListTile(
-                                          leading: const Icon(
-                                            Icons.school,
-                                            color: ColorManager.white,
-                                          ),
-                                          focusColor: ColorManager.bgSideMenu,
-                                          hoverColor: ColorManager.bgSideMenu,
-                                          onTap: () async {
-                                            controller.update();
-                                            MyFlashBar.showSuccess(
-                                              currentSchool.$1,
-                                              "School Selected",
-                                            ).show(context);
-                                            // await Future.delayed(
-                                            //     Durations.long2);
-                                            // await controller
-                                            //     .(currentSchool)
-                                            //     .then(
-                                            //   (_) {
-                                            //     context.mounted
-                                            //         ? context.goNamed(
-                                            //             AppRoutesNamesAndPaths
-                                            //                 .dashBoardScreenName,
-                                            //           )
-                                            //         : Get.key.currentContext
-                                            //             ?.goNamed(
-                                            //             AppRoutesNamesAndPaths
-                                            //                 .dashBoardScreenName,
-                                            //           );
-                                            //   },
-                                            // );
-                                          },
-                                          // title: Text(
-                                          //   "${currentSchool.schoolType!.name ?? ""} ${currentSchool.name ?? ""}",
-                                          //   style: nunitoRegularStyle(
-                                          //     color: ColorManager.white,
-                                          //     fontSize: 16,
-                                          //   ),
-                                          // ),
-                                        ),
+                  child: GetBuilder<SchoolController>(
+                    init: SchoolController(),
+                    builder: (schoolController) {
+                      return schoolController.isLoading
+                          ? Center(
+                              child: LoadingIndicators.getLoadingIndicator(),
+                            )
+                          : GetBuilder<ProfileController>(
+                              builder: (selectSchool) => selectSchool
+                                      .cachedUserProfile!
+                                      .userHasSchoolsResModel!
+                                      .schoolId!
+                                      .isEmpty
+                                  ? const Center(
+                                      child: Text(
+                                        'No Schools available',
                                       ),
-                                    );
-                                  },
-                                ),
-                              ),
+                                    )
+                                  : Center(
+                                      child: ListView.builder(
+                                        itemCount: selectSchool
+                                            .cachedUserProfile!
+                                            .userHasSchoolsResModel!
+                                            .schoolId!
+                                            .length,
+                                        itemBuilder: (context, index) {
+                                          final ({
+                                            String name,
+                                            int id,
+                                            int schoolTypeId,
+                                            SchoolTypeResModel? type
+                                          }) currentSchool = (
+                                            name: selectSchool
+                                                .cachedUserProfile!
+                                                .userHasSchoolsResModel!
+                                                .schoolName![index],
+                                            id: selectSchool
+                                                .cachedUserProfile!
+                                                .userHasSchoolsResModel!
+                                                .schoolId![index],
+                                            schoolTypeId: selectSchool
+                                                .cachedUserProfile!
+                                                .userHasSchoolsResModel!
+                                                .schoolTypeIds![index],
+                                            type: selectSchool
+                                                .cachedUserProfile!
+                                                .userHasSchoolsResModel!
+                                                .schoolType![index],
+                                          );
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: ColorManager.bgSideMenu,
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(25),
+                                                ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: ColorManager.white
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 4,
+                                                    blurRadius: 7,
+                                                    offset: const Offset(0, 3),
+                                                  ),
+                                                ],
+                                              ),
+                                              child: ListTile(
+                                                leading: const Icon(
+                                                  Icons.school,
+                                                  color: ColorManager.white,
+                                                ),
+                                                focusColor:
+                                                    ColorManager.bgSideMenu,
+                                                hoverColor:
+                                                    ColorManager.bgSideMenu,
+                                                onTap: () async {
+                                                  schoolController.isLoading =
+                                                      true;
+                                                  schoolController.update();
+                                                  MyFlashBar.showSuccess(
+                                                    currentSchool.name,
+                                                    "School Selected",
+                                                  ).show(context);
+                                                  await Future.delayed(
+                                                      Durations.long2);
+                                                  await schoolController
+                                                      .saveToSchoolBox(
+                                                    SchoolResModel(
+                                                      iD: currentSchool.id,
+                                                      name: currentSchool.name,
+                                                      schoolTypeID:
+                                                          currentSchool
+                                                              .schoolTypeId,
+                                                      schoolType:
+                                                          currentSchool.type,
+                                                    ),
+                                                  )
+                                                      .then(
+                                                    (_) {
+                                                      context.mounted
+                                                          ? context.goNamed(
+                                                              AppRoutesNamesAndPaths
+                                                                  .dashBoardScreenName,
+                                                            )
+                                                          : Get.key
+                                                              .currentContext
+                                                              ?.goNamed(
+                                                              AppRoutesNamesAndPaths
+                                                                  .dashBoardScreenName,
+                                                            );
+                                                    },
+                                                  );
+                                                },
+                                                title: Text(
+                                                  "${currentSchool.type?.name} ${currentSchool.name}",
+                                                  style: nunitoRegularStyle(
+                                                    color: ColorManager.white,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                            );
+                    },
                   ),
                 ),
               ],
