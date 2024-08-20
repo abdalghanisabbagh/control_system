@@ -1,4 +1,3 @@
-import '../users_res/user_has_school_res_model.dart';
 import 'user_profile_model.dart';
 
 class LoginResModel {
@@ -7,7 +6,6 @@ class LoginResModel {
   String? refreshToken;
 
   UserProfileModel? userProfile;
-  UserHasSchoolsResModel? userHasSchoolsResModel;
   LoginResModel({
     this.refreshToken,
     this.accessToken,
@@ -19,9 +17,6 @@ class LoginResModel {
     userProfile = json['userProfile'] != null
         ? UserProfileModel.fromJson(json['userProfile'])
         : null;
-    userHasSchoolsResModel = json['userHasSchoolsResModel'] != null
-        ? UserHasSchoolsResModel.fromJson(json['userHasSchoolsResModel'])
-        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -30,9 +25,6 @@ class LoginResModel {
     data['accessToken'] = accessToken;
     if (userProfile != null) {
       data['userProfile'] = userProfile!.toJson();
-    }
-    if (userHasSchoolsResModel != null) {
-      data['userHasSchoolsResModel'] = userHasSchoolsResModel!.toJson();
     }
     return data;
   }
