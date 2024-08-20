@@ -143,7 +143,7 @@ class AllUserWidget extends GetView<AdminController> {
                                                 children: [
                                                   Flexible(
                                                     child: Text(
-                                                      "Created At: ${DateFormat("dd-MM-yyyy HH:mm").format(DateTime.parse(item.createdAt!))}",
+                                                      "Created At: ${DateFormat("dd-MM-yyyy HH:mm").format(DateTime.parse(item.createdAt!).toLocal())}",
                                                       style: nunitoRegular
                                                           .copyWith(
                                                               color: ColorManager

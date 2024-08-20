@@ -24,7 +24,7 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 20,
-            offset: const Offset(2, 15), 
+            offset: const Offset(2, 15),
           ),
         ],
         color: ColorManager.ligthBlue,
@@ -69,7 +69,7 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                             FittedBox(
                               fit: BoxFit.contain,
                               child: Text(
-                                "Start Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.startDate!.substring(0, controlMission.startDate!.length - 1).toString()))}",
+                                "Start Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.startDate!.substring(0, controlMission.startDate!.length - 1).toString()).toLocal())}",
                                 style: nunitoRegular.copyWith(
                                     color: ColorManager.green, fontSize: 16),
                               ),
@@ -78,7 +78,7 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                             FittedBox(
                               fit: BoxFit.contain,
                               child: Text(
-                                "End Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.endDate!.substring(0, controlMission.endDate!.length - 1).toString()))}",
+                                "End Date: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(controlMission.endDate!.substring(0, controlMission.endDate!.length - 1).toString()).toLocal())}",
                                 style: nunitoRegular.copyWith(
                                     color: ColorManager.red, fontSize: 16),
                               ),
