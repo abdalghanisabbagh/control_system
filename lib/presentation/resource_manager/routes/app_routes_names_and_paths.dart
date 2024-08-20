@@ -10,6 +10,10 @@ class AppRoutesNamesAndPaths {
 
   static const String allUsersScreenName = 'All Users';
   static const String allusersScreenPath = 'all-users';
+
+  static const String profileScreenName = 'Profile';
+  // profileScreen
+  static const String profileScreenPath = '/profile';
   static const String batchDocumentsScreenName = 'Batch Documents';
   // batchDocumentsScreen
   static const String batchDocumentsScreenPath = '/batch-documents';

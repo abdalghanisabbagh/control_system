@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/views/custom_app_bar_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class BaseScreen extends GetView<SideMenueGetController> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: ColorManager.background,
-      appBar: appbar,
+      appBar: appbar ?? const CustomAppBar(),
       body: SafeArea(
         child: Row(
           children: [

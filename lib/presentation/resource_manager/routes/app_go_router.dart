@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/views/profile_widget.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -289,6 +290,17 @@ class AppGoRouter {
 
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const RolesScreen();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+      ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.profileScreenPath,
+        name: AppRoutesNamesAndPaths.profileScreenName,
+        builder: (context, state) {
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          return ProfileWidget();
         },
         onExit: (context, state) {
           return true;
