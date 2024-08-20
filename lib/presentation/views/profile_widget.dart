@@ -136,7 +136,7 @@ class ProfileWidget extends GetView<ProfileController> {
                 final data = <String, dynamic>{};
 
                 if (_nameController.text.isNotEmpty) {
-                  data['User_Name'] = _nameController.text;
+                  data['Full_Name'] = _nameController.text;
                 }
                 if (_oldPasswordController.text.isNotEmpty &&
                     _newPasswordController.text.isNotEmpty) {
