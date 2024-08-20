@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/user/login_response/user_profile_model.dart';
-import '../../Data/Models/user/users_res/user_res_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
@@ -51,9 +50,9 @@ class ProfileController extends GetxController {
     isLodingEditUser = true;
     update();
 
-    final response = await ResponseHandler<UserResModel>().getResponse(
+    final response = await ResponseHandler<void>().getResponse(
         path: "${UserLinks.users}/$id",
-        converter: UserResModel.fromJson,
+        converter: (_){},
         type: ReqTypeEnum.PATCH,
         body: data);
 

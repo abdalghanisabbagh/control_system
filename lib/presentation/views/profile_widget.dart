@@ -1,9 +1,13 @@
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:custom_theme/lib.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:universal_html/html.dart';
 
 import '../../../../domain/controllers/controllers.dart';
+import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../resource_manager/ReusableWidget/my_back_button.dart';
 
 class ProfileWidget extends GetView<ProfileController> {
@@ -30,7 +34,9 @@ class ProfileWidget extends GetView<ProfileController> {
             fontSize: 20,
           ),
         ),
-        leading: MyBackButton(onPressed: () => Get.back()),
+        leading: const MyBackButton(
+          color: ColorManager.white,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -174,11 +180,15 @@ class ProfileWidget extends GetView<ProfileController> {
               data, profileController.cachedUserProfile!.iD!);
 
           if (success) {
+            UserProfileModel userProfile = profileController.cachedUserProfile!
+              ..fullName = _nameController.text;
+            profileController.saveProfileToHiveBox(userProfile);
             MyFlashBar.showSuccess(
               'Success',
               'Profile updated successfully',
             ).show(Get.key.currentContext!);
-            Get.back();
+            await Future.delayed(const Duration(milliseconds: 1000));
+            kIsWeb ? window.history.back() : Get.key.currentContext!.pop();
           }
         }
       },
