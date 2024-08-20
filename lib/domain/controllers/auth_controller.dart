@@ -94,7 +94,7 @@ class AuthController extends GetxController {
 
     var dio = Dio(
       BaseOptions(
-        baseUrl: AppLinks.baseUrlDev,
+        baseUrl: AppLinks.baseUrlProd,
       ),
     );
 
