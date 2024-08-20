@@ -353,8 +353,8 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
 
                     DateTime? selectedDate = await selectDate(context);
                     if (selectedDate != null) {
-                      dateController.text =
-                          DateFormat('dd MMMM yyyy').format(selectedDate);
+                      dateController.text = DateFormat('dd MMMM yyyy')
+                          .format(selectedDate.toLocal());
                     } else {
                       dateController.text = 'dd MMMM yyyy';
                     }
@@ -534,15 +534,18 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.parse(controller.controlMissionResModel!.startDate!
-          .substring(
-              0, controller.controlMissionResModel!.startDate!.length - 1)),
+              .substring(
+                  0, controller.controlMissionResModel!.startDate!.length - 1))
+          .toLocal(),
       initialDatePickerMode: DatePickerMode.day,
       firstDate: DateTime.parse(controller.controlMissionResModel!.startDate!
-          .substring(
-              0, controller.controlMissionResModel!.startDate!.length - 1)),
+              .substring(
+                  0, controller.controlMissionResModel!.startDate!.length - 1))
+          .toLocal(),
       lastDate: DateTime.parse(controller.controlMissionResModel!.endDate!
-          .substring(
-              0, controller.controlMissionResModel!.endDate!.length - 1)),
+              .substring(
+                  0, controller.controlMissionResModel!.endDate!.length - 1))
+          .toLocal(),
     );
 
     if (picked != null) {
