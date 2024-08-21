@@ -28,7 +28,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
   ExamMissionResModel examMissionObject;
 
   late TextEditingController startTimeController = TextEditingController(
-      text: examMissionObject.endTime == null
+      text: examMissionObject.startTime == null
           ? "${examMissionObject.month} ${examMissionObject.year}"
           : DateFormat('yyyy-MM-dd HH:mm')
               .format(DateTime.parse(examMissionObject.startTime!).toLocal()));
@@ -300,24 +300,25 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
             }
             return InkWell(
               onTap: () {
-                String? endTimeIso;
-                if (controller.selectedEndTime != null) {
-                  if (controller.selectedStartTime != null &&
-                      controller.selectedEndTime!
-                          .isAtSameMomentAs(controller.selectedStartTime!)) {
+                if (controller.selectedEndTime != null &&
+                    controller.selectedStartTime != null) {
+                  if (controller.selectedEndTime!
+                      .isBefore(controller.selectedStartTime!)) {
                     MyFlashBar.showError(
-                      "End Time cannot be the same as Start Time",
+                      "End Time cannot be before Start Time",
                       "Error",
                     ).show(Get.key.currentContext!);
                     return;
                   }
-                  endTimeIso =
-                      endTimeController.text.convertDateStringToIso8601String();
                 }
+
                 if (_formKey.currentState!.validate()) {
                   controller
                       .updateExamMission(
-                    endTime: endTimeIso,
+                    endTime: controller.selectedEndTime == null
+                        ? null
+                        : endTimeController.text
+                            .convertDateStringToIso8601String(),
                     period: examMissionObject.period,
                     id: examMissionObject.iD!,
                     startTime: controller.selectedStartTime == null
