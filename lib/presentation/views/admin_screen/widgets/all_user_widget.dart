@@ -228,20 +228,25 @@ class AllUserWidget extends GetView<AdminController> {
                                             ],
                                           ),
                                         ),
-                                        IconButton(
-                                          icon: const Icon(Icons.school,
-                                              color: ColorManager.bgSideMenu),
-                                          onPressed: () {
-                                            MyDialogs.showDialog(
-                                              context,
-                                              AddSchoolUser(
+                                        Visibility(
+                                          visible: Get.find<ProfileController>()
+                                              .canAccessWidget(
+                                                  widgetId: '9700'),
+                                          child: IconButton(
+                                            icon: const Icon(Icons.school,
+                                                color: ColorManager.bgSideMenu),
+                                            onPressed: () {
+                                              MyDialogs.showDialog(
+                                                context,
+                                                AddSchoolUser(
+                                                  userResModel: item,
+                                                ),
+                                              );
+                                              controller.getAllSchool(
                                                 userResModel: item,
-                                              ),
-                                            );
-                                            controller.getAllSchool(
-                                              userResModel: item,
-                                            );
-                                          },
+                                              );
+                                            },
+                                          ),
                                         ),
                                         Visibility(
                                           visible: Get.find<ProfileController>()
