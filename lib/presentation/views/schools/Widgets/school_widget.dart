@@ -77,7 +77,7 @@ class SchoolWidget extends GetView<SchoolController> {
                                     ),
                                     padding: const EdgeInsets.all(10),
                                     child: Text(
-                                      "${school.schoolType?.name} ${school.name}",
+                                      "${school.name} (${school.schoolType?.name})",
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),

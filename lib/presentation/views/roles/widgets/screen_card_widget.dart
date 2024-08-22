@@ -28,14 +28,34 @@ class ScreenCardWidget extends GetView<RolesController> {
           elevation: 10,
           child: ListTile(
             title: Text(
-              controller.screens[index].name,
+              controller.searchScreensController.text.isEmpty
+                  ? controller.screens[index].name
+                  : controller.screens
+                      .where((screen) =>
+                          screen.name.toLowerCase().contains(controller
+                              .searchScreensController.text
+                              .toLowerCase()) ||
+                          screen.frontId.contains(
+                              controller.searchScreensController.text))
+                      .toList()[index]
+                      .name,
               style: nunitoBold.copyWith(
                 color: ColorManager.black,
                 fontSize: 18,
               ),
             ),
             subtitle: Text(
-              controller.screens[index].frontId,
+              controller.searchScreensController.text.isEmpty
+                  ? controller.screens[index].frontId
+                  : controller.screens
+                      .where((screen) =>
+                          screen.name.toLowerCase().contains(controller
+                              .searchScreensController.text
+                              .toLowerCase()) ||
+                          screen.frontId.contains(
+                              controller.searchScreensController.text))
+                      .toList()[index]
+                      .frontId,
             ),
           ),
         );

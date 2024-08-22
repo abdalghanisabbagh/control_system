@@ -200,7 +200,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                 controller: missionNameController
                   ..text = controller.batchName ?? "",
                 title: "Mission Name",
-                onChange: (value) => controller.batchName = value,
+                onChanged: (value) => controller.batchName = value,
               ),
               const SizedBox(height: 20),
               Visibility(

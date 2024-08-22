@@ -160,7 +160,7 @@ class CohortsSettingsController extends GetxController {
     getAllLoading = true;
     update();
     final response = await ResponseHandler<CohortsResModel>().getResponse(
-      path: CohortLinks.cohort,
+      path: '${CohortLinks.cohort}/school-type',
       converter: CohortsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

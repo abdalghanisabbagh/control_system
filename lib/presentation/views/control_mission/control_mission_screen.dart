@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,114 +19,90 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
       body: Container(
         color: ColorManager.bgColor,
         padding: const EdgeInsets.all(20),
-        child: Column(children: [
-          const HeaderMissionWidget(),
-          const Divider(),
-          const SizedBox(height: 20),
-          GetBuilder<ControlMissionController>(
-            builder: (_) {
-              if (controller.isLodingGetEducationYears) {
-                return Center(
-                  child: LoadingIndicators.getLoadingIndicator(),
-                );
-              }
-
-              if (controller.optionsEducationYear.isEmpty) {
-                return const Text('No items available');
-              }
-
-              return MultiSelectDropDownView(
-                hintText: "Select Education Year",
-                onOptionSelected: (selectedItem) {
-                  controller.setSelectedItemEducationYear(selectedItem);
-                },
-                showChipSelect: false,
-                options: controller.optionsEducationYear,
-              );
-            },
-          ),
-          const SizedBox(height: 20),
-          GetBuilder<ControlMissionController>(
-            builder: (_) {
-              
-              if (controller.selectedItemEducationYear != null &&
-                  controller.controlMissionList.isNotEmpty) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: TextField(
-                    onChanged: (query) {
-                      controller.updateSearchQuery(query);
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Search by Name',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      prefixIcon: const Icon(Icons.search),
-                    ),
-                  ),
-                );
-              } else if (controller.selectedItemEducationYear == null) {
-                return const Text('Please Select Education Year');
-              } else if (controller.controlMissionList.isEmpty) {
-                return const Text('No items available');
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-          const SizedBox(height: 20),
-          GetBuilder<ControlMissionController>(
-            builder: (controller) {
-              if (controller.isLoading) {
-                return Expanded(
-                  child: Center(
+        child: Column(
+          children: [
+            const HeaderMissionWidget(),
+            const Divider(),
+            const SizedBox(height: 20),
+            GetBuilder<ControlMissionController>(
+              builder: (_) {
+                if (controller.isLodingGetEducationYears) {
+                  return Center(
                     child: LoadingIndicators.getLoadingIndicator(),
-                  ),
-                );
-              }
-
-              if (controller.selectedItemEducationYear == null) {
-                return Expanded(
-                  child: Center(
-                    child: Text(
-                      'Please Select Education Year',
-                      style: nunitoRegular.copyWith(
-                        color: ColorManager.bgSideMenu,
-                        fontSize: 23,
-                      ),
-                    ),
-                  ),
-                );
-              }
-
-              if (controller.filteredControlMissionList.isEmpty) {
-                return Expanded(
-                  child: Center(
-                    child: Text(
-                      'No items available',
-                      style: nunitoRegular.copyWith(
-                        color: ColorManager.bgSideMenu,
-                        fontSize: 23,
-                      ),
-                    ),
-                  ),
-                );
-              }
-
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: controller.filteredControlMissionList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ControlMissionReviewWidget(
-                      controlMission:
-                          controller.filteredControlMissionList[index],
-                    );
+                  );
+                }
+                if (controller.optionsEducationYear.isEmpty) {
+                  return const Text('No items available');
+                }
+                return MultiSelectDropDownView(
+                  hintText: "Select Education Year",
+                  onOptionSelected: (selectedItem) {
+                    controller.setSelectedItemEducationYear(selectedItem);
                   },
-                ),
-              );
-            },
-          )
-        ]),
+                  showChipSelect: false,
+                  options: controller.optionsEducationYear,
+                );
+              },
+            ),
+            GetBuilder<ControlMissionController>(
+              builder: (_) {
+                if (controller.selectedItemEducationYear != null &&
+                    controller.controlMissionList.isNotEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: MytextFormFiled(
+                      title: 'Search by Name',
+                      onChanged: (query) {
+                        controller.updateSearchQuery(query ?? '');
+                        return query;
+                      },
+                    ),
+                  );
+                } else if (controller.selectedItemEducationYear == null) {
+                  return Text(
+                    'Please Select Education Year',
+                    style: nunitoRegular.copyWith(
+                      color: ColorManager.bgSideMenu,
+                      fontSize: 23,
+                    ),
+                  );
+                } else if (controller.controlMissionList.isEmpty) {
+                  return Text(
+                    'No items available',
+                    style: nunitoRegular.copyWith(
+                      color: ColorManager.bgSideMenu,
+                      fontSize: 23,
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+            const SizedBox(height: 20),
+            GetBuilder<ControlMissionController>(
+              builder: (controller) {
+                if (controller.isLoading) {
+                  return Expanded(
+                    child: Center(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    ),
+                  );
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.filteredControlMissionList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ControlMissionReviewWidget(
+                        controlMission:
+                            controller.filteredControlMissionList[index],
+                      );
+                    },
+                  ),
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }

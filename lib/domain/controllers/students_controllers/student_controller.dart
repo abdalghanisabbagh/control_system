@@ -352,12 +352,11 @@ class StudentController extends GetxController {
   Future<bool> getClassRooms() async {
     bool gotData = false;
     update();
-    int schoolId = Hive.box('School').get('Id');
 
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassesRoomsResModel> response =
         await responseHandler.getResponse(
-      path: "${SchoolsLinks.getSchoolsClassesBySchoolId}/$schoolId",
+      path: SchoolsLinks.getSchoolsClassesBySchoolId,
       converter: ClassesRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -386,12 +385,11 @@ class StudentController extends GetxController {
   Future<bool> getCohorts() async {
     bool gotData = false;
     update();
-    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
 
     ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortsResModel> response =
         await responseHandler.getResponse(
-      path: "${CohortLinks.getCohortBySchoolType}/$selectedSchoolId",
+      path: CohortLinks.getCohortBySchoolType,
       converter: CohortsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

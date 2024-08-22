@@ -167,7 +167,7 @@ class SelectSchoolForm extends GetView<ProfileController> {
                                                   );
                                                 },
                                                 title: Text(
-                                                  "${currentSchool.type?.name} ${currentSchool.name}",
+                                                  "${currentSchool.name} (${currentSchool.type?.name})",
                                                   style: nunitoRegularStyle(
                                                     color: ColorManager.white,
                                                     fontSize: 16,

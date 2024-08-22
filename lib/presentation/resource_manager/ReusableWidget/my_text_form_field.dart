@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 class MytextFormFiled extends StatelessWidget {
   final String? Function(String? newValue)? myValidation;
 
-  final String? Function(String? value)? onChange;
+  final String? Function(String? value)? onChanged;
   final Function(String? value)? onFieldSubmitted;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final Color? enableBorderColor;
   final FocusNode? focusNode;
   final Color? foucsBorderColor;
@@ -20,17 +20,18 @@ class MytextFormFiled extends StatelessWidget {
   final Widget? suffixIcon;
   final List<TextInputFormatter>? textInputs;
   final String? title;
+
   const MytextFormFiled({
     super.key,
     this.title,
-    required this.controller,
+    this.controller,
     this.maxlines = 1,
     this.maxLength,
     this.isEnable,
     this.myValidation,
     this.isNumber,
     this.textInputs,
-    this.onChange,
+    this.onChanged,
     this.suffixIcon,
     this.obscureText = false,
     this.enableBorderColor = ColorManager.grey,
@@ -76,7 +77,7 @@ class MytextFormFiled extends StatelessWidget {
       maxLength: maxLength,
       enabled: isEnable,
       validator: myValidation,
-      onChanged: onChange,
+      onChanged: onChanged,
       onFieldSubmitted: onFieldSubmitted,
       obscureText: obscureText,
       focusNode: focusNode,
