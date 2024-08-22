@@ -17,18 +17,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: nunitoBold.copyWith(color: ColorManager.white),
       ),
       backgroundColor: ColorManager.primary,
-      leading:
-          GetBuilder<SideMenueGetController>(builder: (sideMenueGetController) {
-        return IconButton(
-          icon: Icon(sideMenueGetController.isSideMenuVisible
-              ? Icons.arrow_back
-              : Icons.menu),
-          color: ColorManager.white,
-          onPressed: () {
-            sideMenueGetController.toggleSideMenuVisibility();
-          },
-        );
-      }),
+      leading: GetBuilder<SideMenueGetController>(
+        builder: (sideMenueGetController) {
+          return IconButton(
+            icon: Icon(sideMenueGetController.isSideMenuVisible
+                ? Icons.arrow_back
+                : Icons.menu),
+            color: ColorManager.white,
+            onPressed: () {
+              sideMenueGetController.toggleSideMenuVisibility();
+            },
+          );
+        },
+      ),
       actions: [
         IconButton(
           icon: const Icon(
