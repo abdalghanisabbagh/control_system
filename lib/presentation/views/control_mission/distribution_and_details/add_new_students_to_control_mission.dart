@@ -347,18 +347,26 @@ class AddStudentsToControlMissionScreen
                           ),
                         ),
                         const SizedBox(height: 10),
-                        ElevatedAddButton(
-                          onPressed: () async {
-                            await controller.addStudentsToControlMission().then(
-                              (value) {
-                                if (value) {
-                                  context.mounted
-                                      ? context.goNamed(
-                                          AppRoutesNamesAndPaths
-                                              .distributioncreateMissionScreenName,
-                                        )
-                                      : null;
-                                }
+                        GetBuilder<DistributionController>(
+                          builder: (distributionController) {
+                            return ElevatedAddButton(
+                              onPressed: () async {
+                                await controller
+                                    .addStudentsToControlMission()
+                                    .then(
+                                  (value) async {
+                                    distributionController
+                                        .getDistributedStudentsCounts();
+                                    if (value) {
+                                      context.mounted
+                                          ? context.goNamed(
+                                              AppRoutesNamesAndPaths
+                                                  .distributioncreateMissionScreenName,
+                                            )
+                                          : null;
+                                    }
+                                  },
+                                );
                               },
                             );
                           },
