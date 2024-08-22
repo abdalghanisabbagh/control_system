@@ -14,6 +14,8 @@ import '../controllers/profile_controller.dart';
 class SideMenueGetController extends GetxController {
   int nowIndex = 0;
   late final SideMenuController sideMenuController;
+  bool isSideMenuVisible = true;
+
   List<SideMenuItem> userMenue = [];
 
   changePage(int currentIndex) {
@@ -97,5 +99,10 @@ class SideMenueGetController extends GetxController {
     if (index != -1) {
       sideMenuController.changePage(index);
     }
+  }
+
+  void toggleSideMenuVisibility() {
+    isSideMenuVisible = !isSideMenuVisible;
+    update();
   }
 }
