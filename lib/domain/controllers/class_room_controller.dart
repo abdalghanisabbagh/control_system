@@ -159,7 +159,7 @@ class ClassRoomController extends GetxController {
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassesRoomsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.schoolsClasses,
+      path: '${SchoolsLinks.schoolsClasses}/school',
       converter: ClassesRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
