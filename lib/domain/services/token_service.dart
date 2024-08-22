@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:control_system/domain/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -24,9 +23,7 @@ class TokenService extends FullLifeCycleController with FullLifeCycleMixin {
   }
 
   @override
-  void onDetached() {
-    Get.find<AuthController>().checkLogin();
-  }
+  void onDetached() {}
 
   @override
   void onHidden() {}

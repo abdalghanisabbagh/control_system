@@ -93,14 +93,14 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                   .examMissionsResModel!
                                   .data!
                                   .where((exam) =>
-                                      exam.period! &&
+                                      !exam.period! &&
                                       exam.month ==
                                           '${controller.selectedDate?.day} ${controller.selectedDate?.toMonthName}')
                                   .isNotEmpty)
                                 ElevatedButton(
                                   onPressed: () async {
                                     controller
-                                        .assignProctorToExamRoom(period: true)
+                                        .assignProctorToExamRoom(period: false)
                                         .then(
                                           (value) => value
                                               ? {
@@ -128,7 +128,7 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                 .examMissionsResModel!
                                 .data!
                                 .where((exam) =>
-                                    exam.period! &&
+                                    !exam.period! &&
                                     exam.month ==
                                         '${controller.selectedDate?.day} ${controller.selectedDate?.toMonthName}')
                                 .map(
@@ -238,14 +238,14 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                   .examMissionsResModel!
                                   .data!
                                   .where((exam) =>
-                                      !exam.period! &&
+                                      exam.period! &&
                                       exam.month ==
                                           '${controller.selectedDate?.day} ${controller.selectedDate?.toMonthName}')
                                   .isNotEmpty)
                                 ElevatedButton(
                                   onPressed: () async {
                                     controller
-                                        .assignProctorToExamRoom(period: false)
+                                        .assignProctorToExamRoom(period: true)
                                         .then(
                                           (value) => value
                                               ? {
@@ -300,7 +300,7 @@ class AssignProctorToExamMission extends GetView<ProctorController> {
                                 .examMissionsResModel!
                                 .data!
                                 .where((exam) =>
-                                    !exam.period! &&
+                                    exam.period! &&
                                     exam.month ==
                                         '${controller.selectedDate?.day} ${controller.selectedDate?.toMonthName}')
                                 .map(

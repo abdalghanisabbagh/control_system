@@ -1,16 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart' hide Response;
 
-import '../../domain/controllers/auth_controller.dart';
-import '../../domain/services/token_service.dart';
-import '../Models/token/token_model.dart';
 import '../enums/req_type_enum.dart';
 import 'tools/dio_factory.dart';
 import 'tools/failure_model.dart';
 
 class ResponseHandler<T> {
-  Dio _dio;
+  final Dio _dio;
 
   ResponseHandler() : _dio = DioFactory().getDio();
 
@@ -21,23 +17,6 @@ class ResponseHandler<T> {
     Map<String, dynamic>? params,
     dynamic body,
   }) async {
-    TokenService tokenService = Get.find<TokenService>();
-    String dtoken =
-        tokenService.tokenModel?.dToken ?? DateTime.now().toIso8601String();
-    DateTime? tokenTime = DateTime.tryParse(dtoken);
-    if (DateTime.now().difference(tokenTime!).inMinutes > 50) {
-      String? newAccessToken = await Get.find<AuthController>().refreshToken();
-      _dio = DioFactory().getDio(
-        token: newAccessToken != null
-            ? TokenModel(
-                aToken: newAccessToken,
-                dToken: dtoken,
-                rToken: tokenService.tokenModel!.rToken,
-              )
-            : null,
-      );
-    }
-
     switch (type) {
       case ReqTypeEnum.GET:
         return await _get(path, converter, params, body);

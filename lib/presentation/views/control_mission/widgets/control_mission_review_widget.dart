@@ -135,44 +135,47 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                       widgetId: '2200',
                     ),
                     child: GetBuilder<DistributionController>(
-                        builder: (distributionController) {
-                      return InkWell(
-                        onTap: () async {
-                          await Future.wait([
-                            distributionController
-                                .saveControlMissionId(controlMission.iD!),
-                            distributionController
-                                .saveControlMissionName(controlMission.name!),
-                          ]);
-                          context.mounted
-                              ? context.goNamed(
-                                  AppRoutesNamesAndPaths
-                                      .distributioncreateMissionScreenName,
-                                )
-                              : null;
-                        },
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                // topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              color: ColorManager.glodenColor),
-                          child: Center(
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Text(
-                                "Distribution",
-                                style: nunitoRegular.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 18,
+                      builder: (distributionController) {
+                        return InkWell(
+                          onTap: () async {
+                            await Future.wait([
+                              distributionController
+                                  .saveControlMissionId(controlMission.iD!),
+                              distributionController
+                                  .saveControlMissionName(controlMission.name!),
+                              distributionController
+                                  .getDistributedStudentsCounts(),
+                            ]);
+                            context.mounted
+                                ? context.goNamed(
+                                    AppRoutesNamesAndPaths
+                                        .distributioncreateMissionScreenName,
+                                  )
+                                : null;
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  // topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                                color: ColorManager.glodenColor),
+                            child: Center(
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text(
+                                  "Distribution",
+                                  style: nunitoRegular.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Expanded(
