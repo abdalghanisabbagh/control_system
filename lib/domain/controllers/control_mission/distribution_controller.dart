@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
+import '../../../Data/Models/distribution_students_res_model.dart';
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../../Data/Models/exam_room/exam_rooms_res_model.dart';
 import '../../../Data/Models/satge/stage_res_model.dart';
@@ -26,6 +27,9 @@ class DistributionController extends GetxController {
   List<ValueItem> optionsStage = <ValueItem>[];
   ValueItem? selectedItemClassRoom;
   ValueItem? selectedItemStage;
+  int distributedStudents = 0;
+  int unDistributedStudents = 0;
+  int totalStudents = 0;
 
   Future<bool> addNewExamRoom({
     required int controlMissionId,
@@ -146,6 +150,35 @@ class DistributionController extends GetxController {
     update();
   }
 
+  Future<void> getDistributedStudentsCounts() async {
+    final ResponseHandler<DistributionStudentsResModel> responseHandler =
+        ResponseHandler();
+    Either<Failure, DistributionStudentsResModel> response =
+        await responseHandler.getResponse(
+      path: "${ControlMissionLinks.distributedStudents}/$controlMissionId",
+      converter: DistributionStudentsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'title',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(
+          Get.key.currentContext!,
+        );
+      },
+      (r) {
+        distributedStudents = r.distributedStudents!;
+        unDistributedStudents = r.unDistributedStudents!;
+        totalStudents = r.totalStudents!;
+      },
+    );
+    update();
+  }
+
   Future<void> getExamRoomByControlMissionId() async {
     isLodingGetExamRooms = true;
     update();
@@ -220,6 +253,7 @@ class DistributionController extends GetxController {
       getControlMissionId(),
       getControlMissionName(),
     ]);
+    controlMissionId != 0 ? getDistributedStudentsCounts() : null;
     getExamRoomByControlMissionId();
   }
 

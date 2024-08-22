@@ -50,6 +50,30 @@ class DistributionScreen extends GetView<DistributionController> {
                     text: "Distribution: ${controller.controlMissionName}",
                   ),
                   const Spacer(),
+                  GetBuilder<DistributionController>(
+                    builder: (_) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Distributed students: ${controller.distributedStudents} of ${controller.totalStudents}',
+                            style: nunitoBold.copyWith(
+                              color: ColorManager.primary,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Text(
+                            'Undistributed students: ${controller.unDistributedStudents}',
+                            style: nunitoBold.copyWith(
+                              color: ColorManager.red,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  const Spacer(),
                   Visibility(
                     visible: Get.find<ProfileController>()
                         .canAccessWidget(widgetId: '2201'),
