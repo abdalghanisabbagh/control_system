@@ -46,6 +46,35 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
           ),
           const SizedBox(height: 20),
           GetBuilder<ControlMissionController>(
+            builder: (_) {
+              
+              if (controller.selectedItemEducationYear != null &&
+                  controller.controlMissionList.isNotEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: TextField(
+                    onChanged: (query) {
+                      controller.updateSearchQuery(query);
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Search by Name',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      prefixIcon: const Icon(Icons.search),
+                    ),
+                  ),
+                );
+              } else if (controller.selectedItemEducationYear == null) {
+                return const Text('Please Select Education Year');
+              } else if (controller.controlMissionList.isEmpty) {
+                return const Text('No items available');
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+          const SizedBox(height: 20),
+          GetBuilder<ControlMissionController>(
             builder: (controller) {
               if (controller.isLoading) {
                 return Expanded(
@@ -69,7 +98,7 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
                 );
               }
 
-              if (controller.controlMissionList.isEmpty) {
+              if (controller.filteredControlMissionList.isEmpty) {
                 return Expanded(
                   child: Center(
                     child: Text(
@@ -85,10 +114,11 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
 
               return Expanded(
                 child: ListView.builder(
-                  itemCount: controller.controlMissionList.length,
+                  itemCount: controller.filteredControlMissionList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ControlMissionReviewWidget(
-                      controlMission: controller.controlMissionList[index],
+                      controlMission:
+                          controller.filteredControlMissionList[index],
                     );
                   },
                 ),

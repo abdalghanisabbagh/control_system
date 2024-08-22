@@ -16,6 +16,8 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 
 class ControlMissionController extends GetxController {
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
+  List<ControlMissionResModel> filteredControlMissionList =
+      <ControlMissionResModel>[];
   List<EducationYearModel> educationYearList = [];
   bool isLoading = false;
   bool isLodingGetClassesRooms = false;
@@ -23,6 +25,13 @@ class ControlMissionController extends GetxController {
   List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem>? selectedEducationYear;
   ValueItem? selectedItemEducationYear;
+  String searchQuery = '';
+
+  @override
+  void onInit() async {
+    super.onInit();
+    getEducationYears();
+  }
 
   Future<bool> getControlMissionByEducationYear(int educationYearId) async {
     bool gotData = false;
@@ -49,6 +58,7 @@ class ControlMissionController extends GetxController {
       },
       (r) {
         controlMissionList = r.data!;
+        filteredControlMissionList = controlMissionList;
         gotData = true;
       },
     );
@@ -90,16 +100,23 @@ class ControlMissionController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-    getEducationYears();
-  }
-
   void setSelectedItemEducationYear(List<ValueItem> items) {
     selectedItemEducationYear = items.first;
     int educationYearId = selectedItemEducationYear!.value;
     getControlMissionByEducationYear(educationYearId);
+    update();
+  }
+
+  void updateSearchQuery(String query) {
+    searchQuery = query;
+    if (query.isEmpty) {
+      filteredControlMissionList = controlMissionList;
+    } else {
+      filteredControlMissionList = controlMissionList.where((mission) {
+        return mission.name?.toLowerCase().contains(query.toLowerCase()) ??
+            false;
+      }).toList();
+    }
     update();
   }
 }
