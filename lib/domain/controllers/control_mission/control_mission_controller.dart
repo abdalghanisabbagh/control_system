@@ -101,9 +101,14 @@ class ControlMissionController extends GetxController {
   }
 
   void setSelectedItemEducationYear(List<ValueItem> items) {
-    selectedItemEducationYear = items.first;
-    int educationYearId = selectedItemEducationYear!.value;
-    getControlMissionByEducationYear(educationYearId);
+    if (items.isEmpty) {
+      selectedItemEducationYear = null;
+      controlMissionList.clear();
+    } else {
+      selectedItemEducationYear = items.first;
+      int educationYearId = selectedItemEducationYear!.value;
+      getControlMissionByEducationYear(educationYearId);
+    }
     update();
   }
 
