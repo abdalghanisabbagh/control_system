@@ -32,7 +32,13 @@ class RoleCardWidget extends GetView<RolesController> {
               controller.update();
             },
             title: Text(
-              controller.roles[index].name!,
+              controller.searchRolesController.text.isEmpty
+                  ? controller.roles[index].name!
+                  : controller.roles
+                      .where((role) => role.name!.toLowerCase().contains(
+                          controller.searchRolesController.text.toLowerCase()))
+                      .toList()[index]
+                      .name!,
               overflow: TextOverflow.ellipsis,
               style: nunitoBold.copyWith(
                 fontSize: 22,

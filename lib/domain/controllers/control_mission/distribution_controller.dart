@@ -113,8 +113,7 @@ class DistributionController extends GetxController {
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassesRoomsResModel> response =
         await responseHandler.getResponse(
-      path:
-          "${SchoolsLinks.schoolsClasses}/school/${Hive.box('School').get('Id')}",
+      path: SchoolsLinks.getSchoolsClassesBySchoolId,
       converter: ClassesRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );

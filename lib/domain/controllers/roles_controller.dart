@@ -16,6 +16,8 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class RolesController extends GetxController {
+  final searchScreensController = TextEditingController();
+  final searchRolesController = TextEditingController();
   bool addLoading = false;
   bool connectLoading = false;
   bool deleteScreenLoading = false;

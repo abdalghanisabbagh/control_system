@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,7 +72,19 @@ class RolesScreen extends GetView<RolesController> {
                             ),
                           ],
                         ),
+                        Flexible(
+                          child: MytextFormFiled(
+                            title: 'Search Roles',
+                            controller: controller.searchRolesController,
+                            onChanged: (value) {
+                              controller.update();
+                              return value;
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                         Expanded(
+                          flex: 9,
                           child: Container(
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
@@ -102,8 +115,21 @@ class RolesScreen extends GetView<RolesController> {
                                             child: ListView.builder(
                                               controller: controller
                                                   .rolesScrollController,
-                                              itemCount:
-                                                  controller.roles.length,
+                                              itemCount: controller
+                                                      .searchRolesController
+                                                      .text
+                                                      .isEmpty
+                                                  ? controller.roles.length
+                                                  : controller.roles
+                                                      .where((role) => role
+                                                          .name!
+                                                          .toLowerCase()
+                                                          .contains(controller
+                                                              .searchRolesController
+                                                              .text
+                                                              .toLowerCase()))
+                                                      .toList()
+                                                      .length,
                                               itemBuilder: (context, index) {
                                                 return RoleCardWidget(
                                                   index: index,
@@ -170,7 +196,19 @@ class RolesScreen extends GetView<RolesController> {
                             ),
                           ],
                         ),
+                        Flexible(
+                          child: MytextFormFiled(
+                            title: 'Search Screens By Name Or Front Id',
+                            controller: controller.searchScreensController,
+                            onChanged: (value) {
+                              controller.update();
+                              return value;
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
                         Expanded(
+                          flex: 9,
                           child: Container(
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
@@ -193,20 +231,52 @@ class RolesScreen extends GetView<RolesController> {
                                             trackVisibility: true,
                                             controller: controller
                                                 .screensScrollController,
-                                            child:
-                                                TransformableListView.builder(
-                                              getTransformMatrix:
-                                                  controller.getTransformMatrix,
-                                              controller: controller
-                                                  .screensScrollController,
-                                              itemCount:
-                                                  controller.screens.length,
-                                              itemBuilder: (context, index) {
-                                                return ScreenCardWidget(
-                                                  index: index,
-                                                );
-                                              },
-                                            ),
+                                            child: controller
+                                                    .searchScreensController
+                                                    .text
+                                                    .isEmpty
+                                                ? TransformableListView.builder(
+                                                    getTransformMatrix:
+                                                        controller
+                                                            .getTransformMatrix,
+                                                    controller: controller
+                                                        .screensScrollController,
+                                                    itemCount: controller
+                                                        .screens.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return ScreenCardWidget(
+                                                        index: index,
+                                                      );
+                                                    },
+                                                  )
+                                                : TransformableListView.builder(
+                                                    getTransformMatrix:
+                                                        controller
+                                                            .getTransformMatrix,
+                                                    controller: controller
+                                                        .screensScrollController,
+                                                    itemCount: controller
+                                                        .screens
+                                                        .where((screen) =>
+                                                            screen.name
+                                                                .toLowerCase()
+                                                                .contains(controller
+                                                                    .searchScreensController
+                                                                    .text
+                                                                    .toLowerCase()) ||
+                                                            screen.frontId.contains(
+                                                                controller
+                                                                    .searchScreensController
+                                                                    .text))
+                                                        .length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return ScreenCardWidget(
+                                                        index: index,
+                                                      );
+                                                    },
+                                                  ),
                                           );
                               },
                             ),
