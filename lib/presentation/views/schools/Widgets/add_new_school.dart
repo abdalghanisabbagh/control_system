@@ -28,27 +28,6 @@ class AddNewSchoolWidget extends GetView<SchoolController> {
             fontSize: 25,
           ),
         ),
-        GetBuilder<SchoolController>(
-          builder: (controller) {
-            if (controller.isLoadingAddGrades) {
-              return LoadingIndicators.getLoadingIndicator();
-            }
-
-            if (controller.options.isEmpty) {
-              return const Text('No items available');
-            }
-
-            return SizedBox(
-              width: 500,
-              child: MultiSelectDropDownView(
-                onOptionSelected: (selectedItem) {
-                  controller.setSelectedItem(selectedItem[0]);
-                },
-                options: controller.options,
-              ),
-            );
-          },
-        ),
         const SizedBox(
           height: 20,
         ),
@@ -74,6 +53,30 @@ class AddNewSchoolWidget extends GetView<SchoolController> {
             ),
           ),
           controller: schoolNameController,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        GetBuilder<SchoolController>(
+          builder: (controller) {
+            if (controller.isLoadingAddGrades) {
+              return LoadingIndicators.getLoadingIndicator();
+            }
+
+            if (controller.options.isEmpty) {
+              return const Text('No items available');
+            }
+
+            return SizedBox(
+              width: 500,
+              child: MultiSelectDropDownView(
+                onOptionSelected: (selectedItem) {
+                  controller.setSelectedItem(selectedItem[0]);
+                },
+                options: controller.options,
+              ),
+            );
+          },
         ),
         const SizedBox(
           height: 20,
