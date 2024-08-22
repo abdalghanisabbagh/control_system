@@ -52,250 +52,256 @@ class EditSubject extends GetView<EditSubjectsController> {
                   : Form(
                       key: formKey,
                       child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Edit Subject",
-                              style: nunitoSemiBoldStyle().copyWith(
-                                color: ColorManager.bgSideMenu,
-                                fontSize: 25,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Edit Subject",
+                                style: nunitoSemiBoldStyle().copyWith(
+                                  color: ColorManager.bgSideMenu,
+                                  fontSize: 25,
+                                ),
                               ),
-                            ),
-                            const Divider(),
-                            TextFormField(
-                              controller: subjectNameController,
-                              cursorColor: ColorManager.bgSideMenu,
-                              style: nunitoRegular.copyWith(
-                                  fontSize: 14, color: ColorManager.bgSideMenu),
-                              decoration: InputDecoration(
-                                hintText: "Subject name",
-                                hintStyle: nunitoRegular.copyWith(
+                              const Divider(),
+                              TextFormField(
+                                controller: subjectNameController,
+                                cursorColor: ColorManager.bgSideMenu,
+                                style: nunitoRegular.copyWith(
                                     fontSize: 14,
                                     color: ColorManager.bgSideMenu),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Subject name is required';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            controller.schoolsType.isEmpty
-                                ? Text(
-                                    'All School Types Selected',
-                                    style: nunitoSemiBoldStyle().copyWith(
-                                      color: ColorManager.bgSideMenu,
-                                    ),
-                                  )
-                                : MultiSelectDropDownView(
-                                    hintText: "Select Schools Type",
-                                    options: controller.schoolsType
-                                        .map((e) => ValueItem(
-                                            label: e.name!, value: e.iD!))
-                                        .toList(),
-                                    onOptionSelected:
-                                        controller.onOptionSelected,
-                                    multiSelect: true,
-                                    showChipSelect: true,
+                                decoration: InputDecoration(
+                                  hintText: "Subject name",
+                                  hintStyle: nunitoRegular.copyWith(
+                                      fontSize: 14,
+                                      color: ColorManager.bgSideMenu),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            GetBuilder<EditSubjectsController>(
-                              builder: (_) {
-                                return InkWell(
-                                  onTap: () async {
-                                    if (formKey.currentState!.validate()) {
-                                      await controller
-                                          .editSubject(
-                                              id: subjectResModel.iD!,
-                                              name: subjectNameController.text,
-                                              schholTypeIds: controller
-                                                  .selectedSchoolTypeIds,
-                                              active: subjectResModel.active!,
-                                              inexam: subjectResModel.inExam!)
-                                          .then(
-                                            (value) => value
-                                                ? {
-                                                    Get.back(),
-                                                    MyFlashBar.showSuccess(
-                                                            "Subjects Added",
-                                                            "Success")
-                                                        .show(context.mounted
-                                                            ? context
-                                                            : Get.key
-                                                                .currentContext!),
-                                                    Get.delete<
-                                                        EditSubjectsController>(),
-                                                    Get.find<
-                                                            SubjectsController>()
-                                                        .getAllSubjects(),
-                                                    controller.onDelete()
-                                                  }
-                                                : null,
-                                          );
-                                    }
-                                  },
-                                  child: controller.editLoading
-                                      ? SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: Center(
-                                            child: LoadingIndicators
-                                                .getLoadingIndicator(),
-                                          ),
-                                        )
-                                      : Container(
-                                          height: 50,
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: ColorManager.glodenColor,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Edit Subjects",
-                                              style: nunitoRegular.copyWith(
-                                                  color: Colors.white),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Subject name is required';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              controller.schoolsType.isEmpty
+                                  ? Text(
+                                      'All School Types Selected',
+                                      style: nunitoSemiBoldStyle().copyWith(
+                                        color: ColorManager.bgSideMenu,
+                                      ),
+                                    )
+                                  : MultiSelectDropDownView(
+                                      hintText: "Select Schools Type",
+                                      options: controller.schoolsType
+                                          .map((e) => ValueItem(
+                                              label: e.name!, value: e.iD!))
+                                          .toList(),
+                                      onOptionSelected:
+                                          controller.onOptionSelected,
+                                      multiSelect: true,
+                                      showChipSelect: true,
+                                    ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              GetBuilder<EditSubjectsController>(
+                                builder: (_) {
+                                  return InkWell(
+                                    onTap: () async {
+                                      if (formKey.currentState!.validate()) {
+                                        await controller
+                                            .editSubject(
+                                                id: subjectResModel.iD!,
+                                                name:
+                                                    subjectNameController.text,
+                                                schholTypeIds: controller
+                                                    .selectedSchoolTypeIds,
+                                                active: subjectResModel.active!,
+                                                inexam: subjectResModel.inExam!)
+                                            .then(
+                                              (value) => value
+                                                  ? {
+                                                      Get.back(),
+                                                      MyFlashBar.showSuccess(
+                                                              "Subjects Added",
+                                                              "Success")
+                                                          .show(context.mounted
+                                                              ? context
+                                                              : Get.key
+                                                                  .currentContext!),
+                                                      Get.delete<
+                                                          EditSubjectsController>(),
+                                                      Get.find<
+                                                              SubjectsController>()
+                                                          .getAllSubjects(),
+                                                      controller.onDelete()
+                                                    }
+                                                  : null,
+                                            );
+                                      }
+                                    },
+                                    child: controller.editLoading
+                                        ? SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: Center(
+                                              child: LoadingIndicators
+                                                  .getLoadingIndicator(),
+                                            ),
+                                          )
+                                        : Container(
+                                            height: 50,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: ColorManager.glodenColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                "Edit Subjects",
+                                                style: nunitoRegular.copyWith(
+                                                    color: Colors.white),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                );
-                              },
-                            ),
-                            SizedBox(
-                              height: 200,
-                              width: 200,
-                              child: ListView.builder(
-                                itemCount: subjectResModel
-                                    .schoolTypeHasSubjectsResModel!
-                                    .schooltypeHasSubjects!
-                                    .length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          subjectResModel
-                                              .schoolTypeHasSubjectsResModel!
-                                              .schooltypeHasSubjects![index]
-                                              .schoolType!
-                                              .name!,
-                                          style: nunitoRegular.copyWith(
-                                              color: Colors.black),
-                                        ),
-                                        IconButton(
-                                          onPressed: () async {
-                                            controller
-                                                .deleteSchoolTypeInSubject(
-                                                  idSubject:
-                                                      subjectResModel.iD!,
-                                                  idSchoolType: subjectResModel
-                                                      .schoolTypeHasSubjectsResModel!
-                                                      .schooltypeHasSubjects![
-                                                          index]
-                                                      .schoolType!
-                                                      .iD!,
-                                                )
-                                                .then(
-                                                  (value) => value
-                                                      ? {
-                                                          Get.back(),
-                                                          MyFlashBar.showSuccess(
-                                                                  "School Type Deleted In Subject",
-                                                                  "Success")
-                                                              .show(context
-                                                                      .mounted
-                                                                  ? context
-                                                                  : Get.key
-                                                                      .currentContext!),
-                                                          Get.delete<
-                                                              EditSubjectsController>(),
-                                                          Get.find<
-                                                                  SubjectsController>()
-                                                              .getAllSubjects(),
-                                                        }
-                                                      : null,
-                                                );
-                                          },
-                                          icon: const Icon(Icons.delete),
-                                        )
-                                      ],
-                                    ),
                                   );
                                 },
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "InExam  ",
-                                  style: nunitoBoldStyle().copyWith(
-                                      color: ColorManager.bgSideMenu,
-                                      fontSize: 25),
-                                ),
-                                GetBuilder<EditSubjectsController>(
-                                  builder: (_) {
-                                    return Checkbox(
-                                      value: subjectResModel.inExam == 1
-                                          ? true
-                                          : false,
-                                      onChanged: (newVal) {
-                                        subjectResModel.inExam =
-                                            newVal! ? 1 : 0;
-                                        controller.update();
-                                      },
+                              SizedBox(
+                                height: 200,
+                                width: 200,
+                                child: ListView.builder(
+                                  itemCount: subjectResModel
+                                      .schoolTypeHasSubjectsResModel!
+                                      .schooltypeHasSubjects!
+                                      .length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            subjectResModel
+                                                .schoolTypeHasSubjectsResModel!
+                                                .schooltypeHasSubjects![index]
+                                                .schoolType!
+                                                .name!,
+                                            style: nunitoRegular.copyWith(
+                                                color: Colors.black),
+                                          ),
+                                          IconButton(
+                                            onPressed: () async {
+                                              controller
+                                                  .deleteSchoolTypeInSubject(
+                                                    idSubject:
+                                                        subjectResModel.iD!,
+                                                    idSchoolType: subjectResModel
+                                                        .schoolTypeHasSubjectsResModel!
+                                                        .schooltypeHasSubjects![
+                                                            index]
+                                                        .schoolType!
+                                                        .iD!,
+                                                  )
+                                                  .then(
+                                                    (value) => value
+                                                        ? {
+                                                            Get.back(),
+                                                            MyFlashBar.showSuccess(
+                                                                    "School Type Deleted In Subject",
+                                                                    "Success")
+                                                                .show(context
+                                                                        .mounted
+                                                                    ? context
+                                                                    : Get.key
+                                                                        .currentContext!),
+                                                            Get.delete<
+                                                                EditSubjectsController>(),
+                                                            Get.find<
+                                                                    SubjectsController>()
+                                                                .getAllSubjects(),
+                                                          }
+                                                        : null,
+                                                  );
+                                            },
+                                            icon: const Icon(Icons.delete),
+                                          )
+                                        ],
+                                      ),
                                     );
                                   },
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.delete<EditSubjectsController>();
-                                Get.back();
-                              },
-                              child: Container(
-                                width: double.infinity,
-                                height: 45,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: ColorManager.bgSideMenu,
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    "Back",
-                                    style: nunitoRegular.copyWith(
-                                        color: Colors.white, fontSize: 18),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "InExam  ",
+                                    style: nunitoBoldStyle().copyWith(
+                                        color: ColorManager.bgSideMenu,
+                                        fontSize: 25),
+                                  ),
+                                  GetBuilder<EditSubjectsController>(
+                                    builder: (_) {
+                                      return Checkbox(
+                                        value: subjectResModel.inExam == 1
+                                            ? true
+                                            : false,
+                                        onChanged: (newVal) {
+                                          subjectResModel.inExam =
+                                              newVal! ? 1 : 0;
+                                          controller.update();
+                                        },
+                                      );
+                                    },
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Get.delete<EditSubjectsController>();
+                                  Get.back();
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: ColorManager.bgSideMenu,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Back",
+                                      style: nunitoRegular.copyWith(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );

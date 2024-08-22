@@ -58,15 +58,15 @@ class SubjectsWidget extends GetView<SubjectsController> {
                         .join(', ');
 
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Stack(
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                              vertical: 50,
+                              vertical: 5,
                             ),
                             child: Container(
-                              height: 250,
+                              height: 220,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -80,7 +80,6 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                 color: ColorManager.ligthBlue,
                                 borderRadius: BorderRadius.circular(11),
                               ),
-                              padding: const EdgeInsets.all(10),
                               child: Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: Column(
@@ -93,7 +92,6 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                         fontSize: 35,
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
                                     Text(
                                       'School type ($schoolTypes)',
                                       style: nunitoRegular.copyWith(
@@ -101,7 +99,7 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                         fontSize: 20,
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    const SizedBox(height: 10),
                                     Row(
                                       children: [
                                         Text(
@@ -166,6 +164,7 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                             },
                                             child: Container(
                                               width: 150,
+                                              height: 40,
                                               decoration: BoxDecoration(
                                                 color: Colors.red,
                                                 borderRadius:
@@ -174,16 +173,11 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                                 ),
                                               ),
                                               child: Center(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                    10,
-                                                  ),
-                                                  child: Text(
-                                                    "Delete Subject",
-                                                    style: nunitoBold.copyWith(
-                                                      color: ColorManager.white,
-                                                      fontSize: 16,
-                                                    ),
+                                                child: Text(
+                                                  "Delete Subject",
+                                                  style: nunitoBold.copyWith(
+                                                    color: ColorManager.white,
+                                                    fontSize: 16,
                                                   ),
                                                 ),
                                               ),
@@ -198,7 +192,7 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                           ),
                                           child: SizedBox(
                                             width: 150,
-                                            height: 43,
+                                            height: 40,
                                             child: ElevatedEditButton(
                                               onPressed: () =>
                                                   MyDialogs.showDialog(
@@ -218,13 +212,13 @@ class SubjectsWidget extends GetView<SubjectsController> {
                             ),
                           ),
                           Positioned(
-                            right: MediaQuery.of(context).size.width * 0.01,
-                            bottom: 100,
+                            right: MediaQuery.of(context).size.width * 0.02,
+                            bottom: 60,
                             child: Image.asset(
                               AssetsManager.assetsIconsArabic,
                               fit: BoxFit.fill,
-                              height: 150,
-                              width: 150,
+                              height: 125,
+                              width: 125,
                             ),
                           ),
                         ],
