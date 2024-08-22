@@ -41,6 +41,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  dispose() async {
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
   }

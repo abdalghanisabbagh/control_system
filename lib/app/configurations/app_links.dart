@@ -26,6 +26,7 @@ class ControlMissionLinks {
   static const getGradesByControlMission = '$controlMission/grades';
   static const getSubjectsByControlMission = 'subjects/controlMission';
   static const studentSeatNumbers = '$controlMission/student-seat-numbers';
+  static const distributedStudents = '$controlMission/distribution';
 }
 
 class EducationYearsLinks {
@@ -90,8 +91,7 @@ class StudentsLinks {
   static const studentSeatNumbersControlMission =
       '$studentSeatNumbers/control-mission';
   static const studentSeatNumberActive = '$studentSeatNumbers/activate';
-    static const studentSeatNumberDeactive = '$studentSeatNumbers/deactivate';
-
+  static const studentSeatNumberDeactive = '$studentSeatNumbers/deactivate';
 
   static const studentSeatNumbersExamRoom = '$studentSeatNumbers/exam-rooms';
   static const studentSeatNumbersStudent = '$studentSeatNumbers/student';
