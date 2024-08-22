@@ -61,8 +61,6 @@ class BarcodeController extends GetxController {
   }
 
   Future<bool> setStudentDegree() async {
-    barcodeController.clear();
-    studentDegreeController.clear();
     isLoading = true;
     bool setDegreeSuccess = false;
     update();
@@ -88,6 +86,8 @@ class BarcodeController extends GetxController {
         setDegreeSuccess = true;
       },
     );
+        barcodeController.clear();
+    studentDegreeController.clear();
     isLoading = false;
     update();
 
