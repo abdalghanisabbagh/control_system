@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:control_system/app/configurations/app_links.dart';
+import 'package:control_system/app/configurations/token_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ const Duration timeOut = Duration(seconds: 120);
 
 class DioFactory {
   Dio getDio({TokenModel? token}) {
-    Dio dio = Dio();
+    Dio dio = Dio()..interceptors.add(TokenInterceptor());
 
     TokenService tokenService = Get.find<TokenService>();
 
