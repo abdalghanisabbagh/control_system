@@ -132,7 +132,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                             style: nunitoRegular,
                                           ),
                                           Text(
-                                            'Max: ${controller.examRoomResModel.capacity}',
+                                            'Max: ${controller.examRoomResModel.classRoomResModel?.maxCapacity}',
                                             style: nunitoRegular,
                                           ),
                                         ],
@@ -606,9 +606,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                               FittedBox(
                                                                                 fit: BoxFit.fill,
                                                                                 child: Text(
-                                                                                  'Seat NO: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).seatNumber}',
+                                                                                  'Class: ${controller.availableStudents[i].student?.classRoomResModel?.name}',
                                                                                   style: nunitoBold.copyWith(
-                                                                                    fontSize: 14,
+                                                                                    fontSize: 15,
                                                                                   ),
                                                                                 ),
                                                                               ),
