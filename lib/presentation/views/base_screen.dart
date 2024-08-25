@@ -19,41 +19,56 @@ class BaseScreen extends GetView<SideMenueGetController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SideMenueGetController>(
-      builder: (controller) {
-        return Scaffold(
-          key: _scaffoldKey,
-          backgroundColor: ColorManager.background,
-          appBar: appbar ?? const CustomAppBar(),
-          body: SafeArea(
-            child: Row(
-              children: [
-                if (controller.isSideMenuVisible) 
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      color: ColorManager.bgSideMenu,
-                      child: const SideMenueWidget(
-                        isMobile: false,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return GetBuilder<SideMenueGetController>(
+          builder: (controller) {
+            return Scaffold(
+              key: _scaffoldKey,
+              backgroundColor: ColorManager.bgColor,
+              appBar: appbar ?? const CustomAppBar(),
+              body: SafeArea(
+                child: Row(
+                  children: [
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder:
+                          (Widget child, Animation<double> animation) {
+                        return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(-1, 0),
+                              end: const Offset(0, 0),
+                            ).animate(animation),
+                            child: child);
+                      },
+                      child: controller.isSideMenuVisible
+                          ? Container(
+                              width: constraints.maxWidth * 0.15,
+                              color: ColorManager.bgSideMenu,
+                              child: const SideMenueWidget(
+                                isMobile: false,
+                              ),
+                            )
+                          : SizedBox.shrink(
+                              key: ValueKey<bool>(controller.isSideMenuVisible),
+                            ),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: body,
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                Expanded(
-                  flex: 6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        child: body,
-                      ),
-                    ],
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          
-        
+              ),
+            );
+          },
         );
       },
     );

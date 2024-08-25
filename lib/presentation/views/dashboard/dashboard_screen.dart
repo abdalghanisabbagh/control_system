@@ -14,7 +14,7 @@ class DashboardScreen extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     return BaseScreen(
       body: Container(
-        color: ColorManager.bgColor,
+        color: Colors.transparent,
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
