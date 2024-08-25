@@ -32,7 +32,7 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
                   );
                 }
                 if (controller.optionsEducationYear.isEmpty) {
-                  return const Text('No items available');
+                  return const Text('No Education Year Available');
                 }
                 return MultiSelectDropDownView(
                   hintText: "Select Education Year",
@@ -58,23 +58,8 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
                       },
                     ),
                   );
-                } else if (controller.selectedItemEducationYear == null) {
-                  return Text(
-                    'Please Select Education Year',
-                    style: nunitoRegular.copyWith(
-                      color: ColorManager.bgSideMenu,
-                      fontSize: 23,
-                    ),
-                  );
-                } else if (controller.controlMissionList.isEmpty) {
-                  return Text(
-                    'No items available',
-                    style: nunitoRegular.copyWith(
-                      color: ColorManager.bgSideMenu,
-                      fontSize: 23,
-                    ),
-                  );
                 }
+
                 return const SizedBox.shrink();
               },
             ),
@@ -85,6 +70,16 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
                   return Expanded(
                     child: Center(
                       child: LoadingIndicators.getLoadingIndicator(),
+                    ),
+                  );
+                }
+                if (controller.filteredControlMissionList.isEmpty &&
+                    controller.selectedItemEducationYear != null) {
+                  return Text(
+                    'No items available',
+                    style: nunitoRegular.copyWith(
+                      color: ColorManager.bgSideMenu,
+                      fontSize: 23,
                     ),
                   );
                 }
