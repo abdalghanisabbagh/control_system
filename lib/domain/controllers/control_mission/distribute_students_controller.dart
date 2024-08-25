@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:custom_theme/lib.dart';
@@ -59,7 +61,9 @@ class DistributeStudentsController extends GetxController {
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
       body: {
-        "Class_Desk_ID": classDesks[classDeskId].id,
+        "Class_Desk_ID": classDesks
+            .firstWhere((classDesk) => classDesk.id == classDeskId)
+            .id,
       },
     );
   }
@@ -107,7 +111,7 @@ class DistributeStudentsController extends GetxController {
             0) &&
         (int.parse(numberOfStudentsController.text) +
                 availableStudents.length) <=
-            examRoomResModel.capacity!;
+            int.parse(examRoomResModel.classRoomResModel!.maxCapacity!);
   }
 
   bool canRemoveStudents() {
@@ -391,6 +395,13 @@ class DistributeStudentsController extends GetxController {
                                                               ),
                                                               pw.Text(
                                                                 'Grade: ${availableStudents.firstWhere((element) => element.classDeskID == classDeskCollection.entries.toList()[i].value[j].id).student?.gradeResModel?.name}',
+                                                                style: const pw
+                                                                    .TextStyle(
+                                                                  fontSize: 10,
+                                                                ),
+                                                              ),
+                                                              pw.Text(
+                                                                'Class: ${availableStudents.firstWhere((element) => element.classDeskID == classDeskCollection.entries.toList()[i].value[j].id).student?.classRoomResModel?.name}',
                                                                 style: const pw
                                                                     .TextStyle(
                                                                   fontSize: 10,
@@ -687,14 +698,11 @@ class DistributeStudentsController extends GetxController {
   }
 
   Future<void> getExamRoom() async {
-    examRoomResModel = Hive.box('ExamRoom').containsKey('ID')
-        ? ExamRoomResModel(
-            id: Hive.box('ExamRoom').get('ID'),
-            name: Hive.box('ExamRoom').get('Name'),
-            stage: Hive.box('ExamRoom').get('Stage'),
-            capacity: Hive.box('ExamRoom').get('Capacity'),
-            controlMissionID: Hive.box('ExamRoom').get('Control_Mission_ID'),
-            schoolClassID: Hive.box('ExamRoom').get('School_Class_ID'),
+    examRoomResModel = Hive.box('ExamRoom').containsKey('examRoomResModel')
+        ? ExamRoomResModel.fromJson(
+            json.decode(
+              Hive.box('ExamRoom').get('examRoomResModel'),
+            ),
           )
         : ExamRoomResModel();
     update();
@@ -778,7 +786,8 @@ class DistributeStudentsController extends GetxController {
           ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
           ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
         availableStudentsCount =
-            examRoomResModel.capacity! - availableStudents.length;
+            int.parse(examRoomResModel.classRoomResModel!.maxCapacity!) -
+                availableStudents.length;
         optionsGradesInExamRoom.assignAll(availableStudents
             .map(
               (e) => ValueItem(
@@ -979,7 +988,7 @@ class DistributeStudentsController extends GetxController {
   Future<void> saveExamRoom(ExamRoomResModel examRoomResModel) async {
     this.examRoomResModel = examRoomResModel;
     update();
-    Hive.box('ExamRoom').putAll(examRoomResModel.toJson());
+    Hive.box('ExamRoom').put('examRoomResModel', json.encode(examRoomResModel));
   }
 
   void unBlockClassDesk({required int classDeskId}) {
