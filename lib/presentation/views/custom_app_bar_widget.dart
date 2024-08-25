@@ -20,9 +20,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: GetBuilder<SideMenueGetController>(
         builder: (sideMenueGetController) {
           return IconButton(
-            icon: Icon(sideMenueGetController.isSideMenuVisible
-                ? Icons.arrow_back
-                : Icons.menu),
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return ScaleTransition(scale: animation, child: child);
+              },
+              child: Icon(
+                sideMenueGetController.isSideMenuVisible
+                    ? Icons.arrow_back
+                    : Icons.menu,
+                key: ValueKey<bool>(sideMenueGetController.isSideMenuVisible),
+              ),
+            ),
             color: ColorManager.white,
             onPressed: () {
               sideMenueGetController.toggleSideMenuVisibility();
