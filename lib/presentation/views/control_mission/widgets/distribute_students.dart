@@ -423,14 +423,19 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                 children: [
                                                   ...List.generate(
                                                     controller
-                                                        .classDeskCollection[i]!
+                                                        .classDeskCollection
+                                                        .entries
+                                                        .toList()[i]
+                                                        .value
                                                         .length,
                                                     (j) {
                                                       return controller
                                                               .blockedClassDesks
                                                               .contains(controller
-                                                                  .classDesks[
-                                                                      i * 6 + j]
+                                                                  .classDeskCollection
+                                                                  .entries
+                                                                  .toList()[i]
+                                                                  .value[j]
                                                                   .id)
                                                           ? SizedBox(
                                                               height:
@@ -461,7 +466,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                         onPressed:
                                                                             () {
                                                                           controller.unBlockClassDesk(
-                                                                              classDeskId: controller.classDesks[i * 6 + j].id!);
+                                                                              classDeskId: controller.classDeskCollection.entries.toList()[i].value[j].id!);
                                                                         },
                                                                         icon:
                                                                             const Icon(
@@ -492,7 +497,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                               .center,
                                                                       child:
                                                                           Text(
-                                                                        '${i * 6 + j + 1}',
+                                                                        '${i != 0 ? i * controller.classDeskCollection.entries.toList()[i - 1].value.length + j + 1 : i * controller.classDeskCollection.entries.toList()[i].value.length + j + 1}',
                                                                         style: nunitoBold
                                                                             .copyWith(
                                                                           color:
@@ -509,13 +514,16 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                               horizontal: 5)
                                                           : (controller
                                                                   .availableStudents
-                                                                  .map((element) => element
-                                                                      .classDeskID)
+                                                                  .map((element) =>
+                                                                      element
+                                                                          .classDeskID)
                                                                   .toList()
                                                                   .contains(controller
-                                                                      .classDesks[
-                                                                          i * 6 +
-                                                                              j]
+                                                                      .classDeskCollection
+                                                                      .entries
+                                                                      .toList()[
+                                                                          i]
+                                                                      .value[j]
                                                                       .id!))
                                                               ? SizedBox(
                                                                   height:
@@ -553,12 +561,12 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                                 MainAxisAlignment.spaceAround,
                                                                             children: [
                                                                               Text(
-                                                                                '${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).seatNumber}',
+                                                                                '${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).seatNumber}',
                                                                                 style: nunitoRegular,
                                                                               ),
                                                                               IconButton(
                                                                                 onPressed: () {
-                                                                                  controller.removeStudentFromDesk(studentSeatNumberId: controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).iD!);
+                                                                                  controller.removeStudentFromDesk(studentSeatNumberId: controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).iD!);
                                                                                 },
                                                                                 icon: const Icon(
                                                                                   FontAwesomeIcons.deleteLeft,
@@ -579,7 +587,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                               width: 1.5,
                                                                             ),
                                                                             color:
-                                                                                ColorManager.gradesColor[controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student!.gradeResModel!.name!],
+                                                                                ColorManager.gradesColor[controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student!.gradeResModel!.name!],
                                                                           ),
                                                                           width:
                                                                               double.infinity,
@@ -589,7 +597,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                                 CrossAxisAlignment.start,
                                                                             children: [
                                                                               Text(
-                                                                                'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.thirdName!} ',
+                                                                                'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.thirdName!} ',
                                                                                 style: nunitoBold.copyWith(
                                                                                   fontSize: 14,
                                                                                 ),
@@ -598,7 +606,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                               FittedBox(
                                                                                 fit: BoxFit.fill,
                                                                                 child: Text(
-                                                                                  'Seat NO: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).seatNumber}',
+                                                                                  'Seat NO: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).seatNumber}',
                                                                                   style: nunitoBold.copyWith(
                                                                                     fontSize: 14,
                                                                                   ),
@@ -607,7 +615,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                               FittedBox(
                                                                                 fit: BoxFit.fill,
                                                                                 child: Text(
-                                                                                  'Grade : ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
+                                                                                  'Grade : ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.gradeResModel?.name}',
                                                                                   style: nunitoBold.copyWith(
                                                                                     fontSize: 14,
                                                                                   ),
@@ -630,13 +638,21 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                   StudentSeatNumberResModel>(
                                                                   onAcceptWithDetails:
                                                                       (details) {
-                                                                    controller.addStudentToDesk(
-                                                                        studentSeatNumberId: details
-                                                                            .data
-                                                                            .iD!,
-                                                                        classDeskIndex:
-                                                                            i * 6 +
-                                                                                j);
+                                                                    controller
+                                                                        .addStudentToDesk(
+                                                                      studentSeatNumberId:
+                                                                          details
+                                                                              .data
+                                                                              .iD!,
+                                                                      classDeskId: controller
+                                                                          .classDeskCollection
+                                                                          .entries
+                                                                          .toList()[
+                                                                              i]
+                                                                          .value[
+                                                                              j]
+                                                                          .id!,
+                                                                    );
                                                                   },
                                                                   builder: (BuildContext context,
                                                                           List<StudentSeatNumberResModel?>
@@ -670,7 +686,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                             child:
                                                                                 IconButton(
                                                                               onPressed: () {
-                                                                                controller.blockClassDesk(classDeskId: controller.classDesks[i * 6 + j].id!);
+                                                                                controller.blockClassDesk(classDeskId: controller.classDeskCollection.entries.toList()[i].value[j].id!);
                                                                               },
                                                                               icon: const Icon(
                                                                                 FontAwesomeIcons.ban,
@@ -697,7 +713,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                                                                 FittedBox(
                                                                               fit: BoxFit.fill,
                                                                               child: Text(
-                                                                                '${i * 6 + j + 1}',
+                                                                                '${i != 0 ? i * controller.classDeskCollection.entries.toList()[i - 1].value.length + j + 1 : i * controller.classDeskCollection.entries.toList()[i].value.length + j + 1}',
                                                                                 style: nunitoBold.copyWith(
                                                                                   color: ColorManager.white,
                                                                                   fontSize: 20,

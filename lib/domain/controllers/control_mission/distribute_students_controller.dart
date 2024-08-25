@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:collection/collection.dart';
 import 'package:custom_theme/lib.dart';
@@ -48,10 +46,11 @@ class DistributeStudentsController extends GetxController {
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
 
   void addStudentToDesk(
-      {required int studentSeatNumberId, required int classDeskIndex}) async {
+      {required int studentSeatNumberId, required int classDeskId}) async {
     availableStudents
-        .firstWhere((element) => element.iD == studentSeatNumberId)
-        .classDeskID = classDesks[classDeskIndex].id;
+            .firstWhere((element) => element.iD == studentSeatNumberId)
+            .classDeskID =
+        classDesks.firstWhere((classDesk) => classDesk.id == classDeskId).id;
 
     update();
     ResponseHandler responseHandler = ResponseHandler();
@@ -60,7 +59,7 @@ class DistributeStudentsController extends GetxController {
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
       body: {
-        "Class_Desk_ID": classDesks[classDeskIndex].id,
+        "Class_Desk_ID": classDesks[classDeskId].id,
       },
     );
   }
@@ -132,6 +131,7 @@ class DistributeStudentsController extends GetxController {
 
     double pdfWidth = PdfPageFormat.a4.landscape.width;
     double pdfHeight = PdfPageFormat.a4.landscape.height;
+    var (double maxWidth, double maxHeight) = (pdfWidth, pdfHeight);
 
     document.addPage(
       pw.Page(
@@ -145,8 +145,8 @@ class DistributeStudentsController extends GetxController {
           return pw.Stack(
             children: [
               pw.Positioned(
-                left: 0,
-                top: 0,
+                left: 10,
+                top: 5,
                 child: pw.Image(
                   pw.MemoryImage(logoImageBytes),
                   width: pdfWidth * 0.10,
@@ -188,10 +188,16 @@ class DistributeStudentsController extends GetxController {
                               return pw.Row(
                                 children: [
                                   ...List.generate(
-                                    classDeskCollection[i]!.length,
+                                    classDeskCollection.entries
+                                        .toList()[i]
+                                        .value
+                                        .length,
                                     (j) {
                                       return blockedClassDesks.contains(
-                                              classDesks[i * 6 + j].id)
+                                              classDeskCollection.entries
+                                                  .toList()[i]
+                                                  .value[j]
+                                                  .id)
                                           ? pw.Padding(
                                               padding:
                                                   const pw.EdgeInsets.symmetric(
@@ -207,7 +213,10 @@ class DistributeStudentsController extends GetxController {
                                                         (pdfHeight * 0.03 * 6) /
                                                             numberOrRows,
                                                     width: (pdfWidth /
-                                                        classDeskCollection[i]!
+                                                        classDeskCollection
+                                                            .entries
+                                                            .toList()[i]
+                                                            .value
                                                             .length),
                                                     decoration:
                                                         pw.BoxDecoration(
@@ -222,11 +231,13 @@ class DistributeStudentsController extends GetxController {
                                                     height:
                                                         (pdfHeight * 0.3 * 6) /
                                                             numberOrRows,
-                                                    width: (pdfWidth *
-                                                            0.17 *
-                                                            5) /
-                                                        classDeskCollection[i]!
-                                                            .length,
+                                                    width:
+                                                        (pdfWidth * 0.17 * 5) /
+                                                            classDeskCollection
+                                                                .entries
+                                                                .toList()[i]
+                                                                .value
+                                                                .length,
                                                     decoration:
                                                         pw.BoxDecoration(
                                                       border: pw.Border.all(
@@ -238,7 +249,7 @@ class DistributeStudentsController extends GetxController {
                                                     alignment:
                                                         pw.Alignment.center,
                                                     child: pw.Text(
-                                                      '${i * 6 + j + 1}',
+                                                      '${i != 0 ? i * classDeskCollection.entries.toList()[i - 1].value.length + j + 1 : i * classDeskCollection.entries.toList()[i].value.length + j + 1}',
                                                       style: pw.TextStyle(
                                                         fontSize: 14,
                                                         fontWeight:
@@ -253,209 +264,226 @@ class DistributeStudentsController extends GetxController {
                                                   .map((element) =>
                                                       element.classDeskID)
                                                   .toList()
-                                                  .contains(
-                                                      classDesks[i * 6 + j]
-                                                          .id!))
+                                                  .contains(classDeskCollection
+                                                      .entries
+                                                      .toList()[i]
+                                                      .value[j]
+                                                      .id))
                                               ? pw.Padding(
                                                   padding: const pw
                                                       .EdgeInsets.symmetric(
                                                     horizontal: 5,
                                                   ),
-                                                  child: pw.LayoutBuilder(
-                                                    builder:
-                                                        (context, constraints) {
-                                                      return pw.Column(
-                                                        mainAxisAlignment: pw
-                                                            .MainAxisAlignment
-                                                            .start,
-                                                        crossAxisAlignment: pw
-                                                            .CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          pw.SizedBox(
-                                                            height: constraints!
-                                                                    .maxHeight *
-                                                                0.01,
+                                                  child: pw.Column(
+                                                    mainAxisAlignment: pw
+                                                        .MainAxisAlignment
+                                                        .start,
+                                                    crossAxisAlignment: pw
+                                                        .CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      pw.SizedBox(
+                                                        height: (maxHeight *
+                                                                0.01 *
+                                                                6) /
+                                                            numberOrRows,
+                                                      ),
+                                                      pw.Container(
+                                                        height: (maxHeight *
+                                                                0.05 *
+                                                                6) /
+                                                            numberOrRows,
+                                                        width: (maxWidth *
+                                                                0.15 *
+                                                                5) /
+                                                            classDeskCollection
+                                                                .entries
+                                                                .toList()[i]
+                                                                .value
+                                                                .length,
+                                                        decoration:
+                                                            pw.BoxDecoration(
+                                                          border: pw.Border.all(
+                                                            width: 1.5,
                                                           ),
-                                                          pw.Container(
-                                                            height: constraints
-                                                                    .maxHeight *
-                                                                0.05,
-                                                            width: constraints
-                                                                    .maxWidth *
-                                                                0.15,
-                                                            decoration: pw
-                                                                .BoxDecoration(
-                                                              border:
-                                                                  pw.Border.all(
-                                                                width: 1.5,
-                                                              ),
-                                                              color: ColorManager
-                                                                  .yellow
-                                                                  .toPdfColorFromValue(),
+                                                          color: ColorManager
+                                                              .yellow
+                                                              .toPdfColorFromValue(),
+                                                        ),
+                                                        child: pw.Center(
+                                                          child: pw.Text(
+                                                            '${availableStudents.firstWhere((element) => element.classDeskID == classDeskCollection.entries.toList()[i].value[j].id).seatNumber}',
+                                                            style: pw.TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight: pw
+                                                                  .FontWeight
+                                                                  .bold,
                                                             ),
-                                                            child: pw.Center(
-                                                              child: pw.Text(
-                                                                '${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).seatNumber}',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      pw.Container(
+                                                        height: (maxHeight *
+                                                                0.092 *
+                                                                6) /
+                                                            numberOrRows,
+                                                        width: (maxWidth *
+                                                                0.15 *
+                                                                5) /
+                                                            classDeskCollection
+                                                                .entries
+                                                                .toList()[i]
+                                                                .value
+                                                                .length,
+                                                        decoration:
+                                                            pw.BoxDecoration(
+                                                          border: pw.Border.all(
+                                                            width: 1.5,
+                                                          ),
+                                                          color: ColorManager
+                                                              .gradesColor[availableStudents
+                                                                  .firstWhere((element) =>
+                                                                      element
+                                                                          .classDeskID ==
+                                                                      classDeskCollection
+                                                                          .entries
+                                                                          .toList()[
+                                                                              i]
+                                                                          .value[
+                                                                              j]
+                                                                          .id)
+                                                                  .student!
+                                                                  .gradeResModel!
+                                                                  .name!]!
+                                                              .toPdfColorFromValue(),
+                                                        ),
+                                                        child: pw.Padding(
+                                                          padding: pw.EdgeInsets
+                                                              .symmetric(
+                                                            horizontal: (maxWidth *
+                                                                    0.01 *
+                                                                    5) /
+                                                                classDeskCollection
+                                                                    .entries
+                                                                    .toList()[i]
+                                                                    .value
+                                                                    .length,
+                                                            vertical:
+                                                                (maxHeight *
+                                                                        0.01 *
+                                                                        6) /
+                                                                    numberOrRows,
+                                                          ),
+                                                          child: pw.Column(
+                                                            crossAxisAlignment: pw
+                                                                .CrossAxisAlignment
+                                                                .start,
+                                                            children: [
+                                                              pw.Text(
+                                                                '${availableStudents.firstWhere((element) => element.classDeskID == classDeskCollection.entries.toList()[i].value[j].id).student?.firstName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDeskCollection.entries.toList()[i].value[j].id).student?.secondName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDeskCollection.entries.toList()[i].value[j].id).student?.thirdName!}',
                                                                 style: pw
                                                                     .TextStyle(
-                                                                  fontSize: 14,
+                                                                  fontSize: 10,
                                                                   fontWeight: pw
                                                                       .FontWeight
                                                                       .bold,
                                                                 ),
                                                               ),
-                                                            ),
+                                                              pw.Text(
+                                                                'Grade: ${availableStudents.firstWhere((element) => element.classDeskID == classDeskCollection.entries.toList()[i].value[j].id).student?.gradeResModel?.name}',
+                                                                style: const pw
+                                                                    .TextStyle(
+                                                                  fontSize: 10,
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          pw.Container(
-                                                            height: constraints
-                                                                    .maxHeight *
-                                                                0.092,
-                                                            width: constraints
-                                                                    .maxWidth *
-                                                                0.15,
-                                                            decoration: pw
-                                                                .BoxDecoration(
-                                                              border:
-                                                                  pw.Border.all(
-                                                                width: 1.5,
-                                                              ),
-                                                              color: ColorManager
-                                                                  .gradesColor[availableStudents
-                                                                      .firstWhere((element) =>
-                                                                          element
-                                                                              .classDeskID ==
-                                                                          classDesks[i * 6 + j]
-                                                                              .id)
-                                                                      .student!
-                                                                      .gradeResModel!
-                                                                      .name!]!
-                                                                  .toPdfColorFromValue(),
-                                                            ),
-                                                            child: pw.Padding(
-                                                              padding:
-                                                                  pw.EdgeInsets
-                                                                      .symmetric(
-                                                                horizontal:
-                                                                    constraints
-                                                                            .maxWidth *
-                                                                        0.01,
-                                                                vertical:
-                                                                    constraints
-                                                                            .maxHeight *
-                                                                        0.01,
-                                                              ),
-                                                              child: pw.Column(
-                                                                crossAxisAlignment:
-                                                                    pw.CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  pw.Text(
-                                                                    '${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.firstName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.secondName!} ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.thirdName!}',
-                                                                    style: pw
-                                                                        .TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                      fontWeight: pw
-                                                                          .FontWeight
-                                                                          .bold,
-                                                                    ),
-                                                                  ),
-                                                                  pw.Text(
-                                                                    'Grade: ${availableStudents.firstWhere((element) => element.classDeskID == classDesks[i * 6 + j].id).student?.gradeResModel?.name}',
-                                                                    style: const pw
-                                                                        .TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 )
                                               : pw.Padding(
                                                   padding: const pw
                                                       .EdgeInsets.symmetric(
                                                       horizontal: 5),
-                                                  child: pw.LayoutBuilder(
-                                                    builder:
-                                                        (context, constraints) {
-                                                      return pw.Column(
-                                                        children: [
-                                                          pw.SizedBox(
-                                                            height: constraints!
-                                                                    .maxHeight *
-                                                                0.01,
+                                                  child: pw.Column(
+                                                    children: [
+                                                      pw.SizedBox(
+                                                        height: (maxHeight *
+                                                                0.01 *
+                                                                6) /
+                                                            numberOrRows,
+                                                      ),
+                                                      pw.Container(
+                                                        height: (maxHeight *
+                                                                0.05 *
+                                                                6) /
+                                                            numberOrRows,
+                                                        width: (maxWidth *
+                                                                0.15 *
+                                                                5) /
+                                                            classDeskCollection
+                                                                .entries
+                                                                .toList()[i]
+                                                                .value
+                                                                .length,
+                                                        decoration:
+                                                            pw.BoxDecoration(
+                                                          border: pw.Border.all(
+                                                            width: 1.5,
                                                           ),
-                                                          pw.Container(
-                                                            height: constraints
-                                                                    .maxHeight *
-                                                                0.05,
-                                                            width: constraints
-                                                                    .maxWidth *
-                                                                0.15,
-                                                            decoration: pw
-                                                                .BoxDecoration(
-                                                              border:
-                                                                  pw.Border.all(
-                                                                width: 1.5,
-                                                              ),
-                                                              color: ColorManager
-                                                                  .yellow
-                                                                  .toPdfColorFromValue(),
-                                                            ),
-                                                            child: pw.Center(
-                                                              child: pw.Text(
-                                                                '${i * 6 + j + 1}',
-                                                                style: pw
-                                                                    .TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontWeight: pw
-                                                                      .FontWeight
-                                                                      .bold,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          pw.Container(
-                                                            height: constraints
-                                                                    .maxHeight *
-                                                                0.05,
-                                                            width: constraints
-                                                                    .maxWidth *
-                                                                0.15,
-                                                            decoration: pw
-                                                                .BoxDecoration(
-                                                              border:
-                                                                  pw.Border.all(
-                                                                width: 1.5,
-                                                              ),
-                                                              color: ColorManager
-                                                                  .greyA8
-                                                                  .toPdfColorFromValue(),
-                                                            ),
-                                                            alignment: pw
-                                                                .Alignment
-                                                                .center,
-                                                            child: pw.Text(
-                                                              '${i * 6 + j + 1}',
-                                                              style:
-                                                                  pw.TextStyle(
-                                                                fontSize: 14,
-                                                                fontWeight: pw
-                                                                    .FontWeight
-                                                                    .bold,
-                                                              ),
+                                                          color: ColorManager
+                                                              .yellow
+                                                              .toPdfColorFromValue(),
+                                                        ),
+                                                        child: pw.Center(
+                                                          child: pw.Text(
+                                                            '${i != 0 ? i * classDeskCollection.entries.toList()[i - 1].value.length + j + 1 : i * classDeskCollection.entries.toList()[i].value.length + j + 1}',
+                                                            style: pw.TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight: pw
+                                                                  .FontWeight
+                                                                  .bold,
                                                             ),
                                                           ),
-                                                        ],
-                                                      );
-                                                    },
+                                                        ),
+                                                      ),
+                                                      pw.Container(
+                                                        height: (maxHeight *
+                                                                0.05 *
+                                                                6) /
+                                                            numberOrRows,
+                                                        width: (maxWidth *
+                                                                0.15 *
+                                                                5) /
+                                                            classDeskCollection
+                                                                .entries
+                                                                .toList()[i]
+                                                                .value
+                                                                .length,
+                                                        decoration:
+                                                            pw.BoxDecoration(
+                                                          border: pw.Border.all(
+                                                            width: 1.5,
+                                                          ),
+                                                          color: ColorManager
+                                                              .greyA8
+                                                              .toPdfColorFromValue(),
+                                                        ),
+                                                        alignment:
+                                                            pw.Alignment.center,
+                                                        child: pw.Text(
+                                                          '${i != 0 ? i * classDeskCollection.entries.toList()[i - 1].value.length + j + 1 : i * classDeskCollection.entries.toList()[i].value.length + j + 1}',
+                                                          style: pw.TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight: pw
+                                                                .FontWeight
+                                                                .bold,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 );
                                     },
@@ -488,74 +516,64 @@ class DistributeStudentsController extends GetxController {
                                                 .iD)
                                         .isEmpty
                                     ? pw.SizedBox.shrink()
-                                    : pw.LayoutBuilder(
-                                        builder: (context, constraints) {
-                                          return pw.Column(
-                                            mainAxisAlignment:
-                                                pw.MainAxisAlignment.start,
-                                            children: [
-                                              pw.Container(
-                                                height: constraints!.maxHeight *
-                                                    0.030,
-                                                width:
-                                                    constraints.maxWidth * 0.17,
-                                                alignment: pw.Alignment.center,
-                                                decoration: pw.BoxDecoration(
-                                                  border: pw.Border.all(
-                                                    width: 1.5,
-                                                  ),
-                                                  color: ColorManager.yellow
-                                                      .toPdfColorFromValue(),
-                                                ),
-                                                child: pw.Text(
-                                                  '${grades.firstWhere((element) => element.iD.toString() == countByGrade.keys.toList()[index]).name}',
-                                                  style: pw.TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        pw.FontWeight.bold,
-                                                  ),
+                                    : pw.Column(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.start,
+                                        children: [
+                                          pw.Container(
+                                            height: maxHeight * 0.030,
+                                            width: maxWidth * 0.17,
+                                            alignment: pw.Alignment.center,
+                                            decoration: pw.BoxDecoration(
+                                              border: pw.Border.all(
+                                                width: 1.5,
+                                              ),
+                                              color: ColorManager.yellow
+                                                  .toPdfColorFromValue(),
+                                            ),
+                                            child: pw.Text(
+                                              '${grades.firstWhere((element) => element.iD.toString() == countByGrade.keys.toList()[index]).name}',
+                                              style: pw.TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: pw.FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          pw.Container(
+                                            height: maxHeight * 0.035,
+                                            width: maxWidth * 0.17,
+                                            alignment: pw.Alignment.center,
+                                            decoration: pw.BoxDecoration(
+                                              border: pw.Border.all(
+                                                width: 1.5,
+                                              ),
+                                              color: ColorManager
+                                                  .gradesColor[grades
+                                                      .firstWhere((element) =>
+                                                          element.iD
+                                                              .toString() ==
+                                                          countByGrade.keys
+                                                              .toList()[index])
+                                                      .name]!
+                                                  .toPdfColorFromValue(),
+                                            ),
+                                            child: pw.Padding(
+                                              padding:
+                                                  const pw.EdgeInsets.symmetric(
+                                                horizontal: 5,
+                                                vertical: 5,
+                                              ),
+                                              child: pw.Text(
+                                                '${availableStudents.where((element) => element.gradesID == grades.firstWhere((element) => element.iD.toString() == countByGrade.keys.toList()[index]).iD).length}',
+                                                style: pw.TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                      pw.FontWeight.bold,
                                                 ),
                                               ),
-                                              pw.Container(
-                                                height: constraints.maxHeight *
-                                                    0.035,
-                                                width:
-                                                    constraints.maxWidth * 0.17,
-                                                alignment: pw.Alignment.center,
-                                                decoration: pw.BoxDecoration(
-                                                  border: pw.Border.all(
-                                                    width: 1.5,
-                                                  ),
-                                                  color: ColorManager
-                                                      .gradesColor[grades
-                                                          .firstWhere((element) =>
-                                                              element.iD
-                                                                  .toString() ==
-                                                              countByGrade.keys
-                                                                      .toList()[
-                                                                  index])
-                                                          .name]!
-                                                      .toPdfColorFromValue(),
-                                                ),
-                                                child: pw.Padding(
-                                                  padding: const pw
-                                                      .EdgeInsets.symmetric(
-                                                    horizontal: 5,
-                                                    vertical: 5,
-                                                  ),
-                                                  child: pw.Text(
-                                                    '${availableStudents.where((element) => element.gradesID == grades.firstWhere((element) => element.iD.toString() == countByGrade.keys.toList()[index]).iD).length}',
-                                                    style: pw.TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          pw.FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                               ),
                             ),
@@ -661,8 +679,7 @@ class DistributeStudentsController extends GetxController {
         classDeskCollection = classDesks.groupListsBy(
           (e) => e.cloumnNum,
         );
-        numberOrRows =
-            classDesks.map((element) => element.cloumnNum!).reduce(max) + 1;
+        numberOrRows = classDeskCollection.length;
       },
     );
     update();
