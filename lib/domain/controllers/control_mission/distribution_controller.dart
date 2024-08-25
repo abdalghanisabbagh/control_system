@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
+import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/distribution_students_res_model.dart';
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
@@ -25,6 +26,7 @@ class DistributionController extends GetxController {
   List<ExamRoomResModel> listExamRoom = [];
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsStage = <ValueItem>[];
+  List<ClassRoomResModel> classRooms = [];
   ValueItem? selectedItemClassRoom;
   ValueItem? selectedItemStage;
   int distributedStudents = 0;
@@ -128,6 +130,7 @@ class DistributionController extends GetxController {
         update();
       },
       (r) {
+        classRooms = r.data!;
         List<ValueItem> items = r.data!
             .map((item) => ValueItem(label: item.name!, value: item.iD))
             .toList();
