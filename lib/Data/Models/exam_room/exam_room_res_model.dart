@@ -1,11 +1,12 @@
+import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
+
 import '../control_mission/control_mission_res_model.dart';
 
 class ExamRoomResModel {
-  int? capacity;
-
   int? controlMissionID;
 
   ControlMissionResModel? controlMissionResModel;
+  ClassRoomResModel? classRoomResModel;
 
   int? id;
   String? name;
@@ -17,7 +18,7 @@ class ExamRoomResModel {
     this.schoolClassID,
     this.name,
     this.stage,
-    this.capacity,
+    this.controlMissionResModel,
   });
   ExamRoomResModel.fromExtra(Map<String, String>? extra) {
     id = int.parse(extra?['ID'] ?? '0');
@@ -25,7 +26,6 @@ class ExamRoomResModel {
     schoolClassID = int.parse(extra?['School_Class_ID'] ?? '0');
     name = extra?['Name'];
     stage = extra?['Stage'];
-    capacity = int.parse(extra?['Capacity'] ?? '0');
   }
   ExamRoomResModel.fromJson(json) {
     id = json['ID'];
@@ -33,10 +33,13 @@ class ExamRoomResModel {
     schoolClassID = json['School_Class_ID'];
     name = json['Name'];
     stage = json['Stage'];
-    capacity = json['Capacity'];
     controlMissionResModel = json['control_mission'] == null
         ? null
         : ControlMissionResModel.fromJson(json['control_mission']);
+
+    classRoomResModel = json['school_class'] == null
+        ? null
+        : ClassRoomResModel.fromJson(json['school_class']);
   }
 
   Map<String, String>? toExtra() {
@@ -46,7 +49,6 @@ class ExamRoomResModel {
       'School_Class_ID': schoolClassID.toString(),
       'Name': name ?? '',
       'Stage': stage ?? '',
-      'Capacity': capacity.toString(),
     };
   }
 
@@ -57,8 +59,8 @@ class ExamRoomResModel {
     data['School_Class_ID'] = schoolClassID;
     data['Name'] = name;
     data['Stage'] = stage;
-    data['Capacity'] = capacity;
     data['control_mission'] = controlMissionResModel?.toJson();
+    data['school_class'] = classRoomResModel?.toJson();
     return data;
   }
 }
