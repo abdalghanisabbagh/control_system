@@ -21,7 +21,7 @@ class DistributionScreen extends GetView<DistributionController> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isSmallScreen = screenWidth < 600; 
+    final isSmallScreen = screenWidth < 600;
 
     return Scaffold(
       body: Container(
@@ -193,7 +193,7 @@ class DistributionScreen extends GetView<DistributionController> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                "Students Max Capacity: ${room.capacity}",
+                                                "Students Max Capacity: ${room.classRoomResModel?.maxCapacity}",
                                                 overflow: TextOverflow.ellipsis,
                                                 style: nunitoBold.copyWith(
                                                   fontSize:
@@ -206,7 +206,7 @@ class DistributionScreen extends GetView<DistributionController> {
                                           ],
                                         ),
                                       ),
-                                      if (!isSmallScreen) 
+                                      if (!isSmallScreen)
                                         Row(
                                           children: [
                                             Visibility(
