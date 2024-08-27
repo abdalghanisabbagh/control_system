@@ -53,7 +53,7 @@ class ClassRoomResModel {
     data['Name'] = name;
     data['Max_Capacity'] = maxCapacity;
     data['Floor'] = floor;
-    data['Rows'] = rows;
+    data['Rows'] = rows.toString();
     data['Columns'] = columns;
     data['Created_By'] = createdBy;
     data['Created_At'] = createdAt;

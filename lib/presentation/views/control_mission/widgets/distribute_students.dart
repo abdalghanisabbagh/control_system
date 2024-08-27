@@ -417,7 +417,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                       child: Column(
                                         children: [
                                           ...List.generate(
-                                            controller.numberOrRows,
+                                            controller.numberOfRows,
                                             (i) {
                                               return Row(
                                                 children: [

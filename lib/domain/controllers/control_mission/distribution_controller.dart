@@ -38,7 +38,6 @@ class DistributionController extends GetxController {
     required int schoolClassId,
     required String name,
     required String stage,
-    required int capacity,
   }) async {
     isLodingAddExamRoom = true;
 
@@ -56,7 +55,6 @@ class DistributionController extends GetxController {
           "School_Class_ID": schoolClassId,
           "Name": name,
           "Stage": stage,
-          "Capacity": capacity
         });
 
     response.fold((fauilr) {
@@ -256,7 +254,7 @@ class DistributionController extends GetxController {
       getControlMissionName(),
     ]);
     controlMissionId != 0 ? getDistributedStudentsCounts() : null;
-    getExamRoomByControlMissionId();
+    controlMissionId != 0 ? getExamRoomByControlMissionId() : null;
   }
 
   Future<void> saveControlMissionId(int id) async {

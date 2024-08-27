@@ -6,8 +6,10 @@ class ExamMissionsResModel {
   ExamMissionsResModel({this.data});
 
   ExamMissionsResModel.fromJson(json) {
-    data = List<ExamMissionResModel>.from(
-        json.map((e) => ExamMissionResModel.fromJson(e)).toList());
+    if (json != null && json is List) {
+      data = List<ExamMissionResModel>.from(
+          json.map((e) => ExamMissionResModel.fromJson(e)).toList());
+    }
   }
 
   Map<String, dynamic> toJson() {

@@ -136,14 +136,6 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                                               name: newRoomName.text,
                                               stage: controller
                                                   .selectedItemStage!.label,
-                                              capacity: int.parse(controller
-                                                  .classRooms
-                                                  .firstWhere((element) =>
-                                                      element.iD ==
-                                                      controller
-                                                          .selectedItemClassRoom!
-                                                          .value)
-                                                  .maxCapacity!),
                                               controlMissionId:
                                                   controller.controlMissionId,
                                               schoolClassId: controller
