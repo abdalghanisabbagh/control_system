@@ -59,8 +59,12 @@ class ExamRoomResModel {
     data['School_Class_ID'] = schoolClassID;
     data['Name'] = name;
     data['Stage'] = stage;
-    data['control_mission'] = controlMissionResModel?.toJson();
-    data['school_class'] = classRoomResModel?.toJson();
+    if (controlMissionResModel != null) {
+      data['control_mission'] = controlMissionResModel!.toJson();
+    }
+    if (classRoomResModel != null) {
+      data['school_class'] = classRoomResModel!.toJson();
+    }
     return data;
   }
 }
