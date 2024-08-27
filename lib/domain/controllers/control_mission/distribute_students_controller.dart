@@ -119,16 +119,10 @@ class DistributeStudentsController extends GetxController {
     // Print the reordered list
     availableStudents.assignAll(reOrderedList);
 
-    for (int i = 0;
-        i < classDesks.where((classDesk) => classDesk.rowNum == i).length;
-        i++) {
-      for (int j = 0; j < numberOfRows; j++) {
-        availableStudents
-                .firstWhereOrNull((student) => student.classDeskID == null)
-                ?.classDeskID =
+    for (int i = 0; i < availableStudents.length; i++) {
+      if (availableStudents[i].classDeskID == null) {
+        availableStudents[i].classDeskID = availableStudents[i].classDeskID =
             classDesks
-                .where((classDesk) =>
-                    classDesk.rowNum == j && classDesk.cloumnNum == i)
                 .whereNot(
                     (classDesk) => blockedClassDesks.contains(classDesk.id))
                 .whereNot((classDesk) => availableStudents
@@ -136,6 +130,40 @@ class DistributeStudentsController extends GetxController {
                     .contains(classDesk.id))
                 .firstOrNull
                 ?.id;
+      }
+    }
+
+    // ccheck there is no students from the sae grade setting next to each other
+    // use the class desk rowNum and column
+    for (int i = 0; i < availableStudents.length; i++) {
+      if (classDesks.firstWhereOrNull((classDesk) =>
+              classDesk.id == availableStudents[i].classDeskID) !=
+          null) {
+        ClassDeskResModel currentClassDesk = classDesks.firstWhere(
+            (classDesk) => classDesk.id == availableStudents[i].classDeskID);
+        ClassDeskResModel? nextClassDesk = classDesks.firstWhereOrNull(
+            (classDesk) =>
+                classDesk.rowNum == currentClassDesk.rowNum &&
+                classDesk.cloumnNum == currentClassDesk.cloumnNum! + 1);
+        if (nextClassDesk != null) {
+          StudentSeatNumberResModel? nextStudent =
+              availableStudents.firstWhereOrNull(
+                  (student) => student.classDeskID == nextClassDesk.id);
+          if (nextStudent != null) {
+            if (availableStudents[i].gradesID == nextStudent.gradesID) {
+              update();
+              MyAwesomeDialogue(
+                title: 'Warning',
+                desc:
+                    'Students from the same grade setting next to each other. Are you sure you want to continue?',
+                dialogType: DialogType.warning,
+                btnOkOnPressed: () => distributeStudents(),
+                btnCancelOnPressed: () {},
+              ).showDialogue(Get.key.currentContext!);
+              return;
+            }
+          }
+        }
       }
     }
 
@@ -178,19 +206,6 @@ class DistributeStudentsController extends GetxController {
     // }
     update();
 
-    ResponseHandler responseHandler = ResponseHandler();
-    responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumbers}/many',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: [
-        ...availableStudents.map((element) => {
-              "ID": element.iD,
-              "Class_Desk_ID": element.classDeskID,
-            }),
-      ],
-    );
-
     return;
   }
 
@@ -214,6 +229,22 @@ class DistributeStudentsController extends GetxController {
                 .length -
             int.parse(numberOfStudentsController.text) >=
         0;
+  }
+
+  Future<void> distributeStudents() async {
+    ResponseHandler responseHandler = ResponseHandler();
+    responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumbers}/many',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: [
+        ...availableStudents.map((element) => {
+              "ID": element.iD,
+              "Class_Desk_ID": element.classDeskID,
+            }),
+      ],
+    );
+    return;
   }
 
   Future<void> exportToPdf() async {
