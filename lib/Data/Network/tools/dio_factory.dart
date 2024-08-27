@@ -41,11 +41,11 @@ class DioFactory {
 
     if (!kReleaseMode) {
       // its debug mode so print app logs
-      dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseHeader: true,
-      ));
+      // dio.interceptors.add(PrettyDioLogger(
+      //   requestHeader: true,
+      //   requestBody: true,
+      //   responseHeader: true,
+      // ));
     }
     return dio;
   }
