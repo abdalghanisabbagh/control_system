@@ -325,8 +325,8 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                                   .last
                                   .toString(),
                             ),
-                            6,
-                            30,
+                            9,
+                            1,
                           ),
                         ).then(
                           (picked) {
