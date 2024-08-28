@@ -69,7 +69,66 @@ class DistributeStudentsController extends GetxController {
     );
   }
 
+  void autoGenerateCross() {
+    availableStudents
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+    classDesks.sort((a, b) => a.rowNum!.compareTo(b.rowNum!));
+    // Count students in each grade
+    Map<int, List<StudentSeatNumberResModel>> gradeCounts =
+        <int, List<StudentSeatNumberResModel>>{};
+    for (StudentSeatNumberResModel student in availableStudents) {
+      gradeCounts.putIfAbsent(student.gradesID!, () => []).add(student);
+    }
+
+// Create the reordered list
+    List<StudentSeatNumberResModel> reOrderedList =
+        <StudentSeatNumberResModel>[];
+    Queue<int> gradesQueue = Queue<int>.from(gradeCounts.keys);
+
+    while (gradesQueue.isNotEmpty) {
+      int currentBlockSize = 1;
+      List<StudentSeatNumberResModel> tempStudents =
+          <StudentSeatNumberResModel>[];
+
+      // Process students for the current block
+      for (int i = 0; i < gradesQueue.length && currentBlockSize > 0; i++) {
+        int grade = gradesQueue.removeFirst();
+        List<StudentSeatNumberResModel> studentInGrade = gradeCounts[grade]!;
+
+        if (studentInGrade.isNotEmpty) {
+          int toAddCount = studentInGrade.length < currentBlockSize
+              ? studentInGrade.length
+              : currentBlockSize;
+          tempStudents.addAll(studentInGrade.take(toAddCount));
+          gradeCounts[grade] = studentInGrade.skip(toAddCount).toList();
+          currentBlockSize -= toAddCount;
+
+          if (gradeCounts[grade]!.isNotEmpty) {
+            gradesQueue.addLast(grade);
+          }
+        }
+      }
+
+      reOrderedList.addAll(tempStudents);
+
+      // Remove empty categories
+      gradeCounts.removeWhere((key, value) => value.isEmpty);
+      gradesQueue.removeWhere((grade) => !gradeCounts.containsKey(grade));
+    }
+
+    // Print the reordered list
+    availableStudents.assignAll(reOrderedList);
+    distributeStudentsUi();
+    checkStudentsSettingNextToEachOther();
+  }
+
   void autoGenerateSimple() {
+    availableStudents
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+    classDesks.sort((a, b) => a.cloumnNum!.compareTo(b.cloumnNum!));
+
     // Define the block size
     final int blockSize = numberOfRows;
 
@@ -119,64 +178,8 @@ class DistributeStudentsController extends GetxController {
     // Print the reordered list
     availableStudents.assignAll(reOrderedList);
 
-    for (int i = 0; i < availableStudents.length; i++) {
-      if (availableStudents[i].classDeskID == null) {
-        availableStudents[i].classDeskID = availableStudents[i].classDeskID =
-            classDesks
-                .whereNot(
-                    (classDesk) => blockedClassDesks.contains(classDesk.id))
-                .whereNot((classDesk) => availableStudents
-                    .map((student) => student.classDeskID)
-                    .contains(classDesk.id))
-                .firstOrNull
-                ?.id;
-      }
-    }
-
-    List<StudentSeatNumberResModel> studentsSettingNextToEachOther = [];
-
-    // ccheck there is no students from the sae grade setting next to each other
-    // use the class desk rowNum and column
-    for (int i = 0; i < availableStudents.length; i++) {
-      if (classDesks.firstWhereOrNull((classDesk) =>
-              classDesk.id == availableStudents[i].classDeskID) !=
-          null) {
-        ClassDeskResModel currentClassDesk = classDesks.firstWhere(
-            (classDesk) => classDesk.id == availableStudents[i].classDeskID);
-        ClassDeskResModel? nextClassDesk = classDesks.firstWhereOrNull(
-            (classDesk) =>
-                classDesk.rowNum == currentClassDesk.rowNum &&
-                classDesk.cloumnNum == currentClassDesk.cloumnNum! + 1);
-        if (nextClassDesk != null) {
-          StudentSeatNumberResModel? nextStudent =
-              availableStudents.firstWhereOrNull(
-                  (student) => student.classDeskID == nextClassDesk.id);
-          if (nextStudent != null) {
-            if (availableStudents[i].gradesID == nextStudent.gradesID) {
-              studentsSettingNextToEachOther.addAll(
-                [
-                  availableStudents[i],
-                  nextStudent,
-                ],
-              );
-            }
-          }
-        }
-      }
-    }
-
-    if (studentsSettingNextToEachOther.isNotEmpty) {
-      MyAwesomeDialogue(
-        title: 'Warning',
-        desc:
-            'Some students from the same grade will be setting next to each other. The following students will be setting next to each other: ${studentsSettingNextToEachOther.map((student) => 'name: ${student.student?.firstName} ${student.student?.secondName} ${student.student?.thirdName} grade: ${student.student?.gradeResModel?.name}').join(', ')} Are you sure you want to continue?',
-        dialogType: DialogType.warning,
-        btnOkOnPressed: () {
-          distributeStudents();
-        },
-        btnCancelOnPressed: () {},
-      ).showDialogue(Get.key.currentContext!);
-    }
+    distributeStudentsUi();
+    checkStudentsSettingNextToEachOther();
 
 // ///// 1-   map of grades students
 //     Map<int, List<StudentSeatNumberResModel>> studentsByGrade =
@@ -215,7 +218,6 @@ class DistributeStudentsController extends GetxController {
     //             ?.id;
     //   }
     // }
-    update();
 
     return;
   }
@@ -242,6 +244,52 @@ class DistributeStudentsController extends GetxController {
         0;
   }
 
+  void checkStudentsSettingNextToEachOther() {
+    List<StudentSeatNumberResModel> studentsSettingNextToEachOther = [];
+
+    // ccheck there is no students from the sae grade setting next to each other
+    // use the class desk rowNum and column
+    for (int i = 0; i < availableStudents.length; i++) {
+      if (classDesks.firstWhereOrNull((classDesk) =>
+              classDesk.id == availableStudents[i].classDeskID) !=
+          null) {
+        ClassDeskResModel currentClassDesk = classDesks.firstWhere(
+            (classDesk) => classDesk.id == availableStudents[i].classDeskID);
+        ClassDeskResModel? nextClassDesk = classDesks.firstWhereOrNull(
+            (classDesk) =>
+                classDesk.rowNum == currentClassDesk.rowNum &&
+                classDesk.cloumnNum == currentClassDesk.cloumnNum! + 1);
+        if (nextClassDesk != null) {
+          StudentSeatNumberResModel? nextStudent =
+              availableStudents.firstWhereOrNull(
+                  (student) => student.classDeskID == nextClassDesk.id);
+          if (nextStudent != null) {
+            if (availableStudents[i].gradesID == nextStudent.gradesID) {
+              studentsSettingNextToEachOther.addAll(
+                [
+                  availableStudents[i],
+                  nextStudent,
+                ],
+              );
+            }
+          }
+        }
+      }
+    }
+    if (studentsSettingNextToEachOther.isNotEmpty) {
+      MyAwesomeDialogue(
+        title: 'Warning',
+        desc:
+            'Some students from the same grade will be setting next to each other. The following students will be setting next to each other: ${studentsSettingNextToEachOther.map((student) => 'name: ${student.student?.firstName} ${student.student?.secondName} ${student.student?.thirdName} grade: ${student.student?.gradeResModel?.name}').join(', ')} Are you sure you want to continue?',
+        dialogType: DialogType.warning,
+        btnOkOnPressed: () {
+          distributeStudents();
+        },
+        btnCancelOnPressed: () {},
+      ).showDialogue(Get.key.currentContext!);
+    }
+  }
+
   Future<void> distributeStudents() async {
     ResponseHandler responseHandler = ResponseHandler();
     responseHandler.getResponse(
@@ -256,6 +304,23 @@ class DistributeStudentsController extends GetxController {
       ],
     );
     return;
+  }
+
+  void distributeStudentsUi() {
+    for (int i = 0; i < availableStudents.length; i++) {
+      if (availableStudents[i].classDeskID == null) {
+        availableStudents[i].classDeskID = availableStudents[i].classDeskID =
+            classDesks
+                .whereNot(
+                    (classDesk) => blockedClassDesks.contains(classDesk.id))
+                .whereNot((classDesk) => availableStudents
+                    .map((student) => student.classDeskID)
+                    .contains(classDesk.id))
+                .firstOrNull
+                ?.id;
+      }
+    }
+    update();
   }
 
   Future<void> exportToPdf() async {
@@ -822,8 +887,7 @@ class DistributeStudentsController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
-        classDesks = r.data!
-          ..sort((a, b) => a.cloumnNum!.compareTo(b.cloumnNum!));
+        classDesks = r.data!;
         classDeskCollection = classDesks.groupListsBy(
           (e) => e.rowNum,
         );
