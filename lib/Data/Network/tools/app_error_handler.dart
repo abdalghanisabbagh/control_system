@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'dart:developer';
-
 import 'package:control_system/Data/Network/tools/failure_model.dart';
 import 'package:dio/dio.dart';
 
@@ -44,7 +42,6 @@ class ErrorHandler implements Exception {
   late Failure failure;
 
   ErrorHandler.handle(dynamic error) {
-    log(error.toString());
     if (error is DioException) {
       // dio error so its an error from response of the API or from dio itself
       failure = _handleError(error);
