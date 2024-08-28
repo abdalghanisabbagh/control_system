@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
@@ -45,7 +43,6 @@ class AddNewStudentsToControlMissionController extends GetxController {
           (e) => e.iD!,
         )
         .toList();
-    log(controlMissionId.toString());
     final response = await ResponseHandler<void>().getResponse(
       path: ControlMissionLinks.studentSeatNumbers,
       converter: (_) {},
