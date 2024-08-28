@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
@@ -17,6 +18,8 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class DistributionController extends GetxController {
+  final searchExamRoomController = TextEditingController();
+
   int controlMissionId = 0;
   String controlMissionName = '';
   bool isLoadingDeleteClassRoom = false;
@@ -24,6 +27,7 @@ class DistributionController extends GetxController {
   bool isLodingGetExamRooms = false;
   bool isLodingGetStageAndClassRoom = false;
   List<ExamRoomResModel> listExamRoom = [];
+  List<ExamRoomResModel> serachExamRoomList = [];
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsStage = <ValueItem>[];
   List<ClassRoomResModel> classRooms = [];
@@ -68,7 +72,6 @@ class DistributionController extends GetxController {
       update();
     }, (result) {
       getExamRoomByControlMissionId();
-      // studentController.getStudents();
       addExamRoomHasBeenAdded = true;
       isLodingAddExamRoom = false;
     });
@@ -87,6 +90,7 @@ class DistributionController extends GetxController {
       path: "${ExamRoomLinks.examRooms}/$idExamRoom",
       converter: ExamRoomResModel.fromJson,
       type: ReqTypeEnum.DELETE,
+      body: {},
     );
     response.fold(
       (l) {
@@ -201,9 +205,25 @@ class DistributionController extends GetxController {
       },
       (r) {
         listExamRoom = r.data!;
+        serachExamRoomList = r.data!;
       },
     );
     isLodingGetExamRooms = false;
+    update();
+  }
+
+  void searchExamRoom(String query) {
+    if (query.isEmpty) {
+      serachExamRoomList = listExamRoom;
+    } else {
+      serachExamRoomList = listExamRoom.where((examRoom) {
+        return examRoom.name!.toLowerCase().contains(query.toLowerCase()) ||
+            examRoom.classRoomResModel!.name!
+                .toLowerCase()
+                .contains(query.toLowerCase());
+      }).toList();
+    }
+
     update();
   }
 
