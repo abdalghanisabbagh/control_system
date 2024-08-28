@@ -133,6 +133,8 @@ class DistributeStudentsController extends GetxController {
       }
     }
 
+    List<StudentSeatNumberResModel> studentsSettingNextToEachOther = [];
+
     // ccheck there is no students from the sae grade setting next to each other
     // use the class desk rowNum and column
     for (int i = 0; i < availableStudents.length; i++) {
@@ -151,20 +153,29 @@ class DistributeStudentsController extends GetxController {
                   (student) => student.classDeskID == nextClassDesk.id);
           if (nextStudent != null) {
             if (availableStudents[i].gradesID == nextStudent.gradesID) {
-              update();
-              MyAwesomeDialogue(
-                title: 'Warning',
-                desc:
-                    'Students from the same grade setting next to each other. Are you sure you want to continue?',
-                dialogType: DialogType.warning,
-                btnOkOnPressed: () => distributeStudents(),
-                btnCancelOnPressed: () {},
-              ).showDialogue(Get.key.currentContext!);
-              return;
+              studentsSettingNextToEachOther.addAll(
+                [
+                  availableStudents[i],
+                  nextStudent,
+                ],
+              );
             }
           }
         }
       }
+    }
+
+    if (studentsSettingNextToEachOther.isNotEmpty) {
+      MyAwesomeDialogue(
+        title: 'Warning',
+        desc:
+            'Some students from the same grade will be setting next to each other. The following students will be setting next to each other: ${studentsSettingNextToEachOther.map((student) => 'name: ${student.student?.firstName} ${student.student?.secondName} ${student.student?.thirdName} grade: ${student.student?.gradeResModel?.name}').join(', ')} Are you sure you want to continue?',
+        dialogType: DialogType.warning,
+        btnOkOnPressed: () {
+          distributeStudents();
+        },
+        btnCancelOnPressed: () {},
+      ).showDialogue(Get.key.currentContext!);
     }
 
 // ///// 1-   map of grades students
@@ -811,7 +822,8 @@ class DistributeStudentsController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
-        classDesks = r.data!;
+        classDesks = r.data!
+          ..sort((a, b) => a.cloumnNum!.compareTo(b.cloumnNum!));
         classDeskCollection = classDesks.groupListsBy(
           (e) => e.rowNum,
         );
