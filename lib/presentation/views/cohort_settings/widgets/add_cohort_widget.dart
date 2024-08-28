@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,9 +58,7 @@ class AddCohortWidget extends StatelessWidget {
                 int found = controller.cohorts.indexWhere(
                   (p0) => p0.name == value,
                 );
-                if (found > -1) {
-                  log('founded');
-                }
+                if (found > -1) {}
               },
             ),
             const SizedBox(
@@ -86,7 +82,6 @@ class AddCohortWidget extends StatelessWidget {
                                 (p0) => p0.name == editingController.text,
                               );
                               if (found > -1) {
-                                log('founded');
                               } else {
                                 controller
                                     .addnewCohort(editingController.text)
