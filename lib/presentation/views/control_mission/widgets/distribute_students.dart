@@ -71,7 +71,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                 ),
                                 FittedBox(
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      controller.autoGenerateCross();
+                                    },
                                     child: const Text(
                                       'Auto Generate (Cross)',
                                     ),
