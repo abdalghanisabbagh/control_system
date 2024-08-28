@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,13 +50,27 @@ class FrontIdScreen extends GetView<RolesController> {
               ? IconButton(
                   onPressed: () {
                     controller.removedSreensIds.add(id);
-                    controller.deleteScreensFromRole();
+                    controller.deleteScreensFromRole().then((value) {
+                      if (value) {
+                        MyFlashBar.showSuccess(
+                          'Removed successfully From Role',
+                          "Success",
+                        ).show(Get.key.currentContext!);
+                      }
+                    });
                   },
                   icon: const Icon(Icons.delete))
               : IconButton(
                   onPressed: () {
-                     controller.selectedSreensIds.add(id);
-                    controller.addScreensToRole();
+                    controller.selectedSreensIds.add(id);
+                    controller.addScreensToRole().then((value) {
+                      if (value) {
+                        MyFlashBar.showSuccess(
+                          'Added successfully To Role',
+                          "Success",
+                        ).show(Get.key.currentContext!);
+                      }
+                    });
                   },
                   icon: const Icon(Icons.add))
         ],

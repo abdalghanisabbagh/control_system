@@ -24,8 +24,6 @@ class RolesController extends GetxController {
   bool connectLoading = false;
   bool deleteScreenLoading = false;
   bool getAllLoading = false;
-  // final ScrollController rolesScrollController = ScrollController();
-  //final ScrollController screensScrollController = ScrollController();
   List<int> removedSreensIds = [];
   List<int> selectedSreensIds = [];
   List<RoleResModel> rolesList = [];
@@ -36,26 +34,11 @@ class RolesController extends GetxController {
   List<ScreenResModel> filteredWidgets = [];
   List<RoleResModel> filteredRoles = [];
   List<int> includedActions = [];
-  // List<ScreenResModel> resultFilteredScreens = [];
   List<ScreenResModel> resultFilteredWidgets = [];
 
   int? selectedRoleId;
   int? selectedScreenId;
   String? lastSelectedFrontId;
-
-  // void filterScreens(List<ScreenResModel> myScreens) {
-  //   //  List<ScreenResModel> myScreen = [];
-  //   RegExp regex = RegExp(r'000');
-
-  //   filteredScreens.assignAll(
-  //     allScreens.where((screen) => regex.hasMatch(screen.frontId)).toList(),
-  //   );
-  //   // myScreen.assignAll(
-  //   //   myScreens.where((screen) => regex.hasMatch(screen.frontId)).toList(),
-  //   // );
-  //   resultFilteredScreens = filteredScreens;
-  //   update();
-  // }
 
   void searchWithinFilteredScreens(String query) {
     var screens =
@@ -84,14 +67,28 @@ class RolesController extends GetxController {
   }
 
   void filterWidgets() {
-    int id = int.parse(lastSelectedFrontId!);
+    if (lastSelectedFrontId == null || selectedRoleId == null) {
+      return;
+    }
+
+    int id;
+    id = int.parse(lastSelectedFrontId!);
+
     widgets = allScreens.where((screen) {
-      int screenFrontId = int.parse(screen.frontId);
+      int screenFrontId;
+      screenFrontId = int.parse(screen.frontId);
+
       return screenFrontId >= id && screenFrontId < id + 1000;
     }).toList();
-    includedActions = filteredRoles
-        .firstWhereOrNull((role) => role.id == selectedRoleId)!
-        .screens!
+
+    var role =
+        filteredRoles.firstWhereOrNull((role) => role.id == selectedRoleId);
+
+    if (role == null) {
+      return;
+    }
+
+    includedActions = role.screens!
         .map((screen) => screen.id)
         .where((action) => widgets.map((widget) => widget.id).contains(action))
         .toList();
@@ -118,8 +115,9 @@ class RolesController extends GetxController {
     update();
   }
 
-  void setSelectedScreen(int screenId) {
+  Future<void> setSelectedScreen(int screenId, String frontid) async {
     selectedScreenId = screenId;
+    lastSelectedFrontId = frontid;
     update();
   }
 
@@ -223,7 +221,6 @@ class RolesController extends GetxController {
       },
     );
     connectLoading = false;
-    selectedSreensIds.clear();
 
     onInit();
     update();
@@ -252,7 +249,6 @@ class RolesController extends GetxController {
         screenHasBeenRemoved = false;
       },
       (r) {
-        onInit();
         screenHasBeenRemoved = true;
         update();
       },
@@ -313,8 +309,7 @@ class RolesController extends GetxController {
 
   @override
   void onClose() {
-    // rolesScrollController.dispose();
-    // screensScrollController.dispose();
+    
     super.onClose();
   }
 
@@ -322,20 +317,14 @@ class RolesController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    selectedRoleId;
-    selectedScreenId;
-    allScreens.clear();
-    rolesList.clear();
-    widgets.clear();
-    filteredScreens.clear();
-    filteredRoles.clear();
-    selectedSreensIds.clear();
 
     getAllLoading = true;
-    update();
 
     await Future.wait([getAllScreens(), getAllRoles()]);
-
+    selectedScreenId != null && lastSelectedFrontId != null
+        ? setSelectedScreen(selectedScreenId!, lastSelectedFrontId!)
+        : null;
+    filterWidgets();
     getAllLoading = false;
     update();
   }

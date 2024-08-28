@@ -101,14 +101,20 @@ class RolesScreen extends GetView<RolesController> {
                               itemCount: controller.filteredRoles.length,
                               itemBuilder: (context, index) {
                                 var role = controller.filteredRoles[index];
-                                return CustomRoleCardWidget(
-                                  roleName: role.name!,
-                                  isSelected:
-                                      controller.selectedRoleId == role.id!,
-                                  onSelect: () {
-                                    controller.setSelectedRole(role.id!);
-                                    controller.filterWidgets();
-                                  },
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 10.0),
+                                  child: CustomRoleCardWidget(
+                                    roleName: role.name!,
+                                    isSelected:
+                                        controller.selectedRoleId == role.id!,
+                                    onSelect: () {
+                                      controller.setSelectedRole(role.id!);
+                                      if (controller.lastSelectedFrontId !=
+                                          null) {
+                                        controller.filterWidgets();
+                                      }
+                                    },
+                                  ),
                                 );
                               },
                             );
@@ -208,19 +214,21 @@ class RolesScreen extends GetView<RolesController> {
                               itemCount: controller.filteredScreens.length,
                               itemBuilder: (context, index) {
                                 var screen = controller.filteredScreens[index];
-                                return ScreenSideMenu(
-                                  color: screen.color,
-                                  frontId: screen.frontId,
-                                  screenName: screen.name,
-                                  isSelected:
-                                      controller.selectedScreenId == screen.id,
-                                  screenId: screen.id,
-                                  onSelect: () {
-                                    controller.lastSelectedFrontId =
-                                        screen.frontId;
-                                    controller.setSelectedScreen(screen.id);
-                                    controller.filterWidgets();
-                                  },
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 10.0),
+                                  child: ScreenSideMenu(
+                                    color: screen.color,
+                                    frontId: screen.frontId,
+                                    screenName: screen.name,
+                                    isSelected: controller.selectedScreenId ==
+                                        screen.id,
+                                    screenId: screen.id,
+                                    onSelect: () async {
+                                      await controller.setSelectedScreen(
+                                          screen.id, screen.frontId);
+                                      controller.filterWidgets();
+                                    },
+                                  ),
                                 );
                               },
                             );
@@ -268,7 +276,7 @@ class RolesScreen extends GetView<RolesController> {
                           if (controller.selectedRoleId == null) {
                             return Center(
                               child: Text(
-                                "Please Select Role First",
+                                "Please Select Role ",
                                 style: nunitoBold.copyWith(
                                   color: ColorManager.bgSideMenu,
                                 ),
@@ -276,6 +284,16 @@ class RolesScreen extends GetView<RolesController> {
                             );
                           }
 
+                          if (controller.lastSelectedFrontId == null) {
+                            return Center(
+                              child: Text(
+                                "Please Select Screen ",
+                                style: nunitoBold.copyWith(
+                                  color: ColorManager.bgSideMenu,
+                                ),
+                              ),
+                            );
+                          }
                           if (controller.widgets.isEmpty) {
                             return Center(
                               child: Text(
@@ -290,16 +308,19 @@ class RolesScreen extends GetView<RolesController> {
                               itemCount: controller.widgets.length,
                               itemBuilder: (context, index) {
                                 var widget = controller.widgets[index];
-                                return FrontIdScreen(
-                                  color: controller.includedActions
-                                          .contains(widget.id)
-                                      ? Colors.green
-                                      : Colors.white,
-                                  widgetName: widget.name,
-                                  frontId: widget.frontId,
-                                  id: widget.id,
-                                  included: controller.includedActions
-                                      .contains(widget.id),
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 10.0),
+                                  child: FrontIdScreen(
+                                    color: controller.includedActions
+                                            .contains(widget.id)
+                                        ? Colors.green
+                                        : Colors.white,
+                                    widgetName: widget.name,
+                                    frontId: widget.frontId,
+                                    id: widget.id,
+                                    included: controller.includedActions
+                                        .contains(widget.id),
+                                  ),
                                 );
                               },
                             );
