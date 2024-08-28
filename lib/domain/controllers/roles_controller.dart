@@ -24,6 +24,7 @@ class RolesController extends GetxController {
   bool connectLoading = false;
   bool deleteScreenLoading = false;
   bool getAllLoading = false;
+  bool isProcessing = false;
   List<int> removedSreensIds = [];
   List<int> selectedSreensIds = [];
   List<RoleResModel> rolesList = [];
@@ -195,6 +196,11 @@ class RolesController extends GetxController {
   }
 
   Future<bool> addScreensToRole() async {
+    if (isProcessing) {
+      return false;
+    }
+
+    isProcessing = true;
     connectLoading = true;
     update();
     bool screenHasBeenAdded = false;
@@ -222,6 +228,7 @@ class RolesController extends GetxController {
     );
     connectLoading = false;
 
+    isProcessing = false;
     onInit();
     update();
     return screenHasBeenAdded;
@@ -307,19 +314,13 @@ class RolesController extends GetxController {
     );
   }
 
-  @override
-  void onClose() {
-    
-    super.onClose();
-  }
 
   @override
   void onInit() async {
     super.onInit();
 
-
     getAllLoading = true;
-
+    update();
     await Future.wait([getAllScreens(), getAllRoles()]);
     selectedScreenId != null && lastSelectedFrontId != null
         ? setSelectedScreen(selectedScreenId!, lastSelectedFrontId!)
