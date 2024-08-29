@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../Data/Models/token/token_model.dart';
 import '../../Data/Models/user/login_response/login_res_model.dart';
@@ -12,6 +15,8 @@ import 'profile_controller.dart';
 import 'school_controller.dart';
 
 class AuthController extends GetxController {
+  PackageInfo? packageInfo;
+
   bool isLoading = false;
   bool isLogin = false;
   ProfileController profileController = Get.find<ProfileController>();
@@ -60,7 +65,8 @@ class AuthController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
+    packageInfo = await PackageInfo.fromPlatform();
     isLogin = false;
     update();
     super.onInit();
