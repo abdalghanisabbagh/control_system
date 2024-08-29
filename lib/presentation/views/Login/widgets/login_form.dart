@@ -282,7 +282,8 @@ class LoginForm extends GetView<AuthController> {
                             GetBuilder<AuthController>(
                               builder: (_) {
                                 return Text(
-                                  controller.packageInfo?.version ?? 'unknown',
+                                  controller.packageInfo?.version ??
+                                      'getting version...',
                                   style: nunitoBlack.copyWith(
                                     fontSize: 16,
                                     color: ColorManager.grey,
