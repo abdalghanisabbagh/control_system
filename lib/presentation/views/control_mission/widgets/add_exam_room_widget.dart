@@ -1,173 +1,173 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../../resource_manager/index.dart';
+import '../../../../domain/controllers/control_mission/distribution_controller.dart';
+import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
+import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
+import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
-class AddExamRoomWidget extends StatelessWidget {
+class AddExamRoomWidget extends GetView<DistributionController> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  TextEditingController newRoomName = TextEditingController();
   AddExamRoomWidget({
     super.key,
   });
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController newname = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Obx(
-        //   () => controller.allrooms.isEmpty
-        //       ? const Center(
-        //           child: CircularProgressIndicator(),
-        //         )
-        //       : Column(
-        //           children: [
-        //             DropdownSearch<ClassResponse>(
-        //               items: controller.allrooms,
-        //               selectedItem: controller.selectedRoom?.value,
-        //               itemAsString: (item) =>
-        //                   "${item.className} - ${item.floorName} - ${item.buildName}",
-        //               dropdownDecoratorProps: DropDownDecoratorProps(
-        //                 dropdownSearchDecoration: InputDecoration(
-        //                     focusedBorder: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.glodenColor),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     border: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.glodenColor),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     hintText: "Select Class Room",
-        //                     hintStyle: nunitoRegular.copyWith(
-        //                         fontSize: 16, color: ColorManager.black)),
-        //               ),
-        //               onChanged: (
-        //                 (value) {
-        //                   controller.selectedRoom = value!.obs;
-        //                   controller.selectedRoom!.call();
-        //                 },
-        //               ),
-        //             ),
-        //             const SizedBox(
-        //               height: 10,
-        //             ),
-        //             DropdownSearch<String>(
-        //               items: controller.roomType,
-        //               dropdownDecoratorProps: DropDownDecoratorProps(
-        //                 dropdownSearchDecoration: InputDecoration(
-        //                     focusedBorder: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.glodenColor),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     border: OutlineInputBorder(
-        //                         borderSide:
-        //                             BorderSide(color: ColorManager.glodenColor),
-        //                         borderRadius: BorderRadius.circular(10)),
-        //                     hintText: "Select Class Type",
-        //                     hintStyle: nunitoRegular.copyWith(
-        //                         fontSize: 16, color: ColorManager.black)),
-        //               ),
-        //               onChanged: (
-        //                 (value) {
-        //                   controller.selectedroomType = value!.obs;
-        //                   controller.selectedroomType!.call();
-        //                 },
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        // ),
-        const SizedBox(
-          height: 10,
+    return SizedBox(
+      width: 500,
+      child: SingleChildScrollView(
+        child: Form(
+          key: formKey,
+          child: GetBuilder<DistributionController>(builder: (_) {
+            return controller.isLodingGetStageAndClassRoom
+                ? Center(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  )
+                : Column(mainAxisSize: MainAxisSize.min, children: [
+                    FormField<List<ValueItem<dynamic>>>(
+                      validator:
+                          Validations.multiSelectDropDownRequiredValidator,
+                      builder: (formFieldState) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 500,
+                              child: MultiSelectDropDownView(
+                                searchEnabled: true,
+                                hintText: "Select Class Room",
+                                onOptionSelected: (selectedItem) {
+                                  controller.selectedItemClassRoom =
+                                      selectedItem.isNotEmpty
+                                          ? selectedItem.first
+                                          : null;
+                                  formFieldState.didChange(selectedItem);
+                                },
+                                options: controller.optionsClassRoom,
+                              ),
+                            ),
+                            if (formFieldState.hasError)
+                              Text(
+                                formFieldState.errorText!,
+                                style: nunitoRegular.copyWith(
+                                  fontSize: FontSize.s10,
+                                  color: ColorManager.error,
+                                ),
+                              ),
+                          ],
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    FormField<List<ValueItem<dynamic>>>(
+                      validator:
+                          Validations.multiSelectDropDownRequiredValidator,
+                      builder: (formFieldState) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 500,
+                              child: MultiSelectDropDownView(
+                                hintText: "Select Class Type",
+                                onOptionSelected: (selectedItem) {
+                                  controller.selectedItemStage =
+                                      selectedItem.isNotEmpty
+                                          ? selectedItem.first
+                                          : null;
+                                  formFieldState.didChange(selectedItem);
+                                },
+                                options: controller.optionsStage,
+                              ),
+                            ),
+                            if (formFieldState.hasError)
+                              Text(
+                                formFieldState.errorText!,
+                                style: nunitoRegular.copyWith(
+                                  fontSize: FontSize.s10,
+                                  color: ColorManager.error,
+                                ),
+                              ),
+                          ],
+                        );
+                      },
+                    ),
+                    MytextFormFiled(
+                        controller: newRoomName,
+                        title: "Room Name",
+                        myValidation: Validations.requiredValidator),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    controller.isLodingAddExamRoom
+                        ? Center(
+                            child: LoadingIndicators.getLoadingIndicator(),
+                          )
+                        : Row(
+                            children: [
+                              const Expanded(
+                                child: ElevatedBackButton(),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: ElevatedAddButton(
+                                  onPressed: () {
+                                    if (formKey.currentState!.validate() &&
+                                        controller.selectedItemClassRoom !=
+                                            null &&
+                                        controller.selectedItemStage != null) {
+                                      controller
+                                          .addNewExamRoom(
+                                              name: newRoomName.text,
+                                              stage: controller
+                                                  .selectedItemStage!.label,
+                                              controlMissionId:
+                                                  controller.controlMissionId,
+                                              schoolClassId: controller
+                                                  .selectedItemClassRoom!.value)
+                                          .then(
+                                        (value) {
+                                          value
+                                              ? {
+                                                  context.mounted
+                                                      ? context.pop()
+                                                      : null,
+                                                  MyFlashBar.showSuccess(
+                                                    "The Student has been added successfully",
+                                                    "Success",
+                                                  ).show(context.mounted
+                                                      ? context
+                                                      : Get
+                                                          .key.currentContext!),
+                                                }
+                                              : null;
+                                        },
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          )
+                  ]);
+          }),
         ),
-        Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: newname,
-                  decoration: const InputDecoration(hintText: "Room New Name"),
-                ),
-              ],
-            )),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(11),
-                    ),
-                    color: ColorManager.bgSideMenu,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Back",
-                      style: nunitoRegular.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: InkWell(
-                // onTap: () {
-                //   if (controller.selectedroomType != null &&
-                //       controller.selectedRoom != null) {
-                //     controller.sendRoomToServer(ExamRoom(
-                //         schoolClassType: controller.selectedroomType!.value,
-                //         schoolClassId: controller.selectedRoom!.value.id!,
-                //         controlmissionId: controller.missionDetials!.id!,
-                //         name: newname.text,
-                //         capacity: controller.selectedRoom!.value.maxCapacity));
-                //     Get.back();
-                //     Get.snackbar("Exam Room", "Added succesfuly",
-                //         colorText: Colors.white, backgroundColor: Colors.green);
-                //   } else {
-                //     Get.snackbar("missing data", "complete data",
-                //         colorText: Colors.white, backgroundColor: Colors.red);
-                //   }
-                // },
-                child: Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      bottomRight: Radius.circular(11),
-                    ),
-                    color: ColorManager.glodenColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Yes",
-                      style: nunitoRegular.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
-      ],
+      ),
     );
   }
 }

@@ -7,11 +7,13 @@ import '../../Data/Models/class_room/class_room_res_model.dart';
 import '../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../Data/Models/school/school_response/school_res_model.dart';
 import '../../Data/Models/school/school_response/schools_res_model.dart';
+import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'profile_controller.dart';
 
 class ClassRoomController extends GetxController {
   List<int> classSeats = [];
@@ -19,15 +21,135 @@ class ClassRoomController extends GetxController {
   int count = 1;
   bool isLoading = false;
   bool isLoadingAddClassRoom = false;
+  bool isLoadingEditClassRoom = false;
   int numbers = 0;
   List<SchoolResModel> schools = <SchoolResModel>[];
 
-  @override
-  void onInit() async {
-    await getSchools().then((_) async {
-      await getClassesRooms();
-    });
-    super.onInit();
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
+
+  Future<bool> addNewClass({
+    required String name,
+    required String floorName,
+    required String maxCapacity,
+    required int columns,
+    required List<int> rows,
+  }) async {
+    isLoadingAddClassRoom = true;
+    bool added = false;
+    update();
+    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
+    Either<Failure, ClassRoomResModel> response =
+        await responseHandler.getResponse(
+      path: SchoolsLinks.schoolsClasses,
+      converter: ClassRoomResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: {
+        "Name": name,
+        "Max_Capacity": maxCapacity,
+        "Floor": floorName,
+        "Rows": rows.toString(),
+        "Columns": columns,
+        "Schools_ID": Hive.box('School').get('Id'),
+        "Created_By": _userProfile?.iD,
+      },
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        added = false;
+      },
+      (r) {
+        getClassesRooms();
+        added = true;
+      },
+    );
+    count = 1;
+    isLoadingAddClassRoom = false;
+    update();
+    return added;
+  }
+
+  Future<bool> deleteClassRoom({
+    required int id,
+  }) async {
+    bool classRoomHasBeenDeleted = false;
+
+    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
+
+    Either<Failure, ClassRoomResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.schoolsClasses}/$id',
+      converter: ClassRoomResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        classRoomHasBeenDeleted = false;
+      },
+      (r) {
+        getClassesRooms();
+        classRoomHasBeenDeleted = true;
+      },
+    );
+    update();
+    return classRoomHasBeenDeleted;
+  }
+
+  Future<bool> editClassRoom({
+    required int id,
+    required String name,
+    required String floorName,
+    required String maxCapacity,
+    required int columns,
+    required List<int> rows,
+  }) async {
+    bool classRoomHasBeenEdited = false;
+    isLoadingEditClassRoom = true;
+    update();
+    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
+    Either<Failure, ClassRoomResModel> response =
+        await responseHandler.getResponse(
+      path: '${SchoolsLinks.schoolsClasses}/$id',
+      converter: ClassRoomResModel.fromJson,
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Name": name,
+        "Max_Capacity": maxCapacity,
+        "Floor": floorName,
+        "Rows": rows.toString(),
+        "Columns": columns,
+        "Schools_ID": Hive.box('School').get('Id'),
+        "Created_By": _userProfile?.iD,
+      },
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        classRoomHasBeenEdited = false;
+      },
+      (r) {
+        getClassesRooms();
+        classRoomHasBeenEdited = true;
+        update();
+      },
+    );
+    isLoadingEditClassRoom = false;
+    update();
+    return classRoomHasBeenEdited;
   }
 
   Future<bool> getClassesRooms() async {
@@ -37,7 +159,7 @@ class ClassRoomController extends GetxController {
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassesRoomsResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.schoolsClasses,
+      path: '${SchoolsLinks.schoolsClasses}/school',
       converter: ClassesRoomsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -94,121 +216,11 @@ class ClassRoomController extends GetxController {
     return gotData;
   }
 
-  Future<bool> deleteClassRoom({
-    required int id,
-  }) async {
-    bool classRoomHasBeenDeleted = false;
-
-    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
-
-    Either<Failure, ClassRoomResModel> response =
-        await responseHandler.getResponse(
-      path: '${SchoolsLinks.schoolsClasses}/$id',
-      converter: ClassRoomResModel.fromJson,
-      type: ReqTypeEnum.DELETE,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        classRoomHasBeenDeleted = false;
-      },
-      (r) {
-        getClassesRooms();
-        classRoomHasBeenDeleted = true;
-      },
-    );
-    update();
-    return classRoomHasBeenDeleted;
-  }
-
-  Future<bool> addNewClass({
-    required String name,
-    required String floorName,
-    required String maxCapacity,
-    required int columns,
-    required List<int> rows,
-  }) async {
-    isLoadingAddClassRoom = true;
-    update();
-    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
-    Either<Failure, ClassRoomResModel> response =
-        await responseHandler.getResponse(
-      path: SchoolsLinks.schoolsClasses,
-      converter: ClassRoomResModel.fromJson,
-      type: ReqTypeEnum.POST,
-      body: {
-        "Name": name,
-        "Max_Capacity": maxCapacity,
-        "Floor": floorName,
-        "Rows": rows,
-        "Columns": columns,
-        "Schools_ID": Hive.box('School').get('Id'),
-        "Created_By": Hive.box('Profile').get('ID'),
-      },
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      },
-      (r) {
-        getClassesRooms();
-      },
-    );
-    count = 1;
-    isLoadingAddClassRoom = false;
-    update();
-    return true;
-  }
-
-  Future<bool> editClassRoom({
-    required int id,
-    required String name,
-    required String floorName,
-    required String maxCapacity,
-    required int columns,
-    required List<int> rows,
-  }) async {
-    bool classRoomHasBeenEdited = false;
-    update();
-    ResponseHandler<ClassRoomResModel> responseHandler = ResponseHandler();
-    Either<Failure, ClassRoomResModel> response =
-        await responseHandler.getResponse(
-      path: '${SchoolsLinks.schoolsClasses}/$id',
-      converter: ClassRoomResModel.fromJson,
-      type: ReqTypeEnum.PATCH,
-      body: {
-        "Name": name,
-        "Max_Capacity": maxCapacity,
-        "Floor": floorName,
-        "Rows": rows.toString(),
-        "Columns": columns,
-        "Schools_ID": Hive.box('School').get('Id'),
-        "Created_By": Hive.box('Profile').get('ID')
-      },
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        classRoomHasBeenEdited = false;
-      },
-      (r) {
-        getClassesRooms();
-        classRoomHasBeenEdited = true;
-        update();
-      },
-    );
-    return classRoomHasBeenEdited;
+  @override
+  void onInit() async {
+    await getSchools().then((_) async {
+      await getClassesRooms();
+    });
+    super.onInit();
   }
 }

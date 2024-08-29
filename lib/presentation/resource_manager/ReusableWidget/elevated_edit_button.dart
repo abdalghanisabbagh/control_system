@@ -1,14 +1,13 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 
-import '../index.dart';
-
 class ElevatedEditButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
   const ElevatedEditButton({
     super.key,
     required this.onPressed,
   });
-
-  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +15,8 @@ class ElevatedEditButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         height: 50,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
             Radius.circular(11),
           ),
           color: ColorManager.glodenColor,

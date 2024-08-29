@@ -1,0 +1,34 @@
+{
+  "hosting": {
+    "target": "control_system_2025",
+    "source": ".",
+    "headers": [
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "**/*.{js,css,png,jpg,jpeg,gif,svg}",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=0, no-cache, no-store, must-revalidate"
+          }
+        ]
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
+  }
+}

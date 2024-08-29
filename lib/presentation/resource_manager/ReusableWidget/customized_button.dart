@@ -1,11 +1,13 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 
-import '../color_manager.dart';
-import '../font_manager.dart';
-import '../styles_manager.dart';
-import '../values_manager.dart';
-
 class CustomizedButton extends StatelessWidget {
+  final void Function()? onPressed;
+
+  final String buttonTitle;
+  final double responsiveHeight, responsiveWidth;
+  final Color? txtColor;
+  final bool whiteButtonWithColoredBorder;
   const CustomizedButton({
     super.key,
     this.responsiveHeight = 36,
@@ -15,12 +17,6 @@ class CustomizedButton extends StatelessWidget {
     this.txtColor,
     this.whiteButtonWithColoredBorder = false,
   });
-
-  final void Function()? onPressed;
-  final String buttonTitle;
-  final double responsiveHeight, responsiveWidth;
-  final Color? txtColor;
-  final bool whiteButtonWithColoredBorder;
 
   @override
   Widget build(BuildContext context) {

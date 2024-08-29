@@ -6,11 +6,13 @@ import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Models/cohort/cohort_res_model.dart';
 import '../../Data/Models/cohort/cohorts_res_model.dart';
+import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'profile_controller.dart';
 
 class CohortsSettingsController extends GetxController {
   bool addLoading = false;
@@ -18,51 +20,27 @@ class CohortsSettingsController extends GetxController {
   bool getAllLoading = false;
   List<int> selectedSubjectsIds = <int>[];
 
-  @override
-  void onInit() {
-    getAllCohorts();
-    super.onInit();
-  }
-
-  Future getAllCohorts() async {
-    getAllLoading = true;
-    update();
-    final response = await ResponseHandler<CohortsResModel>().getResponse(
-      path: SchoolsLinks.cohort,
-      converter: CohortsResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) => MyAwesomeDialogue(
-        title: 'Error',
-        desc: l.message,
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!),
-      (r) {
-        cohorts = r.data!;
-        update();
-      },
-    );
-    getAllLoading = false;
-    update();
-  }
+  final UserProfileModel? _userProfile =
+      Get.find<ProfileController>().cachedUserProfile;
 
   Future<bool> addnewCohort(String name) async {
     addLoading = true;
     update();
     bool cohortHasBeenAdded = false;
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
-      path: SchoolsLinks.cohort,
+      path: CohortLinks.cohort,
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        "Created_By": Hive.box('Profile').get('ID'),
         "School_Type_ID": Hive.box('School').get('SchoolTypeID'),
+        "Created_By": _userProfile?.iD,
       },
     );
+    ////////
     response.fold(
       (l) {
         MyAwesomeDialogue(
@@ -84,40 +62,6 @@ class CohortsSettingsController extends GetxController {
     return cohortHasBeenAdded;
   }
 
-  Future<bool> deleteCohort(int id) async {
-    bool cohortHasBeenDeleted = false;
-    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
-    Either<Failure, CohortResModel> response =
-        await responseHandler.getResponse(
-      path: '${SchoolsLinks.cohort}/$id',
-      converter: CohortResModel.fromJson,
-      type: ReqTypeEnum.DELETE,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        cohortHasBeenDeleted = false;
-      },
-      (r) {
-        getAllCohorts();
-        cohortHasBeenDeleted = true;
-        update();
-      },
-    );
-
-    return cohortHasBeenDeleted;
-  }
-
-  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
-    selectedSubjectsIds =
-        selectedOptions.map((e) => e.value as int).toList().cast<int>();
-    update();
-  }
-
   Future<bool> addNewsubjecstToCohort(int id) async {
     addLoading = true;
     bool cohortHasBeenAdded = false;
@@ -125,7 +69,7 @@ class CohortsSettingsController extends GetxController {
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.connectSubjectToCohort}/$id',
+      path: '${CohortLinks.connectSubjectToCohort}/$id',
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: selectedSubjectsIds,
@@ -152,6 +96,34 @@ class CohortsSettingsController extends GetxController {
     return cohortHasBeenAdded;
   }
 
+  Future<bool> deleteCohort(int id) async {
+    bool cohortHasBeenDeleted = false;
+    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+    Either<Failure, CohortResModel> response =
+        await responseHandler.getResponse(
+      path: '${CohortLinks.cohort}/$id',
+      converter: CohortResModel.fromJson,
+      type: ReqTypeEnum.DELETE,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        cohortHasBeenDeleted = false;
+      },
+      (r) {
+        getAllCohorts();
+        cohortHasBeenDeleted = true;
+        update();
+      },
+    );
+
+    return cohortHasBeenDeleted;
+  }
+
   Future<bool> deleteSubjectFromCohort({
     required int cohortId,
     required int subjectId,
@@ -161,7 +133,7 @@ class CohortsSettingsController extends GetxController {
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
-      path: '${SchoolsLinks.disConnectSubjectFromCohort}/$cohortId',
+      path: '${CohortLinks.disConnectSubjectFromCohort}/$cohortId',
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: subjectId,
@@ -182,5 +154,40 @@ class CohortsSettingsController extends GetxController {
     );
     update();
     return subjectHasBeenDeleted;
+  }
+
+  Future getAllCohorts() async {
+    getAllLoading = true;
+    update();
+    final response = await ResponseHandler<CohortsResModel>().getResponse(
+      path: '${CohortLinks.cohort}/school-type',
+      converter: CohortsResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) => MyAwesomeDialogue(
+        title: 'Error',
+        desc: l.message,
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!),
+      (r) {
+        cohorts = r.data!;
+        update();
+      },
+    );
+    getAllLoading = false;
+    update();
+  }
+
+  @override
+  void onInit() {
+    getAllCohorts();
+    super.onInit();
+  }
+
+  void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
+    selectedSubjectsIds =
+        selectedOptions.map((e) => e.value as int).toList().cast<int>();
+    update();
   }
 }

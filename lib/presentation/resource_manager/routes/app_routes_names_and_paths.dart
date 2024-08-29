@@ -1,8 +1,19 @@
 class AppRoutesNamesAndPaths {
+  static const String addNewStudentsToControlMissionName = 'Add New Students';
+  // addNewStudentsToControlMission
+  static const String addNewStudentsToControlMissionPath =
+      'add-new-students-to-control-mission';
+
   static const String adminScreenName = 'Admin';
   // adminScreen
   static const String adminScreenPath = '/admin';
 
+  static const String allUsersScreenName = 'All Users';
+  static const String allusersScreenPath = 'all-users';
+
+  static const String profileScreenName = 'Profile';
+  // profileScreen
+  static const String profileScreenPath = '/profile';
   static const String batchDocumentsScreenName = 'Batch Documents';
   // batchDocumentsScreen
   static const String batchDocumentsScreenPath = '/batch-documents';
@@ -23,19 +34,34 @@ class AppRoutesNamesAndPaths {
   // cohortSettingScreen
   static const String cohortSettingScreenPath = '/cohort-settings';
 
-  static const String controlMissionScreenName = 'Control Mission';
+  static const String controlBatchScreenName = 'Control Batch';
   // controlMissionScreen
-  static const String controlMissionScreenPath = '/control-mission';
+  static const String controlBatchScreenPath = '/control-batch';
+
+  static const String createMissionScreenName = 'Create Mission';
+  // createMissionScreen
+  static const String createMissionScreenPath = 'create-mission';
 
   static const String dashBoardScreenName = 'Dashboard';
   // dashBoardScreen
   static const String dashBoardScreenPath = '/dashboard';
 
-  static const String distributionScreenName = 'Distribution';
-  // distributionScreen
-  static const String distributionScreenPath = '/distribution';
+  static const String distributeStudentsScreenName = 'Distribute Students';
+  // distributeStudentScreen
+  static const String distributeStudentsScreenPath = 'distribute-students';
+
+  static const String distributioncreateMissionScreenName =
+      'distributioncreateMissionScreenName';
+
+  static const String distributioncreateMissionScreenPath =
+      'distributioncreateMissionScreenPath';
+
+  // static const String distributionScreenName = 'Distribution';
+  // // distributionScreen
+  // static const String distributionScreenPath = '/distribution';
 
   static const String examRoomScreenName = 'Exam Room';
+
   // examRoomScreen
   static const String examRoomScreenPath = '/exam-room';
 
@@ -47,6 +73,10 @@ class AppRoutesNamesAndPaths {
   // loginScreen
   static const String loginScreenPath = '/login';
 
+  static const String oprerationsScreenName = 'Operations';
+  // oprerationsScreen
+  static const String oprerationsScreenPath = 'operations';
+
   static const String proctorScreenName = 'Proctor';
   // proctorScreen
   static const String proctorScreenPath = '/proctor';
@@ -54,6 +84,12 @@ class AppRoutesNamesAndPaths {
   static const String renderSeatScreenName = 'Render Seat';
   // renderSeatScreen
   static const String renderSeatScreenPath = '/render-seat';
+
+  static const String reviewAndDetailsMissionName =
+      'reviewAndDetailsMissionPath';
+
+  static const String reviewAndDetailsMissionPath =
+      'reviewAndDetailsMissionPath';
 
   static const String rolesScreenName = 'Roles';
   // rolesScreen
@@ -74,4 +110,7 @@ class AppRoutesNamesAndPaths {
   static const String subjectSettingScreenName = 'Subject Settings';
   // subjectSettingScreen
   static const String subjectSettingScreenPath = '/subject-settings';
+
+  static const String usersInSchoolScreenName = 'Users In School';
+  static const String usersInSchoolScreenPath = 'users-in-school';
 }

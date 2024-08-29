@@ -1,18 +1,16 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/state_manager.dart';
 
-import '../../../../Data/Models/student_seat/student_seat_model.dart';
+import '../../../../Data/Models/student_seat/student_seat_res_model.dart';
 import '../../../../domain/controllers/class_room_controller.dart';
-import '../../../resource_manager/assets_manager.dart';
-import '../../../resource_manager/color_manager.dart';
-import '../../../resource_manager/styles_manager.dart';
 
 // ignore: must_be_immutable
 class RendarSeats extends StatelessWidget {
-  RendarSeats({super.key, required this.seatsNumbers});
+  List<StudentSeatNumberResModel> seatsNumbers = [];
 
-  List<StudentSeatModel> seatsNumbers = [];
+  RendarSeats({super.key, required this.seatsNumbers});
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +45,29 @@ class RendarSeats extends StatelessWidget {
                             for (int i = 0;
                                 i < controller.classSeats[index];
                                 i++, controller.count++)
-                              Stack(children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  width: size.width * 0.1,
-                                  child: Image.asset(
-                                      AssetsManager.assetsImagesClassDesk),
-                                ),
-                                Positioned(
-                                  //       width: 0,
-                                  top: 40,
-                                  //   left: 0,
-                                  right: (size.width * 0.085) / 2,
-                                  child: Text(
-                                    controller.count.toString(),
-                                    style: nunitoBold.copyWith(
-                                      color: ColorManager.black,
-                                      fontSize: 35,
+                              Stack(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    width: size.width * 0.1,
+                                    child: Image.asset(
+                                        AssetsManager.assetsImagesClassDesk),
+                                  ),
+                                  Positioned.fill(
+                                    right: 10,
+                                    child: Center(
+                                      child: Text(
+                                        controller.count.toString(),
+                                        style: nunitoBold.copyWith(
+                                          color: ColorManager.black,
+                                          fontSize: 35,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                )
-                              ]),
+                                ],
+                              ),
                           ],
                         ),
                       );

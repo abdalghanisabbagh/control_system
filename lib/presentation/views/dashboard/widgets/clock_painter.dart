@@ -1,14 +1,13 @@
 import 'dart:math';
 
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 
-import '../../../resource_manager/index.dart';
-
 class ClockPainter extends CustomPainter {
-  ClockPainter(this.context, this.dateTime);
-
   final BuildContext context;
+
   final DateTime dateTime;
+  ClockPainter(this.context, this.dateTime);
 
   @override
   void paint(Canvas canvas, Size size) {

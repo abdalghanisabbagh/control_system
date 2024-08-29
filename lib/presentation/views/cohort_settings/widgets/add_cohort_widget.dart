@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -7,9 +6,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../domain/controllers/cohorts_settings_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/color_manager.dart';
-import '../../../resource_manager/styles_manager.dart';
 
 class AddCohortWidget extends StatelessWidget {
   const AddCohortWidget({super.key});
@@ -60,16 +58,14 @@ class AddCohortWidget extends StatelessWidget {
                 int found = controller.cohorts.indexWhere(
                   (p0) => p0.name == value,
                 );
-                if (found > -1) {
-                  log('founded');
-                }
+                if (found > -1) {}
               },
             ),
             const SizedBox(
               height: 20,
             ),
             controller.addLoading
-                ? const CircularProgressIndicator()
+                ? LoadingIndicators.getLoadingIndicator()
                 : Row(
                     children: [
                       const Expanded(
@@ -86,7 +82,6 @@ class AddCohortWidget extends StatelessWidget {
                                 (p0) => p0.name == editingController.text,
                               );
                               if (found > -1) {
-                                log('founded');
                               } else {
                                 controller
                                     .addnewCohort(editingController.text)
@@ -94,11 +89,15 @@ class AddCohortWidget extends StatelessWidget {
                                   (value) {
                                     value
                                         ? {
-                                            context.pop(),
+                                            context.mounted
+                                                ? context.pop()
+                                                : null,
                                             MyFlashBar.showSuccess(
                                               "The Cohort has been added successfully",
                                               "Success",
-                                            ).show(context),
+                                            ).show(context.mounted
+                                                ? context
+                                                : Get.key.currentContext!),
                                           }
                                         : null;
                                   },

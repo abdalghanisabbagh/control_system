@@ -1,10 +1,9 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../app/extensions/device_type_extension.dart';
-import '../../../domain/controllers/index.dart';
+import '../../../domain/controllers/dashboard_controller.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
-import '../../resource_manager/index.dart';
 import '../base_screen.dart';
 import 'widgets/index.dart';
 
@@ -15,7 +14,7 @@ class DashboardScreen extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     return BaseScreen(
       body: Container(
-        color: ColorManager.bgColor,
+        color: Colors.transparent,
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [

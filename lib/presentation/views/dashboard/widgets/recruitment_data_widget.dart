@@ -1,8 +1,5 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../app/extensions/device_type_extension.dart';
-import '../../../resource_manager/assets_manager.dart';
-import '../../../resource_manager/index.dart';
 
 class RecruitmentDataWidget extends StatefulWidget {
   const RecruitmentDataWidget({super.key});
@@ -12,77 +9,6 @@ class RecruitmentDataWidget extends StatefulWidget {
 }
 
 class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
-  TableRow tableRow(context, {name, image, designation, status, color}) {
-    return TableRow(
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey,
-            width: 0.5,
-          ),
-        ),
-      ),
-      children: [
-        //Full Name
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 15),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(1000),
-                child: Icon(
-                  Icons.person,
-                  color: ColorManager.bgSideMenu,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(name)
-            ],
-          ),
-        ),
-        // Designation
-        if (!context.isMobile) Text(designation),
-        //Status
-        Row(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color,
-              ),
-              height: 10,
-              width: 10,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(status),
-          ],
-        ),
-        // Menu icon
-        if (!context.isMobile)
-          Image.asset(
-            AssetsManager.assetsIconsMore,
-            color: Colors.grey,
-            height: 30,
-          )
-      ],
-    );
-  }
-
-  Widget tableHeader(text) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 15),
-      child: Text(
-        text,
-        style: const TextStyle(
-            fontWeight: FontWeight.bold, color: ColorManager.black),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -121,7 +47,7 @@ class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
                   vertical: 10,
                   horizontal: 20,
                 ),
-                child: Text(
+                child: const Text(
                   "View All",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -177,6 +103,77 @@ class RecruitmentDataWidgetState extends State<RecruitmentDataWidget> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget tableHeader(text) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 15),
+      child: Text(
+        text,
+        style: const TextStyle(
+            fontWeight: FontWeight.bold, color: ColorManager.black),
+      ),
+    );
+  }
+
+  TableRow tableRow(context, {name, image, designation, status, color}) {
+    return TableRow(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey,
+            width: 0.5,
+          ),
+        ),
+      ),
+      children: [
+        //Full Name
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(1000),
+                child: const Icon(
+                  Icons.person,
+                  color: ColorManager.bgSideMenu,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(name)
+            ],
+          ),
+        ),
+        // Designation
+        if (!context.isMobile) Text(designation),
+        //Status
+        Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color,
+              ),
+              height: 10,
+              width: 10,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(status),
+          ],
+        ),
+        // Menu icon
+        if (!context.isMobile)
+          Image.asset(
+            AssetsManager.assetsIconsMore,
+            color: Colors.grey,
+            height: 30,
+          )
+      ],
     );
   }
 }

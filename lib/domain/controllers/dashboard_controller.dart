@@ -1,5 +1,6 @@
 import 'dart:async' show Timer;
 
+import 'package:control_system/domain/controllers/controllers.dart';
 import 'package:flutter/material.dart' show DayPeriod, TimeOfDay;
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -9,13 +10,21 @@ class DashboardController extends GetxController {
   String? period;
   final String? schoolName = Hive.box('School').get('Name');
   TimeOfDay timeOfDay = TimeOfDay.now();
-  final String? userName = Hive.box('Profile').get('User_Name');
+  final String? userName =
+      Get.find<ProfileController>().cachedUserProfile?.fullName;
 
   @override
   void onInit() {
     super.onInit();
     updateTime();
     updateClock();
+  }
+
+  updateClock() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      update(['clock']);
+      dateTime = DateTime.now();
+    });
   }
 
   updateTime() {
@@ -25,13 +34,6 @@ class DashboardController extends GetxController {
         update(['clock']);
         timeOfDay = TimeOfDay.now();
       }
-    });
-  }
-
-  updateClock() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      update(['clock']);
-      dateTime = DateTime.now();
     });
   }
 }

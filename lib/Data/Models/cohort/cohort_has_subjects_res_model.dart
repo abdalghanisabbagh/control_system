@@ -1,12 +1,16 @@
 import '../subject/subject_res_model.dart';
 
 class CohortHasSubjectsResModel {
+  int? cohortID;
+
+  SubjectResModel? subjects;
+
+  int? subjectsID;
   CohortHasSubjectsResModel({
     this.cohortID,
     this.subjectsID,
     this.subjects,
   });
-
   CohortHasSubjectsResModel.fromJson(json) {
     cohortID = json['Cohort_ID'];
     subjectsID = json['Subjects_ID'];
@@ -14,10 +18,6 @@ class CohortHasSubjectsResModel {
         ? SubjectResModel.fromJson(json['subjects'])
         : null;
   }
-
-  int? cohortID;
-  SubjectResModel? subjects;
-  int? subjectsID;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

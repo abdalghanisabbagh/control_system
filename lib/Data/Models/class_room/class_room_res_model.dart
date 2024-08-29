@@ -1,6 +1,20 @@
 import 'dart:convert' as convert;
 
 class ClassRoomResModel {
+  int? active;
+
+  int? columns;
+
+  String? createdAt;
+  int? createdBy;
+  String? floor;
+  int? iD;
+  String? maxCapacity;
+  String? name;
+  List<int>? rows;
+  int? schoolsID;
+  String? updatedAt;
+  int? updatedBy;
   ClassRoomResModel({
     this.iD,
     this.schoolsID,
@@ -15,14 +29,15 @@ class ClassRoomResModel {
     this.updatedAt,
     this.active,
   });
-
   ClassRoomResModel.fromJson(json) {
     iD = json['ID'];
     schoolsID = json['Schools_ID'];
     name = json['Name'];
     maxCapacity = json['Max_Capacity'];
     floor = json['Floor'];
-    rows = convert.json.decode(json['Rows']).cast<int>();
+    rows = json['Rows'] == null
+        ? null
+        : convert.json.decode(json['Rows']).cast<int>();
     columns = json['Columns'];
     createdBy = json['Created_By'];
     createdAt = json['Created_At'];
@@ -31,19 +46,6 @@ class ClassRoomResModel {
     active = json['Active'];
   }
 
-  int? active;
-  int? columns;
-  String? createdAt;
-  int? createdBy;
-  String? floor;
-  int? iD;
-  String? maxCapacity;
-  String? name;
-  List<int>? rows;
-  int? schoolsID;
-  DateTime? updatedAt;
-  int? updatedBy;
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ID'] = iD;
@@ -51,7 +53,7 @@ class ClassRoomResModel {
     data['Name'] = name;
     data['Max_Capacity'] = maxCapacity;
     data['Floor'] = floor;
-    data['Rows'] = rows;
+    data['Rows'] = rows.toString();
     data['Columns'] = columns;
     data['Created_By'] = createdBy;
     data['Created_At'] = createdAt;

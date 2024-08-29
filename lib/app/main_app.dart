@@ -1,29 +1,24 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../domain/bindings/bindings.dart';
 import '../presentation/resource_manager/routes/app_go_router.dart';
-import '../presentation/resource_manager/theme_manager.dart';
 import 'configurations/scroll_configurations.dart';
 
 class MyApp extends StatefulWidget {
+  static const MyApp _instance = MyApp._internal(); // singlton instance
+
   factory MyApp() => _instance;
 
   const MyApp._internal();
-
-  static const MyApp _instance = MyApp._internal(); // singlton instance
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -43,5 +38,15 @@ class _MyAppState extends State<MyApp> {
       theme: getApplicationTheme(),
       initialBinding: SideMenuBindings(),
     );
+  }
+
+  @override
+  dispose() async {
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 }

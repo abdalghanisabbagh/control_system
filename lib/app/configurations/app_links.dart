@@ -1,70 +1,135 @@
 class AppLinks {
-  static const baseUrl = 'http://localhost:3333/';
-  static const baseUrlDev = 'http://10.6.70.120:3333/';
+  static const baseUrl = 'http://localhost:80/';
+  static const baseUrlDev = 'http://localhost:3333/';
+  static const baseUrlProd = 'https://control-o5xlbifnea-uc.a.run.app/';
 }
 
 class AuthLinks {
-  static const login = 'auth/login';
-  static const logout = 'auth/logout';
-  static const refresh = 'auth/refresh';
-  static const user = 'users';
-  static const userAddRoles = 'users/add-roles';
-  static const usersAddSchools = 'users/add-schools';
+  static const auth = 'auth';
+  static const getNewAccessToken = '$auth/get-new-access-token';
+  static const login = '$auth/login';
+  static const logout = '$auth/logout';
+  static const refresh = '$auth/refresh';
 }
 
-class SchoolsLinks {
+class CohortLinks {
   static const cohort = 'cohort';
   static const connectSubjectToCohort = '$cohort/Connect-Subject';
   static const disConnectSubjectFromCohort = '$cohort/disconnect-Subject';
-  static const getAllSchools = 'schools/all';
   static const getCohortBySchoolType = '$cohort/school-type';
-  static const getSchoolsClassesBySchoolId = '$schoolsClasses/school';
-  static const grades = 'grades';
-  static const gradesSchools = 'grades/school';
-  static const schools = 'schools';
-  static const schoolsClasses = 'school-classes';
-  static const schoolsType = 'school-type';
-  static const subject = 'subject';
-  static const subjects = 'subjects';
 }
 
-class StudentsLinks {
-  static const student = 'student';
-  static const studentBarcodes = 'student-barcodes';
-  static const studentBarcodesExamMission = 'student-barcodes/exam-mission';
-  static const studentBarcodesStudent = 'student-barcodes/student';
-  static const studentCohort = 'student/cohort';
-  static const studentSchool = 'student/school';
-  static const studentSetNumbers = 'student-set-numbers';
-  static const studentSetNumbersControlMission =
-      'student-set-numbers/control-mission';
-
-  static const studentSetNumbersExamRoom = 'student-set-numbers/exam-rooms';
-  static const studentSetNumbersStudent = 'student-set-numbers/student';
-  static const studentsClass = 'student/class';
+class ControlMissionLinks {
+  static const controlMission = 'control-mission';
+  static const controlMissionEducationYear = 'education-year';
+  static const controlMissionSchool = '$controlMission/school';
+  static const getGradesByControlMission = '$controlMission/grades';
+  static const getSubjectsByControlMission = 'subjects/controlMission';
+  static const studentSeatNumbers = '$controlMission/student-seat-numbers';
+  static const distributedStudents = '$controlMission/distribution';
 }
 
 class EducationYearsLinks {
   static const educationyear = 'education-year';
 }
 
-class ControlMissionLinks {
-  static const controlMission = 'control-mission';
-  static const controlMissionEducationYear = 'control-mission/education-year';
-  static const controlMissionSchool = 'control-mission/school';
+class ExamMissionLinks {
+  static const examMission = 'exam-mission';
+  static const examMissionControlMission = '$examMission/control-mission';
+  static const examMissionSubject = '$examMission/subject';
+  static const examMissionUpload = '$examMission/upload';
+  static const previewExamMission = '$examMission/previewExam';
 }
 
-class ExamLinks {
-  static const examMission = 'exam-mission';
-  static const examMissionControlMission = 'exam-mission/control-mission';
-  static const examMissionSubject = 'exam-mission/subject';
+class ExamRoomLinks {
   static const examRooms = 'exam-rooms';
-  static const examRoomsControlMission = 'exam-rooms/control-mission';
-  static const examRoomsSchoolClass = 'exam-rooms/school-class';
+  static const examRoomsControlMission = '$examRooms/control-mission';
+  static const examRoomsSchoolClass = '$examRooms/school-class';
+}
+
+class GeneratePdfLinks {
+  static const generatePdf = 'generate-pdf';
+  static const generatePdfAmCover = '$generatePdf/am-cover';
+  static const generatePdfAttendence = '$generatePdf/attendance';
+  static const generatePdfBrCover = '$generatePdf/br-cover';
+  static const generatePdfIBCover = '$generatePdf/IB-cover';
+  static const generatePdfSeat = '$generatePdf/seats';
+}
+
+class GradeLinks {
+  static const grades = 'grades';
+  static const gradesSchools = '$grades/school';
+}
+
+class ProctorsLinks {
+  static const proctor = 'proctor';
+}
+
+class SchoolsLinks {
+  static const classDesks = 'class-desk';
+  static const getAllSchools = '$schools/all';
+  static const getSchoolsClassesBySchoolId = '$schoolsClasses/school';
+  static const schools = 'schools';
+  static const schoolsClasses = 'school-classes';
+  static const schoolsType = 'school-type';
+}
+
+class Stage {
+  static const stage = 'stage';
+}
+
+class StudentsLinks {
+  static const getStudentsByControlMission = '$student/controlMission';
+  static const student = 'student';
+  static const studentBarcodes = 'student-barcodes';
+  static const studentBarcodesExamMission = 'student-barcodes/exam-mission';
+  static const studentBarcodesStudent = 'student-barcodes/student';
+  static const studentCohort = '$student/cohort';
+  static const studentMany = '$student/many';
+  static const studentSchool = '$student/school';
+  static const studentSeatNumbers = 'student-seat-numbers';
+  static const studentSeatNumbersControlMission =
+      '$studentSeatNumbers/control-mission';
+  static const studentSeatNumberActive = '$studentSeatNumbers/activate';
+  static const studentSeatNumberDeactive = '$studentSeatNumbers/deactivate';
+
+  static const studentSeatNumbersExamRoom = '$studentSeatNumbers/exam-rooms';
+  static const studentSeatNumbersStudent = '$studentSeatNumbers/student';
+
+  static const studentsClass = '$student/class';
+  static const studentsGrades = '$student/students-grades/control-mission/';
+}
+
+class SubjectsLinks {
+  static const deleteSchoolTypeinSubjects = '$subjects/remove-school-type';
+  static const subject = 'subject';
+  static const subjects = 'subjects';
+  static const subjectsBySchoolType = '$subjects/school-type/';
+  static const subjectsDeactivate = '$subjects/deactivate';
+}
+
+class UserLinks {
+  static const String getNewAccessToken = 'auth/get-new-access-token';
+  static const getUsersByCreated = '$users/created-by';
+  static const login = 'auth/login';
+  static const logout = 'auth/logout';
+  static const refresh = 'auth/refresh';
+  static const userAddRoles = '$users/add-roles';
+  static const userEditRoles = '$users/edit-roles';
+  static const userEditUserHasSchools = '$users/edi-user-has-schools';
+  static const users = 'users';
+  static const usersAddSchools = '$users/add-schools';
+  static const usersInSchool = '/$users/school';
+  static const deactivateUser = '/$users/deactivate';
+  static const activateUser = 'users/activate';
 }
 
 class UserRolesSystemsLink {
+  static const screen = 'user-roles-systems/screen';
   static const userRolesSystems = 'user-roles-systems';
-  static const userRolesSystemsConnectRolesTOScreens =
+  static const userRolesSystemsConnectRolesToScreens =
       'user-roles-systems/connect-roles-to-screens';
+
+  static const userRolesSystemsDisconnectRolesFromScreens =
+      'user-roles-systems/disconnect-roles-from-screens';
 }

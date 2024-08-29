@@ -1,23 +1,19 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../Data/Models/student/student_res_model.dart';
-import '../../../../domain/controllers/studentsController/student_controller.dart';
+import '../../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../../resource_manager/index.dart';
 import '../../../resource_manager/validations.dart';
 
 class EditStudentWidget extends GetView<StudentController> {
-  EditStudentWidget({
-    super.key,
-    required this.studentResModel,
-  });
-
   final TextEditingController blbIdController = TextEditingController();
+
   final TextEditingController citizenshipController = TextEditingController();
   final TextEditingController fnameController = TextEditingController();
   final TextEditingController lnameController = TextEditingController();
@@ -25,6 +21,10 @@ class EditStudentWidget extends GetView<StudentController> {
   final TextEditingController religionController = TextEditingController();
   final TextEditingController sLangController = TextEditingController();
   final StudentResModel studentResModel;
+  EditStudentWidget({
+    super.key,
+    required this.studentResModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class EditStudentWidget extends GetView<StudentController> {
                 GetBuilder<StudentController>(
                   builder: (controller) {
                     if (controller.loading) {
-                      return const CircularProgressIndicator();
+                      return LoadingIndicators.getLoadingIndicator();
                     }
 
                     if (controller.optionsCohort.isEmpty) {
@@ -77,7 +77,7 @@ class EditStudentWidget extends GetView<StudentController> {
                       children: [
                         SizedBox(
                           width: 500,
-                          child: FormField<List<ValueItem<dynamic>>>(
+                          child: FormField(
                             validator: Validations
                                 .multiSelectDropDownRequiredValidator,
                             builder: (formFieldState) {
@@ -91,11 +91,12 @@ class EditStudentWidget extends GetView<StudentController> {
                                     },
                                     options: controller.optionsGrade,
                                     optionSelected: [
-                                      controller.optionsGrade.firstWhere(
-                                        (element) =>
-                                            element.value ==
-                                            studentResModel.gradesID,
-                                      ),
+                                      controller.optionsGrade.firstWhereOrNull(
+                                            (element) =>
+                                                element.value ==
+                                                studentResModel.gradesID,
+                                          ) ??
+                                          controller.optionsGrade.first
                                     ],
                                   ),
                                   const SizedBox(
@@ -133,11 +134,12 @@ class EditStudentWidget extends GetView<StudentController> {
                                     },
                                     options: controller.optionsCohort,
                                     optionSelected: [
-                                      controller.optionsCohort.firstWhere(
-                                        (element) =>
-                                            element.value ==
-                                            studentResModel.cohortID,
-                                      ),
+                                      controller.optionsCohort.firstWhereOrNull(
+                                            (element) =>
+                                                element.value ==
+                                                studentResModel.cohortID,
+                                          ) ??
+                                          controller.optionsCohort.first,
                                     ],
                                   ),
                                   const SizedBox(
@@ -175,10 +177,13 @@ class EditStudentWidget extends GetView<StudentController> {
                                     },
                                     options: controller.optionsClassRoom,
                                     optionSelected: [
-                                      controller.optionsClassRoom.firstWhere(
-                                          (element) =>
-                                              element.value ==
-                                              studentResModel.schoolClassID),
+                                      controller.optionsClassRoom
+                                              .firstWhereOrNull(
+                                            (element) =>
+                                                element.value ==
+                                                studentResModel.schoolClassID,
+                                          ) ??
+                                          controller.optionsClassRoom.first,
                                     ],
                                   ),
                                   const SizedBox(
@@ -220,7 +225,8 @@ class EditStudentWidget extends GetView<StudentController> {
                     title: "Last Name",
                     myValidation: Validations.requiredValidator),
                 MytextFormFiled(
-                    controller: religionController,
+                    controller: religionController
+                      ..text = studentResModel.religion.toString(),
                     title: "Religion",
                     myValidation: Validations.requiredValidator),
                 MytextFormFiled(
@@ -238,17 +244,9 @@ class EditStudentWidget extends GetView<StudentController> {
                 GetBuilder<StudentController>(
                   builder: (_) {
                     return controller.islodingEditStudent
-                        ? const CircularProgressIndicator()
+                        ? LoadingIndicators.getLoadingIndicator()
                         : InkWell(
                             onTap: () {
-                              // debugPrint('ID ${studentResModel.iD}');
-                              // debugPrint(
-                              //     'GradeId ${controller.selectedItemGrade?.value.toString()}');
-                              // debugPrint(
-                              //     'CohortId ${controller.selectedItemCohort?.value.toString()}');
-                              // debugPrint(
-                              //     'ClassRoomId ${controller.selectedItemClassRoom?.value.toString()}');
-
                               controller
                                   .patchEditStudent(
                                 studentid: studentResModel.iD!,
@@ -259,16 +257,22 @@ class EditStudentWidget extends GetView<StudentController> {
                                 firstName: fnameController.text,
                                 secondName: mnameController.text,
                                 thirdName: lnameController.text,
+                                secondLang: sLangController.text,
+                                religion: religionController.text,
                               )
                                   .then(
                                 (value) {
                                   value
                                       ? {
-                                          context.pop(),
+                                          context.mounted
+                                              ? context.pop()
+                                              : null,
                                           MyFlashBar.showSuccess(
                                             "The Student has been Edited successfully",
                                             "Success",
-                                          ).show(context),
+                                          ).show(context.mounted
+                                              ? context
+                                              : Get.key.currentContext!),
                                         }
                                       : null;
                                 },

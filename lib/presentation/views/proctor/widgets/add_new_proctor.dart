@@ -1,237 +1,213 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../domain/controllers/proctor_controller.dart';
+import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
-import '../../../resource_manager/index.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
+import '../../../resource_manager/validations.dart';
 
-class AddNewProctor extends StatelessWidget {
-  const AddNewProctor({super.key});
+class CreateNewProctor extends GetView<ProctorController> {
+  const CreateNewProctor({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Form(
-        // key: proctorcontroller.formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 450,
-              child: TextFormField(
-                // controller: proctorcontroller.usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a username';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            SizedBox(
-              width: 450,
-              child:
-                  // GetBuilder<Proctor_controller>(
-                  //   builder: (context) {
-                  //     return
-                  TextFormField(
-                // controller: proctorcontroller.passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      // proctorcontroller.showPass
-                      //     ? Icons.visibility
-                      //     :
-                      Icons.visibility_off,
-                      color: ColorManager.glodenColor,
-                    ),
-                    onPressed: () {
-                      // proctorcontroller.showPass =
-                      //     !proctorcontroller.showPass;
-                      // proctorcontroller.update();
-                    },
-                  ),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a password';
-                  }
-                  return null;
-                },
-                // obscureText: proctorcontroller.showPass,
-                //   );
-                // },
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            SizedBox(
-              width: 450,
-              child: TextFormField(
-                // controller: proctorcontroller.confirmPasswordController,
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      // proctorcontroller.showPass
-                      //     ? Icons.visibility
-                      //:
-                      Icons.visibility_off,
-                      color: ColorManager.glodenColor,
-                    ),
-                    onPressed: () {
-                      // proctorcontroller.showPass =
-                      //     !proctorcontroller.showPass;
-                      // proctorcontroller.update();
-                    },
-                  ),
-                ),
-                // validator: (value) {
-                //   if (value!.isEmpty) {
-                //     return 'Please enter a Confirm password';
-                //   } else if (value !=
-                //       proctorcontroller.passwordController.text) {
-                //     return 'password not match';
-                //   } else {
-                //     return null;
-                //   }
-                // },
-                // obscureText: proctorcontroller.showPass,
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            SizedBox(
-              width: 450,
-              child: TextFormField(
-                // controller: proctorcontroller.nisIdController,
-                decoration: InputDecoration(
-                  labelText: 'NIS ID',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a NIS ID';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            /*    SizedBox(
-              width: 450,
-              child: TextFormField(
-                controller: proctorcontroller.nationController,
-                decoration: InputDecoration(
-                  labelText: 'National Id',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a National Id';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            const SizedBox(height: 16.0),
-        
-            GetBuilder<Proctor_controller>(builder: (context) {
-              return Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      const Text('Floor Manager :'),
-                      Switch(
-                          value: proctorcontroller.isFloorManager,
-                          activeColor: ColorManager.glodenColor,
-                          onChanged: (newValue) {
-                            proctorcontroller.isFloorManager = newValue;
-                            proctorcontroller.update();
-                          }),
-                    ],
-                  ),
-                  if (proctorcontroller.isFloorManager)
-                    SizedBox(
-                      width: 450,
-                      child: DropdownSearch<String>(
-                        items: proctorcontroller.mission.roomType,
-                        dropdownDecoratorProps: DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: ColorManager.glodenColor),
-                                  borderRadius: BorderRadius.circular(10)),
-                              border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: ColorManager.glodenColor),
-                                  borderRadius: BorderRadius.circular(10)),
-                              hintText: "Select Stage",
-                              hintStyle: AppTextStyle.nunitoRegular.copyWith(
-                                  fontSize: 16, color: ColorManager.black)),
-                        ),
-                        onChanged: (value) {
-                          proctorcontroller.roomTypePrincepl = value;
-                        },
-                      ),
-                    ),
-                ],
-              );
-            }),
-            */
-            const SizedBox(height: 16.0),
-            Row(
+        key: controller.formKey,
+        child: GetBuilder<ProctorController>(
+          id: 'createNewProctor',
+          builder: (proctorcontroller) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    //  proctorcontroller.submitForm,
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorManager.glodenColor),
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(11),
-                        ),
-                        color: ColorManager.glodenColor,
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "Proctor Full Name",
+                    controller: proctorcontroller.fullNameController,
+                    myValidation: Validations.requiredValidator,
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "Username",
+                    controller: proctorcontroller.usernameController,
+                    myValidation: Validations.requiredValidator,
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "Password",
+                    controller: proctorcontroller.passwordController,
+                    myValidation: Validations.requiredValidator,
+                    obscureText: proctorcontroller.showPassord,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        proctorcontroller.showPassord
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                       ),
-                      child: Center(
-                        child: Text(
-                          "Create Proctor",
-                          style: nunitoRegular.copyWith(
-                            color: Colors.white,
-                            fontSize: 18,
+                      onPressed: () {
+                        proctorcontroller.showPassord =
+                            !proctorcontroller.showPassord;
+                        proctorcontroller.update(
+                          [
+                            'createNewProctor',
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "Confirm Password",
+                    controller: proctorcontroller.confirmPasswordController,
+                    obscureText: proctorcontroller.showPassord,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        proctorcontroller.showPassord
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        proctorcontroller.showPassord =
+                            !proctorcontroller.showPassord;
+                        proctorcontroller.update(
+                          [
+                            'createNewProctor',
+                          ],
+                        );
+                      },
+                    ),
+                    myValidation: (value) {
+                      return Validations.validateConfirmPassword(
+                          value, proctorcontroller.passwordController.text);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: 450,
+                  child: MytextFormFiled(
+                    title: "NIS Id",
+                    controller: proctorcontroller.nisIdController,
+                    myValidation: Validations.requiredValidator,
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                /*    SizedBox(
+                  width: 450,
+                  child: TextFormField(
+                    controller: proctorcontroller.nationController,
+                    decoration: InputDecoration(
+                      labelText: 'National Id',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a National Id';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+            
+                GetBuilder<Proctor_controller>(builder: (context) {
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          const Text('Floor Manager :'),
+                          Switch(
+                              value: proctorcontroller.isFloorManager,
+                              activeColor: ColorManager.glodenColor,
+                              onChanged: (newValue) {
+                                proctorcontroller.isFloorManager = newValue;
+                                proctorcontroller.update();
+                              }),
+                        ],
+                      ),
+                      if (proctorcontroller.isFloorManager)
+                        SizedBox(
+                          width: 450,
+                          child: DropdownSearch<String>(
+                            items: proctorcontroller.mission.roomType,
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: ColorManager.glodenColor),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  border: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: ColorManager.glodenColor),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  hintText: "Select Stage",
+                                  hintStyle: AppTextStyle.nunitoRegular.copyWith(
+                                      fontSize: 16, color: ColorManager.black)),
+                            ),
+                            onChanged: (value) {
+                              proctorcontroller.roomTypePrincepl = value;
+                            },
                           ),
                         ),
+                    ],
+                  );
+                }),
+                */
+                const SizedBox(height: 16.0),
+                controller.isLoading
+                    ? Center(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      )
+                    : Row(
+                        children: [
+                          const Expanded(
+                            child: ElevatedBackButton(),
+                          ),
+                          const SizedBox(width: 16.0),
+                          Expanded(
+                            child: ElevatedAddButton(
+                              onPressed: () {
+                                if (controller.formKey.currentState!
+                                    .validate()) {
+                                  controller.createNewProctor().then(
+                                    (value) {
+                                      if (value) {
+                                        Get.back();
+                                        MyFlashBar.showSuccess(
+                                                'Proctor has been created successfully',
+                                                'Success')
+                                            .show(Get.key.currentContext!);
+                                      }
+                                    },
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16.0),
-                const Expanded(
-                  child: ElevatedBackButton(),
-                ),
               ],
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

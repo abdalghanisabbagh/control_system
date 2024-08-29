@@ -1,9 +1,8 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../domain/controllers/SeatingNumbersControllers/seating_number_tab_view_controller.dart';
-import '../../resource_manager/color_manager.dart';
-import '../../resource_manager/styles_manager.dart';
+import '../../../domain/controllers/batch_documents.dart/batch_documents_controller.dart';
 import '../base_screen.dart';
 import 'widgets/attendance_screen.dart';
 import 'widgets/cover_sheet_screen.dart';
@@ -29,21 +28,22 @@ class BatchDocumentsScreen extends GetView<BatchDocumentsController> {
                         borderRadius: BorderRadius.circular(10),
                         color: ColorManager.primary),
                     child: TabBar(
-                        overlayColor:
-                            WidgetStateProperty.all(ColorManager.primary),
-                        labelStyle: nunitoSemiBoldStyle(),
-                        automaticIndicatorColorAdjustment: true,
-                        labelColor: ColorManager.primary,
-                        labelPadding: const EdgeInsets.symmetric(vertical: 15),
-                        indicator: BoxDecoration(color: ColorManager.white),
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        unselectedLabelColor: ColorManager.white,
-                        controller: controller.tabController,
-                        tabs: const [
-                          Text("Cover Sheet"),
-                          Text("Seat numbers"),
-                          Text("Attendance"),
-                        ]),
+                      overlayColor:
+                          WidgetStateProperty.all(ColorManager.primary),
+                      labelStyle: nunitoSemiBoldStyle(),
+                      automaticIndicatorColorAdjustment: true,
+                      labelColor: ColorManager.primary,
+                      labelPadding: const EdgeInsets.symmetric(vertical: 15),
+                      indicator: const BoxDecoration(color: ColorManager.white),
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      unselectedLabelColor: ColorManager.white,
+                      controller: controller.tabController,
+                      tabs: const [
+                        Text("Cover Sheet"),
+                        Text("Seat numbers"),
+                        Text("Attendance"),
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: TabBarView(

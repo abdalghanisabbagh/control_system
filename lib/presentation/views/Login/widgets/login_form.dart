@@ -1,25 +1,49 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../../domain/controllers/auth_controller.dart';
-import '../../../../domain/controllers/index.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../../resource_manager/assets_manager.dart';
-import '../../../resource_manager/color_manager.dart';
+import '../../../resource_manager/constants/app_constatnts.dart';
 import '../../../resource_manager/validations.dart';
 
-class LoginForm extends GetView<AuthController> {
-  LoginForm({super.key});
+void _login(
+    Future<bool> Function(String email, String password) login,
+    String username,
+    String password,
+    GlobalKey<FormState> formKey,
+    BuildContext context) async {
+  if (formKey.currentState!.validate()) {
+    login(
+      username,
+      password,
+    ).then(
+      (value) {
+        value
+            ? {
+                MyFlashBar.showSuccess(
+                        'You have been logged in successfully', 'Success')
+                    .show(context.mounted ? context : Get.key.currentContext!)
+              }
+            : null;
+      },
+    );
+  }
+}
 
+class LoginForm extends GetView<AuthController> {
   final emailController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
+  LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return KeyboardListener(
       onKeyEvent: (value) {
@@ -95,7 +119,7 @@ class LoginForm extends GetView<AuthController> {
                             const SizedBox(
                               height: 8,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 30,
                               child: Divider(
                                 color: ColorManager.bgSideMenu,
@@ -106,31 +130,114 @@ class LoginForm extends GetView<AuthController> {
                               height: 32,
                             ),
                             MytextFormFiled(
+                              autofillHints: const [
+                                AutofillHints.username,
+                              ],
                               controller: emailController,
                               myValidation: Validations.requiredValidator,
                               title: "Email",
-                              suffixIcon: Icon(
+                              suffixIcon: const Icon(
                                 Icons.mail_outline,
                                 color: ColorManager.glodenColor,
                               ),
                             ),
-                            Obx(
-                              () {
+                            GetBuilder<AuthController>(
+                              id: 'pass_icon',
+                              builder: (_) {
                                 return MytextFormFiled(
-                                  obscureText: controller.showPass.value,
+                                  autofillHints: const [
+                                    AutofillHints.password,
+                                  ],
+                                  obscureText: controller.showPass,
                                   controller: passwordController,
                                   myValidation: Validations.requiredValidator,
                                   enableBorderColor: ColorManager.grey,
                                   title: "Password",
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      controller.showPass.value
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: ColorManager.glodenColor,
-                                    ),
-                                    onPressed: () {
-                                      controller.setShowPass();
+                                  suffixIcon: GetBuilder<AuthController>(
+                                    id: 'pass_icon',
+                                    builder: (_) {
+                                      return IntrinsicHeight(
+                                        child: IntrinsicWidth(
+                                          child: IconButton(
+                                            icon: AnimatedSwitcher(
+                                              duration:
+                                                  AppConstants.mediumDuration,
+                                              transitionBuilder:
+                                                  (child, animation) {
+                                                final rotateAnimation =
+                                                    Tween<double>(
+                                                            begin: 0.0,
+                                                            end: 1.0)
+                                                        .animate(animation);
+                                                final reverseAnimation =
+                                                    Tween<double>(
+                                                            begin: 1.0,
+                                                            end: 0.0)
+                                                        .animate(animation);
+                                                return RotationTransition(
+                                                  turns: controller.showPass
+                                                      ? rotateAnimation
+                                                      : reverseAnimation,
+                                                  child: FadeTransition(
+                                                    opacity: animation,
+                                                    child: child,
+                                                  ),
+                                                );
+                                              },
+                                              layoutBuilder: (currentChild,
+                                                  previousChildren) {
+                                                return Stack(
+                                                  fit: StackFit.loose,
+                                                  children: [
+                                                    // Show the current child.
+                                                    if (currentChild != null)
+                                                      Positioned.fill(
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .topRight,
+                                                          child: currentChild,
+                                                        ),
+                                                      ),
+                                                    // Show the previous children in a stack.
+                                                    ...previousChildren.map(
+                                                      (child) {
+                                                        return Positioned.fill(
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .topRight,
+                                                            child:
+                                                                IgnorePointer(
+                                                                    child:
+                                                                        child),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                              switchInCurve: Curves.easeOutExpo,
+                                              switchOutCurve: Curves.easeInExpo,
+                                              child: controller.showPass
+                                                  ? const Icon(
+                                                      key: ValueKey(1),
+                                                      Icons.visibility,
+                                                      color: ColorManager
+                                                          .glodenColor,
+                                                    )
+                                                  : const Icon(
+                                                      key: ValueKey(2),
+                                                      Icons.visibility_off,
+                                                      color: ColorManager
+                                                          .glodenColor,
+                                                    ),
+                                            ),
+                                            onPressed: () {
+                                              controller.setShowPass();
+                                            },
+                                          ),
+                                        ),
+                                      );
                                     },
                                   ),
                                 );
@@ -140,29 +247,33 @@ class LoginForm extends GetView<AuthController> {
                               height: 32,
                             ),
                             GetBuilder<AuthController>(
+                              id: 'login_btn',
                               builder: (_) {
-                                return Column(
-                                  children: [
-                                    controller.isLoading
-                                        ? const CircularProgressIndicator()
-                                        : SizedBox(
-                                            width: double.infinity,
-                                            height: 50,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                _login(
-                                                  controller.login,
-                                                  emailController.text,
-                                                  passwordController.text,
-                                                  formKey,
-                                                  context,
-                                                );
-                                              },
-                                              child: const Text("Login"),
-                                            ),
-                                          ),
-                                  ],
-                                );
+                                return controller.isLoading
+                                    ? SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: FittedBox(
+                                          child: LoadingIndicators
+                                              .getLoadingIndicator(),
+                                        ),
+                                      )
+                                    : SizedBox(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            _login(
+                                              controller.login,
+                                              emailController.text,
+                                              passwordController.text,
+                                              formKey,
+                                              context,
+                                            );
+                                          },
+                                          child: const Text("Login"),
+                                        ),
+                                      );
                               },
                             )
                           ],
@@ -177,27 +288,5 @@ class LoginForm extends GetView<AuthController> {
         ),
       ),
     );
-  }
-}
-
-void _login(
-    Future<bool> Function(String email, String password) login,
-    String username,
-    String password,
-    GlobalKey<FormState> formKey,
-    BuildContext context) async {
-  if (formKey.currentState!.validate()) {
-    login(
-      username,
-      password,
-    ).then((value) {
-      value
-          ? {
-              MyFlashBar.showSuccess(
-                      'You have been logged in successfully', 'Success')
-                  .show(context)
-            }
-          : null;
-    });
   }
 }

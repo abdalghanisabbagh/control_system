@@ -1,10 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/controllers/auth_controller.dart';
-import '../../resource_manager/assets_manager.dart';
-import '../../resource_manager/index.dart';
 import 'widgets/login_form.dart';
 import 'widgets/select_school_form.dart';
 
@@ -13,7 +12,7 @@ class LoginScreen extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       body: SizedBox(
@@ -22,38 +21,39 @@ class LoginScreen extends GetView<AuthController> {
         child: Stack(
           children: [
             Opacity(
-                opacity: .5,
-                child: CarouselSlider(
-                  items: [
-                    Image.asset(
-                      width: size.width,
-                      height: size.height,
-                      AssetsManager.assetsImagesNis1,
-                      fit: BoxFit.fill,
-                    ),
-                    Image.asset(
-                      width: size.width,
-                      height: size.height,
-                      AssetsManager.assetsImagesNis2,
-                      fit: BoxFit.fill,
-                    ),
-                    Image.asset(
-                      width: size.width,
-                      height: size.height,
-                      AssetsManager.assetsImagesNis3,
-                      fit: BoxFit.fill,
-                    )
-                  ],
-                  options: CarouselOptions(
+              opacity: .5,
+              child: CarouselSlider(
+                items: [
+                  Image.asset(
+                    width: size.width,
                     height: size.height,
-                    viewportFraction: 1.0,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    enlargeCenterPage: false,
-                    scrollPhysics: const NeverScrollableScrollPhysics(),
-                    autoPlay: true,
-                    reverse: false,
+                    AssetsManager.assetsImagesNis1,
+                    fit: BoxFit.fill,
                   ),
-                )),
+                  Image.asset(
+                    width: size.width,
+                    height: size.height,
+                    AssetsManager.assetsImagesNis2,
+                    fit: BoxFit.fill,
+                  ),
+                  Image.asset(
+                    width: size.width,
+                    height: size.height,
+                    AssetsManager.assetsImagesNis3,
+                    fit: BoxFit.fill,
+                  )
+                ],
+                options: CarouselOptions(
+                  height: size.height,
+                  viewportFraction: 1.0,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  enlargeCenterPage: false,
+                  scrollPhysics: const NeverScrollableScrollPhysics(),
+                  autoPlay: true,
+                  reverse: false,
+                ),
+              ),
+            ),
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
@@ -78,9 +78,13 @@ class LoginScreen extends GetView<AuthController> {
                     const SizedBox(
                       width: 8,
                     ),
-                    Text("Copyright 2024",
-                        style: nunitoBoldStyle().copyWith(
-                            fontSize: 22, color: ColorManager.primary)),
+                    Text(
+                      "Copyright 2024",
+                      style: nunitoBoldStyle().copyWith(
+                        fontSize: 22,
+                        color: ColorManager.primary,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -94,9 +98,8 @@ class LoginScreen extends GetView<AuthController> {
                         : 16,
               ),
               child: GetBuilder<AuthController>(
-                builder: (_) => controller.isLogin
-                    ? const SelectSchoolForm()
-                    : LoginForm(),
+                builder: (_) =>
+                    controller.isLogin ? const SelectSchoolForm() : LoginForm(),
               ),
             )
           ],

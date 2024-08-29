@@ -1,529 +1,466 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../resource_manager/index.dart';
+import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
+import '../../../../domain/controllers/profile_controller.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 
-class MissionDetailsWidget extends StatelessWidget {
-  const MissionDetailsWidget({super.key});
+// ignore: must_be_immutable
+class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
+  late PlutoGridStateManager stateManager;
 
-  // List<PlutoColumn> columns = [
-  //   /// Text Column definition
-  //   PlutoColumn(
-  //     readOnly: true,
-  //     enableEditingMode: false,
-  //     title: 'Id',
-  //     field: 'blb_id',
-  //     type: PlutoColumnType.text(),
-  //   ),
+  MissionDetailsWidget({super.key});
 
-  //   /// Text Column definition
-  //   PlutoColumn(
-  //     readOnly: true,
-  //     enableEditingMode: false,
-  //     title: 'Student Name',
-  //     field: 'name_field',
-  //     type: PlutoColumnType.text(),
-  //   ),
-
-  //   /// Number Column definition
-  //   PlutoColumn(
-  //     enableEditingMode: false,
-  //     title: 'seat number',
-  //     field: 'seat_number',
-  //     type: PlutoColumnType.text(),
-  //   ),
-
-  //   /// Select Column definition
-  //   PlutoColumn(
-  //     enableEditingMode: false,
-  //     title: 'Grade',
-  //     field: 'grade_field',
-  //     type: PlutoColumnType.text(),
-  //   ),
-
-  //   /// Datetime Column definition
-  //   PlutoColumn(
-  //     enableEditingMode: false,
-  //     title: 'Class',
-  //     field: 'Class',
-  //     type: PlutoColumnType.text(),
-  //   ),
-
-  //   /// Text Column definition
-  //   PlutoColumn(
-  //     readOnly: true,
-  //     // enableRowChecked: true,
-  //     enableEditingMode: false,
-  //     title: 'Cohort',
-  //     field: 'cohort_field',
-  //     type: PlutoColumnType.text(),
-  //   ),
-
-  //   /// Datetime Column definition
-  //   PlutoColumn(
-  //     enableEditingMode: false,
-  //     title: 'Actions',
-  //     field: 'actions_field',
-  //     type: PlutoColumnType.date(),
-  //     renderer: (rendererContext) {
-  //       return Row(
-  //         children: [
-  //           IconButton(
-  //               onPressed: () {
-  //                 log(rendererContext.rowIdx.toString());
-  //               },
-  //               icon: const Icon(Icons.density_small)),
-  //           IconButton(
-  //               onPressed: () {
-  //                 log(rendererContext.rowIdx.toString());
-  //               },
-  //               icon: const Icon(Icons.edit)),
-  //           IconButton(
-  //               onPressed: () {
-  //                 log(rendererContext.rowIdx.toString());
-  //               },
-  //               icon: const Icon(Icons.delete)),
-  //         ],
-  //       );
-  //     },
-  //   ),
-  // ];
-  // late PlutoGridStateManager stateManager;
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
-      // child: GetBuilder<ReviewMissionControllers>(
-      //   builder: (reviewMissionControllers) {
-      //     return Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: [
-      //         Text(
-      //           "Batch Name : ${reviewMissionControllers.selectMission!.name!}",
-      //           style: nunitoBold.copyWith(color: Colors.black, fontSize: 30),
-      //         ),
-      //         const SizedBox(
-      //           height: 20,
-      //         ),
-      //         Row(
-      //           children: [
-      //             Expanded(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: [
-      //                   Text(
-      //                     "Subjects",
-      //                     style: nunitoBold.copyWith(
-      //                         color: Colors.black, fontSize: 30),
-      //                   ),
-      //                   const SizedBox(
-      //                     height: 10,
-      //                   ),
-      //                   Container(
-      //                     margin: const EdgeInsets.all(5),
-      //                     padding: const EdgeInsets.all(10),
-      //                     decoration: BoxDecoration(
-      //                         boxShadow: [
-      //                           BoxShadow(
-      //                             color: Colors.grey.withOpacity(0.5),
-      //                             spreadRadius: 5,
-      //                             blurRadius: 20,
-      //                             offset: const Offset(
-      //                                 2, 15), // changes position of shadow
-      //                           ),
-      //                         ],
-      //                         color: ColorManager.ligthBlue,
-      //                         borderRadius: BorderRadius.circular(10)),
-      //                     height: 200,
-      //                     // child: GetBuilder<CompleteMissionsController>(
-      //                     //   builder: (completeMissionsController) =>
-      //                     //       completeMissionsController.missionDetials ==
-      //                     //               null
-      //                     //           ? const Center(
-      //                     //               child: CircularProgressIndicator(),
-      //                     //             )
-      //                     //           // : ListView.builder(
-      //                     //           //     itemCount: completeMissionsController
-      //                     //           //         .missionDetials!
-      //                     //           //         .exammission!
-      //                     //           //         .length,
-      //                     //           //     itemBuilder: (context, index) {
-      //                     //           //       return const Padding(
-      //                     //           //         padding: EdgeInsets.all(8.0),
-      //                     //           //         child: Row(
-      //                     //           //           mainAxisAlignment:
-      //                     //           //               MainAxisAlignment
-      //                     //           //                   .spaceBetween,
-      //                     //           //           crossAxisAlignment:
-      //                     //           //               CrossAxisAlignment.center,
-      //                     //           //           children: [
-      //                     //           //             // Text(reviewMissionControllers.selectMission.studentseatnumbers.forEach((element) {element.students.subjects.forEach((element) {element.name})})),
-      //                     //           //             Column(
-      //                     //           //               crossAxisAlignment:
-      //                     //           //                   CrossAxisAlignment.start,
-      //                     //           //               children: [
-      //                     //           //                 // Text(
-      //                     //           //                 //     "Subject : ${completeMissionsController.missionDetials!.exammission![index].subjects!.name}"),
-      //                     //           //                 // Text(
-      //                     //           //                 //   completeMissionsController
-      //                     //           //                 //       .missionDetials!
-      //                     //           //                 //       .exammission![index]
-      //                     //           //                 //       .grades!
-      //                     //           //                 //       .name,
-      //                     //           //                 // )
-      //                     //           //               ],
-      //                     //           //             ),
-      //                     //           //             // Row(
-      //                     //           //             //   children: [
-      //                     //           //             //     IconButton(
-      //                     //           //             //         onPressed: () {},
-      //                     //           //             //         icon: const Icon(
-      //                     //           //             //           Icons.edit,
-      //                     //           //             //           size: 30,
-      //                     //           //             //           color: Colors.green,
-      //                     //           //             //         )),
-      //                     //           //             //     IconButton(
-      //                     //           //             //         onPressed: () {},
-      //                     //           //             //         icon: const Icon(
-      //                     //           //             //           Icons.delete,
-      //                     //           //             //           size: 30,
-      //                     //           //             //           color: Colors.red,
-      //                     //           //             //         ))
-      //                     //           //             //   ],
-      //                     //           //             // )
-      //                     //           //           ],
-      //                     //           //         ),
-      //                     //           //       );
-      //                     //           //     },
-      //                     //           //   ),
-      //                     // ),
-      //                   )
-      //                 ],
-      //               ),
-      //             ),
-      //             const SizedBox(
-      //               width: 20,
-      //             ),
-      //             Expanded(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: [
-      //                   Text(
-      //                     "Classrooms",
-      //                     style: nunitoBold.copyWith(
-      //                         color: Colors.black, fontSize: 30),
-      //                   ),
-      //                   const SizedBox(
-      //                     height: 10,
-      //                   ),
-      //                   Container(
-      //                     margin: const EdgeInsets.all(5),
-      //                     padding: const EdgeInsets.all(10),
-      //                     decoration: BoxDecoration(
-      //                         boxShadow: [
-      //                           BoxShadow(
-      //                             color: Colors.grey.withOpacity(0.5),
-      //                             spreadRadius: 5,
-      //                             blurRadius: 20,
-      //                             offset: const Offset(
-      //                                 2, 15), // changes position of shadow
-      //                           ),
-      //                         ],
-      //                         color: ColorManager.ligthBlue,
-      //                         borderRadius: BorderRadius.circular(10)),
-      //                     height: 200,
-      //                     // child: GetBuilder<CompleteMissionsController>(
-      //                     //   builder: (completeMissionsController) =>
-      //                     //       completeMissionsController.missionDetials ==
-      //                     //               null
-      //                     //           ? const Center(
-      //                     //               child: CircularProgressIndicator(),
-      //                     //             )
-      //                     //           : ListView.builder(
-      //                     //               itemCount: completeMissionsController
-      //                     //                   .missionDetials!.examrooms!.length,
-      //                     //               itemBuilder: (context, index) {
-      //                     //                 return Padding(
-      //                     //                   padding: const EdgeInsets.all(8.0),
-      //                     //                   child: Row(
-      //                     //                     mainAxisAlignment:
-      //                     //                         MainAxisAlignment
-      //                     //                             .spaceBetween,
-      //                     //                     crossAxisAlignment:
-      //                     //                         CrossAxisAlignment.center,
-      //                     //                     children: [
-      //                     //                       Column(
-      //                     //                         crossAxisAlignment:
-      //                     //                             CrossAxisAlignment.start,
-      //                     //                         children: [
-      //                     //                           Text(
-      //                     //                               completeMissionsController
-      //                     //                                   .missionDetials!
-      //                     //                                   .examrooms![index]
-      //                     //                                   .name!),
-      //                     //                           Text(
-      //                     //                               completeMissionsController
-      //                     //                                   .missionDetials!
-      //                     //                                   .examrooms![index]
-      //                     //                                   .capacity!
-      //                     //                                   .toString())
-      //                     //                         ],
-      //                     //                       ),
-      //                     //                       // Row(
-      //                     //                       //   children: [
-      //                     //                       //     IconButton(
-      //                     //                       //         onPressed: () {},
-      //                     //                       //         icon: const Icon(
-      //                     //                       //           Icons.edit,
-      //                     //                       //           size: 30,
-      //                     //                       //           color: Colors.green,
-      //                     //                       //         )),
-      //                     //                       //     IconButton(
-      //                     //                       //         onPressed: () {},
-      //                     //                       //         icon: const Icon(
-      //                     //                       //           Icons.delete,
-      //                     //                       //           size: 30,
-      //                     //                       //           color: Colors.red,
-      //                     //                       //         ))
-      //                     //                       //   ],
-      //                     //                       // )
-      //                     //                     ],
-      //                     //                   ),
-      //                     //                 );
-      //                     //               },
-      //                     //             ),
-      //                     // ),
-      //                   )
-      //                 ],
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //         const SizedBox(
-      //           height: 20,
-      //         ),
-      //         Expanded(
-      //           child: Column(
-      //             crossAxisAlignment: CrossAxisAlignment.start,
-      //             children: [
-      //               Text(
-      //                 "Joined Students",
-      //                 style: nunitoBold.copyWith(
-      //                     color: Colors.black, fontSize: 30),
-      //               ),
-      //               const SizedBox(
-      //                 height: 20,
-      //               ),
-      //               // Expanded(
-      //               //     // child: GetBuilder<CompleteMissionsController>(
-      //               //     //   builder: (completeMissionsController) =>
-      //               //     //       completeMissionsController.missionDetials == null
-      //               //     //           ? const Center(
-      //               //     //               child: CircularProgressIndicator(),
-      //               //     //             )
-      //               //     //           : PlutoGrid(
-      //               //     //               configuration: PlutoGridConfiguration(
-      //               //     //                 style: PlutoGridStyleConfig(
-      //               //     //                     gridBorderRadius:
-      //               //     //                         BorderRadius.circular(10)),
-      //               //     //                 columnSize:
-      //               //     //                     const PlutoGridColumnSizeConfig(
-      //               //     //                         autoSizeMode:
-      //               //     //                             PlutoAutoSizeMode.equal),
-      //               //     //                 columnFilter:
-      //               //     //                     const PlutoGridColumnFilterConfig(
-      //               //     //                   filters: FilterHelper.defaultFilters,
-      //               //     //                 ),
-      //               //     //                 scrollbar: const PlutoGridScrollbarConfig(
-      //               //     //                   isAlwaysShown: false,
-      //               //     //                   scrollbarThickness: 8,
-      //               //     //                   scrollbarThicknessWhileDragging: 10,
-      //               //     //                 ),
-      //               //     //               ),
-      //               //     //               columns: columns,
-      //               //     //               rows: [
-      //               //     //                 for (var grade
-      //               //     //                     in completeMissionsController
-      //               //     //                         .missionDetials!.grades!)
-      //               //     //                   ...List.generate(
-      //               //     //                     grade.studentseatnumbers!.length,
-      //               //     //                     (i) {
-      //               //     //                       final obj =
-      //               //     //                           grade.studentseatnumbers![i];
-
-      //               //     //                       CohortResponse? cohortresponse;
-      //               //     //                       try {
-      //               //     //                         cohortresponse =
-      //               //     //                             StudentServices.getCohort(
-      //               //     //                                 id: obj
-      //               //     //                                     .students?.cohertId);
-      //               //     //                       } catch (e) {
-      //               //     //                       }
-
-      //               //     //                       String cohortName =
-      //               //     //                           cohortresponse != null
-      //               //     //                               ? cohortresponse.name
-      //               //     //                               : "no cohort";
-      //               //     //                       return PlutoRow(
-      //               //     //                         cells: {
-      //               //     //                           'blb_id': PlutoCell(
-      //               //     //                               value: obj.students?.blbId
-      //               //     //                                   .toString()),
-      //               //     //                           'name_field': PlutoCell(
-      //               //     //                               value:
-      //               //     //                                   '${obj.students?.firstName} ${obj.students?.middleName}'),
-      //               //     //                           'seat_number': PlutoCell(
-      //               //     //                               value: obj.seatNumbers
-      //               //     //                                   .toString()),
-      //               //     //                           'grade_field': PlutoCell(
-      //               //     //                               value: StudentServices
-      //               //     //                                       .getGrade(
-      //               //     //                                           id: obj
-      //               //     //                                               .gradesId)
-      //               //     //                                   .name),
-      //               //     //                           'Class': PlutoCell(
-      //               //     //                               value: StudentServices
-      //               //     //                                       .getClass(
-      //               //     //                                           id: obj.students
-      //               //     //                                               ?.classId)
-      //               //     //                                   ?.name),
-      //               //     //                           'cohort_field': PlutoCell(
-      //               //     //                               value: cohortName),
-      //               //     //                           'actions_field': PlutoCell(
-      //               //     //                               value: '2020-08-08'),
-      //               //     //                         },
-      //               //     //                       );
-      //               //     //                     },
-      //               //     //                   )
-      //               //     //               ],
-      //               //     //               createHeader: (stateManager) =>
-      //               //     //                   _Header(stateManager: stateManager),
-      //               //     //               onChanged: (PlutoGridOnChangedEvent event) {
-      //               //     //                 if (kDebugMode) {
-      //               //     //                 }
-      //               //     //               },
-      //               //     //               onLoaded: (PlutoGridOnLoadedEvent event) {
-      //               //     //                 if (kDebugMode) {
-      //               //     //                 }
-      //               //     //                 event.stateManager.setSelectingMode(
-      //               //     //                     PlutoGridSelectingMode.cell);
-
-      //               //     //                 stateManager = event.stateManager;
-      //               //     //                 event.stateManager.setSelectingMode(
-      //               //     //                     PlutoGridSelectingMode.cell);
-      //               //     //               },
-      //               //     //             ),
-      //               //     // ),
-      //               //     ),
-      //             ],
-      //           ),
-      //         ),
-      //         const SizedBox(
-      //           height: 20,
-      //         ),
-      //       ],
-      //     );
-      //   },
-      // ),
-    );
-  }
-}
-
-class _Header extends StatefulWidget {
-  const _Header();
-
-  // final PlutoGridStateManager stateManager;
-
-  @override
-  State<_Header> createState() => _HeaderState();
-}
-
-class _HeaderState extends State<_Header> {
-  // void printToPdfAndShareOrSave() async {
-  //   final themeData = pluto_grid_export.ThemeData.withFont(
-  //     base: pluto_grid_export.Font.ttf(
-  //       await rootBundle.load('assets/fonts/open-sans.ttf'),
-  //     ),
-  //     bold: pluto_grid_export.Font.ttf(
-  //       await rootBundle.load('assets/fonts/open-sans.ttf'),
-  //     ),
-  //   );
-
-  //   var plutoGridPdfExport = pluto_grid_export.PlutoGridDefaultPdfExport(
-  //     title: "All Student patch",
-  //     creator: "Student Degree",
-  //     format: pluto_grid_export.PdfPageFormat.a4.landscape,
-  //     themeData: themeData,
-  //   );
-
-  //   await pluto_grid_export.Printing.sharePdf(
-  //       bytes: await plutoGridPdfExport.export(widget.stateManager),
-  //       filename: plutoGridPdfExport.getFilename());
-  // }
-
-  // void defaultExportGridAsCSV() async {
-  //   String title = "All Student patch";
-  //   var exported = const Utf8Encoder().convert(
-  //       pluto_grid_export.PlutoGridExport.exportCSV(widget.stateManager));
-  //   await GenerateExamCoverSheetPDF.saveAndLaunchFile(exported, "$title.csv");
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: InkWell(
-              // onTap: printToPdfAndShareOrSave,
-              child: Container(
-                height: 55,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorManager.red),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      "Export to PDF",
-                      style: nunitoRegular.copyWith(
-                        color: ColorManager.white,
+      child: GetBuilder<DetailsAndReviewMissionController>(builder: (_) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Batch Name : ${controller.controlMissionName}",
+              style: nunitoBoldStyle().copyWith(fontSize: 25),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Subjects",
+                        style: nunitoBoldStyle().copyWith(fontSize: 25),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 20,
+                                offset: const Offset(2, 15),
+                              ),
+                            ],
+                            color: ColorManager.ligthBlue,
+                            borderRadius: BorderRadius.circular(10)),
+                        height: 200,
+                        child: GetBuilder<DetailsAndReviewMissionController>(
+                            builder: (_) {
+                          if (controller.isLodingGetExamRooms) {
+                            return Center(
+                              child: LoadingIndicators.getLoadingIndicator(),
+                            );
+                          } else if (controller.listExamRoom.isEmpty) {
+                            return Center(
+                                child: Text(
+                              "No items available",
+                              style: nunitoRegular.copyWith(
+                                fontSize: 20,
+                              ),
+                            ));
+                          } else {
+                            return ListView.builder(
+                              itemCount: controller.listSubject.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Subject : ${controller.listSubject[index].name}",
+                                            style: nunitoRegular.copyWith(
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        }),
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: InkWell(
-              // onTap: defaultExportGridAsCSV,
-              child: Container(
-                height: 55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.green,
+                const SizedBox(
+                  width: 20,
                 ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      "Export to Excel",
-                      style: nunitoRegular.copyWith(
-                        color: ColorManager.white,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Classrooms",
+                        style: nunitoBoldStyle().copyWith(fontSize: 25),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 20,
+                                offset: const Offset(2, 15),
+                              ),
+                            ],
+                            color: ColorManager.ligthBlue,
+                            borderRadius: BorderRadius.circular(10)),
+                        height: 200,
+                        child: GetBuilder<DetailsAndReviewMissionController>(
+                          builder: (_) => controller.isLodingGetExamRooms
+                              ? Center(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                )
+                              : controller.listExamRoom.isEmpty
+                                  ? Center(
+                                      child: Text("No items available",
+                                          style: nunitoRegular.copyWith(
+                                            fontSize: 20,
+                                          )))
+                                  : ListView.builder(
+                                      itemCount: controller.listExamRoom.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Class Room : ${controller.listExamRoom[index].name!}",
+                                                    style: nunitoBlackStyle()
+                                                        .copyWith(
+                                                      fontSize: 20,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
+              ],
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Joined Students",
+                    style: nunitoBoldStyle().copyWith(fontSize: 25),
+                  ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
+                  Visibility(
+                    visible: Get.find<ProfileController>().canAccessWidget(
+                      widgetId: '2302',
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              controller.studentsSeatNumbers.isEmpty
+                                  ? MyAwesomeDialogue(
+                                      title: 'Error',
+                                      desc: "No students found",
+                                      dialogType: DialogType.error,
+                                    ).showDialogue(Get.key.currentContext!)
+                                  : controller.exportToPdf(context,
+                                      controller.studentsSeatNumbersRows);
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: ColorManager.red),
+                              child: const Center(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        "Export to PDF",
+                                      ))),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              controller.studentsSeatNumbers.isEmpty
+                                  ? MyAwesomeDialogue(
+                                      title: 'Error',
+                                      desc: "No students found",
+                                      dialogType: DialogType.error,
+                                    ).showDialogue(Get.key.currentContext!)
+                                  : controller.exportToCsv(context,
+                                      controller.studentsSeatNumbersRows);
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.green),
+                              child: const Center(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        "Export to Excel",
+                                      ))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: GetBuilder<DetailsAndReviewMissionController>(
+                      builder: (_) => controller.isLodingGetStudentsSeatNumbers
+                          ? Center(
+                              child: LoadingIndicators.getLoadingIndicator(),
+                            )
+                          : controller.studentsSeatNumbers.isEmpty
+                              ? Center(
+                                  child: Text(
+                                    "No Student Found",
+                                    style: nunitoBlack.copyWith(
+                                      color: ColorManager.bgSideMenu,
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                )
+                              : PlutoGrid(
+                                  key: UniqueKey(),
+                                  createFooter: (stateManager) {
+                                    stateManager.setPageSize(50, notify: false);
+                                    return PlutoPagination(
+                                      stateManager,
+                                      pageSizeToMove: 1,
+                                    );
+                                  },
+                                  configuration: PlutoGridConfiguration(
+                                    style: PlutoGridStyleConfig(
+                                      enableGridBorderShadow: true,
+                                      iconColor: ColorManager.bgSideMenu,
+                                      gridBackgroundColor: ColorManager.bgColor,
+                                      menuBackgroundColor: ColorManager.bgColor,
+                                      rowColor: ColorManager.bgColor,
+                                      checkedColor: Colors.white,
+                                      gridBorderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                    columnSize: const PlutoGridColumnSizeConfig(
+                                      autoSizeMode: PlutoAutoSizeMode.scale,
+                                    ),
+                                    columnFilter:
+                                        const PlutoGridColumnFilterConfig(
+                                      filters: FilterHelper.defaultFilters,
+                                    ),
+                                    scrollbar: const PlutoGridScrollbarConfig(
+                                      isAlwaysShown: false,
+                                      scrollbarThickness: 8,
+                                      scrollbarThicknessWhileDragging: 10,
+                                    ),
+                                  ),
+                                  columns: [
+                                    PlutoColumn(
+                                      readOnly: true,
+                                      enableEditingMode: false,
+                                      title: 'Blb Id',
+                                      field: 'BlbIdField',
+                                      type: PlutoColumnType.text(),
+                                    ),
+                                    PlutoColumn(
+                                      enableEditingMode: false,
+                                      title: 'Name',
+                                      field: 'StudentNameField',
+                                      type: PlutoColumnType.text(),
+                                    ),
+                                    PlutoColumn(
+                                      readOnly: true,
+                                      enableEditingMode: false,
+                                      title: 'Seat Number',
+                                      field: 'SeatNumberField',
+                                      type: PlutoColumnType.text(),
+                                    ),
+                                    PlutoColumn(
+                                      readOnly: true,
+                                      enableEditingMode: false,
+                                      title: 'Grade',
+                                      field: 'GradeField',
+                                      type: PlutoColumnType.text(),
+                                    ),
+                                    PlutoColumn(
+                                      readOnly: true,
+                                      enableEditingMode: false,
+                                      title: 'Class Room',
+                                      field: 'ClassRoomField',
+                                      cellPadding: EdgeInsets.zero,
+                                      type: PlutoColumnType.text(),
+                                    ),
+                                    PlutoColumn(
+                                      readOnly: true,
+                                      enableEditingMode: false,
+                                      title: 'Cohort',
+                                      field: 'CohortField',
+                                      type: PlutoColumnType.text(),
+                                      cellPadding: EdgeInsets.zero,
+                                    ),
+                                    PlutoColumn(
+                                      enableEditingMode: false,
+                                      title: 'Actions',
+                                      field: 'ActionsField',
+                                      type: PlutoColumnType.text(),
+                                      renderer: (rendererContext) {
+                                        final isActive = rendererContext.row
+                                                .cells['ActionsField']!.value ==
+                                            '1';
+
+                                        return Row(
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                if (isActive) {
+                                                  MyAwesomeDialogue(
+                                                    title: 'Deactivate Student',
+                                                    desc:
+                                                        'Are you sure you want to deactivate this student?',
+                                                    dialogType:
+                                                        DialogType.warning,
+                                                    btnOkOnPressed: () {
+                                                      controller
+                                                          .deactiveStudentInControlMission(
+                                                              idSeat: rendererContext
+                                                                  .row
+                                                                  .cells[
+                                                                      'IdField']!
+                                                                  .value)
+                                                          .then((value) {
+                                                        if (value) {
+                                                          MyFlashBar
+                                                              .showSuccess(
+                                                            "Student deactivated successfully",
+                                                            "Success",
+                                                          ).show(Get.key
+                                                              .currentContext!);
+                                                        }
+                                                      });
+                                                    },
+                                                    btnCancelOnPressed: () {
+                                                      Get.back();
+                                                    },
+                                                  ).showDialogue(context);
+                                                } else {
+                                                    MyAwesomeDialogue(
+                                                    title: 'Activate Student',
+                                                    desc:
+                                                        'Are you sure you want to activate this student?',
+                                                    dialogType:
+                                                        DialogType.warning,
+                                                    btnOkOnPressed: () {
+                                                      controller
+                                                          .activeStudentInControlMission(
+                                                              idSeat: rendererContext
+                                                                  .row
+                                                                  .cells[
+                                                                      'IdField']!
+                                                                  .value)
+                                                          .then((value) {
+                                                        if (value) {
+                                                          MyFlashBar
+                                                              .showSuccess(
+                                                            "Student activated successfully",
+                                                            "Success",
+                                                          ).show(Get.key
+                                                              .currentContext!);
+                                                        }
+                                                      });
+                                                    },
+                                                    btnCancelOnPressed: () {
+                                                      Get.back();
+                                                    },
+                                                  ).showDialogue(context);
+                                                }
+                                              },
+                                              icon: Icon(
+                                                  isActive
+                                                      ? Icons.check_circle
+                                                      : Icons.cancel,
+                                                  color: isActive
+                                                      ? ColorManager.green
+                                                      : ColorManager.red),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                  rows: controller.studentsSeatNumbersRows,
+                                  onChanged: (PlutoGridOnChangedEvent event) {},
+                                  onLoaded: (PlutoGridOnLoadedEvent event) {},
+                                ),
+                    ),
+                  )
+                ],
               ),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        );
+      }),
     );
   }
 }

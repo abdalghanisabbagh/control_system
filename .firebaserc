@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "default": "nis-control-4cd9d"
+  },
+  "targets": {
+    "nis-control-4cd9d": {
+      "hosting": {
+        "control_system_2025": [
+          "control-system-2025"
+        ]
+      }
+    }
+  },
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}

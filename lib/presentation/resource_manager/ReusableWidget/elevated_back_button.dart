@@ -1,13 +1,11 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../color_manager.dart';
-import '../styles_manager.dart';
-
 class ElevatedBackButton extends StatelessWidget {
-  const ElevatedBackButton({super.key, this.onPressed});
-
   final VoidCallback? onPressed;
+
+  const ElevatedBackButton({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +16,8 @@ class ElevatedBackButton extends StatelessWidget {
       },
       child: Container(
         height: 50,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
             Radius.circular(11),
           ),
           color: ColorManager.bgSideMenu,

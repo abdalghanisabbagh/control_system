@@ -1,14 +1,14 @@
 import 'subject_res_model.dart';
 
 class SubjectsResModel {
+  List<SubjectResModel>? data;
+
   SubjectsResModel({this.data});
 
   SubjectsResModel.fromJson(json) {
     data = List<SubjectResModel>.from(
         json.map((e) => SubjectResModel.fromJson(e)).toList());
   }
-
-  List<SubjectResModel>? data;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

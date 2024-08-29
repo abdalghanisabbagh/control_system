@@ -1,37 +1,46 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../index.dart';
-
 class MytextFormFiled extends StatelessWidget {
-  const MytextFormFiled(
-      {super.key,
-      this.title,
-      required this.controller,
-      this.maxlines = 1,
-      this.isEnable,
-      this.myValidation,
-      this.isNumber,
-      this.textInputs,
-      this.onChange,
-      this.suffixIcon,
-      this.obscureText = false,
-      this.enableBorderColor = ColorManager.grey,
-      this.foucsBorderColor = ColorManager.primary});
-
   final String? Function(String? newValue)? myValidation;
-  final String? Function(String? value)? onChange;
-  final TextEditingController controller;
+
+  final String? Function(String? value)? onChanged;
+  final Function(String? value)? onFieldSubmitted;
+  final TextEditingController? controller;
   final Color? enableBorderColor;
+  final FocusNode? focusNode;
   final Color? foucsBorderColor;
   final bool? isEnable;
   final bool? isNumber;
+  final int? maxLength;
   final int maxlines;
   final bool obscureText;
   final Widget? suffixIcon;
   final List<TextInputFormatter>? textInputs;
   final String? title;
+  final List<String>? autofillHints;
+
+  const MytextFormFiled({
+    super.key,
+    this.title,
+    this.controller,
+    this.maxlines = 1,
+    this.maxLength,
+    this.isEnable,
+    this.myValidation,
+    this.isNumber,
+    this.textInputs,
+    this.onChanged,
+    this.suffixIcon,
+    this.obscureText = false,
+    this.enableBorderColor = ColorManager.grey,
+    this.foucsBorderColor = ColorManager.primary,
+    this.onFieldSubmitted,
+    this.focusNode,
+    this.autofillHints,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +74,16 @@ class MytextFormFiled extends StatelessWidget {
           color: ColorManager.grey,
         ),
       ),
+      autofillHints: autofillHints,
       controller: controller,
       maxLines: maxlines,
+      maxLength: maxLength,
       enabled: isEnable,
       validator: myValidation,
-      onChanged: onChange,
+      onChanged: onChanged,
+      onFieldSubmitted: onFieldSubmitted,
       obscureText: obscureText,
+      focusNode: focusNode,
     ).paddingOnly(
       top: AppPading.p25,
     );

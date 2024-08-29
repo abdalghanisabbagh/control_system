@@ -1,36 +1,48 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/token/token_model.dart';
 
-class TokenService extends GetxController {
+class TokenService extends FullLifeCycleController with FullLifeCycleMixin {
   TokenModel? _tokenModel;
 
   TokenModel? get tokenModel => _tokenModel ?? getTokenModelFromHiveBox();
 
-  Future<void> saveNewAccessToken(String newAccessToken) async {
-    _tokenModel = tokenModel;
-    await Hive.box('Token').put('aToken', newAccessToken);
-    await Hive.box('Token').put('dToken', DateTime.now().toIso8601String());
-    await Hive.box('Token').flush();
-  }
-
-  void saveTokenModelToHiveBox(TokenModel tokenModel) {
-    Hive.box('Token').putAll(tokenModel.toJson());
+  Future<void> deleteTokenModelFromHiveBox() async {
+    _tokenModel = null;
+    await Hive.box('Token').clear();
   }
 
   TokenModel? getTokenModelFromHiveBox() {
-    _tokenModel = Hive.box('Token').containsKey('aToken')
-        ? TokenModel(
-            aToken: Hive.box('Token').get('aToken'),
-            rToken: Hive.box('Token').get('rToken'),
-            dToken: Hive.box('Token').get('dToken'),
-          )
+    _tokenModel = Hive.box('Token').containsKey('Token')
+        ? TokenModel.fromJson(jsonDecode(Hive.box('Token').get('Token')))
         : null;
     return _tokenModel;
   }
 
-  Future<void> deleteTokenModelFromHiveBox() async {
-    await Hive.box('Token').clear();
+  @override
+  void onDetached() {}
+
+  @override
+  void onHidden() {}
+
+  @override
+  void onInactive() {}
+
+  @override
+  void onPaused() {}
+
+  @override
+  void onResumed() {}
+
+  Future<void> saveNewAccessToken(TokenModel tokenModel) async {
+    _tokenModel = tokenModel;
+    Hive.box('Token').put('Token', jsonEncode(tokenModel.toJson()));
+  }
+
+  void saveTokenModelToHiveBox(TokenModel tokenModel) {
+    Hive.box('Token').put('Token', jsonEncode(tokenModel.toJson()));
   }
 }

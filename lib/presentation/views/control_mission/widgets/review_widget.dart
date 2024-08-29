@@ -1,19 +1,25 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../resource_manager/index.dart';
+import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
+import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 
-class ReviewWidget extends StatelessWidget {
+// ignore: must_be_immutable
+class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
+  FocusNode searchFoucs = FocusNode();
+
   ReviewWidget({super.key});
-
-  final FocusNode searchFoucs = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: ColorManager.bgColor,
       margin: const EdgeInsets.all(10),
-      child: const Column(
+      child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           // Row(
@@ -24,9 +30,9 @@ class ReviewWidget extends StatelessWidget {
           //         builder: (completeMissionsController) => Container(
           //           height: 55,
           //           decoration: BoxDecoration(
-          //             color: ColorManager.bgColor,
+          //             color: AppColor.bgColor,
           //             borderRadius: const BorderRadius.all(Radius.circular(15)),
-          //             border: Border.all(color: ColorManager.bgSideMenu, width: 2),
+          //             border: Border.all(color: AppColor.bgSideMenu, width: 2),
           //           ),
           //           child: DropdownButton<GradeResponse>(
           //             value: completeMissionsController.gradeSelect[0],
@@ -36,8 +42,8 @@ class ReviewWidget extends StatelessWidget {
           //             hint: Padding(
           //               padding: const EdgeInsets.symmetric(horizontal: 20),
           //               child: Text('Select grade',
-          //                   style: nunitoBold.copyWith(
-          //                     color: ColorManager.bgSideMenu,
+          //                   style: AppTextStyle.nunitoBold.copyWith(
+          //                     color: AppColor.bgSideMenu,
           //                     fontSize: 14,
           //                   )),
           //             ),
@@ -46,11 +52,11 @@ class ReviewWidget extends StatelessWidget {
           //               decoration: BoxDecoration(
           //                 border: Border(
           //                   left: BorderSide(
-          //                       color: ColorManager.bgSideMenu, width: 2),
+          //                       color: AppColor.bgSideMenu, width: 2),
           //                 ),
           //               ),
           //               child: Icon(Icons.keyboard_arrow_down_rounded,
-          //                   color: ColorManager.bgSideMenu),
+          //                   color: AppColor.bgSideMenu),
           //             ),
           //             items: completeMissionsController.missionDetials!.grades!
           //                 .map<DropdownMenuItem<GradeResponse>>(
@@ -64,8 +70,8 @@ class ReviewWidget extends StatelessWidget {
           //                     maxLines: 1,
           //                     overflow: TextOverflow.ellipsis,
           //                     softWrap: true,
-          //                     style: nunitoSemiBold
-          //                         .copyWith(fontSize: 12, color: ColorManager.red),
+          //                     style: AppTextStyle.nunitoSemiBold
+          //                         .copyWith(fontSize: 12, color: AppColor.red),
           //                   ),
           //                 ),
           //               );
@@ -87,9 +93,9 @@ class ReviewWidget extends StatelessWidget {
           //         builder: (completeMissionsController) => Container(
           //           height: 55,
           //           decoration: BoxDecoration(
-          //             color: ColorManager.bgColor,
+          //             color: AppColor.bgColor,
           //             borderRadius: const BorderRadius.all(Radius.circular(15)),
-          //             border: Border.all(color: ColorManager.bgSideMenu, width: 2),
+          //             border: Border.all(color: AppColor.bgSideMenu, width: 2),
           //           ),
           //           child: DropdownButton<SubjectResponse>(
           //             value: completeMissionsController.subjectSelect,
@@ -99,8 +105,8 @@ class ReviewWidget extends StatelessWidget {
           //             hint: Padding(
           //               padding: const EdgeInsets.symmetric(horizontal: 20),
           //               child: Text('Select Subject',
-          //                   style: nunitoBold.copyWith(
-          //                     color: ColorManager.bgSideMenu,
+          //                   style: AppTextStyle.nunitoBold.copyWith(
+          //                     color: AppColor.bgSideMenu,
           //                     fontSize: 14,
           //                   )),
           //             ),
@@ -109,11 +115,11 @@ class ReviewWidget extends StatelessWidget {
           //               decoration: BoxDecoration(
           //                 border: Border(
           //                   left: BorderSide(
-          //                       color: ColorManager.bgSideMenu, width: 2),
+          //                       color: AppColor.bgSideMenu, width: 2),
           //                 ),
           //               ),
           //               child: Icon(Icons.keyboard_arrow_down_rounded,
-          //                   color: ColorManager.bgSideMenu),
+          //                   color: AppColor.bgSideMenu),
           //             ),
           //             items: completeMissionsController.selectedSubjectExams
           //                 .map<DropdownMenuItem<SubjectResponse>>(
@@ -127,8 +133,8 @@ class ReviewWidget extends StatelessWidget {
           //                     maxLines: 1,
           //                     overflow: TextOverflow.ellipsis,
           //                     softWrap: true,
-          //                     style: nunitoSemiBold
-          //                         .copyWith(fontSize: 12, color: ColorManager.red),
+          //                     style: AppTextStyle.nunitoSemiBold
+          //                         .copyWith(fontSize: 12, color: AppColor.red),
           //                   ),
           //                 ),
           //               );
@@ -142,96 +148,170 @@ class ReviewWidget extends StatelessWidget {
           //     ),
           //   ],
           // ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          // Expanded(
-          //     child: GetBuilder<CompleteMissionsController>(
-          //       builder: (completeMissionsController) =>
-          //           completeMissionsController.rows.isEmpty
-          //               ? const Center(
-          //                   child: CircularProgressIndicator(),
-          //                 )
-          //               : PlutoGrid(
-          //                   configuration: PlutoGridConfiguration(
-          //                     enterKeyAction:
-          //                         PlutoGridEnterKeyAction.toggleEditing,
-          //                     style: PlutoGridStyleConfig(
-          //                         gridBorderRadius: BorderRadius.circular(10)),
-          //                     columnSize: const PlutoGridColumnSizeConfig(
-          //                         autoSizeMode: PlutoAutoSizeMode.equal),
-          //                     columnFilter: const PlutoGridColumnFilterConfig(
-          //                       filters: FilterHelper.defaultFilters,
-          //                     ),
-          //                     scrollbar: const PlutoGridScrollbarConfig(
-          //                       isAlwaysShown: false,
-          //                       scrollbarThickness: 8,
-          //                       scrollbarThicknessWhileDragging: 10,
-          //                     ),
-          //                   ),
-          //                   columns: [
-          //                     PlutoColumn(
-          //                       readOnly: true,
-          //                       enableEditingMode: false,
-          //                       title: 'Name',
-          //                       field: 'name_field',
-          //                       type: PlutoColumnType.text(),
-          //                     ),
-          //                     PlutoColumn(
-          //                       readOnly: true,
-          //                       enableEditingMode: false,
-          //                       title: 'Grade',
-          //                       field: 'grade_field',
-          //                       type: PlutoColumnType.text(),
-          //                     ),
-          //                     PlutoColumn(
-          //                       readOnly: true,
-          //                       enableEditingMode: false,
-          //                       title: 'Class',
-          //                       field: 'Class',
-          //                       type: PlutoColumnType.text(),
-          //                     ),
-          //                     ...List.generate(
-          //                       completeMissionsController
-          //                           .selectedSubjectExams.length,
-          //                       (index) {
-          //                         final subject = completeMissionsController
-          //                             .selectedSubjectExams[index];
-          //                         return PlutoColumn(
-          //                           readOnly: true,
-          //                           enableEditingMode: false,
-          //                           title: subject.name,
-          //                           field: "${subject.name}_${subject.id}",
-          //                           type: PlutoColumnType.text(),
-          //                         );
-          //                       },
-          //                     )
-          //                   ],
-          //                   rows: completeMissionsController.rows,
-          //                   onChanged: (PlutoGridOnChangedEvent event) {
-          //                     if (kDebugMode) {
-          //                     }
-
-          //                     completeMissionsController.stateManager!
-          //                         .notifyListeners();
-          //                   },
-          //                   createHeader: (stateManager) =>
-          //                       _Header(stateManager: stateManager),
-          //                   onLoaded: (PlutoGridOnLoadedEvent event) {
-          //                     completeMissionsController.getRows();
-          //                     if (kDebugMode) {
-          //                     }
-          //                     event.stateManager
-          //                         .setSelectingMode(PlutoGridSelectingMode.cell);
-
-          //                     completeMissionsController.stateManager =
-          //                         event.stateManager;
-          //                     event.stateManager
-          //                         .setSelectingMode(PlutoGridSelectingMode.cell);
-          //                   },
-          //                 ),
-          //     ),
-          //     ),
+          Expanded(
+            child: GetBuilder<DetailsAndReviewMissionController>(
+              builder: (completeMissionsController) =>
+                  completeMissionsController.isLoadingGetStudentsGrades
+                      ? Center(
+                          child: LoadingIndicators.getLoadingIndicator(),
+                        )
+                      : PlutoGrid(
+                          configuration: PlutoGridConfiguration(
+                            enterKeyAction:
+                                PlutoGridEnterKeyAction.toggleEditing,
+                            style: PlutoGridStyleConfig(
+                              gridBorderRadius: BorderRadius.circular(10),
+                            ),
+                            columnSize: const PlutoGridColumnSizeConfig(
+                              autoSizeMode: PlutoAutoSizeMode.equal,
+                            ),
+                            columnFilter: const PlutoGridColumnFilterConfig(
+                              filters: FilterHelper.defaultFilters,
+                            ),
+                            scrollbar: const PlutoGridScrollbarConfig(
+                              isAlwaysShown: false,
+                              scrollbarThickness: 8,
+                              scrollbarThicknessWhileDragging: 10,
+                            ),
+                          ),
+                          columns: [
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: 'Name',
+                              field: 'name_field',
+                              type: PlutoColumnType.text(),
+                            ),
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: 'Grade',
+                              field: 'grade_field',
+                              type: PlutoColumnType.text(),
+                            ),
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: 'Class',
+                              field: 'class_field',
+                              type: PlutoColumnType.text(),
+                            ),
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: 'Exam Room',
+                              field: 'exam_room_field',
+                              type: PlutoColumnType.text(),
+                            ),
+                            ...List.generate(
+                              completeMissionsController
+                                  .studentGradesResModel!.studentSeatNumnbers!
+                                  .map(
+                                    (element) => element
+                                        .student!.cohort!.cohortHasSubjects!
+                                        .map(
+                                      (element) => (
+                                        element.subjects!.name,
+                                        element.subjects!.iD
+                                      ),
+                                    ),
+                                  )
+                                  .expand((element) => element)
+                                  .toSet()
+                                  .toList()
+                                  .length,
+                              (index) {
+                                final subject = completeMissionsController
+                                    .studentGradesResModel!.studentSeatNumnbers!
+                                    .map(
+                                      (element) => element
+                                          .student!.cohort!.cohortHasSubjects!
+                                          .map(
+                                        (element) => (
+                                          name: element.subjects!.name,
+                                          id: element.subjects!.iD
+                                        ),
+                                      ),
+                                    )
+                                    .expand((element) => element)
+                                    .toSet()
+                                    .toList()[index];
+                                return PlutoColumn(
+                                  readOnly: true,
+                                  enableEditingMode: false,
+                                  title: subject.name!,
+                                  field: "${subject.name}_${subject.id}",
+                                  type: PlutoColumnType.text(),
+                                  footerRenderer: index ==
+                                          completeMissionsController
+                                                  .studentGradesResModel!
+                                                  .studentSeatNumnbers!
+                                                  .map(
+                                                    (element) => element
+                                                        .student!
+                                                        .cohort!
+                                                        .cohortHasSubjects!
+                                                        .map(
+                                                      (element) => (
+                                                        element.subjects!.name,
+                                                        element.subjects!.iD
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .expand((element) => element)
+                                                  .toSet()
+                                                  .toList()
+                                                  .length -
+                                              1
+                                      ? (footerRenderer) {
+                                          return PlutoAggregateColumnFooter(
+                                            rendererContext: footerRenderer,
+                                            type:
+                                                PlutoAggregateColumnType.count,
+                                            format: 'count : #,###',
+                                            alignment: Alignment.center,
+                                          );
+                                        }
+                                      : null,
+                                );
+                              },
+                            ),
+                          ],
+                          rows: completeMissionsController.studentsGradesRows,
+                          onChanged: (PlutoGridOnChangedEvent event) {
+                            // completeMissionsController
+                            //     .studentsGradesPlutoGridStateManager!
+                            //     .notifyListeners();
+                          },
+                          createFooter: (stateManager) {
+                            stateManager.setPageSize(50, notify: false);
+                            return PlutoPagination(
+                              stateManager,
+                              pageSizeToMove: 1,
+                            );
+                          },
+                          createHeader: (stateManager) =>
+                              _Header(stateManager: stateManager),
+                          onLoaded: (PlutoGridOnLoadedEvent event) {
+                            event.stateManager
+                                .setSelectingMode(PlutoGridSelectingMode.cell);
+                            completeMissionsController
+                                    .studentsGradesPlutoGridStateManager =
+                                event.stateManager;
+                            event.stateManager
+                                .setSelectingMode(PlutoGridSelectingMode.cell);
+                            completeMissionsController
+                                    .studentsGradesPlutoGridStateManager =
+                                event.stateManager;
+                            completeMissionsController
+                                .convertStudentsGradesToPlutoGridRows();
+                          },
+                        ),
+            ),
+          ),
         ],
       ),
     );
@@ -239,11 +319,11 @@ class ReviewWidget extends StatelessWidget {
 }
 
 class _Header extends StatefulWidget {
-  const _Header();
+  final PlutoGridStateManager stateManager;
 
-  // required this.stateManager,
-
-  // final PlutoGridStateManager stateManager;
+  const _Header({
+    required this.stateManager,
+  });
 
   @override
   State<_Header> createState() => _HeaderState();
@@ -288,21 +368,21 @@ class _HeaderState extends State<_Header> {
         children: [
           Expanded(
             child: InkWell(
-              // onTap: printToPdfAndShareOrSave,
+              onTap: () => Get.find<DetailsAndReviewMissionController>()
+                  .exportStudentDegreesToPdf(context),
               child: Container(
                 height: 55,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: ColorManager.red,
-                ),
-                child: Center(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorManager.red),
+                child: const Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
                     child: Text(
                       "Export to PDF",
-                      style: nunitoRegular.copyWith(
-                        color: ColorManager.white,
-                      ),
+                      // style: AppTextStyle.nunitoRegular.copyWith(
+                      //   color: ColorManager.white,
+                      // ),
                     ),
                   ),
                 ),
@@ -314,21 +394,21 @@ class _HeaderState extends State<_Header> {
           ),
           Expanded(
             child: InkWell(
-              // onTap: defaultExportGridAsCSV,
+              onTap: () => Get.find<DetailsAndReviewMissionController>()
+                  .exportStudentDegreesToExcel(context),
               child: Container(
                 height: 55,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.green,
-                ),
-                child: Center(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.green),
+                child: const Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10),
                     child: Text(
                       "Export to Excel",
-                      style: nunitoRegular.copyWith(
-                        color: ColorManager.white,
-                      ),
+                      // style: AppTextStyle.nunitoRegular.copyWith(
+                      //   color: AppColor.white,
+                      // ),
                     ),
                   ),
                 ),

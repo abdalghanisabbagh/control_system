@@ -1,18 +1,17 @@
+import 'package:custom_theme/lib.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/services/side_menue_get_controller.dart';
-import '../../resource_manager/assets_manager.dart';
-import '../../resource_manager/index.dart';
 
 class SideMenueWidget extends GetView<SideMenueGetController> {
+  final bool isMobile;
+
   const SideMenueWidget({
     super.key,
     required this.isMobile,
   });
-
-  final bool isMobile;
 
   @override
   Widget build(BuildContext context) {

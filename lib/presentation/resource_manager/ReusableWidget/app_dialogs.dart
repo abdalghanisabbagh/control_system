@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AppDialogs extends StatelessWidget {
+  final Widget content;
+
+  final double? curve;
   const AppDialogs({
     super.key,
     required this.curve,
     required this.content,
   });
-
-  final Widget content;
-  final double? curve;
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,7 @@
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../../../resource_manager/index.dart';
 
 class CalendarWidget extends StatefulWidget {
   const CalendarWidget({super.key});
@@ -108,8 +107,8 @@ class CalendarWidgetState extends State<CalendarWidget> {
               _focusedDay = day;
               setState(() {});
             },
-            calendarStyle: CalendarStyle(
-              defaultTextStyle: const TextStyle(
+            calendarStyle: const CalendarStyle(
+              defaultTextStyle: TextStyle(
                 color: ColorManager.black,
                 fontWeight: FontWeight.bold,
               ),

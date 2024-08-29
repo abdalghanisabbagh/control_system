@@ -1,10 +1,19 @@
+import 'package:control_system/presentation/views/profile_widget.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/bindings/bindings.dart';
-import '../../../domain/controllers/index.dart';
+import '../../../domain/controllers/controllers.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
+import '../../views/admin_screen/widgets/all_user_widget.dart';
+import '../../views/admin_screen/widgets/user_in_school_widget.dart';
+import '../../views/control_mission/distribution_and_details/add_new_students_to_control_mission.dart';
+import '../../views/control_mission/distribution_and_details/details_and_review_mission.dart';
+import '../../views/control_mission/distribution_and_details/distribution.dart';
+import '../../views/control_mission/widgets/create_mission_widget.dart';
+import '../../views/control_mission/widgets/distribute_students.dart';
 import '../../views/index.dart';
+import '../../views/subject_setting/widgets/operation_widget.dart';
 import 'app_routes_names_and_paths.dart';
 
 class AppGoRouter {
@@ -13,19 +22,6 @@ class AppGoRouter {
     debugLogDiagnostics: true,
     initialLocation: AppRoutesNamesAndPaths.loginScreenPath,
     routes: [
-      GoRoute(
-        path: AppRoutesNamesAndPaths.homeScreenPath,
-        name: AppRoutesNamesAndPaths.homeScreenName,
-        builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
-          HomeBindings().dependencies();
-          return const HomeScreen();
-        },
-        onExit: (context, state) {
-          Get.delete<HomeController>();
-          return true;
-        },
-      ),
       GoRoute(
         path: AppRoutesNamesAndPaths.loginScreenPath,
         name: AppRoutesNamesAndPaths.loginScreenName,
@@ -103,12 +99,67 @@ class AppGoRouter {
         },
       ),
       GoRoute(
-        path: AppRoutesNamesAndPaths.controlMissionScreenPath,
-        name: AppRoutesNamesAndPaths.controlMissionScreenName,
+        path: AppRoutesNamesAndPaths.controlBatchScreenPath,
+        name: AppRoutesNamesAndPaths.controlBatchScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          ControlMissingBindings().dependencies();
           return const ControlMissionScreen();
         },
+        routes: [
+          GoRoute(
+            path: AppRoutesNamesAndPaths.addNewStudentsToControlMissionPath,
+            name: AppRoutesNamesAndPaths.addNewStudentsToControlMissionName,
+            builder: (context, state) {
+              AddNewStudentsToControlMissionBindings().dependencies();
+              return const AddStudentsToControlMissionScreen();
+            },
+            onExit: (context, state) async {
+              await Get.delete<AddNewStudentsToControlMissionController>();
+              return true;
+            },
+          ),
+          GoRoute(
+            path: AppRoutesNamesAndPaths.reviewAndDetailsMissionPath,
+            name: AppRoutesNamesAndPaths.reviewAndDetailsMissionName,
+            builder: (context, state) {
+              return const DetailsAndReviewMission();
+            },
+          ),
+          GoRoute(
+            path: AppRoutesNamesAndPaths.distributioncreateMissionScreenPath,
+            name: AppRoutesNamesAndPaths.distributioncreateMissionScreenName,
+            builder: (context, state) {
+              return const DistributionScreen();
+            },
+            onExit: (context, state) async {
+              await Get.delete<DistributionController>();
+              return true;
+            },
+            routes: [
+              GoRoute(
+                path: AppRoutesNamesAndPaths.distributeStudentsScreenPath,
+                name: AppRoutesNamesAndPaths.distributeStudentsScreenName,
+                builder: (context, state) {
+                  return const DistributeStudents();
+                },
+                onExit: (context, state) async {
+                  await Get.delete<DistributeStudentsController>();
+                  Get.find<DistributionController>().onInit();
+                  return true;
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: AppRoutesNamesAndPaths.createMissionScreenPath,
+            name: AppRoutesNamesAndPaths.createMissionScreenName,
+            builder: (context, state) {
+              CreateControlMissionBindings().dependencies();
+              return CreateMissionScreen();
+            },
+          ),
+        ],
         onExit: (context, state) {
           return true;
         },
@@ -130,6 +181,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.proctorScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          ProctorBindings().dependencies();
           return const ProctorScreen();
         },
         onExit: (context, state) {
@@ -141,9 +193,11 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.setDegreesScreenName,
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
-          return const SetDegreesScreen();
+          BarcodeBindings().dependencies();
+          return SetDegreesScreen();
         },
         onExit: (context, state) {
+          Get.delete<BarcodeController>();
           return true;
         },
       ),
@@ -167,21 +221,55 @@ class AppGoRouter {
           SubjectSettingBindings().dependencies();
           return const SubjectSettingScreen();
         },
+        routes: [
+          GoRoute(
+            path: AppRoutesNamesAndPaths.oprerationsScreenPath,
+            name: AppRoutesNamesAndPaths.oprerationsScreenName,
+            builder: (context, state) {
+              SubjectSettingBindings().dependencies();
+              return const OperationWidget();
+            },
+          ),
+        ],
         onExit: (context, state) {
           return true;
         },
       ),
       GoRoute(
-        path: AppRoutesNamesAndPaths.adminScreenPath,
-        name: AppRoutesNamesAndPaths.adminScreenName,
-        builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
-          return const AdminScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
+          path: AppRoutesNamesAndPaths.adminScreenPath,
+          name: AppRoutesNamesAndPaths.adminScreenName,
+          builder: (context, state) {
+            AdminBindings().dependencies();
+            Get.find<SideMenueGetController>().onRouteChange(state.name!);
+            return const AdminScreen();
+          },
+          onExit: (context, state) {
+            return true;
+          },
+          routes: [
+            GoRoute(
+              path: AppRoutesNamesAndPaths.usersInSchoolScreenPath,
+              name: AppRoutesNamesAndPaths.usersInSchoolScreenName,
+              builder: (context, state) {
+                AdminBindings().dependencies();
+                return const UserInSchoolWidget();
+              },
+              onExit: (context, state) {
+                return true;
+              },
+            ),
+            GoRoute(
+              path: AppRoutesNamesAndPaths.allusersScreenPath,
+              name: AppRoutesNamesAndPaths.allUsersScreenName,
+              builder: (context, state) {
+                AdminBindings().dependencies();
+                return const AllUserWidget();
+              },
+              onExit: (context, state) {
+                return true;
+              },
+            ),
+          ]),
       GoRoute(
         path: AppRoutesNamesAndPaths.batchDocumentsScreenPath,
         name: AppRoutesNamesAndPaths.batchDocumentsScreenName,
@@ -198,6 +286,8 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.rolesScreenPath,
         name: AppRoutesNamesAndPaths.rolesScreenName,
         builder: (context, state) {
+          RolesBinidings().dependencies();
+
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return const RolesScreen();
         },
@@ -206,30 +296,11 @@ class AppGoRouter {
         },
       ),
       GoRoute(
-        path: AppRoutesNamesAndPaths.renderSeatScreenPath,
-        name: AppRoutesNamesAndPaths.renderSeatScreenName,
+        path: AppRoutesNamesAndPaths.profileScreenPath,
+        name: AppRoutesNamesAndPaths.profileScreenName,
         builder: (context, state) {
-          return const RenderSeatsExam();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
-      GoRoute(
-        path: AppRoutesNamesAndPaths.examRoomScreenPath,
-        name: AppRoutesNamesAndPaths.examRoomScreenName,
-        builder: (context, state) {
-          return const ExamRoomScreen();
-        },
-        onExit: (context, state) {
-          return true;
-        },
-      ),
-      GoRoute(
-        path: AppRoutesNamesAndPaths.distributionScreenPath,
-        name: AppRoutesNamesAndPaths.distributionScreenName,
-        builder: (context, state) {
-          return const DistributionScreen();
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          return ProfileWidget();
         },
         onExit: (context, state) {
           return true;
@@ -238,13 +309,3 @@ class AppGoRouter {
     ],
   );
 }
-
-// final pagess = [
-//   GetPage(
-//     name: 'test',
-//     page: () => HomeScreen(),
-//     bindings: [],
-//     title: 'test',
-//     children: []
-//   ),
-// ];

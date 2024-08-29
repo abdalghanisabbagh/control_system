@@ -1,27 +1,27 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../../Data/Models/cohort/cohort_res_model.dart';
 import '../../../domain/controllers/cohorts_settings_controller.dart';
-import '../../../domain/controllers/subject_controller.dart';
+import '../../../domain/controllers/subject/subject_controller.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../resource_manager/ReusableWidget/show_dialgue.dart';
-import '../../resource_manager/color_manager.dart';
-import '../../resource_manager/styles_manager.dart';
 
 class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
-  const AddSubjectsToCohort({super.key, required this.item});
-
   final CohortResModel item;
+
+  const AddSubjectsToCohort({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 510,
-      width: 300,
+      width: 500,
       child: GetBuilder<SubjectsController>(
         init: SubjectsController(),
         builder: (subjectController) {
@@ -30,8 +30,8 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
               .map((e) => e.subjects!.iD)
               .contains(e.iD));
           return subjectController.getAllLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
+              ? Center(
+                  child: LoadingIndicators.getLoadingIndicator(),
                 )
               : Column(
                   mainAxisSize: MainAxisSize.min,
@@ -48,6 +48,7 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                           .toList(),
                       onOptionSelected: controller.onOptionSelected,
                       multiSelect: true,
+                      showChipSelect: true,
                     ),
                     const SizedBox(
                       height: 20,
@@ -66,7 +67,9 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                               MyFlashBar.showSuccess(
                                                       "Subjects Added Successfully",
                                                       "Success")
-                                                  .show(context)
+                                                  .show(context.mounted
+                                                      ? context
+                                                      : Get.key.currentContext!)
                                             }
                                           : null,
                                     )
@@ -77,8 +80,13 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                   ).showDialogue(context);
                           },
                           child: controller.addLoading
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
+                              ? SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: Center(
+                                    child:
+                                        LoadingIndicators.getLoadingIndicator(),
+                                  ),
                                 )
                               : Container(
                                   height: 50,
@@ -136,7 +144,10 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                                   MyFlashBar.showSuccess(
                                                           "Subject Deleted Successfully",
                                                           "Success")
-                                                      .show(context)
+                                                      .show(context.mounted
+                                                          ? context
+                                                          : Get.key
+                                                              .currentContext!)
                                                 }
                                               : null,
                                         );
