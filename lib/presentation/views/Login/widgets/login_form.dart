@@ -275,7 +275,21 @@ class LoginForm extends GetView<AuthController> {
                                         ),
                                       );
                               },
-                            )
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            GetBuilder<AuthController>(
+                              builder: (_) {
+                                return Text(
+                                  controller.packageInfo?.version ?? 'unknown',
+                                  style: nunitoBlack.copyWith(
+                                    fontSize: 16,
+                                    color: ColorManager.grey,
+                                  ),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       );
