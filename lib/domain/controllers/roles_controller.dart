@@ -41,87 +41,6 @@ class RolesController extends GetxController {
   int? selectedScreenId;
   String? lastSelectedFrontId;
 
-  void searchWithinFilteredScreens(String query) {
-    var screens =
-        allScreens.where((screen) => screen.frontId.contains("000")).toList();
-    if (query.isEmpty) {
-      filteredScreens = screens;
-    } else {
-      filteredScreens = screens.where((screen) {
-        return screen.name.toLowerCase().contains(query.toLowerCase()) ||
-            screen.frontId.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    }
-
-    update();
-  }
-
-  void serachInRoles(String query) {
-    if (query.isEmpty) {
-      filteredRoles = rolesList;
-    } else {
-      filteredRoles = rolesList.where((role) {
-        return role.name?.toLowerCase().contains(query.toLowerCase()) ?? false;
-      }).toList();
-    }
-    update();
-  }
-
-  void filterWidgets() {
-    if (lastSelectedFrontId == null || selectedRoleId == null) {
-      return;
-    }
-
-    int id;
-    id = int.parse(lastSelectedFrontId!);
-
-    widgets = allScreens.where((screen) {
-      int screenFrontId;
-      screenFrontId = int.parse(screen.frontId);
-
-      return screenFrontId >= id && screenFrontId < id + 1000;
-    }).toList();
-
-    var role =
-        filteredRoles.firstWhereOrNull((role) => role.id == selectedRoleId);
-
-    if (role == null) {
-      return;
-    }
-
-    includedActions = role.screens!
-        .map((screen) => screen.id)
-        .where((action) => widgets.map((widget) => widget.id).contains(action))
-        .toList();
-
-    resultFilteredWidgets = widgets;
-    update();
-  }
-
-  void searchWithinFilteredWidgets(String query) {
-    if (query.isEmpty) {
-      widgets = resultFilteredWidgets;
-    } else {
-      widgets = widgets.where((widget) {
-        return widget.name.toLowerCase().contains(query.toLowerCase()) ||
-            widget.frontId.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    }
-
-    update();
-  }
-
-  void setSelectedRole(int roleId) {
-    selectedRoleId = roleId;
-    update();
-  }
-
-  Future<void> setSelectedScreen(int screenId, String frontid) async {
-    selectedScreenId = screenId;
-    lastSelectedFrontId = frontid;
-    update();
-  }
-
   Future<bool> addNewRoles({
     required String name,
   }) async {
@@ -267,6 +186,37 @@ class RolesController extends GetxController {
     return screenHasBeenRemoved;
   }
 
+  void filterWidgets() {
+    if (lastSelectedFrontId == null || selectedRoleId == null) {
+      return;
+    }
+
+    int id;
+    id = int.parse(lastSelectedFrontId!);
+
+    widgets = allScreens.where((screen) {
+      int screenFrontId;
+      screenFrontId = int.parse(screen.frontId);
+
+      return screenFrontId >= id && screenFrontId < id + 1000;
+    }).toList();
+
+    var role =
+        filteredRoles.firstWhereOrNull((role) => role.id == selectedRoleId);
+
+    if (role == null) {
+      return;
+    }
+
+    includedActions = role.screens!
+        .map((screen) => screen.id)
+        .where((action) => widgets.map((widget) => widget.id).contains(action))
+        .toList();
+
+    resultFilteredWidgets = widgets;
+    update();
+  }
+
   Future<void> getAllRoles() async {
     ResponseHandler<RolesResModel> responseHandler = ResponseHandler();
     Either<Failure, RolesResModel> response = await responseHandler.getResponse(
@@ -314,11 +264,11 @@ class RolesController extends GetxController {
     );
   }
 
-
   @override
   void onInit() async {
     super.onInit();
-
+    removedSreensIds.clear();
+    selectedSreensIds.clear();
     getAllLoading = true;
     update();
     await Future.wait([getAllScreens(), getAllRoles()]);
@@ -333,6 +283,56 @@ class RolesController extends GetxController {
   void onOptionSelected(List<ValueItem<dynamic>> selectedOptions) {
     selectedSreensIds =
         selectedOptions.map((e) => e.value as int).toList().cast<int>();
+    update();
+  }
+
+  void searchWithinFilteredScreens(String query) {
+    var screens =
+        allScreens.where((screen) => screen.frontId.contains("000")).toList();
+    if (query.isEmpty) {
+      filteredScreens = screens;
+    } else {
+      filteredScreens = screens.where((screen) {
+        return screen.name.toLowerCase().contains(query.toLowerCase()) ||
+            screen.frontId.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    }
+
+    update();
+  }
+
+  void searchWithinFilteredWidgets(String query) {
+    if (query.isEmpty) {
+      widgets = resultFilteredWidgets;
+    } else {
+      widgets = widgets.where((widget) {
+        return widget.name.toLowerCase().contains(query.toLowerCase()) ||
+            widget.frontId.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    }
+
+    update();
+  }
+
+  void serachInRoles(String query) {
+    if (query.isEmpty) {
+      filteredRoles = rolesList;
+    } else {
+      filteredRoles = rolesList.where((role) {
+        return role.name?.toLowerCase().contains(query.toLowerCase()) ?? false;
+      }).toList();
+    }
+    update();
+  }
+
+  void setSelectedRole(int roleId) {
+    selectedRoleId = roleId;
+    update();
+  }
+
+  Future<void> setSelectedScreen(int screenId, String frontid) async {
+    selectedScreenId = screenId;
+    lastSelectedFrontId = frontid;
     update();
   }
 }
