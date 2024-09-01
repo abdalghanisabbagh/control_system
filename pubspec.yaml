@@ -39,7 +39,7 @@ dependencies:
   custom_theme:
     git:
       url: https://github.com/Mahmoud-Saeed-Mahmoud/custom_theme.git
-      ref: v1.0.1
+      ref: v1.0.2
   package_info_plus: ^8.0.2
 
 dev_dependencies:
