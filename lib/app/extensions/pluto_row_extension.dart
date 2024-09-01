@@ -68,10 +68,10 @@ extension PlutoRowExtension on List<StudentResModel> {
       }
 
       String? secondName = element.secondName;
-      if (secondName == null || secondName.isEmpty) {
-        errors.add('SecondNameField is empty');
-        //  hasError = true;
-      }
+      // if (secondName == null || secondName.isEmpty) {
+      //   errors.add('SecondNameField is empty');
+      //   //  hasError = true;
+      // }
 
       String? thirdName = element.thirdName;
       if (thirdName == null || thirdName.isEmpty) {
@@ -268,8 +268,7 @@ extension PlutoRowStudentSeatsNumbersExtansion
             ),
             'CohortField': PlutoCell(
                 value: element.student!.cohortResModel!.name.toString()),
-            'ActionsField':
-                PlutoCell(value: element.active.toString()),
+            'ActionsField': PlutoCell(value: element.active.toString()),
           },
         ),
       );
