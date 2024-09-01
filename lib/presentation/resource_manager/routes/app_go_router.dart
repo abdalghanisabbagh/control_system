@@ -292,6 +292,7 @@ class AppGoRouter {
           return const RolesScreen();
         },
         onExit: (context, state) {
+          Get.delete<RolesController>();
           return true;
         },
       ),
