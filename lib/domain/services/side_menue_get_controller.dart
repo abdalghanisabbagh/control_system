@@ -4,6 +4,7 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/app_menue_item_model.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
@@ -19,6 +20,7 @@ class SideMenueGetController extends GetxController {
   List<SideMenuItem> userMenue = [];
 
   changePage(int currentIndex) {
+    Hive.box('SideMenueIndex').put('index', currentIndex);
     sideMenuController.changePage(currentIndex);
   }
 
@@ -90,8 +92,10 @@ class SideMenueGetController extends GetxController {
 
   @override
   void onInit() {
-    sideMenuController = SideMenuController();
     super.onInit();
+    sideMenuController = SideMenuController(
+      initialPage: Hive.box('SideMenueIndex').get('index') ?? nowIndex,
+    );
   }
 
   onRouteChange(String name) {
