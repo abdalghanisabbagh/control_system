@@ -172,8 +172,6 @@ class SchoolController extends GetxController {
     return true;
   }
 
-  getSchool() async {}
-
   Future<bool> getSchoolType() async {
     ResponseHandler<SchoolsTypeResModel> responseHandler = ResponseHandler();
     Either<Failure, SchoolsTypeResModel> response =
