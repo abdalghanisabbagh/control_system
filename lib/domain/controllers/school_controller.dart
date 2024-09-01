@@ -86,7 +86,7 @@ class SchoolController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "School_Type_ID": schoolTypeId,
-        "Name": "($name)",
+        "Name": name,
       },
     );
     response.fold(
