@@ -32,7 +32,7 @@ class ScreenSideMenu extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: isSelected ? Colors.green : ColorManager.white,
+            color: color,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
               color: isSelected ? Colors.green : Colors.grey,
@@ -46,17 +46,12 @@ class ScreenSideMenu extends StatelessWidget {
                 child: Text(
                   "$screenName :  $frontId",
                   style: nunitoBold.copyWith(
-                    color: color,
+                    color: ColorManager.primary,
                     fontSize: 16,
                   ),
                 ),
               ),
-              // IconButton(
-              //     onPressed: () {
-              //       controller.removedSreensIds.add(screenId);
-              //       controller.deleteScreensFromRole();
-              //     },
-              //     icon: const Icon(Icons.delete)),
+             
             ],
           ),
         ),

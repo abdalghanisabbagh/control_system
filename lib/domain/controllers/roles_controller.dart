@@ -25,6 +25,7 @@ class RolesController extends GetxController {
   bool deleteScreenLoading = false;
   bool getAllLoading = false;
   bool isProcessing = false;
+  bool allActionsIncluded = false;
   List<int> removedSreensIds = [];
   List<int> selectedSreensIds = [];
   List<RoleResModel> rolesList = [];
@@ -153,6 +154,7 @@ class RolesController extends GetxController {
     return screenHasBeenAdded;
   }
 
+
   Future<bool> deleteScreensFromRole() async {
     deleteScreenLoading = true;
     update();
@@ -186,6 +188,9 @@ class RolesController extends GetxController {
     return screenHasBeenRemoved;
   }
 
+
+  
+
   void filterWidgets() {
     if (lastSelectedFrontId == null || selectedRoleId == null) {
       return;
@@ -214,6 +219,40 @@ class RolesController extends GetxController {
         .toList();
 
     resultFilteredWidgets = widgets;
+
+    update();
+  }
+
+
+  void filterColorScreen() {
+    if (lastSelectedFrontId == null || selectedRoleId == null) {
+      return;
+    }
+
+    int id = int.parse(lastSelectedFrontId!);
+
+    // جميع الشاشات حيث يكون screenFrontId >= id && screenFrontId < id + 1000
+    var widgetInThisScreen = allScreens.where((screen) {
+      int screenFrontId = int.parse(screen.frontId);
+      return screenFrontId >= id && screenFrontId < id + 1000;
+    }).toList();
+
+    var role =
+        filteredRoles.firstWhereOrNull((role) => role.id == selectedRoleId);
+
+    if (role == null) {
+      return;
+    }
+
+    List<ScreenResModel> allActionsNotIncluded = role.screens!.where((screen) {
+      int screenFrontId = int.parse(screen.frontId);
+      return screenFrontId >= id &&
+          screenFrontId < id + 1000 &&
+          widgetInThisScreen.map((widget) => widget.id).contains(screen.id);
+    }).toList();
+    allActionsIncluded =
+        widgetInThisScreen.length == allActionsNotIncluded.length;
+
     update();
   }
 

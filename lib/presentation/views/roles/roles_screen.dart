@@ -200,6 +200,15 @@ class RolesScreen extends GetView<RolesController> {
                             return Center(
                               child: LoadingIndicators.getLoadingIndicator(),
                             );
+                          } else if (controller.selectedRoleId == null) {
+                            return Center(
+                              child: Text(
+                                "please select a role first",
+                                style: nunitoBold.copyWith(
+                                  color: ColorManager.bgSideMenu,
+                                ),
+                              ),
+                            );
                           } else if (controller.filteredScreens.isEmpty) {
                             return Center(
                               child: Text(
@@ -217,7 +226,15 @@ class RolesScreen extends GetView<RolesController> {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 10.0),
                                   child: ScreenSideMenu(
-                                    color: screen.color,
+                                    color: controller.selectedScreenId ==
+                                                screen.id &&
+                                            controller.allActionsIncluded
+                                        ? Colors.green
+                                        : controller.selectedScreenId ==
+                                                    screen.id &&
+                                                !controller.allActionsIncluded
+                                            ? Colors.orange
+                                            : Colors.white,
                                     frontId: screen.frontId,
                                     screenName: screen.name,
                                     isSelected: controller.selectedScreenId ==
@@ -227,6 +244,7 @@ class RolesScreen extends GetView<RolesController> {
                                       await controller.setSelectedScreen(
                                           screen.id, screen.frontId);
                                       controller.filterWidgets();
+                                      controller.filterColorScreen();
                                     },
                                   ),
                                 );
