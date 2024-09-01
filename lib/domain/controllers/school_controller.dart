@@ -182,23 +182,13 @@ class SchoolController extends GetxController {
   Future<void> saveToSchoolBox(SchoolResModel currentSchool) async {
     TokenService tokenService = Get.find<TokenService>();
     ProfileController profileController = Get.find<ProfileController>();
-    await ResponseHandler<void>().getResponse(
-      path:
-          '${UserLinks.users}/${Get.find<ProfileController>().cachedUserProfile!.iD}',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: {
-        "LastSelectSchoolId": currentSchool.iD,
-      },
-    );
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
-      path: AuthLinks.getNewAccessToken,
+      path: '${AuthLinks.getNewAccessToken}/${currentSchool.iD}',
       converter: LoginResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
-
     response.fold(
       (l) => MyAwesomeDialogue(
         title: 'Error',

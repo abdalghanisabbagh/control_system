@@ -84,37 +84,123 @@ class DistributeStudentsController extends GetxController {
 // Create the reordered list
     List<StudentSeatNumberResModel> reOrderedList =
         <StudentSeatNumberResModel>[];
-    Queue<int> gradesQueue = Queue<int>.from(gradeCounts.keys);
-
-    while (gradesQueue.isNotEmpty) {
-      int currentBlockSize = 1;
-      List<StudentSeatNumberResModel> tempStudents =
-          <StudentSeatNumberResModel>[];
-
-      // Process students for the current block
-      for (int i = 0; i < gradesQueue.length && currentBlockSize > 0; i++) {
-        int grade = gradesQueue.removeFirst();
-        List<StudentSeatNumberResModel> studentInGrade = gradeCounts[grade]!;
-
-        if (studentInGrade.isNotEmpty) {
-          int toAddCount = studentInGrade.length < currentBlockSize
-              ? studentInGrade.length
-              : currentBlockSize;
-          tempStudents.addAll(studentInGrade.take(toAddCount));
-          gradeCounts[grade] = studentInGrade.skip(toAddCount).toList();
-          currentBlockSize -= toAddCount;
-
-          if (gradeCounts[grade]!.isNotEmpty) {
-            gradesQueue.addLast(grade);
+    if (gradeCounts.keys.length == 2) {
+      List<StudentSeatNumberResModel> studentsFromGrade = gradeCounts[0]!;
+      List<StudentSeatNumberResModel> studentsFromAnotherGrade =
+          gradeCounts[1]!;
+      int row = 0;
+      while (row < numberOfRows) {
+        int rowLength =
+            classDesks.where((classDesk) => classDesk.rowNum == row).length;
+        for (int i = 0; i < rowLength; i++) {
+          if (row.isEven) {
+            studentsFromGrade.isEmpty
+                ? null
+                : reOrderedList.add(studentsFromGrade.removeAt(0));
+            studentsFromAnotherGrade.isEmpty
+                ? null
+                : reOrderedList.add(studentsFromAnotherGrade.removeAt(0));
+          } else {
+            studentsFromAnotherGrade.isEmpty
+                ? null
+                : reOrderedList.add(studentsFromAnotherGrade.removeAt(0));
+            studentsFromGrade.isEmpty
+                ? null
+                : reOrderedList.add(studentsFromGrade.removeAt(0));
           }
         }
+        row++;
       }
+    } else if (gradeCounts.keys.length == 3) {
+      List<StudentSeatNumberResModel>? maxStudents,
+          secondMaxStudents,
+          minStudents;
+      int maxLength = -1;
+      int secondMaxLength = -1;
+      int minLength = double.infinity.toInt();
 
-      reOrderedList.addAll(tempStudents);
+      for (var entry in gradeCounts.entries) {
+        int length = entry.value.length;
 
-      // Remove empty categories
-      gradeCounts.removeWhere((key, value) => value.isEmpty);
-      gradesQueue.removeWhere((grade) => !gradeCounts.containsKey(grade));
+        // Update max length and corresponding list
+        if (length > maxLength) {
+          // Move current max to second max
+          secondMaxLength = maxLength;
+          secondMaxStudents = maxStudents;
+
+          // Update max length and list
+          maxLength = length;
+          maxStudents = entry.value;
+        } else if (length > secondMaxLength && length < maxLength) {
+          // Update second max length and list
+          secondMaxLength = length;
+          secondMaxStudents = entry.value;
+        }
+
+        // Update min length and corresponding list
+        if (length < minLength) {
+          minLength = length;
+          minStudents = entry.value;
+        }
+      }
+      int row = 0;
+      while (row < numberOfRows) {
+        int rowLength =
+            classDesks.where((classDesk) => classDesk.rowNum == row).length;
+        for (int i = 0; i < rowLength; i++) {
+          if (row.isEven && i.isEven) {
+            secondMaxStudents!.isEmpty
+                ? null
+                : reOrderedList.add(secondMaxStudents.removeAt(0));
+          } else if (row.isEven && i.isOdd) {
+            maxStudents!.isEmpty
+                ? null
+                : reOrderedList.add(maxStudents.removeAt(0));
+          } else if (row.isOdd && i.isEven) {
+            maxStudents!.isEmpty
+                ? null
+                : reOrderedList.add(maxStudents.removeAt(0));
+          } else if (row.isOdd && i.isOdd) {
+            minStudents!.isEmpty
+                ? null
+                : reOrderedList.add(minStudents.removeAt(0));
+          }
+        }
+        row++;
+      }
+    } else if (gradeCounts.keys.length == 4) {
+      Queue<int> gradesQueue = Queue<int>.from(gradeCounts.keys);
+
+      while (gradesQueue.isNotEmpty) {
+        int currentBlockSize = 1;
+        List<StudentSeatNumberResModel> tempStudents =
+            <StudentSeatNumberResModel>[];
+
+        // Process students for the current block
+        for (int i = 0; i < gradesQueue.length && currentBlockSize > 0; i++) {
+          int grade = gradesQueue.removeFirst();
+          List<StudentSeatNumberResModel> studentInGrade = gradeCounts[grade]!;
+
+          if (studentInGrade.isNotEmpty) {
+            int toAddCount = studentInGrade.length < currentBlockSize
+                ? studentInGrade.length
+                : currentBlockSize;
+            tempStudents.addAll(studentInGrade.take(toAddCount));
+            gradeCounts[grade] = studentInGrade.skip(toAddCount).toList();
+            currentBlockSize -= toAddCount;
+
+            if (gradeCounts[grade]!.isNotEmpty) {
+              gradesQueue.addLast(grade);
+            }
+          }
+        }
+
+        reOrderedList.addAll(tempStudents);
+
+        // Remove empty categories
+        gradeCounts.removeWhere((key, value) => value.isEmpty);
+        gradesQueue.removeWhere((grade) => !gradeCounts.containsKey(grade));
+      }
     }
 
     // Print the reordered list
@@ -336,8 +422,6 @@ class DistributeStudentsController extends GetxController {
 
     double pdfWidth = PdfPageFormat.a4.landscape.width;
     double pdfHeight = PdfPageFormat.a4.landscape.height;
-    var (double maxWidth, double maxHeight) = (pdfWidth, pdfHeight);
-
     document.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4.landscape.copyWith(
@@ -488,17 +572,17 @@ class DistributeStudentsController extends GetxController {
                                                         .start,
                                                     children: [
                                                       pw.SizedBox(
-                                                        height: (maxHeight *
+                                                        height: (pdfHeight *
                                                                 0.01 *
                                                                 6) /
                                                             numberOfRows,
                                                       ),
                                                       pw.Container(
-                                                        height: (maxHeight *
+                                                        height: (pdfHeight *
                                                                 0.05 *
                                                                 6) /
                                                             numberOfRows,
-                                                        width: (maxWidth *
+                                                        width: (pdfWidth *
                                                                 0.15 *
                                                                 5) /
                                                             classDeskCollection
@@ -528,11 +612,11 @@ class DistributeStudentsController extends GetxController {
                                                         ),
                                                       ),
                                                       pw.Container(
-                                                        height: (maxHeight *
+                                                        height: (pdfHeight *
                                                                 0.092 *
                                                                 6) /
                                                             numberOfRows,
-                                                        width: (maxWidth *
+                                                        width: (pdfWidth *
                                                                 0.15 *
                                                                 5) /
                                                             classDeskCollection
@@ -565,7 +649,7 @@ class DistributeStudentsController extends GetxController {
                                                         child: pw.Padding(
                                                           padding: pw.EdgeInsets
                                                               .symmetric(
-                                                            horizontal: (maxWidth *
+                                                            horizontal: (pdfWidth *
                                                                     0.01 *
                                                                     5) /
                                                                 classDeskCollection
@@ -574,7 +658,7 @@ class DistributeStudentsController extends GetxController {
                                                                     .value
                                                                     .length,
                                                             vertical:
-                                                                (maxHeight *
+                                                                (pdfHeight *
                                                                         0.01 *
                                                                         6) /
                                                                     numberOfRows,
@@ -622,17 +706,17 @@ class DistributeStudentsController extends GetxController {
                                                   child: pw.Column(
                                                     children: [
                                                       pw.SizedBox(
-                                                        height: (maxHeight *
+                                                        height: (pdfHeight *
                                                                 0.01 *
                                                                 6) /
                                                             numberOfRows,
                                                       ),
                                                       pw.Container(
-                                                        height: (maxHeight *
+                                                        height: (pdfHeight *
                                                                 0.05 *
                                                                 6) /
                                                             numberOfRows,
-                                                        width: (maxWidth *
+                                                        width: (pdfWidth *
                                                                 0.15 *
                                                                 5) /
                                                             classDeskCollection
@@ -662,11 +746,11 @@ class DistributeStudentsController extends GetxController {
                                                         ),
                                                       ),
                                                       pw.Container(
-                                                        height: (maxHeight *
+                                                        height: (pdfHeight *
                                                                 0.05 *
                                                                 6) /
                                                             numberOfRows,
-                                                        width: (maxWidth *
+                                                        width: (pdfWidth *
                                                                 0.15 *
                                                                 5) /
                                                             classDeskCollection
@@ -715,7 +799,8 @@ class DistributeStudentsController extends GetxController {
                               countByGrade.keys.length,
                               (index) => pw.Padding(
                                 padding: pw.EdgeInsets.symmetric(
-                                  horizontal: pdfWidth * 0.005,
+                                  horizontal: (pdfWidth * 0.005 * 5) /
+                                      countByGrade.keys.length,
                                 ),
                                 child: availableStudents
                                         .where((element) =>
@@ -733,8 +818,10 @@ class DistributeStudentsController extends GetxController {
                                             pw.MainAxisAlignment.start,
                                         children: [
                                           pw.Container(
-                                            height: maxHeight * 0.030,
-                                            width: maxWidth * 0.17,
+                                            height: (pdfHeight * 0.030 * 6) /
+                                                numberOfRows,
+                                            width: (pdfWidth * 0.17 * 5) /
+                                                countByGrade.keys.length,
                                             alignment: pw.Alignment.center,
                                             decoration: pw.BoxDecoration(
                                               border: pw.Border.all(
@@ -752,8 +839,10 @@ class DistributeStudentsController extends GetxController {
                                             ),
                                           ),
                                           pw.Container(
-                                            height: maxHeight * 0.035,
-                                            width: maxWidth * 0.17,
+                                            height: (pdfHeight * 0.035 * 6) /
+                                                numberOfRows,
+                                            width: (pdfWidth * 0.17 * 5) /
+                                                countByGrade.keys.length,
                                             alignment: pw.Alignment.center,
                                             decoration: pw.BoxDecoration(
                                               border: pw.Border.all(
@@ -911,14 +1000,12 @@ class DistributeStudentsController extends GetxController {
   }
 
   Future<bool> getGradesBySchoolId() async {
-    int schoolId = await Hive.box('School').get('Id');
-
     bool gotData = false;
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
 
     Either<Failure, GradesResModel> response =
         await responseHandler.getResponse(
-      path: "${GradeLinks.gradesSchools}/$schoolId",
+      path: GradeLinks.gradesSchools,
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
