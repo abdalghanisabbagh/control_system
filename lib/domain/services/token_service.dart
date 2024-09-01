@@ -43,6 +43,7 @@ class TokenService extends FullLifeCycleController with FullLifeCycleMixin {
   }
 
   void saveTokenModelToHiveBox(TokenModel tokenModel) {
+    _tokenModel = tokenModel;
     Hive.box('Token').put('Token', jsonEncode(tokenModel.toJson()));
   }
 }
