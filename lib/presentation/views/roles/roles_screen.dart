@@ -230,11 +230,16 @@ class RolesScreen extends GetView<RolesController> {
                                                 screen.id &&
                                             controller.allActionsIncluded
                                         ? Colors.green
-                                        : controller.selectedScreenId ==
-                                                    screen.id &&
-                                                !controller.allActionsIncluded
-                                            ? Colors.orange
-                                            : Colors.white,
+                                        : controller.selectedRoleId == null &&
+                                                controller.selectedScreenId ==
+                                                    screen.id
+                                            ? ColorManager.grey
+                                            : controller.selectedScreenId ==
+                                                        screen.id &&
+                                                    !controller
+                                                        .allActionsIncluded
+                                                ? Colors.orange
+                                                : Colors.white,
                                     frontId: screen.frontId,
                                     screenName: screen.name,
                                     isSelected: controller.selectedScreenId ==
