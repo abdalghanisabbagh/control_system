@@ -123,20 +123,23 @@ class SchoolController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
-      /// handel error
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-    }, (result) {
+    response.fold(
+      (fauilr) {
+        /// handel error
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: "${fauilr.code} ::${fauilr.message}",
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (result) {
 // handel el response
 
-      grades = result.data!;
-      isLoadingGrades = false;
-      update();
-    });
+        grades = result.data!;
+        isLoadingGrades = false;
+        update();
+      },
+    );
     isLoadingGrades = false;
 
     return true;
