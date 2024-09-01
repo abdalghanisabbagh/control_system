@@ -32,7 +32,7 @@ class DioFactory {
     };
 
     dio.options = BaseOptions(
-      baseUrl: AppLinks.baseUrlProd,
+      baseUrl: AppLinks.baseUrl,
       headers: headers,
       receiveTimeout: timeOut,
       sendTimeout: timeOut,

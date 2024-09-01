@@ -69,6 +69,17 @@ class HeaderStudentWidget extends GetView<StudentController> {
             ),
             Visibility(
               visible: Get.find<ProfileController>().canAccessWidget(
+                widgetId: '1700',
+              ),
+              child: IconButton(
+                  tooltip: "Export To Excel",
+                  icon: const Icon(FontAwesomeIcons.fileExport),
+                  onPressed: () {
+                    controller.exportToCsv(context, controller.studentsRows);
+                  }),
+            ),
+            Visibility(
+              visible: Get.find<ProfileController>().canAccessWidget(
                 widgetId: '1100',
               ),
               child: IconButton(
