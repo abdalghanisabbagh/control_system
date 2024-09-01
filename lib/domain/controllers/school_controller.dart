@@ -250,7 +250,7 @@ class SchoolController extends GetxController {
     await Hive.box('School').flush();
   }
 
-  void setSelectedItem(ValueItem item) {
+  void setSelectedItem(ValueItem? item) {
     selectedItem = item;
     update();
   }
