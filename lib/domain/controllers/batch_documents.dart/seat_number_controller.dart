@@ -181,7 +181,7 @@ class SeatNumberController extends GetxController {
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
-      path: "${GradeLinks.gradesSchools}/$schoolId",
+      path: GradeLinks.gradesSchools,
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
