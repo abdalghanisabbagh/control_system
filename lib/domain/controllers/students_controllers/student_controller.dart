@@ -131,14 +131,15 @@ class StudentController extends GetxController {
     List<List<dynamic>> csvData = [];
 
     List<String> headers = [
-      'Blb Id',
-      'First Name',
-      'Second Name',
-      'Third Name',
-      'Cohort',
-      'Grade',
-      'Class Room',
-      'Second Language'
+      'id',
+      'firstname',
+      'middlename',
+      'lastname',
+      'cohort',
+      'grade',
+      'class',
+      'second_language',
+      'religion',
     ];
 
     csvData.add(headers);
@@ -170,7 +171,6 @@ class StudentController extends GetxController {
       dialogType: DialogType.success,
     ).showDialogue(Get.key.currentContext!);
   }
-
 
   Future<void> exportToPdf(
       BuildContext context, List<PlutoRow> studentsRows) async {

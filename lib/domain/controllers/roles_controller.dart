@@ -306,9 +306,12 @@ class RolesController extends GetxController {
     getAllLoading = true;
     update();
     await Future.wait([getAllScreens(), getAllRoles()]);
-    selectedScreenId != null && lastSelectedFrontId != null
-        ? setSelectedScreen(selectedScreenId!, lastSelectedFrontId!)
-        : null;
+    if (selectedScreenId != null && lastSelectedFrontId != null) {
+      setSelectedScreen(selectedScreenId!, lastSelectedFrontId!);
+      filterColorScreen();
+    } else {
+      null;
+    }
     filterWidgets();
     getAllLoading = false;
     update();
