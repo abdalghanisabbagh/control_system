@@ -297,7 +297,7 @@ class EditStudentWidget extends GetView<StudentController> {
                   },
                 ),
               ],
-            );
+            ).paddingOnly(right: 20);
           },
         ),
       ),

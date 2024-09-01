@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/views/student/widgets/transfer_student_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -366,6 +367,23 @@ class StudentWidget extends GetView<StudentController> {
                                 icon: const Icon(
                                   Icons.edit,
                                   color: Colors.green,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  MyDialogs.showDialog(context,
+                                      TransferStudentWidget(studentResModel:
+                                          controller.students
+                                              .firstWhere((element) {
+                                    return int.tryParse(rendererContext
+                                            .row.cells['BlbIdField']!.value
+                                            .toString()) ==
+                                        element.blbId;
+                                  })));
+                                },
+                                icon: const Icon(
+                                  Icons.transfer_within_a_station,
+                                  color: Colors.blue,
                                 ),
                               ),
                             ],
