@@ -200,15 +200,15 @@ class RolesScreen extends GetView<RolesController> {
                             return Center(
                               child: LoadingIndicators.getLoadingIndicator(),
                             );
-                          } else if (controller.selectedRoleId == null) {
-                            return Center(
-                              child: Text(
-                                "please select a role first",
-                                style: nunitoBold.copyWith(
-                                  color: ColorManager.bgSideMenu,
-                                ),
-                              ),
-                            );
+                            // } else if (controller.selectedRoleId == null) {
+                            //   return Center(
+                            //     child: Text(
+                            //       "please select a role first",
+                            //       style: nunitoBold.copyWith(
+                            //         color: ColorManager.bgSideMenu,
+                            //       ),
+                            //     ),
+                            //   );
                           } else if (controller.filteredScreens.isEmpty) {
                             return Center(
                               child: Text(
@@ -291,16 +291,16 @@ class RolesScreen extends GetView<RolesController> {
                       ),
                       child: GetBuilder<RolesController>(
                         builder: (_) {
-                          if (controller.selectedRoleId == null) {
-                            return Center(
-                              child: Text(
-                                "Please Select Role ",
-                                style: nunitoBold.copyWith(
-                                  color: ColorManager.bgSideMenu,
-                                ),
-                              ),
-                            );
-                          }
+                          // if (controller.selectedRoleId == null) {
+                          //   return Center(
+                          //     child: Text(
+                          //       "Please Select Role ",
+                          //       style: nunitoBold.copyWith(
+                          //         color: ColorManager.bgSideMenu,
+                          //       ),
+                          //     ),
+                          //   );
+                          // }
 
                           if (controller.lastSelectedFrontId == null) {
                             return Center(

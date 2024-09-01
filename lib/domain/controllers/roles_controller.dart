@@ -154,7 +154,6 @@ class RolesController extends GetxController {
     return screenHasBeenAdded;
   }
 
-
   Future<bool> deleteScreensFromRole() async {
     deleteScreenLoading = true;
     update();
@@ -188,11 +187,8 @@ class RolesController extends GetxController {
     return screenHasBeenRemoved;
   }
 
-
-  
-
   void filterWidgets() {
-    if (lastSelectedFrontId == null || selectedRoleId == null) {
+    if (lastSelectedFrontId == null) {
       return;
     }
 
@@ -223,9 +219,8 @@ class RolesController extends GetxController {
     update();
   }
 
-
   void filterColorScreen() {
-    if (lastSelectedFrontId == null || selectedRoleId == null) {
+    if (lastSelectedFrontId == null) {
       return;
     }
 
@@ -366,6 +361,7 @@ class RolesController extends GetxController {
 
   void setSelectedRole(int roleId) {
     selectedRoleId = roleId;
+    filterColorScreen();
     update();
   }
 
