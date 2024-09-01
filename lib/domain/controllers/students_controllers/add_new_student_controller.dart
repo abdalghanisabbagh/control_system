@@ -89,7 +89,6 @@ class AddNewStudentController extends GetxController {
     update();
     bool cohortHasBeenAdded = false;
 
-    int selectedSchoolId = Hive.box('School').get('SchoolTypeID');
     ResponseHandler<CohortsResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
@@ -120,7 +119,6 @@ class AddNewStudentController extends GetxController {
     update();
     bool gradeHasBeenAdded = false;
 
-    int schoolId = Hive.box('School').get('Id');
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
@@ -151,7 +149,6 @@ class AddNewStudentController extends GetxController {
     update();
     bool classRoomHasBeenAdded = false;
 
-    int schoolId = Hive.box('School').get('Id');
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(

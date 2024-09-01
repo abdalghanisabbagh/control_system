@@ -196,12 +196,11 @@ class CreateControlMissionController extends GetxController {
   Future<bool> getGrades() async {
     bool gotData = false;
     update();
-    int schoolId = Hive.box('School').get('Id');
 
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
     Either<Failure, GradesResModel> response =
         await responseHandler.getResponse(
-      path: "${GradeLinks.gradesSchools}/$schoolId",
+      path: GradeLinks.gradesSchools,
       converter: GradesResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
