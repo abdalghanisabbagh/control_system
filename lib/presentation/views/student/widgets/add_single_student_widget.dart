@@ -288,7 +288,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                 ),
                               )
                       ],
-                    );
+                    ).paddingOnly(right: 20);
             },
           ),
         ),

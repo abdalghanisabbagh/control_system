@@ -86,7 +86,7 @@ class SchoolController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "School_Type_ID": schoolTypeId,
-        "Name": "($name)",
+        "Name": name,
       },
     );
     response.fold(
@@ -112,36 +112,6 @@ class SchoolController extends GetxController {
     await Hive.box('School').clear();
   }
 
-//   Future<bool> getAllSchools() async {
-//     isLoadingSchools = true;
-//     update();
-//     ResponseHandler<SchoolsResModel> responseHandler = ResponseHandler();
-
-//     var response = await responseHandler.getResponse(
-//       path: SchoolsLinks.getAllSchools,
-//       converter: SchoolsResModel.fromJson,
-//       type: ReqTypeEnum.GET,
-//     );
-
-//     response.fold((fauilr) {
-//       /// handel error
-//       MyAwesomeDialogue(
-//         title: 'Error',
-//         desc: "${fauilr.code} ::${fauilr.message}",
-//         dialogType: DialogType.error,
-//       ).showDialogue(Get.key.currentContext!);
-//     }, (result) {
-// // handel el response
-
-//       schools = result.data!;
-//       isLoadingSchools = false;
-//       update();
-//     });
-
-//     isLoadingSchools = false;
-//     return true;
-//   }
-
   Future<bool> getGradesBySchoolId() async {
     isLoadingGrades = true;
     update();
@@ -153,26 +123,27 @@ class SchoolController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
-      /// handel error
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-    }, (result) {
+    response.fold(
+      (fauilr) {
+        /// handel error
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: "${fauilr.code} ::${fauilr.message}",
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (result) {
 // handel el response
 
-      grades = result.data!;
-      isLoadingGrades = false;
-      update();
-    });
+        grades = result.data!;
+        isLoadingGrades = false;
+        update();
+      },
+    );
     isLoadingGrades = false;
 
     return true;
   }
-
-  getSchool() async {}
 
   Future<bool> getSchoolType() async {
     ResponseHandler<SchoolsTypeResModel> responseHandler = ResponseHandler();
@@ -206,7 +177,6 @@ class SchoolController extends GetxController {
   void onInit() {
     super.onInit();
     getSchoolType();
-    //   getAllSchools();
   }
 
   Future<void> saveToSchoolBox(SchoolResModel currentSchool) async {
@@ -230,27 +200,31 @@ class SchoolController extends GetxController {
     );
 
     response.fold(
-        (l) => MyAwesomeDialogue(
-              title: 'Error',
-              desc: l.message,
-              dialogType: DialogType.error,
-            ).showDialogue(Get.key.currentContext!), (r) {
-      tokenService.saveTokenModelToHiveBox(TokenModel(
-        aToken: r.accessToken!,
-        rToken: r.refreshToken!,
-        dToken: DateTime.now().toIso8601String(),
-      ));
-      profileController.saveProfileToHiveBox(r.userProfile!);
-    });
-    await Future.wait([
-      Hive.box('School').put('Id', currentSchool.iD),
-      Hive.box('School').put('Name', currentSchool.name),
-      Hive.box('School').put('SchoolTypeID', currentSchool.schoolTypeID),
-    ]);
+      (l) => MyAwesomeDialogue(
+        title: 'Error',
+        desc: l.message,
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!),
+      (r) {
+        tokenService.saveTokenModelToHiveBox(TokenModel(
+          aToken: r.accessToken!,
+          rToken: r.refreshToken!,
+          dToken: DateTime.now().toIso8601String(),
+        ));
+        profileController.saveProfileToHiveBox(r.userProfile!);
+      },
+    );
+    await Future.wait(
+      [
+        Hive.box('School').put('Id', currentSchool.iD),
+        Hive.box('School').put('Name', currentSchool.name),
+        Hive.box('School').put('SchoolTypeID', currentSchool.schoolTypeID),
+      ],
+    );
     await Hive.box('School').flush();
   }
 
-  void setSelectedItem(ValueItem item) {
+  void setSelectedItem(ValueItem? item) {
     selectedItem = item;
     update();
   }
