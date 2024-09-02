@@ -347,9 +347,31 @@ class StudentWidget extends GetView<StudentController> {
                             children: [
                               IconButton(
                                 onPressed: () {
+                                  var student =
+                                      controller.students.firstWhereOrNull(
+                                    (element) {
+                                      return int.tryParse(rendererContext
+                                              .row.cells['BlbIdField']!.value
+                                              .toString()) ==
+                                          element.blbId;
+                                    },
+                                  );
                                   MyDialogs.showDialog(
                                     context,
                                     EditStudentWidget(
+                                        studentResModel: student!),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  MyDialogs.showDialog(
+                                    context,
+                                    TransferStudentWidget(
                                       studentResModel:
                                           controller.students.firstWhere(
                                         (element) {
@@ -363,23 +385,6 @@ class StudentWidget extends GetView<StudentController> {
                                       ),
                                     ),
                                   );
-                                },
-                                icon: const Icon(
-                                  Icons.edit,
-                                  color: Colors.green,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  MyDialogs.showDialog(context,
-                                      TransferStudentWidget(studentResModel:
-                                          controller.students
-                                              .firstWhere((element) {
-                                    return int.tryParse(rendererContext
-                                            .row.cells['BlbIdField']!.value
-                                            .toString()) ==
-                                        element.blbId;
-                                  })));
                                 },
                                 icon: const Icon(
                                   Icons.transfer_within_a_station,

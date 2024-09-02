@@ -197,6 +197,10 @@ class StudentsBindings extends Bindings {
       () => StudentController(),
       fenix: true,
     );
+    Get.lazyPut<TransferStudentController>(
+      () => TransferStudentController(),
+      fenix: true,
+    );
   }
 }
 
@@ -227,15 +231,5 @@ class TokenBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(TokenService(), permanent: true);
-  }
-}
-
-class TransferStudentBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<TransferStudentController>(
-      () => TransferStudentController(),
-      fenix: true,
-    );
   }
 }
