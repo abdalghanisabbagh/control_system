@@ -202,7 +202,6 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                         MytextFormFiled(
                           controller: lnameController,
                           title: "Last Name",
-                          myValidation: Validations.requiredValidator,
                         ),
 
                         MytextFormFiled(

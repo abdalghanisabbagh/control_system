@@ -68,16 +68,16 @@ extension PlutoRowExtension on List<StudentResModel> {
       }
 
       String? secondName = element.secondName;
-      // if (secondName == null || secondName.isEmpty) {
-      //   errors.add('SecondNameField is empty');
-      //   //  hasError = true;
-      // }
-
-      String? thirdName = element.thirdName;
-      if (thirdName == null || thirdName.isEmpty) {
-        errors.add('ThirdNameField is empty');
+      if (secondName == null || secondName.isEmpty) {
+        errors.add('SecondNameField is empty');
         //  hasError = true;
       }
+
+      String? thirdName = element.thirdName;
+      // if (thirdName == null || thirdName.isEmpty) {
+      //   errors.add('ThirdNameField is empty');
+      //   //  hasError = true;
+      // }
 
       String? secondLang = element.secondLang;
       if (secondLang == null || secondLang.isEmpty) {

@@ -159,8 +159,8 @@ class StudentResModel {
     data['Cohort_ID'] = cohortID;
     data['School_Class_ID'] = schoolClassID;
     data['First_Name'] = firstName;
-    data['Second_Name'] = secondName ?? ' ';
-    data['Third_Name'] = thirdName;
+    data['Second_Name'] = secondName;
+    data['Third_Name'] = thirdName ?? ' ';
     data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
     data['Second_Lang'] = secondLang;
     data['Religion'] = religion;

@@ -36,6 +36,7 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 import '../profile_controller.dart';
 
 class StudentController extends GetxController {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<CohortResModel> cohorts = <CohortResModel>[];
   Map<String, bool> errorMap = {};
@@ -381,8 +382,8 @@ class StudentController extends GetxController {
   void onInit() async {
     isImportedNew = false;
     isImportedPromot = false;
-
     loading = true;
+    importedStudentsRows = [];
     update();
     await Future.wait([
       getCohorts(),
@@ -476,17 +477,17 @@ class StudentController extends GetxController {
   }
 
   void setSelectedItemClassRoom(List<ValueItem> items) {
-    selectedItemClassRoom = items.first;
+    selectedItemClassRoom = items.isEmpty ? null : items.first;
     update();
   }
 
   void setSelectedItemCohort(List<ValueItem> items) {
-    selectedItemCohort = items.first;
+    selectedItemCohort = items.isEmpty ? null : items.first;
     update();
   }
 
   void setSelectedItemGrade(List<ValueItem> items) {
-    selectedItemGrade = items.first;
+    selectedItemGrade = items.isEmpty ? null : items.first;
     update();
   }
 
