@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 class ElevatedEditButton extends StatelessWidget {
   final VoidCallback onPressed;
+  final String title;
 
   const ElevatedEditButton({
     super.key,
     required this.onPressed,
+    this.title = "Edit",
   });
 
   @override
@@ -23,7 +25,7 @@ class ElevatedEditButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            "Edit",
+            title,
             style: nunitoRegular.copyWith(
               color: Colors.white,
               fontSize: 18,

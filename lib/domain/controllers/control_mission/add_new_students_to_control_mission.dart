@@ -46,7 +46,7 @@ class AddNewStudentsToControlMissionController extends GetxController {
     final response = await ResponseHandler<void>().getResponse(
       path: ControlMissionLinks.studentSeatNumbers,
       converter: (_) {},
-      type: ReqTypeEnum.POST,
+      type: ReqTypeEnum.PATCH,
       body: {
         'Student_IDs': includedStudentsIds,
         'controlMissionId': controlMissionId,
