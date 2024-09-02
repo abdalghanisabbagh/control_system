@@ -4,6 +4,7 @@ import '../controllers/batch_documents.dart/attendance_controller.dart';
 import '../controllers/batch_documents.dart/edit_cover_controller.dart';
 import '../controllers/batch_documents.dart/seat_number_controller.dart';
 import '../controllers/controllers.dart';
+import '../controllers/students_controllers/transfer_student_controller.dart';
 import '../controllers/subject/edit_subject_controller.dart';
 import '../controllers/subject/operation_controoler.dart';
 import '../services/side_menue_get_controller.dart';
@@ -226,5 +227,15 @@ class TokenBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(TokenService(), permanent: true);
+  }
+}
+
+class TransferStudentBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<TransferStudentController>(
+      () => TransferStudentController(),
+      fenix: true,
+    );
   }
 }
