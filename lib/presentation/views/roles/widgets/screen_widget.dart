@@ -35,8 +35,8 @@ class ScreenSideMenu extends StatelessWidget {
             color: color,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
-              color: isSelected ? Colors.green : Colors.grey,
-              width: 2,
+              color: isSelected ? ColorManager.primary : ColorManager.grey,
+              width: isSelected ? 4 : 2,
             ),
           ),
           child: Row(
@@ -51,7 +51,6 @@ class ScreenSideMenu extends StatelessWidget {
                   ),
                 ),
               ),
-             
             ],
           ),
         ),

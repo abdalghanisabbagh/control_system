@@ -220,33 +220,40 @@ class RolesController extends GetxController {
   }
 
   void filterColorScreen() {
-    if (lastSelectedFrontId == null) {
-      return;
-    }
-
-    int id = int.parse(lastSelectedFrontId!);
-
-    // جميع الشاشات حيث يكون screenFrontId >= id && screenFrontId < id + 1000
-    var widgetInThisScreen = allScreens.where((screen) {
+    for (var screen in allScreens) {
       int screenFrontId = int.parse(screen.frontId);
-      return screenFrontId >= id && screenFrontId < id + 1000;
-    }).toList();
 
-    var role =
-        filteredRoles.firstWhereOrNull((role) => role.id == selectedRoleId);
+      var role =
+          filteredRoles.firstWhereOrNull((role) => role.id == selectedRoleId);
 
-    if (role == null) {
-      return;
+      if (role != null) {
+        List<ScreenResModel> matchingActions =
+            role.screens!.where((roleScreen) {
+          int roleScreenFrontId = int.parse(roleScreen.frontId);
+          return roleScreenFrontId >= screenFrontId &&
+              roleScreenFrontId < screenFrontId + 1000 &&
+              allScreens.any((s) => int.parse(s.frontId) == roleScreenFrontId);
+        }).toList();
+
+        int numberOfScreensInRange = allScreens.where((s) {
+          int sFrontId = int.parse(s.frontId);
+          return sFrontId >= screenFrontId && sFrontId < screenFrontId + 1000;
+        }).length;
+
+        if (matchingActions.isEmpty) {
+          screen.color =
+              Colors.white; 
+        } else if (matchingActions.length == numberOfScreensInRange) {
+          screen.color =
+              Colors.green; 
+        } else {
+          screen.color =
+              Colors.orange; 
+        }
+      } else {
+        screen.color = Colors.white; 
+      }
     }
-
-    List<ScreenResModel> allActionsNotIncluded = role.screens!.where((screen) {
-      int screenFrontId = int.parse(screen.frontId);
-      return screenFrontId >= id &&
-          screenFrontId < id + 1000 &&
-          widgetInThisScreen.map((widget) => widget.id).contains(screen.id);
-    }).toList();
-    allActionsIncluded =
-        widgetInThisScreen.length == allActionsNotIncluded.length;
 
     update();
   }

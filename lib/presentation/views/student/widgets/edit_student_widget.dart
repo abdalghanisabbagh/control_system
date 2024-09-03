@@ -14,7 +14,7 @@ import '../../../resource_manager/validations.dart';
 class EditStudentWidget extends StatefulWidget {
   final StudentResModel studentResModel;
 
-  EditStudentWidget({
+  const EditStudentWidget({
     super.key,
     required this.studentResModel,
   });
@@ -36,7 +36,6 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
   void initState() {
     super.initState();
 
-    // Initialize controllers with values from studentResModel
     fnameController = TextEditingController(
         text: widget.studentResModel.firstName.toString());
     mnameController = TextEditingController(
@@ -48,12 +47,11 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
     sLangController = TextEditingController(
         text: widget.studentResModel.secondLang.toString());
     citizenshipController =
-        TextEditingController(); // If you want to initialize it with a value, add it here
+        TextEditingController(); 
   }
 
   @override
   void dispose() {
-    // Dispose controllers when the widget is removed from the widget tree
     fnameController.dispose();
     mnameController.dispose();
     lnameController.dispose();
@@ -65,7 +63,6 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the StudentController instance
     final StudentController controller = Get.find<StudentController>();
 
     // Set initial values
