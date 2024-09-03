@@ -47,7 +47,7 @@ class DistributionScreen extends GetView<DistributionController> {
                       size: isSmallScreen ? 24 : 30,
                     ),
                   ),
-                  Expanded(
+                  FittedBox(
                     child: HeaderWidget(
                       text: "Distribution: ${controller.controlMissionName}",
                     ),

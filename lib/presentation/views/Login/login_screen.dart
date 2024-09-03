@@ -58,7 +58,7 @@ class LoginScreen extends GetView<AuthController> {
               alignment: Alignment.topLeft,
               child: Padding(
                 padding: const EdgeInsets.all(32),
-                child: Text("Welcome Admin",
+                child: Text("Welcome",
                     style: nunitoBoldStyle(
                         color: ColorManager.primary, fontSize: 24)),
               ),

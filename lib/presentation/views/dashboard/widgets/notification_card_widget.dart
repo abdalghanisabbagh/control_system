@@ -6,10 +6,12 @@ class NotificationCardWidget extends StatelessWidget {
 
   final String schoolName;
   final String userName;
+  final String schoolTypeName;
   NotificationCardWidget({
     super.key,
     required this.userName,
     required this.schoolName,
+    required this.schoolTypeName,
   });
 
   String get welcomeMessage => now.hour < 12
@@ -45,7 +47,7 @@ class NotificationCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '$schoolName School',
+                  '$schoolName School ($schoolTypeName)',
                   style: nunitoBold.copyWith(
                     color: ColorManager.black,
                   ),

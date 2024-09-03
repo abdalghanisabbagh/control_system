@@ -116,6 +116,7 @@ class AppGoRouter {
             },
             onExit: (context, state) async {
               await Get.delete<AddNewStudentsToControlMissionController>();
+              Get.find<ControlMissionController>().onInit();
               return true;
             },
           ),
@@ -134,6 +135,7 @@ class AppGoRouter {
             },
             onExit: (context, state) async {
               await Get.delete<DistributionController>();
+              Get.find<ControlMissionController>().onInit();
               return true;
             },
             routes: [
@@ -161,6 +163,8 @@ class AppGoRouter {
           ),
         ],
         onExit: (context, state) {
+          Get.delete<CreateControlMissionBindings>();
+          Get.find<ControlMissionController>().onInit();
           return true;
         },
       ),

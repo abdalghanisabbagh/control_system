@@ -123,9 +123,11 @@ class RenderStudentsInEaxmRoom extends GetView<DistributeStudentsController> {
                                                         MainAxisAlignment
                                                             .spaceAround,
                                                     children: [
-                                                      Text(
-                                                        '${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).seatNumber}',
-                                                        style: nunitoRegular,
+                                                      Expanded(
+                                                        child: Text(
+                                                          '${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).seatNumber}',
+                                                          style: nunitoRegular,
+                                                        ),
                                                       ),
                                                       IconButton(
                                                         onPressed: () {
@@ -184,13 +186,15 @@ class RenderStudentsInEaxmRoom extends GetView<DistributeStudentsController> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Text(
-                                                        'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.thirdName!} ',
-                                                        style:
-                                                            nunitoBold.copyWith(
-                                                          fontSize: 14,
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Student Name: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.firstName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.secondName!} ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.thirdName!} ',
+                                                          style: nunitoBold
+                                                              .copyWith(
+                                                            fontSize: 14,
+                                                          ),
+                                                          maxLines: 3,
                                                         ),
-                                                        maxLines: 3,
                                                       ),
                                                       FittedBox(
                                                         fit: BoxFit.fill,

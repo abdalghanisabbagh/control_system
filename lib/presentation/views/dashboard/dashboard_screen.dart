@@ -31,6 +31,7 @@ class DashboardScreen extends GetView<DashboardController> {
                           NotificationCardWidget(
                             schoolName: controller.schoolName ?? '',
                             userName: controller.userName ?? '',
+                            schoolTypeName: controller.schoolTypeName ?? '',
                           ),
                           const SizedBox(
                             height: 20,
@@ -41,7 +42,7 @@ class DashboardScreen extends GetView<DashboardController> {
                               height: 20,
                             ),
                           },
-                          const RecruitmentDataWidget(),
+                          // const RecruitmentDataWidget(),
                         ],
                       ),
                     ),

@@ -35,7 +35,7 @@ void _login(
 }
 
 class LoginForm extends GetView<AuthController> {
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
@@ -50,7 +50,7 @@ class LoginForm extends GetView<AuthController> {
         if (value.logicalKey == LogicalKeyboardKey.enter) {
           _login(
             controller.login,
-            emailController.text,
+            usernameController.text,
             passwordController.text,
             formKey,
             context,
@@ -70,12 +70,7 @@ class LoginForm extends GetView<AuthController> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
             ),
-            height: size.height *
-                (size.height > 770
-                    ? 0.8
-                    : size.height > 670
-                        ? 0.7
-                        : 0.9),
+            height: size.height * 0.9,
             width: 500,
             child: Center(
               child: SingleChildScrollView(
@@ -103,8 +98,8 @@ class LoginForm extends GetView<AuthController> {
                             Image.asset(
                               AssetsManager.assetsLogosNisLogo,
                               fit: BoxFit.fill,
-                              height: 160,
-                              width: 160,
+                              height: 130,
+                              width: 130,
                             ),
                             const SizedBox(
                               height: 8,
@@ -133,13 +128,9 @@ class LoginForm extends GetView<AuthController> {
                               autofillHints: const [
                                 AutofillHints.username,
                               ],
-                              controller: emailController,
+                              controller: usernameController,
                               myValidation: Validations.requiredValidator,
-                              title: "Email",
-                              suffixIcon: const Icon(
-                                Icons.mail_outline,
-                                color: ColorManager.glodenColor,
-                              ),
+                              title: "username",
                             ),
                             GetBuilder<AuthController>(
                               id: 'pass_icon',
@@ -265,7 +256,7 @@ class LoginForm extends GetView<AuthController> {
                                           onPressed: () {
                                             _login(
                                               controller.login,
-                                              emailController.text,
+                                              usernameController.text,
                                               passwordController.text,
                                               formKey,
                                               context,

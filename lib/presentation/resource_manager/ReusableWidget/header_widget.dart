@@ -12,7 +12,9 @@ class HeaderWidget extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: Row(
         children: [
-          Text(text, style: nunitoBoldStyle()),
+          FittedBox(
+            child: Text(text, style: nunitoBold.copyWith(fontSize: 25)),
+          ),
         ],
       ),
     );
