@@ -199,7 +199,6 @@ class SchoolController extends GetxController {
         tokenService.saveTokenModelToHiveBox(TokenModel(
           aToken: r.accessToken!,
           rToken: r.refreshToken!,
-          dToken: DateTime.now().toIso8601String(),
         ));
         profileController.saveProfileToHiveBox(r.userProfile!);
       },

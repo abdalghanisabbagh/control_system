@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../Data/Models/token/token_model.dart';
@@ -49,7 +50,6 @@ class AuthController extends GetxController {
           TokenModel(
             aToken: r.accessToken!,
             rToken: r.refreshToken!,
-            dToken: DateTime.now().toIso8601String(),
           ),
         );
 
@@ -82,7 +82,18 @@ class AuthController extends GetxController {
       tokenService.deleteTokenModelFromHiveBox(),
       profileController.deleteProfileFromHiveBox(),
       SchoolController().deleteFromSchoolBox(),
+      Hive.box('ControlMission').clear(),
+      Hive.box('ExamRoom').clear(),
+      Hive.box('SideMenueIndex').clear(),
     ]);
+    ResponseHandler<void>().getResponse(
+      path: AuthLinks.logout,
+      converter: (_) {},
+      type: ReqTypeEnum.DELETE,
+      body: {
+        'refreshToken': tokenService.tokenModel?.rToken,
+      },
+    );
     isLogin = false;
   }
 }

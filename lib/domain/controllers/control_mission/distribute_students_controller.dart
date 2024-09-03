@@ -85,14 +85,15 @@ class DistributeStudentsController extends GetxController {
     List<StudentSeatNumberResModel> reOrderedList =
         <StudentSeatNumberResModel>[];
     if (gradeCounts.keys.length == 2) {
-      List<StudentSeatNumberResModel> studentsFromGrade = gradeCounts[0]!;
+      List<StudentSeatNumberResModel> studentsFromGrade =
+          gradeCounts.entries.toList()[0].value;
       List<StudentSeatNumberResModel> studentsFromAnotherGrade =
-          gradeCounts[1]!;
+          gradeCounts.entries.toList()[1].value;
       int row = 0;
       while (row < numberOfRows) {
         int rowLength =
             classDesks.where((classDesk) => classDesk.rowNum == row).length;
-        for (int i = 0; i < rowLength; i++) {
+        for (int i = 0; i < rowLength ~/ 2; i++) {
           if (row.isEven) {
             studentsFromGrade.isEmpty
                 ? null
@@ -115,15 +116,15 @@ class DistributeStudentsController extends GetxController {
       List<StudentSeatNumberResModel>? maxStudents,
           secondMaxStudents,
           minStudents;
-      int maxLength = -1;
-      int secondMaxLength = -1;
-      int minLength = double.infinity.toInt();
+      int? maxLength;
+      int? secondMaxLength;
+      int? minLength;
 
       for (var entry in gradeCounts.entries) {
         int length = entry.value.length;
 
         // Update max length and corresponding list
-        if (length > maxLength) {
+        if (maxLength == null || length > maxLength) {
           // Move current max to second max
           secondMaxLength = maxLength;
           secondMaxStudents = maxStudents;
@@ -131,14 +132,16 @@ class DistributeStudentsController extends GetxController {
           // Update max length and list
           maxLength = length;
           maxStudents = entry.value;
-        } else if (length > secondMaxLength && length < maxLength) {
+        }
+        if (secondMaxLength == null ||
+            (length > secondMaxLength && length < maxLength)) {
           // Update second max length and list
           secondMaxLength = length;
           secondMaxStudents = entry.value;
         }
 
         // Update min length and corresponding list
-        if (length < minLength) {
+        if (minLength == null || length < minLength) {
           minLength = length;
           minStudents = entry.value;
         }
@@ -574,17 +577,17 @@ class DistributeStudentsController extends GetxController {
                                                       pw.SizedBox(
                                                         height: (pdfHeight *
                                                                 0.01 *
-                                                                6) /
+                                                                5) /
                                                             numberOfRows,
                                                       ),
                                                       pw.Container(
                                                         height: (pdfHeight *
                                                                 0.05 *
-                                                                6) /
+                                                                5) /
                                                             numberOfRows,
                                                         width: (pdfWidth *
                                                                 0.15 *
-                                                                5) /
+                                                                6) /
                                                             classDeskCollection
                                                                 .entries
                                                                 .toList()[i]
@@ -614,11 +617,11 @@ class DistributeStudentsController extends GetxController {
                                                       pw.Container(
                                                         height: (pdfHeight *
                                                                 0.092 *
-                                                                6) /
+                                                                5) /
                                                             numberOfRows,
                                                         width: (pdfWidth *
                                                                 0.15 *
-                                                                5) /
+                                                                6) /
                                                             classDeskCollection
                                                                 .entries
                                                                 .toList()[i]
@@ -651,7 +654,7 @@ class DistributeStudentsController extends GetxController {
                                                               .symmetric(
                                                             horizontal: (pdfWidth *
                                                                     0.01 *
-                                                                    5) /
+                                                                    6) /
                                                                 classDeskCollection
                                                                     .entries
                                                                     .toList()[i]
@@ -660,7 +663,7 @@ class DistributeStudentsController extends GetxController {
                                                             vertical:
                                                                 (pdfHeight *
                                                                         0.01 *
-                                                                        6) /
+                                                                        5) /
                                                                     numberOfRows,
                                                           ),
                                                           child: pw.Column(
@@ -708,17 +711,17 @@ class DistributeStudentsController extends GetxController {
                                                       pw.SizedBox(
                                                         height: (pdfHeight *
                                                                 0.01 *
-                                                                6) /
+                                                                5) /
                                                             numberOfRows,
                                                       ),
                                                       pw.Container(
                                                         height: (pdfHeight *
                                                                 0.05 *
-                                                                6) /
+                                                                5) /
                                                             numberOfRows,
                                                         width: (pdfWidth *
                                                                 0.15 *
-                                                                5) /
+                                                                6) /
                                                             classDeskCollection
                                                                 .entries
                                                                 .toList()[i]
@@ -748,11 +751,11 @@ class DistributeStudentsController extends GetxController {
                                                       pw.Container(
                                                         height: (pdfHeight *
                                                                 0.05 *
-                                                                6) /
+                                                                5) /
                                                             numberOfRows,
                                                         width: (pdfWidth *
                                                                 0.15 *
-                                                                5) /
+                                                                6) /
                                                             classDeskCollection
                                                                 .entries
                                                                 .toList()[i]
@@ -799,7 +802,7 @@ class DistributeStudentsController extends GetxController {
                               countByGrade.keys.length,
                               (index) => pw.Padding(
                                 padding: pw.EdgeInsets.symmetric(
-                                  horizontal: (pdfWidth * 0.005 * 5) /
+                                  horizontal: (pdfWidth * 0.005 * 6) /
                                       countByGrade.keys.length,
                                 ),
                                 child: availableStudents
@@ -818,9 +821,9 @@ class DistributeStudentsController extends GetxController {
                                             pw.MainAxisAlignment.start,
                                         children: [
                                           pw.Container(
-                                            height: (pdfHeight * 0.030 * 6) /
+                                            height: (pdfHeight * 0.030 * 5) /
                                                 numberOfRows,
-                                            width: (pdfWidth * 0.17 * 5) /
+                                            width: (pdfWidth * 0.17 * 6) /
                                                 countByGrade.keys.length,
                                             alignment: pw.Alignment.center,
                                             decoration: pw.BoxDecoration(
@@ -839,9 +842,9 @@ class DistributeStudentsController extends GetxController {
                                             ),
                                           ),
                                           pw.Container(
-                                            height: (pdfHeight * 0.035 * 6) /
+                                            height: (pdfHeight * 0.035 * 5) /
                                                 numberOfRows,
-                                            width: (pdfWidth * 0.17 * 5) /
+                                            width: (pdfWidth * 0.17 * 6) /
                                                 countByGrade.keys.length,
                                             alignment: pw.Alignment.center,
                                             decoration: pw.BoxDecoration(

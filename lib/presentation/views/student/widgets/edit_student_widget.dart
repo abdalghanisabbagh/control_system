@@ -14,16 +14,16 @@ import '../../../resource_manager/validations.dart';
 class EditStudentWidget extends StatefulWidget {
   final StudentResModel studentResModel;
 
-  EditStudentWidget({
+  const EditStudentWidget({
     super.key,
     required this.studentResModel,
   });
 
   @override
-  _EditStudentWidgetState createState() => _EditStudentWidgetState();
+  EditStudentWidgetState createState() => EditStudentWidgetState();
 }
 
-class _EditStudentWidgetState extends State<EditStudentWidget> {
+class EditStudentWidgetState extends State<EditStudentWidget> {
   late TextEditingController blbIdController;
   late TextEditingController citizenshipController;
   late TextEditingController fnameController;
@@ -31,37 +31,6 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
   late TextEditingController mnameController;
   late TextEditingController religionController;
   late TextEditingController sLangController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Initialize controllers with values from studentResModel
-    fnameController = TextEditingController(
-        text: widget.studentResModel.firstName.toString());
-    mnameController = TextEditingController(
-        text: widget.studentResModel.secondName.toString());
-    lnameController = TextEditingController(
-        text: widget.studentResModel.thirdName.toString());
-    religionController =
-        TextEditingController(text: widget.studentResModel.religion.toString());
-    sLangController = TextEditingController(
-        text: widget.studentResModel.secondLang.toString());
-    citizenshipController =
-        TextEditingController(); // If you want to initialize it with a value, add it here
-  }
-
-  @override
-  void dispose() {
-    // Dispose controllers when the widget is removed from the widget tree
-    fnameController.dispose();
-    mnameController.dispose();
-    lnameController.dispose();
-    religionController.dispose();
-    sLangController.dispose();
-    citizenshipController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -310,5 +279,36 @@ class _EditStudentWidgetState extends State<EditStudentWidget> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Dispose controllers when the widget is removed from the widget tree
+    fnameController.dispose();
+    mnameController.dispose();
+    lnameController.dispose();
+    religionController.dispose();
+    sLangController.dispose();
+    citizenshipController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize controllers with values from studentResModel
+    fnameController = TextEditingController(
+        text: widget.studentResModel.firstName.toString());
+    mnameController = TextEditingController(
+        text: widget.studentResModel.secondName.toString());
+    lnameController = TextEditingController(
+        text: widget.studentResModel.thirdName.toString());
+    religionController =
+        TextEditingController(text: widget.studentResModel.religion.toString());
+    sLangController = TextEditingController(
+        text: widget.studentResModel.secondLang.toString());
+    citizenshipController =
+        TextEditingController(); // If you want to initialize it with a value, add it here
   }
 }
