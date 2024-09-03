@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 class DashboardController extends GetxController {
   DateTime dateTime = DateTime.now();
   String? period;
+  final String? schoolTypeName = Hive.box('School').get('SchoolTypeName');
   final String? schoolName = Hive.box('School').get('Name');
   TimeOfDay timeOfDay = TimeOfDay.now();
   final String? userName =

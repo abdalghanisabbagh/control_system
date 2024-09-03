@@ -361,7 +361,7 @@ class AddStudentsToControlMissionScreen
                                       context.mounted
                                           ? context.goNamed(
                                               AppRoutesNamesAndPaths
-                                                  .distributioncreateMissionScreenName,
+                                                  .controlBatchScreenName,
                                             )
                                           : null;
                                     }

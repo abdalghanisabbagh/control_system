@@ -27,12 +27,6 @@ class ControlMissionController extends GetxController {
   ValueItem? selectedItemEducationYear;
   String searchQuery = '';
 
-  @override
-  void onInit() async {
-    super.onInit();
-    getEducationYears();
-  }
-
   Future<bool> getControlMissionByEducationYear(int educationYearId) async {
     bool gotData = false;
     isLoading = true;
@@ -98,6 +92,13 @@ class ControlMissionController extends GetxController {
 
     isLodingGetEducationYears = false;
     update();
+  }
+
+  @override
+  void onInit() async {
+    super.onInit();
+    setSelectedItemEducationYear([]);
+    getEducationYears();
   }
 
   void setSelectedItemEducationYear(List<ValueItem> items) {

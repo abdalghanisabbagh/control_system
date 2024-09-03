@@ -70,6 +70,9 @@ class DistributeStudentsController extends GetxController {
   }
 
   void autoGenerateCross() {
+    for (var element in availableStudents) {
+      element.classDeskID = null;
+    }
     availableStudents
       ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
       ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
@@ -116,56 +119,47 @@ class DistributeStudentsController extends GetxController {
       List<StudentSeatNumberResModel>? maxStudents,
           secondMaxStudents,
           minStudents;
-      int? maxLength;
-      int? secondMaxLength;
-      int? minLength;
-
-      for (var entry in gradeCounts.entries) {
-        int length = entry.value.length;
-
-        // Update max length and corresponding list
-        if (maxLength == null || length > maxLength) {
-          // Move current max to second max
-          secondMaxLength = maxLength;
-          secondMaxStudents = maxStudents;
-
-          // Update max length and list
-          maxLength = length;
-          maxStudents = entry.value;
-        }
-        if (secondMaxLength == null ||
-            (length > secondMaxLength && length < maxLength)) {
-          // Update second max length and list
-          secondMaxLength = length;
-          secondMaxStudents = entry.value;
-        }
-
-        // Update min length and corresponding list
-        if (minLength == null || length < minLength) {
-          minLength = length;
-          minStudents = entry.value;
-        }
-      }
+      List<int> grades = gradeCounts.keys.toList()
+        ..sort((a, b) => a.compareTo(b));
+      minStudents = gradeCounts[grades[0]]!;
+      secondMaxStudents = gradeCounts[grades[1]]!;
+      maxStudents = gradeCounts[grades[2]]!;
       int row = 0;
       while (row < numberOfRows) {
         int rowLength =
             classDesks.where((classDesk) => classDesk.rowNum == row).length;
         for (int i = 0; i < rowLength; i++) {
           if (row.isEven && i.isEven) {
-            secondMaxStudents!.isEmpty
-                ? null
+            secondMaxStudents.isEmpty
+                ? maxStudents.isEmpty
+                    ? minStudents.isEmpty
+                        ? null
+                        : reOrderedList.add(minStudents.removeAt(0))
+                    : reOrderedList.add(maxStudents.removeAt(0))
                 : reOrderedList.add(secondMaxStudents.removeAt(0));
           } else if (row.isEven && i.isOdd) {
-            maxStudents!.isEmpty
-                ? null
+            maxStudents.isEmpty
+                ? secondMaxStudents.isEmpty
+                    ? minStudents.isEmpty
+                        ? null
+                        : reOrderedList.add(minStudents.removeAt(0))
+                    : reOrderedList.add(secondMaxStudents.removeAt(0))
                 : reOrderedList.add(maxStudents.removeAt(0));
           } else if (row.isOdd && i.isEven) {
-            maxStudents!.isEmpty
-                ? null
+            maxStudents.isEmpty
+                ? secondMaxStudents.isEmpty
+                    ? minStudents.isEmpty
+                        ? null
+                        : reOrderedList.add(minStudents.removeAt(0))
+                    : reOrderedList.add(secondMaxStudents.removeAt(0))
                 : reOrderedList.add(maxStudents.removeAt(0));
           } else if (row.isOdd && i.isOdd) {
-            minStudents!.isEmpty
-                ? null
+            minStudents.isEmpty
+                ? maxStudents.isEmpty
+                    ? secondMaxStudents.isEmpty
+                        ? null
+                        : reOrderedList.add(secondMaxStudents.removeAt(0))
+                    : reOrderedList.add(secondMaxStudents.removeAt(0))
                 : reOrderedList.add(minStudents.removeAt(0));
           }
         }
@@ -209,15 +203,19 @@ class DistributeStudentsController extends GetxController {
     // Print the reordered list
     availableStudents.assignAll(reOrderedList);
     distributeStudentsUi();
-    checkStudentsSettingNextToEachOther();
+    if (checkStudentsSettingNextToEachOther()) {
+      distributeStudents();
+    }
   }
 
   void autoGenerateSimple() {
+    for (var element in availableStudents) {
+      element.classDeskID = null;
+    }
     availableStudents
       ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
       ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
     classDesks.sort((a, b) => a.cloumnNum!.compareTo(b.cloumnNum!));
-
     // Define the block size
     final int blockSize = numberOfRows;
 
@@ -268,7 +266,9 @@ class DistributeStudentsController extends GetxController {
     availableStudents.assignAll(reOrderedList);
 
     distributeStudentsUi();
-    checkStudentsSettingNextToEachOther();
+    if (checkStudentsSettingNextToEachOther()) {
+      distributeStudents();
+    }
 
 // ///// 1-   map of grades students
 //     Map<int, List<StudentSeatNumberResModel>> studentsByGrade =
@@ -333,7 +333,7 @@ class DistributeStudentsController extends GetxController {
         0;
   }
 
-  void checkStudentsSettingNextToEachOther() {
+  bool checkStudentsSettingNextToEachOther() {
     List<StudentSeatNumberResModel> studentsSettingNextToEachOther = [];
 
     // ccheck there is no students from the sae grade setting next to each other
@@ -376,7 +376,9 @@ class DistributeStudentsController extends GetxController {
         },
         btnCancelOnPressed: () {},
       ).showDialogue(Get.key.currentContext!);
+      return false;
     }
+    return true;
   }
 
   Future<void> distributeStudents() async {

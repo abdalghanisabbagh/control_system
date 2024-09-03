@@ -208,6 +208,8 @@ class SchoolController extends GetxController {
         Hive.box('School').put('Id', currentSchool.iD),
         Hive.box('School').put('Name', currentSchool.name),
         Hive.box('School').put('SchoolTypeID', currentSchool.schoolTypeID),
+        Hive.box('School')
+            .put('SchoolTypeName', currentSchool.schoolType?.name),
       ],
     );
     await Hive.box('School').flush();
