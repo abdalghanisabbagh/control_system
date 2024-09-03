@@ -109,10 +109,7 @@ class RolesScreen extends GetView<RolesController> {
                                         controller.selectedRoleId == role.id!,
                                     onSelect: () {
                                       controller.setSelectedRole(role.id!);
-                                      if (controller.lastSelectedFrontId !=
-                                          null) {
-                                        controller.filterWidgets();
-                                      }
+
                                     },
                                   ),
                                 );
@@ -226,20 +223,7 @@ class RolesScreen extends GetView<RolesController> {
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 10.0),
                                   child: ScreenSideMenu(
-                                    color: controller.selectedScreenId ==
-                                                screen.id &&
-                                            controller.allActionsIncluded
-                                        ? Colors.green
-                                        : controller.selectedRoleId == null &&
-                                                controller.selectedScreenId ==
-                                                    screen.id
-                                            ? ColorManager.grey
-                                            : controller.selectedScreenId ==
-                                                        screen.id &&
-                                                    !controller
-                                                        .allActionsIncluded
-                                                ? Colors.orange
-                                                : Colors.white,
+                                    color: screen.color ?? Colors.grey,
                                     frontId: screen.frontId,
                                     screenName: screen.name,
                                     isSelected: controller.selectedScreenId ==
