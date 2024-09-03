@@ -17,7 +17,7 @@ class TokenInterceptor extends Interceptor {
       String refresh = tokenService.tokenModel!.rToken;
       var dio = Dio(
         BaseOptions(
-          baseUrl: AppLinks.baseUrlProd,
+          baseUrl: AppLinks.baseUrlDev,
         ),
       );
 
@@ -35,7 +35,6 @@ class TokenInterceptor extends Interceptor {
       TokenModel tokenModel = TokenModel(
         aToken: response.data['data'],
         rToken: tokenService.tokenModel!.rToken,
-        dToken: DateTime.now().toIso8601String(),
       );
       tokenService.saveNewAccessToken(tokenModel);
       final requestOptions = err.requestOptions;
