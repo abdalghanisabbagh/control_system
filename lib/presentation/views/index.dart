@@ -8,7 +8,7 @@ export 'cohort_settings/cohort_settings_screen.dart';
 export 'control_mission/control_mission_screen.dart';
 export 'dashboard/dashboard_screen.dart';
 export 'proctor/proctor_screen.dart';
-export 'roles/roles_screen.dart';
+export 'roles/privileges_screen.dart';
 export 'schools/school_screen.dart';
 export 'set_degrees/set_degrees_screen.dart';
 export 'student/student_screen.dart';
