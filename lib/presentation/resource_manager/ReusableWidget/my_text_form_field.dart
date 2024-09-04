@@ -84,8 +84,6 @@ class MytextFormFiled extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       obscureText: obscureText,
       focusNode: focusNode,
-    ).paddingOnly(
-      top: AppPading.p25,
     );
   }
 }

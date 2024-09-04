@@ -43,7 +43,8 @@ class LoginForm extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
+    // Size size = MediaQuery.sizeOf(context);
+    Size size = Get.size;
 
     return KeyboardListener(
       onKeyEvent: (value) {
@@ -70,8 +71,8 @@ class LoginForm extends GetView<AuthController> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
             ),
-            height: size.height * 0.9,
-            width: 500,
+            height: size.height * 0.85,
+            width: 400,
             child: Center(
               child: SingleChildScrollView(
                 child: Padding(
@@ -88,7 +89,7 @@ class LoginForm extends GetView<AuthController> {
                               "Control System",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 25,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -112,7 +113,7 @@ class LoginForm extends GetView<AuthController> {
                               ),
                             ),
                             const SizedBox(
-                              height: 8,
+                              height: 10,
                             ),
                             const SizedBox(
                               width: 30,
@@ -122,7 +123,7 @@ class LoginForm extends GetView<AuthController> {
                               ),
                             ),
                             const SizedBox(
-                              height: 32,
+                              height: 20,
                             ),
                             MytextFormFiled(
                               autofillHints: const [
@@ -131,6 +132,9 @@ class LoginForm extends GetView<AuthController> {
                               controller: usernameController,
                               myValidation: Validations.requiredValidator,
                               title: "username",
+                            ),
+                            const SizedBox(
+                              height: 10,
                             ),
                             GetBuilder<AuthController>(
                               id: 'pass_icon',
@@ -235,7 +239,7 @@ class LoginForm extends GetView<AuthController> {
                               },
                             ),
                             const SizedBox(
-                              height: 32,
+                              height: 10,
                             ),
                             GetBuilder<AuthController>(
                               id: 'login_btn',
@@ -268,7 +272,7 @@ class LoginForm extends GetView<AuthController> {
                               },
                             ),
                             const SizedBox(
-                              height: 20,
+                              height: 15,
                             ),
                             GetBuilder<AuthController>(
                               builder: (_) {
