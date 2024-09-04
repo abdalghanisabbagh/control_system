@@ -10,6 +10,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
 
   @override
+  Size get preferredSize => const Size.fromHeight(50.0);
+
+  @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
@@ -20,20 +23,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: GetBuilder<SideMenueGetController>(
         builder: (sideMenueGetController) {
           return IconButton(
-            icon: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return ScaleTransition(scale: animation, child: child);
-              },
-              child: Icon(
-                sideMenueGetController.isSideMenuVisible
-                    ? Icons.arrow_back
-                    : Icons.menu,
-                key: ValueKey<bool>(sideMenueGetController.isSideMenuVisible),
-              ),
+            icon: AnimatedIcon(
+              icon: AnimatedIcons.menu_close,
+              progress: sideMenueGetController.menuIconAnimationController,
             ),
             color: ColorManager.white,
             onPressed: () {
+              sideMenueGetController.isSideMenuVisible
+                  ? sideMenueGetController.menuIconAnimationController.reverse()
+                  : sideMenueGetController.menuIconAnimationController
+                      .forward();
               sideMenueGetController.toggleSideMenuVisibility();
             },
           );
@@ -54,7 +53,4 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ],
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(50.0);
 }

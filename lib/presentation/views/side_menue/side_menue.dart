@@ -43,17 +43,21 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
       title: Row(
         children: [
           Expanded(
+            flex: 1,
             child: Image.asset(
               AssetsManager.assetsLogosNIS5,
             ),
           ),
-          FittedBox(
-            fit: BoxFit.contain,
-            child: Text(
-              "Control System",
-              style: nunitoRegularStyle(
-                  color: ColorManager.white, fontSize: AppSize.s18),
-              overflow: TextOverflow.ellipsis,
+          Expanded(
+            flex: 2,
+            child: FittedBox(
+              fit: BoxFit.fill,
+              child: Text(
+                "Control System",
+                style: nunitoRegularStyle(
+                    color: ColorManager.white, fontSize: AppSize.s18),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           const Divider(
