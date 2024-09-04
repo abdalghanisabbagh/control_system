@@ -12,10 +12,13 @@ import '../../presentation/resource_manager/routes/index.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/profile_controller.dart';
 
-class SideMenueGetController extends GetxController {
+class SideMenueGetController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   int nowIndex = 0;
   late final SideMenuController sideMenuController;
   bool isSideMenuVisible = true;
+
+  late AnimationController menuIconAnimationController;
 
   List<SideMenuItem> userMenue = [];
 
@@ -93,6 +96,15 @@ class SideMenueGetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    menuIconAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+      lowerBound: 0.0,
+      upperBound: 1.0,
+      value: 1.0,
+    )..addListener(() {
+        update();
+      });
     sideMenuController = SideMenuController(
       initialPage: Hive.box('SideMenueIndex').get('index') ?? nowIndex,
     );

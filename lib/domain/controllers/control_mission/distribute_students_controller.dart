@@ -121,9 +121,9 @@ class DistributeStudentsController extends GetxController {
           minStudents;
       List<int> grades = gradeCounts.keys.toList()
         ..sort((a, b) => a.compareTo(b));
-      minStudents = gradeCounts[grades[0]]!;
+      maxStudents = gradeCounts[grades[0]]!;
       secondMaxStudents = gradeCounts[grades[1]]!;
-      maxStudents = gradeCounts[grades[2]]!;
+      minStudents = gradeCounts[grades[2]]!;
       int row = 0;
       while (row < numberOfRows) {
         int rowLength =
