@@ -34,6 +34,10 @@ class AppRoutesNamesAndPaths {
   // cohortSettingScreen
   static const String cohortSettingScreenPath = '/cohort-settings';
 
+  static const String operationCohortScreenName = 'Cohort Operations';
+
+  static const String operationCohortScreenPath = 'cohort-operations';
+
   static const String controlBatchScreenName = 'Control Batch';
   // controlMissionScreen
   static const String controlBatchScreenPath = '/control-batch';

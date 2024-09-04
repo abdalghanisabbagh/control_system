@@ -1,3 +1,4 @@
+import 'package:control_system/domain/controllers/operation_cohort_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/batch_documents.dart/attendance_controller.dart';
@@ -93,6 +94,10 @@ class CohortSettingsBindings extends Bindings {
   void dependencies() {
     Get.lazyPut<CohortsSettingsController>(
       () => CohortsSettingsController(),
+      fenix: true,
+    );
+    Get.lazyPut<OperationCohortController>(
+      () => OperationCohortController(),
       fenix: true,
     );
   }
