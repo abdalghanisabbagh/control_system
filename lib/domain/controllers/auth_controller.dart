@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:universal_html/html.dart';
 
 import '../../Data/Models/token/token_model.dart';
 import '../../Data/Models/user/login_response/login_res_model.dart';
@@ -95,5 +96,6 @@ class AuthController extends GetxController {
       },
     );
     isLogin = false;
+    window.history.replaceState(null, '', '');
   }
 }
