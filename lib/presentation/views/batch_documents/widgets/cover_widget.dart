@@ -207,7 +207,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
             ),
             Row(
               children: [
-                controller.schoolTypeId == 1
+                'american' == controller.schoolTypeName?.toLowerCase()
                     ? controller.isLoadingGeneratePdf
                         ? Expanded(
                             child: Center(
@@ -257,7 +257,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                             ),
                           )
                     : const SizedBox.shrink(),
-                controller.schoolTypeId == 2
+                'british' == controller.schoolTypeName?.toLowerCase()
                     ? controller.isLoadingGeneratePdf
                         ? Expanded(
                             child: Center(
@@ -307,7 +307,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                             ),
                           )
                     : const SizedBox.shrink(),
-                controller.schoolTypeId == 5
+                "ib" == controller.schoolTypeName?.toLowerCase()
                     ? controller.isLoadingGeneratePdf
                         ? Expanded(
                             child: Center(

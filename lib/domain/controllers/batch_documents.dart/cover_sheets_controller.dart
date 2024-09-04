@@ -39,7 +39,8 @@ class CoversSheetsController extends GetxController {
   List<ValueItem> optionsGrades = <ValueItem>[];
   List<ValueItem> optionsSubjects = <ValueItem>[];
   final int schoolId = Hive.box('School').get('Id');
-  final int schoolTypeId = Hive.box('School').get('SchoolTypeID');
+  final String? schoolTypeName = Hive.box('School').get('SchoolTypeName');
+
   ValueItem? selectedItemControlMission;
   ValueItem? selectedItemEducationYear;
   ValueItem? selectedItemGrade;
