@@ -15,6 +15,7 @@ import '../../views/control_mission/widgets/create_mission_widget.dart';
 import '../../views/control_mission/widgets/distribute_students.dart';
 import '../../views/index.dart';
 import '../../views/subject_setting/widgets/operation_widget.dart';
+import '../ReusableWidget/page_not_found_screen.dart';
 import 'app_routes_names_and_paths.dart';
 
 class AppGoRouter {
@@ -22,6 +23,9 @@ class AppGoRouter {
     navigatorKey: Get.key,
     debugLogDiagnostics: true,
     initialLocation: AppRoutesNamesAndPaths.loginScreenPath,
+    errorBuilder: (context, state) {
+      return const PageNotFoundScreen();
+    },
     routes: [
       GoRoute(
         path: AppRoutesNamesAndPaths.loginScreenPath,
@@ -297,16 +301,16 @@ class AppGoRouter {
         },
       ),
       GoRoute(
-        path: AppRoutesNamesAndPaths.rolesScreenPath,
-        name: AppRoutesNamesAndPaths.rolesScreenName,
+        path: AppRoutesNamesAndPaths.privilegesScreenPath,
+        name: AppRoutesNamesAndPaths.privilegesScreenName,
         builder: (context, state) {
           RolesBinidings().dependencies();
 
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
-          return const RolesScreen();
+          return const PrivilegesScreen();
         },
         onExit: (context, state) {
-          Get.delete<RolesController>();
+          Get.delete<PrivilegesController>();
           return true;
         },
       ),

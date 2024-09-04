@@ -2,7 +2,7 @@ import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../domain/controllers/roles_controller.dart';
+import '../../../../domain/controllers/privileges_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -42,42 +42,46 @@ class AddNewScreenWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          GetBuilder<RolesController>(builder: (controller) {
-            return controller.addLoading
-                ? Center(
-                    child: LoadingIndicators.getLoadingIndicator(),
-                  )
-                : Row(
-                    children: [
-                      const Expanded(
-                        child: ElevatedBackButton(),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: ElevatedAddButton(
-                          onPressed: () async {
-                            controller
-                                .addNewScreen(
-                                    name: nameController.text,
-                                    frontId: screenIdController.text)
-                                .then((added) {
-                              if (added) {
-                                nameController.clear();
-                                screenIdController.clear();
-                                Get.back();
-                                MyFlashBar.showSuccess(
-                                        'Screen has ben added', 'Screen')
-                                    .show(Get.key.currentContext);
-                              }
-                            });
-                          },
+          GetBuilder<PrivilegesController>(
+            builder: (controller) {
+              return controller.addLoading
+                  ? Center(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    )
+                  : Row(
+                      children: [
+                        const Expanded(
+                          child: ElevatedBackButton(),
                         ),
-                      ),
-                    ],
-                  );
-          }),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: ElevatedAddButton(
+                            onPressed: () async {
+                              controller
+                                  .addNewScreen(
+                                      name: nameController.text,
+                                      frontId: screenIdController.text)
+                                  .then(
+                                (added) {
+                                  if (added) {
+                                    nameController.clear();
+                                    screenIdController.clear();
+                                    Get.back();
+                                    MyFlashBar.showSuccess(
+                                            'Screen has ben added', 'Screen')
+                                        .show(Get.key.currentContext);
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+            },
+          ),
         ],
       ),
     );

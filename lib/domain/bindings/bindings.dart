@@ -160,8 +160,8 @@ class ProctorBindings extends Bindings {
 class RolesBinidings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<RolesController>(
-      () => RolesController(),
+    Get.lazyPut<PrivilegesController>(
+      () => PrivilegesController(),
       fenix: true,
     );
   }

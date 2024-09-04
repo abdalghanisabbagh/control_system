@@ -6,13 +6,11 @@ import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Models/cohort/cohort_res_model.dart';
 import '../../Data/Models/cohort/cohorts_res_model.dart';
-import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
-import 'profile_controller.dart';
 
 class CohortsSettingsController extends GetxController {
   bool addLoading = false;
@@ -21,9 +19,6 @@ class CohortsSettingsController extends GetxController {
   List<int> selectedSubjectsIds = <int>[];
   bool deleteSubjectLoading = false;
   List<int> slectedSchoolTypeId = <int>[];
-
-  final UserProfileModel? _userProfile =
-      Get.find<ProfileController>().cachedUserProfile;
 
   Future<bool> addnewCohort(String name) async {
     addLoading = true;

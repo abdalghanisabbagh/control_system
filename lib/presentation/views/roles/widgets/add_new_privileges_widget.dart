@@ -2,7 +2,7 @@ import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../domain/controllers/roles_controller.dart';
+import '../../../../domain/controllers/privileges_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -10,10 +10,10 @@ import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/validations.dart';
 
-class AddNewRolesWidget extends StatelessWidget {
+class AddNewPrivilegesWidget extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
 
-  AddNewRolesWidget({super.key});
+  AddNewPrivilegesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class AddNewRolesWidget extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                GetBuilder<RolesController>(
+                GetBuilder<PrivilegesController>(
                   builder: (controller) {
                     return controller.addLoading
                         ? Center(

@@ -14,7 +14,7 @@ import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
-class RolesController extends GetxController {
+class PrivilegesController extends GetxController {
   final searchRolesController = TextEditingController();
   final searchScreensController = TextEditingController();
   final searchWidgetsController = TextEditingController();
@@ -368,6 +368,7 @@ class RolesController extends GetxController {
   void setSelectedRole(int roleId) {
     selectedRoleId = roleId;
     filterColorScreen();
+    filterWidgets();
     update();
   }
 

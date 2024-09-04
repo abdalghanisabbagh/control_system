@@ -1,22 +1,22 @@
 import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
 import 'package:control_system/presentation/views/roles/widgets/front_id_screen.dart';
-import 'package:control_system/presentation/views/roles/widgets/role_widget.dart';
+import 'package:control_system/presentation/views/roles/widgets/privileges_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../domain/controllers/privileges_controller.dart';
 import '../../../domain/controllers/profile_controller.dart';
-import '../../../domain/controllers/roles_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../base_screen.dart';
-import 'widgets/add_new_roles_widget.dart';
+import 'widgets/add_new_privileges_widget.dart';
 import 'widgets/add_new_screen_widget.dart';
 import 'widgets/screen_widget.dart';
 
-class RolesScreen extends GetView<RolesController> {
-  const RolesScreen({super.key});
+class PrivilegesScreen extends GetView<PrivilegesController> {
+  const PrivilegesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,30 +33,35 @@ class RolesScreen extends GetView<RolesController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const HeaderWidget(text: "Roles"),
-                      Visibility(
-                        visible: Get.find<ProfileController>()
-                            .canAccessWidget(widgetId: '11200'),
-                        child: InkWell(
-                          onTap: () {
-                            MyDialogs.showDialog(
-                              context,
-                              AddNewRolesWidget(),
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: ColorManager.glodenColor,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Text(
-                                  "Add New Roles",
-                                  style: nunitoBold.copyWith(
-                                    color: ColorManager.white,
-                                    fontSize: 16,
+                      const HeaderWidget(text: "Privileges"),
+                      Expanded(
+                        child: Visibility(
+                          visible: Get.find<ProfileController>()
+                              .canAccessWidget(widgetId: '11200'),
+                          child: InkWell(
+                            onTap: () {
+                              MyDialogs.showDialog(
+                                context,
+                                AddNewPrivilegesWidget(),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorManager.glodenColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Text(
+                                      "Add New Privileges",
+                                      style: nunitoBold.copyWith(
+                                        color: ColorManager.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -67,7 +72,7 @@ class RolesScreen extends GetView<RolesController> {
                     ],
                   ),
                   MytextFormFiled(
-                    title: 'Search Roles',
+                    title: 'Search Privileges',
                     controller: controller.searchRolesController,
                     onChanged: (value) {
                       controller.serachInRoles(value!);
@@ -82,7 +87,7 @@ class RolesScreen extends GetView<RolesController> {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: GetBuilder<RolesController>(
+                      child: GetBuilder<PrivilegesController>(
                         builder: (controller) {
                           if (controller.getAllLoading) {
                             return Center(
@@ -91,7 +96,7 @@ class RolesScreen extends GetView<RolesController> {
                           } else if (controller.filteredRoles.isEmpty) {
                             return Center(
                               child: Text(
-                                "No Roles Found",
+                                "No Privileges Found",
                                 style: nunitoBold.copyWith(
                                     color: ColorManager.black),
                               ),
@@ -103,13 +108,12 @@ class RolesScreen extends GetView<RolesController> {
                                 var role = controller.filteredRoles[index];
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 10.0),
-                                  child: CustomRoleCardWidget(
+                                  child: CustomPrivilegeCardWidget(
                                     roleName: role.name!,
                                     isSelected:
                                         controller.selectedRoleId == role.id!,
                                     onSelect: () {
                                       controller.setSelectedRole(role.id!);
-
                                     },
                                   ),
                                 );
@@ -191,7 +195,7 @@ class RolesScreen extends GetView<RolesController> {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: GetBuilder<RolesController>(
+                      child: GetBuilder<PrivilegesController>(
                         builder: (_) {
                           if (controller.getAllLoading) {
                             return Center(
@@ -278,7 +282,7 @@ class RolesScreen extends GetView<RolesController> {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: GetBuilder<RolesController>(
+                      child: GetBuilder<PrivilegesController>(
                         builder: (_) {
                           // if (controller.selectedRoleId == null) {
                           //   return Center(
@@ -311,25 +315,31 @@ class RolesScreen extends GetView<RolesController> {
                               ),
                             );
                           } else {
-                            return ListView.builder(
-                              itemCount: controller.widgets.length,
-                              itemBuilder: (context, index) {
-                                var widget = controller.widgets[index];
-                                return Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: FrontIdScreen(
-                                    color: controller.includedActions
-                                            .contains(widget.id)
-                                        ? Colors.green
-                                        : Colors.white,
-                                    widgetName: widget.name,
-                                    frontId: widget.frontId,
-                                    id: widget.id,
-                                    included: controller.includedActions
-                                        .contains(widget.id),
-                                  ),
-                                );
-                              },
+                            return AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              child: ListView.builder(
+                                key: ValueKey(
+                                    controller.lastSelectedFrontId.toString() +
+                                        controller.selectedRoleId.toString()),
+                                itemCount: controller.widgets.length,
+                                itemBuilder: (context, index) {
+                                  var widget = controller.widgets[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: FrontIdScreen(
+                                      color: controller.includedActions
+                                              .contains(widget.id)
+                                          ? Colors.green
+                                          : Colors.white,
+                                      widgetName: widget.name,
+                                      frontId: widget.frontId,
+                                      id: widget.id,
+                                      included: controller.includedActions
+                                          .contains(widget.id),
+                                    ),
+                                  );
+                                },
+                              ),
                             );
                           }
                         },
