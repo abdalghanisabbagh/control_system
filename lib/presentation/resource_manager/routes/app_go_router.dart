@@ -7,6 +7,7 @@ import '../../../domain/controllers/controllers.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
 import '../../views/admin_screen/widgets/all_user_widget.dart';
 import '../../views/admin_screen/widgets/user_in_school_widget.dart';
+import '../../views/cohort_settings/widgets/operation_cohort_screen.dart';
 import '../../views/control_mission/distribution_and_details/add_new_students_to_control_mission.dart';
 import '../../views/control_mission/distribution_and_details/details_and_review_mission.dart';
 import '../../views/control_mission/distribution_and_details/distribution.dart';
@@ -94,6 +95,15 @@ class AppGoRouter {
           CohortSettingsBindings().dependencies();
           return const CohortSettingsScreen();
         },
+        routes: [
+          GoRoute(
+            path: AppRoutesNamesAndPaths.operationCohortScreenPath,
+            name: AppRoutesNamesAndPaths.operationCohortScreenName,
+            builder: (context, state) {
+              return const OperationCohortScreen();
+            },
+          )
+        ],
         onExit: (context, state) {
           return true;
         },

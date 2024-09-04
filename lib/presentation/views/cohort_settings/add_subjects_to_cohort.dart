@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/controllers/operation_cohort_controller.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,11 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                                       "Success")
                                                   .show(context.mounted
                                                       ? context
-                                                      : Get.key.currentContext!)
+                                                      : Get
+                                                          .key.currentContext!),
+                                              Get.find<
+                                                      OperationCohortController>()
+                                                  .onInit(),
                                             }
                                           : null,
                                     )
@@ -127,55 +132,78 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                   style: nunitoRegular.copyWith(
                                       color: Colors.black),
                                 ),
-                                IconButton(
-                                  onPressed: () async {
-                                    await controller
-                                        .deleteSubjectFromCohort(
-                                            cohortId: item.iD!,
-                                            subjectId: item
-                                                .cohortsSubjects!
-                                                .cohortHasSubjects![index]
-                                                .subjects!
-                                                .iD!)
-                                        .then(
-                                          (value) => value
-                                              ? {
-                                                  Get.back(),
-                                                  MyFlashBar.showSuccess(
-                                                          "Subject Deleted Successfully",
-                                                          "Success")
-                                                      .show(context.mounted
-                                                          ? context
-                                                          : Get.key
-                                                              .currentContext!)
-                                                }
-                                              : null,
-                                        );
+                                GetBuilder<CohortsSettingsController>(
+                                  id: "delete_${item.iD}_${item.cohortsSubjects!.cohortHasSubjects![index].subjects!.iD}",
+                                  builder: (_) {
+                                    return controller.deleteSubjectLoading
+                                        ? FittedBox(
+                                            fit: BoxFit.fill,
+                                            child: SizedBox(
+                                              width: 50,
+                                              height: 50,
+                                              child: Center(
+                                                child: LoadingIndicators
+                                                    .getLoadingIndicator(),
+                                              ),
+                                            ),
+                                          )
+                                        : IconButton(
+                                            onPressed: () async {
+                                              await controller
+                                                  .deleteSubjectFromCohort(
+                                                      cohortId: item.iD!,
+                                                      subjectId: item
+                                                          .cohortsSubjects!
+                                                          .cohortHasSubjects![
+                                                              index]
+                                                          .subjects!
+                                                          .iD!)
+                                                  .then(
+                                                    (value) => value
+                                                        ? {
+                                                            Get.back(),
+                                                            MyFlashBar.showSuccess(
+                                                                    "Subject Deleted Successfully",
+                                                                    "Success")
+                                                                .show(context
+                                                                        .mounted
+                                                                    ? context
+                                                                    : Get.key
+                                                                        .currentContext!),
+                                                            Get.find<
+                                                                    OperationCohortController>()
+                                                                .onInit()
+                                                          }
+                                                        : null,
+                                                  );
+                                            },
+                                            icon: const Icon(Icons.delete),
+                                          );
                                   },
-                                  icon: const Icon(Icons.delete),
-                                )
+                                ),
                               ],
                             ),
                           );
                         },
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: ColorManager.bgSideMenu,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Back",
-                            style: nunitoRegular.copyWith(
-                                color: Colors.white, fontSize: 18),
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ColorManager.bgSideMenu,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Back",
+                              style: nunitoRegular.copyWith(
+                                  color: Colors.white, fontSize: 18),
+                            ),
                           ),
                         ),
                       ),
