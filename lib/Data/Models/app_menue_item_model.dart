@@ -56,9 +56,9 @@ class AppMenueItem {
         routeName: AppRoutesNamesAndPaths.proctorScreenName,
         iconWidget: Image.asset(AssetsManager.assetsIconsPatchDoc)),
     AppMenueItem(
-        pageName: AppRoutesNamesAndPaths.rolesScreenName,
+        pageName: AppRoutesNamesAndPaths.privilegesScreenName,
         pageNumber: '11000',
-        routeName: AppRoutesNamesAndPaths.rolesScreenName,
+        routeName: AppRoutesNamesAndPaths.privilegesScreenName,
         iconWidget: Image.asset(AssetsManager.assetsIconsRoles)),
   ];
 
