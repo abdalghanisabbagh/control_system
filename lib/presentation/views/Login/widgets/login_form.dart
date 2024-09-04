@@ -72,7 +72,7 @@ class LoginForm extends GetView<AuthController> {
               borderRadius: BorderRadius.circular(15),
             ),
             height: size.height * 0.85,
-            width: 400,
+            width: 420,
             child: Center(
               child: SingleChildScrollView(
                 child: Padding(

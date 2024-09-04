@@ -16,7 +16,8 @@ class SelectSchoolForm extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
+    Size size = Get.size;
 
     return Center(
       child: Card(
@@ -30,13 +31,8 @@ class SelectSchoolForm extends GetView<ProfileController> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
           ),
-          height: size.height *
-              (size.height > 770
-                  ? 0.7
-                  : size.height > 670
-                      ? 0.8
-                      : 0.9),
-          width: 500,
+          height: size.height * 0.85,
+          width: 420,
           child: Padding(
             padding: const EdgeInsets.all(40),
             child: Column(
