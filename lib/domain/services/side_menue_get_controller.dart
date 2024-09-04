@@ -18,6 +18,10 @@ class SideMenueGetController extends GetxController
   late final SideMenuController sideMenuController;
   bool isSideMenuVisible = true;
 
+  final PageStorageBucket sideMenuBucket = PageStorageBucket();
+
+  final PageStorageKey sideMenuStorageKey = const PageStorageKey('sideMenuKey');
+
   late AnimationController menuIconAnimationController;
 
   List<SideMenuItem> userMenue = [];
