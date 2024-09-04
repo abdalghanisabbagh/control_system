@@ -36,7 +36,7 @@ class MultiSelectDropDownView extends StatelessWidget {
             },
       selectionType: multiSelect ? SelectionType.multi : SelectionType.single,
       chipConfig: const ChipConfig(
-        wrapType: WrapType.wrap,
+        wrapType: WrapType.scroll,
         autoScroll: true,
       ),
       optionTextStyle: const TextStyle(fontSize: 16),
