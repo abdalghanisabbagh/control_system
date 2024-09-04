@@ -95,9 +95,9 @@ class AppRoutesNamesAndPaths {
   static const String reviewAndDetailsMissionPath =
       'reviewAndDetailsMissionPath';
 
-  static const String rolesScreenName = 'Roles';
-  // rolesScreen
-  static const String rolesScreenPath = '/roles';
+  static const String privilegesScreenName = 'Privileges';
+  // privilegesScreen
+  static const String privilegesScreenPath = '/privileges';
 
   static const String schoolsScreenName = 'Schools';
   // schoolsScreen
