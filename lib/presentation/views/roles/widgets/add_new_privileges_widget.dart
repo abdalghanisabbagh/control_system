@@ -31,6 +31,9 @@ class AddNewPrivilegesWidget extends StatelessWidget {
                     fontSize: 30,
                   ),
                 ),
+                const SizedBox(
+                  height: 15,
+                ),
                 MytextFormFiled(
                   myValidation: Validations.requiredValidator,
                   controller: nameController,

@@ -29,10 +29,16 @@ class AddNewScreenWidget extends StatelessWidget {
               fontSize: 30,
             ),
           ),
+            const SizedBox(
+            height: 15,
+          ),
           MytextFormFiled(
             myValidation: Validations.requiredValidator,
             controller: nameController,
             title: "Screen Name",
+          ),
+          const SizedBox(
+            height: 15,
           ),
           MytextFormFiled(
             myValidation: Validations.requiredValidator,
