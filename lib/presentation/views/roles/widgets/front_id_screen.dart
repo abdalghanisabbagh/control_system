@@ -3,9 +3,9 @@ import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../domain/controllers/roles_controller.dart';
+import '../../../../domain/controllers/privileges_controller.dart';
 
-class FrontIdScreen extends GetView<RolesController> {
+class FrontIdScreen extends GetView<PrivilegesController> {
   final String widgetName;
   final String frontId;
   final Color color;
@@ -39,40 +39,47 @@ class FrontIdScreen extends GetView<RolesController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            "$widgetName : $frontId ",
-            style: nunitoBold.copyWith(
-              color: ColorManager.primary,
-              fontSize: 16,
+          Expanded(
+            child: Text(
+              "$widgetName : $frontId ",
+              style: nunitoBold.copyWith(
+                color: ColorManager.primary,
+                fontSize: 16,
+              ),
             ),
           ),
           included
               ? IconButton(
                   onPressed: () {
                     controller.removedSreensIds.add(id);
-                    controller.deleteScreensFromRole().then((value) {
-                      if (value) {
-                        MyFlashBar.showSuccess(
-                          'Removed successfully From Role',
-                          "Success",
-                        ).show(Get.key.currentContext!);
-                      }
-                    });
+                    controller.deleteScreensFromRole().then(
+                      (value) {
+                        if (value) {
+                          MyFlashBar.showSuccess(
+                            'Removed successfully From Role',
+                            "Success",
+                          ).show(Get.key.currentContext!);
+                        }
+                      },
+                    );
                   },
                   icon: const Icon(Icons.delete))
               : IconButton(
                   onPressed: () {
                     controller.selectedSreensIds.add(id);
-                    controller.addScreensToRole().then((value) {
-                      if (value) {
-                        MyFlashBar.showSuccess(
-                          'Added successfully To Role',
-                          "Success",
-                        ).show(Get.key.currentContext!);
-                      }
-                    });
+                    controller.addScreensToRole().then(
+                      (value) {
+                        if (value) {
+                          MyFlashBar.showSuccess(
+                            'Added successfully To Role',
+                            "Success",
+                          ).show(Get.key.currentContext!);
+                        }
+                      },
+                    );
                   },
-                  icon: const Icon(Icons.add))
+                  icon: const Icon(Icons.add),
+                ),
         ],
       ),
     );
