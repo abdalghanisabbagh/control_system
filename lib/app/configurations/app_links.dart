@@ -14,6 +14,7 @@ class AuthLinks {
 
 class CohortLinks {
   static const cohort = 'cohort';
+  static const operationCreateCohort = '$cohort/operation-create-cohort';
   static const connectSubjectToCohort = '$cohort/Connect-Subject';
   static const disConnectSubjectFromCohort = '$cohort/disconnect-Subject';
   static const getCohortBySchoolType = '$cohort/school-type';
