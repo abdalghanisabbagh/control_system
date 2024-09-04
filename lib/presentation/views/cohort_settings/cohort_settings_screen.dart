@@ -37,7 +37,7 @@ class CohortSettingsScreen extends GetView<CohortsSettingsController> {
                     const Spacer(),
                     Visibility(
                       visible: Get.find<ProfileController>().canAccessWidget(
-                        widgetId: '7400',
+                        widgetId: '8400',
                       ),
                       child: Expanded(
                         flex: 1,
