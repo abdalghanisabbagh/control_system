@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/domain/controllers/operation_cohort_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Models/cohort/cohort_res_model.dart';
@@ -19,6 +19,8 @@ class CohortsSettingsController extends GetxController {
   List<CohortResModel> cohorts = <CohortResModel>[];
   bool getAllLoading = false;
   List<int> selectedSubjectsIds = <int>[];
+  bool deleteSubjectLoading = false;
+  List<int> slectedSchoolTypeId = <int>[];
 
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
@@ -31,13 +33,12 @@ class CohortsSettingsController extends GetxController {
 
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
-      path: CohortLinks.cohort,
+      path: CohortLinks.operationCreateCohort,
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        "School_Type_ID": Hive.box('School').get('SchoolTypeID'),
-        "Created_By": _userProfile?.iD,
+        "School_Type_ID": slectedSchoolTypeId.first,
       },
     );
     ////////
@@ -56,7 +57,7 @@ class CohortsSettingsController extends GetxController {
         update();
       },
     );
-
+    Get.find<OperationCohortController>().onInit();
     addLoading = false;
     update();
     return cohortHasBeenAdded;
@@ -128,8 +129,9 @@ class CohortsSettingsController extends GetxController {
     required int cohortId,
     required int subjectId,
   }) async {
+    deleteSubjectLoading = true;
     bool subjectHasBeenDeleted = false;
-    update();
+    update(['delete_${cohortId}_$subjectId']);
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
     Either<Failure, CohortResModel> response =
         await responseHandler.getResponse(
@@ -152,7 +154,8 @@ class CohortsSettingsController extends GetxController {
         subjectHasBeenDeleted = true;
       },
     );
-    update();
+    deleteSubjectLoading = false;
+    update(['delete_${cohortId}_$subjectId']);
     return subjectHasBeenDeleted;
   }
 
