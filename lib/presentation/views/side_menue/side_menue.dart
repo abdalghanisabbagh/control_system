@@ -17,6 +17,7 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
   Widget build(BuildContext context) {
     return PageStorage(
       bucket: controller.sideMenuBucket,
+      key: controller.sideMenuStorageKey,
       child: SideMenu(
         showToggle: true,
         controller: controller.sideMenuController,
@@ -69,7 +70,6 @@ class SideMenueWidget extends GetView<SideMenueGetController> {
           ],
         ),
         items: controller.getUserMenue(context),
-        key: controller.sideMenuStorageKey,
       ),
     );
   }
