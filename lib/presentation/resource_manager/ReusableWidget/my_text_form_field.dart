@@ -1,6 +1,7 @@
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class MytextFormFiled extends StatelessWidget {
   final String? Function(String? newValue)? myValidation;
@@ -20,6 +21,7 @@ class MytextFormFiled extends StatelessWidget {
   final List<TextInputFormatter>? textInputs;
   final String? title;
   final List<String>? autofillHints;
+  final double? padding;
 
   const MytextFormFiled({
     super.key,
@@ -39,6 +41,7 @@ class MytextFormFiled extends StatelessWidget {
     this.onFieldSubmitted,
     this.focusNode,
     this.autofillHints,
+    this.padding = 15.0,
   });
 
   @override
@@ -83,6 +86,6 @@ class MytextFormFiled extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       obscureText: obscureText,
       focusNode: focusNode,
-    );
+    ).paddingSymmetric(vertical: padding!);
   }
 }

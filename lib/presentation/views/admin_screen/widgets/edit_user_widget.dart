@@ -72,7 +72,7 @@ class EditUserWidget extends GetView<AdminController> {
                           )
                         : _buildActionButtons(),
                   ],
-                ),
+                ).paddingOnly(right: 20.0),
               );
             },
           ),
