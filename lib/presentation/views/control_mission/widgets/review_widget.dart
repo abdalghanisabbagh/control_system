@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
+import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 
 // ignore: must_be_immutable
@@ -22,132 +23,6 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
           const SizedBox(
             height: 20,
           ),
-          // Row(
-          //   children: [
-          //     // select grade
-          //     Expanded(
-          //       child: GetBuilder<CompleteMissionsController>(
-          //         builder: (completeMissionsController) => Container(
-          //           height: 55,
-          //           decoration: BoxDecoration(
-          //             color: AppColor.bgColor,
-          //             borderRadius: const BorderRadius.all(Radius.circular(15)),
-          //             border: Border.all(color: AppColor.bgSideMenu, width: 2),
-          //           ),
-          //           child: DropdownButton<GradeResponse>(
-          //             value: completeMissionsController.gradeSelect[0],
-          //             borderRadius: BorderRadius.circular(10),
-          //             isExpanded: true,
-          //             underline: Container(),
-          //             hint: Padding(
-          //               padding: const EdgeInsets.symmetric(horizontal: 20),
-          //               child: Text('Select grade',
-          //                   style: AppTextStyle.nunitoBold.copyWith(
-          //                     color: AppColor.bgSideMenu,
-          //                     fontSize: 14,
-          //                   )),
-          //             ),
-          //             icon: Container(
-          //               height: 55,
-          //               decoration: BoxDecoration(
-          //                 border: Border(
-          //                   left: BorderSide(
-          //                       color: AppColor.bgSideMenu, width: 2),
-          //                 ),
-          //               ),
-          //               child: Icon(Icons.keyboard_arrow_down_rounded,
-          //                   color: AppColor.bgSideMenu),
-          //             ),
-          //             items: completeMissionsController.missionDetials!.grades!
-          //                 .map<DropdownMenuItem<GradeResponse>>(
-          //                     (GradeResponse value) {
-          //               return DropdownMenuItem<GradeResponse>(
-          //                 value: value,
-          //                 child: Padding(
-          //                   padding: const EdgeInsets.symmetric(horizontal: 20),
-          //                   child: Text(
-          //                     value.name,
-          //                     maxLines: 1,
-          //                     overflow: TextOverflow.ellipsis,
-          //                     softWrap: true,
-          //                     style: AppTextStyle.nunitoSemiBold
-          //                         .copyWith(fontSize: 12, color: AppColor.red),
-          //                   ),
-          //                 ),
-          //               );
-          //             }).toList(),
-          //             onChanged: (newOne) {
-          //               completeMissionsController.onSelectGrade(newOne!);
-          //             },
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //     const SizedBox(
-          //       width: 20,
-          //     ),
-          //     // select supject
-
-          //     Expanded(
-          //       child: GetBuilder<CompleteMissionsController>(
-          //         builder: (completeMissionsController) => Container(
-          //           height: 55,
-          //           decoration: BoxDecoration(
-          //             color: AppColor.bgColor,
-          //             borderRadius: const BorderRadius.all(Radius.circular(15)),
-          //             border: Border.all(color: AppColor.bgSideMenu, width: 2),
-          //           ),
-          //           child: DropdownButton<SubjectResponse>(
-          //             value: completeMissionsController.subjectSelect,
-          //             borderRadius: BorderRadius.circular(10),
-          //             isExpanded: true,
-          //             underline: Container(),
-          //             hint: Padding(
-          //               padding: const EdgeInsets.symmetric(horizontal: 20),
-          //               child: Text('Select Subject',
-          //                   style: AppTextStyle.nunitoBold.copyWith(
-          //                     color: AppColor.bgSideMenu,
-          //                     fontSize: 14,
-          //                   )),
-          //             ),
-          //             icon: Container(
-          //               height: 55,
-          //               decoration: BoxDecoration(
-          //                 border: Border(
-          //                   left: BorderSide(
-          //                       color: AppColor.bgSideMenu, width: 2),
-          //                 ),
-          //               ),
-          //               child: Icon(Icons.keyboard_arrow_down_rounded,
-          //                   color: AppColor.bgSideMenu),
-          //             ),
-          //             items: completeMissionsController.selectedSubjectExams
-          //                 .map<DropdownMenuItem<SubjectResponse>>(
-          //                     (SubjectResponse value) {
-          //               return DropdownMenuItem<SubjectResponse>(
-          //                 value: value,
-          //                 child: Padding(
-          //                   padding: const EdgeInsets.symmetric(horizontal: 20),
-          //                   child: Text(
-          //                     value.name,
-          //                     maxLines: 1,
-          //                     overflow: TextOverflow.ellipsis,
-          //                     softWrap: true,
-          //                     style: AppTextStyle.nunitoSemiBold
-          //                         .copyWith(fontSize: 12, color: AppColor.red),
-          //                   ),
-          //                 ),
-          //               );
-          //             }).toList(),
-          //             onChanged: (newOne) async {
-          //               completeMissionsController.onSelectSupject(newOne!);
-          //             },
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
           const SizedBox(
             height: 20,
           ),
@@ -330,92 +205,62 @@ class _Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<_Header> {
-  // void printToPdfAndShareOrSave() async {
-  //   final themeData = pluto_grid_export.ThemeData.withFont(
-  //     base: pluto_grid_export.Font.ttf(
-  //       await rootBundle.load('assets/fonts/open-sans.ttf'),
-  //     ),
-  //     bold: pluto_grid_export.Font.ttf(
-  //       await rootBundle.load('assets/fonts/open-sans.ttf'),
-  //     ),
-  //   );
-
-  //   var plutoGridPdfExport = pluto_grid_export.PlutoGridDefaultPdfExport(
-  //     title: "All Student Degree",
-  //     creator: "Student Degree",
-  //     format: pluto_grid_export.PdfPageFormat.a4.landscape,
-  //     themeData: themeData,
-  //   );
-
-  //   await pluto_grid_export.Printing.sharePdf(
-  //       bytes: await plutoGridPdfExport.export(widget.stateManager),
-  //       filename: plutoGridPdfExport.getFilename());
-  // }
-
-  // void defaultExportGridAsCSV() async {
-  //   String title = "All Student Degree";
-  //   var exported = const Utf8Encoder().convert(
-  //       pluto_grid_export.PlutoGridExport.exportCSV(widget.stateManager));
-  //   await GenerateExamCoverSheetPDF.saveAndLaunchFile(exported, "$title.csv");
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: InkWell(
-              onTap: () => Get.find<DetailsAndReviewMissionController>()
-                  .exportStudentDegreesToPdf(context),
-              child: Container(
-                height: 55,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: ColorManager.red),
-                child: const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      "Export to PDF",
-                      // style: AppTextStyle.nunitoRegular.copyWith(
-                      //   color: ColorManager.white,
-                      // ),
+      child: Visibility(
+        visible: Get.find<ProfileController>().canAccessWidget(
+          widgetId: '2302',
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () => Get.find<DetailsAndReviewMissionController>()
+                    .exportStudentDegreesToPdf(context),
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: ColorManager.red),
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "Export to PDF",
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: InkWell(
-              onTap: () => Get.find<DetailsAndReviewMissionController>()
-                  .exportStudentDegreesToExcel(context),
-              child: Container(
-                height: 55,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.green),
-                child: const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      "Export to Excel",
-                      // style: AppTextStyle.nunitoRegular.copyWith(
-                      //   color: AppColor.white,
-                      // ),
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () => Get.find<DetailsAndReviewMissionController>()
+                    .exportStudentDegreesToExcel(context),
+                child: Container(
+                  height: 55,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.green),
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "Export to Excel",
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

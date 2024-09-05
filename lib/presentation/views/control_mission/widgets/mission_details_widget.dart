@@ -198,7 +198,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                   // ),
                   Visibility(
                     visible: Get.find<ProfileController>().canAccessWidget(
-                      widgetId: '2302',
+                      widgetId: '2301',
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -402,7 +402,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                                     },
                                                   ).showDialogue(context);
                                                 } else {
-                                                    MyAwesomeDialogue(
+                                                  MyAwesomeDialogue(
                                                     title: 'Activate Student',
                                                     desc:
                                                         'Are you sure you want to activate this student?',
