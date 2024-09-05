@@ -49,6 +49,56 @@ class CreateControlMissionController extends GetxController {
     bool success = false;
     isLoading = true;
     update();
+    if (selectedEducationYear == null) {
+      MyAwesomeDialogue(
+        title: 'title',
+        desc: 'Please select education year',
+        dialogType: DialogType.error,
+      ).showDialogue(
+        Get.key.currentContext!,
+      );
+      success = false;
+      isLoading = false;
+      update();
+      return success;
+    } else if (selectedStartDate == null) {
+      MyAwesomeDialogue(
+        title: 'title',
+        desc: 'Please select start date',
+        dialogType: DialogType.error,
+      ).showDialogue(
+        Get.key.currentContext!,
+      );
+      success = false;
+      isLoading = false;
+      update();
+      return success;
+    } else if (selectedEndDate == null) {
+      MyAwesomeDialogue(
+        title: 'title',
+        desc: 'Please select end date',
+        dialogType: DialogType.error,
+      ).showDialogue(
+        Get.key.currentContext!,
+      );
+      success = false;
+      isLoading = false;
+      update();
+      return success;
+    } else if (batchName == null || batchName!.isEmpty) {
+      MyAwesomeDialogue(
+        title: 'title',
+        desc: 'Please enter mission name',
+        dialogType: DialogType.error,
+      ).showDialogue(
+        Get.key.currentContext!,
+      );
+      success = false;
+      isLoading = false;
+      update();
+      return success;
+    }
+
     final response =
         await ResponseHandler<ControlMissionResModel>().getResponse(
       path: ControlMissionLinks.controlMission,
