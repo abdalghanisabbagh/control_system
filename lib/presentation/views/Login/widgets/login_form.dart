@@ -73,7 +73,7 @@ class LoginForm extends GetView<AuthController> {
               child: Center(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(40),
+                    padding: const EdgeInsets.all(20),
                     child: GetBuilder<AuthController>(
                       init: AuthController(),
                       builder: (controller) {
