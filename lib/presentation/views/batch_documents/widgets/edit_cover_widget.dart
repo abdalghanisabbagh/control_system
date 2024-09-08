@@ -21,7 +21,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
       text: examMissionObject.endTime == null
           ? null
           : DateFormat('yyyy-MM-dd HH:mm')
-              .format(DateTime.parse(examMissionObject.endTime!).toLocal()));
+              .format(DateTime.parse(examMissionObject.endTime!)));
   final TextEditingController examFinalDegreeController =
       TextEditingController();
 
@@ -31,7 +31,7 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
       text: examMissionObject.startTime == null
           ? "${examMissionObject.month} ${examMissionObject.year}"
           : DateFormat('yyyy-MM-dd HH:mm')
-              .format(DateTime.parse(examMissionObject.startTime!).toLocal()));
+              .format(DateTime.parse(examMissionObject.startTime!)));
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   EditCoverWidget(
@@ -364,11 +364,9 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
     }
 
     final DateTime startDate = DateTime.parse(controlMissionObject.startDate!
-            .substring(0, controlMissionObject.startDate!.length - 1))
-        .toLocal();
+        .substring(0, controlMissionObject.startDate!.length - 1));
     final DateTime endDate = DateTime.parse(controlMissionObject.endDate!
-            .substring(0, controlMissionObject.endDate!.length - 1))
-        .toLocal();
+        .substring(0, controlMissionObject.endDate!.length - 1));
 
     final DateTime? pickedDate = await showDatePicker(
       context: context,

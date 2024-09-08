@@ -239,15 +239,12 @@ class OfficerEditCoverWidget extends GetView<EditCoverSheetController> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.parse(controlMissionObject.startDate!
-              .substring(0, controlMissionObject.startDate!.length - 1))
-          .toLocal(),
+          .substring(0, controlMissionObject.startDate!.length - 1)),
       initialDatePickerMode: DatePickerMode.day,
       firstDate: DateTime.parse(controlMissionObject.startDate!
-              .substring(0, controlMissionObject.startDate!.length - 1))
-          .toLocal(),
+          .substring(0, controlMissionObject.startDate!.length - 1)),
       lastDate: DateTime.parse(controlMissionObject.endDate!
-              .substring(0, controlMissionObject.endDate!.length - 1))
-          .toLocal(),
+          .substring(0, controlMissionObject.endDate!.length - 1)),
     );
 
     if (picked != null) {

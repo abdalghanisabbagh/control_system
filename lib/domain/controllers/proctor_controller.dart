@@ -499,6 +499,7 @@ class ProctorController extends GetxController {
       path: "${ProctorsLinks.proctor}/unassign-from-exam-room/$proctorId",
       converter: (_) {},
       type: ReqTypeEnum.DELETE,
+      body: {},
     );
 
     response.fold(
