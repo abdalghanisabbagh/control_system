@@ -100,7 +100,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                       ),
                       Visibility(
                         visible: Get.find<ProfileController>().canAccessWidget(
-                          widgetId: '3301ap',
+                          widgetId: '3301',
                         ),
                         child: IconButton(
                           onPressed: () {
