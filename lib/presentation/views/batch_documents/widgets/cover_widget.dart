@@ -12,8 +12,8 @@ import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import 'edit_cover__ad_widget.dart';
 import 'edit_cover_widget.dart';
-import 'officer_edit_cover_widget.dart';
 
 // ignore: must_be_immutable
 class CoverWidget extends GetView<CoversSheetsController> {
@@ -88,7 +88,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         onPressed: () {
                           MyDialogs.showDialog(
                               context,
-                              EditCoverWidget(
+                              EditCoverAdWidget(
                                 examMissionObject: examMissionObject,
                                 controlMissionObject: controlMissionObject,
                               ));
@@ -107,7 +107,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         onPressed: () {
                           MyDialogs.showDialog(
                               context,
-                              OfficerEditCoverWidget(
+                              EditCoverWidget(
                                 examMissionObject: examMissionObject,
                                 controlMissionObject: controlMissionObject,
                               ));
