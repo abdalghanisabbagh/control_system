@@ -1,15 +1,11 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../../Data/Models/school/grade_response/grade_res_model.dart';
-import '../../../../domain/controllers/batch_documents.dart/cover_sheets_controller.dart';
 import '../../../../domain/controllers/batch_documents.dart/seat_number_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 
 // ignore: must_be_immutable
 class SeatNumberWidget extends GetView<SeatNumberController> {
@@ -57,41 +53,41 @@ class SeatNumberWidget extends GetView<SeatNumberController> {
                       ),
                     ),
                     const Spacer(),
-                    GetBuilder<CoversSheetsController>(
-                        builder: (coversSheetsController) {
-                      return IconButton(
-                        onPressed: () {
-                          MyAwesomeDialogue(
-                            title: 'Delete Exam Cover Sheet',
-                            desc:
-                                'Are you sure you want to delete this mission?',
-                            dialogType: DialogType.warning,
-                            btnCancelOnPressed: () {},
-                            btnOkOnPressed: () {
-                              coversSheetsController
-                                  .deleteExamMission(id: gradeObject.iD!)
-                                  .then((value) {
-                                if (value) {
-                                  MyFlashBar.showSuccess(
-                                    'Success',
-                                    'Students have been distributed successfully',
-                                  ).show(context.mounted
-                                      ? context
-                                      : Get.key.currentContext!);
-                                }
-                              });
-                            },
-                          ).showDialogue(context);
-                        },
-                        icon: const CircleAvatar(
-                          backgroundColor: ColorManager.red,
-                          child: Icon(
-                            Icons.delete_forever,
-                            color: ColorManager.white,
-                          ),
-                        ),
-                      );
-                    }),
+                    // GetBuilder<CoversSheetsController>(
+                    //     builder: (coversSheetsController) {
+                    //   return IconButton(
+                    //     onPressed: () {
+                    //       MyAwesomeDialogue(
+                    //         title: 'Delete Exam Cover Sheet',
+                    //         desc:
+                    //             'Are you sure you want to delete this mission?',
+                    //         dialogType: DialogType.warning,
+                    //         btnCancelOnPressed: () {},
+                    //         btnOkOnPressed: () {
+                    //           coversSheetsController
+                    //               .deleteExamMission(id: gradeObject.iD!)
+                    //               .then((value) {
+                    //             if (value) {
+                    //               MyFlashBar.showSuccess(
+                    //                 'Success',
+                    //                 'Students have been distributed successfully',
+                    //               ).show(context.mounted
+                    //                   ? context
+                    //                   : Get.key.currentContext!);
+                    //             }
+                    //           });
+                    //         },
+                    //       ).showDialogue(context);
+                    //     },
+                    //     icon: const CircleAvatar(
+                    //       backgroundColor: ColorManager.red,
+                    //       child: Icon(
+                    //         Icons.delete_forever,
+                    //         color: ColorManager.white,
+                    //       ),
+                    //     ),
+                    //   );
+                    // }),
                   ],
                 ),
                 Text(
