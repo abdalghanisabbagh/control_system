@@ -19,7 +19,7 @@ class AuthController extends GetxController {
   PackageInfo? packageInfo;
 
   bool isLoading = false;
-  bool isLogin = false;
+  bool isLogin = Hive.box('Token').get('isLogin', defaultValue: false);
   ProfileController profileController = Get.find<ProfileController>();
   bool showPass = true;
   TokenService tokenService = Get.find<TokenService>();
@@ -27,6 +27,7 @@ class AuthController extends GetxController {
   Future<bool> login(String username, String password) async {
     isLoading = true;
     update(['login_btn']);
+    await Hive.box('Token').put('isLogin', true);
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
@@ -67,7 +68,6 @@ class AuthController extends GetxController {
   @override
   void onInit() async {
     packageInfo = await PackageInfo.fromPlatform();
-    isLogin = false;
     update();
     super.onInit();
   }
@@ -78,6 +78,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> signOut() async {
+    isLogin = false;
     await Future.wait([
       tokenService.deleteTokenModelFromHiveBox(),
       profileController.deleteProfileFromHiveBox(),

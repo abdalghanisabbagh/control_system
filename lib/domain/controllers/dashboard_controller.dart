@@ -8,15 +8,18 @@ import 'package:hive_flutter/hive_flutter.dart';
 class DashboardController extends GetxController {
   DateTime dateTime = DateTime.now();
   String? period;
-  final String? schoolTypeName = Hive.box('School').get('SchoolTypeName');
-  final String? schoolName = Hive.box('School').get('Name');
+  String? schoolTypeName;
+  String? schoolName;
   TimeOfDay timeOfDay = TimeOfDay.now();
-  final String? userName =
-      Get.find<ProfileController>().cachedUserProfile?.fullName;
+  String? userName;
 
   @override
   void onInit() {
     super.onInit();
+    schoolTypeName = Hive.box('School').get('SchoolTypeName');
+    schoolName = Hive.box('School').get('Name');
+    userName = Get.find<ProfileController>().cachedUserProfile?.fullName;
+    update();
     updateTime();
     updateClock();
   }
@@ -30,11 +33,14 @@ class DashboardController extends GetxController {
 
   updateTime() {
     period = timeOfDay.period == DayPeriod.am ? "AM" : "PM";
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (timeOfDay.minute != TimeOfDay.now().minute) {
-        update(['clock']);
-        timeOfDay = TimeOfDay.now();
-      }
-    });
+    Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        if (timeOfDay.minute != TimeOfDay.now().minute) {
+          update(['clock']);
+          timeOfDay = TimeOfDay.now();
+        }
+      },
+    );
   }
 }
