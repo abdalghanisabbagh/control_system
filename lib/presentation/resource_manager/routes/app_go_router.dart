@@ -26,6 +26,16 @@ class AppGoRouter {
     errorBuilder: (context, state) {
       return const PageNotFoundScreen();
     },
+    redirect: (context, state) {
+      final isLoggedIn = Get.find<AuthController>().isLogin;
+      if (state.path == AppRoutesNamesAndPaths.loginScreenPath) {
+        return null;
+      } else if (isLoggedIn) {
+        return null;
+      } else {
+        return AppRoutesNamesAndPaths.loginScreenPath;
+      }
+    },
     routes: [
       GoRoute(
         path: AppRoutesNamesAndPaths.loginScreenPath,
@@ -327,4 +337,5 @@ class AppGoRouter {
       ),
     ],
   );
+  final authController = Get.find<AuthController>();
 }
