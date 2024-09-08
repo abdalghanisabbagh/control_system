@@ -31,6 +31,15 @@ class AddNewStudentsToControlMissionController extends GetxController {
   List<StudentResModel> students = [];
 
   Future<bool> addStudentsToControlMission() async {
+    if (includedStudentsIds.isEmpty) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: 'Please select students',
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+      return false;
+    }
+
     bool success = false;
     isLoading = true;
     update();
