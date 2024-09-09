@@ -159,7 +159,7 @@ class DistributeStudentsController extends GetxController {
                     ? secondMaxStudents.isEmpty
                         ? null
                         : reOrderedList.add(secondMaxStudents.removeAt(0))
-                    : reOrderedList.add(secondMaxStudents.removeAt(0))
+                    : reOrderedList.add(maxStudents.removeAt(0))
                 : reOrderedList.add(minStudents.removeAt(0));
           }
         }
