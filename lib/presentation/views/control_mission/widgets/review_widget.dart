@@ -82,61 +82,75 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                               type: PlutoColumnType.text(),
                             ),
                             ...List.generate(
-                              completeMissionsController
-                                  .studentGradesResModel!.studentSeatNumnbers!
+                              controller.studentGradesResModel!.examRoom!
                                   .map(
-                                    (element) => element
-                                        .student!.cohort!.cohortHasSubjects!
-                                        .map(
-                                      (element) => (
-                                        element.subjects!.name,
-                                        element.subjects!.iD
+                                    (element) =>
+                                        element.studentSeatNumnbers!.map(
+                                      (element) => element
+                                          .student!.cohort!.cohortHasSubjects!
+                                          .map(
+                                        (element) => (
+                                          element.subjects!.name,
+                                          element.subjects!.iD
+                                        ),
                                       ),
                                     ),
                                   )
+                                  .expand((element) => element)
                                   .expand((element) => element)
                                   .toSet()
                                   .toList()
                                   .length,
                               (index) {
-                                final subject = completeMissionsController
-                                    .studentGradesResModel!.studentSeatNumnbers!
-                                    .map(
-                                      (element) => element
-                                          .student!.cohort!.cohortHasSubjects!
-                                          .map(
-                                        (element) => (
-                                          name: element.subjects!.name,
-                                          id: element.subjects!.iD
-                                        ),
-                                      ),
-                                    )
-                                    .expand((element) => element)
-                                    .toSet()
-                                    .toList()[index];
+                                final ({String? name, int? id}) subject =
+                                    controller.studentGradesResModel!.examRoom!
+                                        .map(
+                                          (element) =>
+                                              element.studentSeatNumnbers!.map(
+                                            (element) => element.student!
+                                                .cohort!.cohortHasSubjects!
+                                                .map(
+                                              (element) => (
+                                                name: element.subjects!.name,
+                                                id: element.subjects!.iD
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                        .expand((element) => element)
+                                        .expand((element) => element)
+                                        .toSet()
+                                        .toList()[index];
                                 return PlutoColumn(
                                   readOnly: true,
                                   enableEditingMode: false,
-                                  title: subject.name!,
+                                  title: subject.name ?? '',
                                   field: "${subject.name}_${subject.id}",
                                   type: PlutoColumnType.text(),
                                   footerRenderer: index ==
                                           completeMissionsController
                                                   .studentGradesResModel!
-                                                  .studentSeatNumnbers!
+                                                  .examRoom!
                                                   .map(
                                                     (element) => element
-                                                        .student!
-                                                        .cohort!
-                                                        .cohortHasSubjects!
+                                                        .studentSeatNumnbers!
                                                         .map(
                                                       (element) => (
-                                                        element.subjects!.name,
-                                                        element.subjects!.iD
+                                                        element.student!.cohort!
+                                                            .cohortHasSubjects!
+                                                            .map(
+                                                          (element) => (
+                                                            element
+                                                                .subjects?.name,
+                                                            element.subjects?.iD
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                   )
                                                   .expand((element) => element)
+                                                  .expand(
+                                                      (element) => element.$1)
                                                   .toSet()
                                                   .toList()
                                                   .length -
