@@ -1,0 +1,33 @@
+# Your GitHub Actions workflow file here
+name: Deploy Control Sysytem to Firebase Hosting
+on:
+  pull_request:
+    branches:
+      - stage
+
+jobs:
+  build_and_preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: subosito/flutter-action@v2.14.0
+        with:
+          channel: "stable"
+      - run: flutter pub get
+      - run: flutter build web
+      - name: ⬇️ Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: build
+          path: build/web
+      - name: ⬇️ Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: build
+          path: build/web
+      - name: 🎯 Deploy to firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          projectId: "${{ secrets.FIREBASE_PROJECT_ID }}"
