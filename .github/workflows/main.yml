@@ -16,11 +16,7 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: |
-          echo "Building WEB"
-          ls -la lib/presentation/views/subject_setting/widgets/.
-          flutter build web
-
+      - run: flutter build web
       - name: 🎯 Deploy to firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
