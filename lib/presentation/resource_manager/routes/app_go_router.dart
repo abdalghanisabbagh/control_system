@@ -15,6 +15,7 @@ import '../../views/control_mission/widgets/create_mission_widget.dart';
 import '../../views/control_mission/widgets/distribute_students.dart';
 import '../../views/index.dart';
 import '../../views/subject_setting/widgets/operation_widget.dart';
+import '../../views/system_logger/system_logger.widget.dart';
 import '../ReusableWidget/page_not_found_screen.dart';
 import 'app_routes_names_and_paths.dart';
 
@@ -330,6 +331,17 @@ class AppGoRouter {
         builder: (context, state) {
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           return ProfileWidget();
+        },
+        onExit: (context, state) {
+          return true;
+        },
+      ),
+      GoRoute(
+        path: AppRoutesNamesAndPaths.systemLoggerScreenPath,
+        name: AppRoutesNamesAndPaths.systemLoggerScreenName,
+        builder: (context, state) {
+          //   Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          return const SystemLoggerWidget();
         },
         onExit: (context, state) {
           return true;

@@ -60,6 +60,15 @@ class AppMenueItem {
         pageNumber: '11000',
         routeName: AppRoutesNamesAndPaths.privilegesScreenName,
         iconWidget: Image.asset(AssetsManager.assetsIconsRoles)),
+    AppMenueItem(
+        pageName: AppRoutesNamesAndPaths.systemLoggerScreenName,
+        pageNumber: '12000',
+        routeName: AppRoutesNamesAndPaths.systemLoggerScreenName,
+        iconWidget: const Icon(
+          Icons.bug_report_outlined,
+          size: 35,
+          color: Colors.blue,
+        )),
   ];
 
   Widget? iconWidget;

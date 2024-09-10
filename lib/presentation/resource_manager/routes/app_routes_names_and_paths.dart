@@ -99,6 +99,10 @@ class AppRoutesNamesAndPaths {
   // privilegesScreen
   static const String privilegesScreenPath = '/privileges';
 
+  static const String systemLoggerScreenName = 'System Logger';
+  // systemLoggerScreen
+  static const String systemLoggerScreenPath = '/system-logger';
+
   static const String schoolsScreenName = 'Schools';
   // schoolsScreen
   static const String schoolsScreenPath = '/schools';
