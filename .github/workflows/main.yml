@@ -5,6 +5,8 @@ on:
     branches:
       - stage
 
+permissions: read-all
+
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
