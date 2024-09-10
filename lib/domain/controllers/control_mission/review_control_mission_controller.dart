@@ -49,77 +49,142 @@ class DetailsAndReviewMissionController extends GetxController {
   List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
   TabController? tabController;
 
+  Future<bool> activeStudentInControlMission({required String idSeat}) async {
+    bool activateStudents = false;
+    update();
+    ResponseHandler<void> responseHandler = ResponseHandler<void>();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumberActive}/$idSeat',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        activateStudents = false;
+      },
+      (r) {
+        activateStudents = true;
+        getStudentsSeatNumberByControlMissionId();
+      },
+    );
+    update();
+    return activateStudents;
+  }
+
   void convertStudentsGradesToPlutoGridRows() {
     studentsGradesRows.clear();
 
     if (studentGradesResModel != null) {
-      for (var studentSeatNumber
-          in studentGradesResModel!.studentSeatNumnbers!) {
-        studentsGradesRows.add(
-          PlutoRow(
-            cells: {
-              'name_field': PlutoCell(
-                  value:
-                      '${studentSeatNumber.student?.firstName} ${studentSeatNumber.student?.secondName} ${studentSeatNumber.student?.thirdName}'),
-              'grade_field': PlutoCell(
-                  value:
-                      '${studentGradesResModel?.examMission?.first.grades?.name}'),
-              'class_field': PlutoCell(
-                  value: '${studentSeatNumber.student?.classRoom?.name}'),
-              'exam_room_field': PlutoCell(
-                  value: '${studentGradesResModel?.examRoom?.first.name}'),
-              ...Map.fromEntries(
-                List.generate(
-                  studentGradesResModel!.studentSeatNumnbers!
-                      .map(
-                        (element) =>
-                            element.student!.cohort!.cohortHasSubjects!.map(
-                          (element) =>
-                              (element.subjects!.name, element.subjects!.iD),
-                        ),
-                      )
-                      .expand((element) => element)
-                      .toSet()
-                      .toList()
-                      .length,
-                  (index) {
-                    final subject = studentGradesResModel!.studentSeatNumnbers!
+      for (var examRoom in studentGradesResModel!.examRoom!) {
+        for (var studentSeatNumber in examRoom.studentSeatNumnbers!) {
+          studentsGradesRows.add(
+            PlutoRow(
+              cells: {
+                'name_field': PlutoCell(
+                    value:
+                        '${studentSeatNumber.student?.firstName} ${studentSeatNumber.student?.secondName} ${studentSeatNumber.student?.thirdName}'),
+                'grade_field': PlutoCell(
+                    value: '${studentSeatNumber.student?.grades?.name}'),
+                'class_field': PlutoCell(
+                    value: '${studentSeatNumber.student?.schoolClass?.name}'),
+                'exam_room_field': PlutoCell(value: '${examRoom.name}'),
+                ...Map.fromEntries(
+                  List.generate(
+                    studentGradesResModel!.examRoom!
                         .map(
-                          (element) =>
-                              element.student!.cohort!.cohortHasSubjects!.map(
-                            (element) => (
-                              name: element.subjects!.name,
-                              id: element.subjects!.iD
+                          (element) => element.studentSeatNumnbers!.map(
+                            (element) =>
+                                element.student!.cohort!.cohortHasSubjects!.map(
+                              (element) => (
+                                element.subjects!.name,
+                                element.subjects!.iD
+                              ),
                             ),
                           ),
                         )
                         .expand((element) => element)
+                        .expand((element) => element)
                         .toSet()
-                        .toList()[index];
-                    return MapEntry(
-                      "${subject.name}_${subject.id}",
-                      PlutoCell(
-                          value: studentSeatNumber
-                                  .student!.cohort!.cohortHasSubjects!
-                                  .map((element) => element.subjects!.name)
-                                  .contains(subject.name)
-                              ? studentSeatNumber
-                                          .barcode!.first.studentDegree ==
-                                      null
-                                  ? 'Need to scan'
-                                  : '${studentSeatNumber.barcode!.first.studentDegree}'
-                              : 'Exampt'),
-                    );
-                  },
+                        .toList()
+                        .length,
+                    (index) {
+                      final ({String? name, int? id}) subject =
+                          studentGradesResModel!.examRoom!
+                              .map(
+                                (element) => element.studentSeatNumnbers!.map(
+                                  (element) => element
+                                      .student!.cohort!.cohortHasSubjects!
+                                      .map(
+                                    (element) => (
+                                      name: element.subjects!.name,
+                                      id: element.subjects!.iD
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .expand((element) => element)
+                              .expand((element) => element)
+                              .toSet()
+                              .toList()[index];
+                      return MapEntry(
+                        "${subject.name}_${subject.id}",
+                        PlutoCell(
+                            value: studentSeatNumber
+                                    .student!.cohort!.cohortHasSubjects!
+                                    .map((element) => element.subjects!.name)
+                                    .contains(subject.name)
+                                ? studentSeatNumber
+                                            .student?.barcode?.studentDegree ==
+                                        null
+                                    ? 'Need to scan'
+                                    : '${studentSeatNumber.student?.barcode?.studentDegree}'
+                                : 'Exampt'),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            },
-          ),
-        );
+              },
+            ),
+          );
+        }
       }
     }
     studentsGradesPlutoGridStateManager!.setPage(1);
     return;
+  }
+
+  Future<bool> deactiveStudentInControlMission({required String idSeat}) async {
+    bool deactivateStudents = false;
+    update();
+    ResponseHandler<void> responseHandler = ResponseHandler<void>();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${StudentsLinks.studentSeatNumberDeactive}/$idSeat',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        deactivateStudents = false;
+      },
+      (r) {
+        deactivateStudents = true;
+        getStudentsSeatNumberByControlMissionId();
+      },
+    );
+    update();
+    return deactivateStudents;
   }
 
   void exportStudentDegreesToExcel(BuildContext context) {
@@ -131,27 +196,37 @@ class DetailsAndReviewMissionController extends GetxController {
       'Class',
       'Exam Room',
       ...List.generate(
-        studentGradesResModel!.studentSeatNumnbers!
+        studentGradesResModel!.examRoom!
             .map(
-              (element) => element.student!.cohort!.cohortHasSubjects!.map(
-                (element) => (element.subjects!.name, element.subjects!.iD),
+              (element) => element.studentSeatNumnbers!.map(
+                (element) => element.student!.cohort!.cohortHasSubjects!.map(
+                  (element) => (element.subjects!.name, element.subjects!.iD),
+                ),
               ),
             )
+            .expand((element) => element)
             .expand((element) => element)
             .toSet()
             .toList()
             .length,
         (index) {
-          final subject = studentGradesResModel!.studentSeatNumnbers!
-              .map(
-                (element) => element.student!.cohort!.cohortHasSubjects!.map(
-                  (element) =>
-                      (name: element.subjects!.name, id: element.subjects!.iD),
-                ),
-              )
-              .expand((element) => element)
-              .toSet()
-              .toList()[index];
+          final ({String? name, int? id}) subject =
+              studentGradesResModel!.examRoom!
+                  .map(
+                    (element) => element.studentSeatNumnbers!.map(
+                      (element) =>
+                          element.student!.cohort!.cohortHasSubjects!.map(
+                        (element) => (
+                          name: element.subjects!.name,
+                          id: element.subjects!.iD
+                        ),
+                      ),
+                    ),
+                  )
+                  .expand((element) => element)
+                  .expand((element) => element)
+                  .toSet()
+                  .toList()[index];
           return subject.name!;
         },
       )
@@ -198,27 +273,37 @@ class DetailsAndReviewMissionController extends GetxController {
       'Class',
       'Exam Room',
       ...List.generate(
-        studentGradesResModel!.studentSeatNumnbers!
+        studentGradesResModel!.examRoom!
             .map(
-              (element) => element.student!.cohort!.cohortHasSubjects!.map(
-                (element) => (element.subjects!.name, element.subjects!.iD),
+              (element) => element.studentSeatNumnbers!.map(
+                (element) => element.student!.cohort!.cohortHasSubjects!.map(
+                  (element) => (element.subjects!.name, element.subjects!.iD),
+                ),
               ),
             )
+            .expand((element) => element)
             .expand((element) => element)
             .toSet()
             .toList()
             .length,
         (index) {
-          final subject = studentGradesResModel!.studentSeatNumnbers!
-              .map(
-                (element) => element.student!.cohort!.cohortHasSubjects!.map(
-                  (element) =>
-                      (name: element.subjects!.name, id: element.subjects!.iD),
-                ),
-              )
-              .expand((element) => element)
-              .toSet()
-              .toList()[index];
+          final ({String? name, int? id}) subject =
+              studentGradesResModel!.examRoom!
+                  .map(
+                    (element) => element.studentSeatNumnbers!.map(
+                      (element) =>
+                          element.student!.cohort!.cohortHasSubjects!.map(
+                        (element) => (
+                          name: element.subjects!.name,
+                          id: element.subjects!.iD
+                        ),
+                      ),
+                    ),
+                  )
+                  .expand((element) => element)
+                  .expand((element) => element)
+                  .toSet()
+                  .toList()[index];
           return subject.name!;
         },
       )
@@ -528,62 +613,6 @@ class DetailsAndReviewMissionController extends GetxController {
     isLodingGetSubjects = false;
   }
 
-  Future<bool> activeStudentInControlMission({required String idSeat}) async {
-    bool activateStudents = false;
-    update();
-    ResponseHandler<void> responseHandler = ResponseHandler<void>();
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumberActive}/$idSeat',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: {},
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        activateStudents = false;
-      },
-      (r) {
-        activateStudents = true;
-        getStudentsSeatNumberByControlMissionId();
-      },
-    );
-    update();
-    return activateStudents;
-  }
-
-  Future<bool> deactiveStudentInControlMission({required String idSeat}) async {
-    bool deactivateStudents = false;
-    update();
-    ResponseHandler<void> responseHandler = ResponseHandler<void>();
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumberDeactive}/$idSeat',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: {},
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        deactivateStudents = false;
-      },
-      (r) {
-        deactivateStudents = true;
-        getStudentsSeatNumberByControlMissionId();
-      },
-    );
-    update();
-    return deactivateStudents;
-  }
-
   @override
   void onInit() async {
     super.onInit();
@@ -594,6 +623,7 @@ class DetailsAndReviewMissionController extends GetxController {
     getExamRoomByControlMissionId();
     getSubjectByControlMissionId();
     getStudentsSeatNumberByControlMissionId();
+    controlMissionId != 0 ? getStudentsGrades() : null;
   }
 
   Future<void> saveControlMissionId(int id) async {
