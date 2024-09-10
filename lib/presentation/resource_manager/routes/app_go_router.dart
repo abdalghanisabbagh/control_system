@@ -340,7 +340,8 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.systemLoggerScreenPath,
         name: AppRoutesNamesAndPaths.systemLoggerScreenName,
         builder: (context, state) {
-          //   Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          SystemLoggerBindings().dependencies();
           return const SystemLoggerWidget();
         },
         onExit: (context, state) {

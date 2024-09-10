@@ -8,6 +8,7 @@ import '../controllers/controllers.dart';
 import '../controllers/students_controllers/transfer_student_controller.dart';
 import '../controllers/subject/edit_subject_controller.dart';
 import '../controllers/subject/operation_controoler.dart';
+import '../controllers/system_logger_controller.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
 
@@ -236,5 +237,13 @@ class TokenBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(TokenService(), permanent: true);
+  }
+}
+
+class SystemLoggerBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SystemLoggerController>(() => SystemLoggerController(),
+        fenix: true);
   }
 }

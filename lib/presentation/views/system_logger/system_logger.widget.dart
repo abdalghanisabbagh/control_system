@@ -1,9 +1,11 @@
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../domain/controllers/system_logger_controller.dart';
 import '../base_screen.dart';
 
-class SystemLoggerWidget extends StatelessWidget {
+class SystemLoggerWidget extends GetView<SystemLoggerController> {
   const SystemLoggerWidget({super.key});
 
   @override
