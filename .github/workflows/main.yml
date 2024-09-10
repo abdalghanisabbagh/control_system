@@ -18,7 +18,7 @@ jobs:
       - run: flutter pub get
       - run: |
           echo "Building WEB"
-          ls -la .
+          ls -la lib/presentation/views/subject_setting/widgets/.
           flutter build web
 
       - name: 🎯 Deploy to firebase
