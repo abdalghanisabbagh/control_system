@@ -3,7 +3,7 @@ name: Deploy Control Sysytem to Firebase Hosting
 on:
   pull_request:
     branches:
-      - stage
+      - staging
 
 jobs:
   build_and_preview:
