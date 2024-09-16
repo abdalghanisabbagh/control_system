@@ -1,4 +1,3 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +11,6 @@ import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 
 class AddCohortWidget extends StatelessWidget {
   final bool isOperation;
@@ -43,7 +41,9 @@ class AddCohortWidget extends StatelessWidget {
               TextFormField(
                 cursorColor: ColorManager.bgSideMenu,
                 style: nunitoRegular.copyWith(
-                    fontSize: 14, color: ColorManager.bgSideMenu),
+                  fontSize: 14,
+                  color: ColorManager.bgSideMenu,
+                ),
                 decoration: InputDecoration(
                   hintText: "Cohort name",
                   hintStyle: nunitoRegular.copyWith(
@@ -64,12 +64,6 @@ class AddCohortWidget extends StatelessWidget {
                   ),
                 ),
                 controller: editingController,
-                onChanged: (value) {
-                  int found = controller.cohorts.indexWhere(
-                    (p0) => p0.name == value,
-                  );
-                  if (found > -1) {}
-                },
               ),
               const SizedBox(
                 height: 20,
@@ -112,11 +106,10 @@ class AddCohortWidget extends StatelessWidget {
                                 } else {
                                   if (isOperation &&
                                       controller.slectedSchoolTypeId.isEmpty) {
-                                    MyAwesomeDialogue(
-                                      title: 'Error',
-                                      desc: 'Please select school type',
-                                      dialogType: DialogType.error,
-                                    ).showDialogue(
+                                    MyFlashBar.showError(
+                                            "Please select School Type",
+                                            "Error")
+                                        .show(
                                       Get.key.currentContext!,
                                     );
                                     return;
@@ -127,9 +120,7 @@ class AddCohortWidget extends StatelessWidget {
                                     (value) {
                                       value
                                           ? {
-                                              context.mounted
-                                                  ? context.pop()
-                                                  : null,
+                                              Get.key.currentContext!.pop(),
                                               MyFlashBar.showSuccess(
                                                 "The Cohort has been added successfully",
                                                 "Success",
@@ -143,7 +134,10 @@ class AddCohortWidget extends StatelessWidget {
                                 }
                               } else {
                                 MyFlashBar.showError(
-                                    "enter cohort name", "Error");
+                                        "Enter cohort name", "Error")
+                                    .show(
+                                  Get.key.currentContext!,
+                                );
                               }
                             },
                           ),
