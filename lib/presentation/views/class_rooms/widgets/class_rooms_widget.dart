@@ -44,6 +44,7 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
                         ),
                       )
                     : SearchableList(
+                      
                         initialList: controller.classesRooms,
                         emptyWidget: Center(
                           child: Text(

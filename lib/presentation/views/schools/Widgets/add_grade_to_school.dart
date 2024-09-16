@@ -17,87 +17,102 @@ class AddNewGradeToSchool extends GetView<SchoolController> {
   @override
   Widget build(BuildContext context) {
     TextEditingController gradeNameController = TextEditingController();
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          "Add New Grade",
-          style: nunitoRegular.copyWith(
-            color: ColorManager.bgSideMenu,
-            fontSize: 25,
+    final formKey = GlobalKey<FormState>();
+
+    return Form(
+      key: formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Add New Grade",
+            style: nunitoRegular.copyWith(
+              color: ColorManager.bgSideMenu,
+              fontSize: 25,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        TextFormField(
-          cursorColor: ColorManager.bgSideMenu,
-          style: nunitoRegular.copyWith(
-              fontSize: 14, color: ColorManager.bgSideMenu),
-          decoration: InputDecoration(
-            hintText: "Grade name",
-            hintStyle: nunitoRegular.copyWith(
+          const SizedBox(
+            height: 40,
+          ),
+          TextFormField(
+            cursorColor: ColorManager.bgSideMenu,
+            style: nunitoRegular.copyWith(
                 fontSize: 14, color: ColorManager.bgSideMenu),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
+            decoration: InputDecoration(
+              hintText: "Grade name",
+              hintStyle: nunitoRegular.copyWith(
+                  fontSize: 14, color: ColorManager.bgSideMenu),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
+            controller: gradeNameController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter  name';
+              }
+              return null;
+            },
           ),
-          controller: gradeNameController,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        GetBuilder<SchoolController>(
-          builder: (_) {
-            return controller.isLoadingAddGrades
-                ? Center(
-                    child: LoadingIndicators.getLoadingIndicator(),
-                  )
-                : Row(
-                    children: [
-                      const Expanded(
-                        child: ElevatedBackButton(),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: ElevatedAddButton(
-                          onPressed: () async {
-                            await controller
-                                .addNewGrade(name: gradeNameController.text)
-                                .then(
-                              (value) {
-                                value
-                                    ? {
-                                        context.mounted ? context.pop() : null,
-                                        MyFlashBar.showSuccess(
-                                                'The Grade Has Been Added Successfully',
-                                                'Success')
-                                            .show(context.mounted
-                                                ? context
-                                                : Get.key.currentContext!)
-                                      }
-                                    : null;
-                              },
-                            );
-                          },
+          const SizedBox(
+            height: 20,
+          ),
+          GetBuilder<SchoolController>(
+            builder: (_) {
+              return controller.isLoadingAddGrades
+                  ? Center(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    )
+                  : Row(
+                      children: [
+                        const Expanded(
+                          child: ElevatedBackButton(),
                         ),
-                      ),
-                    ],
-                  );
-          },
-        )
-      ],
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: ElevatedAddButton(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()) {
+                                await controller
+                                    .addNewGrade(name: gradeNameController.text)
+                                    .then(
+                                  (value) {
+                                    value
+                                        ? {
+                                            context.mounted
+                                                ? context.pop()
+                                                : null,
+                                            MyFlashBar.showSuccess(
+                                                    'The Grade Has Been Added Successfully',
+                                                    'Success')
+                                                .show(context.mounted
+                                                    ? context
+                                                    : Get.key.currentContext!)
+                                          }
+                                        : null;
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+            },
+          )
+        ],
+      ),
     );
   }
 }
