@@ -10,10 +10,8 @@ import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/validations.dart';
 
-class AddNewPrivilegesWidget extends GetView<PrivilegesController> {
+class AddNewPrivilegesWidget extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // مفتاح الـ Form للتحقق من المدخلات
 
   AddNewPrivilegesWidget({super.key});
 
@@ -23,7 +21,6 @@ class AddNewPrivilegesWidget extends GetView<PrivilegesController> {
       child: IntrinsicHeight(
         child: IntrinsicWidth(
           child: Form(
-            key: _formKey, // تعيين المفتاح للـ Form
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -45,57 +42,46 @@ class AddNewPrivilegesWidget extends GetView<PrivilegesController> {
                 const SizedBox(
                   height: 20,
                 ),
-                controller.addLoading
-                    ? Center(
-                        child: LoadingIndicators.getLoadingIndicator(),
-                      )
-                    : Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedBackButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: ElevatedAddButton(
-                              onPressed: () async {
-                                // التحقق من صحة الحقول
-                                if (_formKey.currentState!.validate()) {
-                                  // إذا كانت الحقول صحيحة، أضف الدور
-                                  bool added = await controller.addNewRoles(
-                                    name: nameController.text,
-                                  );
-
-                                  if (added) {
-                                    nameController.clear();
-                                    Get.back();
-                                    MyFlashBar.showSuccess(
-                                      'Role has been added successfully',
-                                      'Success',
-                                    ).show(Get.key.currentContext);
-                                  } else {
-                                    MyFlashBar.showError(
-                                      'Failed to add role',
-                                      'Error',
-                                    ).show(Get.key.currentContext);
-                                  }
-                                } else {
-                                  // عرض رسالة خطأ في حالة وجود خطأ في الإدخال
-                                  MyFlashBar.showError(
-                                    'Please fill in the required fields',
-                                    'Error',
-                                  ).show(Get.key.currentContext);
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                GetBuilder<PrivilegesController>(
+                  builder: (controller) {
+                    return controller.addLoading
+                        ? Center(
+                            child: LoadingIndicators.getLoadingIndicator(),
+                          )
+                        : Row(
+                            children: [
+                              const Expanded(
+                                child: ElevatedBackButton(),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: ElevatedAddButton(
+                                  onPressed: () async {
+                                    controller
+                                        .addNewRoles(
+                                      name: nameController.text,
+                                    )
+                                        .then(
+                                      (added) {
+                                        if (added) {
+                                          nameController.clear();
+                                          Get.back();
+                                          MyFlashBar.showSuccess(
+                                                  'Roles has ben added',
+                                                  'Roles')
+                                              .show(Get.key.currentContext);
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                  },
+                ),
               ],
             ),
           ),

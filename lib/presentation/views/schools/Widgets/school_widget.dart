@@ -45,54 +45,52 @@ class SchoolWidget extends GetView<SchoolController> {
               borderRadius: BorderRadius.circular(10),
             ),
             width: double.infinity,
-            child: GetBuilder<SchoolController>(builder: (_) {
-              return GetBuilder<ProfileController>(
-                builder: (selectSchool) => selectSchool.cachedUserProfile!
-                        .userHasSchoolsResModel!.schoolId!.isEmpty
-                    ? const Center(child: Text("No schools found"))
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: selectSchool.cachedUserProfile!
-                            .userHasSchoolsResModel!.schoolId!.length,
-                        itemBuilder: (context, index) {
-                          var schoolName = selectSchool.cachedUserProfile!
-                              .userHasSchoolsResModel!.schoolName![index];
+            child: GetBuilder<ProfileController>(
+              builder: (selectSchool) => selectSchool.cachedUserProfile!
+                      .userHasSchoolsResModel!.schoolId!.isEmpty
+                  ? const Center(child: Text("No schools found"))
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: selectSchool.cachedUserProfile!
+                          .userHasSchoolsResModel!.schoolId!.length,
+                      itemBuilder: (context, index) {
+                        var schoolName = selectSchool.cachedUserProfile!
+                            .userHasSchoolsResModel!.schoolName![index];
 
-                          var schoolType = selectSchool.cachedUserProfile!
-                              .userHasSchoolsResModel!.schoolType![index].name;
-                          bool isSelected =
-                              index == controller.selectedSchoolIndex;
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                controller.updateSelectedSchool(
-                                  index,
-                                  selectSchool.cachedUserProfile!
-                                      .userHasSchoolsResModel!.schoolId![index],
-                                  schoolName,
-                                );
-                                controller.getGradesBySchoolId();
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: isSelected
-                                      ? Colors.blue
-                                      : ColorManager.bgSideMenu,
-                                ),
-                                padding: const EdgeInsets.all(10),
-                                child: Text(
-                                  "$schoolName ($schoolType)",
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                        var schoolType = selectSchool.cachedUserProfile!
+                            .userHasSchoolsResModel!.schoolType![index].name;
+                        bool isSelected =
+                            index == controller.selectedSchoolIndex;
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              controller.updateSelectedSchool(
+                                index,
+                                selectSchool.cachedUserProfile!
+                                    .userHasSchoolsResModel!.schoolId![index],
+                                schoolName,
+                              );
+                              controller.getGradesBySchoolId();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: isSelected
+                                    ? Colors.blue
+                                    : ColorManager.bgSideMenu,
+                              ),
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                "$schoolName ($schoolType)",
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          );
-                        },
-                      ),
-              );
-            }),
+                          ),
+                        );
+                      },
+                    ),
+            ),
           ),
         )
       ],

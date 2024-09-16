@@ -68,8 +68,8 @@ class AddSchoolUser extends GetView<AdminController> {
                         controller.selectedSchoolID.contains(school.iD);
 
                     return CheckboxListTile(
-                      title: Text(
-                          '${school.schoolType!.name}' ' ' '${school.name}'),
+                      title:
+                          Text('${school.schoolType!.name}' '${school.name}'),
                       value: isChecked,
                       onChanged: (bool? value) {
                         if (value == true) {
