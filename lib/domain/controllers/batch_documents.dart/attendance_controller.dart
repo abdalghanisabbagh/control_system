@@ -1,13 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Network/tools/dio_factory.dart';
 import 'package:dartz/dartz.dart';
-import 'package:file_saver/file_saver.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
+import 'package:universal_html/html.dart' as html;
 
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
-import '../../../Data/Models/exam_mission/upload_pdf_res_models.dart';
 import '../../../Data/Models/exam_room/exam_rooms_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
@@ -28,14 +31,32 @@ class AttendanceController extends GetxController {
   ValueItem? selectedItemEducationYear;
   ValueItem? selectedItemExamRoom;
 
-  Future<void> downloadFilePdf(String url, String attendanceName) async {
+  Future<void> generatePdfAttendance({required int roomId}) async {
+    isLoadingGeneratePdf = true;
+    update();
+
+    var dio = DioFactory().getDio();
+
+    var response = await dio.get<List<int>>(
+      '${GeneratePdfLinks.generatePdfAttendence}?roomid=$roomId',
+      options: Options(
+        responseType: ResponseType.bytes,
+      ),
+    );
     try {
-      await FileSaver.instance.saveFile(
-        name: attendanceName,
-        link: LinkDetails(link: url),
-        mimeType: MimeType.pdf,
-        ext: 'pdf',
-      );
+      if (response.statusCode == 200) {
+        final bytes = Uint8List.fromList(response.data!);
+        final blob = html.Blob([bytes]);
+        final blobUrl = html.Url.createObjectUrlFromBlob(blob);
+
+        html.AnchorElement(href: blobUrl)
+          ..setAttribute('download', 'attendence.pdf')
+          ..click();
+
+        html.Url.revokeObjectUrl(blobUrl);
+      } else {
+        throw Exception('Failed to download file');
+      }
     } catch (e) {
       MyAwesomeDialogue(
         title: 'Error',
@@ -43,32 +64,8 @@ class AttendanceController extends GetxController {
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }
-  }
-
-  Future<void> generatePdfAttendance({required int roomId}) async {
-    isLoadingGeneratePdf = true;
+    isLoadingGeneratePdf = false;
     update();
-
-    final response = await ResponseHandler<UploadPdfResModel>().getResponse(
-      path: '${GeneratePdfLinks.generatePdfAttendence}?roomid=$roomId',
-      converter: UploadPdfResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      isLoadingGeneratePdf = false;
-      update();
-    }, (result) {
-      if (result.url != null) {
-        downloadFilePdf(result.url!, 'attendance report');
-        isLoadingGeneratePdf = false;
-        update();
-      }
-    });
   }
 
   Future<void> getAllExamMissionsByControlMission(int controlMissionId) async {
@@ -195,9 +192,6 @@ class AttendanceController extends GetxController {
       getControlMissionByEducationYearAndBySchool(educationYearId);
     } else {
       selectedItemEducationYear = null;
-      //gradesList.clear();
-      //examMissionsList.clear();
-      // filteredGradesList.clear();
       selectedItemControlMission = null;
       selectedItemExamRoom = null;
     }
