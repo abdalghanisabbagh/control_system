@@ -1,17 +1,21 @@
+import 'dart:typed_data';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
+import 'package:universal_html/html.dart' as html;
 
 import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
 import '../../../Data/Models/education_year/educations_years_res_model.dart';
-import '../../../Data/Models/exam_mission/upload_pdf_res_models.dart';
 import '../../../Data/Models/school/grade_response/grade_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
+import '../../../Data/Network/tools/dio_factory.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
@@ -60,27 +64,40 @@ class SeatNumberController extends GetxController {
     isLoadingGeneratePdf = true;
     update([gradeId]);
 
-    final response = await ResponseHandler<UploadPdfResModel>().getResponse(
-      path:
-          '${GeneratePdfLinks.generatePdfSeat}/$controlMissionId?gradeid=$gradeId',
-      converter: UploadPdfResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
+    var dio = DioFactory().getDio();
+
+    try {
+      var response = await dio.get<List<int>>(
+        '${GeneratePdfLinks.generatePdfSeat}/$controlMissionId?gradeid=$gradeId',
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      );
       isLoadingGeneratePdf = false;
       update([gradeId]);
-    }, (result) {
-      if (result.url != null) {
-        downloadFilePdf(result.url!, controlMissionName);
-        isLoadingGeneratePdf = false;
-        update([gradeId]);
+      if (response.statusCode == 200) {
+        final bytes = Uint8List.fromList(response.data!);
+        final blob = html.Blob([bytes]);
+        final blobUrl = html.Url.createObjectUrlFromBlob(blob);
+
+        // Create an anchor element and trigger the download
+        html.AnchorElement(href: blobUrl)
+          ..setAttribute('download', 'attendence.pdf')
+          ..click();
+
+        // Revoke the object URL after download
+        html.Url.revokeObjectUrl(blobUrl);
       }
-    });
+    } catch (e) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: "$e",
+        dialogType: DialogType.error,
+      ).showDialogue(Get.key.currentContext!);
+    }
+
+    isLoadingGeneratePdf = false;
+    update([gradeId]);
   }
 
   Future<void> getControlMissionByEducationYearAndBySchool(
