@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:control_system/Data/Network/tools/dio_factory.dart';
 import 'package:dartz/dartz.dart';
-import 'package:file_saver/file_saver.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Data/Models/control_mission/control_mission_res_model.dart';
@@ -12,7 +16,6 @@ import '../../../Data/Models/education_year/educations_years_res_model.dart';
 import '../../../Data/Models/exam_mission/exam_mission_res_model.dart';
 import '../../../Data/Models/exam_mission/exam_missions_res_model.dart';
 import '../../../Data/Models/exam_mission/preview_exam_res_model.dart';
-import '../../../Data/Models/exam_mission/upload_pdf_res_models.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/subject/subjects_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
@@ -135,23 +138,6 @@ class CoversSheetsController extends GetxController {
     return examMissionHasBeenDeleted;
   }
 
-  Future<void> downloadFilePdf(String url, String controlMissionName) async {
-    try {
-      await FileSaver.instance.saveFile(
-        name: 'cover-sheet-$controlMissionName',
-        link: LinkDetails(link: url),
-        mimeType: MimeType.pdf,
-        ext: 'pdf',
-      );
-    } catch (e) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "$e",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-    }
-  }
-
   Future<void> generateAmCoverSheet({
     required String controlMissionName,
     required int examMissionId,
@@ -182,27 +168,38 @@ class CoversSheetsController extends GetxController {
     isLoadingGeneratePdf = true;
     update([examMissionId]);
 
-    final response = await ResponseHandler<UploadPdfResModel>().getResponse(
-      path: path,
-      converter: UploadPdfResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
+    var dio = DioFactory().getDio();
+    try {
+      var response = await dio.get(
+        path,
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      );
+      if (response.statusCode == 200) {
+        final bytes = Uint8List.fromList(response.data!);
+        final blob = html.Blob([bytes]);
+        final blobUrl = html.Url.createObjectUrlFromBlob(blob);
 
-    response.fold((failure) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${failure.code} ::${failure.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      isLoadingGeneratePdf = false;
-      update([examMissionId]);
-    }, (result) {
-      if (result.url != null) {
-        downloadFilePdf(result.url!, controlMissionName);
-        isLoadingGeneratePdf = false;
-        update([examMissionId]);
+        // Create an anchor element and trigger the download
+        html.AnchorElement(href: blobUrl)
+          ..setAttribute('download', 'attendence.pdf')
+          ..click();
+
+        // Revoke the object URL after download
+        html.Url.revokeObjectUrl(blobUrl);
+      } else {
+        throw Exception('Failed to download file');
       }
-    });
+    } catch (e) {
+      MyAwesomeDialogue(
+              title: 'Error', desc: "$e", dialogType: DialogType.error)
+          .showDialogue(Get.key.currentContext!);
+    }
+
+    isLoadingGeneratePdf = false;
+
+    update([examMissionId]);
   }
 
   Future<void> generateIBCoverSheet({

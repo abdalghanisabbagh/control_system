@@ -3,9 +3,7 @@ name: Deploy Control Sysytem to Firebase Hosting
 on:
   pull_request:
     branches:
-      - stage
-
-permissions: read-all
+      - staging
 
 jobs:
   build_and_preview:
@@ -16,7 +14,7 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: flutter build web --source-maps --web-renderer=canvaskit
+      - run: flutter build web
       - name: 🎯 Deploy to firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
