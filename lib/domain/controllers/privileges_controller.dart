@@ -199,12 +199,12 @@ class PrivilegesController extends GetxController {
           int roleScreenFrontId = int.parse(roleScreen.frontId);
           return roleScreenFrontId >= screenFrontId &&
               roleScreenFrontId < screenFrontId + 1000 &&
-              allScreens.any((s) => int.parse(s.frontId) == roleScreenFrontId);
+              allScreens.any((screen) => int.parse(screen.frontId) == roleScreenFrontId);
         }).toList();
 
-        int numberOfScreensInRange = allScreens.where((s) {
-          int sFrontId = int.parse(s.frontId);
-          return sFrontId >= screenFrontId && sFrontId < screenFrontId + 1000;
+        int numberOfScreensInRange = allScreens.where((screen) {
+          int includedScreenFrontId = int.parse(screen.frontId);
+          return includedScreenFrontId >= screenFrontId && includedScreenFrontId < screenFrontId + 1000;
         }).length;
 
         if (matchingActions.isEmpty) {
@@ -227,14 +227,14 @@ class PrivilegesController extends GetxController {
       return;
     }
 
-    int id;
-    id = int.parse(lastSelectedFrontId!);
+    int lastSelctedFrontId;
+    lastSelctedFrontId = int.parse(lastSelectedFrontId!);
 
     widgets = allScreens.where((screen) {
       int screenFrontId;
       screenFrontId = int.parse(screen.frontId);
 
-      return screenFrontId >= id && screenFrontId < id + 1000;
+      return screenFrontId >= lastSelctedFrontId && screenFrontId < lastSelctedFrontId + 1000;
     }).toList();
 
     var role =
@@ -372,9 +372,9 @@ class PrivilegesController extends GetxController {
     update();
   }
 
-  Future<void> setSelectedScreen(int screenId, String frontid) async {
+  Future<void> setSelectedScreen(int screenId, String frontId) async {
     selectedScreenId = screenId;
-    lastSelectedFrontId = frontid;
+    lastSelectedFrontId = frontId;
     update();
   }
 }
