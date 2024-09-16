@@ -29,15 +29,20 @@ class SchoolsScreen extends GetView<SchoolController> {
                   visible: Get.find<ProfileController>().canAccessWidget(
                     widgetId: '5100',
                   ),
-                  child: IconButton(
-                    tooltip: "Add new School",
+                  child: ElevatedButton.icon(
+                    iconAlignment: IconAlignment.end,
+                    icon: const Icon(Icons.school),
+                    label: const Text("Add New School"),
                     onPressed: () {
                       MyDialogs.showDialog(
                         context,
                         const AddNewSchoolWidget(),
                       );
                     },
-                    icon: const Icon(Icons.school),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 12.0),
+                    ),
                   ),
                 ),
               ],

@@ -44,6 +44,17 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
                         ),
                       )
                     : SearchableList(
+                        inputDecoration: InputDecoration(
+                          labelText: "Search Class Room",
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: ColorManager.bgSideMenu,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
                         initialList: controller.classesRooms,
                         emptyWidget: Center(
                           child: Text(
