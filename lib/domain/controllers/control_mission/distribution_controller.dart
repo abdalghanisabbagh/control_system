@@ -82,7 +82,7 @@ class DistributionController extends GetxController {
 
   Future<bool> deleteExamRoom(int idExamRoom) async {
     isLoadingDeleteClassRoom = true;
-    bool succDel = false;
+    bool isSuccess = false;
     update();
     ResponseHandler<ExamRoomResModel> responseHandler = ResponseHandler();
     Either<Failure, ExamRoomResModel> response =
@@ -99,17 +99,17 @@ class DistributionController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        succDel = false;
+        isSuccess = false;
         update();
       },
       (r) {
         getExamRoomByControlMissionId();
         isLoadingDeleteClassRoom = false;
-        succDel = true;
+        isSuccess = true;
         update();
       },
     );
-    return succDel;
+    return isSuccess;
   }
 
   Future<bool> getClassesRoomsBySchoolId() async {
@@ -212,21 +212,6 @@ class DistributionController extends GetxController {
     update();
   }
 
-  void searchExamRoom(String query) {
-    if (query.isEmpty) {
-      serachExamRoomList = listExamRoom;
-    } else {
-      serachExamRoomList = listExamRoom.where((examRoom) {
-        return examRoom.name!.toLowerCase().contains(query.toLowerCase()) ||
-            examRoom.classRoomResModel!.name!
-                .toLowerCase()
-                .contains(query.toLowerCase());
-      }).toList();
-    }
-
-    update();
-  }
-
   Future<bool> getStage() async {
     bool getData = false;
     ResponseHandler<StageResModel> responseHandler = ResponseHandler();
@@ -288,6 +273,21 @@ class DistributionController extends GetxController {
     controlMissionName = name;
     update();
     Hive.box('ControlMission').put('Name', name);
+  }
+
+  void searchExamRoom(String query) {
+    if (query.isEmpty) {
+      serachExamRoomList = listExamRoom;
+    } else {
+      serachExamRoomList = listExamRoom.where((examRoom) {
+        return examRoom.name!.toLowerCase().contains(query.toLowerCase()) ||
+            examRoom.classRoomResModel!.name!
+                .toLowerCase()
+                .contains(query.toLowerCase());
+      }).toList();
+    }
+
+    update();
   }
 
   void setSelectedItemClassRoom(List<ValueItem> items) {
