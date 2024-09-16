@@ -49,9 +49,17 @@ class CreateControlMissionController extends GetxController {
     bool success = false;
     isLoading = true;
     update();
-    if (selectedEducationYear == null) {
+    if (includedStudentsIds.isEmpty) {
       MyAwesomeDialogue(
-        title: 'title',
+        title: 'Error',
+        desc: 'Please select students',
+        dialogType: DialogType.error,
+      ).showDialogue(
+        Get.key.currentContext!,
+      );
+    } else if (selectedEducationYear == null) {
+      MyAwesomeDialogue(
+        title: 'Error',
         desc: 'Please select education year',
         dialogType: DialogType.error,
       ).showDialogue(
@@ -63,7 +71,7 @@ class CreateControlMissionController extends GetxController {
       return success;
     } else if (selectedStartDate == null) {
       MyAwesomeDialogue(
-        title: 'title',
+        title: 'Error',
         desc: 'Please select start date',
         dialogType: DialogType.error,
       ).showDialogue(
@@ -75,7 +83,7 @@ class CreateControlMissionController extends GetxController {
       return success;
     } else if (selectedEndDate == null) {
       MyAwesomeDialogue(
-        title: 'title',
+        title: 'Error',
         desc: 'Please select end date',
         dialogType: DialogType.error,
       ).showDialogue(
@@ -87,7 +95,7 @@ class CreateControlMissionController extends GetxController {
       return success;
     } else if (batchName == null || batchName!.isEmpty) {
       MyAwesomeDialogue(
-        title: 'title',
+        title: 'Error',
         desc: 'Please enter mission name',
         dialogType: DialogType.error,
       ).showDialogue(

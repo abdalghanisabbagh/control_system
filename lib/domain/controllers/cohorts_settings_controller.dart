@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:control_system/domain/controllers/operation_cohort_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Models/cohort/cohort_res_model.dart';
@@ -21,6 +22,7 @@ class CohortsSettingsController extends GetxController {
   List<int> slectedSchoolTypeId = <int>[];
 
   Future<bool> addnewCohort(String name) async {
+
     addLoading = true;
     update();
     bool cohortHasBeenAdded = false;
@@ -33,7 +35,8 @@ class CohortsSettingsController extends GetxController {
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
-        "School_Type_ID": slectedSchoolTypeId.first,
+        "School_Type_ID": slectedSchoolTypeId.firstOrNull ??
+            Hive.box('School').get('SchoolTypeID'),
       },
     );
     ////////
