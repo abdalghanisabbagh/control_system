@@ -241,6 +241,7 @@ class PrivilegesController extends GetxController {
         filteredRoles.firstWhereOrNull((role) => role.id == selectedRoleId);
 
     if (role == null) {
+      resultFilteredWidgets = widgets;
       return;
     }
 
@@ -343,9 +344,11 @@ class PrivilegesController extends GetxController {
 
   void searchWithinFilteredWidgets(String query) {
     if (query.isEmpty) {
+      setSelectedScreen(selectedScreenId!, lastSelectedFrontId!);
+      filterWidgets();
       widgets = resultFilteredWidgets;
     } else {
-      widgets = widgets.where((widget) {
+      widgets = resultFilteredWidgets.where((widget) {
         return widget.name.toLowerCase().contains(query.toLowerCase()) ||
             widget.frontId.toLowerCase().contains(query.toLowerCase());
       }).toList();
