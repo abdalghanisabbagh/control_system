@@ -416,9 +416,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                                           },
                                                         );
                                                       },
-                                                      btnCancelOnPressed: () {
-                                                        Get.back();
-                                                      },
+                                                      btnCancelOnPressed: () {},
                                                     ).showDialogue(context);
                                                   } else {
                                                     MyAwesomeDialogue(
@@ -448,9 +446,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                                           },
                                                         );
                                                       },
-                                                      btnCancelOnPressed: () {
-                                                        Get.back();
-                                                      },
+                                                      btnCancelOnPressed: () {},
                                                     ).showDialogue(context);
                                                   }
                                                 },
