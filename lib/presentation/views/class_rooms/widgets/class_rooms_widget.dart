@@ -44,6 +44,11 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
                         ),
                       )
                     : SearchableList(
+                        inputDecoration: const InputDecoration(
+                          label: Text(
+                            'Search by name',
+                          ),
+                        ),
                         initialList: controller.classesRooms,
                         emptyWidget: Center(
                           child: Text(
