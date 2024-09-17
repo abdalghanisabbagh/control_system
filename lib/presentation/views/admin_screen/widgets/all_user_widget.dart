@@ -62,6 +62,11 @@ class AllUserWidget extends GetView<AdminController> {
                       : Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: SearchableList<UserResModel>(
+                            inputDecoration: const InputDecoration(
+                              label: Text(
+                                'Search by name',
+                              ),
+                            ),
                             initialList: controller.allUsersList,
                             emptyWidget: Center(
                               child: Text(

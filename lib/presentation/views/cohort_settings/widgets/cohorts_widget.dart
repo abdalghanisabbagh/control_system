@@ -41,6 +41,11 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                       ),
                     )
                   : SearchableList<CohortResModel>(
+                      inputDecoration: const InputDecoration(
+                        label: Text(
+                          'Search by name',
+                        ),
+                      ),
                       initialList: controller.cohorts,
                       emptyWidget: Center(
                         child: Text(

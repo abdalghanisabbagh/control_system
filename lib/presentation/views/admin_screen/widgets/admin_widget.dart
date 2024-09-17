@@ -38,6 +38,11 @@ class AdminWidget extends GetView<AdminController> {
                       ),
                     )
                   : SearchableList<UserResModel>(
+                      inputDecoration: const InputDecoration(
+                        label: Text(
+                          'Search by name',
+                        ),
+                      ),
                       initialList: controller.userCreatedList,
                       emptyWidget: Center(
                         child: Text(
