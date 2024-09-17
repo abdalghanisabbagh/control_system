@@ -32,7 +32,7 @@ class DioFactory {
     };
 
     dio.options = BaseOptions(
-      baseUrl: AppLinks.baseUrlProd,
+      baseUrl: AppLinks.baseUrl,
       headers: headers,
       receiveTimeout: timeOut,
       sendTimeout: timeOut,
@@ -40,7 +40,7 @@ class DioFactory {
 
     if (!kReleaseMode) {
       // its debug mode so print app logs
-      // dio.interceptors.add(PrettyDioLogger(
+      // dio.interceptors.add(PrettyDioLogger(5
       //   requestHeader: true,
       //   requestBody: true,
       //   responseHeader: true,
