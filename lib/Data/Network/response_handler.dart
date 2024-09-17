@@ -168,7 +168,11 @@ class ResponseHandler<T> {
     final Response response = await request.call();
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      if (response.data['status'] == true) {
+      if (response.data['status'] is bool
+          ? response.data['status'] == true
+          : response.data['data'] is String
+              ? response.data['data'] == 'OK'
+              : false) {
         if (response.data['data'] != null) {
           try {
             return Right(converter(response.data['data']));
