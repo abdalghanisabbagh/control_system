@@ -75,6 +75,12 @@ class OperationWidget extends GetView<OperationController> {
                                                   100,
                                               child: SearchableList<
                                                   SubjectResModel>(
+                                                inputDecoration:
+                                                    const InputDecoration(
+                                                  label: Text(
+                                                    'Search by name',
+                                                  ),
+                                                ),
                                                 initialList:
                                                     controller.subjects,
                                                 emptyWidget: Center(
