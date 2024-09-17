@@ -10,8 +10,10 @@ import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/validations.dart';
 
-class AddNewPrivilegesWidget extends StatelessWidget {
+class AddNewPrivilegesWidget extends GetView<PrivilegesController> {
   final TextEditingController nameController = TextEditingController();
+  final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(); 
 
   AddNewPrivilegesWidget({super.key});
 
@@ -21,6 +23,7 @@ class AddNewPrivilegesWidget extends StatelessWidget {
       child: IntrinsicHeight(
         child: IntrinsicWidth(
           child: Form(
+            key: _formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -42,46 +45,54 @@ class AddNewPrivilegesWidget extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                GetBuilder<PrivilegesController>(
-                  builder: (controller) {
-                    return controller.addLoading
-                        ? Center(
-                            child: LoadingIndicators.getLoadingIndicator(),
-                          )
-                        : Row(
-                            children: [
-                              const Expanded(
-                                child: ElevatedBackButton(),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                child: ElevatedAddButton(
-                                  onPressed: () async {
-                                    controller
-                                        .addNewRoles(
-                                      name: nameController.text,
-                                    )
-                                        .then(
-                                      (added) {
-                                        if (added) {
-                                          nameController.clear();
-                                          Get.back();
-                                          MyFlashBar.showSuccess(
-                                                  'Roles has ben added',
-                                                  'Roles')
-                                              .show(Get.key.currentContext);
-                                        }
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                  },
-                ),
+                controller.addLoading
+                    ? Center(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      )
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedBackButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: ElevatedAddButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  bool added = await controller.addNewRoles(
+                                    name: nameController.text,
+                                  );
+
+                                  if (added) {
+                                    nameController.clear();
+                                    Get.back();
+                                    MyFlashBar.showSuccess(
+                                      'Role has been added successfully',
+                                      'Success',
+                                    ).show(Get.key.currentContext);
+                                  } else {
+                                    MyFlashBar.showError(
+                                      'Failed to add role',
+                                      'Error',
+                                    ).show(Get.key.currentContext);
+                                  }
+                                } else {
+                                  MyFlashBar.showError(
+                                    'Please fill in the required fields',
+                                    'Error',
+                                  ).show(Get.key.currentContext);
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
               ],
             ),
           ),
