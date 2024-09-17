@@ -184,7 +184,6 @@ class DistributionController extends GetxController {
 
   Future<void> getExamRoomByControlMissionId() async {
     isLodingGetExamRooms = true;
-    listExamRoom.clear();
     update(['getExamRoomByControlMissionId']);
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
@@ -253,6 +252,7 @@ class DistributionController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    listExamRoom.clear();
     await Future.wait([
       getControlMissionId(),
       getControlMissionName(),
