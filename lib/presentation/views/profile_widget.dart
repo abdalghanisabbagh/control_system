@@ -44,24 +44,24 @@ class ProfileWidget extends GetView<ProfileController> {
           width: Get.width * 0.5,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildProfileIcon(),
-                const SizedBox(height: 20),
-                _buildEditProfileTitle(),
-                const SizedBox(height: 20),
-                _buildNameField(),
-                const SizedBox(height: 20),
-                _buildOldPasswordField(),
-                const SizedBox(height: 20),
-                _buildNewPasswordField(),
-                const SizedBox(height: 20),
-                _buildConfirmNewPasswordField(),
-                const SizedBox(height: 20),
-                GetBuilder<ProfileController>(
-                  builder: (_) {
-                    return controller.isLodingEditUser
+            child: GetBuilder<ProfileController>(
+              builder: (_) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildProfileIcon(),
+                    const SizedBox(height: 20),
+                    _buildEditProfileTitle(),
+                    const SizedBox(height: 20),
+                    _buildNameField(),
+                    const SizedBox(height: 20),
+                    _buildOldPasswordField(),
+                    const SizedBox(height: 20),
+                    _buildNewPasswordField(),
+                    const SizedBox(height: 20),
+                    _buildConfirmNewPasswordField(),
+                    const SizedBox(height: 20),
+                    controller.isLodingEditUser
                         ? SizedBox(
                             width: 50,
                             height: 50,
@@ -69,10 +69,10 @@ class ProfileWidget extends GetView<ProfileController> {
                               child: LoadingIndicators.getLoadingIndicator(),
                             ),
                           )
-                        : _buildSaveButton(profileController);
-                  },
-                ),
-              ],
+                        : _buildSaveButton(profileController),
+                  ],
+                );
+              },
             ),
           ),
         ),
@@ -83,11 +83,20 @@ class ProfileWidget extends GetView<ProfileController> {
   Widget _buildConfirmNewPasswordField() {
     return TextFormField(
       controller: _confirmNewPasswordController,
-      obscureText: true,
-      decoration: const InputDecoration(
+      obscureText: controller.showPassword,
+      decoration: InputDecoration(
         labelText: 'Confirm New Password',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.lock),
+        border: const OutlineInputBorder(),
+        prefixIcon: const Icon(Icons.lock),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.showPassword = !controller.showPassword;
+            controller.update();
+          },
+          icon: controller.showPassword
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        ),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -131,11 +140,20 @@ class ProfileWidget extends GetView<ProfileController> {
   Widget _buildNewPasswordField() {
     return TextFormField(
       controller: _newPasswordController,
-      obscureText: true,
-      decoration: const InputDecoration(
+      obscureText: controller.showPassword,
+      decoration: InputDecoration(
         labelText: 'New Password',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.lock),
+        border: const OutlineInputBorder(),
+        prefixIcon: const Icon(Icons.lock),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.showPassword = !controller.showPassword;
+            controller.update();
+          },
+          icon: controller.showPassword
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        ),
       ),
       validator: (value) {
         if (_confirmNewPasswordController.text.isNotEmpty) {
@@ -151,11 +169,20 @@ class ProfileWidget extends GetView<ProfileController> {
   Widget _buildOldPasswordField() {
     return TextFormField(
       controller: _oldPasswordController,
-      obscureText: true,
-      decoration: const InputDecoration(
+      obscureText: controller.showPassword,
+      decoration: InputDecoration(
         labelText: 'Old Password',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.lock),
+        border: const OutlineInputBorder(),
+        prefixIcon: const Icon(Icons.lock),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.showPassword = !controller.showPassword;
+            controller.update();
+          },
+          icon: controller.showPassword
+              ? const Icon(Icons.visibility)
+              : const Icon(Icons.visibility_off),
+        ),
       ),
       validator: (value) {
         if (_newPasswordController.text.isNotEmpty ||

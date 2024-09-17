@@ -12,7 +12,7 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class ProfileController extends GetxController {
   bool isLodingEditUser = false;
-
+  bool showPassword = false;
   UserProfileModel? _cachedUserProfile;
 
   UserProfileModel? get cachedUserProfile =>
