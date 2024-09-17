@@ -1,4 +1,3 @@
-import 'package:control_system/presentation/views/student/widgets/transfer_student_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +7,7 @@ import '../../../../domain/controllers/students_controllers/student_controller.d
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import 'edit_student_widget.dart';
+import 'transfer_student_widget.dart';
 
 class StudentWidget extends GetView<StudentController> {
   const StudentWidget({super.key});

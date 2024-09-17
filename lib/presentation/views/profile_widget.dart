@@ -1,4 +1,3 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +8,15 @@ import 'package:universal_html/html.dart';
 import '../../../../domain/controllers/controllers.dart';
 import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../resource_manager/ReusableWidget/my_back_button.dart';
+import '../resource_manager/ReusableWidget/my_snak_bar.dart';
 
 class ProfileWidget extends GetView<ProfileController> {
-  ProfileWidget({super.key});
+  final _confirmNewPasswordController = TextEditingController();
 
   final _nameController = TextEditingController();
-  final _oldPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
-  final _confirmNewPasswordController = TextEditingController();
+  final _oldPasswordController = TextEditingController();
+  ProfileWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +62,24 @@ class ProfileWidget extends GetView<ProfileController> {
     );
   }
 
-  Widget _buildProfileIcon() {
-    return const Center(
-      child: Icon(
-        Icons.account_circle,
-        size: 120,
-        color: ColorManager.greyA8,
+  Widget _buildConfirmNewPasswordField() {
+    return TextFormField(
+      controller: _confirmNewPasswordController,
+      obscureText: true,
+      decoration: const InputDecoration(
+        labelText: 'Confirm New Password',
+        border: OutlineInputBorder(),
+        prefixIcon: Icon(Icons.lock),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please confirm your new password';
+        }
+        if (value != _newPasswordController.text) {
+          return 'Passwords do not match';
+        }
+        return null;
+      },
     );
   }
 
@@ -99,6 +110,26 @@ class ProfileWidget extends GetView<ProfileController> {
     );
   }
 
+  Widget _buildNewPasswordField() {
+    return TextFormField(
+      controller: _newPasswordController,
+      obscureText: true,
+      decoration: const InputDecoration(
+        labelText: 'New Password',
+        border: OutlineInputBorder(),
+        prefixIcon: Icon(Icons.lock),
+      ),
+      validator: (value) {
+        if (_confirmNewPasswordController.text.isNotEmpty) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter your new password';
+          }
+        }
+        return null;
+      },
+    );
+  }
+
   Widget _buildOldPasswordField() {
     return TextFormField(
       controller: _oldPasswordController,
@@ -120,44 +151,13 @@ class ProfileWidget extends GetView<ProfileController> {
     );
   }
 
-  Widget _buildNewPasswordField() {
-    return TextFormField(
-      controller: _newPasswordController,
-      obscureText: true,
-      decoration: const InputDecoration(
-        labelText: 'New Password',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.lock),
+  Widget _buildProfileIcon() {
+    return const Center(
+      child: Icon(
+        Icons.account_circle,
+        size: 120,
+        color: ColorManager.greyA8,
       ),
-      validator: (value) {
-        if (_confirmNewPasswordController.text.isNotEmpty) {
-          if (value == null || value.isEmpty) {
-            return 'Please enter your new password';
-          }
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _buildConfirmNewPasswordField() {
-    return TextFormField(
-      controller: _confirmNewPasswordController,
-      obscureText: true,
-      decoration: const InputDecoration(
-        labelText: 'Confirm New Password',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.lock),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please confirm your new password';
-        }
-        if (value != _newPasswordController.text) {
-          return 'Passwords do not match';
-        }
-        return null;
-      },
     );
   }
 

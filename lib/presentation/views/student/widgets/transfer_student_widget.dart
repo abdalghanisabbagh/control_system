@@ -1,17 +1,18 @@
-import 'package:control_system/Data/Models/student/student_res_model.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_edit_button.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../Data/Models/student/student_res_model.dart';
 import '../../../../domain/controllers/students_controllers/transfer_student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
+import '../../../resource_manager/ReusableWidget/elevated_edit_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 
 class TransferStudentWidget extends GetView<TransferStudentController> {
   final StudentResModel studentResModel;
 
   const TransferStudentWidget({super.key, required this.studentResModel});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

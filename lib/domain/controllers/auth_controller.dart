@@ -16,10 +16,9 @@ import 'profile_controller.dart';
 import 'school_controller.dart';
 
 class AuthController extends GetxController {
-  PackageInfo? packageInfo;
-
   bool isLoading = false;
   bool isLogin = Hive.box('Token').get('isLogin', defaultValue: false);
+  PackageInfo? packageInfo;
   ProfileController profileController = Get.find<ProfileController>();
   bool showPass = true;
   TokenService tokenService = Get.find<TokenService>();

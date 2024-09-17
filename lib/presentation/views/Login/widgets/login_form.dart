@@ -35,10 +35,10 @@ void _login(
 }
 
 class LoginForm extends GetView<AuthController> {
-  final usernameController = TextEditingController();
-
   final formKey = GlobalKey<FormState>();
+
   final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
   LoginForm({super.key});
 
   @override

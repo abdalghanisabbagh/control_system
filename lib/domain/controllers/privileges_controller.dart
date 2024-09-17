@@ -15,31 +15,28 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class PrivilegesController extends GetxController {
+  bool addLoading = false;
+  bool allActionsIncluded = false;
+  List<ScreenResModel> allScreens = [];
+  bool connectLoading = false;
+  bool deleteScreenLoading = false;
+  List<RoleResModel> filteredRoles = [];
+  List<ScreenResModel> filteredScreens = [];
+  List<ScreenResModel> filteredWidgets = [];
+  bool getAllLoading = false;
+  List<int> includedActions = [];
+  bool isProcessing = false;
+  String? lastSelectedFrontId;
+  List<int> removedSreensIds = [];
+  List<ScreenResModel> resultFilteredWidgets = [];
+  List<RoleResModel> rolesList = [];
   final searchRolesController = TextEditingController();
   final searchScreensController = TextEditingController();
   final searchWidgetsController = TextEditingController();
-
-  bool addLoading = false;
-  bool connectLoading = false;
-  bool deleteScreenLoading = false;
-  bool getAllLoading = false;
-  bool isProcessing = false;
-  bool allActionsIncluded = false;
-  List<int> removedSreensIds = [];
-  List<int> selectedSreensIds = [];
-  List<RoleResModel> rolesList = [];
-  List<ScreenResModel> allScreens = [];
-  List<ScreenResModel> widgets = [];
-
-  List<ScreenResModel> filteredScreens = [];
-  List<ScreenResModel> filteredWidgets = [];
-  List<RoleResModel> filteredRoles = [];
-  List<int> includedActions = [];
-  List<ScreenResModel> resultFilteredWidgets = [];
-
   int? selectedRoleId;
   int? selectedScreenId;
-  String? lastSelectedFrontId;
+  List<int> selectedSreensIds = [];
+  List<ScreenResModel> widgets = [];
 
   Future<bool> addNewRoles({
     required String name,
@@ -199,12 +196,14 @@ class PrivilegesController extends GetxController {
           int roleScreenFrontId = int.parse(roleScreen.frontId);
           return roleScreenFrontId >= screenFrontId &&
               roleScreenFrontId < screenFrontId + 1000 &&
-              allScreens.any((screen) => int.parse(screen.frontId) == roleScreenFrontId);
+              allScreens.any(
+                  (screen) => int.parse(screen.frontId) == roleScreenFrontId);
         }).toList();
 
         int numberOfScreensInRange = allScreens.where((screen) {
           int includedScreenFrontId = int.parse(screen.frontId);
-          return includedScreenFrontId >= screenFrontId && includedScreenFrontId < screenFrontId + 1000;
+          return includedScreenFrontId >= screenFrontId &&
+              includedScreenFrontId < screenFrontId + 1000;
         }).length;
 
         if (matchingActions.isEmpty) {
@@ -234,7 +233,8 @@ class PrivilegesController extends GetxController {
       int screenFrontId;
       screenFrontId = int.parse(screen.frontId);
 
-      return screenFrontId >= lastSelctedFrontId && screenFrontId < lastSelctedFrontId + 1000;
+      return screenFrontId >= lastSelctedFrontId &&
+          screenFrontId < lastSelctedFrontId + 1000;
     }).toList();
 
     var role =

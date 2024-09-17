@@ -16,9 +16,7 @@ class BarcodeController extends GetxController {
   final TextEditingController barcodeController = TextEditingController();
   BarcodeResModel? barcodeResModel;
   bool isEdit = false;
-
   bool isLoading = false;
-
   final TextEditingController studentDegreeController = TextEditingController();
 
   @override
@@ -86,7 +84,7 @@ class BarcodeController extends GetxController {
         setDegreeSuccess = true;
       },
     );
-        barcodeController.clear();
+    barcodeController.clear();
     studentDegreeController.clear();
     isLoading = false;
     update();

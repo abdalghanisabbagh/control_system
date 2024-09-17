@@ -6,6 +6,7 @@ import '../../../../domain/controllers/control_mission/distribute_students_contr
 
 class HeaderWidget extends GetView<DistributeStudentsController> {
   const HeaderWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DistributeStudentsController>(

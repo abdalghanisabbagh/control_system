@@ -6,7 +6,6 @@ import 'package:searchable_listview/searchable_listview.dart';
 
 import '../../../../Data/Models/subject/subject_res_model.dart';
 import '../../../../domain/controllers/controllers.dart';
-import '../../../../domain/controllers/subject/operation_controoler.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';

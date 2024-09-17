@@ -1,9 +1,9 @@
 class Barcode {
   int? id;
+
   String? studentDegree;
 
   Barcode({this.id, this.studentDegree});
-
   Barcode.fromJson(Map<String, dynamic> json) {
     id = json['ID'];
     studentDegree = json['StudentDegree'];
@@ -18,12 +18,12 @@ class Barcode {
 }
 
 class Cohort {
-  int? iD;
-  String? name;
   List<CohortHasSubjects>? cohortHasSubjects;
 
-  Cohort({this.iD, this.name, this.cohortHasSubjects});
+  int? iD;
 
+  String? name;
+  Cohort({this.iD, this.name, this.cohortHasSubjects});
   Cohort.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     name = json['Name'];
@@ -68,11 +68,11 @@ class CohortHasSubjects {
 
 class ExamRoom {
   int? iD;
+
   String? name;
+
   List<StudentSeatNumnbers>? studentSeatNumnbers;
-
   ExamRoom({this.iD, this.name, this.studentSeatNumnbers});
-
   ExamRoom.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     name = json['Name'];
@@ -98,10 +98,10 @@ class ExamRoom {
 
 class Grades {
   int? iD;
+
   String? name;
 
   Grades({this.iD, this.name});
-
   Grades.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     name = json['Name'];
@@ -117,10 +117,10 @@ class Grades {
 
 class SchoolClass {
   int? iD;
+
   String? name;
 
   SchoolClass({this.iD, this.name});
-
   SchoolClass.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     name = json['Name'];
@@ -135,14 +135,15 @@ class SchoolClass {
 }
 
 class Student {
-  String? firstName;
-  String? secondName;
-  String? thirdName;
-  Grades? grades;
-  SchoolClass? schoolClass;
-  Cohort? cohort;
   Barcode? barcode;
 
+  Cohort? cohort;
+
+  String? firstName;
+  Grades? grades;
+  SchoolClass? schoolClass;
+  String? secondName;
+  String? thirdName;
   Student({
     this.firstName,
     this.secondName,
@@ -152,7 +153,6 @@ class Student {
     this.cohort,
     this.barcode,
   });
-
   Student.fromJson(Map<String, dynamic> json) {
     firstName = json['First_Name'];
     secondName = json['Second_Name'];
@@ -216,11 +216,11 @@ class StudentGradesResModel {
 
 class StudentSeatNumnbers {
   int? iD;
+
   String? seatNumber;
+
   Student? student;
-
   StudentSeatNumnbers({this.iD, this.seatNumber, this.student});
-
   StudentSeatNumnbers.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     seatNumber = json['Seat_Number'];

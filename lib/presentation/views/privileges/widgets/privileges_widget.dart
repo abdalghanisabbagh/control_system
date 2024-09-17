@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import '../../../../domain/controllers/privileges_controller.dart';
 
 class CustomPrivilegeCardWidget extends StatelessWidget {
-  final String roleName;
   final bool isSelected;
-  final VoidCallback onSelect;
 
+  final VoidCallback onSelect;
+  final String roleName;
   const CustomPrivilegeCardWidget({
     super.key,
     required this.roleName,

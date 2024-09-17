@@ -1,11 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/school/school_response/schools_res_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/school/school_response/school_res_model.dart';
+import '../../Data/Models/school/school_response/schools_res_model.dart';
 import '../../Data/Models/user/roles/role_res_model.dart';
 import '../../Data/Models/user/roles/roleres_model.dart';
 import '../../Data/Models/user/users_res/user_res_model.dart';
@@ -19,7 +19,8 @@ import '../../presentation/resource_manager/constants/app_constatnts.dart';
 
 class AdminController extends GetxController {
   List<UserResModel> allUsersList = <UserResModel>[];
-
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController fullNameController = TextEditingController();
   bool isLoading = false;
   bool isLoadingGetAllUsers = false;
   bool isLoadingGetUsersCreatedBy = false;
@@ -29,25 +30,48 @@ class AdminController extends GetxController {
   bool isLodingEditUserSchools = false;
   bool isLodingGetRoles = false;
   bool isloadingGetSchools = false;
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController nisIdController = TextEditingController();
   final TextEditingController oldPasswordController = TextEditingController();
-
   List<RoleResModel> rolesList = <RoleResModel>[];
-  List<int> selectedRolesID = <int>[];
   List<SchoolResModel> schoolsList = <SchoolResModel>[];
-  List<int> selectedSchoolID = <int>[];
-
   String? selectedDivision;
   String? selectedRoleType;
+  List<int> selectedRolesID = <int>[];
+  List<int> selectedSchoolID = <int>[];
   bool showNewPassword = true;
   bool showOldPassord = true;
   List<UserResModel> userCreatedList = <UserResModel>[];
   List<UserResModel> userInSchoolList = <UserResModel>[];
   final TextEditingController usernameController = TextEditingController();
+
+  Future<bool> activateUser({required int userId}) async {
+    bool activateUser = false;
+    update();
+    ResponseHandler<void> responseHandler = ResponseHandler<void>();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${UserLinks.activateUser}/$userId',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        activateUser = false;
+      },
+      (r) {
+        activateUser = true;
+        onInit();
+      },
+    );
+    update();
+    return activateUser;
+  }
 
   Future<bool> addNewUser() async {
     isLoading = true;
@@ -88,6 +112,34 @@ class AdminController extends GetxController {
         return true;
       },
     );
+  }
+
+  Future<bool> deactivateUser({required int userId}) async {
+    bool deactivateUser = false;
+    update();
+    ResponseHandler<void> responseHandler = ResponseHandler<void>();
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${UserLinks.deactivateUser}/$userId',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        deactivateUser = false;
+      },
+      (r) {
+        deactivateUser = true;
+        onInit();
+      },
+    );
+    update();
+    return deactivateUser;
   }
 
   Future<bool> editUser(Map<String, dynamic> data, int id) async {
@@ -351,62 +403,6 @@ class AdminController extends GetxController {
     );
     isLoadingGetUsersInSchool = false;
     update();
-  }
-
-  Future<bool> deactivateUser({required int userId}) async {
-    bool deactivateUser = false;
-    update();
-    ResponseHandler<void> responseHandler = ResponseHandler<void>();
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${UserLinks.deactivateUser}/$userId',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: {},
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        deactivateUser = false;
-      },
-      (r) {
-        deactivateUser = true;
-        onInit();
-      },
-    );
-    update();
-    return deactivateUser;
-  }
-
-  Future<bool> activateUser({required int userId}) async {
-    bool activateUser = false;
-    update();
-    ResponseHandler<void> responseHandler = ResponseHandler<void>();
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${UserLinks.activateUser}/$userId',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: {},
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        activateUser = false;
-      },
-      (r) {
-        activateUser = true;
-        onInit();
-      },
-    );
-    update();
-    return activateUser;
   }
 
   @override

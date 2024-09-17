@@ -1,12 +1,12 @@
-import 'package:control_system/Data/Models/class_room/class_room_res_model.dart';
-
+import '../class_room/class_room_res_model.dart';
 import '../control_mission/control_mission_res_model.dart';
 
 class ExamRoomResModel {
+  ClassRoomResModel? classRoomResModel;
+
   int? controlMissionID;
 
   ControlMissionResModel? controlMissionResModel;
-  ClassRoomResModel? classRoomResModel;
 
   int? id;
   String? name;

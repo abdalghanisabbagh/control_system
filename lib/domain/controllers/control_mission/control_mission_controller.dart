@@ -16,16 +16,17 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 
 class ControlMissionController extends GetxController {
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
+  List<EducationYearModel> educationYearList = [];
   List<ControlMissionResModel> filteredControlMissionList =
       <ControlMissionResModel>[];
-  List<EducationYearModel> educationYearList = [];
+
   bool isLoading = false;
   bool isLodingGetClassesRooms = false;
   bool isLodingGetEducationYears = false;
   List<ValueItem> optionsEducationYear = <ValueItem>[];
+  String searchQuery = '';
   List<ValueItem>? selectedEducationYear;
   ValueItem? selectedItemEducationYear;
-  String searchQuery = '';
 
   Future<bool> getControlMissionByEducationYear(int educationYearId) async {
     bool gotData = false;

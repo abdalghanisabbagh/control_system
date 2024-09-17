@@ -1,21 +1,10 @@
-import 'package:control_system/presentation/views/profile_widget.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/bindings/bindings.dart';
 import '../../../domain/controllers/controllers.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
-import '../../views/admin_screen/widgets/all_user_widget.dart';
-import '../../views/admin_screen/widgets/user_in_school_widget.dart';
-import '../../views/cohort_settings/widgets/operation_cohort_screen.dart';
-import '../../views/control_mission/distribution_and_details/add_new_students_to_control_mission.dart';
-import '../../views/control_mission/distribution_and_details/details_and_review_mission.dart';
-import '../../views/control_mission/distribution_and_details/distribution.dart';
-import '../../views/control_mission/widgets/create_mission_widget.dart';
-import '../../views/control_mission/widgets/distribute_students.dart';
-import '../../views/index.dart';
-import '../../views/subject_setting/widgets/operation_widget.dart';
-import '../../views/system_logger/system_logger.widget.dart';
+import '../../views/views.dart';
 import '../ReusableWidget/page_not_found_screen.dart';
 import 'app_routes_names_and_paths.dart';
 
@@ -350,5 +339,6 @@ class AppGoRouter {
       ),
     ],
   );
+
   final authController = Get.find<AuthController>();
 }

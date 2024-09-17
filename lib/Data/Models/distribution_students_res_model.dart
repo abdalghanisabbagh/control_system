@@ -1,14 +1,14 @@
 class DistributionStudentsResModel {
   int? distributedStudents;
-  int? unDistributedStudents;
+
   int? totalStudents;
 
+  int? unDistributedStudents;
   DistributionStudentsResModel({
     this.distributedStudents,
     this.unDistributedStudents,
     this.totalStudents,
   });
-
   DistributionStudentsResModel.fromJson(json) {
     distributedStudents = json['distributedStudents'];
     unDistributedStudents = json['unDistributedStudents'];

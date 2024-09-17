@@ -11,6 +11,7 @@ import 'remove_students_from_exam_room_widget.dart';
 class DistributeStudentsSideMenue
     extends GetView<DistributeStudentsController> {
   const DistributeStudentsSideMenue({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DistributeStudentsController>(

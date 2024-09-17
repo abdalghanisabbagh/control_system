@@ -10,10 +10,6 @@ class AppRoutesNamesAndPaths {
 
   static const String allUsersScreenName = 'All Users';
   static const String allusersScreenPath = 'all-users';
-
-  static const String profileScreenName = 'Profile';
-  // profileScreen
-  static const String profileScreenPath = '/profile';
   static const String batchDocumentsScreenName = 'Batch Documents';
   // batchDocumentsScreen
   static const String batchDocumentsScreenPath = '/batch-documents';
@@ -33,10 +29,6 @@ class AppRoutesNamesAndPaths {
   static const String cohortSettingScreenName = 'Cohort Settings';
   // cohortSettingScreen
   static const String cohortSettingScreenPath = '/cohort-settings';
-
-  static const String operationCohortScreenName = 'Cohort Operations';
-
-  static const String operationCohortScreenPath = 'cohort-operations';
 
   static const String controlBatchScreenName = 'Control Batch';
   // controlMissionScreen
@@ -77,13 +69,23 @@ class AppRoutesNamesAndPaths {
   // loginScreen
   static const String loginScreenPath = '/login';
 
+  static const String operationCohortScreenName = 'Cohort Operations';
+  static const String operationCohortScreenPath = 'cohort-operations';
   static const String oprerationsScreenName = 'Operations';
   // oprerationsScreen
   static const String oprerationsScreenPath = 'operations';
 
+  static const String privilegesScreenName = 'Privileges';
+  // privilegesScreen
+  static const String privilegesScreenPath = '/privileges';
+
   static const String proctorScreenName = 'Proctor';
   // proctorScreen
   static const String proctorScreenPath = '/proctor';
+
+  static const String profileScreenName = 'Profile';
+  // profileScreen
+  static const String profileScreenPath = '/profile';
 
   static const String renderSeatScreenName = 'Render Seat';
   // renderSeatScreen
@@ -94,14 +96,6 @@ class AppRoutesNamesAndPaths {
 
   static const String reviewAndDetailsMissionPath =
       'reviewAndDetailsMissionPath';
-
-  static const String privilegesScreenName = 'Privileges';
-  // privilegesScreen
-  static const String privilegesScreenPath = '/privileges';
-
-  static const String systemLoggerScreenName = 'System Logger';
-  // systemLoggerScreen
-  static const String systemLoggerScreenPath = '/system-logger';
 
   static const String schoolsScreenName = 'Schools';
   // schoolsScreen
@@ -118,6 +112,10 @@ class AppRoutesNamesAndPaths {
   static const String subjectSettingScreenName = 'Subject Settings';
   // subjectSettingScreen
   static const String subjectSettingScreenPath = '/subject-settings';
+
+  static const String systemLoggerScreenName = 'System Logger';
+  // systemLoggerScreen
+  static const String systemLoggerScreenPath = '/system-logger';
 
   static const String usersInSchoolScreenName = 'Users In School';
   static const String usersInSchoolScreenPath = 'users-in-school';

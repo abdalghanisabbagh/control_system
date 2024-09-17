@@ -12,8 +12,8 @@ import '../../../resource_manager/validations.dart';
 
 class AddNewPrivilegesWidget extends GetView<PrivilegesController> {
   final TextEditingController nameController = TextEditingController();
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); 
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   AddNewPrivilegesWidget({super.key});
 

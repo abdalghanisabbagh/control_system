@@ -36,10 +36,10 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart'
 import '../profile_controller.dart';
 
 class StudentController extends GetxController {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<ClassRoomResModel> classRooms = <ClassRoomResModel>[];
   List<CohortResModel> cohorts = <CohortResModel>[];
   Map<String, bool> errorMap = {};
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<GradeResModel> grades = <GradeResModel>[];
   List hasError = [];
   bool hasErrorInBlbId = false;

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class ElevatedEditButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String title;
 
+  final String title;
   const ElevatedEditButton({
     super.key,
     required this.onPressed,

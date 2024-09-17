@@ -1,4 +1,3 @@
-import 'package:control_system/presentation/views/control_mission/widgets/distribute_students_side_menue.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';
+import 'distribute_students_side_menue.dart';
 import 'header_widget.dart';
 import 'render_students_in_eaxm_room.dart';
 

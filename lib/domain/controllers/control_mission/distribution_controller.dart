@@ -18,24 +18,23 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class DistributionController extends GetxController {
-  final searchExamRoomController = TextEditingController();
-
+  List<ClassRoomResModel> classRooms = [];
   int controlMissionId = 0;
   String controlMissionName = '';
+  int distributedStudents = 0;
   bool isLoadingDeleteClassRoom = false;
   bool isLodingAddExamRoom = false;
   bool isLodingGetExamRooms = false;
   bool isLodingGetStageAndClassRoom = false;
   List<ExamRoomResModel> listExamRoom = [];
-  List<ExamRoomResModel> serachExamRoomList = [];
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsStage = <ValueItem>[];
-  List<ClassRoomResModel> classRooms = [];
+  final searchExamRoomController = TextEditingController();
   ValueItem? selectedItemClassRoom;
   ValueItem? selectedItemStage;
-  int distributedStudents = 0;
-  int unDistributedStudents = 0;
+  List<ExamRoomResModel> serachExamRoomList = [];
   int totalStudents = 0;
+  int unDistributedStudents = 0;
 
   Future<bool> addNewExamRoom({
     required int controlMissionId,

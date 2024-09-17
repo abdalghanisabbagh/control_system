@@ -1,47 +1,35 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/class_room/classes_rooms_res_model.dart';
-import 'package:control_system/Data/Models/cohort/cohorts_res_model.dart';
-import 'package:control_system/Data/Models/student/student_res_model.dart';
-import 'package:control_system/Data/Network/tools/failure_model.dart';
-import 'package:control_system/domain/controllers/controllers.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
+import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
+import '../../../Data/Models/cohort/cohorts_res_model.dart';
 import '../../../Data/Models/school/grade_response/grades_res_model.dart';
 import '../../../Data/Models/school/school_response/schools_res_model.dart';
+import '../../../Data/Models/student/student_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
+import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
+import '../../../presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../controllers.dart';
 
 class TransferStudentController extends GetxController {
-  bool isLoadingSchools = false;
-
-  bool isLoadingGrades = false;
-
-  bool isLoadingClassRooms = false;
-
-  bool isLoadingCohorts = false;
-
-  bool transferLoading = false;
-
   List<ValueItem> classesOptions = [];
-
-  ValueItem? selectedItemClassRoom;
-
   List<ValueItem> cohortsOptions = [];
-
-  ValueItem? selectedItemCohort;
-
   List<ValueItem> gradesOptions = [];
-
-  ValueItem? selectedItemGrade;
-
+  bool isLoadingClassRooms = false;
+  bool isLoadingCohorts = false;
+  bool isLoadingGrades = false;
+  bool isLoadingSchools = false;
   List<ValueItem> schoolsOptions = [];
-
+  ValueItem? selectedItemClassRoom;
+  ValueItem? selectedItemCohort;
+  ValueItem? selectedItemGrade;
   ValueItem? selectedItemSchool;
+  bool transferLoading = false;
 
   Future<void> getAllGradesSchoolId() async {
     isLoadingGrades = true;

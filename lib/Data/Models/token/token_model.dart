@@ -2,6 +2,7 @@ class TokenModel {
   final String aToken;
 
   final String rToken;
+
   TokenModel({
     required this.aToken,
     required this.rToken,

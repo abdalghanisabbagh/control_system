@@ -40,8 +40,8 @@ class DistributeStudentsController extends GetxController {
   List<GradeResModel> grades = [];
   bool isLoading = false;
   bool isLoadingStudents = false;
-  TextEditingController numberOfStudentsController = TextEditingController();
   int numberOfRows = 0;
+  TextEditingController numberOfStudentsController = TextEditingController();
   List<ValueItem> optionsGrades = [];
   List<ValueItem> optionsGradesInExamRoom = [];
   List<StudentSeatNumberResModel> removedStudentsFromExamRoom = [];

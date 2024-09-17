@@ -1,16 +1,17 @@
-import 'package:control_system/domain/controllers/privileges_controller.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../domain/controllers/privileges_controller.dart';
+
 class ScreenSideMenu extends StatelessWidget {
-  final String screenName;
+  final Color? color;
+
   final String frontId;
   final bool isSelected;
   final VoidCallback onSelect;
   final int screenId;
-  final Color? color;
-
+  final String screenName;
   const ScreenSideMenu({
     super.key,
     required this.screenName,
