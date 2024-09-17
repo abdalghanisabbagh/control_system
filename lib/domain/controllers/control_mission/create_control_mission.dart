@@ -49,18 +49,22 @@ class CreateControlMissionController extends GetxController {
     bool success = false;
     isLoading = true;
     update();
-    if (includedStudentsIds.isEmpty) {
+    if (selectedEducationYear == null) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: 'Please select students',
+        desc: 'Please select education year',
         dialogType: DialogType.error,
       ).showDialogue(
         Get.key.currentContext!,
       );
-    } else if (selectedEducationYear == null) {
+      success = false;
+      isLoading = false;
+      update();
+      return success;
+    } else if (batchName == null || batchName!.isEmpty) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: 'Please select education year',
+        desc: 'Please enter mission name',
         dialogType: DialogType.error,
       ).showDialogue(
         Get.key.currentContext!,
@@ -85,18 +89,6 @@ class CreateControlMissionController extends GetxController {
       MyAwesomeDialogue(
         title: 'Error',
         desc: 'Please select end date',
-        dialogType: DialogType.error,
-      ).showDialogue(
-        Get.key.currentContext!,
-      );
-      success = false;
-      isLoading = false;
-      update();
-      return success;
-    } else if (batchName == null || batchName!.isEmpty) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: 'Please enter mission name',
         dialogType: DialogType.error,
       ).showDialogue(
         Get.key.currentContext!,
@@ -166,6 +158,20 @@ class CreateControlMissionController extends GetxController {
     bool success = false;
     isLoading = true;
     update();
+    if (includedStudentsRows.isEmpty) {
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc: 'Please select students',
+        dialogType: DialogType.error,
+      ).showDialogue(
+        Get.key.currentContext!,
+      );
+      success = false;
+      isLoading = false;
+      update();
+      return success;
+    }
+
     List<int> blbIds = includedStudentsRows
         .map((e) => int.parse(e.cells['BlbIdField']!.value))
         .toList();
