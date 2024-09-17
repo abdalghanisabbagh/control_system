@@ -203,8 +203,8 @@ class DistributionController extends GetxController {
         );
       },
       (r) {
-        listExamRoom = r.data!;
-        serachExamRoomList = r.data!;
+        listExamRoom.assignAll(r.data!);
+        serachExamRoomList.assignAll(r.data!);
       },
     );
     isLodingGetExamRooms = false;
@@ -257,8 +257,12 @@ class DistributionController extends GetxController {
       getControlMissionId(),
       getControlMissionName(),
     ]);
-    controlMissionId != 0 ? getDistributedStudentsCounts() : null;
-    controlMissionId != 0 ? getExamRoomByControlMissionId() : null;
+    controlMissionId != 0
+        ? {
+            getDistributedStudentsCounts(),
+            getExamRoomByControlMissionId(),
+          }
+        : null;
   }
 
   Future<void> saveControlMissionId(int id) async {
