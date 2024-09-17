@@ -86,6 +86,11 @@ class OperationCohortScreen extends GetView<OperationCohortController> {
                       const SizedBox(height: 20),
                       Expanded(
                         child: SearchableList<CohortResModel>(
+                          inputDecoration: const InputDecoration(
+                            label: Text(
+                              'Search by name',
+                            ),
+                          ),
                           initialList: controller.cohorts,
                           emptyWidget: Center(
                             child: Text(
