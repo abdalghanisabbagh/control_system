@@ -288,9 +288,7 @@ class OperationWidget extends GetView<OperationController> {
                                                                                   },
                                                                                 );
                                                                               },
-                                                                              btnCancelOnPressed: () {
-                                                                                Get.back();
-                                                                              },
+                                                                              btnCancelOnPressed: () {},
                                                                             ).showDialogue(context);
                                                                           },
                                                                           child:
