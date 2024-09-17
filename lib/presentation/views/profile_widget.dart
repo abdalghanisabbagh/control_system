@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/resource_manager/ReusableWidget/loading_indicators.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,25 +39,42 @@ class ProfileWidget extends GetView<ProfileController> {
           color: ColorManager.white,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildProfileIcon(),
-            const SizedBox(height: 20),
-            _buildEditProfileTitle(),
-            const SizedBox(height: 20),
-            _buildNameField(),
-            const SizedBox(height: 20),
-            _buildOldPasswordField(),
-            const SizedBox(height: 20),
-            _buildNewPasswordField(),
-            const SizedBox(height: 20),
-            _buildConfirmNewPasswordField(),
-            const SizedBox(height: 20),
-            _buildSaveButton(profileController),
-          ],
+      body: Center(
+        child: SizedBox(
+          width: Get.width * 0.5,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildProfileIcon(),
+                const SizedBox(height: 20),
+                _buildEditProfileTitle(),
+                const SizedBox(height: 20),
+                _buildNameField(),
+                const SizedBox(height: 20),
+                _buildOldPasswordField(),
+                const SizedBox(height: 20),
+                _buildNewPasswordField(),
+                const SizedBox(height: 20),
+                _buildConfirmNewPasswordField(),
+                const SizedBox(height: 20),
+                GetBuilder<ProfileController>(
+                  builder: (_) {
+                    return controller.isLodingEditUser
+                        ? SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: FittedBox(
+                              child: LoadingIndicators.getLoadingIndicator(),
+                            ),
+                          )
+                        : _buildSaveButton(profileController);
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
