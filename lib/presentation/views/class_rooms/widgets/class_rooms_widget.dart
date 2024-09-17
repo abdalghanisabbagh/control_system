@@ -237,9 +237,7 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
                                                           },
                                                         );
                                                       },
-                                                      btnCancelOnPressed: () {
-                                                        Get.back();
-                                                      },
+                                                      btnCancelOnPressed: () {},
                                                     ).showDialogue(
                                                       context,
                                                     );

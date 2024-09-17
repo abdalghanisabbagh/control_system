@@ -196,9 +196,7 @@ class AdminWidget extends GetView<AdminController> {
                                               }
                                             });
                                           },
-                                          btnCancelOnPressed: () {
-                                            Get.back();
-                                          },
+                                          btnCancelOnPressed: () {},
                                         ).showDialogue(context);
                                       },
                                     ),

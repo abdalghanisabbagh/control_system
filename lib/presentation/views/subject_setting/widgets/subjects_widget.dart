@@ -162,9 +162,7 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                                     },
                                                   );
                                                 },
-                                                btnCancelOnPressed: () {
-                                                  Get.back();
-                                                },
+                                                btnCancelOnPressed: () {},
                                               ).showDialogue(context);
                                             },
                                             child: Container(

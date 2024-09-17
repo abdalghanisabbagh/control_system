@@ -204,9 +204,7 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                                                             : null;
                                                       });
                                                     },
-                                                    btnCancelOnPressed: () {
-                                                      Get.back();
-                                                    },
+                                                    btnCancelOnPressed: () {},
                                                   ).showDialogue(context);
                                                 },
                                                 child: Container(
