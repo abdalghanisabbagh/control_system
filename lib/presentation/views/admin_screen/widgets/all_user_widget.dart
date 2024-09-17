@@ -319,9 +319,7 @@ class AllUserWidget extends GetView<AdminController> {
                                                       Get.key.currentContext!);
                                                 }
                                               },
-                                              btnCancelOnPressed: () {
-                                                Get.back();
-                                              },
+                                              btnCancelOnPressed: () {},
                                             ).showDialogue(context);
                                           },
                                         )
