@@ -143,9 +143,9 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                                   .saveControlMissionId(controlMission.iD!),
                               distributionController
                                   .saveControlMissionName(controlMission.name!),
-                              distributionController
-                                  .getDistributedStudentsCounts(),
                             ]);
+                            distributionController
+                                .getDistributedStudentsCounts();
                             context.mounted
                                 ? context.goNamed(
                                     AppRoutesNamesAndPaths
@@ -155,11 +155,12 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                           },
                           child: Container(
                             decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  // topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                ),
-                                color: ColorManager.glodenColor),
+                              borderRadius: BorderRadius.only(
+                                // topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                              color: ColorManager.glodenColor,
+                            ),
                             child: Center(
                               child: FittedBox(
                                 fit: BoxFit.contain,
