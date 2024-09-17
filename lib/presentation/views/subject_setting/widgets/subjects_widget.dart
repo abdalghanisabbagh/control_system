@@ -35,6 +35,11 @@ class SubjectsWidget extends GetView<SubjectsController> {
                   ),
                 )
               : SearchableList<SubjectResModel>(
+                  inputDecoration: const InputDecoration(
+                    label: Text(
+                      'Search by name',
+                    ),
+                  ),
                   initialList: controller.subjects,
                   emptyWidget: Center(
                     child: Text(
