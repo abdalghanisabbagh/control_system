@@ -17,11 +17,10 @@ class TokenInterceptor extends Interceptor {
       String refresh = tokenService.tokenModel!.rToken;
       var dio = Dio(
         BaseOptions(
-          baseUrl: AppLinks.baseUrlDev,
+          baseUrl: AppLinks.baseUrlProd,
         ),
       );
 
-      // DioException Error in the networklayer can not be resolved by the library
       var response = await dio
           .post(AuthLinks.refresh, data: {'refreshToken': refresh}).onError(
         (error, stackTrace) {
