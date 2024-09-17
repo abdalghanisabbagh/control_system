@@ -169,17 +169,17 @@ class ProfileWidget extends GetView<ProfileController> {
   Widget _buildOldPasswordField() {
     return TextFormField(
       controller: _oldPasswordController,
-      obscureText: controller.showPassword,
+      obscureText: controller.showOldPassword,
       decoration: InputDecoration(
         labelText: 'Old Password',
         border: const OutlineInputBorder(),
         prefixIcon: const Icon(Icons.lock),
         suffixIcon: IconButton(
           onPressed: () {
-            controller.showPassword = !controller.showPassword;
+            controller.showOldPassword = !controller.showOldPassword;
             controller.update();
           },
-          icon: controller.showPassword
+          icon: controller.showOldPassword
               ? const Icon(Icons.visibility)
               : const Icon(Icons.visibility_off),
         ),
