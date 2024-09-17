@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart' show VoidCallback, kIsWeb;
 import 'package:flutter/material.dart'
-    show BackButton, BuildContext, StatelessWidget, Widget;
-import 'package:flutter/widgets.dart';
+    show BackButton, BuildContext, StatelessWidget, Widget, Color;
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:universal_html/html.dart' show window;
 
 class MyBackButton extends StatelessWidget {
+  final VoidCallback? onPressed;
   final Color? color;
 
-  final VoidCallback? onPressed;
   const MyBackButton({super.key, this.onPressed, this.color});
 
   @override
@@ -17,7 +17,7 @@ class MyBackButton extends StatelessWidget {
       color: color,
       onPressed: () {
         onPressed?.call();
-        kIsWeb ? window.history.back() : context.pop();
+        kIsWeb ? window.history.back() : Get.key.currentContext!.pop();
       },
     );
   }

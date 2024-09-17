@@ -1,6 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_dropdown/models/value_item.dart';
@@ -29,10 +28,8 @@ class DistributionController extends GetxController {
   List<ExamRoomResModel> listExamRoom = [];
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsStage = <ValueItem>[];
-  final searchExamRoomController = TextEditingController();
   ValueItem? selectedItemClassRoom;
   ValueItem? selectedItemStage;
-  List<ExamRoomResModel> serachExamRoomList = [];
   int totalStudents = 0;
   int unDistributedStudents = 0;
 
@@ -60,20 +57,23 @@ class DistributionController extends GetxController {
           "Stage": stage,
         });
 
-    response.fold((fauilr) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      isLodingAddExamRoom = false;
-      addExamRoomHasBeenAdded = false;
-      update();
-    }, (result) {
-      getExamRoomByControlMissionId();
-      addExamRoomHasBeenAdded = true;
-      isLodingAddExamRoom = false;
-    });
+    response.fold(
+      (fauilr) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: "${fauilr.code} ::${fauilr.message}",
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        isLodingAddExamRoom = false;
+        addExamRoomHasBeenAdded = false;
+        update();
+      },
+      (result) {
+        getExamRoomByControlMissionId();
+        addExamRoomHasBeenAdded = true;
+        isLodingAddExamRoom = false;
+      },
+    );
 
     update();
     return addExamRoomHasBeenAdded;
@@ -179,12 +179,13 @@ class DistributionController extends GetxController {
         totalStudents = r.totalStudents!;
       },
     );
-    update();
+    update(['getDistributedStudentsCounts']);
   }
 
   Future<void> getExamRoomByControlMissionId() async {
     isLodingGetExamRooms = true;
-    update();
+    listExamRoom.clear();
+    update(['getExamRoomByControlMissionId']);
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
       path: "${ExamRoomLinks.examRoomsControlMission}/$controlMissionId",
@@ -202,13 +203,12 @@ class DistributionController extends GetxController {
           Get.key.currentContext!,
         );
       },
-      (r) {
+      (r) async {
         listExamRoom.assignAll(r.data!);
-        serachExamRoomList.assignAll(r.data!);
       },
     );
     isLodingGetExamRooms = false;
-    update();
+    update(['getExamRoomByControlMissionId']);
   }
 
   Future<bool> getStage() async {
@@ -267,30 +267,13 @@ class DistributionController extends GetxController {
 
   Future<void> saveControlMissionId(int id) async {
     controlMissionId = id;
-    update();
     Hive.box('ControlMission').put('Id', id);
     getExamRoomByControlMissionId();
   }
 
   Future<void> saveControlMissionName(String name) async {
     controlMissionName = name;
-    update();
     Hive.box('ControlMission').put('Name', name);
-  }
-
-  void searchExamRoom(String query) {
-    if (query.isEmpty) {
-      serachExamRoomList = listExamRoom;
-    } else {
-      serachExamRoomList = listExamRoom.where((examRoom) {
-        return examRoom.name!.toLowerCase().contains(query.toLowerCase()) ||
-            examRoom.classRoomResModel!.name!
-                .toLowerCase()
-                .contains(query.toLowerCase());
-      }).toList();
-    }
-
-    update();
   }
 
   void setSelectedItemClassRoom(List<ValueItem> items) {

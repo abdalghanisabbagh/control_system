@@ -148,7 +148,6 @@ class AppGoRouter {
               return const DistributionScreen();
             },
             onExit: (context, state) async {
-              await Get.delete<DistributionController>();
               Get.find<ControlMissionController>().onInit();
               return true;
             },

@@ -98,7 +98,6 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
               onTap: () {
                 Hive.box('ControlMission').put('Id', controlMission.iD);
                 Hive.box('ControlMission').put('Name', controlMission.name);
-
                 context.goNamed(
                     AppRoutesNamesAndPaths.addNewStudentsToControlMissionName);
               },
