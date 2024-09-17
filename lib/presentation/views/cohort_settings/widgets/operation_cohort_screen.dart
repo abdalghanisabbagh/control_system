@@ -16,6 +16,7 @@ import 'add_cohort_widget.dart';
 
 class OperationCohortScreen extends GetView<OperationCohortController> {
   const OperationCohortScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OperationCohortController>(

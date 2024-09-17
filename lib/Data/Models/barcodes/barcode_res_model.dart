@@ -5,9 +5,6 @@ class BarcodeResModel {
   int? attendanceStatusId;
 
   String? barcode;
-  int? studentsWithoutDegrees;
-  int? studentsWithDegrees;
-  int? totalStudents;
 
   ExamMissionResModel? examMission;
   int? examMissionID;
@@ -18,6 +15,9 @@ class BarcodeResModel {
   String? studentDegree;
   int? studentID;
   int? studentSeatNumnbersID;
+  int? studentsWithDegrees;
+  int? studentsWithoutDegrees;
+  int? totalStudents;
   BarcodeResModel({
     this.iD,
     this.examMissionID,

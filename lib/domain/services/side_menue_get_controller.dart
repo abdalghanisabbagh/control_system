@@ -14,16 +14,12 @@ import '../controllers/profile_controller.dart';
 
 class SideMenueGetController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  int nowIndex = 0;
-  late final SideMenuController sideMenuController;
   bool isSideMenuVisible = true;
-
-  final PageStorageBucket sideMenuBucket = PageStorageBucket();
-
-  final PageStorageKey sideMenuStorageKey = const PageStorageKey('sideMenuKey');
-
   late AnimationController menuIconAnimationController;
-
+  int nowIndex = 0;
+  final PageStorageBucket sideMenuBucket = PageStorageBucket();
+  late final SideMenuController sideMenuController;
+  final PageStorageKey sideMenuStorageKey = const PageStorageKey('sideMenuKey');
   List<SideMenuItem> userMenue = [];
 
   changePage(int currentIndex) {

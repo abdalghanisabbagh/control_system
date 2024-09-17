@@ -5,8 +5,8 @@ class NotificationCardWidget extends StatelessWidget {
   final DateTime now = DateTime.now();
 
   final String schoolName;
-  final String userName;
   final String schoolTypeName;
+  final String userName;
   NotificationCardWidget({
     super.key,
     required this.userName,

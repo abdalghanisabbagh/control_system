@@ -1,15 +1,15 @@
 import '../student/student_res_model.dart';
 
 class StudentSeatNumberResModel {
+  int? active;
+
   int? classDeskID;
 
   int? controlMissionID;
-
   int? examRoomID;
   int? gradesID;
   int? iD;
   String? seatNumber;
-  int? active;
   StudentResModel? student;
   int? studentID;
   StudentSeatNumberResModel({

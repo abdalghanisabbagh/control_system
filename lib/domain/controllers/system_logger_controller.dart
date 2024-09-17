@@ -1,5 +1,3 @@
 import 'package:get/get.dart';
 
-class SystemLoggerController extends GetxController {
-  
-}
+class SystemLoggerController extends GetxController {}

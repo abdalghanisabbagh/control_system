@@ -12,9 +12,8 @@ class UserProfileModel {
   List<RoleResModel>? roles;
   String? updatedAt;
   int? updatedBy;
-  String? userName;
   UserHasSchoolsResModel? userHasSchoolsResModel;
-
+  String? userName;
   UserProfileModel({
     this.iD,
     this.fullName,

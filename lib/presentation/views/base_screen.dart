@@ -1,13 +1,14 @@
-import 'package:control_system/presentation/views/custom_app_bar_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../domain/services/side_menue_get_controller.dart';
+import 'custom_app_bar_widget.dart';
 import 'side_menue/side_menue.dart';
 
 class BaseScreen extends GetView<SideMenueGetController> {
   final PreferredSizeWidget? appbar;
+
   final Widget body;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 

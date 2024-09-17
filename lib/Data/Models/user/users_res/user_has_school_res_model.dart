@@ -1,4 +1,4 @@
-import 'package:control_system/Data/Models/school/school_type/school_type_model.dart';
+import '../../school/school_type/school_type_model.dart';
 
 class UserHasSchoolsResModel {
   List<int>? schoolId;
@@ -6,9 +6,7 @@ class UserHasSchoolsResModel {
   List<String>? schoolName;
 
   List<SchoolTypeResModel>? schoolType;
-
   List<int>? schoolTypeIds;
-
   UserHasSchoolsResModel({this.schoolName});
   UserHasSchoolsResModel.fromJson(json) {
     if (json is List) {

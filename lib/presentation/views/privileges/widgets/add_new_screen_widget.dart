@@ -12,6 +12,7 @@ import '../../../resource_manager/validations.dart';
 
 class AddNewScreenWidget extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
+
   final TextEditingController screenIdController = TextEditingController();
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // مفتاح الـ Form للتحقق من المدخلات

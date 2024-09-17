@@ -32,27 +32,13 @@ class ProfileController extends GetxController {
     await Hive.box('Profile').clear();
   }
 
-  UserProfileModel? getProfileFromHiveBox() {
-    var data = Hive.box('Profile').get('Profile');
-    _cachedUserProfile = Hive.box('Profile').containsKey("Profile")
-        ? UserProfileModel.fromJson(jsonDecode(data))
-        : null;
-    return _cachedUserProfile;
-  }
-
-  void saveProfileToHiveBox(UserProfileModel cachedUserProfile) {
-    _cachedUserProfile = cachedUserProfile;
-    update();
-    Hive.box('Profile').put('Profile', jsonEncode(cachedUserProfile.toJson()));
-  }
-
   Future<bool> editUser(Map<String, dynamic> data, int id) async {
     isLodingEditUser = true;
     update();
 
     final response = await ResponseHandler<void>().getResponse(
         path: "${UserLinks.users}/$id",
-        converter: (_){},
+        converter: (_) {},
         type: ReqTypeEnum.PATCH,
         body: data);
 
@@ -76,5 +62,19 @@ class ProfileController extends GetxController {
         return true;
       },
     );
+  }
+
+  UserProfileModel? getProfileFromHiveBox() {
+    var data = Hive.box('Profile').get('Profile');
+    _cachedUserProfile = Hive.box('Profile').containsKey("Profile")
+        ? UserProfileModel.fromJson(jsonDecode(data))
+        : null;
+    return _cachedUserProfile;
+  }
+
+  void saveProfileToHiveBox(UserProfileModel cachedUserProfile) {
+    _cachedUserProfile = cachedUserProfile;
+    update();
+    Hive.box('Profile').put('Profile', jsonEncode(cachedUserProfile.toJson()));
   }
 }

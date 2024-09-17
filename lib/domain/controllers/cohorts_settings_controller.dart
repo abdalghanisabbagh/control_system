@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/domain/controllers/operation_cohort_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -12,17 +11,17 @@ import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import 'operation_cohort_controller.dart';
 
 class CohortsSettingsController extends GetxController {
   bool addLoading = false;
   List<CohortResModel> cohorts = <CohortResModel>[];
+  bool deleteSubjectLoading = false;
   bool getAllLoading = false;
   List<int> selectedSubjectsIds = <int>[];
-  bool deleteSubjectLoading = false;
   List<int> slectedSchoolTypeId = <int>[];
 
   Future<bool> addnewCohort(String name) async {
-
     addLoading = true;
     update();
     bool cohortHasBeenAdded = false;

@@ -14,6 +14,7 @@ import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 
 class AddCohortWidget extends StatelessWidget {
   final bool isOperation;
+
   final SchoolsTypeResModel? schoolTypes;
   const AddCohortWidget(
       {super.key, this.isOperation = false, this.schoolTypes});

@@ -14,20 +14,20 @@ class AuthLinks {
 
 class CohortLinks {
   static const cohort = 'cohort';
-  static const operationCreateCohort = '$cohort/operation-create-cohort';
   static const connectSubjectToCohort = '$cohort/Connect-Subject';
   static const disConnectSubjectFromCohort = '$cohort/disconnect-Subject';
   static const getCohortBySchoolType = '$cohort/school-type';
+  static const operationCreateCohort = '$cohort/operation-create-cohort';
 }
 
 class ControlMissionLinks {
   static const controlMission = 'control-mission';
   static const controlMissionEducationYear = 'education-year';
   static const controlMissionSchool = '$controlMission/school';
+  static const distributedStudents = '$controlMission/distribution';
   static const getGradesByControlMission = '$controlMission/grades';
   static const getSubjectsByControlMission = 'subjects/controlMission';
   static const studentSeatNumbers = '$controlMission/student-seat-numbers';
-  static const distributedStudents = '$controlMission/distribution';
 }
 
 class EducationYearsLinks {
@@ -88,15 +88,14 @@ class StudentsLinks {
   static const studentCohort = '$student/cohort';
   static const studentMany = '$student/many';
   static const studentSchool = '$student/school';
+  static const studentSeatNumberActive = '$studentSeatNumbers/activate';
+  static const studentSeatNumberDeactive = '$studentSeatNumbers/deactivate';
   static const studentSeatNumbers = 'student-seat-numbers';
   static const studentSeatNumbersControlMission =
       '$studentSeatNumbers/control-mission';
-  static const studentSeatNumberActive = '$studentSeatNumbers/activate';
-  static const studentSeatNumberDeactive = '$studentSeatNumbers/deactivate';
 
   static const studentSeatNumbersExamRoom = '$studentSeatNumbers/exam-rooms';
   static const studentSeatNumbersStudent = '$studentSeatNumbers/student';
-
   static const studentsClass = '$student/class';
   static const studentsGrades = '$student/students-grades/control-mission/';
 }
@@ -110,6 +109,8 @@ class SubjectsLinks {
 }
 
 class UserLinks {
+  static const activateUser = 'users/activate';
+  static const deactivateUser = '/$users/deactivate';
   static const String getNewAccessToken = 'auth/get-new-access-token';
   static const getUsersByCreated = '$users/created-by';
   static const login = 'auth/login';
@@ -121,8 +122,6 @@ class UserLinks {
   static const users = 'users';
   static const usersAddSchools = '$users/add-schools';
   static const usersInSchool = '/$users/school';
-  static const deactivateUser = '/$users/deactivate';
-  static const activateUser = 'users/activate';
 }
 
 class UserRolesSystemsLink {

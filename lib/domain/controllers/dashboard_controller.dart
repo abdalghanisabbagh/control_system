@@ -1,15 +1,16 @@
 import 'dart:async' show Timer;
 
-import 'package:control_system/domain/controllers/controllers.dart';
 import 'package:flutter/material.dart' show DayPeriod, TimeOfDay;
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'controllers.dart';
+
 class DashboardController extends GetxController {
   DateTime dateTime = DateTime.now();
   String? period;
-  String? schoolTypeName;
   String? schoolName;
+  String? schoolTypeName;
   TimeOfDay timeOfDay = TimeOfDay.now();
   String? userName;
 

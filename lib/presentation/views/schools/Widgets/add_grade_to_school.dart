@@ -16,6 +16,7 @@ class AddNewGradeToSchool extends GetView<SchoolController> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: no_leading_underscores_for_local_identifiers
     final _formKey = GlobalKey<FormState>();
     TextEditingController gradeNameController = TextEditingController();
     return Form(

@@ -8,6 +8,7 @@ import '../../../../domain/controllers/control_mission/distribute_students_contr
 
 class AvailableStudents extends GetView<DistributeStudentsController> {
   const AvailableStudents({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DistributeStudentsController>(

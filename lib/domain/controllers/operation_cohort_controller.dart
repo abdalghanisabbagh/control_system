@@ -13,12 +13,9 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class OperationCohortController extends GetxController {
   List<CohortResModel> cohorts = <CohortResModel>[];
-
-  List<int> selectedSubjectsIds = <int>[];
-
   bool loadindCohorts = false;
-
   SchoolsTypeResModel? schoolsType;
+  List<int> selectedSubjectsIds = <int>[];
 
   Future<bool> deleteCohort(int id) async {
     bool cohortHasBeenDeleted = false;

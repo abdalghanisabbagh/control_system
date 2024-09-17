@@ -1,12 +1,13 @@
 class SystemLoggerResModel {
-  int? id;
-  String? tableName;
   String? action;
-  String? userId;
-  String? recordBefore;
-  String? recordAfter;
+
   String? createdAt;
 
+  int? id;
+  String? recordAfter;
+  String? recordBefore;
+  String? tableName;
+  String? userId;
   SystemLoggerResModel(
       {this.id,
       this.tableName,
@@ -15,7 +16,6 @@ class SystemLoggerResModel {
       this.recordBefore,
       this.recordAfter,
       this.createdAt});
-
   SystemLoggerResModel.fromJson(json) {
     id = json['ID'];
     tableName = json['TableName'];

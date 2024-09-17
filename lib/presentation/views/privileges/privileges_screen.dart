@@ -1,6 +1,3 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/my_text_form_field.dart';
-import 'package:control_system/presentation/views/roles/widgets/front_id_screen.dart';
-import 'package:control_system/presentation/views/roles/widgets/privileges_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,9 +7,12 @@ import '../../../domain/controllers/profile_controller.dart';
 import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
+import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../base_screen.dart';
 import 'widgets/add_new_privileges_widget.dart';
 import 'widgets/add_new_screen_widget.dart';
+import 'widgets/front_id_screen.dart';
+import 'widgets/privileges_widget.dart';
 import 'widgets/screen_widget.dart';
 
 class PrivilegesScreen extends GetView<PrivilegesController> {
