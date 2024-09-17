@@ -256,9 +256,8 @@ class OperationCohortScreen extends GetView<OperationCohortController> {
                                                                 : null;
                                                           });
                                                         },
-                                                        btnCancelOnPressed: () {
-                                                          Get.back();
-                                                        },
+                                                        btnCancelOnPressed:
+                                                            () {},
                                                       ).showDialogue(context);
                                                     },
                                                     child: Container(
