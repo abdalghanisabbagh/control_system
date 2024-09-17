@@ -252,17 +252,16 @@ class DistributionController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    listExamRoom.clear();
     await Future.wait([
       getControlMissionId(),
       getControlMissionName(),
     ]);
-    controlMissionId != 0
-        ? {
-            getDistributedStudentsCounts(),
-            getExamRoomByControlMissionId(),
-          }
-        : null;
+    if (controlMissionId != 0) {
+      await Future.wait([
+        getDistributedStudentsCounts(),
+        getExamRoomByControlMissionId(),
+      ]);
+    }
   }
 
   Future<void> saveControlMissionId(int id) async {
