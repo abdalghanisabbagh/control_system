@@ -1,4 +1,3 @@
-# Your GitHub Actions workflow file here
 name: Deploy Control Sysytem to Firebase Hosting
 on:
   pull_request:
