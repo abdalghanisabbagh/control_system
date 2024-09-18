@@ -4,13 +4,6 @@ on:
     branches:
       - staging
 
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch to build"
-        default: staging
-        required: true
-
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
