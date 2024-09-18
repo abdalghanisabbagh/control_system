@@ -31,7 +31,6 @@ class FrontIdScreen extends GetView<PrivilegesController> {
       margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: color,
-        //    color: widget.isSelected ? Colors.green : ColorManager.white,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           width: 2,
@@ -49,38 +48,40 @@ class FrontIdScreen extends GetView<PrivilegesController> {
               ),
             ),
           ),
-          included
-              ? IconButton(
-                  onPressed: () {
-                    controller.removedSreensIds.add(id);
-                    controller.deleteScreensFromRole().then(
-                      (value) {
-                        if (value) {
-                          MyFlashBar.showSuccess(
-                            'Removed successfully From Role',
-                            "Success",
-                          ).show(Get.key.currentContext!);
-                        }
+          controller.selectedRoleId == null
+              ? const SizedBox.shrink()
+              : included
+                  ? IconButton(
+                      onPressed: () {
+                        controller.removedSreensIds.add(id);
+                        controller.deleteScreensFromRole().then(
+                          (value) {
+                            if (value) {
+                              MyFlashBar.showSuccess(
+                                'Removed successfully From Role',
+                                "Success",
+                              ).show(Get.key.currentContext!);
+                            }
+                          },
+                        );
                       },
-                    );
-                  },
-                  icon: const Icon(Icons.delete))
-              : IconButton(
-                  onPressed: () {
-                    controller.selectedSreensIds.add(id);
-                    controller.addScreensToRole().then(
-                      (value) {
-                        if (value) {
-                          MyFlashBar.showSuccess(
-                            'Added successfully To Role',
-                            "Success",
-                          ).show(Get.key.currentContext!);
-                        }
+                      icon: const Icon(Icons.delete))
+                  : IconButton(
+                      onPressed: () {
+                        controller.selectedSreensIds.add(id);
+                        controller.addScreensToRole().then(
+                          (value) {
+                            if (value) {
+                              MyFlashBar.showSuccess(
+                                'Added successfully To Role',
+                                "Success",
+                              ).show(Get.key.currentContext!);
+                            }
+                          },
+                        );
                       },
-                    );
-                  },
-                  icon: const Icon(Icons.add),
-                ),
+                      icon: const Icon(Icons.add),
+                    ),
         ],
       ),
     );

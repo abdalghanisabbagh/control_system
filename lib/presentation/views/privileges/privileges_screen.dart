@@ -111,22 +111,27 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                                 ),
                               );
                             } else {
-                              return ListView.builder(
-                                itemCount: controller.filteredRoles.length,
-                                itemBuilder: (context, index) {
-                                  var role = controller.filteredRoles[index];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: CustomPrivilegeCardWidget(
-                                      roleName: role.name!,
-                                      isSelected:
-                                          controller.selectedRoleId == role.id!,
-                                      onSelect: () {
-                                        controller.setSelectedRole(role.id!);
-                                      },
-                                    ),
-                                  );
-                                },
+                              return PageStorage(
+                                bucket: controller.previlegesPageStorageBucket,
+                                key: controller.previlegesPageStorageKey,
+                                child: ListView.builder(
+                                  itemCount: controller.filteredRoles.length,
+                                  itemBuilder: (context, index) {
+                                    var role = controller.filteredRoles[index];
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 10.0),
+                                      child: CustomPrivilegeCardWidget(
+                                        roleName: role.name!,
+                                        isSelected: controller.selectedRoleId ==
+                                            role.id!,
+                                        onSelect: () {
+                                          controller.setSelectedRole(role.id!);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
                               );
                             }
                           },
@@ -229,31 +234,37 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                                 ),
                               );
                             } else {
-                              return ListView.builder(
-                                itemCount: controller.filteredScreens.length,
-                                itemBuilder: (context, index) {
-                                  var screen =
-                                      controller.filteredScreens[index];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: ScreenSideMenu(
-                                      color: controller.selectedRoleId != null
-                                          ? screen.color ?? Colors.grey
-                                          : Colors.grey,
-                                      frontId: screen.frontId,
-                                      screenName: screen.name,
-                                      isSelected: controller.selectedScreenId ==
-                                          screen.id,
-                                      screenId: screen.id,
-                                      onSelect: () async {
-                                        await controller.setSelectedScreen(
-                                            screen.id, screen.frontId);
-                                        controller.filterWidgets();
-                                        controller.filterColorScreen();
-                                      },
-                                    ),
-                                  );
-                                },
+                              return PageStorage(
+                                bucket: controller.screensPageStorageBucket,
+                                key: controller.screensPageStorageKey,
+                                child: ListView.builder(
+                                  itemCount: controller.filteredScreens.length,
+                                  itemBuilder: (context, index) {
+                                    var screen =
+                                        controller.filteredScreens[index];
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 10.0),
+                                      child: ScreenSideMenu(
+                                        color: controller.selectedRoleId != null
+                                            ? screen.color ?? Colors.grey
+                                            : Colors.grey,
+                                        frontId: screen.frontId,
+                                        screenName: screen.name,
+                                        isSelected:
+                                            controller.selectedScreenId ==
+                                                screen.id,
+                                        screenId: screen.id,
+                                        onSelect: () async {
+                                          await controller.setSelectedScreen(
+                                              screen.id, screen.frontId);
+                                          controller.filterWidgets();
+                                          controller.filterColorScreen();
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
                               );
                             }
                           },
@@ -279,7 +290,7 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                       ],
                     ),
                     MytextFormFiled(
-                      title: 'Search Widgets By Name Or Front Id',
+                      title: 'Search Actions By Name Or Front Id',
                       controller: controller.searchWidgetsController,
                       onChanged: (value) {
                         controller.searchWithinFilteredWidgets(value!);
@@ -309,7 +320,7 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                             if (controller.widgets.isEmpty) {
                               return Center(
                                 child: Text(
-                                  "No Screens Available",
+                                  "No Actions Available",
                                   style: nunitoBold.copyWith(
                                     color: ColorManager.bgSideMenu,
                                   ),
@@ -318,30 +329,45 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                             } else {
                               return AnimatedSwitcher(
                                 duration: const Duration(milliseconds: 300),
-                                child: ListView.builder(
-                                  key: ValueKey(controller.lastSelectedFrontId
-                                          .toString() +
-                                      controller.selectedRoleId.toString()),
-                                  itemCount: controller.widgets.length,
-                                  itemBuilder: (context, index) {
-                                    var widget = controller.widgets[index];
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 10.0),
-                                      child: FrontIdScreen(
-                                        color: controller.includedActions
-                                                .contains(widget.id)
-                                            ? Colors.green
-                                            : Colors.white,
-                                        widgetName: widget.name,
-                                        frontId: widget.frontId,
-                                        id: widget.id,
-                                        included: controller.includedActions
-                                            .contains(widget.id),
+                                child: controller.getAllLoading
+                                    ? Center(
+                                        child: LoadingIndicators
+                                            .getLoadingIndicator(),
+                                      )
+                                    : PageStorage(
+                                        bucket:
+                                            controller.actionsPageStorageBucket,
+                                        key: controller.actionsPageStorageKey,
+                                        child: ListView.builder(
+                                          key: ValueKey(controller
+                                                  .lastSelectedFrontId
+                                                  .toString() +
+                                              controller.selectedRoleId
+                                                  .toString()),
+                                          itemCount: controller.widgets.length,
+                                          itemBuilder: (context, index) {
+                                            var widget =
+                                                controller.widgets[index];
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10.0),
+                                              child: FrontIdScreen(
+                                                color: controller
+                                                        .includedActions
+                                                        .contains(widget.id)
+                                                    ? Colors.green
+                                                    : Colors.white,
+                                                widgetName: widget.name,
+                                                frontId: widget.frontId,
+                                                id: widget.id,
+                                                included: controller
+                                                    .includedActions
+                                                    .contains(widget.id),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ),
-                                    );
-                                  },
-                                ),
                               );
                             }
                           },

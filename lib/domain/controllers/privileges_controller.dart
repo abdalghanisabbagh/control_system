@@ -15,6 +15,15 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
 
 class PrivilegesController extends GetxController {
+  final PageStorageBucket screensPageStorageBucket = PageStorageBucket();
+  final PageStorageKey screensPageStorageKey =
+      const PageStorageKey<String>('screensPageStorageKey');
+  final PageStorageBucket previlegesPageStorageBucket = PageStorageBucket();
+  final PageStorageKey previlegesPageStorageKey =
+      const PageStorageKey<String>('previlegesPageStorageKey');
+  final PageStorageBucket actionsPageStorageBucket = PageStorageBucket();
+  final PageStorageKey actionsPageStorageKey =
+      const PageStorageKey<String>('actionsPageStorageKey');
   bool addLoading = false;
   bool allActionsIncluded = false;
   List<ScreenResModel> allScreens = [];
@@ -25,7 +34,6 @@ class PrivilegesController extends GetxController {
   List<ScreenResModel> filteredWidgets = [];
   bool getAllLoading = false;
   List<int> includedActions = [];
-  bool isProcessing = false;
   String? lastSelectedFrontId;
   List<int> removedSreensIds = [];
   List<ScreenResModel> resultFilteredWidgets = [];
@@ -112,11 +120,6 @@ class PrivilegesController extends GetxController {
   }
 
   Future<bool> addScreensToRole() async {
-    if (isProcessing) {
-      return false;
-    }
-
-    isProcessing = true;
     connectLoading = true;
     update();
     bool screenHasBeenAdded = false;
@@ -144,9 +147,7 @@ class PrivilegesController extends GetxController {
     );
     connectLoading = false;
 
-    isProcessing = false;
     onInit();
-    update();
     return screenHasBeenAdded;
   }
 
@@ -179,7 +180,6 @@ class PrivilegesController extends GetxController {
     deleteScreenLoading = false;
     removedSreensIds.clear();
     onInit();
-    update();
     return screenHasBeenRemoved;
   }
 
