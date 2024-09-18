@@ -65,7 +65,8 @@ class CreateCoversSheetsController extends GetxController {
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
     Either<Failure, SubjectsResModel> response =
         await responseHandler.getResponse(
-      path: SubjectsLinks.subjects,
+      path:
+          "${SubjectsLinks.subjectsBySchoolType}/${Hive.box('School').get('SchoolTypeID')}",
       converter: SubjectsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
