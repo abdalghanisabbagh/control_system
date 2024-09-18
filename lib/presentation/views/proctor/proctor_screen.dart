@@ -173,11 +173,13 @@ class ProctorScreen extends GetView<ProctorController> {
                         padding: const EdgeInsets.all(16),
                         child: controller.proctors.isEmpty
                             ? Center(
-                                child: Text("No Proctors",
-                                    style: nunitoRegular.copyWith(
-                                      fontSize: 30,
-                                      color: ColorManager.primary,
-                                    )),
+                                child: Text(
+                                  "No Proctors",
+                                  style: nunitoRegular.copyWith(
+                                    fontSize: 30,
+                                    color: ColorManager.primary,
+                                  ),
+                                ),
                               )
                             : Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
