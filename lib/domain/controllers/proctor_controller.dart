@@ -377,11 +377,17 @@ class ProctorController extends GetxController {
       },
     );
     isLoading = false;
-    update(
-      [
-        'proctors',
-      ],
-    );
+    proctors.length == 1
+        ? update(
+            [
+              'proctorEntryScreen',
+            ],
+          )
+        : update(
+            [
+              'proctors',
+            ],
+          );
     return gotData;
   }
 

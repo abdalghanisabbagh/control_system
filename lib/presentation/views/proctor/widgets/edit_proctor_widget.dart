@@ -105,16 +105,16 @@ class EditProctorWidget extends GetView<ProctorController> {
                     },
                   ),
                 ),
-                const SizedBox(height: 16.0),
-                SizedBox(
-                  width: 450,
-                  child: MytextFormFiled(
-                    title: "NIS Id",
-                    controller: proctorcontroller.nisIdController,
-                    // myValidation: Validations.requiredValidator,
-                  ),
-                ),
-                const SizedBox(height: 16.0),
+                // const SizedBox(height: 16.0),
+                // SizedBox(
+                //   width: 450,
+                //   child: MytextFormFiled(
+                //     title: "NIS Id",
+                //     controller: proctorcontroller.nisIdController,
+                //     // myValidation: Validations.requiredValidator,
+                //   ),
+                // ),
+                // const SizedBox(height: 16.0),
                 /*    SizedBox(
                   width: 450,
                   child: TextFormField(
