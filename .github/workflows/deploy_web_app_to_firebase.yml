@@ -5,6 +5,10 @@ on:
       - staging
 
   workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to build"
+        default: staging
 
 jobs:
   build_and_preview:
