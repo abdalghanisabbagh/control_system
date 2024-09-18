@@ -32,7 +32,11 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
                   );
                 }
                 if (controller.optionsEducationYear.isEmpty) {
-                  return const Text('No Education Year Available');
+                  return Text('No Education Year Available',
+                      style: nunitoRegular.copyWith(
+                        fontSize: 30,
+                        color: ColorManager.primary,
+                      ));
                 }
                 return MultiSelectDropDownView(
                   hintText: "Select Education Year",
