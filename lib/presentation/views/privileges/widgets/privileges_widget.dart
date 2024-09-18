@@ -18,43 +18,45 @@ class CustomPrivilegeCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PrivilegesController>(builder: (controller) {
-      return GestureDetector(
-        onTap: () {
-          onSelect();
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.green : ColorManager.white,
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(
-              color: isSelected ? Colors.green : Colors.grey,
-              width: 2,
+    return GetBuilder<PrivilegesController>(
+      builder: (controller) {
+        return GestureDetector(
+          onTap: () {
+            onSelect();
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: isSelected ? Colors.green : ColorManager.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                color: isSelected ? Colors.green : Colors.grey,
+                width: 2,
+              ),
             ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    roleName,
-                    style: nunitoBold.copyWith(
-                      color: ColorManager.primary,
-                      fontSize: 16,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      roleName,
+                      style: nunitoBold.copyWith(
+                        color: ColorManager.primary,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
