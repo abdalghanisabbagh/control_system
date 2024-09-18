@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/token/token_model.dart';
 
-class TokenService extends FullLifeCycleController with FullLifeCycleMixin {
+class TokenService extends GetxController {
   TokenModel? _tokenModel;
 
   TokenModel? get tokenModel => _tokenModel ?? getTokenModelFromHiveBox();
@@ -21,21 +21,6 @@ class TokenService extends FullLifeCycleController with FullLifeCycleMixin {
         : null;
     return _tokenModel;
   }
-
-  @override
-  void onDetached() {}
-
-  @override
-  void onHidden() {}
-
-  @override
-  void onInactive() {}
-
-  @override
-  void onPaused() {}
-
-  @override
-  void onResumed() {}
 
   Future<void> saveNewAccessToken(TokenModel tokenModel) async {
     _tokenModel = tokenModel;
