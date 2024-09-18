@@ -9,6 +9,7 @@ on:
       branch:
         description: "Branch to build"
         default: staging
+        required: true
 
 jobs:
   build_and_preview:
