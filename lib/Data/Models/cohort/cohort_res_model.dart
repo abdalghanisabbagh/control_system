@@ -1,3 +1,5 @@
+import 'package:control_system/Data/Models/school/school_type/school_type_model.dart';
+
 import 'cohorts_subjects_res_model.dart';
 
 class CohortResModel {
@@ -5,15 +7,18 @@ class CohortResModel {
 
   CohortsSubjectsResModel? cohortsSubjects;
 
+  SchoolTypeResModel? schoolType;
+
   String? createdAt;
   int? createdBy;
   int? iD;
   String? name;
   int? schoolTypeID;
-  DateTime? updatedAt;
+  String? updatedAt;
   int? updatedBy;
   CohortResModel({
     this.iD,
+    this.schoolType,
     this.schoolTypeID,
     this.name,
     this.createdBy,
@@ -31,6 +36,9 @@ class CohortResModel {
     createdAt = json['Created_At'];
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
+    schoolType = json['school_type'] != null
+        ? SchoolTypeResModel.fromJson(json['school_type'])
+        : null;
     cohortsSubjects = json['cohort_has_subjects'] != null
         ? CohortsSubjectsResModel.fromJson(json['cohort_has_subjects'])
         : null;

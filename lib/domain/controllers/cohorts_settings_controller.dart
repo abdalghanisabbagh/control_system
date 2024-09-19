@@ -25,12 +25,11 @@ class CohortsSettingsController extends GetxController {
     addLoading = true;
     update();
     bool cohortHasBeenAdded = false;
-    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+    ResponseHandler<void> responseHandler = ResponseHandler();
 
-    Either<Failure, CohortResModel> response =
-        await responseHandler.getResponse(
+    Either<Failure, void> response = await responseHandler.getResponse(
       path: CohortLinks.operationCreateCohort,
-      converter: CohortResModel.fromJson,
+      converter: (_) {},
       type: ReqTypeEnum.POST,
       body: {
         "Name": name,
@@ -64,11 +63,10 @@ class CohortsSettingsController extends GetxController {
     addLoading = true;
     bool cohortHasBeenAdded = false;
     update();
-    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
-    Either<Failure, CohortResModel> response =
-        await responseHandler.getResponse(
+    ResponseHandler<void> responseHandler = ResponseHandler();
+    Either<Failure, void> response = await responseHandler.getResponse(
       path: '${CohortLinks.connectSubjectToCohort}/$id',
-      converter: CohortResModel.fromJson,
+      converter: (_) {},
       type: ReqTypeEnum.POST,
       body: selectedSubjectsIds,
     );
@@ -96,11 +94,10 @@ class CohortsSettingsController extends GetxController {
 
   Future<bool> deleteCohort(int id) async {
     bool cohortHasBeenDeleted = false;
-    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
-    Either<Failure, CohortResModel> response =
-        await responseHandler.getResponse(
+    ResponseHandler<void> responseHandler = ResponseHandler();
+    Either<Failure, void> response = await responseHandler.getResponse(
       path: '${CohortLinks.cohort}/$id',
-      converter: CohortResModel.fromJson,
+      converter: (_) {},
       type: ReqTypeEnum.DELETE,
     );
     response.fold(
@@ -129,11 +126,10 @@ class CohortsSettingsController extends GetxController {
     deleteSubjectLoading = true;
     bool subjectHasBeenDeleted = false;
     update(['delete_${cohortId}_$subjectId']);
-    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
-    Either<Failure, CohortResModel> response =
-        await responseHandler.getResponse(
+    ResponseHandler<void> responseHandler = ResponseHandler();
+    Either<Failure, void> response = await responseHandler.getResponse(
       path: '${CohortLinks.disConnectSubjectFromCohort}/$cohortId',
-      converter: CohortResModel.fromJson,
+      converter: (_) {},
       type: ReqTypeEnum.POST,
       body: subjectId,
     );
@@ -154,6 +150,44 @@ class CohortsSettingsController extends GetxController {
     deleteSubjectLoading = false;
     update(['delete_${cohortId}_$subjectId']);
     return subjectHasBeenDeleted;
+  }
+
+  Future<bool> editCohort(int id, String name, int? schoolTypeID) async {
+    addLoading = true;
+    update();
+    bool cohortHasBeenAdded = false;
+    ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
+
+    Either<Failure, CohortResModel> response =
+        await responseHandler.getResponse(
+      path: '${CohortLinks.cohort}/$id',
+      converter: CohortResModel.fromJson,
+      type: ReqTypeEnum.PATCH,
+      body: {
+        "Name": name,
+        if (schoolTypeID != null) "School_Type_ID": schoolTypeID,
+      },
+    );
+    ////////
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        cohortHasBeenAdded = false;
+      },
+      (r) {
+        getAllCohorts();
+        cohortHasBeenAdded = true;
+        update();
+      },
+    );
+    Get.find<OperationCohortController>().onInit();
+    addLoading = false;
+    update();
+    return cohortHasBeenAdded;
   }
 
   Future getAllCohorts() async {
