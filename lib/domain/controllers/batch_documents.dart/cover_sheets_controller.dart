@@ -118,6 +118,7 @@ class CoversSheetsController extends GetxController {
       path: '${ExamMissionLinks.examMission}/$id',
       converter: ExamMissionResModel.fromJson,
       type: ReqTypeEnum.DELETE,
+      body: {},
     );
     response.fold(
       (l) {

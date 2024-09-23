@@ -25,6 +25,7 @@ class OperationCohortController extends GetxController {
       path: '${CohortLinks.cohort}/$id',
       converter: CohortResModel.fromJson,
       type: ReqTypeEnum.DELETE,
+      body: {},
     );
     response.fold(
       (l) {

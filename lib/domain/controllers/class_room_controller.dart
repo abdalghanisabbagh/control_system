@@ -86,6 +86,7 @@ class ClassRoomController extends GetxController {
       path: '${SchoolsLinks.schoolsClasses}/$id',
       converter: ClassRoomResModel.fromJson,
       type: ReqTypeEnum.DELETE,
+      body: {},
     );
     response.fold(
       (l) {

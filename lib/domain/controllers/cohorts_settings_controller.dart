@@ -99,6 +99,7 @@ class CohortsSettingsController extends GetxController {
       path: '${CohortLinks.cohort}/$id',
       converter: (_) {},
       type: ReqTypeEnum.DELETE,
+      body: {},
     );
     response.fold(
       (l) {
