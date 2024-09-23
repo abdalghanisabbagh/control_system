@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import '../../../domain/services/token_service.dart';
 import '../../Models/token/token_model.dart';
 
-const String ACCEPT = "accept";
 const String AUTHORIZATION = "authorization";
 
 const Duration timeOut = Duration(seconds: 120);
@@ -23,12 +22,13 @@ class DioFactory {
     TokenModel? tokenModel = tokenService.tokenModel;
 
     Map<String, String> headers = {
+      "Content-Type": "application/json",
       if (token != null || tokenModel?.aToken != null)
         AUTHORIZATION: "Bearer ${token?.aToken ?? tokenModel?.aToken}",
     };
 
     dio.options = BaseOptions(
-      baseUrl: AppLinks.baseUrlProd,
+      baseUrl: AppLinks.baseUrlStaging,
       headers: headers,
       receiveTimeout: timeOut,
       sendTimeout: timeOut,
