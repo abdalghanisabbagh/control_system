@@ -28,6 +28,6 @@ export 'students_controllers/student_controller.dart';
 export 'students_controllers/students_controllers.dart';
 export 'students_controllers/transfer_student_controller.dart';
 export 'subject/edit_subject_controller.dart';
-export 'subject/operation_controoler.dart';
+export 'subject/operation_controller.dart';
 export 'subject/subject_controller.dart';
 export 'system_logger_controller.dart';

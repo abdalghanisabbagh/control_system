@@ -1,36 +1,36 @@
+import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
+import 'package:control_system/domain/controllers/controllers.dart';
+import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_edit_button.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
-import '../../../../Data/Models/school/school_type/schools_type_res_model.dart';
-import '../../../../domain/controllers/cohorts_settings_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
-import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 
-class AddCohortWidget extends StatelessWidget {
-  final bool isOperation;
-
-  final SchoolsTypeResModel? schoolTypes;
-  const AddCohortWidget(
-      {super.key, this.isOperation = false, this.schoolTypes});
-
+class EditCohortWidget extends GetView<OperationCohortController> {
+  final CohortResModel cohort;
+  const EditCohortWidget({
+    super.key,
+    required this.cohort,
+  });
   @override
   Widget build(BuildContext context) {
-    TextEditingController editingController = TextEditingController();
+    TextEditingController editingController =
+        TextEditingController(text: cohort.name);
     return SizedBox(
       width: 450,
       child: GetBuilder<CohortsSettingsController>(
-        builder: (controller) {
+        builder: (cohortSettingsController) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Add new Cohort",
+                "Edit Cohort",
                 style: nunitoRegular.copyWith(
                   color: ColorManager.bgSideMenu,
                   fontSize: 25,
@@ -69,24 +69,27 @@ class AddCohortWidget extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              if (isOperation) ...[
-                MultiSelectDropDownView(
-                  multiSelect: false,
-                  onOptionSelected: (value) {
-                    controller.slectedSchoolTypeId =
-                        value.map((e) => e.value! as int).toList();
-                  },
-                  options: schoolTypes!.data!
-                      .map(
-                        (e) => ValueItem(label: e.name!, value: e.iD),
-                      )
-                      .toList(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
-              controller.addLoading
+              MultiSelectDropDownView(
+                multiSelect: false,
+                optionSelected: controller.schoolsType!.data!
+                    .where((element) => element.iD == cohort.schoolTypeID)
+                    .map((element) =>
+                        ValueItem(label: element.name!, value: element.iD))
+                    .toList(),
+                onOptionSelected: (value) {
+                  cohortSettingsController.slectedSchoolTypeId =
+                      value.map((e) => e.value! as int).toList();
+                },
+                options: controller.schoolsType!.data!
+                    .map(
+                      (e) => ValueItem(label: e.name!, value: e.iD),
+                    )
+                    .toList(),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              cohortSettingsController.addLoading
                   ? LoadingIndicators.getLoadingIndicator()
                   : Row(
                       children: [
@@ -97,11 +100,11 @@ class AddCohortWidget extends StatelessWidget {
                           width: 20,
                         ),
                         Expanded(
-                          child: ElevatedAddButton(
+                          child: ElevatedEditButton(
                             onPressed: () async {
                               if (editingController.text != "") {
-                                if (isOperation &&
-                                    controller.slectedSchoolTypeId.isEmpty) {
+                                if (cohortSettingsController
+                                    .slectedSchoolTypeId.isEmpty) {
                                   MyFlashBar.showError(
                                           "Please select School Type", "Error")
                                       .show(
@@ -109,8 +112,13 @@ class AddCohortWidget extends StatelessWidget {
                                   );
                                   return;
                                 }
-                                controller
-                                    .addnewCohort(editingController.text)
+                                cohortSettingsController
+                                    .editCohort(
+                                  cohort.iD!,
+                                  editingController.text,
+                                  cohortSettingsController
+                                      .slectedSchoolTypeId.firstOrNull,
+                                )
                                     .then(
                                   (value) {
                                     value

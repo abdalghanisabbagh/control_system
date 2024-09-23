@@ -5,7 +5,7 @@ import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../../../Data/Models/subject/subject_res_model.dart';
 import '../../../../domain/controllers/subject/edit_subject_controller.dart';
-import '../../../../domain/controllers/subject/operation_controoler.dart';
+import '../../../../domain/controllers/subject/operation_controller.dart';
 import '../../../../domain/controllers/subject/subject_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';

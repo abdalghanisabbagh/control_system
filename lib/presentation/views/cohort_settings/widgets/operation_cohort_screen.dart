@@ -13,6 +13,7 @@ import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
 import '../add_subjects_to_cohort.dart';
 import 'add_cohort_widget.dart';
+import 'edit_cohort_widget.dart';
 
 class OperationCohortScreen extends GetView<OperationCohortController> {
   const OperationCohortScreen({super.key});
@@ -139,7 +140,7 @@ class OperationCohortScreen extends GetView<OperationCohortController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              item.name ?? "no name",
+                                              '${item.name} (${item.schoolType?.name})',
                                               style: nunitoBold.copyWith(
                                                 color: ColorManager.bgSideMenu,
                                                 fontSize: 28,
@@ -182,6 +183,49 @@ class OperationCohortScreen extends GetView<OperationCohortController> {
                                             const SizedBox(height: 8),
                                             Row(
                                               children: [
+                                                Visibility(
+                                                  visible: Get.find<
+                                                          ProfileController>()
+                                                      .canAccessWidget(
+                                                          widgetId: '8300'),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      MyDialogs.showDialog(
+                                                        context,
+                                                        EditCohortWidget(
+                                                          cohort: item,
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        color: ColorManager
+                                                            .glodenColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      child: Center(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          child: Text(
+                                                            "Edit Cohort",
+                                                            style: nunitoBold
+                                                                .copyWith(
+                                                              color:
+                                                                  ColorManager
+                                                                      .white,
+                                                              fontSize: 16,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
                                                 Visibility(
                                                   visible: Get.find<
                                                           ProfileController>()
