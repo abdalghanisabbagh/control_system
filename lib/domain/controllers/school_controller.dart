@@ -124,11 +124,11 @@ class SchoolController extends GetxController {
     );
 
     response.fold(
-      (fauilr) {
+      (failure) {
         /// handel error
         MyAwesomeDialogue(
           title: 'Error',
-          desc: "${fauilr.code} ::${fauilr.message}",
+          desc: "${failure.code} ::${failure.message}",
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
       },

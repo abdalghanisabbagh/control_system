@@ -9,7 +9,7 @@ import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
 import '../../../Data/Models/distribution_students_res_model.dart';
 import '../../../Data/Models/exam_room/exam_room_res_model.dart';
 import '../../../Data/Models/exam_room/exam_rooms_res_model.dart';
-import '../../../Data/Models/satge/stage_res_model.dart';
+import '../../../Data/Models/stage/stage_res_model.dart';
 import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
@@ -22,9 +22,9 @@ class DistributionController extends GetxController {
   String controlMissionName = '';
   int distributedStudents = 0;
   bool isLoadingDeleteClassRoom = false;
-  bool isLodingAddExamRoom = false;
-  bool isLodingGetExamRooms = false;
-  bool isLodingGetStageAndClassRoom = false;
+  bool isLoadingAddExamRoom = false;
+  bool isLoadingGetExamRooms = false;
+  bool isLoadingGetStageAndClassRoom = false;
   List<ExamRoomResModel> listExamRoom = [];
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsStage = <ValueItem>[];
@@ -39,7 +39,7 @@ class DistributionController extends GetxController {
     required String name,
     required String stage,
   }) async {
-    isLodingAddExamRoom = true;
+    isLoadingAddExamRoom = true;
 
     bool addExamRoomHasBeenAdded = false;
     update();
@@ -58,20 +58,20 @@ class DistributionController extends GetxController {
         });
 
     response.fold(
-      (fauilr) {
+      (failure) {
         MyAwesomeDialogue(
           title: 'Error',
-          desc: "${fauilr.code} ::${fauilr.message}",
+          desc: "${failure.code} ::${failure.message}",
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLodingAddExamRoom = false;
+        isLoadingAddExamRoom = false;
         addExamRoomHasBeenAdded = false;
         update();
       },
       (result) {
         getExamRoomByControlMissionId();
         addExamRoomHasBeenAdded = true;
-        isLodingAddExamRoom = false;
+        isLoadingAddExamRoom = false;
       },
     );
 
@@ -183,7 +183,7 @@ class DistributionController extends GetxController {
   }
 
   Future<void> getExamRoomByControlMissionId() async {
-    isLodingGetExamRooms = true;
+    isLoadingGetExamRooms = true;
     update(['getExamRoomByControlMissionId']);
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
@@ -206,7 +206,7 @@ class DistributionController extends GetxController {
         listExamRoom.assignAll(r.data!);
       },
     );
-    isLodingGetExamRooms = false;
+    isLoadingGetExamRooms = false;
     update(['getExamRoomByControlMissionId']);
   }
 
@@ -242,10 +242,10 @@ class DistributionController extends GetxController {
   }
 
   void getStageAndClassRoom() async {
-    isLodingGetStageAndClassRoom = true;
+    isLoadingGetStageAndClassRoom = true;
     update();
     await Future.wait([getStage(), getClassesRoomsBySchoolId()]);
-    isLodingGetStageAndClassRoom = false;
+    isLoadingGetStageAndClassRoom = false;
     update();
   }
 

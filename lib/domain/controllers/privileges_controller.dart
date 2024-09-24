@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../Data/Models/user/roles/role_res_model.dart';
-import '../../Data/Models/user/roles/roleres_model.dart';
+import '../../Data/Models/user/roles/roles_res_model.dart';
 import '../../Data/Models/user/screens/screen_res_model.dart';
 import '../../Data/Models/user/screens/screens_res_model.dart';
 import '../../Data/Network/response_handler.dart';

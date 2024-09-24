@@ -113,7 +113,7 @@ class DistributionScreen extends GetView<DistributionController> {
             Expanded(
               child: GetBuilder<DistributionController>(
                 id: 'getExamRoomByControlMissionId',
-                builder: (_) => controller.isLodingGetExamRooms
+                builder: (_) => controller.isLoadingGetExamRooms
                     ? Center(
                         child: LoadingIndicators.getLoadingIndicator(),
                       )

@@ -30,7 +30,7 @@ class AddExamRoomWidget extends GetView<DistributionController> {
         child: Form(
           key: formKey,
           child: GetBuilder<DistributionController>(builder: (_) {
-            return controller.isLodingGetStageAndClassRoom
+            return controller.isLoadingGetStageAndClassRoom
                 ? Center(
                     child: LoadingIndicators.getLoadingIndicator(),
                   )
@@ -112,7 +112,7 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                     const SizedBox(
                       height: 10,
                     ),
-                    controller.isLodingAddExamRoom
+                    controller.isLoadingAddExamRoom
                         ? Center(
                             child: LoadingIndicators.getLoadingIndicator(),
                           )

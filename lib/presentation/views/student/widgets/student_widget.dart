@@ -190,14 +190,14 @@ class StudentWidget extends GetView<StudentController> {
                         type: PlutoColumnType.text(),
                         renderer: (context) {
                           final String? cohortValue = context.cell.value;
-                          final bool isDefaultcohort = cohortValue != null &&
+                          final bool isDefaultCohort = cohortValue != null &&
                               cohortValue.startsWith('[ERROR]');
-                          final String? displayValue = isDefaultcohort
+                          final String? displayValue = isDefaultCohort
                               ? cohortValue.substring(7)
                               : cohortValue;
 
                           return Container(
-                            color: isDefaultcohort
+                            color: isDefaultCohort
                                 ? Colors.red
                                 : Colors.transparent,
                             child: Align(
@@ -341,7 +341,7 @@ class StudentWidget extends GetView<StudentController> {
                         title: 'Actions',
                         field: 'ActionsField',
                         type: PlutoColumnType.text(),
-                        hide: controller.isImportedPromot ||
+                        hide: controller.isImportedPromote ||
                             controller.isImportedNew,
                         renderer: (rendererContext) {
                           return Row(
@@ -410,7 +410,7 @@ class StudentWidget extends GetView<StudentController> {
                       ),
                     ],
                     rows:
-                        controller.isImportedPromot || controller.isImportedNew
+                        controller.isImportedPromote || controller.isImportedNew
                             ? controller.importedStudentsRows
                             : controller.studentsRows,
                     onChanged: (PlutoGridOnChangedEvent event) {},

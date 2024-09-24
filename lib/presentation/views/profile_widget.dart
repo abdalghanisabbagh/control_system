@@ -61,7 +61,7 @@ class ProfileWidget extends GetView<ProfileController> {
                     const SizedBox(height: 20),
                     _buildConfirmNewPasswordField(),
                     const SizedBox(height: 20),
-                    controller.isLodingEditUser
+                    controller.isLoadingEditUser
                         ? SizedBox(
                             width: 50,
                             height: 50,

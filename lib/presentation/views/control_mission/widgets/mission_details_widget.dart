@@ -62,7 +62,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                           height: 200,
                           child: GetBuilder<DetailsAndReviewMissionController>(
                             builder: (_) {
-                              if (controller.isLodingGetExamRooms) {
+                              if (controller.isLoadingGetExamRooms) {
                                 return Center(
                                   child:
                                       LoadingIndicators.getLoadingIndicator(),
@@ -141,7 +141,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                               borderRadius: BorderRadius.circular(10)),
                           height: 200,
                           child: GetBuilder<DetailsAndReviewMissionController>(
-                            builder: (_) => controller.isLodingGetExamRooms
+                            builder: (_) => controller.isLoadingGetExamRooms
                                 ? Center(
                                     child:
                                         LoadingIndicators.getLoadingIndicator(),
@@ -276,7 +276,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                     Expanded(
                       child: GetBuilder<DetailsAndReviewMissionController>(
                         builder: (_) => controller
-                                .isLodingGetStudentsSeatNumbers
+                                .isLoadingGetStudentsSeatNumbers
                             ? Center(
                                 child: LoadingIndicators.getLoadingIndicator(),
                               )

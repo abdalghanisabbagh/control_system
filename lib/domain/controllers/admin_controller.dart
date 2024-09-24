@@ -7,7 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../../Data/Models/school/school_response/school_res_model.dart';
 import '../../Data/Models/school/school_response/schools_res_model.dart';
 import '../../Data/Models/user/roles/role_res_model.dart';
-import '../../Data/Models/user/roles/roleres_model.dart';
+import '../../Data/Models/user/roles/roles_res_model.dart';
 import '../../Data/Models/user/users_res/user_res_model.dart';
 import '../../Data/Models/user/users_res/users_res_model.dart';
 import '../../Data/Network/response_handler.dart';
@@ -15,7 +15,7 @@ import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
-import '../../presentation/resource_manager/constants/app_constatnts.dart';
+import '../../presentation/resource_manager/constants/app_constants.dart';
 
 class AdminController extends GetxController {
   List<UserResModel> allUsersList = <UserResModel>[];
@@ -25,11 +25,11 @@ class AdminController extends GetxController {
   bool isLoadingGetAllUsers = false;
   bool isLoadingGetUsersCreatedBy = false;
   bool isLoadingGetUsersInSchool = false;
-  bool isLodingEditUser = false;
-  bool isLodingEditUserRoles = false;
-  bool isLodingEditUserSchools = false;
-  bool isLodingGetRoles = false;
-  bool isloadingGetSchools = false;
+  bool isLoadingEditUser = false;
+  bool isLoadingEditUserRoles = false;
+  bool isLoadingEditUserSchools = false;
+  bool isLoadingGetRoles = false;
+  bool isLoadingGetSchools = false;
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController nisIdController = TextEditingController();
   final TextEditingController oldPasswordController = TextEditingController();
@@ -40,7 +40,7 @@ class AdminController extends GetxController {
   List<int> selectedRolesID = <int>[];
   List<int> selectedSchoolID = <int>[];
   bool showNewPassword = true;
-  bool showOldPassord = true;
+  bool showOldPassword = true;
   List<UserResModel> userCreatedList = <UserResModel>[];
   List<UserResModel> userInSchoolList = <UserResModel>[];
   final TextEditingController usernameController = TextEditingController();
@@ -143,7 +143,7 @@ class AdminController extends GetxController {
   }
 
   Future<bool> editUser(Map<String, dynamic> data, int id) async {
-    isLodingEditUser = true;
+    isLoadingEditUser = true;
     update();
 
     final response = await ResponseHandler<UserResModel>().getResponse(
@@ -152,7 +152,7 @@ class AdminController extends GetxController {
         type: ReqTypeEnum.PATCH,
         body: data);
 
-    isLodingEditUser = false;
+    isLoadingEditUser = false;
     update();
 
     return response.fold(
@@ -162,7 +162,7 @@ class AdminController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLodingEditUser = false;
+        isLoadingEditUser = false;
         update();
         return false;
       },
@@ -172,7 +172,7 @@ class AdminController extends GetxController {
         oldPasswordController.clear();
         newPasswordController.clear();
         nisIdController.clear();
-        isLodingEditUser = false;
+        isLoadingEditUser = false;
         onInit();
         update();
         return true;
@@ -181,7 +181,7 @@ class AdminController extends GetxController {
   }
 
   Future<bool> editUserRoles(int roleId) async {
-    isLodingEditUserRoles = true;
+    isLoadingEditUserRoles = true;
     update();
 
     final response = await ResponseHandler<UserResModel>().getResponse(
@@ -191,12 +191,12 @@ class AdminController extends GetxController {
       body: selectedRolesID.map((e) => {'Roles_ID': e}).toList(),
     );
 
-    isLodingEditUserRoles = false;
+    isLoadingEditUserRoles = false;
     update();
 
     return response.fold(
       (l) {
-        isLodingEditUserRoles = false;
+        isLoadingEditUserRoles = false;
 
         MyAwesomeDialogue(
           title: 'Error',
@@ -208,7 +208,7 @@ class AdminController extends GetxController {
       },
       (r) {
         onInit();
-        isLodingEditUserRoles = false;
+        isLoadingEditUserRoles = false;
         update();
 
         return true;
@@ -217,7 +217,7 @@ class AdminController extends GetxController {
   }
 
   Future<bool> editUserSchool(int userId) async {
-    isLodingEditUserSchools = true;
+    isLoadingEditUserSchools = true;
     update();
 
     final response = await ResponseHandler<UserResModel>().getResponse(
@@ -227,12 +227,12 @@ class AdminController extends GetxController {
       body: selectedSchoolID,
     );
 
-    isLodingEditUserSchools = false;
+    isLoadingEditUserSchools = false;
     update();
 
     return response.fold(
       (l) {
-        isLodingEditUserSchools = false;
+        isLoadingEditUserSchools = false;
 
         MyAwesomeDialogue(
           title: 'Error',
@@ -244,7 +244,7 @@ class AdminController extends GetxController {
       },
       (r) {
         onInit();
-        isLodingEditUserSchools = false;
+        isLoadingEditUserSchools = false;
         update();
 
         return true;
@@ -253,7 +253,7 @@ class AdminController extends GetxController {
   }
 
   Future getAllRoles({required UserResModel userResModel}) async {
-    isLodingGetRoles = true;
+    isLoadingGetRoles = true;
     update();
     ResponseHandler<RolesResModel> responseHandler = ResponseHandler();
     Either<Failure, RolesResModel> response = await responseHandler.getResponse(
@@ -276,12 +276,12 @@ class AdminController extends GetxController {
       },
     );
 
-    isLodingGetRoles = false;
+    isLoadingGetRoles = false;
     update();
   }
 
   Future getAllSchool({required UserResModel userResModel}) async {
-    isloadingGetSchools = true;
+    isLoadingGetSchools = true;
     update();
     ResponseHandler<SchoolsResModel> responseHandler = ResponseHandler();
     Either<Failure, SchoolsResModel> response =
@@ -306,7 +306,7 @@ class AdminController extends GetxController {
       },
     );
 
-    isloadingGetSchools = false;
+    isLoadingGetSchools = false;
     update();
   }
 

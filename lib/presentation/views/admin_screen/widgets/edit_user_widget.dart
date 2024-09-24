@@ -11,7 +11,7 @@ import '../../../resource_manager/ReusableWidget/elevated_edit_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../../resource_manager/constants/app_constatnts.dart';
+import '../../../resource_manager/constants/app_constants.dart';
 import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
@@ -63,7 +63,7 @@ class EditUserWidget extends GetView<AdminController> {
                     _buildPasswordField(),
                     _buildNewPasswordField(),
                     const SizedBox(height: 20),
-                    controller.isLodingEditUser
+                    controller.isLoadingEditUser
                         ? Center(
                             child: SizedBox(
                                 width: 40,
@@ -217,13 +217,15 @@ class EditUserWidget extends GetView<AdminController> {
       child: MyTextFormFiled(
         title: "Old Password",
         controller: controller.oldPasswordController,
-        obscureText: controller.showOldPassord,
+        obscureText: controller.showOldPassword,
         suffixIcon: IconButton(
           icon: Icon(
-            controller.showOldPassord ? Icons.visibility : Icons.visibility_off,
+            controller.showOldPassword
+                ? Icons.visibility
+                : Icons.visibility_off,
           ),
           onPressed: () {
-            controller.showOldPassord = !controller.showOldPassord;
+            controller.showOldPassword = !controller.showOldPassword;
             controller.update();
           },
         ),

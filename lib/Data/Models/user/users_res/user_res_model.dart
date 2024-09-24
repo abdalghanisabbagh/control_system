@@ -1,4 +1,4 @@
-import '../../../../presentation/resource_manager/constants/app_constatnts.dart';
+import '../../../../presentation/resource_manager/constants/app_constants.dart';
 import 'created_by_user_res_model.dart';
 import 'user_has_roles_res_model.dart';
 import 'user_has_school_res_model.dart';

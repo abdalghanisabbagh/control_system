@@ -21,8 +21,8 @@ class ControlMissionController extends GetxController {
       <ControlMissionResModel>[];
 
   bool isLoading = false;
-  bool isLodingGetClassesRooms = false;
-  bool isLodingGetEducationYears = false;
+  bool isLoadingGetClassesRooms = false;
+  bool isLoadingGetEducationYears = false;
   List<ValueItem> optionsEducationYear = <ValueItem>[];
   String searchQuery = '';
   List<ValueItem>? selectedEducationYear;
@@ -63,7 +63,7 @@ class ControlMissionController extends GetxController {
   }
 
   Future<void> getEducationYears() async {
-    isLodingGetEducationYears = true;
+    isLoadingGetEducationYears = true;
     update();
 
     final response = await ResponseHandler<EducationsYearsModel>().getResponse(
@@ -91,7 +91,7 @@ class ControlMissionController extends GetxController {
       },
     );
 
-    isLodingGetEducationYears = false;
+    isLoadingGetEducationYears = false;
     update();
   }
 

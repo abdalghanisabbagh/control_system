@@ -37,7 +37,7 @@ class AddRoleUser extends GetView<AdminController> {
             const Divider(),
             const SizedBox(height: 20),
             GetBuilder<AdminController>(builder: (_) {
-              if (controller.isLodingGetRoles) {
+              if (controller.isLoadingGetRoles) {
                 return Expanded(
                   child: Center(
                     child: LoadingIndicators.getLoadingIndicator(),
@@ -84,7 +84,7 @@ class AddRoleUser extends GetView<AdminController> {
               );
             }),
             GetBuilder<AdminController>(builder: (_) {
-              if (controller.isLodingEditUserRoles) {
+              if (controller.isLoadingEditUserRoles) {
                 return Center(
                   child: SizedBox(
                     width: 50,

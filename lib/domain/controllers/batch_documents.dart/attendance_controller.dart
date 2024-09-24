@@ -38,7 +38,7 @@ class AttendanceController extends GetxController {
     var dio = DioFactory().getDio();
 
     var response = await dio.get<List<int>>(
-      '${GeneratePdfLinks.generatePdfAttendence}?roomid=$roomId',
+      '${GeneratePdfLinks.generatePdfAttendance}?roomid=$roomId',
       options: Options(
         responseType: ResponseType.bytes,
       ),
@@ -50,7 +50,7 @@ class AttendanceController extends GetxController {
         final blobUrl = html.Url.createObjectUrlFromBlob(blob);
 
         html.AnchorElement(href: blobUrl)
-          ..setAttribute('download', 'attendence.pdf')
+          ..setAttribute('download', 'attendance.pdf')
           ..click();
 
         html.Url.revokeObjectUrl(blobUrl);
@@ -136,7 +136,7 @@ class AttendanceController extends GetxController {
     update();
   }
 
-  Future<void> geteducationyear() async {
+  Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
     ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
@@ -168,7 +168,7 @@ class AttendanceController extends GetxController {
 
   @override
   void onInit() {
-    geteducationyear();
+    getEducationYear();
     super.onInit();
   }
 

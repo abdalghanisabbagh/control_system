@@ -34,7 +34,7 @@ class EditSubjectsController extends GetxController {
     Either<Failure, SubjectResModel> response =
         await responseHandler.getResponse(
       path:
-          '${SubjectsLinks.deleteSchoolTypeinSubjects}/$idSubject/$idSchoolType',
+          '${SubjectsLinks.deleteSchoolTypeInSubjects}/$idSubject/$idSchoolType',
       converter: SubjectResModel.fromJson,
       type: ReqTypeEnum.PATCH,
       body: {},

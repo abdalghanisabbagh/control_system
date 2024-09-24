@@ -79,7 +79,7 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
                 Get.delete<EditCoverSheetController>();
               },
               builder: (_) {
-                if (controller.isLodingUploadPdf == true) {
+                if (controller.isLoadingUploadPdf == true) {
                   return SizedBox(
                     width: 50,
                     height: 50,
@@ -90,7 +90,7 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
                 }
                 return InkWell(
                   onTap: () {
-                    controller.uplodPdfInExamMission().then((value) {
+                    controller.uploadPdfInExamMission().then((value) {
                       if (value == true) {
                         MyFlashBar.showSuccess(
                           "Uploaded Successfully",
@@ -288,8 +288,8 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
             ],
           ),
           GetBuilder<EditCoverSheetController>(builder: (_) {
-            if (controller.isLodingUpdateExamMission ||
-                controller.isLodingUploadPdf) {
+            if (controller.isLoadingUpdateExamMission ||
+                controller.isLoadingUploadPdf) {
               return SizedBox(
                 width: 50,
                 height: 50,

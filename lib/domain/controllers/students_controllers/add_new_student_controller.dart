@@ -16,11 +16,11 @@ import '../profile_controller.dart';
 import 'student_controller.dart';
 
 class AddNewStudentController extends GetxController {
-  bool checkSelecteClassRoom = false;
-  bool checkSelecteCohort = false;
-  bool checkSelecteGrade = false;
+  bool checkSelectedClassRoom = false;
+  bool checkSelectedCohort = false;
+  bool checkSelectedGrade = false;
   bool isLoading = false;
-  bool isLodingAddStudent = false;
+  bool isLoadingAddStudent = false;
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsCohort = <ValueItem>[];
   List<ValueItem> optionsGrades = <ValueItem>[];
@@ -33,7 +33,7 @@ class AddNewStudentController extends GetxController {
       Get.find<ProfileController>().cachedUserProfile;
 
   Future<bool> addNewStudent({
-    required int blubID,
+    required int blbID,
     required int gradesId,
     required int cohortId,
     required int schoolClassId,
@@ -43,7 +43,7 @@ class AddNewStudentController extends GetxController {
     required String secondLang,
     required String religion,
   }) async {
-    isLodingAddStudent = true;
+    isLoadingAddStudent = true;
 
     update();
     bool addStudentHasBeenAdded = false;
@@ -55,7 +55,7 @@ class AddNewStudentController extends GetxController {
         converter: StudentResModel.fromJson,
         type: ReqTypeEnum.POST,
         body: {
-          "Blb_Id": blubID,
+          "Blb_Id": blbID,
           "Grades_ID": gradesId,
           "Schools_ID": schoolId,
           "Cohort_ID": cohortId,
@@ -68,10 +68,10 @@ class AddNewStudentController extends GetxController {
           "Religion": religion,
         });
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       addStudentHasBeenAdded = false;
@@ -79,7 +79,7 @@ class AddNewStudentController extends GetxController {
       studentController.getStudents();
       addStudentHasBeenAdded = true;
     });
-    isLodingAddStudent = false;
+    isLoadingAddStudent = false;
 
     update();
     return addStudentHasBeenAdded;
@@ -97,10 +97,10 @@ class AddNewStudentController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       cohortHasBeenAdded = false;
@@ -127,10 +127,10 @@ class AddNewStudentController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       gradeHasBeenAdded = false;
@@ -157,10 +157,10 @@ class AddNewStudentController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       classRoomHasBeenAdded = false;

@@ -179,8 +179,8 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
             ],
           ),
           GetBuilder<EditCoverSheetController>(builder: (_) {
-            if (controller.isLodingUpdateExamMission ||
-                controller.isLodingUploadPdf) {
+            if (controller.isLoadingUpdateExamMission ||
+                controller.isLoadingUploadPdf) {
               return SizedBox(
                 width: 50,
                 height: 50,

@@ -84,10 +84,10 @@ class CoversSheetsController extends GetxController {
         body: examMissionResModel.toJson());
 
     response.fold(
-      (fauilr) {
+      (failure) {
         MyAwesomeDialogue(
           title: 'Error',
-          desc: "${fauilr.code} ::${fauilr.message}",
+          desc: "${failure.code} ::${failure.message}",
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
         addExamMissionHasBeenAdded = false;

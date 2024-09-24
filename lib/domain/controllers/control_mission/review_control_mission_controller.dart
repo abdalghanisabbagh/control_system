@@ -30,9 +30,9 @@ class DetailsAndReviewMissionController extends GetxController {
   int controlMissionId = 0;
   String controlMissionName = '';
   bool isLoadingGetStudentsGrades = false;
-  bool isLodingGetExamRooms = false;
-  bool isLodingGetStudentsSeatNumbers = false;
-  bool isLodingGetSubjects = false;
+  bool isLoadingGetExamRooms = false;
+  bool isLoadingGetStudentsSeatNumbers = false;
+  bool isLoadingGetSubjects = false;
   List<ExamRoomResModel> listExamRoom = [];
   List<SubjectResModel> listSubject = [];
   final List<Tab> myTabs = const <Tab>[
@@ -82,7 +82,7 @@ class DetailsAndReviewMissionController extends GetxController {
 
     if (studentGradesResModel != null) {
       for (var examRoom in studentGradesResModel!.examRoom!) {
-        for (var studentSeatNumber in examRoom.studentSeatNumnbers!) {
+        for (var studentSeatNumber in examRoom.studentSeatNumbers!) {
           studentsGradesRows.add(
             PlutoRow(
               cells: {
@@ -98,7 +98,7 @@ class DetailsAndReviewMissionController extends GetxController {
                   List.generate(
                     studentGradesResModel!.examRoom!
                         .map(
-                          (element) => element.studentSeatNumnbers!.map(
+                          (element) => element.studentSeatNumbers!.map(
                             (element) =>
                                 element.student!.cohort!.cohortHasSubjects!.map(
                               (element) => (
@@ -117,7 +117,7 @@ class DetailsAndReviewMissionController extends GetxController {
                       final ({String? name, int? id}) subject =
                           studentGradesResModel!.examRoom!
                               .map(
-                                (element) => element.studentSeatNumnbers!.map(
+                                (element) => element.studentSeatNumbers!.map(
                                   (element) => element
                                       .student!.cohort!.cohortHasSubjects!
                                       .map(
@@ -144,7 +144,7 @@ class DetailsAndReviewMissionController extends GetxController {
                                         null
                                     ? 'Need to scan'
                                     : '${studentSeatNumber.student?.barcode?.studentDegree}'
-                                : 'Exampt'),
+                                : 'Exempt'),
                       );
                     },
                   ),
@@ -164,7 +164,7 @@ class DetailsAndReviewMissionController extends GetxController {
     update();
     ResponseHandler<void> responseHandler = ResponseHandler<void>();
     Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${StudentsLinks.studentSeatNumberDeactive}/$idSeat',
+      path: '${StudentsLinks.studentSeatNumberDeActive}/$idSeat',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
       body: {},
@@ -198,7 +198,7 @@ class DetailsAndReviewMissionController extends GetxController {
       ...List.generate(
         studentGradesResModel!.examRoom!
             .map(
-              (element) => element.studentSeatNumnbers!.map(
+              (element) => element.studentSeatNumbers!.map(
                 (element) => element.student!.cohort!.cohortHasSubjects!.map(
                   (element) => (element.subjects!.name, element.subjects!.iD),
                 ),
@@ -213,7 +213,7 @@ class DetailsAndReviewMissionController extends GetxController {
           final ({String? name, int? id}) subject =
               studentGradesResModel!.examRoom!
                   .map(
-                    (element) => element.studentSeatNumnbers!.map(
+                    (element) => element.studentSeatNumbers!.map(
                       (element) =>
                           element.student!.cohort!.cohortHasSubjects!.map(
                         (element) => (
@@ -275,7 +275,7 @@ class DetailsAndReviewMissionController extends GetxController {
       ...List.generate(
         studentGradesResModel!.examRoom!
             .map(
-              (element) => element.studentSeatNumnbers!.map(
+              (element) => element.studentSeatNumbers!.map(
                 (element) => element.student!.cohort!.cohortHasSubjects!.map(
                   (element) => (element.subjects!.name, element.subjects!.iD),
                 ),
@@ -290,7 +290,7 @@ class DetailsAndReviewMissionController extends GetxController {
           final ({String? name, int? id}) subject =
               studentGradesResModel!.examRoom!
                   .map(
-                    (element) => element.studentSeatNumnbers!.map(
+                    (element) => element.studentSeatNumbers!.map(
                       (element) =>
                           element.student!.cohort!.cohortHasSubjects!.map(
                         (element) => (
@@ -490,7 +490,7 @@ class DetailsAndReviewMissionController extends GetxController {
   }
 
   Future<void> getExamRoomByControlMissionId() async {
-    isLodingGetExamRooms = true;
+    isLoadingGetExamRooms = true;
     update();
 
     final response = await ResponseHandler<ExamRoomsResModel>().getResponse(
@@ -514,7 +514,7 @@ class DetailsAndReviewMissionController extends GetxController {
         update();
       },
     );
-    isLodingGetExamRooms = false;
+    isLoadingGetExamRooms = false;
   }
 
   Future<void> getStudentsGrades() async {
@@ -550,7 +550,7 @@ class DetailsAndReviewMissionController extends GetxController {
 
   Future<bool> getStudentsSeatNumberByControlMissionId() async {
     bool getData = false;
-    isLodingGetStudentsSeatNumbers = true;
+    isLoadingGetStudentsSeatNumbers = true;
     update();
 
     ResponseHandler<StudentsSeatsNumbersResModel> responseHandler =
@@ -579,13 +579,13 @@ class DetailsAndReviewMissionController extends GetxController {
       },
     );
 
-    isLodingGetStudentsSeatNumbers = false;
+    isLoadingGetStudentsSeatNumbers = false;
     update();
     return getData;
   }
 
   Future<void> getSubjectByControlMissionId() async {
-    isLodingGetSubjects = true;
+    isLoadingGetSubjects = true;
     update();
 
     final response = await ResponseHandler<SubjectsResModel>().getResponse(
@@ -610,7 +610,7 @@ class DetailsAndReviewMissionController extends GetxController {
         update();
       },
     );
-    isLodingGetSubjects = false;
+    isLoadingGetSubjects = false;
   }
 
   @override

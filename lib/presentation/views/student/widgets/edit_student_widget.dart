@@ -197,7 +197,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   // Update Button
                   GetBuilder<StudentController>(
                     builder: (_) {
-                      return controller.islodingEditStudent
+                      return controller.isLoadingEditStudent
                           ? LoadingIndicators.getLoadingIndicator()
                           : InkWell(
                               onTap: () {

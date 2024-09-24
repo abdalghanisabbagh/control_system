@@ -85,7 +85,7 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                               controller.studentGradesResModel!.examRoom!
                                   .map(
                                     (element) =>
-                                        element.studentSeatNumnbers!.map(
+                                        element.studentSeatNumbers!.map(
                                       (element) => element
                                           .student!.cohort!.cohortHasSubjects!
                                           .map(
@@ -106,7 +106,7 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                                     controller.studentGradesResModel!.examRoom!
                                         .map(
                                           (element) =>
-                                              element.studentSeatNumnbers!.map(
+                                              element.studentSeatNumbers!.map(
                                             (element) => element.student!
                                                 .cohort!.cohortHasSubjects!
                                                 .map(
@@ -133,7 +133,7 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                                                   .examRoom!
                                                   .map(
                                                     (element) => element
-                                                        .studentSeatNumnbers!
+                                                        .studentSeatNumbers!
                                                         .map(
                                                       (element) => (
                                                         element.student!.cohort!

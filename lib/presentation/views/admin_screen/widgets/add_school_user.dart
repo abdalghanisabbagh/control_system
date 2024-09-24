@@ -37,7 +37,7 @@ class AddSchoolUser extends GetView<AdminController> {
             const Divider(),
             const SizedBox(height: 20),
             GetBuilder<AdminController>(builder: (_) {
-              if (controller.isloadingGetSchools) {
+              if (controller.isLoadingGetSchools) {
                 return Expanded(
                   child: Center(
                     child: LoadingIndicators.getLoadingIndicator(),
@@ -85,7 +85,7 @@ class AddSchoolUser extends GetView<AdminController> {
               );
             }),
             GetBuilder<AdminController>(builder: (_) {
-              if (controller.isLodingEditUserSchools) {
+              if (controller.isLoadingEditUserSchools) {
                 return Center(
                   child: SizedBox(
                     width: 50,

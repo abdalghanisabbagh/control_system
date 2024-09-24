@@ -17,8 +17,8 @@ import '../controllers.dart';
 class EditCoverSheetController extends GetxController {
   bool isImportedFile = false;
 
-  bool isLodingUpdateExamMission = false;
-  bool isLodingUploadPdf = false;
+  bool isLoadingUpdateExamMission = false;
+  bool isLoadingUploadPdf = false;
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
     const ValueItem(value: 25, label: '25 Mins'),
@@ -76,7 +76,7 @@ class EditCoverSheetController extends GetxController {
     required String? pdfUrl,
     required bool? period,
   }) async {
-    isLodingUpdateExamMission = true;
+    isLoadingUpdateExamMission = true;
 
     update();
     bool updateExamMission = false;
@@ -96,10 +96,10 @@ class EditCoverSheetController extends GetxController {
         type: ReqTypeEnum.PATCH,
         body: examMissionResModel.toJson());
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       updateExamMission = false;
@@ -111,7 +111,7 @@ class EditCoverSheetController extends GetxController {
       isImportedFile = false;
       update();
     });
-    isLodingUpdateExamMission = false;
+    isLoadingUpdateExamMission = false;
 
     update();
     return updateExamMission;
@@ -124,7 +124,7 @@ class EditCoverSheetController extends GetxController {
     required String? year,
     required String? month,
   }) async {
-    isLodingUpdateExamMission = true;
+    isLoadingUpdateExamMission = true;
 
     update();
     bool updateExamMission = false;
@@ -144,10 +144,10 @@ class EditCoverSheetController extends GetxController {
         type: ReqTypeEnum.PATCH,
         body: examMissionResModel.toJson());
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       updateExamMission = false;
@@ -156,18 +156,18 @@ class EditCoverSheetController extends GetxController {
           .getAllExamMissionsByControlMission(result.controlMissionID!);
       updateExamMission = true;
     });
-    isLodingUpdateExamMission = false;
+    isLoadingUpdateExamMission = false;
 
     update();
     return updateExamMission;
   }
 
-  Future<bool> uplodPdfInExamMission() async {
+  Future<bool> uploadPdfInExamMission() async {
     bool uploadPdfFile = false;
     ResponseHandler<PdfExamMissionResModel> responseHandler = ResponseHandler();
 
     (Uint8List?, String?) pdfData = await pickPdfFile();
-    isLodingUploadPdf = true;
+    isLoadingUploadPdf = true;
     update();
 
     var response = await responseHandler.getResponse(
@@ -183,10 +183,10 @@ class EditCoverSheetController extends GetxController {
       ),
     );
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       uploadPdfFile = false;
@@ -194,7 +194,7 @@ class EditCoverSheetController extends GetxController {
       pdfUrl = result.data!;
       uploadPdfFile = true;
     });
-    isLodingUploadPdf = false;
+    isLoadingUploadPdf = false;
     update();
     return uploadPdfFile;
   }

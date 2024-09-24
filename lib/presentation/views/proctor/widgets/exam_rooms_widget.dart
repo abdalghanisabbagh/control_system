@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../../../domain/controllers/proctor_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/constants/app_constatnts.dart';
+import '../../../resource_manager/constants/app_constants.dart';
 import 'assign_proctor_to_exam_by_room_id.dart';
 import 'proctors_in_exam_room_widget.dart';
 

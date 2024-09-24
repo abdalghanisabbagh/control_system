@@ -36,7 +36,7 @@ class CreateControlMissionController extends GetxController {
   List<PlutoRow> includedStudentsRows = [];
   PlutoGridStateManager? includedStudentsStateManager;
   bool isLoading = false;
-  bool isLodingGetEducationYears = false;
+  bool isLoadingGetEducationYears = false;
   List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsGrades = [];
   List<ValueItem>? selectedEducationYear;
@@ -224,7 +224,7 @@ class CreateControlMissionController extends GetxController {
   }
 
   Future<void> getEducationYears() async {
-    isLodingGetEducationYears = true;
+    isLoadingGetEducationYears = true;
     update();
 
     final response = await ResponseHandler<EducationsYearsModel>().getResponse(
@@ -253,7 +253,7 @@ class CreateControlMissionController extends GetxController {
       },
     );
 
-    isLodingGetEducationYears = false;
+    isLoadingGetEducationYears = false;
     update();
   }
 

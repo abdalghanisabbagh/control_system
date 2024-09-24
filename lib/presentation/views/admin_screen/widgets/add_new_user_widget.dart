@@ -10,7 +10,7 @@ import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../../resource_manager/constants/app_constatnts.dart';
+import '../../../resource_manager/constants/app_constants.dart';
 import '../../../resource_manager/validations.dart';
 
 class AddNewUserWidget extends GetView<AdminController> {
@@ -133,16 +133,16 @@ class AddNewUserWidget extends GetView<AdminController> {
                           title: "Password",
                           controller: userController.oldPasswordController,
                           myValidation: Validations.requiredValidator,
-                          obscureText: userController.showOldPassord,
+                          obscureText: userController.showOldPassword,
                           suffixIcon: IconButton(
                             icon: Icon(
-                              userController.showOldPassord
+                              userController.showOldPassword
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                             ),
                             onPressed: () {
-                              userController.showOldPassord =
-                                  !userController.showOldPassord;
+                              userController.showOldPassword =
+                                  !userController.showOldPassword;
                               userController.update();
                             },
                           ),
@@ -153,16 +153,16 @@ class AddNewUserWidget extends GetView<AdminController> {
                         child: MyTextFormFiled(
                           title: "Confirm Password",
                           controller: userController.newPasswordController,
-                          obscureText: userController.showOldPassord,
+                          obscureText: userController.showOldPassword,
                           suffixIcon: IconButton(
                             icon: Icon(
-                              userController.showOldPassord
+                              userController.showOldPassword
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                             ),
                             onPressed: () {
-                              userController.showOldPassord =
-                                  !userController.showOldPassord;
+                              userController.showOldPassword =
+                                  !userController.showOldPassword;
                               userController.update();
                             },
                           ),

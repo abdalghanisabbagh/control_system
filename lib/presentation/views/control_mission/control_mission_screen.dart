@@ -26,7 +26,7 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
             const SizedBox(height: 20),
             GetBuilder<ControlMissionController>(
               builder: (_) {
-                if (controller.isLodingGetEducationYears) {
+                if (controller.isLoadingGetEducationYears) {
                   return Center(
                     child: LoadingIndicators.getLoadingIndicator(),
                   );

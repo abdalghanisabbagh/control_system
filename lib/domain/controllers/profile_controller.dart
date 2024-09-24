@@ -11,7 +11,7 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class ProfileController extends GetxController {
-  bool isLodingEditUser = false;
+  bool isLoadingEditUser = false;
   bool showPassword = true;
   bool showOldPassword = true;
   UserProfileModel? _cachedUserProfile;
@@ -34,7 +34,7 @@ class ProfileController extends GetxController {
   }
 
   Future<bool> editUser(Map<String, dynamic> data, int id) async {
-    isLodingEditUser = true;
+    isLoadingEditUser = true;
     update();
 
     final response = await ResponseHandler<void>().getResponse(
@@ -43,7 +43,7 @@ class ProfileController extends GetxController {
         type: ReqTypeEnum.PATCH,
         body: data);
 
-    isLodingEditUser = false;
+    isLoadingEditUser = false;
     update();
 
     return response.fold(
@@ -53,12 +53,12 @@ class ProfileController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLodingEditUser = false;
+        isLoadingEditUser = false;
         update();
         return false;
       },
       (r) {
-        isLodingEditUser = false;
+        isLoadingEditUser = false;
         update();
         return true;
       },

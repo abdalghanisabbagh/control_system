@@ -249,7 +249,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                     builder: (formFieldState) {
                       return GetBuilder<CreateCoversSheetsController>(
                         builder: (_) {
-                          if (controller.isLodingGetSubject) {
+                          if (controller.isLoadingGetSubject) {
                             return Center(
                               child: SizedBox(
                                 width: 50,

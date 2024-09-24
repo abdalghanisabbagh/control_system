@@ -226,7 +226,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                           height: 20,
                         ),
 
-                        controller.isLodingAddStudent
+                        controller.isLoadingAddStudent
                             ? LoadingIndicators.getLoadingIndicator()
                             : InkWell(
                                 onTap: () {
@@ -237,7 +237,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                           null) {
                                     controller
                                         .addNewStudent(
-                                      blubID: int.parse(blbIdController.text),
+                                      blbID: int.parse(blbIdController.text),
                                       cohortId:
                                           controller.selectedItemCohort!.value,
                                       gradesId:
