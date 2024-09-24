@@ -1,5 +1,4 @@
-import 'package:control_system/Data/Models/school/school_type/school_type_model.dart';
-
+import '../school/school_type/school_type_model.dart';
 import 'cohorts_subjects_res_model.dart';
 
 class CohortResModel {

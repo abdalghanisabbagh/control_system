@@ -1,14 +1,14 @@
-import 'package:control_system/Data/Models/cohort/cohort_res_model.dart';
-import 'package:control_system/domain/controllers/controllers.dart';
-import 'package:control_system/presentation/resource_manager/ReusableWidget/elevated_edit_button.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
+import '../../../../Data/Models/cohort/cohort_res_model.dart';
+import '../../../../domain/controllers/controllers.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
+import '../../../resource_manager/ReusableWidget/elevated_edit_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 
