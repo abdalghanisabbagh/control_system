@@ -113,77 +113,71 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                     ),
                     SizedBox(
                       height: 300,
-                      width: 200,
+                      width: 400,
                       child: ListView.builder(
                         itemCount:
                             item.cohortsSubjects!.cohortHasSubjects!.length,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  item
-                                      .cohortsSubjects!
-                                      .cohortHasSubjects![index]
-                                      .subjects!
-                                      .name!,
-                                  style: nunitoRegular.copyWith(
-                                      color: Colors.black),
-                                ),
-                                GetBuilder<CohortsSettingsController>(
-                                  id: "delete_${item.iD}_${item.cohortsSubjects!.cohortHasSubjects![index].subjects!.iD}",
-                                  builder: (_) {
-                                    return controller.deleteSubjectLoading
-                                        ? FittedBox(
-                                            fit: BoxFit.fill,
-                                            child: SizedBox(
-                                              width: 50,
-                                              height: 50,
-                                              child: Center(
-                                                child: LoadingIndicators
-                                                    .getLoadingIndicator(),
-                                              ),
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                item.cohortsSubjects!.cohortHasSubjects![index]
+                                    .subjects!.name!,
+                                style:
+                                    nunitoRegular.copyWith(color: Colors.black),
+                              ),
+                              GetBuilder<CohortsSettingsController>(
+                                id: "delete_${item.iD}_${item.cohortsSubjects!.cohortHasSubjects![index].subjects!.iD}",
+                                builder: (_) {
+                                  return controller.deleteSubjectLoading
+                                      ? FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: Center(
+                                              child: LoadingIndicators
+                                                  .getLoadingIndicator(),
                                             ),
-                                          )
-                                        : IconButton(
-                                            onPressed: () async {
-                                              await controller
-                                                  .deleteSubjectFromCohort(
-                                                      cohortId: item.iD!,
-                                                      subjectId: item
-                                                          .cohortsSubjects!
-                                                          .cohortHasSubjects![
-                                                              index]
-                                                          .subjects!
-                                                          .iD!)
-                                                  .then(
-                                                    (value) => value
-                                                        ? {
-                                                            Get.back(),
-                                                            MyFlashBar.showSuccess(
-                                                                    "Subject Deleted Successfully",
-                                                                    "Success")
-                                                                .show(context
-                                                                        .mounted
-                                                                    ? context
-                                                                    : Get.key
-                                                                        .currentContext!),
-                                                            Get.find<
-                                                                    OperationCohortController>()
-                                                                .onInit()
-                                                          }
-                                                        : null,
-                                                  );
-                                            },
-                                            icon: const Icon(Icons.delete),
-                                          );
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
+                                          ),
+                                        )
+                                      : IconButton(
+                                          onPressed: () async {
+                                            await controller
+                                                .deleteSubjectFromCohort(
+                                                    cohortId: item.iD!,
+                                                    subjectId: item
+                                                        .cohortsSubjects!
+                                                        .cohortHasSubjects![
+                                                            index]
+                                                        .subjects!
+                                                        .iD!)
+                                                .then(
+                                                  (value) => value
+                                                      ? {
+                                                          Get.back(),
+                                                          MyFlashBar.showSuccess(
+                                                                  "Subject Deleted Successfully",
+                                                                  "Success")
+                                                              .show(context
+                                                                      .mounted
+                                                                  ? context
+                                                                  : Get.key
+                                                                      .currentContext!),
+                                                          Get.find<
+                                                                  OperationCohortController>()
+                                                              .onInit()
+                                                        }
+                                                      : null,
+                                                );
+                                          },
+                                          icon: const Icon(Icons.delete),
+                                        );
+                                },
+                              ),
+                            ],
+                          ).paddingOnly(right: 20);
                         },
                       ),
                     ),
