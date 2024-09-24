@@ -93,31 +93,36 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
             ),
           ),
           const Spacer(),
-          Expanded(
-            child: InkWell(
-              onTap: () {
-                Hive.box('ControlMission').put('Id', controlMission.iD);
-                Hive.box('ControlMission').put('Name', controlMission.name);
-                context.goNamed(
-                    AppRoutesNamesAndPaths.addNewStudentsToControlMissionName);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+          Visibility(
+            visible: Get.find<ProfileController>().canAccessWidget(
+              widgetId: '2400',
+            ),
+            child: Expanded(
+              child: InkWell(
+                onTap: () {
+                  Hive.box('ControlMission').put('Id', controlMission.iD);
+                  Hive.box('ControlMission').put('Name', controlMission.name);
+                  context.goNamed(AppRoutesNamesAndPaths
+                      .addNewStudentsToControlMissionName);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                    color: ColorManager.bgSideMenu,
                   ),
-                  color: ColorManager.bgSideMenu,
-                ),
-                child: Center(
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text(
-                      "Add New Students",
-                      style: nunitoRegular.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
+                  child: Center(
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(
+                        "Add New Students",
+                        style: nunitoRegular.copyWith(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
