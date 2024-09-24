@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../../domain/controllers/auth_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/constants/app_constatnts.dart';
 import '../../../resource_manager/validations.dart';

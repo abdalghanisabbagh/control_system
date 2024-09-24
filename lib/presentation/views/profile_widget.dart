@@ -9,7 +9,7 @@ import 'package:universal_html/html.dart';
 import '../../../../domain/controllers/controllers.dart';
 import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../resource_manager/ReusableWidget/my_back_button.dart';
-import '../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../resource_manager/ReusableWidget/my_snack_bar.dart';
 
 class ProfileWidget extends GetView<ProfileController> {
   final _confirmNewPasswordController = TextEditingController();

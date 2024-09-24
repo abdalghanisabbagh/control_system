@@ -26,7 +26,7 @@ import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../app/extensions/convert_material_color_to_pdf_color_extension.dart';
-import '../../../presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../presentation/resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class DistributeStudentsController extends GetxController {

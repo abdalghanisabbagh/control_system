@@ -34,7 +34,7 @@ class ControlMissionLinks {
 }
 
 class EducationYearsLinks {
-  static const educationyear = 'education-year';
+  static const educationYear = 'education-year';
 }
 
 class ExamMissionLinks {

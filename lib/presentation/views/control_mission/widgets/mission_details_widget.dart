@@ -7,7 +7,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import '../../../../domain/controllers/control_mission/review_control_mission_controller.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 
 // ignore: must_be_immutable

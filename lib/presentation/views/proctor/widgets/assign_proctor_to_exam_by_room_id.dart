@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../../app/extensions/date_time_extension.dart';
 import '../../../../domain/controllers/proctor_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 
 class AssignProctorToExamMission extends GetView<ProctorController> {
   const AssignProctorToExamMission({

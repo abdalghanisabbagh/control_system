@@ -262,7 +262,7 @@ class ProctorController extends GetxController {
 
   Future<void> getEducationYears() async {
     final response = await ResponseHandler<EducationsYearsModel>().getResponse(
-      path: EducationYearsLinks.educationyear,
+      path: EducationYearsLinks.educationYear,
       converter: EducationsYearsModel.fromJson,
       type: ReqTypeEnum.GET,
     );

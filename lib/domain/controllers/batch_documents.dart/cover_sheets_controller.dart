@@ -35,8 +35,8 @@ class CoversSheetsController extends GetxController {
   bool isLoadingGetControlMission = false;
   bool isLoadingGetEducationYear = false;
   bool isLoadingGrades = false;
-  bool isLodingGetExamMission = false;
-  bool isLodingGetSubject = false;
+  bool isLoadingGetExamMission = false;
+  bool isLoadingGetSubject = false;
   List<ValueItem> optionsControlMission = <ValueItem>[];
   List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsGrades = <ValueItem>[];
@@ -52,7 +52,7 @@ class CoversSheetsController extends GetxController {
     required int subjectId,
     required int controlMissionId,
     required int gradeId,
-    required int educationyearId,
+    required int educationYearId,
     required String year,
     required String month,
     required String finalDegree,
@@ -69,7 +69,7 @@ class CoversSheetsController extends GetxController {
         subjectsID: subjectId,
         controlMissionID: controlMissionId,
         gradesID: gradeId,
-        educationYearID: educationyearId,
+        educationYearID: educationYearId,
         year: year,
         month: month,
         finalDegree: finalDegree,
@@ -183,7 +183,7 @@ class CoversSheetsController extends GetxController {
 
         // Create an anchor element and trigger the download
         html.AnchorElement(href: blobUrl)
-          ..setAttribute('download', 'attendence.pdf')
+          ..setAttribute('download', 'attendance.pdf')
           ..click();
 
         // Revoke the object URL after download
@@ -214,7 +214,7 @@ class CoversSheetsController extends GetxController {
   }
 
   Future<void> getAllExamMissionsByControlMission(int controlMissionId) async {
-    isLodingGetExamMission = true;
+    isLoadingGetExamMission = true;
 
     update();
     ResponseHandler<ExamMissionsResModel> responseHandler = ResponseHandler();
@@ -231,20 +231,20 @@ class CoversSheetsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLodingGetSubject = false;
+        isLoadingGetSubject = false;
         update();
       },
       (r) {
         examMissionsList = r.data!;
         updateFilteredList(null, null);
-        isLodingGetExamMission = false;
+        isLoadingGetExamMission = false;
         update();
       },
     );
   }
 
   Future<void> getAllSubjects() async {
-    isLodingGetSubject = true;
+    isLoadingGetSubject = true;
 
     update();
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
@@ -261,7 +261,7 @@ class CoversSheetsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLodingGetSubject = false;
+        isLoadingGetSubject = false;
         update();
       },
       (r) {
@@ -270,7 +270,7 @@ class CoversSheetsController extends GetxController {
             .toList();
         optionsSubjects = items;
 
-        isLodingGetSubject = false;
+        isLoadingGetSubject = false;
         update();
       },
     );
@@ -313,13 +313,13 @@ class CoversSheetsController extends GetxController {
     update();
   }
 
-  Future<void> geteducationyear() async {
+  Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
     ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
     Either<Failure, EducationsYearsModel> response =
         await responseHandler.getResponse(
-      path: EducationYearsLinks.educationyear,
+      path: EducationYearsLinks.educationYear,
       converter: EducationsYearsModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -355,10 +355,10 @@ class CoversSheetsController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }, (result) {
@@ -372,7 +372,7 @@ class CoversSheetsController extends GetxController {
 
   @override
   void onInit() {
-    geteducationyear();
+    getEducationYear();
     super.onInit();
   }
 
