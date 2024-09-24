@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
+import '../../../../domain/controllers/profile_controller.dart';
 import '../../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -345,50 +346,62 @@ class StudentWidget extends GetView<StudentController> {
                         renderer: (rendererContext) {
                           return Row(
                             children: [
-                              IconButton(
-                                onPressed: () {
-                                  var student =
-                                      controller.students.firstWhereOrNull(
-                                    (element) {
-                                      return int.tryParse(rendererContext
-                                              .row.cells['BlbIdField']!.value
-                                              .toString()) ==
-                                          element.blbId;
-                                    },
-                                  );
-                                  MyDialogs.showDialog(
-                                    context,
-                                    EditStudentWidget(
-                                        studentResModel: student!),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.edit,
-                                  color: Colors.green,
+                              Visibility(
+                                visible: Get.find<ProfileController>()
+                                    .canAccessWidget(
+                                  widgetId: '1800',
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    var student =
+                                        controller.students.firstWhereOrNull(
+                                      (element) {
+                                        return int.tryParse(rendererContext
+                                                .row.cells['BlbIdField']!.value
+                                                .toString()) ==
+                                            element.blbId;
+                                      },
+                                    );
+                                    MyDialogs.showDialog(
+                                      context,
+                                      EditStudentWidget(
+                                          studentResModel: student!),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.green,
+                                  ),
                                 ),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  MyDialogs.showDialog(
-                                    context,
-                                    TransferStudentWidget(
-                                      studentResModel:
-                                          controller.students.firstWhere(
-                                        (element) {
-                                          return int.tryParse(rendererContext
-                                                  .row
-                                                  .cells['BlbIdField']!
-                                                  .value
-                                                  .toString()) ==
-                                              element.blbId;
-                                        },
+                              Visibility(
+                                visible: Get.find<ProfileController>()
+                                    .canAccessWidget(
+                                  widgetId: '1900',
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    MyDialogs.showDialog(
+                                      context,
+                                      TransferStudentWidget(
+                                        studentResModel:
+                                            controller.students.firstWhere(
+                                          (element) {
+                                            return int.tryParse(rendererContext
+                                                    .row
+                                                    .cells['BlbIdField']!
+                                                    .value
+                                                    .toString()) ==
+                                                element.blbId;
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.transfer_within_a_station,
-                                  color: Colors.blue,
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.transfer_within_a_station,
+                                    color: Colors.blue,
+                                  ),
                                 ),
                               ),
                             ],

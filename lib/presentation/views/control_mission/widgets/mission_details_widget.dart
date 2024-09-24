@@ -385,78 +385,88 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
 
                                           return Row(
                                             children: [
-                                              IconButton(
-                                                onPressed: () {
-                                                  if (isActive) {
-                                                    MyAwesomeDialogue(
-                                                      title:
-                                                          'Deactivate Student',
-                                                      desc:
-                                                          'Are you sure you want to deactivate this student?',
-                                                      dialogType:
-                                                          DialogType.warning,
-                                                      btnOkOnPressed: () {
-                                                        controller
-                                                            .deactiveStudentInControlMission(
-                                                                idSeat: rendererContext
-                                                                    .row
-                                                                    .cells[
-                                                                        'IdField']!
-                                                                    .value)
-                                                            .then(
-                                                          (value) {
-                                                            if (value) {
-                                                              MyFlashBar
-                                                                  .showSuccess(
-                                                                "Student deactivated successfully",
-                                                                "Success",
-                                                              ).show(Get.key
-                                                                  .currentContext!);
-                                                            }
-                                                          },
-                                                        );
-                                                      },
-                                                      btnCancelOnPressed: () {},
-                                                    ).showDialogue(context);
-                                                  } else {
-                                                    MyAwesomeDialogue(
-                                                      title: 'Activate Student',
-                                                      desc:
-                                                          'Are you sure you want to activate this student?',
-                                                      dialogType:
-                                                          DialogType.warning,
-                                                      btnOkOnPressed: () {
-                                                        controller
-                                                            .activeStudentInControlMission(
-                                                                idSeat: rendererContext
-                                                                    .row
-                                                                    .cells[
-                                                                        'IdField']!
-                                                                    .value)
-                                                            .then(
-                                                          (value) {
-                                                            if (value) {
-                                                              MyFlashBar
-                                                                  .showSuccess(
-                                                                "Student activated successfully",
-                                                                "Success",
-                                                              ).show(Get.key
-                                                                  .currentContext!);
-                                                            }
-                                                          },
-                                                        );
-                                                      },
-                                                      btnCancelOnPressed: () {},
-                                                    ).showDialogue(context);
-                                                  }
-                                                },
-                                                icon: Icon(
-                                                  isActive
-                                                      ? Icons.check_circle
-                                                      : Icons.cancel,
-                                                  color: isActive
-                                                      ? ColorManager.green
-                                                      : ColorManager.red,
+                                              Visibility(
+                                                visible: Get.find<
+                                                        ProfileController>()
+                                                    .canAccessWidget(
+                                                  widgetId: '2303',
+                                                ),
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    if (isActive) {
+                                                      MyAwesomeDialogue(
+                                                        title:
+                                                            'Deactivate Student',
+                                                        desc:
+                                                            'Are you sure you want to deactivate this student?',
+                                                        dialogType:
+                                                            DialogType.warning,
+                                                        btnOkOnPressed: () {
+                                                          controller
+                                                              .deactiveStudentInControlMission(
+                                                                  idSeat: rendererContext
+                                                                      .row
+                                                                      .cells[
+                                                                          'IdField']!
+                                                                      .value)
+                                                              .then(
+                                                            (value) {
+                                                              if (value) {
+                                                                MyFlashBar
+                                                                    .showSuccess(
+                                                                  "Student deactivated successfully",
+                                                                  "Success",
+                                                                ).show(Get.key
+                                                                    .currentContext!);
+                                                              }
+                                                            },
+                                                          );
+                                                        },
+                                                        btnCancelOnPressed:
+                                                            () {},
+                                                      ).showDialogue(context);
+                                                    } else {
+                                                      MyAwesomeDialogue(
+                                                        title:
+                                                            'Activate Student',
+                                                        desc:
+                                                            'Are you sure you want to activate this student?',
+                                                        dialogType:
+                                                            DialogType.warning,
+                                                        btnOkOnPressed: () {
+                                                          controller
+                                                              .activeStudentInControlMission(
+                                                                  idSeat: rendererContext
+                                                                      .row
+                                                                      .cells[
+                                                                          'IdField']!
+                                                                      .value)
+                                                              .then(
+                                                            (value) {
+                                                              if (value) {
+                                                                MyFlashBar
+                                                                    .showSuccess(
+                                                                  "Student activated successfully",
+                                                                  "Success",
+                                                                ).show(Get.key
+                                                                    .currentContext!);
+                                                              }
+                                                            },
+                                                          );
+                                                        },
+                                                        btnCancelOnPressed:
+                                                            () {},
+                                                      ).showDialogue(context);
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                    isActive
+                                                        ? Icons.check_circle
+                                                        : Icons.cancel,
+                                                    color: isActive
+                                                        ? ColorManager.green
+                                                        : ColorManager.red,
+                                                  ),
                                                 ),
                                               ),
                                             ],
