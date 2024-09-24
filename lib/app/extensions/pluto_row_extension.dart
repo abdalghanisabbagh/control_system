@@ -120,7 +120,7 @@ extension PlutoRowExtension on List<StudentResModel> {
     };
   }
 
-  Map<String, dynamic> convertPromtoFileStudentsToPluto({
+  Map<String, dynamic> convertPromoteFileStudentsToPluto({
     required List<StudentResModel> students,
     required List<CohortResModel> cohorts,
     required List<ClassRoomResModel> classesRooms,

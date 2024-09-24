@@ -586,7 +586,7 @@ class StudentController extends GetxController {
         hasError.assignAll(result['errors']);
         update();
       } else if (isImportedPromote == true) {
-        result = studentsCsv.convertPromtoFileStudentsToPluto(
+        result = studentsCsv.convertPromoteFileStudentsToPluto(
           students: students,
           cohorts: cohorts,
           classesRooms: classesRooms,

@@ -159,7 +159,7 @@ class DetailsAndReviewMissionController extends GetxController {
     return;
   }
 
-  Future<bool> deactiveStudentInControlMission({required String idSeat}) async {
+  Future<bool> deActiveStudentInControlMission({required String idSeat}) async {
     bool deactivateStudents = false;
     update();
     ResponseHandler<void> responseHandler = ResponseHandler<void>();

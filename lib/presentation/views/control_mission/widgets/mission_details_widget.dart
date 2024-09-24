@@ -403,7 +403,7 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                                             DialogType.warning,
                                                         btnOkOnPressed: () {
                                                           controller
-                                                              .deactiveStudentInControlMission(
+                                                              .deActiveStudentInControlMission(
                                                                   idSeat: rendererContext
                                                                       .row
                                                                       .cells[
