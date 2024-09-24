@@ -3,6 +3,7 @@ class AppLinks {
   static const baseUrlDev = 'http://localhost:3333/';
   static const baseUrlProd =
       'https://control-2025-490607372730.us-central1.run.app/';
+
   static const baseUrlStaging =
       'https://staging-control-2025-490607372730.us-central1.run.app/';
 }

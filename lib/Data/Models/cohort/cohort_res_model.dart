@@ -6,12 +6,11 @@ class CohortResModel {
 
   CohortsSubjectsResModel? cohortsSubjects;
 
-  SchoolTypeResModel? schoolType;
-
   String? createdAt;
   int? createdBy;
   int? iD;
   String? name;
+  SchoolTypeResModel? schoolType;
   int? schoolTypeID;
   String? updatedAt;
   int? updatedBy;

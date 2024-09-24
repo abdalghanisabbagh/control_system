@@ -6,9 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:universal_html/html.dart' show window;
 
 class MyBackButton extends StatelessWidget {
-  final VoidCallback? onPressed;
   final Color? color;
 
+  final VoidCallback? onPressed;
   const MyBackButton({super.key, this.onPressed, this.color});
 
   @override

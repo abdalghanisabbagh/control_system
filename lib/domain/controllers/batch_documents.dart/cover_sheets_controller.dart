@@ -34,9 +34,9 @@ class CoversSheetsController extends GetxController {
   bool isLoadingGeneratePdf = false;
   bool isLoadingGetControlMission = false;
   bool isLoadingGetEducationYear = false;
-  bool isLoadingGrades = false;
   bool isLoadingGetExamMission = false;
   bool isLoadingGetSubject = false;
+  bool isLoadingGrades = false;
   List<ValueItem> optionsControlMission = <ValueItem>[];
   List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsGrades = <ValueItem>[];

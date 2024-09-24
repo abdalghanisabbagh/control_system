@@ -30,8 +30,8 @@ class SeatNumberController extends GetxController {
   bool isLoadingGeneratePdf = false;
   bool isLoadingGetControlMission = false;
   bool isLoadingGetEducationYear = false;
-  bool isLoadingGrades = false;
   bool isLoadingGetExamMission = false;
+  bool isLoadingGrades = false;
   List<ValueItem> optionsControlMission = [];
   List<ValueItem> optionsEducationYear = [];
   List<ValueItem> optionsGrades = [];

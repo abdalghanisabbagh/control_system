@@ -22,14 +22,14 @@ class AdminController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController fullNameController = TextEditingController();
   bool isLoading = false;
-  bool isLoadingGetAllUsers = false;
-  bool isLoadingGetUsersCreatedBy = false;
-  bool isLoadingGetUsersInSchool = false;
   bool isLoadingEditUser = false;
   bool isLoadingEditUserRoles = false;
   bool isLoadingEditUserSchools = false;
+  bool isLoadingGetAllUsers = false;
   bool isLoadingGetRoles = false;
   bool isLoadingGetSchools = false;
+  bool isLoadingGetUsersCreatedBy = false;
+  bool isLoadingGetUsersInSchool = false;
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController nisIdController = TextEditingController();
   final TextEditingController oldPasswordController = TextEditingController();

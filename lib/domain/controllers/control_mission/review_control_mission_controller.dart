@@ -29,8 +29,8 @@ import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart
 class DetailsAndReviewMissionController extends GetxController {
   int controlMissionId = 0;
   String controlMissionName = '';
-  bool isLoadingGetStudentsGrades = false;
   bool isLoadingGetExamRooms = false;
+  bool isLoadingGetStudentsGrades = false;
   bool isLoadingGetStudentsSeatNumbers = false;
   bool isLoadingGetSubjects = false;
   List<ExamRoomResModel> listExamRoom = [];

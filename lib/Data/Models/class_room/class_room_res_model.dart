@@ -3,8 +3,9 @@ import 'dart:convert' as convert;
 class ClassRoomResModel {
   int? active;
 
-  int? columns;
+  int? classNumber;
 
+  int? columns;
   String? createdAt;
   int? createdBy;
   String? floor;
@@ -13,7 +14,6 @@ class ClassRoomResModel {
   String? name;
   List<int>? rows;
   int? schoolsID;
-  int? classNumber;
   String? updatedAt;
   int? updatedBy;
   ClassRoomResModel({

@@ -14,10 +14,12 @@ import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 
 class EditCohortWidget extends GetView<OperationCohortController> {
   final CohortResModel cohort;
+
   const EditCohortWidget({
     super.key,
     required this.cohort,
   });
+
   @override
   Widget build(BuildContext context) {
     TextEditingController editingController =

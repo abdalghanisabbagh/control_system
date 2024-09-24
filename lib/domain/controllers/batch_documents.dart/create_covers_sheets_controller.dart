@@ -26,9 +26,9 @@ class CreateCoversSheetsController extends GetxController {
   bool is2Version = false;
   bool isLoadingGetControlMission = false;
   bool isLoadingGetEducationYear = false;
-  bool isLoadingGrades = false;
   bool isLoadingGetExamMission = false;
   bool isLoadingGetSubject = false;
+  bool isLoadingGrades = false;
   bool isPeriod = false;
   List<ValueItem> optionsControlMission = <ValueItem>[];
   List<ValueItem> optionsEducationYear = <ValueItem>[];

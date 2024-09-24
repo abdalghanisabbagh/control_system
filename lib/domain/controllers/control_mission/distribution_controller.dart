@@ -21,8 +21,8 @@ class DistributionController extends GetxController {
   int controlMissionId = 0;
   String controlMissionName = '';
   int distributedStudents = 0;
-  bool isLoadingDeleteClassRoom = false;
   bool isLoadingAddExamRoom = false;
+  bool isLoadingDeleteClassRoom = false;
   bool isLoadingGetExamRooms = false;
   bool isLoadingGetStageAndClassRoom = false;
   List<ExamRoomResModel> listExamRoom = [];

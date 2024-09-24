@@ -15,15 +15,10 @@ import '../../app/configurations/app_links.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class PrivilegesController extends GetxController {
-  final PageStorageBucket screensPageStorageBucket = PageStorageBucket();
-  final PageStorageKey screensPageStorageKey =
-      const PageStorageKey<String>('screensPageStorageKey');
-  final PageStorageBucket previlegesPageStorageBucket = PageStorageBucket();
-  final PageStorageKey previlegesPageStorageKey =
-      const PageStorageKey<String>('previlegesPageStorageKey');
   final PageStorageBucket actionsPageStorageBucket = PageStorageBucket();
   final PageStorageKey actionsPageStorageKey =
       const PageStorageKey<String>('actionsPageStorageKey');
+
   bool addLoading = false;
   bool allActionsIncluded = false;
   List<ScreenResModel> allScreens = [];
@@ -35,9 +30,17 @@ class PrivilegesController extends GetxController {
   bool getAllLoading = false;
   List<int> includedActions = [];
   String? lastSelectedFrontId;
+  final PageStorageBucket previlegesPageStorageBucket = PageStorageBucket();
+  final PageStorageKey previlegesPageStorageKey =
+      const PageStorageKey<String>('previlegesPageStorageKey');
+
   List<int> removedSreensIds = [];
   List<ScreenResModel> resultFilteredWidgets = [];
   List<RoleResModel> rolesList = [];
+  final PageStorageBucket screensPageStorageBucket = PageStorageBucket();
+  final PageStorageKey screensPageStorageKey =
+      const PageStorageKey<String>('screensPageStorageKey');
+
   final searchRolesController = TextEditingController();
   final searchScreensController = TextEditingController();
   final searchWidgetsController = TextEditingController();
