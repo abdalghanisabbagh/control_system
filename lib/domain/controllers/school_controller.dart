@@ -15,7 +15,7 @@ import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
-import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 import '../services/token_service.dart';
 import 'profile_controller.dart';
 

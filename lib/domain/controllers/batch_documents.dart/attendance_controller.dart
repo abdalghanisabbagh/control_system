@@ -16,7 +16,7 @@ import '../../../Data/Network/tools/dio_factory.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class AttendanceController extends GetxController {
   bool isLoadingGeneratePdf = false;

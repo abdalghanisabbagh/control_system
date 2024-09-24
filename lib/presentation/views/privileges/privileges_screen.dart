@@ -80,7 +80,7 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                         ),
                       ],
                     ),
-                    MytextFormFiled(
+                    MyTextFormFiled(
                       title: 'Search Privileges',
                       controller: controller.searchRolesController,
                       onChanged: (value) {
@@ -193,7 +193,7 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                         ),
                       ],
                     ),
-                    MytextFormFiled(
+                    MyTextFormFiled(
                       title: 'Search Screens By Name Or Front Id',
                       controller: controller.searchScreensController,
                       onChanged: (value) {
@@ -289,7 +289,7 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                         ),
                       ],
                     ),
-                    MytextFormFiled(
+                    MyTextFormFiled(
                       title: 'Search Actions By Name Or Front Id',
                       controller: controller.searchWidgetsController,
                       onChanged: (value) {

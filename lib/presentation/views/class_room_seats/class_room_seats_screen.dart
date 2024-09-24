@@ -9,7 +9,7 @@ import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_back_button.dart';
 import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../resource_manager/ReusableWidget/show_dialogue.dart';
 import '../../resource_manager/validations.dart';
 import 'widgets/render_seat_widget.dart';
 
@@ -59,7 +59,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: MytextFormFiled(
+                                    child: MyTextFormFiled(
                                       myValidation:
                                           Validations.requiredValidator,
                                       controller: classNameController,
@@ -71,7 +71,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                     width: 20,
                                   ),
                                   Expanded(
-                                    child: MytextFormFiled(
+                                    child: MyTextFormFiled(
                                       isNumber: true,
                                       controller: classNumberController,
                                       title: "Class Number",
@@ -88,7 +88,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: MytextFormFiled(
+                                    child: MyTextFormFiled(
                                       myValidation:
                                           Validations.requiredValidator,
                                       controller: floorNameController,
@@ -100,7 +100,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                     width: 20,
                                   ),
                                   Expanded(
-                                    child: MytextFormFiled(
+                                    child: MyTextFormFiled(
                                       myValidation:
                                           Validations.requiredValidator,
                                       isNumber: true,
@@ -114,7 +114,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              MytextFormFiled(
+                              MyTextFormFiled(
                                 myValidation: Validations.requiredValidator,
                                 enableBorderColor: ColorManager.primary,
                                 controller: columnNumber,
@@ -138,14 +138,14 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                             const NeverScrollableScrollPhysics(),
                                         itemCount: controller.numbers,
                                         itemBuilder: (context, index) {
-                                          TextEditingController rowNumper =
+                                          TextEditingController rowNumber =
                                               TextEditingController();
                                           return Column(
                                             children: [
                                               const SizedBox(
                                                 height: 20,
                                               ),
-                                              MytextFormFiled(
+                                              MyTextFormFiled(
                                                 myValidation: Validations
                                                     .requiredValidator,
                                                 onChanged: (value) {
@@ -159,9 +159,9 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                                   }
                                                   return value;
                                                 },
-                                                controller: rowNumper,
+                                                controller: rowNumber,
                                                 title:
-                                                    "'numper of ${index + 1} column'",
+                                                    "'number of ${index + 1} column'",
                                               ),
                                             ],
                                           );
@@ -197,7 +197,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                             ],
                           ),
                         ),
-                        RendarSeats(
+                        RenderSeats(
                           seatsNumbers: const [],
                         ),
                         const SizedBox(

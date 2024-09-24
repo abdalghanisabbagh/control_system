@@ -37,7 +37,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                     children: [
                       SizedBox(
                         width: 450,
-                        child: MytextFormFiled(
+                        child: MyTextFormFiled(
                           title: "User Full Name",
                           controller: userController.fullNameController,
                           myValidation: Validations.requiredValidator,
@@ -45,7 +45,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                       ),
                       SizedBox(
                         width: 450,
-                        child: MytextFormFiled(
+                        child: MyTextFormFiled(
                           title: "Username",
                           controller: userController.usernameController,
                           myValidation: Validations.requiredValidator,
@@ -129,7 +129,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                           : const SizedBox.shrink(),
                       SizedBox(
                         width: 450,
-                        child: MytextFormFiled(
+                        child: MyTextFormFiled(
                           title: "Password",
                           controller: userController.oldPasswordController,
                           myValidation: Validations.requiredValidator,
@@ -150,7 +150,7 @@ class AddNewUserWidget extends GetView<AdminController> {
                       ),
                       SizedBox(
                         width: 450,
-                        child: MytextFormFiled(
+                        child: MyTextFormFiled(
                           title: "Confirm Password",
                           controller: userController.newPasswordController,
                           obscureText: userController.showOldPassord,

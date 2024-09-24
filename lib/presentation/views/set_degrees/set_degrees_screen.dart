@@ -33,7 +33,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
               ),
               Expanded(
                 flex: 1,
-                child: MytextFormFiled(
+                child: MyTextFormFiled(
                   title: 'Student Barcode',
                   controller: controller.barcodeController,
                   focusNode: FocusNode()..requestFocus(),

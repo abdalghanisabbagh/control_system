@@ -76,7 +76,7 @@ class EditClassRoomWidget extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: MytextFormFiled(
+                                  child: MyTextFormFiled(
                                     myValidation: Validations.requiredValidator,
                                     controller: classNameController
                                       ..text = classRoom.name ?? '',
@@ -88,7 +88,7 @@ class EditClassRoomWidget extends StatelessWidget {
                                   width: 20,
                                 ),
                                 Expanded(
-                                  child: MytextFormFiled(
+                                  child: MyTextFormFiled(
                                     controller: buildingNameController,
                                     title: "Building",
                                     enableBorderColor: ColorManager.primary,
@@ -102,7 +102,7 @@ class EditClassRoomWidget extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: MytextFormFiled(
+                                  child: MyTextFormFiled(
                                     myValidation: Validations.requiredValidator,
                                     controller: floorNameController
                                       ..text = classRoom.floor ?? '',
@@ -114,7 +114,7 @@ class EditClassRoomWidget extends StatelessWidget {
                                   width: 20,
                                 ),
                                 Expanded(
-                                  child: MytextFormFiled(
+                                  child: MyTextFormFiled(
                                     myValidation: Validations.requiredValidator,
                                     isNumber: true,
                                     enableBorderColor: ColorManager.primary,
@@ -130,7 +130,7 @@ class EditClassRoomWidget extends StatelessWidget {
                             ),
                             GetBuilder<ClassRoomController>(
                               builder: (controller) {
-                                return MytextFormFiled(
+                                return MyTextFormFiled(
                                   myValidation: Validations.requiredValidator,
                                   enableBorderColor: ColorManager.primary,
                                   controller: columnNumper
@@ -163,7 +163,7 @@ class EditClassRoomWidget extends StatelessWidget {
                                             TextEditingController();
                                         return Column(
                                           children: [
-                                            MytextFormFiled(
+                                            MyTextFormFiled(
                                               myValidation:
                                                   Validations.requiredValidator,
                                               isNumber: true,
@@ -224,7 +224,7 @@ class EditClassRoomWidget extends StatelessWidget {
                             const SizedBox(
                               height: 20,
                             ),
-                            RendarSeats(
+                            RenderSeats(
                               seatsNumbers: const [],
                             ),
                             const SizedBox(

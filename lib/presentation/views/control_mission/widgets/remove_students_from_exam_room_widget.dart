@@ -9,7 +9,7 @@ import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_remove_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import '../../../resource_manager/validations.dart';
 
 class RemoveStudentsFromExamRoomWidget
@@ -71,7 +71,7 @@ class RemoveStudentsFromExamRoomWidget
                           );
                         },
                       ),
-                      MytextFormFiled(
+                      MyTextFormFiled(
                         controller: controller.numberOfStudentsController,
                         myValidation: Validations.requiredValidator,
                         title: "Enter Number of Students",

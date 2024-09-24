@@ -14,7 +14,7 @@ import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../app/extensions/pluto_row_extension.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class AddNewStudentsToControlMissionController extends GetxController {
   int controlMissionId = Hive.box('ControlMission').get('Id') ?? 0;

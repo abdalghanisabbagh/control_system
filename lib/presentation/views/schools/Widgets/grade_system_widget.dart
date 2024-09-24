@@ -7,7 +7,7 @@ import '../../../../domain/controllers/profile_controller.dart';
 import '../../../../domain/controllers/school_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import 'add_grade_to_school.dart';
 
 class GradeSystemWidget extends GetView<SchoolController> {

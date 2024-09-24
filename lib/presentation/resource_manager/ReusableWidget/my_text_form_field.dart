@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class MytextFormFiled extends StatelessWidget {
+class MyTextFormFiled extends StatelessWidget {
   final String? Function(String? newValue)? myValidation;
 
   final String? Function(String? value)? onChanged;
@@ -22,7 +22,7 @@ class MytextFormFiled extends StatelessWidget {
   final Widget? suffixIcon;
   final List<TextInputFormatter>? textInputs;
   final String? title;
-  const MytextFormFiled({
+  const MyTextFormFiled({
     super.key,
     this.title,
     this.controller,

@@ -105,7 +105,7 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                         );
                       },
                     ),
-                    MytextFormFiled(
+                    MyTextFormFiled(
                         controller: newRoomName,
                         title: "Room Name",
                         myValidation: Validations.requiredValidator),

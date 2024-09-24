@@ -37,7 +37,7 @@ class AddNewPrivilegesWidget extends GetView<PrivilegesController> {
                 const SizedBox(
                   height: 15,
                 ),
-                MytextFormFiled(
+                MyTextFormFiled(
                   myValidation: Validations.requiredValidator,
                   controller: nameController,
                   title: "Role Name",

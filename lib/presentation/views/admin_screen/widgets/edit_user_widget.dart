@@ -180,7 +180,7 @@ class EditUserWidget extends GetView<AdminController> {
   Widget _buildNewPasswordField() {
     return SizedBox(
       width: 450,
-      child: MytextFormFiled(
+      child: MyTextFormFiled(
         title: "New Password",
         controller: controller.newPasswordController,
         obscureText: controller.showNewPassword,
@@ -214,7 +214,7 @@ class EditUserWidget extends GetView<AdminController> {
   Widget _buildPasswordField() {
     return SizedBox(
       width: 450,
-      child: MytextFormFiled(
+      child: MyTextFormFiled(
         title: "Old Password",
         controller: controller.oldPasswordController,
         obscureText: controller.showOldPassord,
@@ -245,7 +245,7 @@ class EditUserWidget extends GetView<AdminController> {
   Widget _buildTextField(String title, TextEditingController controller) {
     return SizedBox(
       width: 450,
-      child: MytextFormFiled(
+      child: MyTextFormFiled(
         title: title,
         controller: controller,
         myValidation: Validations.requiredValidator,

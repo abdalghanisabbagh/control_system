@@ -8,7 +8,7 @@ import '../../../../domain/controllers/control_mission/review_control_mission_co
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 
 // ignore: must_be_immutable
 class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {

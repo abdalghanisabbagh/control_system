@@ -33,12 +33,12 @@ class AddNewScreenWidget extends StatelessWidget {
               fontSize: 30,
             ),
           ),
-          MytextFormFiled(
+          MyTextFormFiled(
             myValidation: Validations.requiredValidator,
             controller: nameController,
             title: "Screen Name",
           ),
-          MytextFormFiled(
+          MyTextFormFiled(
             myValidation: Validations.requiredValidator,
             controller: screenIdController,
             title: "Screen Id",

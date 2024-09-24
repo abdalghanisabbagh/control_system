@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import 'add_single_student_widget.dart';
 
 class HeaderStudentWidget extends GetView<StudentController> {

@@ -20,7 +20,7 @@ import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../app/extensions/convert_date_string_to_iso8601_string_extension.dart';
 import '../../../app/extensions/pluto_row_extension.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class CreateControlMissionController extends GetxController {
   String? batchName;

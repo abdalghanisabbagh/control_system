@@ -181,42 +181,42 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                           ],
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: blbIdController,
                           title: "BLB ID",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: fnameController,
                           title: "First Name",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: mnameController,
                           title: "Middle Name",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: lnameController,
                           title: "Last Name",
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: religionController,
                           title: "Religion",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: citizenshipController,
                           title: "Citizenship",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: sLangController,
                           title: "Second Language",
                           myValidation: Validations.requiredValidator,

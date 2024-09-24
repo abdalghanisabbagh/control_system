@@ -11,7 +11,7 @@ import '../../../domain/controllers/subject/subject_controller.dart';
 import '../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../resource_manager/ReusableWidget/show_dialogue.dart';
 
 class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
   final CohortResModel item;

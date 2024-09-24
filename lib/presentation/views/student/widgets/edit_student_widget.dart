@@ -141,7 +141,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   const SizedBox(height: 10),
 
                   // Other Fields
-                  MytextFormFiled(
+                  MyTextFormFiled(
                     controller: fnameController,
                     title: "First Name",
                     myValidation: Validations.requiredValidator,
@@ -150,7 +150,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                       return null;
                     },
                   ),
-                  MytextFormFiled(
+                  MyTextFormFiled(
                     controller: mnameController,
                     title: "Middle Name",
                     myValidation: Validations.requiredValidator,
@@ -159,7 +159,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                       return null;
                     },
                   ),
-                  MytextFormFiled(
+                  MyTextFormFiled(
                     controller: lnameController,
                     title: "Last Name",
                     onChanged: (value) {
@@ -167,7 +167,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                       return null;
                     },
                   ),
-                  MytextFormFiled(
+                  MyTextFormFiled(
                     controller: religionController,
                     title: "Religion",
                     myValidation: Validations.requiredValidator,
@@ -183,7 +183,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   //     widget.studentResModel.citizenship! = value;
                   //   },
                   // ),
-                  MytextFormFiled(
+                  MyTextFormFiled(
                     controller: sLangController,
                     title: "Second Language",
                     myValidation: Validations.requiredValidator,
