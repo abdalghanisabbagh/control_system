@@ -33,6 +33,7 @@ class ClassRoomController extends GetxController {
     required String floorName,
     required String maxCapacity,
     required int columns,
+    required int classNumber,
     required List<int> rows,
   }) async {
     isLoadingAddClassRoom = true;
@@ -51,6 +52,7 @@ class ClassRoomController extends GetxController {
         "Rows": rows.toString(),
         "Columns": columns,
         "Schools_ID": Hive.box('School').get('Id'),
+        "Class_Number": classNumber,
         "Created_By": _userProfile?.iD,
       },
     );

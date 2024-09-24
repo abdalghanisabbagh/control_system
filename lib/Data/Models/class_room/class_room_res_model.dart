@@ -13,6 +13,7 @@ class ClassRoomResModel {
   String? name;
   List<int>? rows;
   int? schoolsID;
+  int? classNumber;
   String? updatedAt;
   int? updatedBy;
   ClassRoomResModel({
@@ -24,6 +25,7 @@ class ClassRoomResModel {
     this.rows,
     this.columns,
     this.createdBy,
+    this.classNumber,
     this.createdAt,
     this.updatedBy,
     this.updatedAt,
@@ -44,6 +46,7 @@ class ClassRoomResModel {
     updatedBy = json['Updated_By'];
     updatedAt = json['Updated_At'];
     active = json['Active'];
+    classNumber = json['Class_Number'];
   }
 
   Map<String, dynamic> toJson() {
@@ -60,6 +63,7 @@ class ClassRoomResModel {
     data['Updated_By'] = updatedBy;
     data['Updated_At'] = updatedAt;
     data['Active'] = active;
+    data['Class_Number'] = classNumber;
     return data;
   }
 }

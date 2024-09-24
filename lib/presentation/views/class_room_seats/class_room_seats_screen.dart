@@ -16,7 +16,7 @@ import 'widgets/render_seat_widget.dart';
 class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
   final TextEditingController classNameController = TextEditingController();
 
-  final TextEditingController classNumber = TextEditingController();
+  final TextEditingController classNumberController = TextEditingController();
   final TextEditingController columnNumber = TextEditingController(text: "0");
   final TextEditingController floorNameController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
@@ -72,9 +72,12 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                   ),
                                   Expanded(
                                     child: MytextFormFiled(
-                                      controller: classNumber,
+                                      isNumber: true,
+                                      controller: classNumberController,
                                       title: "Class Number",
                                       enableBorderColor: ColorManager.primary,
+                                      myValidation:
+                                          Validations.requiredValidator,
                                     ),
                                   ),
                                 ],
@@ -202,40 +205,41 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                         ),
                         InkWell(
                           onTap: () async {
-                            int maxCapacity =
-                                int.parse(maxCapacityController.text);
-                            int renderCapacity = controller.classSeats
-                                .fold(0, (int p, c) => p + c);
-                            if (renderCapacity == maxCapacity) {
-                              _formKey.currentState!.validate()
-                                  ? await controller
-                                      .addNewClass(
-                                      name: classNameController.text,
-                                      maxCapacity: maxCapacity.toString(),
-                                      floorName: floorNameController.text,
-                                      rows: controller.classSeats,
-                                      columns:
-                                          int.tryParse(columnNumber.text) ?? 0,
-                                    )
-                                      .then(
-                                      (value) {
-                                        value
-                                            ? {
-                                                controller.numbers = 0,
-                                                controller.classSeats.clear(),
-                                                classNameController.clear(),
-                                                floorNameController.clear(),
-                                                maxCapacityController.clear(),
-                                                columnNumber.clear(),
-                                                classNumber.clear(),
-                                                controller.update(),
-                                                window.history.go(-1),
-                                              }
-                                            : null;
-                                      },
-                                    )
-                                  : null;
-                              controller.numbers = 0;
+                            if (_formKey.currentState!.validate()) {
+                              int maxCapacity =
+                                  int.parse(maxCapacityController.text);
+                              int renderCapacity = controller.classSeats
+                                  .fold(0, (int p, c) => p + c);
+                              if (renderCapacity == maxCapacity) {
+                                await controller
+                                    .addNewClass(
+                                  name: classNameController.text,
+                                  maxCapacity: maxCapacity.toString(),
+                                  floorName: floorNameController.text,
+                                  rows: controller.classSeats,
+                                  classNumber:
+                                      int.parse(classNumberController.text),
+                                  columns: int.tryParse(columnNumber.text) ?? 0,
+                                )
+                                    .then(
+                                  (value) {
+                                    value
+                                        ? {
+                                            controller.numbers = 0,
+                                            controller.classSeats.clear(),
+                                            classNameController.clear(),
+                                            floorNameController.clear(),
+                                            maxCapacityController.clear(),
+                                            columnNumber.clear(),
+                                            classNumberController.clear(),
+                                            controller.update(),
+                                            window.history.go(-1),
+                                          }
+                                        : null;
+                                  },
+                                );
+                                controller.numbers = 0;
+                              }
                             } else {
                               MyAwesomeDialogue(
                                 title: "Class Create",
