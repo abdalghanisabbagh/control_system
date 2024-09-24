@@ -180,7 +180,7 @@ class SelectSchoolForm extends GetView<ProfileController> {
                                               );
                                             },
                                           ),
-                                        ),
+                                        ).paddingOnly(right: 20),
                                       ),
                               );
                       },
