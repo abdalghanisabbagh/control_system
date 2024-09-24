@@ -114,6 +114,8 @@ class GradeSystemWidget extends GetView<SchoolController> {
                                     child: InkWell(
                                       onTap: () {},
                                       child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 10),
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
