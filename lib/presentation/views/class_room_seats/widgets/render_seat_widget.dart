@@ -7,10 +7,10 @@ import '../../../../Data/Models/student_seat/student_seat_res_model.dart';
 import '../../../../domain/controllers/class_room_controller.dart';
 
 // ignore: must_be_immutable
-class RendarSeats extends StatelessWidget {
+class RenderSeats extends StatelessWidget {
   List<StudentSeatNumberResModel> seatsNumbers = [];
 
-  RendarSeats({super.key, required this.seatsNumbers});
+  RenderSeats({super.key, required this.seatsNumbers});
 
   @override
   Widget build(BuildContext context) {

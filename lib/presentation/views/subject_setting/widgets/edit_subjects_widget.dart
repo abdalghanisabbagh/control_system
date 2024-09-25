@@ -8,7 +8,7 @@ import '../../../../domain/controllers/subject/edit_subject_controller.dart';
 import '../../../../domain/controllers/subject/subject_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 
 class EditSubject extends GetView<EditSubjectsController> {
   final SubjectResModel subjectResModel;

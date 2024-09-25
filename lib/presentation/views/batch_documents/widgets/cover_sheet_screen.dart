@@ -203,7 +203,7 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
         ),
         GetBuilder<CoversSheetsController>(
           builder: (controller) {
-            if (controller.isLodingGetExamMission) {
+            if (controller.isLoadingGetExamMission) {
               return Expanded(
                 child: Center(
                   child: LoadingIndicators.getLoadingIndicator(),

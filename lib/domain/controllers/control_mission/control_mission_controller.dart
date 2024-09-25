@@ -12,7 +12,7 @@ import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class ControlMissionController extends GetxController {
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
@@ -21,8 +21,8 @@ class ControlMissionController extends GetxController {
       <ControlMissionResModel>[];
 
   bool isLoading = false;
-  bool isLodingGetClassesRooms = false;
-  bool isLodingGetEducationYears = false;
+  bool isLoadingGetClassesRooms = false;
+  bool isLoadingGetEducationYears = false;
   List<ValueItem> optionsEducationYear = <ValueItem>[];
   String searchQuery = '';
   List<ValueItem>? selectedEducationYear;
@@ -63,11 +63,11 @@ class ControlMissionController extends GetxController {
   }
 
   Future<void> getEducationYears() async {
-    isLodingGetEducationYears = true;
+    isLoadingGetEducationYears = true;
     update();
 
     final response = await ResponseHandler<EducationsYearsModel>().getResponse(
-      path: EducationYearsLinks.educationyear,
+      path: EducationYearsLinks.educationYear,
       converter: EducationsYearsModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -91,7 +91,7 @@ class ControlMissionController extends GetxController {
       },
     );
 
-    isLodingGetEducationYears = false;
+    isLoadingGetEducationYears = false;
     update();
   }
 

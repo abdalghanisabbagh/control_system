@@ -12,9 +12,9 @@ import '../../../../domain/controllers/control_mission/create_control_mission.da
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../../resource_manager/ReusableWidget/my_back_button.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import '../../../resource_manager/validations.dart';
 
 class CreateMissionScreen extends GetView<CreateControlMissionController> {
@@ -195,7 +195,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                   );
                 },
               ),
-              MytextFormFiled(
+              MyTextFormFiled(
                 myValidation: Validations.requiredValidator,
                 controller: missionNameController
                   ..text = controller.batchName ?? "",

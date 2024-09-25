@@ -133,7 +133,7 @@ class SeatingScreen extends GetView<SeatNumberController> {
         ),
         GetBuilder<SeatNumberController>(
           builder: (_) {
-            if (controller.isLodingGetExamMission) {
+            if (controller.isLoadingGetExamMission) {
               return Expanded(
                 child: Center(
                   child: LoadingIndicators.getLoadingIndicator(),

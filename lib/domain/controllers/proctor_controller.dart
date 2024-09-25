@@ -24,7 +24,7 @@ import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
 import '../../app/extensions/date_time_extension.dart';
-import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 import 'profile_controller.dart';
 
 class ProctorController extends GetxController {
@@ -262,7 +262,7 @@ class ProctorController extends GetxController {
 
   Future<void> getEducationYears() async {
     final response = await ResponseHandler<EducationsYearsModel>().getResponse(
-      path: EducationYearsLinks.educationyear,
+      path: EducationYearsLinks.educationYear,
       converter: EducationsYearsModel.fromJson,
       type: ReqTypeEnum.GET,
     );

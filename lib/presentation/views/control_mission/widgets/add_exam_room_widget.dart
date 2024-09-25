@@ -9,7 +9,7 @@ import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/validations.dart';
 
@@ -30,7 +30,7 @@ class AddExamRoomWidget extends GetView<DistributionController> {
         child: Form(
           key: formKey,
           child: GetBuilder<DistributionController>(builder: (_) {
-            return controller.isLodingGetStageAndClassRoom
+            return controller.isLoadingGetStageAndClassRoom
                 ? Center(
                     child: LoadingIndicators.getLoadingIndicator(),
                   )
@@ -105,14 +105,14 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                         );
                       },
                     ),
-                    MytextFormFiled(
+                    MyTextFormFiled(
                         controller: newRoomName,
                         title: "Room Name",
                         myValidation: Validations.requiredValidator),
                     const SizedBox(
                       height: 10,
                     ),
-                    controller.isLodingAddExamRoom
+                    controller.isLoadingAddExamRoom
                         ? Center(
                             child: LoadingIndicators.getLoadingIndicator(),
                           )

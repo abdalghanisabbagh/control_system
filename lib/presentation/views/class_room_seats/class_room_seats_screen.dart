@@ -9,14 +9,14 @@ import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../../resource_manager/ReusableWidget/my_back_button.dart';
 import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
-import '../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../resource_manager/ReusableWidget/show_dialogue.dart';
 import '../../resource_manager/validations.dart';
 import 'widgets/render_seat_widget.dart';
 
 class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
   final TextEditingController classNameController = TextEditingController();
 
-  final TextEditingController classNumber = TextEditingController();
+  final TextEditingController classNumberController = TextEditingController();
   final TextEditingController columnNumber = TextEditingController(text: "0");
   final TextEditingController floorNameController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
@@ -59,7 +59,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: MytextFormFiled(
+                                    child: MyTextFormFiled(
                                       myValidation:
                                           Validations.requiredValidator,
                                       controller: classNameController,
@@ -71,10 +71,13 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                     width: 20,
                                   ),
                                   Expanded(
-                                    child: MytextFormFiled(
-                                      controller: classNumber,
+                                    child: MyTextFormFiled(
+                                      isNumber: true,
+                                      controller: classNumberController,
                                       title: "Class Number",
                                       enableBorderColor: ColorManager.primary,
+                                      myValidation:
+                                          Validations.requiredValidator,
                                     ),
                                   ),
                                 ],
@@ -85,7 +88,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: MytextFormFiled(
+                                    child: MyTextFormFiled(
                                       myValidation:
                                           Validations.requiredValidator,
                                       controller: floorNameController,
@@ -97,7 +100,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                     width: 20,
                                   ),
                                   Expanded(
-                                    child: MytextFormFiled(
+                                    child: MyTextFormFiled(
                                       myValidation:
                                           Validations.requiredValidator,
                                       isNumber: true,
@@ -111,7 +114,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              MytextFormFiled(
+                              MyTextFormFiled(
                                 myValidation: Validations.requiredValidator,
                                 enableBorderColor: ColorManager.primary,
                                 controller: columnNumber,
@@ -135,14 +138,14 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                             const NeverScrollableScrollPhysics(),
                                         itemCount: controller.numbers,
                                         itemBuilder: (context, index) {
-                                          TextEditingController rowNumper =
+                                          TextEditingController rowNumber =
                                               TextEditingController();
                                           return Column(
                                             children: [
                                               const SizedBox(
                                                 height: 20,
                                               ),
-                                              MytextFormFiled(
+                                              MyTextFormFiled(
                                                 myValidation: Validations
                                                     .requiredValidator,
                                                 onChanged: (value) {
@@ -156,9 +159,9 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                                   }
                                                   return value;
                                                 },
-                                                controller: rowNumper,
+                                                controller: rowNumber,
                                                 title:
-                                                    "'numper of ${index + 1} column'",
+                                                    "'number of ${index + 1} column'",
                                               ),
                                             ],
                                           );
@@ -194,7 +197,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                             ],
                           ),
                         ),
-                        RendarSeats(
+                        RenderSeats(
                           seatsNumbers: const [],
                         ),
                         const SizedBox(
@@ -202,40 +205,41 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                         ),
                         InkWell(
                           onTap: () async {
-                            int maxCapacity =
-                                int.parse(maxCapacityController.text);
-                            int renderCapacity = controller.classSeats
-                                .fold(0, (int p, c) => p + c);
-                            if (renderCapacity == maxCapacity) {
-                              _formKey.currentState!.validate()
-                                  ? await controller
-                                      .addNewClass(
-                                      name: classNameController.text,
-                                      maxCapacity: maxCapacity.toString(),
-                                      floorName: floorNameController.text,
-                                      rows: controller.classSeats,
-                                      columns:
-                                          int.tryParse(columnNumber.text) ?? 0,
-                                    )
-                                      .then(
-                                      (value) {
-                                        value
-                                            ? {
-                                                controller.numbers = 0,
-                                                controller.classSeats.clear(),
-                                                classNameController.clear(),
-                                                floorNameController.clear(),
-                                                maxCapacityController.clear(),
-                                                columnNumber.clear(),
-                                                classNumber.clear(),
-                                                controller.update(),
-                                                window.history.go(-1),
-                                              }
-                                            : null;
-                                      },
-                                    )
-                                  : null;
-                              controller.numbers = 0;
+                            if (_formKey.currentState!.validate()) {
+                              int maxCapacity =
+                                  int.parse(maxCapacityController.text);
+                              int renderCapacity = controller.classSeats
+                                  .fold(0, (int p, c) => p + c);
+                              if (renderCapacity == maxCapacity) {
+                                await controller
+                                    .addNewClass(
+                                  name: classNameController.text,
+                                  maxCapacity: maxCapacity.toString(),
+                                  floorName: floorNameController.text,
+                                  rows: controller.classSeats,
+                                  classNumber:
+                                      int.parse(classNumberController.text),
+                                  columns: int.tryParse(columnNumber.text) ?? 0,
+                                )
+                                    .then(
+                                  (value) {
+                                    value
+                                        ? {
+                                            controller.numbers = 0,
+                                            controller.classSeats.clear(),
+                                            classNameController.clear(),
+                                            floorNameController.clear(),
+                                            maxCapacityController.clear(),
+                                            columnNumber.clear(),
+                                            classNumberController.clear(),
+                                            controller.update(),
+                                            window.history.go(-1),
+                                          }
+                                        : null;
+                                  },
+                                );
+                                controller.numbers = 0;
+                              }
                             } else {
                               MyAwesomeDialogue(
                                 title: "Class Create",

@@ -8,12 +8,13 @@ import '../../Data/Models/user/login_response/user_profile_model.dart';
 import '../../Data/Network/response_handler.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
-import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class ProfileController extends GetxController {
-  bool isLodingEditUser = false;
-  bool showPassword = true;
+  bool isLoadingEditUser = false;
   bool showOldPassword = true;
+  bool showPassword = true;
+
   UserProfileModel? _cachedUserProfile;
 
   UserProfileModel? get cachedUserProfile =>
@@ -34,7 +35,7 @@ class ProfileController extends GetxController {
   }
 
   Future<bool> editUser(Map<String, dynamic> data, int id) async {
-    isLodingEditUser = true;
+    isLoadingEditUser = true;
     update();
 
     final response = await ResponseHandler<void>().getResponse(
@@ -43,7 +44,7 @@ class ProfileController extends GetxController {
         type: ReqTypeEnum.PATCH,
         body: data);
 
-    isLodingEditUser = false;
+    isLoadingEditUser = false;
     update();
 
     return response.fold(
@@ -53,12 +54,12 @@ class ProfileController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLodingEditUser = false;
+        isLoadingEditUser = false;
         update();
         return false;
       },
       (r) {
-        isLodingEditUser = false;
+        isLoadingEditUser = false;
         update();
         return true;
       },

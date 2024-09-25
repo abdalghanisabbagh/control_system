@@ -26,7 +26,7 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
             const SizedBox(height: 20),
             GetBuilder<ControlMissionController>(
               builder: (_) {
-                if (controller.isLodingGetEducationYears) {
+                if (controller.isLoadingGetEducationYears) {
                   return Center(
                     child: LoadingIndicators.getLoadingIndicator(),
                   );
@@ -54,7 +54,7 @@ class ControlMissionScreen extends GetView<ControlMissionController> {
                     controller.controlMissionList.isNotEmpty) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: MytextFormFiled(
+                    child: MyTextFormFiled(
                       title: 'Search by Name',
                       onChanged: (query) {
                         controller.updateSearchQuery(query ?? '');

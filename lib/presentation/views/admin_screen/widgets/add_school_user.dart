@@ -7,7 +7,7 @@ import '../../../../domain/controllers/controllers.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_edit_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 
 // ignore: must_be_immutable
 class AddSchoolUser extends GetView<AdminController> {
@@ -37,7 +37,7 @@ class AddSchoolUser extends GetView<AdminController> {
             const Divider(),
             const SizedBox(height: 20),
             GetBuilder<AdminController>(builder: (_) {
-              if (controller.isloadingGetSchools) {
+              if (controller.isLoadingGetSchools) {
                 return Expanded(
                   child: Center(
                     child: LoadingIndicators.getLoadingIndicator(),
@@ -85,7 +85,7 @@ class AddSchoolUser extends GetView<AdminController> {
               );
             }),
             GetBuilder<AdminController>(builder: (_) {
-              if (controller.isLodingEditUserSchools) {
+              if (controller.isLoadingEditUserSchools) {
                 return Center(
                   child: SizedBox(
                     width: 50,

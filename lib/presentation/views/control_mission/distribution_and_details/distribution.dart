@@ -12,8 +12,8 @@ import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 import '../widgets/add_exam_room_widget.dart';
 
@@ -113,7 +113,7 @@ class DistributionScreen extends GetView<DistributionController> {
             Expanded(
               child: GetBuilder<DistributionController>(
                 id: 'getExamRoomByControlMissionId',
-                builder: (_) => controller.isLodingGetExamRooms
+                builder: (_) => controller.isLoadingGetExamRooms
                     ? Center(
                         child: LoadingIndicators.getLoadingIndicator(),
                       )

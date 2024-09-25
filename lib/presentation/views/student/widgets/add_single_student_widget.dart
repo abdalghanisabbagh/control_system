@@ -7,7 +7,7 @@ import 'package:multi_dropdown/models/value_item.dart';
 import '../../../../domain/controllers/students_controllers/add_new_student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/validations.dart';
 
@@ -181,42 +181,42 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                           ],
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: blbIdController,
                           title: "BLB ID",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: fnameController,
                           title: "First Name",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: mnameController,
                           title: "Middle Name",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: lnameController,
                           title: "Last Name",
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: religionController,
                           title: "Religion",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: citizenshipController,
                           title: "Citizenship",
                           myValidation: Validations.requiredValidator,
                         ),
 
-                        MytextFormFiled(
+                        MyTextFormFiled(
                           controller: sLangController,
                           title: "Second Language",
                           myValidation: Validations.requiredValidator,
@@ -226,7 +226,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                           height: 20,
                         ),
 
-                        controller.isLodingAddStudent
+                        controller.isLoadingAddStudent
                             ? LoadingIndicators.getLoadingIndicator()
                             : InkWell(
                                 onTap: () {
@@ -237,7 +237,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                           null) {
                                     controller
                                         .addNewStudent(
-                                      blubID: int.parse(blbIdController.text),
+                                      blbID: int.parse(blbIdController.text),
                                       cohortId:
                                           controller.selectedItemCohort!.value,
                                       gradesId:

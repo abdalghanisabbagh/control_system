@@ -6,7 +6,7 @@ import '../../../../domain/controllers/privileges_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/validations.dart';
 
@@ -37,7 +37,7 @@ class AddNewPrivilegesWidget extends GetView<PrivilegesController> {
                 const SizedBox(
                   height: 15,
                 ),
-                MytextFormFiled(
+                MyTextFormFiled(
                   myValidation: Validations.requiredValidator,
                   controller: nameController,
                   title: "Role Name",

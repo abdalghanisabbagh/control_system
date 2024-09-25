@@ -16,7 +16,7 @@ import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class CreateCoversSheetsController extends GetxController {
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
@@ -26,9 +26,9 @@ class CreateCoversSheetsController extends GetxController {
   bool is2Version = false;
   bool isLoadingGetControlMission = false;
   bool isLoadingGetEducationYear = false;
+  bool isLoadingGetExamMission = false;
+  bool isLoadingGetSubject = false;
   bool isLoadingGrades = false;
-  bool isLodingGetExamMission = false;
-  bool isLodingGetSubject = false;
   bool isPeriod = false;
   List<ValueItem> optionsControlMission = <ValueItem>[];
   List<ValueItem> optionsEducationYear = <ValueItem>[];
@@ -59,7 +59,7 @@ class CreateCoversSheetsController extends GetxController {
   List<SubjectResModel> subjectsList = <SubjectResModel>[];
 
   Future<void> getAllSubjects() async {
-    isLodingGetSubject = true;
+    isLoadingGetSubject = true;
 
     update();
     ResponseHandler<SubjectsResModel> responseHandler = ResponseHandler();
@@ -77,7 +77,7 @@ class CreateCoversSheetsController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        isLodingGetSubject = false;
+        isLoadingGetSubject = false;
         update();
       },
       (r) {
@@ -91,7 +91,7 @@ class CreateCoversSheetsController extends GetxController {
           ),
         );
 
-        isLodingGetSubject = false;
+        isLoadingGetSubject = false;
         update();
       },
     );
@@ -136,13 +136,13 @@ class CreateCoversSheetsController extends GetxController {
     update();
   }
 
-  Future<void> geteducationyear() async {
+  Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
     ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
     Either<Failure, EducationsYearsModel> response =
         await responseHandler.getResponse(
-      path: EducationYearsLinks.educationyear,
+      path: EducationYearsLinks.educationYear,
       converter: EducationsYearsModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -178,10 +178,10 @@ class CreateCoversSheetsController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }, (result) {
@@ -203,7 +203,7 @@ class CreateCoversSheetsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    geteducationyear();
+    getEducationYear();
     getGradesBySchoolId();
     getAllSubjects();
   }

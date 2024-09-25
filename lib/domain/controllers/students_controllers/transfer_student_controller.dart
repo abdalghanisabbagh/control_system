@@ -12,8 +12,8 @@ import '../../../Data/Network/response_handler.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
-import '../../../presentation/resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/my_snack_bar.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 import '../controllers.dart';
 
 class TransferStudentController extends GetxController {

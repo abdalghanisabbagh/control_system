@@ -3,6 +3,7 @@ class AppLinks {
   static const baseUrlDev = 'http://localhost:3333/';
   static const baseUrlProd =
       'https://control-2025-490607372730.us-central1.run.app/';
+
   static const baseUrlStaging =
       'https://staging-control-2025-490607372730.us-central1.run.app/';
 }
@@ -34,7 +35,7 @@ class ControlMissionLinks {
 }
 
 class EducationYearsLinks {
-  static const educationyear = 'education-year';
+  static const educationYear = 'education-year';
 }
 
 class ExamMissionLinks {
@@ -54,7 +55,7 @@ class ExamRoomLinks {
 class GeneratePdfLinks {
   static const generatePdf = 'generate-pdf';
   static const generatePdfAmCover = '$generatePdf/am-cover';
-  static const generatePdfAttendence = '$generatePdf/attendance';
+  static const generatePdfAttendance = '$generatePdf/attendance';
   static const generatePdfBrCover = '$generatePdf/br-cover';
   static const generatePdfIBCover = '$generatePdf/IB-cover';
   static const generatePdfSeat = '$generatePdf/seats';
@@ -92,7 +93,7 @@ class StudentsLinks {
   static const studentMany = '$student/many';
   static const studentSchool = '$student/school';
   static const studentSeatNumberActive = '$studentSeatNumbers/activate';
-  static const studentSeatNumberDeactive = '$studentSeatNumbers/deactivate';
+  static const studentSeatNumberDeActive = '$studentSeatNumbers/deactivate';
   static const studentSeatNumbers = 'student-seat-numbers';
   static const studentSeatNumbersControlMission =
       '$studentSeatNumbers/control-mission';
@@ -104,7 +105,7 @@ class StudentsLinks {
 }
 
 class SubjectsLinks {
-  static const deleteSchoolTypeinSubjects = '$subjects/remove-school-type';
+  static const deleteSchoolTypeInSubjects = '$subjects/remove-school-type';
   static const subject = 'subject';
   static const subjects = 'subjects';
   static const subjectsBySchoolType = '$subjects/school-type/';

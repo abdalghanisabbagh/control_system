@@ -16,7 +16,7 @@ import '../../../Data/Network/tools/dio_factory.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class AttendanceController extends GetxController {
   bool isLoadingGeneratePdf = false;
@@ -38,7 +38,7 @@ class AttendanceController extends GetxController {
     var dio = DioFactory().getDio();
 
     var response = await dio.get<List<int>>(
-      '${GeneratePdfLinks.generatePdfAttendence}?roomid=$roomId',
+      '${GeneratePdfLinks.generatePdfAttendance}?roomid=$roomId',
       options: Options(
         responseType: ResponseType.bytes,
       ),
@@ -50,7 +50,7 @@ class AttendanceController extends GetxController {
         final blobUrl = html.Url.createObjectUrlFromBlob(blob);
 
         html.AnchorElement(href: blobUrl)
-          ..setAttribute('download', 'attendence.pdf')
+          ..setAttribute('download', 'attendance.pdf')
           ..click();
 
         html.Url.revokeObjectUrl(blobUrl);
@@ -136,13 +136,13 @@ class AttendanceController extends GetxController {
     update();
   }
 
-  Future<void> geteducationyear() async {
+  Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
     ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
     Either<Failure, EducationsYearsModel> response =
         await responseHandler.getResponse(
-      path: EducationYearsLinks.educationyear,
+      path: EducationYearsLinks.educationYear,
       converter: EducationsYearsModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -168,7 +168,7 @@ class AttendanceController extends GetxController {
 
   @override
   void onInit() {
-    geteducationyear();
+    getEducationYear();
     super.onInit();
   }
 

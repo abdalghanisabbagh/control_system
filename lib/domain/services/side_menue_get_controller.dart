@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../Data/Models/app_menue_item_model.dart';
-import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 import '../../presentation/resource_manager/routes/index.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/profile_controller.dart';

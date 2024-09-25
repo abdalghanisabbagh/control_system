@@ -12,7 +12,7 @@ import '../../Data/Network/response_handler.dart';
 import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
-import '../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 import 'profile_controller.dart';
 
 class ClassRoomController extends GetxController {
@@ -33,6 +33,7 @@ class ClassRoomController extends GetxController {
     required String floorName,
     required String maxCapacity,
     required int columns,
+    required int classNumber,
     required List<int> rows,
   }) async {
     isLoadingAddClassRoom = true;
@@ -51,6 +52,7 @@ class ClassRoomController extends GetxController {
         "Rows": rows.toString(),
         "Columns": columns,
         "Schools_ID": Hive.box('School').get('Id'),
+        "Class_Number": classNumber,
         "Created_By": _userProfile?.iD,
       },
     );
@@ -112,6 +114,7 @@ class ClassRoomController extends GetxController {
     required String floorName,
     required String maxCapacity,
     required int columns,
+    required int classNumber,
     required List<int> rows,
   }) async {
     bool classRoomHasBeenEdited = false;
@@ -129,6 +132,7 @@ class ClassRoomController extends GetxController {
         "Floor": floorName,
         "Rows": rows.toString(),
         "Columns": columns,
+        "Class_Number": classNumber,
         "Schools_ID": Hive.box('School').get('Id'),
         "Created_By": _userProfile?.iD,
       },

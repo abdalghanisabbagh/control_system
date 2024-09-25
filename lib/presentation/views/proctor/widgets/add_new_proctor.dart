@@ -5,7 +5,7 @@ import '../../../../domain/controllers/proctor_controller.dart';
 import '../../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../../resource_manager/ReusableWidget/elevated_back_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/validations.dart';
 
@@ -27,7 +27,7 @@ class CreateNewProctor extends GetView<ProctorController> {
               children: [
                 SizedBox(
                   width: 450,
-                  child: MytextFormFiled(
+                  child: MyTextFormFiled(
                     title: "Proctor Full Name",
                     controller: proctorcontroller.fullNameController,
                     myValidation: Validations.requiredValidator,
@@ -36,7 +36,7 @@ class CreateNewProctor extends GetView<ProctorController> {
                 const SizedBox(height: 16.0),
                 SizedBox(
                   width: 450,
-                  child: MytextFormFiled(
+                  child: MyTextFormFiled(
                     title: "Username",
                     controller: proctorcontroller.usernameController,
                     myValidation: Validations.requiredValidator,
@@ -45,7 +45,7 @@ class CreateNewProctor extends GetView<ProctorController> {
                 const SizedBox(height: 16.0),
                 SizedBox(
                   width: 450,
-                  child: MytextFormFiled(
+                  child: MyTextFormFiled(
                     title: "Password",
                     controller: proctorcontroller.passwordController,
                     myValidation: Validations.requiredValidator,
@@ -71,7 +71,7 @@ class CreateNewProctor extends GetView<ProctorController> {
                 const SizedBox(height: 16.0),
                 SizedBox(
                   width: 450,
-                  child: MytextFormFiled(
+                  child: MyTextFormFiled(
                     title: "Confirm Password",
                     controller: proctorcontroller.confirmPasswordController,
                     obscureText: proctorcontroller.showPassord,

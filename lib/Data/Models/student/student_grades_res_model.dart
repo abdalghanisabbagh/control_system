@@ -71,15 +71,15 @@ class ExamRoom {
 
   String? name;
 
-  List<StudentSeatNumnbers>? studentSeatNumnbers;
-  ExamRoom({this.iD, this.name, this.studentSeatNumnbers});
+  List<StudentSeatNumbers>? studentSeatNumbers;
+  ExamRoom({this.iD, this.name, this.studentSeatNumbers});
   ExamRoom.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     name = json['Name'];
     if (json['student_seat_numnbers'] != null) {
-      studentSeatNumnbers = <StudentSeatNumnbers>[];
+      studentSeatNumbers = <StudentSeatNumbers>[];
       json['student_seat_numnbers'].forEach((v) {
-        studentSeatNumnbers!.add(StudentSeatNumnbers.fromJson(v));
+        studentSeatNumbers!.add(StudentSeatNumbers.fromJson(v));
       });
     }
   }
@@ -88,9 +88,9 @@ class ExamRoom {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ID'] = iD;
     data['Name'] = name;
-    if (studentSeatNumnbers != null) {
+    if (studentSeatNumbers != null) {
       data['student_seat_numnbers'] =
-          studentSeatNumnbers!.map((v) => v.toJson()).toList();
+          studentSeatNumbers!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -214,14 +214,14 @@ class StudentGradesResModel {
   }
 }
 
-class StudentSeatNumnbers {
+class StudentSeatNumbers {
   int? iD;
 
   String? seatNumber;
 
   Student? student;
-  StudentSeatNumnbers({this.iD, this.seatNumber, this.student});
-  StudentSeatNumnbers.fromJson(Map<String, dynamic> json) {
+  StudentSeatNumbers({this.iD, this.seatNumber, this.student});
+  StudentSeatNumbers.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     seatNumber = json['Seat_Number'];
     student =

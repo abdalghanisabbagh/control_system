@@ -10,8 +10,8 @@ import '../../../../domain/controllers/admin_controller.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import 'add_role_user.dart';
 import 'edit_user_widget.dart';
 

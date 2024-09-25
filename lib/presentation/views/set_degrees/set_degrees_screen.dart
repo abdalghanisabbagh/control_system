@@ -10,7 +10,7 @@ import '../../resource_manager/ReusableWidget/elevated_add_button.dart';
 import '../../resource_manager/ReusableWidget/elevated_edit_button.dart';
 import '../../resource_manager/ReusableWidget/header_widget.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../base_screen.dart';
 
@@ -33,7 +33,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
               ),
               Expanded(
                 flex: 1,
-                child: MytextFormFiled(
+                child: MyTextFormFiled(
                   title: 'Student Barcode',
                   controller: controller.barcodeController,
                   focusNode: FocusNode()..requestFocus(),

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import 'add_single_student_widget.dart';
 
 class HeaderStudentWidget extends GetView<StudentController> {
@@ -33,10 +33,10 @@ class HeaderStudentWidget extends GetView<StudentController> {
                 widgetId: '1300',
               ),
               child: IconButton(
-                tooltip: "Promot Students From Excel",
+                tooltip: "Promote Students From Excel",
                 icon: const Icon(FontAwesomeIcons.arrowUpFromGroundWater),
                 onPressed: () {
-                  controller.isImportedPromot = true;
+                  controller.isImportedPromote = true;
                   controller.isImportedNew = false;
                   controller.pickAndReadFile();
                 },
@@ -50,7 +50,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
                   tooltip: "Download excel template",
                   icon: const Icon(FontAwesomeIcons.cloudArrowDown),
                   onPressed: () {
-                    controller.downloadeTemp();
+                    controller.downloadTemp();
                   }),
             ),
             Visibility(
@@ -62,7 +62,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
                 icon: const Icon(FontAwesomeIcons.fileExcel),
                 onPressed: () {
                   controller.isImportedNew = true;
-                  controller.isImportedPromot = false;
+                  controller.isImportedPromote = false;
                   controller.pickAndReadFile();
                 },
               ),
@@ -111,7 +111,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
                 icon: const Icon(Icons.send),
                 onPressed: () {
                   if (!controller.isImportedNew &&
-                      !controller.isImportedPromot) {
+                      !controller.isImportedPromote) {
                     MyAwesomeDialogue(
                       title: "Error",
                       desc: "Please import File first",
@@ -162,7 +162,7 @@ class HeaderStudentWidget extends GetView<StudentController> {
                               : Get.key.currentContext!);
                         }
                       });
-                    } else if (controller.isImportedPromot) {
+                    } else if (controller.isImportedPromote) {
                       controller
                           .updateManyStudents(students: controller.students)
                           .then((value) {

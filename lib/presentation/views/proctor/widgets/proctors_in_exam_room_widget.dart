@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../domain/controllers/proctor_controller.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 
 class ProctorsInExamRoomWidget extends GetView<ProctorController> {
   final String examRoomName;

@@ -20,7 +20,7 @@ import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../app/extensions/convert_date_string_to_iso8601_string_extension.dart';
 import '../../../app/extensions/pluto_row_extension.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class CreateControlMissionController extends GetxController {
   String? batchName;
@@ -36,7 +36,7 @@ class CreateControlMissionController extends GetxController {
   List<PlutoRow> includedStudentsRows = [];
   PlutoGridStateManager? includedStudentsStateManager;
   bool isLoading = false;
-  bool isLodingGetEducationYears = false;
+  bool isLoadingGetEducationYears = false;
   List<ValueItem> optionsEducationYear = <ValueItem>[];
   List<ValueItem> optionsGrades = [];
   List<ValueItem>? selectedEducationYear;
@@ -224,11 +224,11 @@ class CreateControlMissionController extends GetxController {
   }
 
   Future<void> getEducationYears() async {
-    isLodingGetEducationYears = true;
+    isLoadingGetEducationYears = true;
     update();
 
     final response = await ResponseHandler<EducationsYearsModel>().getResponse(
-      path: EducationYearsLinks.educationyear,
+      path: EducationYearsLinks.educationYear,
       converter: EducationsYearsModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -253,7 +253,7 @@ class CreateControlMissionController extends GetxController {
       },
     );
 
-    isLodingGetEducationYears = false;
+    isLoadingGetEducationYears = false;
     update();
   }
 

@@ -9,8 +9,8 @@ import '../../../../domain/controllers/batch_documents.dart/cover_sheets_control
 import '../../../../domain/controllers/batch_documents.dart/create_covers_sheets_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
@@ -249,7 +249,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                     builder: (formFieldState) {
                       return GetBuilder<CreateCoversSheetsController>(
                         builder: (_) {
-                          if (controller.isLodingGetSubject) {
+                          if (controller.isLoadingGetSubject) {
                             return Center(
                               child: SizedBox(
                                 width: 50,
@@ -488,7 +488,7 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                           controlMissionId:
                               controller.selectedItemControlMission!.value,
                           gradeId: controller.selectedItemGrade!.value,
-                          educationyearId:
+                          educationYearId:
                               controller.selectedItemEducationYear!.value,
                           year: selectedYear!,
                           month: '${selectedDay!} ${selectedMonth!}',

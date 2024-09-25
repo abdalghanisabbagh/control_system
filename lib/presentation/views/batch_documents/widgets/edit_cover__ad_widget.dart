@@ -10,7 +10,7 @@ import '../../../../app/extensions/convert_date_string_to_iso8601_string_extensi
 import '../../../../domain/controllers/batch_documents.dart/edit_cover_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/validations.dart';
 
 // ignore: must_be_immutable
@@ -79,7 +79,7 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
                 Get.delete<EditCoverSheetController>();
               },
               builder: (_) {
-                if (controller.isLodingUploadPdf == true) {
+                if (controller.isLoadingUploadPdf == true) {
                   return SizedBox(
                     width: 50,
                     height: 50,
@@ -90,7 +90,7 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
                 }
                 return InkWell(
                   onTap: () {
-                    controller.uplodPdfInExamMission().then((value) {
+                    controller.uploadPdfInExamMission().then((value) {
                       if (value == true) {
                         MyFlashBar.showSuccess(
                           "Uploaded Successfully",
@@ -288,8 +288,8 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
             ],
           ),
           GetBuilder<EditCoverSheetController>(builder: (_) {
-            if (controller.isLodingUpdateExamMission ||
-                controller.isLodingUploadPdf) {
+            if (controller.isLoadingUpdateExamMission ||
+                controller.isLoadingUploadPdf) {
               return SizedBox(
                 width: 50,
                 height: 50,

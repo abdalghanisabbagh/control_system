@@ -10,8 +10,8 @@ import '../../../../domain/controllers/batch_documents.dart/cover_sheets_control
 import '../../../../domain/controllers/profile_controller.dart';
 import '../../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
-import '../../../resource_manager/ReusableWidget/my_snak_bar.dart';
-import '../../../resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
+import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import 'edit_cover__ad_widget.dart';
 import 'edit_cover_widget.dart';
 
@@ -206,154 +206,165 @@ class CoverWidget extends GetView<CoversSheetsController> {
               ],
             ),
           ),
-          Row(
-            children: [
-              'american' == controller.schoolTypeName?.toLowerCase()
-                  ? controller.isLoadingGeneratePdf
-                      ? Expanded(
-                          child: Center(
-                            child: SizedBox(
-                              height: 50,
-                              child: FittedBox(
-                                child: LoadingIndicators.getLoadingIndicator(),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              controller.generateAmCoverSheet(
-                                examMissionId: examMissionObject.iD!,
-                                controlMissionName: controlMissionObject.name!,
-                              );
-                            },
-                            child: Container(
-                              height: 50,
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
+          Visibility(
+            visible: Get.find<ProfileController>().canAccessWidget(
+              widgetId: '3304',
+            ),
+            child: Row(
+              children: [
+                'american' == controller.schoolTypeName?.toLowerCase()
+                    ? controller.isLoadingGeneratePdf
+                        ? Expanded(
+                            child: Center(
+                              child: SizedBox(
+                                height: 50,
+                                child: FittedBox(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
                                 ),
-                                color: ColorManager.bgSideMenu,
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "American Cover Sheet",
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Icon(
-                                    Icons.print,
-                                    color: ColorManager.white,
-                                  )
-                                ],
                               ),
                             ),
-                          ),
-                        )
-                  : const SizedBox.shrink(),
-              'british' == controller.schoolTypeName?.toLowerCase()
-                  ? controller.isLoadingGeneratePdf
-                      ? Expanded(
-                          child: Center(
-                            child: SizedBox(
-                              height: 50,
-                              child: FittedBox(
-                                child: LoadingIndicators.getLoadingIndicator(),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              controller.generateBrCoverSheet(
-                                examMissionId: examMissionObject.iD!,
-                                controlMissionName: controlMissionObject.name!,
-                              );
-                            },
-                            child: Container(
-                              height: 50,
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
+                          )
+                        : Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.generateAmCoverSheet(
+                                  examMissionId: examMissionObject.iD!,
+                                  controlMissionName:
+                                      controlMissionObject.name!,
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                width: double.infinity,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)),
-                                color: Colors.lightBlue,
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "IB Cover Sheet",
+                                    bottomRight: Radius.circular(10),
                                   ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Icon(
-                                    Icons.print,
-                                    color: ColorManager.white,
-                                  )
-                                ],
+                                  color: ColorManager.bgSideMenu,
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "American Cover Sheet",
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Icon(
+                                      Icons.print,
+                                      color: ColorManager.white,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                  : const SizedBox.shrink(),
-              "ib" == controller.schoolTypeName?.toLowerCase()
-                  ? controller.isLoadingGeneratePdf
-                      ? Expanded(
-                          child: Center(
-                            child: SizedBox(
-                              height: 50,
-                              child: FittedBox(
-                                child: LoadingIndicators.getLoadingIndicator(),
+                          )
+                    : const SizedBox.shrink(),
+                'british' == controller.schoolTypeName?.toLowerCase()
+                    ? controller.isLoadingGeneratePdf
+                        ? Expanded(
+                            child: Center(
+                              child: SizedBox(
+                                height: 50,
+                                child: FittedBox(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      : Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              controller.generateIBCoverSheet(
-                                examMissionId: examMissionObject.iD!,
-                                controlMissionName: controlMissionObject.name!,
-                              );
-                            },
-                            child: Container(
-                              height: 50,
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)),
-                                color: ColorManager.red,
-                              ),
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "British Cover Sheet",
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Icon(
-                                    Icons.print,
-                                    color: ColorManager.white,
-                                  )
-                                ],
+                          )
+                        : Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.generateBrCoverSheet(
+                                  examMissionId: examMissionObject.iD!,
+                                  controlMissionName:
+                                      controlMissionObject.name!,
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                width: double.infinity,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)),
+                                  color: Colors.lightBlue,
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "IB Cover Sheet",
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Icon(
+                                      Icons.print,
+                                      color: ColorManager.white,
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                  : const SizedBox.shrink(),
-            ],
+                          )
+                    : const SizedBox.shrink(),
+                "ib" == controller.schoolTypeName?.toLowerCase()
+                    ? controller.isLoadingGeneratePdf
+                        ? Expanded(
+                            child: Center(
+                              child: SizedBox(
+                                height: 50,
+                                child: FittedBox(
+                                  child:
+                                      LoadingIndicators.getLoadingIndicator(),
+                                ),
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                controller.generateIBCoverSheet(
+                                  examMissionId: examMissionObject.iD!,
+                                  controlMissionName:
+                                      controlMissionObject.name!,
+                                );
+                              },
+                              child: Container(
+                                height: 50,
+                                width: double.infinity,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10)),
+                                  color: ColorManager.red,
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "British Cover Sheet",
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Icon(
+                                      Icons.print,
+                                      color: ColorManager.white,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                    : const SizedBox.shrink(),
+              ],
+            ),
           ),
         ],
       ),

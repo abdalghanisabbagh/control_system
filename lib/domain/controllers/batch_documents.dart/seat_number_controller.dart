@@ -19,7 +19,7 @@ import '../../../Data/Network/tools/dio_factory.dart';
 import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class SeatNumberController extends GetxController {
   List<ControlMissionResModel> controlMissionList = [];
@@ -30,8 +30,8 @@ class SeatNumberController extends GetxController {
   bool isLoadingGeneratePdf = false;
   bool isLoadingGetControlMission = false;
   bool isLoadingGetEducationYear = false;
+  bool isLoadingGetExamMission = false;
   bool isLoadingGrades = false;
-  bool isLodingGetExamMission = false;
   List<ValueItem> optionsControlMission = [];
   List<ValueItem> optionsEducationYear = [];
   List<ValueItem> optionsGrades = [];
@@ -82,7 +82,7 @@ class SeatNumberController extends GetxController {
 
         // Create an anchor element and trigger the download
         html.AnchorElement(href: blobUrl)
-          ..setAttribute('download', 'attendence.pdf')
+          ..setAttribute('download', 'attendance.pdf')
           ..click();
 
         // Revoke the object URL after download
@@ -135,13 +135,13 @@ class SeatNumberController extends GetxController {
     update();
   }
 
-  Future<void> geteducationyear() async {
+  Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
     ResponseHandler<EducationsYearsModel> responseHandler = ResponseHandler();
     Either<Failure, EducationsYearsModel> response =
         await responseHandler.getResponse(
-      path: EducationYearsLinks.educationyear,
+      path: EducationYearsLinks.educationYear,
       converter: EducationsYearsModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -177,10 +177,10 @@ class SeatNumberController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }, (result) {
@@ -203,10 +203,10 @@ class SeatNumberController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
     }, (result) {
@@ -220,7 +220,7 @@ class SeatNumberController extends GetxController {
 
   @override
   void onInit() {
-    geteducationyear();
+    getEducationYear();
     super.onInit();
   }
 

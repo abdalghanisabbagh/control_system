@@ -32,7 +32,7 @@ import '../../../Data/Network/tools/failure_model.dart';
 import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../app/extensions/pluto_row_extension.dart';
-import '../../../presentation/resource_manager/ReusableWidget/show_dialgue.dart';
+import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 import '../profile_controller.dart';
 
 class StudentController extends GetxController {
@@ -49,9 +49,9 @@ class StudentController extends GetxController {
   List<StudentResModel> importedStudents = <StudentResModel>[];
   List<PlutoRow> importedStudentsRows = <PlutoRow>[];
   bool isImportedNew = false;
-  bool isImportedPromot = false;
-  bool islodingAddStudents = false;
-  bool islodingEditStudent = false;
+  bool isImportedPromote = false;
+  bool isLoadingAddStudents = false;
+  bool isLoadingEditStudent = false;
   bool loading = false;
   List<ValueItem> optionsClassRoom = <ValueItem>[];
   List<ValueItem> optionsCohort = <ValueItem>[];
@@ -83,10 +83,10 @@ class StudentController extends GetxController {
         type: ReqTypeEnum.POST,
         body: studentData);
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       addStudentsHasBeenAdded = false;
@@ -99,13 +99,6 @@ class StudentController extends GetxController {
 
     update();
     return addStudentsHasBeenAdded;
-  }
-
-  Future<void> downloadeTemp() async {
-    if (!await launchUrl(Uri.parse(
-        "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
-      throw 'Could not launch file';
-    }
   }
 
   Future<void> downloadFile() async {
@@ -125,6 +118,13 @@ class StudentController extends GetxController {
         desc: "$e",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
+    }
+  }
+
+  Future<void> downloadTemp() async {
+    if (!await launchUrl(Uri.parse(
+        "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
+      throw 'Could not launch file';
     }
   }
 
@@ -381,7 +381,7 @@ class StudentController extends GetxController {
   @override
   void onInit() async {
     isImportedNew = false;
-    isImportedPromot = false;
+    isImportedPromote = false;
     loading = true;
     importedStudentsRows = [];
     update();
@@ -408,7 +408,7 @@ class StudentController extends GetxController {
     required String secondLang,
     required String religion,
   }) async {
-    islodingEditStudent = true;
+    isLoadingEditStudent = true;
     update();
     bool editStudentHasBeenAdded = false;
     int schoolId = Hive.box('School').get('Id');
@@ -432,10 +432,10 @@ class StudentController extends GetxController {
           "Religion": religion,
         });
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       editStudentHasBeenAdded = false;
@@ -443,7 +443,7 @@ class StudentController extends GetxController {
       getStudents();
       editStudentHasBeenAdded = true;
     });
-    islodingEditStudent = false;
+    isLoadingEditStudent = false;
     update();
     return editStudentHasBeenAdded;
   }
@@ -510,10 +510,10 @@ class StudentController extends GetxController {
         type: ReqTypeEnum.PATCH,
         body: studentData);
 
-    response.fold((fauilr) {
+    response.fold((failure) {
       MyAwesomeDialogue(
         title: 'Error',
-        desc: "${fauilr.code} ::${fauilr.message}",
+        desc: "${failure.code} ::${failure.message}",
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
       updateStudentsHasBeenAdded = false;
@@ -585,8 +585,8 @@ class StudentController extends GetxController {
         hasErrorInClassRoom = result['errorclass'];
         hasError.assignAll(result['errors']);
         update();
-      } else if (isImportedPromot == true) {
-        result = studentsCsv.convertPromtoFileStudentsToPluto(
+      } else if (isImportedPromote == true) {
+        result = studentsCsv.convertPromoteFileStudentsToPluto(
           students: students,
           cohorts: cohorts,
           classesRooms: classesRooms,
