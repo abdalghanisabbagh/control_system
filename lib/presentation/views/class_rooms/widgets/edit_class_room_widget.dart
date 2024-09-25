@@ -15,7 +15,7 @@ import '../../class_room_seats/widgets/render_seat_widget.dart';
 final _formKey = GlobalKey<FormState>();
 
 class EditClassRoomWidget extends StatelessWidget {
-  final TextEditingController buildingNameController = TextEditingController();
+  final TextEditingController classNumberController = TextEditingController();
 
   final TextEditingController classNameController = TextEditingController();
   final ClassRoomResModel classRoom;
@@ -89,8 +89,9 @@ class EditClassRoomWidget extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: MyTextFormFiled(
-                                    controller: buildingNameController,
-                                    title: "Building",
+                                    controller: classNumberController
+                                      ..text = classRoom.classNumber.toString(),
+                                    title: "Class Number",
                                     enableBorderColor: ColorManager.primary,
                                   ),
                                 ),
@@ -263,6 +264,10 @@ class EditClassRoomWidget extends StatelessWidget {
                                                   maxCapacity:
                                                       maxCapacityController
                                                           .text,
+                                                  classNumber: int.tryParse(
+                                                          classNumberController
+                                                              .text) ??
+                                                      0,
                                                   columns: controller.numbers,
                                                   rows: controller.classSeats,
                                                 )

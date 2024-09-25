@@ -114,6 +114,7 @@ class ClassRoomController extends GetxController {
     required String floorName,
     required String maxCapacity,
     required int columns,
+    required int classNumber,
     required List<int> rows,
   }) async {
     bool classRoomHasBeenEdited = false;
@@ -131,6 +132,7 @@ class ClassRoomController extends GetxController {
         "Floor": floorName,
         "Rows": rows.toString(),
         "Columns": columns,
+        "Class_Number": classNumber,
         "Schools_ID": Hive.box('School').get('Id'),
         "Created_By": _userProfile?.iD,
       },
