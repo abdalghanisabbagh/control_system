@@ -286,19 +286,21 @@ class OperationCohortScreen extends GetView<OperationCohortController> {
                                                           controller
                                                               .deleteCohort(
                                                                   item.iD!)
-                                                              .then((value) {
-                                                            value
-                                                                ? MyFlashBar.showSuccess(
-                                                                        'Cohort deleted successfully',
-                                                                        'Success')
-                                                                    .show(context
-                                                                            .mounted
-                                                                        ? context
-                                                                        : Get
-                                                                            .key
-                                                                            .currentContext!)
-                                                                : null;
-                                                          });
+                                                              .then(
+                                                            (value) {
+                                                              value
+                                                                  ? MyFlashBar.showSuccess(
+                                                                          'Cohort deleted successfully',
+                                                                          'Success')
+                                                                      .show(context
+                                                                              .mounted
+                                                                          ? context
+                                                                          : Get
+                                                                              .key
+                                                                              .currentContext!)
+                                                                  : null;
+                                                            },
+                                                          );
                                                         },
                                                         btnCancelOnPressed:
                                                             () {},
