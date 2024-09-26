@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       Hive.box('Profile').deleteFromDisk(), // Id   --- profile
       Hive.box('ControlMission').deleteFromDisk(),
       Hive.box('ExamRoom').deleteFromDisk(),
-      Hive.box('SideMenueIndex').deleteFromDisk(),
+      Hive.box('SideMenuIndex').deleteFromDisk(),
     ]);
     super.dispose();
   }

@@ -14,7 +14,7 @@ Future<void> main() async {
     Hive.openBox('Profile'), // Id   --- profile
     Hive.openBox('ControlMission'),
     Hive.openBox('ExamRoom'),
-    Hive.openBox('SideMenueIndex'),
+    Hive.openBox('SideMenuIndex'),
   ]);
   TokenBindings().dependencies();
   runApp(MyApp());

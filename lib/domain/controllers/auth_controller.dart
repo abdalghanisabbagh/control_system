@@ -90,7 +90,7 @@ class AuthController extends GetxController {
       SchoolController().deleteFromSchoolBox(),
       Hive.box('ControlMission').clear(),
       Hive.box('ExamRoom').clear(),
-      Hive.box('SideMenueIndex').clear(),
+      Hive.box('SideMenuIndex').clear(),
       Hive.box('Token').put('isLogin', false),
     ]);
     ResponseHandler<void>().getResponse(
