@@ -75,7 +75,6 @@ class LoginForm extends GetView<AuthController> {
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: GetBuilder<AuthController>(
-                      init: AuthController(),
                       builder: (controller) {
                         return Form(
                           key: formKey,

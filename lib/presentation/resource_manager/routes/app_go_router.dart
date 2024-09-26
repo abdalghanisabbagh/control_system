@@ -17,6 +17,7 @@ class AppGoRouter {
       return const PageNotFoundScreen();
     },
     redirect: (context, state) {
+      AuthBindings().dependencies();
       final isLoggedIn = Get.find<AuthController>().isLogin;
       if (state.path == AppRoutesNamesAndPaths.loginScreenPath) {
         return null;
@@ -31,12 +32,13 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.loginScreenPath,
         name: AppRoutesNamesAndPaths.loginScreenName,
         builder: (context, state) {
+          AuthBindings().dependencies();
           Get.find<SideMenueGetController>().onRouteChange(state.name!);
           AuthBindings().dependencies();
           return const LoginScreen();
         },
         onExit: (context, state) {
-          Get.delete<AuthController>();
+          Get.delete<AuthController>(force: true);
           return true;
         },
       ),

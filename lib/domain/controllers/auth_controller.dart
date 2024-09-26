@@ -26,7 +26,6 @@ class AuthController extends GetxController {
   Future<bool> login(String username, String password) async {
     isLoading = true;
     update(['login_btn']);
-    await Hive.box('Token').put('isLogin', true);
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
 
     var response = await responseHandler.getResponse(
@@ -45,7 +44,7 @@ class AuthController extends GetxController {
         desc: l.message,
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!),
-      (r) {
+      (r) async {
         tokenService.saveTokenModelToHiveBox(
           TokenModel(
             aToken: r.accessToken!,
@@ -54,8 +53,8 @@ class AuthController extends GetxController {
         );
 
         profileController.saveProfileToHiveBox(r.userProfile!);
-
         isLogin = true;
+        await Hive.box('Token').put('isLogin', true);
       },
     );
 
@@ -65,7 +64,14 @@ class AuthController extends GetxController {
   }
 
   @override
+  void onClose() async {
+    isLogin = false;
+    super.onClose();
+  }
+
+  @override
   void onInit() async {
+    isLogin = Hive.box('Token').get('isLogin', defaultValue: false);
     packageInfo = await PackageInfo.fromPlatform();
     update();
     super.onInit();
@@ -85,6 +91,7 @@ class AuthController extends GetxController {
       Hive.box('ControlMission').clear(),
       Hive.box('ExamRoom').clear(),
       Hive.box('SideMenueIndex').clear(),
+      Hive.box('Token').put('isLogin', false),
     ]);
     ResponseHandler<void>().getResponse(
       path: AuthLinks.logout,
