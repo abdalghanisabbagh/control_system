@@ -15,14 +15,14 @@ class AddNewScreenWidget extends StatelessWidget {
 
   final TextEditingController screenIdController = TextEditingController();
   final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // مفتاح الـ Form للتحقق من المدخلات
+      GlobalKey<FormState>(); 
 
   AddNewScreenWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey, // تعيين المفتاح للـ Form
+      key: _formKey, 
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -42,6 +42,7 @@ class AddNewScreenWidget extends StatelessWidget {
             myValidation: Validations.requiredValidator,
             controller: screenIdController,
             title: "Screen Id",
+            isNumber: true,
           ),
           GetBuilder<PrivilegesController>(
             builder: (controller) {

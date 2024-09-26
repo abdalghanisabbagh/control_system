@@ -10,6 +10,7 @@ class ResponseHandler<T> {
 
   ResponseHandler() : _dio = DioFactory().getDio();
 
+
   Future<Either<Failure, T>> getResponse({
     required String path,
     required T Function(dynamic) converter,
