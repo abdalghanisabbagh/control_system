@@ -91,7 +91,6 @@ class AuthController extends GetxController {
       Hive.box('ControlMission').clear(),
       Hive.box('ExamRoom').clear(),
       Hive.box('SideMenuIndex').clear(),
-      Hive.box('Token').put('isLogin', false),
     ]);
     ResponseHandler<void>().getResponse(
       path: AuthLinks.logout,
