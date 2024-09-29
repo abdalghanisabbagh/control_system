@@ -70,6 +70,7 @@ class DioFactory {
 
     // Only print the logs in debug mode
     if (!kReleaseMode) {
+
       // dio.interceptors.add(PrettyDioLogger(
       //   5,
       //   requestHeader: true,
