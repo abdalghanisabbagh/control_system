@@ -2,6 +2,7 @@ import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../domain/bindings/bindings.dart';
 import '../presentation/resource_manager/routes/app_go_router.dart';
@@ -40,6 +41,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   dispose() async {
+    await Future.wait([
+      Hive.box('Token').deleteFromDisk(),
+      Hive.box('School').deleteFromDisk(), // Id   --- Name
+      Hive.box('Profile').deleteFromDisk(), // Id   --- profile
+      Hive.box('ControlMission').deleteFromDisk(),
+      Hive.box('ExamRoom').deleteFromDisk(),
+      Hive.box('SideMenuIndex').deleteFromDisk(),
+    ]);
     super.dispose();
   }
 

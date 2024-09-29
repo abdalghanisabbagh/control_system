@@ -1,40 +1,51 @@
-class SystemLoggerResModel {
-  String? action;
+import 'package:intl/intl.dart';
 
+class SystemLoggerResModel {
+  int? id;
+  String? ip;
+  String? method;
+  String? url;
+  String? platform;
+  String? userAgent;
+  String? body;
+  String? userId;
   String? createdAt;
 
-  int? id;
-  String? recordAfter;
-  String? recordBefore;
-  String? tableName;
-  String? userId;
   SystemLoggerResModel(
       {this.id,
-      this.tableName,
-      this.action,
+      this.userAgent,
+      this.ip,
+      this.body,
+      this.platform,
       this.userId,
-      this.recordBefore,
-      this.recordAfter,
-      this.createdAt});
+      this.createdAt,
+      this.url,
+      this.method});
   SystemLoggerResModel.fromJson(json) {
     id = json['ID'];
-    tableName = json['TableName'];
-    action = json['Action'];
-    userId = json['UserId'];
-    recordBefore = json['Record_Before'];
-    recordAfter = json['Record_After'];
-    createdAt = json['Created_At'];
+    userAgent = json['userAgent'];
+    ip = json['ip'];
+    body = json['body'];
+    platform = json['platform'];
+    url = json['url'];
+    method = json['method'];
+    userId = json['userId'];
+    createdAt = DateFormat('yyyy,MM,dd (HH:mm)')
+        .format(DateTime.parse(json['Created_At']));
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ID'] = id;
-    data['TableName'] = tableName;
-    data['Action'] = action;
-    data['User_ID'] = userId;
-    data['Record_Before'] = recordBefore;
-    data['Record_After'] = recordAfter;
+    data['TableName'] = userAgent;
+    data['ip'] = ip;
+    data['User_ID'] = body;
+    data['Record_Before'] = platform;
+    data['Record_After'] = url;
+    data['Created_At'] = method;
+    data['userId'] = userId;
     data['Created_At'] = createdAt;
+
     return data;
   }
 }

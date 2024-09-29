@@ -90,4 +90,4 @@ export 'subject_setting/widgets/edit_operation_widget.dart';
 export 'subject_setting/widgets/edit_subjects_widget.dart';
 export 'subject_setting/widgets/operation_widget.dart';
 export 'subject_setting/widgets/subjects_widget.dart';
-export 'system_logger/system_logger.widget.dart';
+export 'system_logger/system_logger.screen.dart';

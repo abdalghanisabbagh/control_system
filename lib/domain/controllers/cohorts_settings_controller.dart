@@ -59,7 +59,7 @@ class CohortsSettingsController extends GetxController {
     return cohortHasBeenAdded;
   }
 
-  Future<bool> addNewsubjecstToCohort(int id) async {
+  Future<bool> addNewSubjectsToCohort(int id) async {
     addLoading = true;
     bool cohortHasBeenAdded = false;
     update();
