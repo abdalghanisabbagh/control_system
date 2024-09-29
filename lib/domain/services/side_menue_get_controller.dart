@@ -23,7 +23,7 @@ class SideMenueGetController extends GetxController
   List<SideMenuItem> userMenue = [];
 
   changePage(int currentIndex) {
-    Hive.box('SideMenueIndex').put('index', currentIndex);
+    Hive.box('SideMenuIndex').put('index', currentIndex);
     sideMenuController.changePage(currentIndex);
   }
 
@@ -106,7 +106,7 @@ class SideMenueGetController extends GetxController
         update();
       });
     sideMenuController = SideMenuController(
-      initialPage: Hive.box('SideMenueIndex').get('index') ?? nowIndex,
+      initialPage: Hive.box('SideMenuIndex').get('index') ?? nowIndex,
     );
   }
 

@@ -114,40 +114,41 @@ extension DataSourceExtension on DataSource {
   Failure getFailure() {
     return switch (this) {
       DataSource.SUCCESS =>
-        Failure(ResponseCode.SUCCESS, ResponseMessage.SUCCESS),
+        const Failure(ResponseCode.SUCCESS, ResponseMessage.SUCCESS),
       DataSource.NO_CONTENT =>
-        Failure(ResponseCode.NO_CONTENT, ResponseMessage.NO_CONTENT),
+        const Failure(ResponseCode.NO_CONTENT, ResponseMessage.NO_CONTENT),
       DataSource.BAD_REQUEST =>
-        Failure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST),
+        const Failure(ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST),
       DataSource.FORBIDDEN =>
-        Failure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN),
+        const Failure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN),
       DataSource.UNAUTORISED =>
-        Failure(ResponseCode.UNAUTORISED, ResponseMessage.UNAUTORISED),
+        const Failure(ResponseCode.UNAUTORISED, ResponseMessage.UNAUTORISED),
       DataSource.NOT_FOUND =>
-        Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND),
-      DataSource.INTERNAL_SERVER_ERROR => Failure(
+        const Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND),
+      DataSource.INTERNAL_SERVER_ERROR => const Failure(
           ResponseCode.INTERNAL_SERVER_ERROR,
           ResponseMessage.INTERNAL_SERVER_ERROR),
-      DataSource.CONNECT_TIMEOUT =>
-        Failure(ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT),
-      DataSource.CANCEL => Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL),
-      DataSource.RECIEVE_TIMEOUT =>
-        Failure(ResponseCode.RECIEVE_TIMEOUT, ResponseMessage.RECIEVE_TIMEOUT),
+      DataSource.CONNECT_TIMEOUT => const Failure(
+          ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT),
+      DataSource.CANCEL =>
+        const Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL),
+      DataSource.RECIEVE_TIMEOUT => const Failure(
+          ResponseCode.RECIEVE_TIMEOUT, ResponseMessage.RECIEVE_TIMEOUT),
       DataSource.SEND_TIMEOUT =>
-        Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT),
+        const Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT),
       DataSource.CACHE_ERROR =>
-        Failure(ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR),
-      DataSource.NO_INTERNET_CONNECTION => Failure(
+        const Failure(ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR),
+      DataSource.NO_INTERNET_CONNECTION => const Failure(
           ResponseCode.NO_INTERNET_CONNECTION,
           ResponseMessage.NO_INTERNET_CONNECTION),
       DataSource.DEFAULT =>
-        Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT),
+        const Failure(ResponseCode.DEFAULT, ResponseMessage.DEFAULT),
       DataSource.CONNECTION_ERROR =>
-        Failure(ResponseCode.DEFAULT, ResponseMessage.CONNECTION_ERROR),
-      DataSource.BAD_CERTIFICATE =>
-        Failure(ResponseCode.BAD_CERTIFICATE, ResponseMessage.BAD_CERTIFICATE),
+        const Failure(ResponseCode.DEFAULT, ResponseMessage.CONNECTION_ERROR),
+      DataSource.BAD_CERTIFICATE => const Failure(
+          ResponseCode.BAD_CERTIFICATE, ResponseMessage.BAD_CERTIFICATE),
       DataSource.BAD_RESPONSE =>
-        Failure(ResponseCode.BAD_RESPONSE, ResponseMessage.BAD_RESPONSE),
+        const Failure(ResponseCode.BAD_RESPONSE, ResponseMessage.BAD_RESPONSE),
     };
   }
 }

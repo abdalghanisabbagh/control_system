@@ -28,6 +28,11 @@ class EditCohortWidget extends GetView<OperationCohortController> {
       width: 450,
       child: GetBuilder<CohortsSettingsController>(
         builder: (cohortSettingsController) {
+          cohortSettingsController.slectedSchoolTypeId = controller
+              .schoolsType!.data!
+              .where((element) => element.iD == cohort.schoolTypeID)
+              .map((element) => element.iD!)
+              .toList();
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
