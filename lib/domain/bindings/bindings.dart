@@ -24,8 +24,8 @@ class AdminBindings implements Bindings {
 class AuthBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
-    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+    Get.put<AuthController>(AuthController(), permanent: true);
+    Get.put<ProfileController>(ProfileController(), permanent: true);
   }
 }
 
@@ -177,9 +177,9 @@ class SideMenuBindings extends Bindings {
       () => SideMenueGetController(),
       fenix: true,
     );
-    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+    Get.put<ProfileController>( ProfileController(), permanent: true);
 
-    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
+    Get.put<AuthController>(AuthController(), permanent: true);
   }
 }
 
