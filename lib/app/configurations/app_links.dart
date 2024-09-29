@@ -137,3 +137,9 @@ class UserRolesSystemsLink {
   static const userRolesSystemsDisconnectRolesFromScreens =
       'user-roles-systems/disconnect-roles-from-screens';
 }
+
+class SystemLogLinks {
+  static const systemLog = 'system-logger';
+  static const systemLogUser = '$systemLog/user';
+  static const systemLogExportText = '$systemLog/export-text';
+}
