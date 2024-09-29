@@ -5,6 +5,7 @@ import 'package:control_system/app/configurations/token_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../../domain/services/token_service.dart';
 import '../../Models/token/token_model.dart';
@@ -32,7 +33,7 @@ class DioFactory {
     };
 
     dio.options = BaseOptions(
-      baseUrl: AppLinks.baseUrlStaging,
+      baseUrl: AppLinks.baseUrlDev,
       headers: headers,
       receiveTimeout: timeOut,
       sendTimeout: timeOut,
@@ -40,11 +41,12 @@ class DioFactory {
 
     if (!kReleaseMode) {
       // its debug mode so print app logs
-      // dio.interceptors.add(PrettyDioLogger(5
-      //   requestHeader: true,
-      //   requestBody: true,
-      //   responseHeader: true,
-      // ));
+      dio.interceptors.add(PrettyDioLogger(
+        //   maxWidth: 5,
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+      ));
     }
     return dio;
   }

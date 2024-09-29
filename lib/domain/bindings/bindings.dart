@@ -228,8 +228,10 @@ class SubjectSettingBindings extends Bindings {
 class SystemLoggerBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SystemLoggerController>(() => SystemLoggerController(),
-        fenix: true);
+    Get.lazyPut<SystemLoggerController>(
+      () => SystemLoggerController(),
+      fenix: true,
+    );
   }
 }
 
