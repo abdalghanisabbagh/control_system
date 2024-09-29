@@ -38,7 +38,7 @@ class AppGoRouter {
           return const LoginScreen();
         },
         onExit: (context, state) {
-          Get.delete<AuthController>(force: true);
+          Get.delete<AuthController>();
           return true;
         },
       ),
