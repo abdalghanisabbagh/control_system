@@ -178,7 +178,6 @@ class SideMenuBindings extends Bindings {
       fenix: true,
     );
     Get.put<ProfileController>( ProfileController(), permanent: true);
-
     Get.put<AuthController>(AuthController(), permanent: true);
   }
 }

@@ -7,15 +7,15 @@ import 'domain/bindings/bindings.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  TokenBindings().dependencies();
+  await Hive.initFlutter();
   await Future.wait([
-    Hive.initFlutter(),
     Hive.openBox('Token'),
     Hive.openBox('School'), // Id   --- Name
     Hive.openBox('Profile'), // Id   --- profile
     Hive.openBox('ControlMission'),
     Hive.openBox('ExamRoom'),
-    Hive.openBox('SideMenueIndex'),
+    Hive.openBox('SideMenuIndex'),
   ]);
+  TokenBindings().dependencies();
   runApp(MyApp());
 }

@@ -60,7 +60,7 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                           onTap: () async {
                             controller.selectedSubjectsIds.isNotEmpty
                                 ? await controller
-                                    .addNewsubjecstToCohort(item.iD!)
+                                    .addNewSubjectsToCohort(item.iD!)
                                     .then(
                                       (value) => value
                                           ? {
