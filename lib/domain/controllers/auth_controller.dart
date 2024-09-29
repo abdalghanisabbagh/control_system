@@ -17,7 +17,7 @@ import 'school_controller.dart';
 
 class AuthController extends GetxController {
   bool isLoading = false;
-  bool isLogin = Hive.box('Token').get('isLogin', defaultValue: false);
+  bool isLogin = false;
   PackageInfo? packageInfo;
   ProfileController profileController = Get.find<ProfileController>();
   bool showPass = true;
@@ -66,6 +66,7 @@ class AuthController extends GetxController {
 
   @override
   void onInit() async {
+    isLogin = false;
     packageInfo = await PackageInfo.fromPlatform();
     update();
     super.onInit();

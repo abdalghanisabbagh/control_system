@@ -141,5 +141,5 @@ class UserRolesSystemsLink {
 class SystemLogLinks {
   static const systemLog = 'system-logger';
   static const systemLogUser = '$systemLog/user';
-  static const systemLogExportText = '$systemLog/export';
+  static const systemLogExportText = '$systemLog/export-text';
 }
