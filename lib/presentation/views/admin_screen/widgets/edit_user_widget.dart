@@ -262,7 +262,7 @@ class EditUserWidget extends GetView<AdminController> {
       child: MyTextFormFiled(
         title: title,
         controller: controller,
-        myValidation: Validations.validateName,
+        myValidation: Validations.validateUsername,
       ),
     );
   }
