@@ -1,3 +1,4 @@
+import 'package:control_system/presentation/views/admin_screen/widgets/add_reader_user_widget%20.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -127,6 +128,43 @@ class AdminScreen extends GetView<AdminController> {
                             padding: const EdgeInsets.all(8),
                             child: Text(
                               "Add New User",
+                              style: nunitoBold.copyWith(
+                                color: ColorManager.white,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                 SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.005,
+                ),
+                Visibility(
+                  visible: Get.find<ProfileController>().canAccessWidget(
+                    widgetId: '9300',
+                  ),
+                  child: Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () {
+                        MyDialogs.showDialog(
+                          context,
+                          const AddReaderUserWidget(),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorManager.glodenColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              "Create Reader",
                               style: nunitoBold.copyWith(
                                 color: ColorManager.white,
                                 fontSize: 20,

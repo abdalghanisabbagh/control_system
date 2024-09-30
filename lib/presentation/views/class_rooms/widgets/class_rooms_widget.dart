@@ -100,12 +100,24 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            classRoom.name!,
-                                            style: nunitoBold.copyWith(
-                                              color: ColorManager.bgSideMenu,
-                                              fontSize: 35,
-                                            ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                classRoom.name!,
+                                                style: nunitoBold.copyWith(
+                                                  color:
+                                                      ColorManager.bgSideMenu,
+                                                  fontSize: 35,
+                                                ),
+                                              ),
+                                              Text(
+                                                "(Class Number :  ${classRoom.classNumber!.toString()})",
+                                                style: nunitoBold.copyWith(
+                                                  color: ColorManager.grey,
+                                                  fontSize: 25,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                           const SizedBox(
                                             height: 5,

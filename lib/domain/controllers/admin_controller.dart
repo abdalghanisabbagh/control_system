@@ -114,6 +114,47 @@ class AdminController extends GetxController {
     );
   }
 
+  Future<bool> addReaderUser() async {
+    isLoading = true;
+    update();
+
+    final response = await ResponseHandler<UserResModel>().getResponse(
+      path: UserLinks.createUsersReader,
+      converter: UserResModel.fromJson,
+      type: ReqTypeEnum.POST,
+      body: {
+        "School_Id": Hive.box('School').get('Id'),
+        "Full_Name": fullNameController.text,
+        "User_Name": usernameController.text,
+        "Password": oldPasswordController.text,
+        "IsFloorManager": selectedDivision,
+        "Type": AppConstants.roleTypes.indexOf('Reader'),
+      },
+    );
+
+    isLoading = false;
+    update();
+
+    return response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        return false;
+      },
+      (r) {
+        fullNameController.clear();
+        usernameController.clear();
+        oldPasswordController.clear();
+        newPasswordController.clear();
+        nisIdController.clear();
+        return true;
+      },
+    );
+  }
+
   Future<bool> deactivateUser({required int userId}) async {
     bool deactivateUser = false;
     update();
