@@ -134,4 +134,17 @@ abstract class Validations {
     }
     return null;
   }
+
+  static String? validateUsername(String? value) {
+    if (value!.isEmpty) {
+      return 'Please enter username';
+    } else if (value.length < 3) {
+      return 'Username must be at least 3 characters long';
+    } else if (value.length > 20) {
+      return 'Username must be at most 20 characters long';
+    } else if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return 'Username must not contain special characters';
+    }
+    return null;
+  }
 }
