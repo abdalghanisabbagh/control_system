@@ -60,8 +60,8 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                 children: [
                                   Expanded(
                                     child: MyTextFormFiled(
-                                      myValidation:
-                                          Validations.requiredValidator,
+                                      myValidation: Validations
+                                          .requiredWithoutSpecialCharacters,
                                       controller: classNameController,
                                       title: "Class Name",
                                       enableBorderColor: ColorManager.primary,
@@ -89,6 +89,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                 children: [
                                   Expanded(
                                     child: MyTextFormFiled(
+                                      isNumber: true,
                                       myValidation:
                                           Validations.requiredValidator,
                                       controller: floorNameController,
@@ -115,6 +116,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                 height: 20,
                               ),
                               MyTextFormFiled(
+                                isNumber: true,
                                 myValidation: Validations.requiredValidator,
                                 enableBorderColor: ColorManager.primary,
                                 controller: columnNumber,
@@ -146,6 +148,7 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                                 height: 20,
                                               ),
                                               MyTextFormFiled(
+                                                isNumber: true,
                                                 myValidation: Validations
                                                     .requiredValidator,
                                                 onChanged: (value) {

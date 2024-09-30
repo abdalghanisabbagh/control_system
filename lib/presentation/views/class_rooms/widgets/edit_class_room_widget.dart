@@ -19,7 +19,7 @@ class EditClassRoomWidget extends StatelessWidget {
 
   final TextEditingController classNameController = TextEditingController();
   final ClassRoomResModel classRoom;
-  final TextEditingController columnNumper = TextEditingController();
+  final TextEditingController columnNumber = TextEditingController();
   final TextEditingController floorNameController = TextEditingController();
   final TextEditingController maxCapacityController = TextEditingController();
   EditClassRoomWidget({super.key, required this.classRoom});
@@ -77,7 +77,8 @@ class EditClassRoomWidget extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: MyTextFormFiled(
-                                    myValidation: Validations.requiredValidator,
+                                    myValidation: Validations
+                                        .requiredWithoutSpecialCharacters,
                                     controller: classNameController
                                       ..text = classRoom.name ?? '',
                                     title: "Class Name",
@@ -89,6 +90,8 @@ class EditClassRoomWidget extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: MyTextFormFiled(
+                                    isNumber: true,
+                                    myValidation: Validations.requiredValidator,
                                     controller: classNumberController
                                       ..text = classRoom.classNumber.toString(),
                                     title: "Class Number",
@@ -104,6 +107,7 @@ class EditClassRoomWidget extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: MyTextFormFiled(
+                                    isNumber: true,
                                     myValidation: Validations.requiredValidator,
                                     controller: floorNameController
                                       ..text = classRoom.floor ?? '',
@@ -134,7 +138,7 @@ class EditClassRoomWidget extends StatelessWidget {
                                 return MyTextFormFiled(
                                   myValidation: Validations.requiredValidator,
                                   enableBorderColor: ColorManager.primary,
-                                  controller: columnNumper
+                                  controller: columnNumber
                                     ..text = controller.numbers.toString(),
                                   isNumber: true,
                                   title: "Number of Row",
@@ -160,7 +164,7 @@ class EditClassRoomWidget extends StatelessWidget {
                                           const NeverScrollableScrollPhysics(),
                                       itemCount: controller.numbers,
                                       itemBuilder: (context, index) {
-                                        TextEditingController rowNumper =
+                                        TextEditingController rowNumber =
                                             TextEditingController();
                                         return Column(
                                           children: [
@@ -178,7 +182,7 @@ class EditClassRoomWidget extends StatelessWidget {
                                                 }
                                                 return value;
                                               },
-                                              controller: rowNumper
+                                              controller: rowNumber
                                                 ..text =
                                                     '${controller.classSeats[index]}',
                                               title:

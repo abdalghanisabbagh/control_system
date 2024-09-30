@@ -126,7 +126,7 @@ class LoginForm extends GetView<AuthController> {
                                   AutofillHints.username,
                                 ],
                                 controller: usernameController,
-                                myValidation: Validations.requiredValidator,
+                                myValidation: Validations.validateUsername,
                                 title: "username",
                               ),
                               const SizedBox(

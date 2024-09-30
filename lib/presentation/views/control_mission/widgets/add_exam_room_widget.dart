@@ -106,9 +106,11 @@ class AddExamRoomWidget extends GetView<DistributionController> {
                       },
                     ),
                     MyTextFormFiled(
-                        controller: newRoomName,
-                        title: "Room Name",
-                        myValidation: Validations.requiredValidator),
+                      controller: newRoomName,
+                      title: "Exam Room Name",
+                      myValidation:
+                          Validations.requiredWithoutSpecialCharacters,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),

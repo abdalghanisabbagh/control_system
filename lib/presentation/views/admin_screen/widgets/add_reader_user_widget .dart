@@ -36,7 +36,7 @@ class AddReaderUserWidget extends GetView<AdminController> {
                         child: MyTextFormFiled(
                           title: "User Full Name",
                           controller: userController.fullNameController,
-                          myValidation: Validations.requiredValidator,
+                          myValidation: Validations.validateName,
                         ),
                       ),
                       SizedBox(
@@ -44,7 +44,7 @@ class AddReaderUserWidget extends GetView<AdminController> {
                         child: MyTextFormFiled(
                           title: "Username",
                           controller: userController.usernameController,
-                          myValidation: Validations.requiredValidator,
+                          myValidation: Validations.validateUsername,
                         ),
                       ),
                       const SizedBox(
