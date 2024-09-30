@@ -119,4 +119,72 @@ class SystemLoggerController extends GetxController {
           .showDialogue(Get.key.currentContext!);
     }
   }
+
+  Future<void> exportExcel() async {
+    var dio = DioFactory().getDio();
+    try {
+      var response = await dio.get(
+        SystemLogLinks.systemLogExportExcel,
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      );
+      if (response.statusCode == 200) {
+        final bytes = Uint8List.fromList(response.data!);
+        final blob = html.Blob([bytes]);
+        final blobUrl = html.Url.createObjectUrlFromBlob(blob);
+
+        // Create an anchor element and trigger the download
+        html.AnchorElement(href: blobUrl)
+          ..setAttribute('download', 'logs.xlsx')
+          ..click();
+
+        // Revoke the object URL after download
+        html.Url.revokeObjectUrl(blobUrl);
+      } else {
+        throw Exception('Failed to download file');
+      }
+    } catch (e) {
+      MyAwesomeDialogue(
+              title: 'Error', desc: "$e", dialogType: DialogType.error)
+          .showDialogue(Get.key.currentContext!);
+    }
+  }
+
+  ///
+  /// This method will clear the system log and then download the log as an Excel file.
+  ///
+  /// If the download fails, an error dialogue will be shown with the error message.
+  ///
+  Future<void> resetAndExportToText() async {
+    var dio = DioFactory().getDio();
+    try {
+      var response = await dio.get(
+        SystemLogLinks.systemLogResetAndExportToText,
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      );
+      if (response.statusCode == 200) {
+        final bytes = Uint8List.fromList(response.data!);
+        final blob = html.Blob([bytes]);
+        final blobUrl = html.Url.createObjectUrlFromBlob(blob);
+
+        // Create an anchor element and trigger the download
+        html.AnchorElement(href: blobUrl)
+          ..setAttribute('download', 'logs.txt')
+          ..click();
+
+        // Revoke the object URL after download
+        html.Url.revokeObjectUrl(blobUrl);
+        getSystemLogs();
+      } else {
+        throw Exception('Failed to download file');
+      }
+    } catch (e) {
+      MyAwesomeDialogue(
+              title: 'Error', desc: "$e", dialogType: DialogType.error)
+          .showDialogue(Get.key.currentContext!);
+    }
+  }
 }
