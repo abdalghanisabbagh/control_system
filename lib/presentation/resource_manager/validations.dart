@@ -121,6 +121,19 @@ abstract class Validations {
     return null;
   }
 
+  /// Validator for special characters
+  ///
+  /// check if value contains special characters
+  /// return `No special characters allowed` as a [String]
+  /// otherwise return `null`
+  static String? validateNoSpecialCharacters(String? value) {
+    if (value!.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return 'No special characters allowed';
+    }
+
+    return null;
+  }
+
   /// Password Validator
   ///
   /// check if value is null or empty
