@@ -135,6 +135,17 @@ abstract class Validations {
     return null;
   }
 
+  /// Username Validator
+  ///
+  /// check if value is null or empty
+  /// return `Please enter username` as a [String]
+  /// otherwise check if value length is less than 3
+  /// return `Username must be at least 3 characters long`
+  /// otherwise check if value length is more than 20
+  /// return `Username must be at most 20 characters long`
+  /// otherwise check if value contains special characters
+  /// return `Username must not contain special characters`
+  /// otherwise return `null`
   static String? validateUsername(String? value) {
     if (value!.isEmpty) {
       return 'Please enter username';
