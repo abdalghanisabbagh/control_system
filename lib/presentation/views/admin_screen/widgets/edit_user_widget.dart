@@ -50,11 +50,11 @@ class EditUserWidget extends GetView<AdminController> {
                       ),
                     ),
                     const Divider(),
-                    _buildTextField(
+                    _buildNameTextField(
                       "User Full Name",
                       controller.fullNameController,
                     ),
-                    _buildTextField(
+                    _buildUserNameTextField(
                       "Username",
                       controller.usernameController,
                     ),
@@ -244,13 +244,25 @@ class EditUserWidget extends GetView<AdminController> {
     );
   }
 
-  Widget _buildTextField(String title, TextEditingController controller) {
+  Widget _buildNameTextField(String title, TextEditingController controller) {
     return SizedBox(
       width: 450,
       child: MyTextFormFiled(
         title: title,
         controller: controller,
-        myValidation: Validations.requiredValidator,
+        myValidation: Validations.validateName,
+      ),
+    );
+  }
+
+  Widget _buildUserNameTextField(
+      String title, TextEditingController controller) {
+    return SizedBox(
+      width: 450,
+      child: MyTextFormFiled(
+        title: title,
+        controller: controller,
+        myValidation: Validations.validateName,
       ),
     );
   }
