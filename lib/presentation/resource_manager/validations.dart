@@ -93,6 +93,34 @@ abstract class Validations {
     return null;
   }
 
+  /// Name Validator
+  ///
+  /// check if value is null or empty
+  /// return `Please enter name` as a [String]
+  /// otherwise check if value length is less than 3
+  /// return `Name must be at least 3 characters long`
+  /// otherwise check if value length is more than 20
+  /// return `Name must be at most 20 characters long`
+  /// otherwise check if value contains numbers
+  /// return `Name must not contain numbers`
+  /// otherwise check if value contains special characters
+  /// return `Name must not contain special characters`
+  /// otherwise return `null`
+  static String? validateName(String? value) {
+    if (value!.isEmpty) {
+      return 'Please enter name';
+    } else if (value.length < 3) {
+      return 'Name must be at least 3 characters long';
+    } else if (value.length > 20) {
+      return 'Name must be at most 20 characters long';
+    } else if (value.contains(RegExp(r'[0-9]'))) {
+      return 'Name must not contain numbers';
+    } else if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return 'Name must not contain special characters';
+    }
+    return null;
+  }
+
   /// Password Validator
   ///
   /// check if value is null or empty
