@@ -214,12 +214,12 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                               Validations.requiredWithoutSpecialCharacters,
                         ),
 
-                        // MyTextFormFiled(
-                        //   controller: citizenshipController,
-                        //   title: "Citizenship",
-                        //   myValidation:
-                        //       Validations.requiredWithoutSpecialCharacters,
-                        // ),
+                        MyTextFormFiled(
+                          controller: citizenshipController,
+                          title: "Citizenship",
+                          myValidation:
+                              Validations.requiredWithoutSpecialCharacters,
+                        ),
 
                         MyTextFormFiled(
                           controller: secondLanguageController,
@@ -255,6 +255,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                       thirdName: thirdNameController.text,
                                       secondLang: secondLanguageController.text,
                                       religion: religionController.text,
+                                      citizenship: citizenshipController.text,
                                     )
                                         .then(
                                       (value) {

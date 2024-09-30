@@ -29,34 +29,37 @@ class StudentResModel {
   String? schoolClassName;
   int? schoolsID;
   String? secondLang;
+  String? citizenship;
   String? secondName;
   String? thirdName;
   DateTime? updatedAt;
   int? updatedBy;
-  StudentResModel(
-      {this.iD,
-      this.blbId,
-      this.gradesID,
-      this.gradeName,
-      this.schoolsID,
-      this.cohortID,
-      this.cohortName,
-      this.schoolClassID,
-      this.schoolClassName,
-      this.firstName,
-      this.secondName,
-      this.thirdName,
-      this.email,
-      this.secondLang,
-      this.createdBy,
-      this.createdAt,
-      this.updatedBy,
-      this.updatedAt,
-      this.gradeResModel,
-      this.classRoomResModel,
-      this.cohortResModel,
-      this.active,
-      this.religion});
+  StudentResModel({
+    this.iD,
+    this.blbId,
+    this.gradesID,
+    this.gradeName,
+    this.schoolsID,
+    this.cohortID,
+    this.cohortName,
+    this.schoolClassID,
+    this.schoolClassName,
+    this.firstName,
+    this.secondName,
+    this.thirdName,
+    this.email,
+    this.secondLang,
+    this.createdBy,
+    this.createdAt,
+    this.updatedBy,
+    this.updatedAt,
+    this.gradeResModel,
+    this.classRoomResModel,
+    this.cohortResModel,
+    this.active,
+    this.religion,
+    this.citizenship,
+  });
   factory StudentResModel.fromCsvWithHeaders(
       List<dynamic> row, List<String> headers) {
     Map<String, dynamic> data = {};
@@ -77,6 +80,7 @@ class StudentResModel {
       secondLang:
           data.containsKey('second_language') ? data['second_language'] : null,
       religion: data.containsKey('religion') ? data['religion'] : null,
+      citizenship: data.containsKey('Citizenship') ? data['Citizenship'] : null,
     );
   }
   StudentResModel.fromJson(json) {
@@ -104,6 +108,9 @@ class StudentResModel {
     cohortResModel =
         json['cohort'] == null ? null : CohortResModel.fromJson(json['cohort']);
     active = json['Active'];
+    if (json['Citizenship'] != null) {
+      citizenship = json['Citizenship'];
+    }
   }
 
   @override
@@ -124,7 +131,11 @@ class StudentResModel {
         updatedBy.hashCode ^
         updatedAt.hashCode ^
         gradeResModel.hashCode ^
-        active.hashCode;
+        active.hashCode ^
+        religion.hashCode ^
+        classRoomResModel.hashCode ^
+        cohortResModel.hashCode ^
+        citizenship.hashCode;
   }
 
   @override
@@ -147,7 +158,11 @@ class StudentResModel {
         other.updatedBy == updatedBy &&
         other.updatedAt == updatedAt &&
         other.gradeResModel == gradeResModel &&
-        other.active == active;
+        other.active == active &&
+        other.religion == religion &&
+        other.classRoomResModel == classRoomResModel &&
+        other.cohortResModel == cohortResModel &&
+        other.citizenship == citizenship;
   }
 
   Map<String, dynamic> importStudentByExcel() {
@@ -164,6 +179,7 @@ class StudentResModel {
     data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
     data['Second_Lang'] = secondLang;
     data['Religion'] = religion;
+    data['Citizenship'] = citizenship;
     return data;
   }
 
@@ -187,6 +203,9 @@ class StudentResModel {
     data['grades'] = gradeResModel?.toJson();
     data['Active'] = active;
     data['Religion'] = religion;
+    data['school_class'] = classRoomResModel?.toJson();
+    data['cohort'] = cohortResModel?.toJson();
+    data['Citizenship'] = citizenship;
     return data;
   }
 }
