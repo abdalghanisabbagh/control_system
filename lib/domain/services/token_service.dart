@@ -23,12 +23,16 @@ class TokenService extends GetxController {
   }
 
   Future<void> saveNewAccessToken(TokenModel tokenModel) async {
-    _tokenModel = tokenModel;
-    Hive.box('Token').put('Token', jsonEncode(tokenModel.toJson()));
+    _tokenModel = tokenModel.copyWith(
+      createdAt: DateTime.now(),
+    );
+    Hive.box('Token').put('Token', jsonEncode(_tokenModel!.toJson()));
   }
 
   void saveTokenModelToHiveBox(TokenModel tokenModel) {
-    _tokenModel = tokenModel;
-    Hive.box('Token').put('Token', jsonEncode(tokenModel.toJson()));
+    _tokenModel = tokenModel.copyWith(
+      createdAt: DateTime.now(),
+    );
+    Hive.box('Token').put('Token', jsonEncode(_tokenModel!.toJson()));
   }
 }

@@ -23,6 +23,19 @@ class AuthController extends GetxController {
   bool showPass = true;
   TokenService tokenService = Get.find<TokenService>();
 
+  Future<void> checkLoginStatus() async {
+    if (tokenService.tokenModel == null) {
+      isLogin = false;
+    } else {
+      isLogin = DateTime.now().difference(tokenService.tokenModel!.createdAt!) >
+              const Duration(hours: 17)
+          ? false
+          : true;
+    }
+    update();
+    return;
+  }
+
   Future<bool> login(String username, String password) async {
     isLoading = true;
     update(['login_btn']);
@@ -66,12 +79,13 @@ class AuthController extends GetxController {
   @override
   void onClose() async {
     isLogin = false;
+    update();
     super.onClose();
   }
 
   @override
   void onInit() async {
-    isLogin = false;
+    await checkLoginStatus();
     packageInfo = await PackageInfo.fromPlatform();
     update();
     super.onInit();
@@ -100,6 +114,6 @@ class AuthController extends GetxController {
         'refreshToken': tokenService.tokenModel?.rToken,
       },
     );
-    isLogin = false;
+    update();
   }
 }

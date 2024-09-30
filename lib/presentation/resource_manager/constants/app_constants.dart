@@ -11,7 +11,7 @@ abstract class AppConstants {
     'School Director',
     'Academic Dean',
     'Principal',
-    'QR Reader',
+    'Reader',
     'Vice Principal',
     'Super Admin'
   ];

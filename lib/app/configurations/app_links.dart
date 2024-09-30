@@ -126,6 +126,7 @@ class UserLinks {
   static const users = 'users';
   static const usersAddSchools = '$users/add-schools';
   static const usersInSchool = '/$users/school';
+  static const createUsersReader = '/$users/create-reader-user';
 }
 
 class UserRolesSystemsLink {
@@ -142,4 +143,6 @@ class SystemLogLinks {
   static const systemLog = 'system-logger';
   static const systemLogUser = '$systemLog/user';
   static const systemLogExportText = '$systemLog/export-text';
+  static const systemLogExportExcel = '$systemLog/export-excel';
+  static const systemLogResetAndExportToText = '$systemLog/reset-and-export-text';
 }

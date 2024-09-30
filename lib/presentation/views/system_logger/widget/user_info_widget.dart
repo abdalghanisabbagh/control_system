@@ -13,7 +13,7 @@ class UserInfoWidget extends GetView<SystemLoggerController> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: Get.width * 0.2,
-      height: Get.height * 0.32,
+      height: Get.height * 0.40,
       child: Container(
         padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         decoration: BoxDecoration(
