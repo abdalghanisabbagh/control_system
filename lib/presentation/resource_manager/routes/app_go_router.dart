@@ -16,7 +16,7 @@ class AppGoRouter {
     errorBuilder: (context, state) {
       return const PageNotFoundScreen();
     },
-    redirect: (context, state) {
+    redirect: (context, state) async {
       AuthBindings().dependencies();
       final isLoggedIn = Get.find<AuthController>().isLogin;
       if (state.path == AppRoutesNamesAndPaths.loginScreenPath) {
@@ -38,7 +38,7 @@ class AppGoRouter {
           return const LoginScreen();
         },
         onExit: (context, state) {
-          Get.delete<AuthController>();
+          Get.delete<AuthController>(force: true);
           return true;
         },
       ),
@@ -340,6 +340,4 @@ class AppGoRouter {
       ),
     ],
   );
-
-  final authController = Get.find<AuthController>();
 }
