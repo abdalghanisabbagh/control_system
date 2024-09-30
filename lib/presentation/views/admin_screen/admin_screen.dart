@@ -139,12 +139,12 @@ class AdminScreen extends GetView<AdminController> {
                     ),
                   ),
                 ),
-                 SizedBox(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * 0.005,
                 ),
                 Visibility(
                   visible: Get.find<ProfileController>().canAccessWidget(
-                    widgetId: '9300',
+                    widgetId: '9800',
                   ),
                   child: Expanded(
                     flex: 1,
