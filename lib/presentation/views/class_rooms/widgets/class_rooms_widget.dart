@@ -111,7 +111,7 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
                                                 ),
                                               ),
                                               Text(
-                                                "(Class Number :  ${classRoom.classNumber!.toString()})",
+                                                " (Class Number :  ${classRoom.classNumber!.toString()})",
                                                 style: nunitoBold.copyWith(
                                                   color: ColorManager.grey,
                                                   fontSize: 25,
