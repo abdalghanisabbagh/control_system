@@ -26,9 +26,9 @@ class EditStudentWidget extends StatefulWidget {
 class EditStudentWidgetState extends State<EditStudentWidget> {
   late TextEditingController blbIdController;
   late TextEditingController citizenshipController;
-  late TextEditingController fnameController;
-  late TextEditingController lnameController;
-  late TextEditingController mnameController;
+  late TextEditingController firstNameController;
+  late TextEditingController thirdNameController;
+  late TextEditingController secondNameController;
   late TextEditingController religionController;
   late TextEditingController sLangController;
 
@@ -142,26 +142,27 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
 
                   // Other Fields
                   MyTextFormFiled(
-                    controller: fnameController,
+                    controller: firstNameController,
                     title: "First Name",
-                    myValidation: Validations.requiredValidator,
+                    myValidation: Validations.validateName,
                     onChanged: (value) {
                       widget.studentResModel.firstName = value;
                       return null;
                     },
                   ),
                   MyTextFormFiled(
-                    controller: mnameController,
-                    title: "Middle Name",
-                    myValidation: Validations.requiredValidator,
+                    controller: secondNameController,
+                    title: "Second Name",
+                    myValidation: Validations.validateName,
                     onChanged: (value) {
                       widget.studentResModel.secondName = value;
                       return null;
                     },
                   ),
                   MyTextFormFiled(
-                    controller: lnameController,
-                    title: "Last Name",
+                    myValidation: Validations.validateName,
+                    controller: thirdNameController,
+                    title: "Third Name",
                     onChanged: (value) {
                       widget.studentResModel.thirdName = value;
                       return null;
@@ -170,7 +171,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   MyTextFormFiled(
                     controller: religionController,
                     title: "Religion",
-                    myValidation: Validations.requiredValidator,
+                    myValidation: Validations.requiredWithoutSpecialCharacters,
                     onChanged: (value) {
                       widget.studentResModel.religion = value;
                       return null;
@@ -186,7 +187,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   MyTextFormFiled(
                     controller: sLangController,
                     title: "Second Language",
-                    myValidation: Validations.requiredValidator,
+                    myValidation: Validations.requiredWithoutSpecialCharacters,
                     onChanged: (value) {
                       widget.studentResModel.secondLang = value;
                       return null;
@@ -283,9 +284,9 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
   @override
   void dispose() {
     // Dispose controllers when the widget is removed from the widget tree
-    fnameController.dispose();
-    mnameController.dispose();
-    lnameController.dispose();
+    firstNameController.dispose();
+    secondNameController.dispose();
+    thirdNameController.dispose();
     religionController.dispose();
     sLangController.dispose();
     citizenshipController.dispose();
@@ -297,11 +298,11 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
     super.initState();
 
     // Initialize controllers with values from studentResModel
-    fnameController = TextEditingController(
+    firstNameController = TextEditingController(
         text: widget.studentResModel.firstName.toString());
-    mnameController = TextEditingController(
+    secondNameController = TextEditingController(
         text: widget.studentResModel.secondName.toString());
-    lnameController = TextEditingController(
+    thirdNameController = TextEditingController(
         text: widget.studentResModel.thirdName.toString());
     religionController =
         TextEditingController(text: widget.studentResModel.religion.toString());

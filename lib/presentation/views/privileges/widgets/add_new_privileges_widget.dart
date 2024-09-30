@@ -38,7 +38,7 @@ class AddNewPrivilegesWidget extends GetView<PrivilegesController> {
                   height: 15,
                 ),
                 MyTextFormFiled(
-                  myValidation: Validations.requiredValidator,
+                  myValidation: Validations.requiredWithoutSpecialCharacters,
                   controller: nameController,
                   title: "Role Name",
                 ),

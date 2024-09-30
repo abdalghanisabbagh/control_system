@@ -14,15 +14,14 @@ class AddNewScreenWidget extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
 
   final TextEditingController screenIdController = TextEditingController();
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   AddNewScreenWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey, 
+      key: _formKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -34,7 +33,7 @@ class AddNewScreenWidget extends StatelessWidget {
             ),
           ),
           MyTextFormFiled(
-            myValidation: Validations.requiredValidator,
+            myValidation: Validations.requiredWithoutSpecialCharacters,
             controller: nameController,
             title: "Screen Name",
           ),

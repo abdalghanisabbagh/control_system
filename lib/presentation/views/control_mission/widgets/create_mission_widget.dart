@@ -196,7 +196,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                 },
               ),
               MyTextFormFiled(
-                myValidation: Validations.requiredValidator,
+                myValidation: Validations.requiredWithoutSpecialCharacters,
                 controller: missionNameController
                   ..text = controller.batchName ?? "",
                 title: "Mission Name",

@@ -28,7 +28,7 @@ class EditProctorWidget extends GetView<ProctorController> {
         key: controller.formKey,
         child: GetBuilder<ProctorController>(
           id: 'updateProctor',
-          builder: (proctorcontroller) {
+          builder: (proctorController) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,8 +37,8 @@ class EditProctorWidget extends GetView<ProctorController> {
                   width: 450,
                   child: MyTextFormFiled(
                     title: "Proctor Full Name",
-                    controller: proctorcontroller.fullNameController,
-                    myValidation: Validations.requiredValidator,
+                    controller: proctorController.fullNameController,
+                    myValidation: Validations.validateName,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -46,8 +46,8 @@ class EditProctorWidget extends GetView<ProctorController> {
                   width: 450,
                   child: MyTextFormFiled(
                     title: "Username",
-                    controller: proctorcontroller.usernameController,
-                    myValidation: Validations.requiredValidator,
+                    controller: proctorController.usernameController,
+                    myValidation: Validations.validateUsername,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -55,19 +55,19 @@ class EditProctorWidget extends GetView<ProctorController> {
                   width: 450,
                   child: MyTextFormFiled(
                     title: "Password",
-                    controller: proctorcontroller.passwordController,
+                    controller: proctorController.passwordController,
                     myValidation: Validations.requiredValidator,
-                    obscureText: proctorcontroller.showPassord,
+                    obscureText: proctorController.showPassword,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        proctorcontroller.showPassord
+                        proctorController.showPassword
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        proctorcontroller.showPassord =
-                            !proctorcontroller.showPassord;
-                        proctorcontroller.update(
+                        proctorController.showPassword =
+                            !proctorController.showPassword;
+                        proctorController.update(
                           [
                             'updateProctor',
                           ],
@@ -81,18 +81,18 @@ class EditProctorWidget extends GetView<ProctorController> {
                   width: 450,
                   child: MyTextFormFiled(
                     title: "Confirm Password",
-                    controller: proctorcontroller.confirmPasswordController,
-                    obscureText: proctorcontroller.showPassord,
+                    controller: proctorController.confirmPasswordController,
+                    obscureText: proctorController.showPassword,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        proctorcontroller.showPassord
+                        proctorController.showPassword
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        proctorcontroller.showPassord =
-                            !proctorcontroller.showPassord;
-                        proctorcontroller.update(
+                        proctorController.showPassword =
+                            !proctorController.showPassword;
+                        proctorController.update(
                           [
                             'updateProctor',
                           ],
@@ -101,7 +101,7 @@ class EditProctorWidget extends GetView<ProctorController> {
                     ),
                     myValidation: (value) {
                       return Validations.validateConfirmPassword(
-                          value, proctorcontroller.passwordController.text);
+                          value, proctorController.passwordController.text);
                     },
                   ),
                 ),

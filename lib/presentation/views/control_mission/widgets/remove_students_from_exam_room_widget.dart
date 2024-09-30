@@ -72,6 +72,7 @@ class RemoveStudentsFromExamRoomWidget
                         },
                       ),
                       MyTextFormFiled(
+                        isNumber: true,
                         controller: controller.numberOfStudentsController,
                         myValidation: Validations.requiredValidator,
                         title: "Enter Number of Students",

@@ -53,7 +53,7 @@ class ProctorController extends GetxController {
   int? selectedEducationYearId;
   ExamRoomResModel? selectedExamRoom;
   ProctorResModel? selectedProctor;
-  bool showPassord = true;
+  bool showPassword = true;
   final TextEditingController usernameController = TextEditingController();
 
   Future<bool> assignProctorToExamRoom({required bool period}) async {

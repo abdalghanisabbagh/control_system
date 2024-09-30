@@ -30,7 +30,7 @@ class CreateNewProctor extends GetView<ProctorController> {
                   child: MyTextFormFiled(
                     title: "Proctor Full Name",
                     controller: proctorcontroller.fullNameController,
-                    myValidation: Validations.requiredValidator,
+                    myValidation: Validations.validateName,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -39,7 +39,7 @@ class CreateNewProctor extends GetView<ProctorController> {
                   child: MyTextFormFiled(
                     title: "Username",
                     controller: proctorcontroller.usernameController,
-                    myValidation: Validations.requiredValidator,
+                    myValidation: Validations.validateUsername,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -49,16 +49,16 @@ class CreateNewProctor extends GetView<ProctorController> {
                     title: "Password",
                     controller: proctorcontroller.passwordController,
                     myValidation: Validations.requiredValidator,
-                    obscureText: proctorcontroller.showPassord,
+                    obscureText: proctorcontroller.showPassword,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        proctorcontroller.showPassord
+                        proctorcontroller.showPassword
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        proctorcontroller.showPassord =
-                            !proctorcontroller.showPassord;
+                        proctorcontroller.showPassword =
+                            !proctorcontroller.showPassword;
                         proctorcontroller.update(
                           [
                             'createNewProctor',
@@ -74,16 +74,16 @@ class CreateNewProctor extends GetView<ProctorController> {
                   child: MyTextFormFiled(
                     title: "Confirm Password",
                     controller: proctorcontroller.confirmPasswordController,
-                    obscureText: proctorcontroller.showPassord,
+                    obscureText: proctorcontroller.showPassword,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        proctorcontroller.showPassord
+                        proctorcontroller.showPassword
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        proctorcontroller.showPassord =
-                            !proctorcontroller.showPassord;
+                        proctorcontroller.showPassword =
+                            !proctorcontroller.showPassword;
                         proctorcontroller.update(
                           [
                             'createNewProctor',

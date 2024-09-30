@@ -15,11 +15,12 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
   final TextEditingController blbIdController = TextEditingController();
 
   final TextEditingController citizenshipController = TextEditingController();
-  final TextEditingController fnameController = TextEditingController();
-  final TextEditingController lnameController = TextEditingController();
-  final TextEditingController mnameController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController thirdNameController = TextEditingController();
+  final TextEditingController secondNameController = TextEditingController();
   final TextEditingController religionController = TextEditingController();
-  final TextEditingController sLangController = TextEditingController();
+  final TextEditingController secondLanguageController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   AddSingleStudentWidget({super.key});
@@ -189,38 +190,42 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                         ),
 
                         MyTextFormFiled(
-                          controller: fnameController,
+                          controller: firstNameController,
                           title: "First Name",
-                          myValidation: Validations.requiredValidator,
+                          myValidation: Validations.validateName,
                         ),
 
                         MyTextFormFiled(
-                          controller: mnameController,
-                          title: "Middle Name",
-                          myValidation: Validations.requiredValidator,
+                          controller: secondNameController,
+                          title: "Second Name",
+                          myValidation: Validations.validateName,
                         ),
 
                         MyTextFormFiled(
-                          controller: lnameController,
-                          title: "Last Name",
+                          controller: thirdNameController,
+                          title: "Third Name",
+                          myValidation: Validations.validateNoSpecialCharacters,
                         ),
 
                         MyTextFormFiled(
                           controller: religionController,
                           title: "Religion",
-                          myValidation: Validations.requiredValidator,
+                          myValidation:
+                              Validations.requiredWithoutSpecialCharacters,
                         ),
 
-                        MyTextFormFiled(
-                          controller: citizenshipController,
-                          title: "Citizenship",
-                          myValidation: Validations.requiredValidator,
-                        ),
+                        // MyTextFormFiled(
+                        //   controller: citizenshipController,
+                        //   title: "Citizenship",
+                        //   myValidation:
+                        //       Validations.requiredWithoutSpecialCharacters,
+                        // ),
 
                         MyTextFormFiled(
-                          controller: sLangController,
+                          controller: secondLanguageController,
                           title: "Second Language",
-                          myValidation: Validations.requiredValidator,
+                          myValidation:
+                              Validations.requiredWithoutSpecialCharacters,
                         ),
 
                         const SizedBox(
@@ -245,10 +250,10 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                           controller.selectedItemGrade!.value,
                                       schoolClassId: controller
                                           .selectedItemClassRoom!.value,
-                                      firstName: fnameController.text,
-                                      secondName: mnameController.text,
-                                      thirdName: lnameController.text,
-                                      secondLang: sLangController.text,
+                                      firstName: firstNameController.text,
+                                      secondName: secondNameController.text,
+                                      thirdName: thirdNameController.text,
+                                      secondLang: secondLanguageController.text,
                                       religion: religionController.text,
                                     )
                                         .then(

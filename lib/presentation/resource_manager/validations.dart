@@ -70,6 +70,19 @@ abstract class Validations {
     return null;
   }
 
+  static String? requiredWithoutSpecialCharacters(String? value) {
+    if (value != null) {
+      if (value.isEmpty) {
+        return 'Field  Is Required';
+      } else if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+        return 'No special characters allowed';
+      }
+    } else if (value == null) {
+      return 'Field  Is Required';
+    }
+    return null;
+  }
+
   static String? validateConfirmPassword(String? value, String? password) {
     if (value!.isEmpty) {
       return 'Please confirm password';
@@ -118,6 +131,19 @@ abstract class Validations {
     } else if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return 'Name must not contain special characters';
     }
+    return null;
+  }
+
+  /// Validator for special characters
+  ///
+  /// check if value contains special characters
+  /// return `No special characters allowed` as a [String]
+  /// otherwise return `null`
+  static String? validateNoSpecialCharacters(String? value) {
+    if (value!.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return 'No special characters allowed';
+    }
+
     return null;
   }
 
