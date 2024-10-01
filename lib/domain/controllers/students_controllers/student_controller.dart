@@ -141,6 +141,7 @@ class StudentController extends GetxController {
       'class',
       'second_language',
       'religion',
+      'citizenship',
     ];
 
     csvData.add(headers);
@@ -397,58 +398,71 @@ class StudentController extends GetxController {
     super.onInit();
   }
 
-  Future<bool> patchEditStudent({
-    required int studentid,
-    required int gradesId,
-    required int cohortId,
-    required int schoolClassId,
-    required String firstName,
-    required String secondName,
-    required String thirdName,
-    required String secondLang,
-    required String religion,
-    required String citizenship,
-  }) async {
-    isLoadingEditStudent = true;
-    update();
-    bool editStudentHasBeenAdded = false;
-    int schoolId = Hive.box('School').get('Id');
+Future<bool> patchEditStudent({
+  required int studentid,
+  required int gradesId,
+  required int cohortId,
+  required int schoolClassId,
+  required String firstName,
+  required String secondName,
+  required String thirdName,
+  required String? secondLang,
+  required String religion,
+  required String? citizenship,
+}) async {
+  isLoadingEditStudent = true;
+  update();
+  bool editStudentHasBeenAdded = false;
+  int schoolId = Hive.box('School').get('Id');
 
-    ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
+  ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
 
-    var response = await responseHandler.getResponse(
-        path: "${StudentsLinks.student}/$studentid",
-        converter: StudentResModel.fromJson,
-        type: ReqTypeEnum.PATCH,
-        body: {
-          "Grades_ID": gradesId,
-          "Schools_ID": schoolId,
-          "Cohort_ID": cohortId,
-          "School_Class_ID": schoolClassId,
-          "First_Name": firstName,
-          "Second_Name": secondName,
-          "Third_Name": thirdName,
-          "Created_By": _userProfile?.iD,
-          "Second_Lang": secondLang,
-          "Religion": religion,
-          "Citizenship": citizenship,
-        });
+  // بناء الجسم مع التحقق من null
+  Map<String, dynamic> body = {
+    "Grades_ID": gradesId,
+    "Schools_ID": schoolId,
+    "Cohort_ID": cohortId,
+    "School_Class_ID": schoolClassId,
+    "First_Name": firstName,
+    "Second_Name": secondName,
+    "Third_Name": thirdName,
+    "Created_By": _userProfile?.iD,
+    "Religion": religion,
+  };
 
-    response.fold((failure) {
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc: "${failure.code} ::${failure.message}",
-        dialogType: DialogType.error,
-      ).showDialogue(Get.key.currentContext!);
-      editStudentHasBeenAdded = false;
-    }, (result) {
-      getStudents();
-      editStudentHasBeenAdded = true;
-    });
-    isLoadingEditStudent = false;
-    update();
-    return editStudentHasBeenAdded;
+  // إذا كانت citizenship ليست null، أضفها إلى الجسم
+  if (citizenship != null) {
+    body["Citizenship"] = citizenship;
   }
+
+  // إذا كانت secondLang ليست null، أضفها إلى الجسم
+  if (secondLang != null) {
+    body["Second_Lang"] = secondLang;
+  }
+
+  var response = await responseHandler.getResponse(
+    path: "${StudentsLinks.student}/$studentid",
+    converter: StudentResModel.fromJson,
+    type: ReqTypeEnum.PATCH,
+    body: body,
+  );
+
+  response.fold((failure) {
+    MyAwesomeDialogue(
+      title: 'Error',
+      desc: "${failure.code} ::${failure.message}",
+      dialogType: DialogType.error,
+    ).showDialogue(Get.key.currentContext!);
+    editStudentHasBeenAdded = false;
+  }, (result) {
+    getStudents();
+    editStudentHasBeenAdded = true;
+  });
+
+  isLoadingEditStudent = false;
+  update();
+  return editStudentHasBeenAdded;
+}
 
   Future<void> pickAndReadFile() async {
     FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
@@ -540,7 +554,7 @@ class StudentController extends GetxController {
     List<List<dynamic>> rowsAsListOfValues =
         const CsvToListConverter().convert(content);
 
-    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 7) {
+    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 8) {
       List<String> headers =
           rowsAsListOfValues.first.map((header) => header.toString()).toList();
       List<String> requiredHeaders = [
@@ -553,6 +567,7 @@ class StudentController extends GetxController {
         'cohort',
         'second_language',
         'religion',
+        'citizenship',
       ];
 
       List<String> missingHeaders =

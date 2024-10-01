@@ -82,16 +82,16 @@ class EditProctorWidget extends GetView<ProctorController> {
                   child: MyTextFormFiled(
                     title: "Confirm Password",
                     controller: proctorController.confirmPasswordController,
-                    obscureText: proctorController.showPassword,
+                    obscureText: proctorController.showConfirmPassword,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        proctorController.showPassword
+                        proctorController.showConfirmPassword
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        proctorController.showPassword =
-                            !proctorController.showPassword;
+                        proctorController.showConfirmPassword =
+                            !proctorController.showConfirmPassword;
                         proctorController.update(
                           [
                             'updateProctor',

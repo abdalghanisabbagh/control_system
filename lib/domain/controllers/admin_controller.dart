@@ -414,7 +414,6 @@ class AdminController extends GetxController {
   }
 
   Future<void> getUserInSchool() async {
-    debugPrint('get user in school');
     isLoadingGetUsersInSchool = true;
     update();
 
@@ -432,10 +431,8 @@ class AdminController extends GetxController {
           desc: l.message,
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
-        debugPrint('user in school error ${l.message}');
       },
       (r) {
-        debugPrint('user in school ${r.users!.length}');
         userInSchoolList = r.users!.map((user) {
           user.roleType = AppConstants.roleTypes[user.type ?? 0];
           return user;

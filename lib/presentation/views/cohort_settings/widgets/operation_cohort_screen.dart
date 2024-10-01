@@ -90,7 +90,7 @@ class OperationCohortScreen extends GetView<OperationCohortController> {
                         child: SearchableList<CohortResModel>(
                           inputDecoration: const InputDecoration(
                             label: Text(
-                              'Search by name',
+                              'Search by cohort name or school type name',
                             ),
                           ),
                           initialList: controller.cohorts,
@@ -104,9 +104,13 @@ class OperationCohortScreen extends GetView<OperationCohortController> {
                             ),
                           ),
                           filter: (value) => controller.cohorts
-                              .where((element) => element.name!
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()))
+                              .where((element) =>
+                                  element.name!
+                                      .toLowerCase()
+                                      .contains(value.toLowerCase()) ||
+                                  element.schoolType!.name!
+                                      .toLowerCase()
+                                      .contains(value.toLowerCase()))
                               .toList(),
                           itemBuilder: (CohortResModel item) {
                             return Padding(

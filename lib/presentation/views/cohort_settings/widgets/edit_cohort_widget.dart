@@ -37,7 +37,7 @@ class EditCohortWidget extends GetView<OperationCohortController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Edit Cohort",
+                "Edit ${cohort.name}",
                 style: nunitoRegular.copyWith(
                   color: ColorManager.bgSideMenu,
                   fontSize: 25,

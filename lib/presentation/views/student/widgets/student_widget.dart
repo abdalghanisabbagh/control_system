@@ -275,28 +275,28 @@ class StudentWidget extends GetView<StudentController> {
                         field: 'LanguageField',
                         type: PlutoColumnType.text(),
                         cellPadding: EdgeInsets.zero,
-                        renderer: (rendererContext) {
-                          String? value =
-                              rendererContext.row.cells['LanguageField']?.value;
-                          Color backgroundColor = Colors.transparent;
-                          String displayText = value ?? '';
+                        // renderer: (rendererContext) {
+                        //   String? value =
+                        //       rendererContext.row.cells['LanguageField']?.value;
+                        //   Color backgroundColor = Colors.transparent;
+                        //   String displayText = value ?? '';
 
-                          if (value == null || value.isEmpty) {
-                            backgroundColor = Colors.red;
-                            displayText = 'null';
-                          }
+                        //   if (value == null || value.isEmpty) {
+                        //     backgroundColor = Colors.red;
+                        //     displayText = 'null';
+                        //   }
 
-                          return Container(
-                            color: backgroundColor,
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              displayText,
-                              style: const TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                          );
-                        },
+                        //   return Container(
+                        //     color: backgroundColor,
+                        //     alignment: Alignment.centerLeft,
+                        //     child: Text(
+                        //       displayText,
+                        //       style: const TextStyle(
+                        //         color: Colors.black,
+                        //       ),
+                        //     ),
+                        //   );
+                        // },
                       ),
                       PlutoColumn(
                         readOnly: true,
@@ -336,6 +336,10 @@ class StudentWidget extends GetView<StudentController> {
                           );
                         },
                       ),
+                      PlutoColumn(
+                          title: "Citizenship",
+                          field: 'CitizenshipField',
+                          type: PlutoColumnType.text()),
                       PlutoColumn(
                         enableEditingMode: false,
                         title: 'Actions',

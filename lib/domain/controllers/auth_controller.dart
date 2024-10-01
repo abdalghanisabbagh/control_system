@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -16,6 +17,8 @@ import 'profile_controller.dart';
 import 'school_controller.dart';
 
 class AuthController extends GetxController {
+  final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
   bool isLoading = false;
   bool isLogin = false;
   PackageInfo? packageInfo;
@@ -36,7 +39,7 @@ class AuthController extends GetxController {
     return;
   }
 
-  Future<bool> login(String username, String password) async {
+  Future<bool> login() async {
     isLoading = true;
     update(['login_btn']);
     ResponseHandler<LoginResModel> responseHandler = ResponseHandler();
@@ -46,8 +49,8 @@ class AuthController extends GetxController {
       converter: LoginResModel.fromJson,
       type: ReqTypeEnum.POST,
       body: {
-        "userName": username,
-        "password": password,
+        "userName": usernameController.text,
+        "password": passwordController.text,
       },
     );
 

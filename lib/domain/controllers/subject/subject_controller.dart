@@ -201,4 +201,17 @@ class SubjectsController extends GetxController {
         selectedOptions.map((e) => e.value).toList().cast<int>();
     update();
   }
+
+  void sortSubjectsByCreationTime({bool asc = true}) {
+    subjects.sort((a, b) => asc
+        ? a.createdAt!.compareTo(b.createdAt!)
+        : b.createdAt!.compareTo(a.createdAt!));
+    update();
+  }
+
+  void sortSubjectsByName({bool asc = true}) {
+    subjects.sort((a, b) =>
+        asc ? a.name!.compareTo(b.name!) : b.name!.compareTo(a.name!));
+    update();
+  }
 }

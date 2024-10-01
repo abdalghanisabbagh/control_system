@@ -81,9 +81,9 @@ extension PlutoRowExtension on List<StudentResModel> {
       // }
 
       String? secondLang = element.secondLang;
-      if (secondLang == null || secondLang.isEmpty) {
-        errors.add('LanguageField is empty');
-      }
+      // if (secondLang == null || secondLang.isEmpty) {
+      //   errors.add('LanguageField is empty');
+      // }
 
       try {
         final blb = students!.firstWhere((item) => item.blbId == element.blbId);
@@ -105,6 +105,7 @@ extension PlutoRowExtension on List<StudentResModel> {
             'ClassRoomField': PlutoCell(value: schoolClassName),
             'LanguageField': PlutoCell(value: secondLang ?? ''),
             'ReligionField': PlutoCell(value: element.religion),
+            'CitizenshipField': PlutoCell(value: element.citizenship ?? ''),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),
@@ -195,8 +196,9 @@ extension PlutoRowExtension on List<StudentResModel> {
             'CohortField': PlutoCell(value: cohortName),
             'GradeField': PlutoCell(value: gradeName),
             'ClassRoomField': PlutoCell(value: schoolClassName),
-            'LanguageField': PlutoCell(value: element.secondLang),
+            'LanguageField': PlutoCell(value: element.secondLang ?? ''),
             'ReligionField': PlutoCell(value: element.religion),
+            'CitizenshipField': PlutoCell(value: element.citizenship ?? ''),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),
@@ -236,6 +238,7 @@ extension PlutoRowExtension on List<StudentResModel> {
             ),
             'LanguageField': PlutoCell(value: element.secondLang),
             'ReligionField': PlutoCell(value: element.religion),
+            'CitizenshipField': PlutoCell(value: element.citizenship),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),
@@ -278,8 +281,8 @@ extension PlutoRowStudentSeatsNumbersExtansion
     return rows;
   }
 }
-extension PlutoRowSystemLogsExtansion
-    on List<SystemLoggerResModel> {
+
+extension PlutoRowSystemLogsExtansion on List<SystemLoggerResModel> {
   List<PlutoRow> convertSystemLogsToRows() {
     List<PlutoRow> rows = [];
 
@@ -296,7 +299,6 @@ extension PlutoRowSystemLogsExtansion
             'UserId Field': PlutoCell(value: element.userId),
             'CreatedAt Field': PlutoCell(value: element.createdAt),
             'Id Field': PlutoCell(value: element.id.toString()),
-            
             'ActionsField': PlutoCell(value: "Actions"),
           },
         ),
