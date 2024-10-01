@@ -81,9 +81,9 @@ extension PlutoRowExtension on List<StudentResModel> {
       // }
 
       String? secondLang = element.secondLang;
-      if (secondLang == null || secondLang.isEmpty) {
-        errors.add('LanguageField is empty');
-      }
+      // if (secondLang == null || secondLang.isEmpty) {
+      //   errors.add('LanguageField is empty');
+      // }
 
       try {
         final blb = students!.firstWhere((item) => item.blbId == element.blbId);
@@ -105,7 +105,7 @@ extension PlutoRowExtension on List<StudentResModel> {
             'ClassRoomField': PlutoCell(value: schoolClassName),
             'LanguageField': PlutoCell(value: secondLang ?? ''),
             'ReligionField': PlutoCell(value: element.religion),
-            'CitizenshipField': PlutoCell(value: element.citizenship),
+            'CitizenshipField': PlutoCell(value: element.citizenship ?? ''),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),
@@ -196,9 +196,9 @@ extension PlutoRowExtension on List<StudentResModel> {
             'CohortField': PlutoCell(value: cohortName),
             'GradeField': PlutoCell(value: gradeName),
             'ClassRoomField': PlutoCell(value: schoolClassName),
-            'LanguageField': PlutoCell(value: element.secondLang),
+            'LanguageField': PlutoCell(value: element.secondLang ?? ''),
             'ReligionField': PlutoCell(value: element.religion),
-            'CitizenshipField': PlutoCell(value: element.citizenship),
+            'CitizenshipField': PlutoCell(value: element.citizenship ?? ''),
             'ActionsField': PlutoCell(value: 'Actions'),
           },
         ),

@@ -224,8 +224,8 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                         MyTextFormFiled(
                           controller: secondLanguageController,
                           title: "Second Language",
-                          myValidation:
-                              Validations.requiredWithoutSpecialCharacters,
+                          // myValidation:
+                          //     Validations.requiredWithoutSpecialCharacters,
                         ),
 
                         const SizedBox(

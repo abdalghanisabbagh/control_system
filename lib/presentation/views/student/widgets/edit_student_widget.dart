@@ -188,7 +188,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   MyTextFormFiled(
                     controller: sLangController,
                     title: "Second Language",
-                    myValidation: Validations.requiredWithoutSpecialCharacters,
+                    //    myValidation: Validations.requiredWithoutSpecialCharacters,
                     onChanged: (value) {
                       widget.studentResModel.secondLang = value;
                       return null;
@@ -234,11 +234,10 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                                     thirdName:
                                         widget.studentResModel.thirdName!,
                                     secondLang:
-                                        widget.studentResModel.secondLang!,
+                                        widget.studentResModel.secondLang,
                                     religion: widget.studentResModel.religion!,
                                     citizenship:
-                                        widget.studentResModel.citizenship ??
-                                            '',
+                                        widget.studentResModel.citizenship,
                                   )
                                       .then((value) {
                                     value
@@ -312,7 +311,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
     religionController =
         TextEditingController(text: widget.studentResModel.religion.toString());
     sLangController = TextEditingController(
-        text: widget.studentResModel.secondLang.toString());
+        text: widget.studentResModel.secondLang?.toString() ?? '');
     citizenshipController = TextEditingController(
       text: widget.studentResModel.citizenship?.toString() ?? '',
     ); // If you want to initialize it with a value, add it here
