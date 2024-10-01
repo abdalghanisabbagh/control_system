@@ -38,7 +38,9 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      item.name!,
+                      '${item.name}',
+                      style: nunitoBold.copyWith(
+                          color: ColorManager.primary, fontSize: 20),
                     ),
                     const Divider(),
                     MultiSelectDropDownView(

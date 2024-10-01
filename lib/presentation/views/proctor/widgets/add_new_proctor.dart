@@ -20,7 +20,7 @@ class CreateNewProctor extends GetView<ProctorController> {
         key: controller.formKey,
         child: GetBuilder<ProctorController>(
           id: 'createNewProctor',
-          builder: (proctorcontroller) {
+          builder: (proctorController) {
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +29,7 @@ class CreateNewProctor extends GetView<ProctorController> {
                   width: 450,
                   child: MyTextFormFiled(
                     title: "Proctor Full Name",
-                    controller: proctorcontroller.fullNameController,
+                    controller: proctorController.fullNameController,
                     myValidation: Validations.validateName,
                   ),
                 ),
@@ -38,7 +38,7 @@ class CreateNewProctor extends GetView<ProctorController> {
                   width: 450,
                   child: MyTextFormFiled(
                     title: "Username",
-                    controller: proctorcontroller.usernameController,
+                    controller: proctorController.usernameController,
                     myValidation: Validations.validateUsername,
                   ),
                 ),
@@ -47,19 +47,19 @@ class CreateNewProctor extends GetView<ProctorController> {
                   width: 450,
                   child: MyTextFormFiled(
                     title: "Password",
-                    controller: proctorcontroller.passwordController,
+                    controller: proctorController.passwordController,
                     myValidation: Validations.requiredValidator,
-                    obscureText: proctorcontroller.showPassword,
+                    obscureText: proctorController.showPassword,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        proctorcontroller.showPassword
+                        proctorController.showPassword
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        proctorcontroller.showPassword =
-                            !proctorcontroller.showPassword;
-                        proctorcontroller.update(
+                        proctorController.showPassword =
+                            !proctorController.showPassword;
+                        proctorController.update(
                           [
                             'createNewProctor',
                           ],
@@ -73,18 +73,18 @@ class CreateNewProctor extends GetView<ProctorController> {
                   width: 450,
                   child: MyTextFormFiled(
                     title: "Confirm Password",
-                    controller: proctorcontroller.confirmPasswordController,
-                    obscureText: proctorcontroller.showPassword,
+                    controller: proctorController.confirmPasswordController,
+                    obscureText: proctorController.showConfirmPassword,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        proctorcontroller.showPassword
+                        proctorController.showConfirmPassword
                             ? Icons.visibility
                             : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        proctorcontroller.showPassword =
-                            !proctorcontroller.showPassword;
-                        proctorcontroller.update(
+                        proctorController.showConfirmPassword =
+                            !proctorController.showConfirmPassword;
+                        proctorController.update(
                           [
                             'createNewProctor',
                           ],
@@ -93,7 +93,7 @@ class CreateNewProctor extends GetView<ProctorController> {
                     ),
                     myValidation: (value) {
                       return Validations.validateConfirmPassword(
-                          value, proctorcontroller.passwordController.text);
+                          value, proctorController.passwordController.text);
                     },
                   ),
                 ),
