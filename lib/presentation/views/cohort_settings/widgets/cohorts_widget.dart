@@ -41,6 +41,42 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                       ),
                     )
                   : SearchableList<CohortResModel>(
+                      secondaryWidget: PopupMenuButton(
+                        icon: const Icon(Icons.sort),
+                        itemBuilder: (_) {
+                          return [
+                            PopupMenuItem(
+                              onTap: () {
+                                controller.sortCohortsByName(asc: true);
+                              },
+                              value: "Sort by name asc",
+                              child: const Text("Sort by name asc"),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                controller.sortCohortsByName(asc: false);
+                              },
+                              value: "Sort by name desc",
+                              child: const Text("Sort by name desc"),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                controller.sortCohortsByCreationTime(asc: true);
+                              },
+                              value: "Sort by creation time asc",
+                              child: const Text("Sort by creation time asc"),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                controller.sortCohortsByCreationTime(
+                                    asc: false);
+                              },
+                              value: "Sort by creation time desc",
+                              child: const Text("Sort by creation time desc"),
+                            ),
+                          ];
+                        },
+                      ).paddingSymmetric(horizontal: 20),
                       inputDecoration: const InputDecoration(
                         label: Text(
                           'Search by name',

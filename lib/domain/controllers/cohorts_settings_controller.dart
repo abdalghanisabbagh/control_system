@@ -225,4 +225,15 @@ class CohortsSettingsController extends GetxController {
         selectedOptions.map((e) => e.value as int).toList().cast<int>();
     update();
   }
+   void sortCohortsByName({bool asc = true}) {
+    cohorts.sort((a, b) =>
+        asc ? a.name!.compareTo(b.name!) : b.name!.compareTo(a.name!));
+    update();
+  }
+  void sortCohortsByCreationTime({bool asc = true}) {
+    cohorts.sort((a, b) => asc
+        ? a.createdAt!.compareTo(b.createdAt!)
+        : b.createdAt!.compareTo(a.createdAt!));
+    update();
+  }
 }
