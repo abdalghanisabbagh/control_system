@@ -168,18 +168,18 @@ class StudentResModel {
   Map<String, dynamic> importStudentByExcel() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (iD != null) data['ID'] = iD;
-    data['Blb_Id'] = blbId;
-    data['Grades_ID'] = gradesID;
+    if (blbId != null) data['Blb_Id'] = blbId;
+    if (gradesID != null) data['Grades_ID'] = gradesID;
     data['Schools_ID'] = schoolsID ?? Hive.box('School').get('Id');
-    data['Cohort_ID'] = cohortID;
-    data['School_Class_ID'] = schoolClassID;
-    data['First_Name'] = firstName;
-    data['Second_Name'] = secondName;
-    data['Third_Name'] = thirdName ?? ' ';
+    if (cohortID != null) data['Cohort_ID'] = cohortID;
+    if (schoolClassID != null) data['School_Class_ID'] = schoolClassID;
+    if (firstName != null) data['First_Name'] = firstName;
+    if (secondName != null) data['Second_Name'] = secondName;
+    if (thirdName != null) data['Third_Name'] = thirdName ?? ' ';
     data['Created_By'] = Get.find<ProfileController>().cachedUserProfile?.iD;
-    data['Second_Lang'] = secondLang;
-    data['Religion'] = religion;
-    data['Citizenship'] = citizenship;
+    if (secondLang != null) data['Second_Lang'] = secondLang;
+    if (religion != null) data['Religion'] = religion;
+    if (citizenship != null) data['Citizenship'] = citizenship;
     return data;
   }
 
