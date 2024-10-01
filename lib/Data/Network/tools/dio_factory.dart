@@ -56,7 +56,7 @@ class DioFactory {
 
     // Set the dio options
     dio.options = BaseOptions(
-      baseUrl: AppLinks.baseUrlStaging,
+      baseUrl: AppLinks.baseUrlDev,
       headers: headers,
 
       // Set the time out for the dio instance
