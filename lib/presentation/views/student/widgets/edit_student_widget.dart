@@ -237,7 +237,8 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                                         widget.studentResModel.secondLang!,
                                     religion: widget.studentResModel.religion!,
                                     citizenship:
-                                        widget.studentResModel.citizenship!,
+                                        widget.studentResModel.citizenship ??
+                                            '',
                                   )
                                       .then((value) {
                                     value
@@ -293,6 +294,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
     religionController.dispose();
     sLangController.dispose();
     citizenshipController.dispose();
+
     super.dispose();
   }
 
@@ -312,7 +314,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
     sLangController = TextEditingController(
         text: widget.studentResModel.secondLang.toString());
     citizenshipController = TextEditingController(
-        text: widget.studentResModel.citizenship
-            .toString()); // If you want to initialize it with a value, add it here
+      text: widget.studentResModel.citizenship?.toString() ?? '',
+    ); // If you want to initialize it with a value, add it here
   }
 }

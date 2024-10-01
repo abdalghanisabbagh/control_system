@@ -217,8 +217,8 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                         MyTextFormFiled(
                           controller: citizenshipController,
                           title: "Citizenship",
-                          myValidation:
-                              Validations.requiredWithoutSpecialCharacters,
+                          // myValidation:
+                          //     Validations.requiredWithoutSpecialCharacters,
                         ),
 
                         MyTextFormFiled(
