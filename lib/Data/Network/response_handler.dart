@@ -10,7 +10,6 @@ class ResponseHandler<T> {
 
   ResponseHandler() : _dio = DioFactory().getDio();
 
-
   Future<Either<Failure, T>> getResponse({
     required String path,
     required T Function(dynamic) converter,
@@ -181,7 +180,7 @@ class ResponseHandler<T> {
             return Left(Failure(2025, 'error while convert $T from json'));
           }
         } else {
-          return Left(
+          return const Left(
             Failure(
               2025,
               'No data found',

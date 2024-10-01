@@ -74,7 +74,7 @@ abstract class Validations {
     if (value != null) {
       if (value.isEmpty) {
         return 'Field  Is Required';
-      } else if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      } else if (value.contains(RegExp(r'[!@#$%^&*(),?":{}|<>]'))) {
         return 'No special characters allowed';
       }
     } else if (value == null) {
@@ -128,7 +128,7 @@ abstract class Validations {
       return 'Name must be at most 20 characters long';
     } else if (value.contains(RegExp(r'[0-9]'))) {
       return 'Name must not contain numbers';
-    } else if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+    } else if (value.contains(RegExp(r'[!@#$%^&*(),?":{}|<>]'))) {
       return 'Name must not contain special characters';
     }
     return null;
@@ -140,7 +140,7 @@ abstract class Validations {
   /// return `No special characters allowed` as a [String]
   /// otherwise return `null`
   static String? validateNoSpecialCharacters(String? value) {
-    if (value!.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+    if (value!.contains(RegExp(r'[!@#$%^&*(),?":{}|<>]'))) {
       return 'No special characters allowed';
     }
 
@@ -179,7 +179,7 @@ abstract class Validations {
       return 'Username must be at least 3 characters long';
     } else if (value.length > 20) {
       return 'Username must be at most 20 characters long';
-    } else if (value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+    } else if (value.contains(RegExp(r'[!@#$%^&*(),?":{}|<>]'))) {
       return 'Username must not contain special characters';
     }
     return null;

@@ -10,17 +10,10 @@ import '../../../resource_manager/ReusableWidget/my_text_form_field.dart';
 import '../../../resource_manager/constants/app_constants.dart';
 import '../../../resource_manager/validations.dart';
 
-void _login(
-    Future<bool> Function(String email, String password) login,
-    String username,
-    String password,
-    GlobalKey<FormState> formKey,
+void _login(Future<bool> Function() login, GlobalKey<FormState> formKey,
     BuildContext context) async {
   if (formKey.currentState!.validate()) {
-    login(
-      username,
-      password,
-    ).then(
+    login().then(
       (value) {
         value
             ? {
@@ -37,8 +30,6 @@ void _login(
 class LoginForm extends GetView<AuthController> {
   final formKey = GlobalKey<FormState>();
 
-  final passwordController = TextEditingController();
-  final usernameController = TextEditingController();
   LoginForm({super.key});
 
   @override
@@ -48,8 +39,6 @@ class LoginForm extends GetView<AuthController> {
         if (value.logicalKey == LogicalKeyboardKey.enter) {
           _login(
             controller.login,
-            usernameController.text,
-            passwordController.text,
             formKey,
             context,
           );
@@ -125,7 +114,7 @@ class LoginForm extends GetView<AuthController> {
                                 autofillHints: const [
                                   AutofillHints.username,
                                 ],
-                                controller: usernameController,
+                                controller: controller.usernameController,
                                 myValidation: Validations.validateUsername,
                                 title: "username",
                               ),
@@ -140,7 +129,7 @@ class LoginForm extends GetView<AuthController> {
                                       AutofillHints.password,
                                     ],
                                     obscureText: controller.showPass,
-                                    controller: passwordController,
+                                    controller: controller.passwordController,
                                     myValidation: Validations.requiredValidator,
                                     enableBorderColor: ColorManager.grey,
                                     title: "Password",
@@ -260,8 +249,6 @@ class LoginForm extends GetView<AuthController> {
                                             onPressed: () {
                                               _login(
                                                 controller.login,
-                                                usernameController.text,
-                                                passwordController.text,
                                                 formKey,
                                                 context,
                                               );
