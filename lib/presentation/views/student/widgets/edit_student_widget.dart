@@ -177,13 +177,14 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                       return null;
                     },
                   ),
-                  // MyTextFormFiled(
-                  //   controller: citizenshipController,
-                  //   title: "Citizenship",
-                  //   onChanged: (value) {
-                  //     widget.studentResModel.citizenship! = value;
-                  //   },
-                  // ),
+                  MyTextFormFiled(
+                    controller: citizenshipController,
+                    title: "Citizenship",
+                    onChanged: (value) {
+                      widget.studentResModel.citizenship = value;
+                      return value;
+                    },
+                  ),
                   MyTextFormFiled(
                     controller: sLangController,
                     title: "Second Language",
@@ -235,6 +236,8 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                                     secondLang:
                                         widget.studentResModel.secondLang!,
                                     religion: widget.studentResModel.religion!,
+                                    citizenship:
+                                        widget.studentResModel.citizenship!,
                                   )
                                       .then((value) {
                                     value
