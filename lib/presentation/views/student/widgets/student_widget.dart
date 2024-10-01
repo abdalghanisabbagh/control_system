@@ -337,6 +337,10 @@ class StudentWidget extends GetView<StudentController> {
                         },
                       ),
                       PlutoColumn(
+                          title: "Citizenship",
+                          field: 'CitizenshipField',
+                          type: PlutoColumnType.text()),
+                      PlutoColumn(
                         enableEditingMode: false,
                         title: 'Actions',
                         field: 'ActionsField',

@@ -141,6 +141,7 @@ class StudentController extends GetxController {
       'class',
       'second_language',
       'religion',
+      'citizenship',
     ];
 
     csvData.add(headers);
@@ -540,7 +541,7 @@ class StudentController extends GetxController {
     List<List<dynamic>> rowsAsListOfValues =
         const CsvToListConverter().convert(content);
 
-    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 7) {
+    if (rowsAsListOfValues.isNotEmpty && rowsAsListOfValues[0].length > 8) {
       List<String> headers =
           rowsAsListOfValues.first.map((header) => header.toString()).toList();
       List<String> requiredHeaders = [
@@ -553,6 +554,7 @@ class StudentController extends GetxController {
         'cohort',
         'second_language',
         'religion',
+        'citizenship',
       ];
 
       List<String> missingHeaders =

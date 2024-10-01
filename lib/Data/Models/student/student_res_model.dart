@@ -80,7 +80,7 @@ class StudentResModel {
       secondLang:
           data.containsKey('second_language') ? data['second_language'] : null,
       religion: data.containsKey('religion') ? data['religion'] : null,
-      citizenship: data.containsKey('Citizenship') ? data['Citizenship'] : null,
+      citizenship: data.containsKey('citizenship') ? data['citizenship'] : null,
     );
   }
   StudentResModel.fromJson(json) {

@@ -160,7 +160,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                     },
                   ),
                   MyTextFormFiled(
-                    myValidation: Validations.validateName,
+                    //  myValidation: Validations.validateName,
                     controller: thirdNameController,
                     title: "Third Name",
                     onChanged: (value) {
@@ -311,7 +311,8 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
         TextEditingController(text: widget.studentResModel.religion.toString());
     sLangController = TextEditingController(
         text: widget.studentResModel.secondLang.toString());
-    citizenshipController =
-        TextEditingController(); // If you want to initialize it with a value, add it here
+    citizenshipController = TextEditingController(
+        text: widget.studentResModel.citizenship
+            .toString()); // If you want to initialize it with a value, add it here
   }
 }
