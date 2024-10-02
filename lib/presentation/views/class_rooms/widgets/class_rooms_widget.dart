@@ -44,6 +44,59 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
                         ),
                       )
                     : SearchableList(
+                        secondaryWidget: PopupMenuButton(
+                          icon: const Icon(Icons.sort),
+                          itemBuilder: (_) {
+                            return [
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.sortClassesByName(asc: true);
+                                },
+                                value: "Sort By Name Asc",
+                                child: const Text("Sort By Name Asc"),
+                              ),
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.sortClassesByName(asc: false);
+                                },
+                                value: "Sort By Name Desc",
+                                child: const Text("Sort By Name Desc"),
+                              ),
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.sortClassesByCreationTime(
+                                      asc: true);
+                                },
+                                value: "Sort By Creation Time Asc",
+                                child: const Text("Sort By Creation Time Asc"),
+                              ),
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.sortClassesByCreationTime(
+                                      asc: false);
+                                },
+                                value: "Sort By Creation Time Desc",
+                                child: const Text("Sort By Creation Time Desc"),
+                              ),
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.sortClassesByCreationTime(
+                                      asc: true);
+                                },
+                                value: "Sort By Class Number Asc",
+                                child: const Text("Sort By Class Number Asc"),
+                              ),
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.sortClassesByCreationTime(
+                                      asc: false);
+                                },
+                                value: "Sort By Class Number Desc",
+                                child: const Text("Sort By Class Number Desc"),
+                              ),
+                            ];
+                          },
+                        ).paddingSymmetric(horizontal: 20),
                         inputDecoration: const InputDecoration(
                           label: Text(
                             'Search by name',

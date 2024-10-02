@@ -29,8 +29,6 @@ class AvailableStudents extends GetView<DistributeStudentsController> {
                       horizontal: 10,
                       vertical: 5,
                     ),
-                    height: Get.height * 0.13,
-                    width: Get.width * 0.2,
                     decoration: BoxDecoration(
                       color: ColorManager.gradesColor[controller
                           .availableStudents[i].student!.gradeResModel!.name!],
@@ -41,40 +39,40 @@ class AvailableStudents extends GetView<DistributeStudentsController> {
                         width: 1,
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
-                          style: nunitoBold.copyWith(
-                            fontSize: 15,
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Student Name: ${controller.availableStudents[i].student?.firstName!} ${controller.availableStudents[i].student?.secondName!} ${controller.availableStudents[i].student?.thirdName!} ',
+                            style: nunitoBold.copyWith(
+                              fontSize: 15,
+                            ),
+                            maxLines: 1,
                           ),
-                          maxLines: 1,
-                        ),
-                        Text(
-                          'Seat NO: ${controller.availableStudents[i].seatNumber}',
-                          style: nunitoBold.copyWith(
-                            fontSize: 15,
+                          Text(
+                            'Seat NO: ${controller.availableStudents[i].seatNumber}',
+                            style: nunitoBold.copyWith(
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
-                          style: nunitoBold.copyWith(
-                            fontSize: 15,
+                          Text(
+                            'Grade/Class : ${controller.availableStudents[i].student?.gradeResModel?.name}/${controller.availableStudents[i].student?.classRoomResModel?.name}',
+                            style: nunitoBold.copyWith(
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Desk NO : ${controller.classDesks.indexWhere((element) => element.id == controller.availableStudents[i].classDeskID) + 1}',
-                          style: nunitoBold.copyWith(
-                            fontSize: 15,
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              FittedBox(
-                                child: IconButton(
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Desk NO : ${controller.classDesks.indexWhere((element) => element.id == controller.availableStudents[i].classDeskID) + 1}',
+                                  style: nunitoBold.copyWith(
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                IconButton(
                                   onPressed: () {
                                     controller.removeStudentFromExamRoom(
                                         studentSeatNumberId: controller
@@ -84,11 +82,11 @@ class AvailableStudents extends GetView<DistributeStudentsController> {
                                     FontAwesomeIcons.trashCan,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                   return Draggable<StudentSeatNumberResModel>(

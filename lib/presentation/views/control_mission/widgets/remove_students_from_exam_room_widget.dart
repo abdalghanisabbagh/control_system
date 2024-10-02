@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
@@ -48,9 +49,47 @@ class RemoveStudentsFromExamRoomWidget
                               MultiSelectDropDownView(
                                 hintText: 'Select Grade',
                                 onOptionSelected: (selectedItem) {
-                                  controller.selectedItemGradeId =
-                                      selectedItem.first.value;
-                                  formFieldState.didChange(selectedItem);
+                                  selectedItem.length == 1
+                                      ? {
+                                          controller.numberOfStudentsInClasses =
+                                              {},
+                                          controller.availableStudents
+                                              .forEach((element) {
+                                            controller
+                                                    .numberOfStudentsInClasses[
+                                                element
+                                                    .student!
+                                                    .classRoomResModel!
+                                                    .name!] = (controller
+                                                            .numberOfStudentsInClasses[
+                                                        element
+                                                            .student!
+                                                            .classRoomResModel!
+                                                            .name!] ??
+                                                    0) +
+                                                1;
+                                          }),
+                                          controller.selectedItemGradeId =
+                                              selectedItem.first.value,
+                                          formFieldState
+                                              .didChange(selectedItem),
+                                          controller.optionsClasses = controller
+                                              .availableStudents
+                                              .where((element) =>
+                                                  element.gradesID ==
+                                                  selectedItem.first.value)
+                                              .map((element) => ValueItem(
+                                                  label:
+                                                      '${element.student!.classRoomResModel!.name!} (${controller.numberOfStudentsInClasses[element.student!.classRoomResModel!.name!]})',
+                                                  value: element.student!
+                                                      .classRoomResModel!.iD))
+                                              .toSet()
+                                              .toList(),
+                                        }
+                                      : {
+                                          controller.optionsClasses.clear(),
+                                        };
+                                  controller.update(['class']);
                                 },
                                 options: controller.optionsGradesInExamRoom,
                               ),
@@ -69,6 +108,26 @@ class RemoveStudentsFromExamRoomWidget
                                 ),
                             ],
                           );
+                        },
+                      ),
+                      GetBuilder<DistributeStudentsController>(
+                        id: 'class',
+                        builder: (_) {
+                          return controller.optionsClasses.isEmpty
+                              ? const SizedBox()
+                              : MultiSelectDropDownView(
+                                  key: UniqueKey(),
+                                  hintText: 'Select class optional',
+                                  onOptionSelected: (selectedItem) {
+                                    selectedItem.length == 1
+                                        ? controller.selectedItemClassId =
+                                            selectedItem.first.value
+                                        : {
+                                            controller.selectedItemClassId = -1,
+                                          };
+                                  },
+                                  options: controller.optionsClasses,
+                                );
                         },
                       ),
                       MyTextFormFiled(
@@ -91,6 +150,9 @@ class RemoveStudentsFromExamRoomWidget
                                       onPressed: () {
                                         controller.numberOfStudentsController
                                             .clear();
+                                        controller.selectedItemClassId = -1;
+                                        controller.selectedItemGradeId = -1;
+                                        controller.optionsClasses.clear();
                                       },
                                     ),
                                   ),
@@ -105,13 +167,25 @@ class RemoveStudentsFromExamRoomWidget
                                               ? {
                                                   controller
                                                       .removeStudentsFromExamRoom(),
+                                                  controller
+                                                      .selectedItemClassId = -1,
+                                                  controller
+                                                      .selectedItemGradeId = -1,
+                                                  controller.optionsClasses
+                                                      .clear(),
                                                   Get.back(),
                                                 }
                                               : MyAwesomeDialogue(
                                                   title: 'Error',
-                                                  desc:
-                                                      '''PLease Make Sure You Have Entered The Right Number Of Students.
+                                                  desc: controller
+                                                              .selectedItemClassId ==
+                                                          -1
+                                                      ? '''PLease Make Sure You Have Entered The Right Number Of Students.
                                                       \n current number of students from the selected grade: ${controller.availableStudents.where((element) => element.gradesID == controller.selectedItemGradeId).length}
+                                                      \n current number of students from the selected number of students: ${controller.numberOfStudentsController.text}'''
+                                                      : '''PLease Make Sure You Have Entered The Right Number Of Students.
+                                                      \n current number of students from the selected grade: ${controller.availableStudents.where((element) => element.gradesID == controller.selectedItemGradeId).length}
+                                                      \n currently available students from the selected class is ${controller.availableStudents.where((element) => element.student!.classRoomResModel!.iD == controller.selectedItemClassId).length.toString()} students.
                                                       \n current number of students from the selected number of students: ${controller.numberOfStudentsController.text}''',
                                                   dialogType: DialogType.error,
                                                 ).showDialogue(context);

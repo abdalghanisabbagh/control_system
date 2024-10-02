@@ -30,6 +30,7 @@ import '../../../presentation/resource_manager/ReusableWidget/my_snack_bar.dart'
 import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class DistributeStudentsController extends GetxController {
+  Map<String, int> numberOfStudentsInClasses = {};
   List<StudentSeatNumberResModel> availableStudents = [];
   int availableStudentsCount = 0;
   List<int> blockedClassDesks = [];
@@ -43,9 +44,11 @@ class DistributeStudentsController extends GetxController {
   int numberOfRows = 0;
   TextEditingController numberOfStudentsController = TextEditingController();
   List<ValueItem> optionsGrades = [];
+  List<ValueItem> optionsClasses = [];
   List<ValueItem> optionsGradesInExamRoom = [];
   List<StudentSeatNumberResModel> removedStudentsFromExamRoom = [];
   int selectedItemGradeId = -1;
+  int selectedItemClassId = -1;
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
 
   void addStudentToDesk(
@@ -317,7 +320,20 @@ class DistributeStudentsController extends GetxController {
   }
 
   bool canAddStudents() {
-    return (countByGrade[selectedItemGradeId.toString()]! -
+    if (selectedItemClassId != -1) {
+      return (studentsSeatNumbers
+                  .where((element) =>
+                      (element.gradesID == selectedItemGradeId) &&
+                      (element.student!.classRoomResModel!.iD ==
+                          selectedItemClassId))
+                  .length +
+              int.parse(numberOfStudentsController.text)) <=
+          int.parse(examRoomResModel.classRoomResModel!.maxCapacity!);
+    }
+    return (studentsSeatNumbers
+                    .where(
+                        (element) => (element.gradesID == selectedItemGradeId))
+                    .length -
                 int.parse(numberOfStudentsController.text) >=
             0) &&
         (int.parse(numberOfStudentsController.text) +
@@ -326,6 +342,16 @@ class DistributeStudentsController extends GetxController {
   }
 
   bool canRemoveStudents() {
+    if (selectedItemClassId != -1) {
+      return availableStudents
+                  .where((element) =>
+                      (element.gradesID == selectedItemGradeId) &&
+                      (element.student!.classRoomResModel!.iD ==
+                          selectedItemClassId))
+                  .length -
+              int.parse(numberOfStudentsController.text) >=
+          0;
+    }
     return availableStudents
                 .where((element) => (element.gradesID == selectedItemGradeId))
                 .length -
@@ -916,12 +942,29 @@ class DistributeStudentsController extends GetxController {
   }
 
   void getAvailableStudents() async {
-    availableStudents.addAll(studentsSeatNumbers
-        .where((element) => (element.gradesID == selectedItemGradeId))
-        .take(int.parse(numberOfStudentsController.text)));
+    int? addedStudentsCount;
+    if (selectedItemClassId == -1) {
+      addedStudentsCount = studentsSeatNumbers
+          .where((element) => (element.gradesID == selectedItemGradeId))
+          .take(int.parse(numberOfStudentsController.text))
+          .length;
+      availableStudents.addAll(studentsSeatNumbers
+          .where((element) => (element.gradesID == selectedItemGradeId))
+          .take(int.parse(numberOfStudentsController.text)));
+    } else if (selectedItemClassId != -1) {
+      addedStudentsCount = studentsSeatNumbers
+          .where((element) =>
+              element.gradesID == selectedItemGradeId &&
+              element.student!.classRoomResModel!.iD == selectedItemClassId)
+          .length;
+      availableStudents.addAll(studentsSeatNumbers
+          .where((element) => (element.gradesID == selectedItemGradeId &&
+              element.student!.classRoomResModel!.iD == selectedItemClassId))
+          .take(int.parse(numberOfStudentsController.text)));
+    }
 
     ResponseHandler responseHandler = ResponseHandler();
-    await responseHandler.getResponse(
+    responseHandler.getResponse(
       path: '${StudentsLinks.studentSeatNumbers}/many',
       converter: (_) {},
       type: ReqTypeEnum.PATCH,
@@ -943,10 +986,9 @@ class DistributeStudentsController extends GetxController {
       ..sort(
         (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
       );
-    availableStudentsCount -= int.parse(numberOfStudentsController.text);
+    availableStudentsCount -= addedStudentsCount!;
     countByGrade[selectedItemGradeId.toString()] =
-        countByGrade[selectedItemGradeId.toString()]! -
-            int.parse(numberOfStudentsController.text);
+        countByGrade[selectedItemGradeId.toString()]! - addedStudentsCount;
     optionsGradesInExamRoom.contains(ValueItem(
             label: grades
                 .firstWhere((element) => element.iD == selectedItemGradeId)
@@ -1229,12 +1271,21 @@ class DistributeStudentsController extends GetxController {
   }
 
   void removeStudentsFromExamRoom() {
-    List<StudentSeatNumberResModel> removedStudents = availableStudents.reversed
-        .where((element) => (element.gradesID == selectedItemGradeId))
-        .take(int.parse(numberOfStudentsController.text))
-        .toList();
+    List<StudentSeatNumberResModel>? removedStudents;
+    if (selectedItemClassId == -1) {
+      removedStudents = availableStudents.reversed
+          .where((element) => (element.gradesID == selectedItemGradeId))
+          .take(int.parse(numberOfStudentsController.text))
+          .toList();
+    } else if (selectedItemClassId != -1) {
+      removedStudents = availableStudents.reversed
+          .where((element) => (element.gradesID == selectedItemGradeId &&
+              element.student!.classRoomResModel!.iD == selectedItemClassId))
+          .take(int.parse(numberOfStudentsController.text))
+          .toList();
+    }
     studentsSeatNumbers.addAll(
-      removedStudents,
+      removedStudents!,
     );
     removedStudentsFromExamRoom
       ..addAll(removedStudents)
@@ -1250,10 +1301,9 @@ class DistributeStudentsController extends GetxController {
       ..sort(
         (a, b) => a.seatNumber!.compareTo(b.seatNumber!),
       );
-    availableStudentsCount += int.parse(numberOfStudentsController.text);
+    availableStudentsCount += removedStudents.length;
     countByGrade[selectedItemGradeId.toString()] =
-        countByGrade[selectedItemGradeId.toString()]! +
-            int.parse(numberOfStudentsController.text);
+        countByGrade[selectedItemGradeId.toString()]! + removedStudents.length;
     availableStudents
             .where((element) => (element.gradesID == selectedItemGradeId))
             .isEmpty

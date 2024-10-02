@@ -1,4 +1,3 @@
-import '../class_room/class_room_res_model.dart';
 import '../student/student_res_model.dart';
 
 class StudentSeatNumberResModel {
@@ -12,7 +11,6 @@ class StudentSeatNumberResModel {
   int? iD;
   String? seatNumber;
   StudentResModel? student;
-  ClassRoomResModel? classRoomResModel;
   int? studentID;
   StudentSeatNumberResModel({
     this.iD,
@@ -23,7 +21,6 @@ class StudentSeatNumberResModel {
     this.controlMissionID,
     this.seatNumber,
     this.student,
-    this.classRoomResModel,
     this.active,
   });
   StudentSeatNumberResModel.fromJson(json) {
@@ -36,9 +33,6 @@ class StudentSeatNumberResModel {
     seatNumber = json['Seat_Number'];
     active = json['Active'];
     student = StudentResModel?.fromJson(json['student']);
-    if (classRoomResModel != null) {
-      classRoomResModel = ClassRoomResModel.fromJson(json['school_class']);
-    }
   }
 
   Map<String, dynamic> toJson() {
@@ -52,7 +46,6 @@ class StudentSeatNumberResModel {
     data['Seat_Number'] = seatNumber;
     data['Active'] = active;
     data['student'] = student?.toJson();
-    data['school_class'] = classRoomResModel?.toJson();
     return data;
   }
 }
