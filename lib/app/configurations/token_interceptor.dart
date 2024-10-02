@@ -18,7 +18,7 @@ class TokenInterceptor extends Interceptor {
         String refresh = tokenService.tokenModel!.rToken;
         var dio = Dio(
           BaseOptions(
-            baseUrl: AppLinks.baseUrlStaging,
+            baseUrl: AppLinks.baseUrlProd,
           ),
         );
 
