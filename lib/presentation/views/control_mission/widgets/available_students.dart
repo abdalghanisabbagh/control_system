@@ -58,7 +58,7 @@ class AvailableStudents extends GetView<DistributeStudentsController> {
                           ),
                         ),
                         Text(
-                          'Grade : ${controller.availableStudents[i].student?.gradeResModel?.name}',
+                          'Grade/Class : ${controller.availableStudents[i].student?.gradeResModel?.name}/${controller.availableStudents[i].student?.classRoomResModel?.name}',
                           style: nunitoBold.copyWith(
                             fontSize: 15,
                           ),
