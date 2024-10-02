@@ -225,11 +225,36 @@ class CohortsSettingsController extends GetxController {
         selectedOptions.map((e) => e.value as int).toList().cast<int>();
     update();
   }
-   void sortCohortsByName({bool asc = true}) {
-    cohorts.sort((a, b) =>
-        asc ? a.name!.compareTo(b.name!) : b.name!.compareTo(a.name!));
+
+  void sortCohortsByName({bool asc = true}) {
+    cohorts.sort((a, b) {
+      final regex = RegExp(r'(\d+)|(\D+)');
+      final aMatches = regex.allMatches(a.name!).map((m) => m[0]).toList();
+      final bMatches = regex.allMatches(b.name!).map((m) => m[0]).toList();
+
+      for (int i = 0; i < aMatches.length && i < bMatches.length; i++) {
+        final aPart = aMatches[i]!;
+        final bPart = bMatches[i]!;
+
+        final isANumeric = int.tryParse(aPart) != null;
+        final isBNumeric = int.tryParse(bPart) != null;
+
+        if (isANumeric && isBNumeric) {
+          final compareNumeric = int.parse(aPart).compareTo(int.parse(bPart));
+          if (compareNumeric != 0) {
+            return asc ? compareNumeric : -compareNumeric;
+          }
+        } else {
+          final compareAlpha = aPart.compareTo(bPart);
+          if (compareAlpha != 0) return asc ? compareAlpha : -compareAlpha;
+        }
+      }
+
+      return asc ? a.name!.compareTo(b.name!) : b.name!.compareTo(a.name!);
+    });
     update();
   }
+
   void sortCohortsByCreationTime({bool asc = true}) {
     cohorts.sort((a, b) => asc
         ? a.createdAt!.compareTo(b.createdAt!)
