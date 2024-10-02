@@ -186,7 +186,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                           controller: blbIdController,
                           title: "BLB ID",
                           isNumber: true,
-                          myValidation: Validations.requiredValidator,
+                          myValidation: Validations.validatorBlbId,
                         ),
 
                         MyTextFormFiled(

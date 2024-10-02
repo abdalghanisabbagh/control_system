@@ -70,6 +70,23 @@ abstract class Validations {
     return null;
   }
 
+
+
+static String? validatorBlbId(String? value) {
+  if (value != null) {
+    if (value.isEmpty) {
+      return 'Field is required';
+    }
+    if (value.length < 8) {
+      return 'Field must contain at least 8 characters';
+    } else if (value.length > 12) {
+      return 'Field must contain no more than 12 characters';
+    }
+  } else {
+    return 'Field is required';
+  }
+  return null;
+}
   static String? requiredWithoutSpecialCharacters(String? value) {
     if (value != null) {
       if (value.isEmpty) {
