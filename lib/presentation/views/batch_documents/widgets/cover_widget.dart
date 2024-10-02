@@ -212,162 +212,99 @@ class CoverWidget extends GetView<CoversSheetsController> {
             ),
             child: Row(
               children: [
-                'american' == controller.schoolTypeName?.toLowerCase()
-                    ? controller.isLoadingGeneratePdf
-                        ? Expanded(
-                            child: Center(
-                              child: SizedBox(
-                                height: 50,
-                                child: FittedBox(
-                                  child:
-                                      LoadingIndicators.getLoadingIndicator(),
-                                ),
-                              ),
+                if (controller.isLoadingGeneratePdf)
+                  Expanded(
+                    child: Center(
+                      child: SizedBox(
+                        height: 50,
+                        child: FittedBox(
+                          child: LoadingIndicators.getLoadingIndicator(),
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        if ('american' ==
+                            controller.schoolTypeName?.toLowerCase()) {
+                          controller.generateAmCoverSheet(
+                            examMissionId: examMissionObject.iD!,
+                            controlMissionName: controlMissionObject.name!,
+                          );
+                        } else if ('british' ==
+                            controller.schoolTypeName?.toLowerCase()) {
+                          controller.generateBrCoverSheet(
+                            examMissionId: examMissionObject.iD!,
+                            controlMissionName: controlMissionObject.name!,
+                          );
+                        } else if ('ib' ==
+                            controller.schoolTypeName?.toLowerCase()) {
+                          controller.generateIBCoverSheet(
+                            examMissionId: examMissionObject.iD!,
+                            controlMissionName: controlMissionObject.name!,
+                          );
+                        }
+                      },
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                          color: _getSchoolColor(
+                              controller.schoolTypeName?.toLowerCase()),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(_getSchoolCoverSheetText(
+                                controller.schoolTypeName?.toLowerCase())),
+                            const SizedBox(width: 20),
+                            const Icon(
+                              Icons.print,
+                              color: ColorManager.white,
                             ),
-                          )
-                        : Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                controller.generateAmCoverSheet(
-                                  examMissionId: examMissionObject.iD!,
-                                  controlMissionName:
-                                      controlMissionObject.name!,
-                                );
-                              },
-                              child: Container(
-                                height: 50,
-                                width: double.infinity,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  ),
-                                  color: ColorManager.bgSideMenu,
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "American Cover Sheet",
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Icon(
-                                      Icons.print,
-                                      color: ColorManager.white,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                    : const SizedBox.shrink(),
-                'british' == controller.schoolTypeName?.toLowerCase()
-                    ? controller.isLoadingGeneratePdf
-                        ? Expanded(
-                            child: Center(
-                              child: SizedBox(
-                                height: 50,
-                                child: FittedBox(
-                                  child:
-                                      LoadingIndicators.getLoadingIndicator(),
-                                ),
-                              ),
-                            ),
-                          )
-                        : Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                controller.generateBrCoverSheet(
-                                  examMissionId: examMissionObject.iD!,
-                                  controlMissionName:
-                                      controlMissionObject.name!,
-                                );
-                              },
-                              child: Container(
-                                height: 50,
-                                width: double.infinity,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)),
-                                  color: Colors.lightBlue,
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "IB Cover Sheet",
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Icon(
-                                      Icons.print,
-                                      color: ColorManager.white,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                    : const SizedBox.shrink(),
-                "ib" == controller.schoolTypeName?.toLowerCase()
-                    ? controller.isLoadingGeneratePdf
-                        ? Expanded(
-                            child: Center(
-                              child: SizedBox(
-                                height: 50,
-                                child: FittedBox(
-                                  child:
-                                      LoadingIndicators.getLoadingIndicator(),
-                                ),
-                              ),
-                            ),
-                          )
-                        : Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                controller.generateIBCoverSheet(
-                                  examMissionId: examMissionObject.iD!,
-                                  controlMissionName:
-                                      controlMissionObject.name!,
-                                );
-                              },
-                              child: Container(
-                                height: 50,
-                                width: double.infinity,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)),
-                                  color: ColorManager.red,
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "British Cover Sheet",
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Icon(
-                                      Icons.print,
-                                      color: ColorManager.white,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                    : const SizedBox.shrink(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  Color _getSchoolColor(String? schoolType) {
+    switch (schoolType) {
+      case 'american':
+        return ColorManager.bgSideMenu;
+      case 'british':
+        return Colors.lightBlue;
+      case 'ib':
+        return ColorManager.red;
+      default:
+        return Colors.transparent; // or some default color
+    }
+  }
+
+// Helper function to determine the button text based on school type
+  String _getSchoolCoverSheetText(String? schoolType) {
+    switch (schoolType) {
+      case 'american':
+        return "American Cover Sheet";
+      case 'british':
+        return "British Cover Sheet";
+      case 'ib':
+        return "IB Cover Sheet";
+      default:
+        return "";
+    }
   }
 }
