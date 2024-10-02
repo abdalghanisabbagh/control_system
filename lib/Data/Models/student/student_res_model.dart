@@ -12,7 +12,6 @@ class StudentResModel {
   int? blbId;
 
   ClassRoomResModel? classRoomResModel;
-
   int? cohortID;
   String? cohortName;
   CohortResModel? cohortResModel;
