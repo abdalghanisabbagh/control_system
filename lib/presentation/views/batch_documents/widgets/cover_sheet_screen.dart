@@ -111,6 +111,7 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                 return SizedBox(
                   width: Get.width * 0.4,
                   child: MultiSelectDropDownView(
+                    searchEnabled: true,
                     hintText: "Select Control Mission",
                     onOptionSelected: (selectedItem) {
                       controller.setSelectedItemControlMission(selectedItem);
@@ -155,6 +156,7 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                 return SizedBox(
                   width: Get.width * 0.4,
                   child: MultiSelectDropDownView(
+                    searchEnabled: true,
                     hintText: "Select Grade",
                     onOptionSelected: controller.setSelectedItemGrade,
                     options: controller.optionsGrades,
@@ -192,6 +194,7 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                 return SizedBox(
                   width: Get.width * 0.4,
                   child: MultiSelectDropDownView(
+                    searchEnabled: true,
                     hintText: "Select Subject",
                     onOptionSelected: controller.setSelectedItemSubject,
                     options: controller.optionsSubjects,

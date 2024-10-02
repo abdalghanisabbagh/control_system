@@ -91,6 +91,7 @@ class AttendanceScreen extends GetView<AttendanceController> {
             }
 
             return MultiSelectDropDownView(
+              searchEnabled: true,
               hintText: "Select Control Mission",
               onOptionSelected: (selectedItem) {
                 controller.setSelectedItemControlMission(selectedItem);
@@ -127,6 +128,7 @@ class AttendanceScreen extends GetView<AttendanceController> {
             }
 
             return MultiSelectDropDownView(
+              searchEnabled: true,
               hintText: "Select Exam Room",
               onOptionSelected: (selectedItem) {
                 controller.setSelectedItemExamRoom(selectedItem);
