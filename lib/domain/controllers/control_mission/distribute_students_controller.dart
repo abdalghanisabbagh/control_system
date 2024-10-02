@@ -322,13 +322,16 @@ class DistributeStudentsController extends GetxController {
   bool canAddStudents() {
     if (selectedItemClassId != -1) {
       return (studentsSeatNumbers
-                  .where((element) =>
-                      (element.gradesID == selectedItemGradeId) &&
-                      (element.student!.classRoomResModel!.iD ==
-                          selectedItemClassId))
-                  .length +
-              int.parse(numberOfStudentsController.text)) <=
-          int.parse(examRoomResModel.classRoomResModel!.maxCapacity!);
+                      .where((element) =>
+                          (element.gradesID == selectedItemGradeId) &&
+                          element.student!.classRoomResModel!.iD ==
+                              selectedItemClassId)
+                      .length -
+                  int.parse(numberOfStudentsController.text) >=
+              0) &&
+          (int.parse(numberOfStudentsController.text) +
+                  availableStudents.length) <=
+              int.parse(examRoomResModel.classRoomResModel!.maxCapacity!);
     }
     return (studentsSeatNumbers
                     .where(
@@ -956,6 +959,7 @@ class DistributeStudentsController extends GetxController {
           .where((element) =>
               element.gradesID == selectedItemGradeId &&
               element.student!.classRoomResModel!.iD == selectedItemClassId)
+          .take(int.parse(numberOfStudentsController.text))
           .length;
       availableStudents.addAll(studentsSeatNumbers
           .where((element) => (element.gradesID == selectedItemGradeId &&

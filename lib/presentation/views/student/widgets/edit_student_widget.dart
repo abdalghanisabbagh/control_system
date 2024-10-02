@@ -83,6 +83,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   SizedBox(
                     width: 500,
                     child: MultiSelectDropDownView(
+                      searchEnabled: true,
                       hintText: "Select Grade",
                       onOptionSelected: (selectedItem) {
                         controller.setSelectedItemGrade(selectedItem);
@@ -104,6 +105,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   SizedBox(
                     width: 500,
                     child: MultiSelectDropDownView(
+                      searchEnabled: true,
                       onOptionSelected: (selectedItem) {
                         controller.setSelectedItemCohort(selectedItem);
                       },
@@ -124,6 +126,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   SizedBox(
                     width: 500,
                     child: MultiSelectDropDownView(
+                      searchEnabled: true,
                       onOptionSelected: (selectedItem) {
                         controller.setSelectedItemClassRoom(selectedItem);
                       },

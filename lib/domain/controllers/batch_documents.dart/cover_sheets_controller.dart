@@ -183,7 +183,7 @@ class CoversSheetsController extends GetxController {
 
         // Create an anchor element and trigger the download
         html.AnchorElement(href: blobUrl)
-          ..setAttribute('download', 'attendance.pdf')
+          ..setAttribute('download', 'cover-sheet.pdf')
           ..click();
 
         // Revoke the object URL after download

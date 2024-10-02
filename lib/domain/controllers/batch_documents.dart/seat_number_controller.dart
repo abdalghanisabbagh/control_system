@@ -82,7 +82,7 @@ class SeatNumberController extends GetxController {
 
         // Create an anchor element and trigger the download
         html.AnchorElement(href: blobUrl)
-          ..setAttribute('download', 'attendance.pdf')
+          ..setAttribute('download', 'seat-number.pdf')
           ..click();
 
         // Revoke the object URL after download

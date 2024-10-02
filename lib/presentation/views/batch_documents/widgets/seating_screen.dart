@@ -87,6 +87,7 @@ class SeatingScreen extends GetView<SeatNumberController> {
             }
 
             return MultiSelectDropDownView(
+              searchEnabled: true,
               hintText: "Select Control Mission",
               onOptionSelected: (selectedItem) {
                 controller.setSelectedItemControlMission(selectedItem);
@@ -123,6 +124,7 @@ class SeatingScreen extends GetView<SeatNumberController> {
             }
 
             return MultiSelectDropDownView(
+              searchEnabled: true,
               hintText: "Select Grade",
               onOptionSelected: (selectedItem) {
                 controller.setSelectedItemGrade(selectedItem);

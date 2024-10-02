@@ -77,6 +77,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                     SizedBox(
                                       width: 500,
                                       child: MultiSelectDropDownView(
+                                        searchEnabled: true,
                                         hintText: "Select Grade",
                                         onOptionSelected: (selectedItem) {
                                           controller.selectedItemGrade =
@@ -115,6 +116,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                       width: 500,
                                       child: MultiSelectDropDownView(
                                         hintText: "Select Cohort",
+                                        searchEnabled: true,
                                         onOptionSelected: (selectedItem) {
                                           controller.selectedItemCohort =
                                               selectedItem.isNotEmpty
@@ -155,6 +157,7 @@ class AddSingleStudentWidget extends GetView<AddNewStudentController> {
                                     SizedBox(
                                       width: 500,
                                       child: MultiSelectDropDownView(
+                                        searchEnabled: true,
                                         hintText: "Select Class Room",
                                         onOptionSelected: (selectedItem) {
                                           controller.selectedItemClassRoom =
