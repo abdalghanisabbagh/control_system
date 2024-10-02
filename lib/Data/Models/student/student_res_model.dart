@@ -31,7 +31,7 @@ class StudentResModel {
   String? citizenship;
   String? secondName;
   String? thirdName;
-  DateTime? updatedAt;
+  String? updatedAt;
   int? updatedBy;
   StudentResModel({
     this.iD,
@@ -107,9 +107,7 @@ class StudentResModel {
     cohortResModel =
         json['cohort'] == null ? null : CohortResModel.fromJson(json['cohort']);
     active = json['Active'];
-    if (json['Citizenship'] != null) {
-      citizenship = json['Citizenship'];
-    }
+    citizenship = json['Citizenship'];
   }
 
   @override
