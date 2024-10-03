@@ -54,6 +54,9 @@ class AddNewStudentsToExamRoomWidget
                                           controller.numberOfStudentsInClasses =
                                               {},
                                           controller.studentsSeatNumbers
+                                              .where((element) =>
+                                                  element.gradesID ==
+                                                  selectedItem.first.value)
                                               .forEach((element) {
                                             controller
                                                     .numberOfStudentsInClasses[
