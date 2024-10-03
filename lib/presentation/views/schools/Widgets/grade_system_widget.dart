@@ -23,12 +23,12 @@ class GradeSystemWidget extends GetView<SchoolController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          // mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GetBuilder<SchoolController>(builder: (_) {
               return SizedBox(
-                width: size.width * 0.3,
+                width: size.width * 0.25,
                 child: Text(
                   controller.selectedSchoolIndex == -1
                       ? "Please select school"
@@ -45,22 +45,41 @@ class GradeSystemWidget extends GetView<SchoolController> {
               visible: Get.find<ProfileController>().canAccessWidget(
                 widgetId: '5200',
               ),
-              child: IconButton(
-                tooltip: "Add New Grade",
-                onPressed: () {
-                  controller.selectedSchoolIndex == -1
-                      ? MyAwesomeDialogue(
-                              title: "Error",
-                              desc: "please select a school",
-                              dialogType: DialogType.error)
-                          .showDialogue(context)
-                      : MyDialogs.showDialog(
-                          context,
-                          const AddNewGradeToSchool(),
-                        );
-                },
-                icon: const Icon(Icons.add),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton.icon(
+                    iconAlignment: IconAlignment.end,
+                    onPressed: () {
+                      controller.selectedSchoolIndex == -1
+                          ? MyAwesomeDialogue(
+                                  title: "Error",
+                                  desc: "please select a school",
+                                  dialogType: DialogType.error)
+                              .showDialogue(context)
+                          : MyDialogs.showDialog(
+                              context,
+                              const AddNewGradeToSchool(),
+                            );
+                    },
+                    label: const Text("Add New Grade"),
+                    icon: const Icon(Icons.add)),
               ),
+              // IconButton(
+              //   tooltip: "Add New Grade",
+              //   onPressed: () {
+              //     controller.selectedSchoolIndex == -1
+              //         ? MyAwesomeDialogue(
+              //                 title: "Error",
+              //                 desc: "please select a school",
+              //                 dialogType: DialogType.error)
+              //             .showDialogue(context)
+              //         : MyDialogs.showDialog(
+              //             context,
+              //             const AddNewGradeToSchool(),
+              //           );
+              //   },
+              //   icon: const Icon(Icons.add),
+              // ),
             ),
           ],
         ),

@@ -91,7 +91,7 @@ class SubjectsWidget extends GetView<SubjectsController> {
                           .contains(value.toLowerCase()))
                       .toList(),
                   itemBuilder: (SubjectResModel item) {
-                    bool inExam = true;
+                  //  bool inExam = true;
                     var schoolTypes = item
                         .schoolTypeHasSubjectsResModel!.schooltypeHasSubjects!
                         .map((e) => e.schoolType!.name)
@@ -149,18 +149,37 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                             fontSize: 20,
                                           ),
                                         ),
-                                        GetBuilder<SubjectsController>(
-                                          builder: (subjectsControllers) =>
-                                              Switch(
-                                            activeColor:
-                                                ColorManager.bgSideMenu,
-                                            value: inExam,
-                                            onChanged: (value) {
-                                              inExam = value;
-                                              subjectsControllers.update();
-                                            },
-                                          ),
-                                        ),
+                                        item.inExam == 1
+                                            ? const Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 8.0),
+                                                child: Icon(
+                                                  Icons.check_circle,
+                                                  color: ColorManager.green,
+                                                  size: 25,
+                                                ),
+                                              )
+                                            : const Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 8.0),
+                                                child: Icon(
+                                                  Icons.cancel,
+                                                  color: ColorManager.red,
+                                                  size: 25,
+                                                ),
+                                              )
+                                        // GetBuilder<SubjectsController>(
+                                        //   builder: (subjectsControllers) =>
+                                        //       Switch(
+                                        //     activeColor:
+                                        //         ColorManager.bgSideMenu,
+                                        //     value: inExam,
+                                        //     onChanged: (value) {
+                                        //       inExam = value;
+                                        //       subjectsControllers.update();
+                                        //     },
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                     const SizedBox(height: 10),

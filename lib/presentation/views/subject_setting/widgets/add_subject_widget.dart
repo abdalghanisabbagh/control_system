@@ -72,6 +72,7 @@ class AddSubjectWidget extends StatelessWidget {
                 : SizedBox(
                     width: 400,
                     child: MultiSelectDropDownView(
+                      hintText: "Select school type",
                       multiSelect: true,
                       showChipSelect: true,
                       onOptionSelected: (selected) {

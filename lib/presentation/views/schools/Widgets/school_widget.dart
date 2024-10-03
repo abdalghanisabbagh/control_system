@@ -18,13 +18,16 @@ class SchoolWidget extends GetView<SchoolController> {
       children: [
         GetBuilder<SchoolController>(
           builder: (_) {
-            return Text(
-              controller.selectedSchoolIndex == -1
-                  ? "Choose a school"
-                  : "School ${controller.selectedSchoolName}",
-              style: nunitoRegular.copyWith(
-                color: ColorManager.bgSideMenu,
-                fontSize: 25,
+            return Padding(
+              padding: const EdgeInsets.all(7.0),
+              child: Text(
+                controller.selectedSchoolIndex == -1
+                    ? "Choose a school"
+                    : "School ${controller.selectedSchoolName}",
+                style: nunitoRegular.copyWith(
+                  color: ColorManager.bgSideMenu,
+                  fontSize: 25,
+                ),
               ),
             );
           },

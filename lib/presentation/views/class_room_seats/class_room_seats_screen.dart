@@ -242,11 +242,17 @@ class ClassRoomSeatsScreen extends GetView<ClassRoomController> {
                                   },
                                 );
                                 controller.numbers = 0;
+                              } else {
+                                MyAwesomeDialogue(
+                                  title: "Class Create",
+                                  desc: "capacity not equal",
+                                  dialogType: DialogType.error,
+                                ).showDialogue(context);
                               }
                             } else {
                               MyAwesomeDialogue(
                                 title: "Class Create",
-                                desc: "capacity not equal",
+                                desc: "Please fill all fields",
                                 dialogType: DialogType.error,
                               ).showDialogue(context);
                             }
