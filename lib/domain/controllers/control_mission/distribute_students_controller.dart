@@ -181,21 +181,23 @@ class DistributeStudentsController extends GetxController {
               (row % 3 == 1 && i % 3 == 2) ||
               (row % 3 == 2 && i % 3 == 0)) {
             secondMaxStudents.isEmpty
-                ? maxStudents.isEmpty
-                    ? minStudents.isEmpty
+                ? maxStudents.length >= minStudents.length &&
+                        (maxStudents.isNotEmpty)
+                    ? reOrderedList.add(maxStudents.removeAt(0))
+                    : minStudents.isEmpty
                         ? null
                         : reOrderedList.add(minStudents.removeAt(0))
-                    : reOrderedList.add(maxStudents.removeAt(0))
                 : reOrderedList.add(secondMaxStudents.removeAt(0));
           } else if ((row % 3 == 0 && i % 3 == 2) ||
               (row % 3 == 1 && i % 3 == 0) ||
               (row % 3 == 2 && i % 3 == 1)) {
             minStudents.isEmpty
-                ? maxStudents.isEmpty
-                    ? secondMaxStudents.isEmpty
+                ? maxStudents.length >= secondMaxStudents.length &&
+                        (maxStudents.isNotEmpty)
+                    ? reOrderedList.add(maxStudents.removeAt(0))
+                    : secondMaxStudents.isEmpty
                         ? null
                         : reOrderedList.add(secondMaxStudents.removeAt(0))
-                    : reOrderedList.add(maxStudents.removeAt(0))
                 : reOrderedList.add(minStudents.removeAt(0));
           }
         }
