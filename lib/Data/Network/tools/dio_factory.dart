@@ -5,7 +5,6 @@ import 'package:control_system/app/configurations/token_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../../domain/services/token_service.dart';
 import '../../Models/token/token_model.dart';
@@ -58,7 +57,7 @@ class DioFactory {
     // Set the dio options
     dio.options = BaseOptions(
       baseUrl: AppLinks.baseUrlProd,
-      
+
       headers: headers,
 
       // Set the time out for the dio instance
