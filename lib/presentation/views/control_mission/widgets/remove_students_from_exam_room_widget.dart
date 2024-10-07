@@ -54,6 +54,9 @@ class RemoveStudentsFromExamRoomWidget
                                           controller.numberOfStudentsInClasses =
                                               {},
                                           controller.availableStudents
+                                              .where((element) =>
+                                                  element.gradesID ==
+                                                  selectedItem.first.value)
                                               .forEach((element) {
                                             controller
                                                     .numberOfStudentsInClasses[
@@ -185,7 +188,7 @@ class RemoveStudentsFromExamRoomWidget
                                                       \n current number of students from the selected number of students: ${controller.numberOfStudentsController.text}'''
                                                       : '''PLease Make Sure You Have Entered The Right Number Of Students.
                                                       \n current number of students from the selected grade: ${controller.availableStudents.where((element) => element.gradesID == controller.selectedItemGradeId).length}
-                                                      \n currently available students from the selected class is ${controller.availableStudents.where((element) => element.student!.classRoomResModel!.iD == controller.selectedItemClassId).length.toString()} students.
+                                                      \n currently available students from the selected class is ${controller.availableStudents.where((element) => (element.gradesID == controller.selectedItemGradeId) && (element.student!.classRoomResModel!.iD == controller.selectedItemClassId)).length.toString()} students.
                                                       \n current number of students from the selected number of students: ${controller.numberOfStudentsController.text}''',
                                                   dialogType: DialogType.error,
                                                 ).showDialogue(context);
