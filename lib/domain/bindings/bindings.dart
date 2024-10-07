@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../controllers/control_mission/control_mission_opreation_controller.dart';
 import '../controllers/controllers.dart';
 import '../services/side_menue_get_controller.dart';
 import '../services/token_service.dart';
@@ -114,6 +115,10 @@ class ControlMissingBindings extends Bindings {
     );
     Get.lazyPut<DistributionController>(
       () => DistributionController(),
+      fenix: true,
+    );
+    Get.lazyPut<ControlMissionOperationController>(
+      () => ControlMissionOperationController(),
       fenix: true,
     );
   }

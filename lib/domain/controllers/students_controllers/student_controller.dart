@@ -400,6 +400,7 @@ class StudentController extends GetxController {
 
   Future<bool> patchEditStudent({
     required int studentid,
+    required int blbId,
     required int gradesId,
     required int cohortId,
     required int schoolClassId,
@@ -417,8 +418,8 @@ class StudentController extends GetxController {
 
     ResponseHandler<StudentResModel> responseHandler = ResponseHandler();
 
-    // بناء الجسم مع التحقق من null
     Map<String, dynamic> body = {
+      "Blb_Id": blbId,
       "Grades_ID": gradesId,
       "Schools_ID": schoolId,
       "Cohort_ID": cohortId,

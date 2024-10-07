@@ -28,6 +28,10 @@ class ControlMissionLinks {
   static const controlMission = 'control-mission';
   static const controlMissionEducationYear = 'education-year';
   static const controlMissionSchool = '$controlMission/school';
+  static const controlMissionActiveSchool = '$controlMission/active/school';
+  static const controlMissionDeactivate = '$controlMission/deactivate';
+  static const controlMissionActivate = '$controlMission/activate';
+
   static const distributedStudents = '$controlMission/distribution';
   static const getGradesByControlMission = '$controlMission/grades';
   static const getSubjectsByControlMission = 'subjects/controlMission';
@@ -144,5 +148,6 @@ class SystemLogLinks {
   static const systemLogUser = '$systemLog/user';
   static const systemLogExportText = '$systemLog/export-text';
   static const systemLogExportExcel = '$systemLog/export-excel';
-  static const systemLogResetAndExportToText = '$systemLog/reset-and-export-text';
+  static const systemLogResetAndExportToText =
+      '$systemLog/reset-and-export-text';
 }

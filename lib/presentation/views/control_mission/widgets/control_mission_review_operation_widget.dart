@@ -13,10 +13,12 @@ import '../../../resource_manager/ReusableWidget/my_snack_bar.dart';
 import '../../../resource_manager/ReusableWidget/show_dialogue.dart';
 import '../../../resource_manager/routes/app_routes_names_and_paths.dart';
 
-class ControlMissionReviewWidget extends GetView<ControlMissionController> {
+class ControlMissionReviewOperationWidget
+    extends GetView<ControlMissionOperationController> {
   final ControlMissionResModel controlMission;
 
-  const ControlMissionReviewWidget({super.key, required this.controlMission});
+  const ControlMissionReviewOperationWidget(
+      {super.key, required this.controlMission});
 
   @override
   Widget build(BuildContext context) {
@@ -126,37 +128,39 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
           ),
           const Spacer(),
           Expanded(
-            child: Column(children: [
-              Visibility(
-                visible: Get.find<ProfileController>().canAccessWidget(
-                  widgetId: '2400',
-                ),
-                child: Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Hive.box('ControlMission').put('Id', controlMission.iD);
-                      Hive.box('ControlMission')
-                          .put('Name', controlMission.name);
-                      context.goNamed(AppRoutesNamesAndPaths
-                          .addNewStudentsToControlMissionName);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                        // borderRadius: BorderRadius.only(
-                        //   topLeft: Radius.circular(10),
-                        //   bottomLeft: Radius.circular(10),
-                        // ),
-                        color: ColorManager.bgSideMenu,
-                      ),
-                      child: Center(
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            "Add New Students",
-                            style: nunitoRegular.copyWith(
-                              color: Colors.white,
-                              fontSize: 18,
+            child: Column(
+              children: [
+                Visibility(
+                  visible: Get.find<ProfileController>().canAccessWidget(
+                    widgetId: '2400',
+                  ),
+                  child: Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Hive.box('ControlMission').put('Id', controlMission.iD);
+                        Hive.box('ControlMission')
+                            .put('Name', controlMission.name);
+                        context.goNamed(AppRoutesNamesAndPaths
+                            .addNewStudentsToControlMissionName);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          // borderRadius: BorderRadius.only(
+                          //   topLeft: Radius.circular(10),
+                          //   bottomLeft: Radius.circular(10),
+                          // ),
+                          color: ColorManager.bgSideMenu,
+                        ),
+                        child: Center(
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                              "Add New Students",
+                              style: nunitoRegular.copyWith(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ),
@@ -164,60 +168,103 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                     ),
                   ),
                 ),
-              ),
-              Visibility(
-                visible: Get.find<ProfileController>().canAccessWidget(
-                  widgetId: '2600',
-                ),
-                child: Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      MyAwesomeDialogue(
-                        title: 'Delete Control Mission',
-                        desc:
-                            'Are you sure you want to delete this control mission?',
-                        dialogType: DialogType.warning,
-                        btnCancelOnPressed: () {},
-                        btnOkOnPressed: () {
-                          controller
-                              .deleteControlMission(id: controlMission.iD!)
-                              .then((value) async {
-                            if (value) {
-                              MyFlashBar.showSuccess(
-                                'Success',
-                                'Control mission has been deleted successfully',
-                              ).show(context.mounted
-                                  ? context
-                                  : Get.key.currentContext!);
-                            }
-                            Get.find<ControlMissionOperationController>()
-                                .onInit();
-                          });
+                GetBuilder<ControlMissionController>(builder: (_) {
+                  if (controlMission.active == 0) {
+                    return Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          MyAwesomeDialogue(
+                            title: 'Activate Control Mission',
+                            desc:
+                                'Are you sure you want to activate this control mission?',
+                            dialogType: DialogType.info,
+                            btnCancelOnPressed: () {},
+                            btnOkOnPressed: () {
+                              controller
+                                  .activeControlMission(id: controlMission.iD!)
+                                  .then((value) {
+                                if (value) {
+                                  MyFlashBar.showSuccess(
+                                    'Success',
+                                    'Control mission has been activated successfully',
+                                  ).show(context.mounted
+                                      ? context
+                                      : Get.key.currentContext!);
+                                }
+                              });
+                            },
+                          ).showDialogue(context);
                         },
-                      ).showDialogue(context);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                        color: ColorManager.newStatus,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: const BoxDecoration(
+                            color: ColorManager.newStatus,
+                          ),
+                          child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text(
+                                "Activate Control Mission",
+                                style: nunitoRegular.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                      child: Center(
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            "Delete Control Mission",
-                            style: nunitoRegular.copyWith(
-                              color: Colors.white,
-                              fontSize: 18,
+                    );
+                  }
+
+                  return Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        MyAwesomeDialogue(
+                          title: 'Delete Control Mission',
+                          desc:
+                              'Are you sure you want to delete this control mission?',
+                          dialogType: DialogType.warning,
+                          btnCancelOnPressed: () {},
+                          btnOkOnPressed: () {
+                            controller
+                                .deleteControlMission(id: controlMission.iD!)
+                                .then((value) async {
+                              if (value) {
+                                MyFlashBar.showSuccess(
+                                  'Success',
+                                  'Control mission has been deleted successfully',
+                                ).show(context.mounted
+                                    ? context
+                                    : Get.key.currentContext!);
+                              }
+                            });
+                          },
+                        ).showDialogue(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          color: ColorManager.newStatus,
+                        ),
+                        child: Center(
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                              "Delete Control Mission",
+                              style: nunitoRegular.copyWith(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              )
-            ]),
+                  );
+                }),
+              ],
+            ),
           ),
           Expanded(
             child: Column(

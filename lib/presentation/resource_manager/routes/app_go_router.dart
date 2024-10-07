@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../domain/bindings/bindings.dart';
 import '../../../domain/controllers/controllers.dart';
 import '../../../domain/services/side_menue_get_controller.dart';
+import '../../views/control_mission/widgets/opreation_control_mission_screen.dart';
 import '../../views/views.dart';
 import '../ReusableWidget/page_not_found_screen.dart';
 import 'app_routes_names_and_paths.dart';
@@ -174,6 +175,14 @@ class AppGoRouter {
             builder: (context, state) {
               CreateControlMissionBindings().dependencies();
               return CreateMissionScreen();
+            },
+          ),
+          GoRoute(
+            path: AppRoutesNamesAndPaths.operationControlScreenPath,
+            name: AppRoutesNamesAndPaths.operationControlScreenName,
+            builder: (context, state) {
+              CreateControlMissionBindings().dependencies();
+              return const OpreationControlMissionScreen();
             },
           ),
         ],
