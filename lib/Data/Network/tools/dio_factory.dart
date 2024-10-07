@@ -57,7 +57,7 @@ class DioFactory {
 
     // Set the dio options
     dio.options = BaseOptions(
-      baseUrl: AppLinks.baseUrl,
+      baseUrl: AppLinks.baseUrlStaging,
       headers: headers,
 
       // Set the time out for the dio instance
@@ -67,12 +67,12 @@ class DioFactory {
 
     // Only print the logs in debug mode
     if (!kReleaseMode) {
-      dio.interceptors.add(PrettyDioLogger(
-        //   5,
-        requestHeader: true,
-        requestBody: true,
-        responseHeader: true,
-      ));
+      // dio.interceptors.add(PrettyDioLogger(
+      //   //   5,
+      //   requestHeader: true,
+      //   requestBody: true,
+      //   responseHeader: true,
+      // ));
     }
 
     return dio;
