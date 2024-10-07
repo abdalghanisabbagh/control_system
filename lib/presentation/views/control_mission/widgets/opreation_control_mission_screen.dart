@@ -22,89 +22,92 @@ class OpreationControlMissionScreen
         title: Text("All Control Mission",
             style: nunitoBold.copyWith(fontSize: 35)),
       ),
-      body: Container(
-        color: ColorManager.bgColor,
-        child: Column(
-          children: [
-            const Divider(),
-            const SizedBox(height: 20),
-            GetBuilder<ControlMissionOperationController>(
-              builder: (_) {
-                if (controller.isLoadingGetEducationYears) {
-                  return Center(
-                    child: LoadingIndicators.getLoadingIndicator(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Container(
+          color: ColorManager.bgColor,
+          child: Column(
+            children: [
+              const Divider(),
+              const SizedBox(height: 20),
+              GetBuilder<ControlMissionOperationController>(
+                builder: (_) {
+                  if (controller.isLoadingGetEducationYears) {
+                    return Center(
+                      child: LoadingIndicators.getLoadingIndicator(),
+                    );
+                  }
+                  if (controller.optionsEducationYear.isEmpty) {
+                    return Text('No Education Year Available',
+                        style: nunitoRegular.copyWith(
+                          fontSize: 30,
+                          color: ColorManager.primary,
+                        ));
+                  }
+                  return MultiSelectDropDownView(
+                    hintText: "Select Education Year",
+                    onOptionSelected: (selectedItem) {
+                      controller.setSelectedItemEducationYear(selectedItem);
+                    },
+                    showChipSelect: false,
+                    options: controller.optionsEducationYear,
                   );
-                }
-                if (controller.optionsEducationYear.isEmpty) {
-                  return Text('No Education Year Available',
+                },
+              ),
+              GetBuilder<ControlMissionOperationController>(
+                builder: (_) {
+                  if (controller.selectedItemEducationYear != null &&
+                      controller.controlMissionList.isNotEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: MyTextFormFiled(
+                        title: 'Search by Name',
+                        onChanged: (query) {
+                          controller.updateSearchQuery(query ?? '');
+                          return query;
+                        },
+                      ),
+                    );
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              ),
+              const SizedBox(height: 20),
+              GetBuilder<ControlMissionOperationController>(
+                builder: (controller) {
+                  if (controller.isLoading) {
+                    return Expanded(
+                      child: Center(
+                        child: LoadingIndicators.getLoadingIndicator(),
+                      ),
+                    );
+                  }
+                  if (controller.filteredControlMissionList.isEmpty &&
+                      controller.selectedItemEducationYear != null) {
+                    return Text(
+                      'No items available',
                       style: nunitoRegular.copyWith(
-                        fontSize: 30,
-                        color: ColorManager.primary,
-                      ));
-                }
-                return MultiSelectDropDownView(
-                  hintText: "Select Education Year",
-                  onOptionSelected: (selectedItem) {
-                    controller.setSelectedItemEducationYear(selectedItem);
-                  },
-                  showChipSelect: false,
-                  options: controller.optionsEducationYear,
-                );
-              },
-            ),
-            GetBuilder<ControlMissionOperationController>(
-              builder: (_) {
-                if (controller.selectedItemEducationYear != null &&
-                    controller.controlMissionList.isNotEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: MyTextFormFiled(
-                      title: 'Search by Name',
-                      onChanged: (query) {
-                        controller.updateSearchQuery(query ?? '');
-                        return query;
+                        color: ColorManager.bgSideMenu,
+                        fontSize: 23,
+                      ),
+                    );
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.filteredControlMissionList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ControlMissionReviewOperationWidget(
+                          controlMission:
+                              controller.filteredControlMissionList[index],
+                        );
                       },
                     ),
                   );
-                }
-
-                return const SizedBox.shrink();
-              },
-            ),
-            const SizedBox(height: 20),
-            GetBuilder<ControlMissionOperationController>(
-              builder: (controller) {
-                if (controller.isLoading) {
-                  return Expanded(
-                    child: Center(
-                      child: LoadingIndicators.getLoadingIndicator(),
-                    ),
-                  );
-                }
-                if (controller.filteredControlMissionList.isEmpty &&
-                    controller.selectedItemEducationYear != null) {
-                  return Text(
-                    'No items available',
-                    style: nunitoRegular.copyWith(
-                      color: ColorManager.bgSideMenu,
-                      fontSize: 23,
-                    ),
-                  );
-                }
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.filteredControlMissionList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ControlMissionReviewOperationWidget(
-                        controlMission:
-                            controller.filteredControlMissionList[index],
-                      );
-                    },
-                  ),
-                );
-              },
-            )
-          ],
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
