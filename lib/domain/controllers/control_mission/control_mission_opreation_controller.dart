@@ -1,8 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:multi_dropdown/models/value_item.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../../Data/Models/control_mission/control_mission_res_model.dart';
 import '../../../Data/Models/control_mission/control_missions_res_model.dart';
@@ -14,16 +14,15 @@ import '../../../Data/enums/req_type_enum.dart';
 import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
-class ControlMissionController extends GetxController {
+class ControlMissionOperationController extends GetxController {
+  bool isLoading = false;
+  bool isLoadingGetEducationYears = false;
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
   List<EducationYearModel> educationYearList = [];
   List<ControlMissionResModel> filteredControlMissionList =
       <ControlMissionResModel>[];
-
-  bool isLoading = false;
-  bool isLoadingGetClassesRooms = false;
-  bool isLoadingGetEducationYears = false;
   List<ValueItem> optionsEducationYear = <ValueItem>[];
+
   String searchQuery = '';
   List<ValueItem>? selectedEducationYear;
   ValueItem? selectedItemEducationYear;
@@ -37,7 +36,7 @@ class ControlMissionController extends GetxController {
     Either<Failure, ControlMissionsResModel> response =
         await responseHandler.getResponse(
       path:
-          "${ControlMissionLinks.controlMissionActiveSchool}/${Hive.box('School').get('Id')}/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
+          "${ControlMissionLinks.controlMissionSchool}/${Hive.box('School').get('Id')}/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
       converter: ControlMissionsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -95,13 +94,6 @@ class ControlMissionController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() async {
-    super.onInit();
-    setSelectedItemEducationYear([]);
-    getEducationYears();
-  }
-
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isEmpty) {
       selectedItemEducationYear = null;
@@ -125,6 +117,15 @@ class ControlMissionController extends GetxController {
       }).toList();
     }
     update();
+  }
+
+  @override
+  void onInit() {
+    setSelectedItemEducationYear([]);
+
+    getEducationYears();
+
+    super.onInit();
   }
 
   Future<bool> deleteControlMission({
@@ -158,7 +159,7 @@ class ControlMissionController extends GetxController {
     return examMissionHasBeenDeleted;
   }
 
-   Future<bool> activeControlMission({
+  Future<bool> activeControlMission({
     required int id,
   }) async {
     bool examMissionHasBeenDeleted = false;

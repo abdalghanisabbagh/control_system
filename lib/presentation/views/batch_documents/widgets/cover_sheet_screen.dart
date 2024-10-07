@@ -36,19 +36,16 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
               visible: Get.find<ProfileController>().canAccessWidget(
                 widgetId: '3100',
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                  onPressed: () {
-                    MyDialogs.showDialog(context, AddNewCoverWidget());
-                  },
-                  tooltip: "Add New Cover",
-                  icon: const Icon(
-                    Icons.add,
-                    color: ColorManager.black,
-                  ),
-                ),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  MyDialogs.showDialog(context, AddNewCoverWidget());
+                },
+                iconAlignment: IconAlignment.end,
+                label: const Text("Add New Cover"),
+                icon: const Icon(Icons.add),
               ),
+
+            
             ),
           ],
         ),

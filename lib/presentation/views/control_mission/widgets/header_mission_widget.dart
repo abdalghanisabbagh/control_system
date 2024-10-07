@@ -12,13 +12,47 @@ class HeaderMissionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           'Control Mission',
           style: nunitoBlack.copyWith(
             color: ColorManager.bgSideMenu,
             fontSize: 30,
+          ),
+        ),
+        const Spacer(),
+        Visibility(
+          visible: Get.find<ProfileController>().canAccessWidget(
+            widgetId: '2500',
+          ),
+          child: InkWell(
+            onTap: () {
+              context.goNamed(
+                AppRoutesNamesAndPaths.operationControlScreenName,
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ColorManager.bgSideMenu,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      "Operation",
+                      style: nunitoBold.copyWith(
+                        color: ColorManager.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
         Visibility(
@@ -48,7 +82,7 @@ class HeaderMissionWidget extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

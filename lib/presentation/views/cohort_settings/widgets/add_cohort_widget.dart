@@ -71,6 +71,7 @@ class AddCohortWidget extends StatelessWidget {
               ),
               if (isOperation) ...[
                 MultiSelectDropDownView(
+                  hintText: "Select School Type",
                   multiSelect: false,
                   onOptionSelected: (value) {
                     controller.slectedSchoolTypeId =

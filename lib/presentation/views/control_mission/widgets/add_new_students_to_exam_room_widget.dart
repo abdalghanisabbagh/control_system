@@ -190,7 +190,7 @@ class AddNewStudentsToExamRoomWidget
                                                           : '''PLease Make Sure You Have Entered The Right Number Of Students.
                                                           \n currently available space in the room is ${controller.availableStudentsCount} students.
                                                           \n currently available students from the selected grade is ${controller.countByGrade[controller.selectedItemGradeId.toString()]} students.
-                                                          \n currently available students from the selected class is ${controller.studentsSeatNumbers.where((element) => element.student!.classRoomResModel!.iD == controller.selectedItemClassId).length.toString()} students.
+                                                          \n currently available students from the selected class is ${controller.studentsSeatNumbers.where((element) => (element.gradesID == controller.selectedItemGradeId) && (element.student!.classRoomResModel!.iD == controller.selectedItemClassId)).length.toString()} students.
                                                           \n currently selected number of students is ${controller.numberOfStudentsController.text}.''',
                                                       dialogType:
                                                           DialogType.error)

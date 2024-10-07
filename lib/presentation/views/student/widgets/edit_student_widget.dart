@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../Data/Models/student/student_res_model.dart';
+import '../../../../domain/controllers/profile_controller.dart';
 import '../../../../domain/controllers/students_controllers/student_controller.dart';
 import '../../../resource_manager/ReusableWidget/drop_down_button.dart';
 import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
@@ -145,6 +146,18 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
 
                   // Other Fields
                   MyTextFormFiled(
+                    controller: blbIdController,
+                    title: "BLB ID",
+                    myValidation: Validations.validatorBlbId,
+                    isEnable: Get.find<ProfileController>().canAccessWidget(
+                      widgetId: '1801',
+                    ),
+                    onChanged: (value) {
+                      widget.studentResModel.blbId = int.tryParse(value!) ?? 0;
+                      return null;
+                    },
+                  ),
+                  MyTextFormFiled(
                     controller: firstNameController,
                     title: "First Name",
                     myValidation: Validations.validateName,
@@ -223,6 +236,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
 
                                   controller
                                       .patchEditStudent(
+                                    blbId: widget.studentResModel.blbId!,
                                     studentid: widget.studentResModel.iD!,
                                     gradesId:
                                         controller.selectedItemGrade!.value,
@@ -305,6 +319,9 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
     super.initState();
 
     // Initialize controllers with values from studentResModel
+    blbIdController = TextEditingController(
+      text: widget.studentResModel.blbId.toString(),
+    );
     firstNameController = TextEditingController(
         text: widget.studentResModel.firstName.toString());
     secondNameController = TextEditingController(
