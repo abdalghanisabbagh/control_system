@@ -61,7 +61,7 @@ class GeneratePdfLinks {
   static const generatePdfAmCover = '$generatePdf/am-cover';
   static const generatePdfAttendance = '$generatePdf/attendance';
   static const generatePdfBrCover = '$generatePdf/br-cover';
-  static const generatePdfIBCover = '$generatePdf/IB-cover';
+  static const generatePdfIBCover = '$generatePdf/IBCover';
   static const generatePdfSeat = '$generatePdf/seats';
 }
 
