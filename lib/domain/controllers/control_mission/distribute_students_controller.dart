@@ -107,29 +107,229 @@ class DistributeStudentsController extends GetxController {
   }
 
   void autoGenerate() {
-    for (var element in availableStudents) {
-      element.classDeskID = null;
+    // Create the reordered list
+    List<StudentSeatNumberResModel> reOrderedList =
+        <StudentSeatNumberResModel>[];
+    // Count students in each grade
+    Map<int, List<StudentSeatNumberResModel>> gradeCounts =
+        <int, List<StudentSeatNumberResModel>>{};
+    for (StudentSeatNumberResModel student in availableStudents) {
+      gradeCounts.putIfAbsent(student.gradesID!, () => []).add(student);
     }
-    availableStudents
-      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
-      ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
-    classDesks.sort((a, b) => a.rowNum!.compareTo(b.rowNum!));
 
-    if (assign(availableStudents, classDesks,
-        List.filled(availableStudents.length, null), 0)) {
-      distributeStudentsUi();
-      distributeStudents();
-    } else {
-      distributeStudentsUi();
-      MyAwesomeDialogue(
-        title: 'Error',
-        desc:
-            'You can not automatically generate the students. Please manually distribute the students.',
-        dialogType: DialogType.error,
-        btnOkOnPressed: () {},
-        btnCancelOnPressed: () {},
-      ).showDialogue(Get.key.currentContext!);
+    if (gradeCounts.keys.length == 3) {
+      () {
+        for (var element in availableStudents) {
+          element.classDeskID = null;
+        }
+        availableStudents
+          ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+          ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+        classDesks.sort((a, b) => a.rowNum!.compareTo(b.rowNum!));
+        reOrderedList.clear();
+        List<StudentSeatNumberResModel> maxStudents = [],
+            secondMaxStudents = [],
+            minStudents = [];
+        List<int> grades = gradeCounts.keys.toList()
+          ..sort((a, b) => a.compareTo(b));
+        maxStudents.assignAll(gradeCounts[grades[0]]!);
+        secondMaxStudents.assignAll(gradeCounts[grades[1]]!);
+        minStudents.assignAll(gradeCounts[grades[2]]!);
+        int row = 0;
+        while (row < numberOfRows) {
+          int rowLength =
+              classDesks.where((classDesk) => classDesk.rowNum == row).length;
+          for (int i = 0; i < rowLength; i++) {
+            if (row.isEven && i.isEven) {
+              secondMaxStudents.isEmpty
+                  ? maxStudents.isEmpty
+                      ? minStudents.isEmpty
+                          ? null
+                          : reOrderedList.add(minStudents.removeAt(0))
+                      : reOrderedList.add(maxStudents.removeAt(0))
+                  : reOrderedList.add(secondMaxStudents.removeAt(0));
+            } else if (row.isEven && i.isOdd) {
+              maxStudents.isEmpty
+                  ? secondMaxStudents.isEmpty
+                      ? minStudents.isEmpty
+                          ? null
+                          : reOrderedList.add(minStudents.removeAt(0))
+                      : reOrderedList.add(secondMaxStudents.removeAt(0))
+                  : reOrderedList.add(maxStudents.removeAt(0));
+            } else if (row.isOdd && i.isEven) {
+              maxStudents.isEmpty
+                  ? secondMaxStudents.isEmpty
+                      ? minStudents.isEmpty
+                          ? null
+                          : reOrderedList.add(minStudents.removeAt(0))
+                      : reOrderedList.add(secondMaxStudents.removeAt(0))
+                  : reOrderedList.add(maxStudents.removeAt(0));
+            } else if (row.isOdd && i.isOdd) {
+              minStudents.isEmpty
+                  ? maxStudents.isEmpty
+                      ? secondMaxStudents.isEmpty
+                          ? null
+                          : reOrderedList.add(secondMaxStudents.removeAt(0))
+                      : reOrderedList.add(maxStudents.removeAt(0))
+                  : reOrderedList.add(minStudents.removeAt(0));
+            }
+          }
+          row++;
+        }
+        availableStudents.assignAll(reOrderedList);
+        distributeStudentsUi();
+      }();
+      if (!checkStudentsSettingNextToEachOther()) {
+        distributeStudents();
+        return;
+      }
+      () {
+        for (var element in availableStudents) {
+          element.classDeskID = null;
+        }
+        availableStudents
+          ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+          ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+        classDesks.sort((a, b) => a.rowNum!.compareTo(b.rowNum!));
+        reOrderedList.clear();
+        List<StudentSeatNumberResModel> maxStudents = [],
+            secondMaxStudents = [],
+            minStudents = [];
+        List<int> grades = gradeCounts.keys.toList()
+          ..sort((a, b) => a.compareTo(b));
+        maxStudents.assignAll(gradeCounts[grades[0]]!);
+        secondMaxStudents.assignAll(gradeCounts[grades[1]]!);
+        minStudents.assignAll(gradeCounts[grades[2]]!);
+        int row = 0;
+        while (row < numberOfRows) {
+          int rowLength =
+              classDesks.where((classDesk) => classDesk.rowNum == row).length;
+          for (int i = 0; i < rowLength; i++) {
+            if ((row % 3 == 0 && i % 3 == 0) ||
+                (row % 3 == 1 && i % 3 == 1) ||
+                (row % 3 == 2 && i % 3 == 2)) {
+              maxStudents.isNotEmpty
+                  ? reOrderedList.add(maxStudents.removeAt(0))
+                  : secondMaxStudents.isNotEmpty
+                      ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                      : minStudents.isNotEmpty
+                          ? reOrderedList.add(minStudents.removeAt(0))
+                          : null;
+            } else if ((row % 3 == 0 && i % 3 == 2) ||
+                (row % 3 == 1 && i % 3 == 0) ||
+                (row % 3 == 2 && i % 3 == 1)) {
+              minStudents.isNotEmpty
+                  ? reOrderedList.add(minStudents.removeAt(0))
+                  : maxStudents.isNotEmpty
+                      ? reOrderedList.add(maxStudents.removeAt(0))
+                      : secondMaxStudents.isNotEmpty
+                          ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                          : null;
+            } else if ((row % 3 == 0 && i % 3 == 1) ||
+                (row % 3 == 1 && i % 3 == 2) ||
+                (row % 3 == 2 && i % 3 == 0)) {
+              secondMaxStudents.isNotEmpty
+                  ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                  : minStudents.isNotEmpty
+                      ? reOrderedList.add(minStudents.removeAt(0))
+                      : maxStudents.isNotEmpty
+                          ? reOrderedList.add(maxStudents.removeAt(0))
+                          : null;
+            }
+          }
+          row++;
+        }
+        availableStudents.assignAll(reOrderedList);
+        distributeStudentsUi();
+      }();
+      if (!checkStudentsSettingNextToEachOther()) {
+        distributeStudents();
+        return;
+      }
+      () {
+        reOrderedList.clear();
+        for (var element in availableStudents) {
+          element.classDeskID = null;
+        }
+        availableStudents
+          ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+          ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+        classDesks.sort((a, b) => a.rowNum!.compareTo(b.rowNum!));
+
+        List<StudentSeatNumberResModel> maxStudents = [],
+            secondMaxStudents = [],
+            minStudents = [];
+        List<int> grades = gradeCounts.keys.toList()
+          ..sort((a, b) => a.compareTo(b));
+        maxStudents.assignAll(gradeCounts[grades[0]]!);
+        secondMaxStudents.assignAll(gradeCounts[grades[1]]!);
+        minStudents.assignAll(gradeCounts[grades[2]]!);
+        int row = 0;
+        while (row < numberOfRows) {
+          int rowLength =
+              classDesks.where((classDesk) => classDesk.rowNum == row).length;
+          for (int i = 0; i < rowLength; i++) {
+            if (row % 3 == 0) {
+              (maxStudents.length >= secondMaxStudents.length) &&
+                      (maxStudents.length >= minStudents.length) &&
+                      (maxStudents.isNotEmpty)
+                  ? reOrderedList.add(maxStudents.removeAt(0))
+                  : secondMaxStudents.isNotEmpty &&
+                          secondMaxStudents.length >= minStudents.length
+                      ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                      : minStudents.isNotEmpty
+                          ? reOrderedList.add(minStudents.removeAt(0))
+                          : null;
+            } else if (row % 3 == 1) {
+              (minStudents.length >= maxStudents.length) &&
+                      (minStudents.length >= secondMaxStudents.length) &&
+                      (minStudents.isNotEmpty)
+                  ? reOrderedList.add(minStudents.removeAt(0))
+                  : maxStudents.isNotEmpty &&
+                          maxStudents.length >= secondMaxStudents.length
+                      ? reOrderedList.add(maxStudents.removeAt(0))
+                      : secondMaxStudents.isNotEmpty
+                          ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                          : null;
+            } else if (row % 3 == 2) {
+              (secondMaxStudents.length >= maxStudents.length) &&
+                      (secondMaxStudents.length >= minStudents.length) &&
+                      (secondMaxStudents.isNotEmpty)
+                  ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                  : minStudents.isNotEmpty &&
+                          minStudents.length >= maxStudents.length
+                      ? reOrderedList.add(minStudents.removeAt(0))
+                      : maxStudents.isNotEmpty
+                          ? reOrderedList.add(maxStudents.removeAt(0))
+                          : null;
+            }
+          }
+          row++;
+        }
+        availableStudents.assignAll(reOrderedList);
+        distributeStudentsUi();
+      }();
+      if (!checkStudentsSettingNextToEachOther()) {
+        distributeStudents();
+        return;
+      }
     }
+
+    // else if (assign(availableStudents, classDesks,
+    //     List.filled(availableStudents.length, null), 0)) {
+    //   distributeStudentsUi();
+    //   distributeStudents();
+    // } else {
+    //   distributeStudentsUi();
+    //   MyAwesomeDialogue(
+    //     title: 'Error',
+    //     desc:
+    //         'You can not automatically generate the students. Please manually distribute the students.',
+    //     dialogType: DialogType.error,
+    //     btnOkOnPressed: () {},
+    //     btnCancelOnPressed: () {},
+    //   ).showDialogue(Get.key.currentContext!);
+    // }
   }
 
   void autoGenerateCross() {
@@ -147,7 +347,7 @@ class DistributeStudentsController extends GetxController {
       gradeCounts.putIfAbsent(student.gradesID!, () => []).add(student);
     }
 
-// Create the reordered list
+    // Create the reordered list
     List<StudentSeatNumberResModel> reOrderedList =
         <StudentSeatNumberResModel>[];
     if (gradeCounts.keys.length == 2) {
@@ -192,40 +392,40 @@ class DistributeStudentsController extends GetxController {
         int rowLength =
             classDesks.where((classDesk) => classDesk.rowNum == row).length;
         for (int i = 0; i < rowLength; i++) {
-          //   if (row.isEven && i.isEven) {
-          //     secondMaxStudents.isEmpty
-          //         ? maxStudents.isEmpty
-          //             ? minStudents.isEmpty
-          //                 ? null
-          //                 : reOrderedList.add(minStudents.removeAt(0))
-          //             : reOrderedList.add(maxStudents.removeAt(0))
-          //         : reOrderedList.add(secondMaxStudents.removeAt(0));
-          //   } else if (row.isEven && i.isOdd) {
-          //     maxStudents.isEmpty
-          //         ? secondMaxStudents.isEmpty
-          //             ? minStudents.isEmpty
-          //                 ? null
-          //                 : reOrderedList.add(minStudents.removeAt(0))
-          //             : reOrderedList.add(secondMaxStudents.removeAt(0))
-          //         : reOrderedList.add(maxStudents.removeAt(0));
-          //   } else if (row.isOdd && i.isEven) {
-          //     maxStudents.isEmpty
-          //         ? secondMaxStudents.isEmpty
-          //             ? minStudents.isEmpty
-          //                 ? null
-          //                 : reOrderedList.add(minStudents.removeAt(0))
-          //             : reOrderedList.add(secondMaxStudents.removeAt(0))
-          //         : reOrderedList.add(maxStudents.removeAt(0));
-          //   } else if (row.isOdd && i.isOdd) {
-          //     minStudents.isEmpty
-          //         ? maxStudents.isEmpty
-          //             ? secondMaxStudents.isEmpty
-          //                 ? null
-          //                 : reOrderedList.add(secondMaxStudents.removeAt(0))
-          //             : reOrderedList.add(maxStudents.removeAt(0))
-          //         : reOrderedList.add(minStudents.removeAt(0));
-          //   }
-          // }
+          if (row % 3 == 0) {
+            (maxStudents.length >= secondMaxStudents.length) &&
+                    (maxStudents.length >= minStudents.length) &&
+                    (maxStudents.isNotEmpty)
+                ? reOrderedList.add(maxStudents.removeAt(0))
+                : secondMaxStudents.isNotEmpty &&
+                        secondMaxStudents.length >= minStudents.length
+                    ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                    : minStudents.isNotEmpty
+                        ? reOrderedList.add(minStudents.removeAt(0))
+                        : null;
+          } else if (row % 3 == 1) {
+            (minStudents.length >= maxStudents.length) &&
+                    (minStudents.length >= secondMaxStudents.length) &&
+                    (minStudents.isNotEmpty)
+                ? reOrderedList.add(minStudents.removeAt(0))
+                : maxStudents.isNotEmpty &&
+                        maxStudents.length >= secondMaxStudents.length
+                    ? reOrderedList.add(maxStudents.removeAt(0))
+                    : secondMaxStudents.isNotEmpty
+                        ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                        : null;
+          } else if (row % 3 == 2) {
+            (secondMaxStudents.length >= maxStudents.length) &&
+                    (secondMaxStudents.length >= minStudents.length) &&
+                    (secondMaxStudents.isNotEmpty)
+                ? reOrderedList.add(secondMaxStudents.removeAt(0))
+                : minStudents.isNotEmpty &&
+                        minStudents.length >= maxStudents.length
+                    ? reOrderedList.add(minStudents.removeAt(0))
+                    : maxStudents.isNotEmpty
+                        ? reOrderedList.add(maxStudents.removeAt(0))
+                        : null;
+          }
         }
         row++;
       }
@@ -258,16 +458,14 @@ class DistributeStudentsController extends GetxController {
 
         reOrderedList.addAll(tempStudents);
 
-        // Remove empty categories
         gradeCounts.removeWhere((key, value) => value.isEmpty);
         gradesQueue.removeWhere((grade) => !gradeCounts.containsKey(grade));
       }
     }
 
-    // Print the reordered list
     availableStudents.assignAll(reOrderedList);
     distributeStudentsUi();
-    if (checkStudentsSettingNextToEachOther()) {
+    if (!checkStudentsSettingNextToEachOther()) {
       distributeStudents();
     } else {
       MyAwesomeDialogue(
@@ -290,7 +488,7 @@ class DistributeStudentsController extends GetxController {
     availableStudents
       ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
       ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
-    classDesks.sort((a, b) => a.cloumnNum!.compareTo(b.cloumnNum!));
+    classDesks.sort((a, b) => a.columnNum!.compareTo(b.columnNum!));
     // Define the block size
     final int blockSize = numberOfRows;
 
@@ -332,16 +530,14 @@ class DistributeStudentsController extends GetxController {
 
       reOrderedList.addAll(tempStudents);
 
-      // Remove empty categories
       gradeCounts.removeWhere((key, value) => value.isEmpty);
       gradesQueue.removeWhere((grade) => !gradeCounts.containsKey(grade));
     }
 
-    // Print the reordered list
     availableStudents.assignAll(reOrderedList);
 
     distributeStudentsUi();
-    if (checkStudentsSettingNextToEachOther()) {
+    if (!checkStudentsSettingNextToEachOther()) {
       distributeStudents();
     } else {
       MyAwesomeDialogue(
@@ -355,45 +551,6 @@ class DistributeStudentsController extends GetxController {
         btnCancelOnPressed: () {},
       ).showDialogue(Get.key.currentContext!);
     }
-
-// ///// 1-   map of grades students
-//     Map<int, List<StudentSeatNumberResModel>> studentsByGrade =
-//         availableStudents.groupListsBy((student) => student.gradesID!);
-
-//     List<int> rows = examRoomResModel.classRoomResModel?.rows ?? [];
-//     // int currentDeskCounter = 0;
-//     for (int i = 0; i < rows.length; i++) {
-//       List<StudentSeatNumberResModel> curerntGrade = studentsByGrade[
-//           studentsByGrade.keys.toList()[i % studentsByGrade.keys.length]]!;
-//       for (int j = 0; j < rows[i]; j++) {
-//         ClassDeskResModel? deskModel = classDeskCollection[j]?.firstWhereOrNull(
-//             (desk) => desk.cloumnNum == j && desk.rowNum == i);
-//         if (deskModel != null) {
-//           StudentSeatNumberResModel currentStudent = curerntGrade.first;
-//           // curerntGrade[currentDeskCounter++];
-
-//           availableStudents
-//               .firstWhereOrNull((std) => std.iD == currentStudent.iD)?.classDeskID = deskModel.id;
-//             curerntGrade.removeWhere((std) => std.iD == currentStudent.iD);
-//         }
-//       }
-//       // currentDeskCounter = 0;
-//     }
-
-    // for (int i = 0; i < availableStudents.length; i++) {
-    //   if (availableStudents[i].classDeskID == null) {
-    //     availableStudents[i].classDeskID = availableStudents[i].classDeskID =
-    //         classDesks
-    //             .whereNot(
-    //                 (classDesk) => blockedClassDesks.contains(classDesk.id))
-    //             .whereNot((classDesk) => availableStudents
-    //                 .map((student) => student.classDeskID)
-    //                 .contains(classDesk.id))
-    //             .firstOrNull
-    //             ?.id;
-    //   }
-    // }
-
     return;
   }
 
@@ -459,7 +616,7 @@ class DistributeStudentsController extends GetxController {
         ClassDeskResModel? nextClassDesk = classDesks.firstWhereOrNull(
             (classDesk) =>
                 classDesk.rowNum == currentClassDesk.rowNum &&
-                classDesk.cloumnNum == currentClassDesk.cloumnNum! + 1);
+                classDesk.columnNum == currentClassDesk.columnNum! + 1);
         if (nextClassDesk != null) {
           StudentSeatNumberResModel? nextStudent =
               availableStudents.firstWhereOrNull(
@@ -477,10 +634,7 @@ class DistributeStudentsController extends GetxController {
         }
       }
     }
-    if (studentsSettingNextToEachOther.isNotEmpty) {
-      return false;
-    }
-    return true;
+    return studentsSettingNextToEachOther.isNotEmpty;
   }
 
   Future<void> distributeStudents() async {
@@ -737,21 +891,23 @@ class DistributeStudentsController extends GetxController {
                                                             width: 1.5,
                                                           ),
                                                           color: ColorManager
-                                                              .gradesColor[availableStudents
-                                                                  .firstWhere((element) =>
-                                                                      element
-                                                                          .classDeskID ==
-                                                                      classDeskCollection
-                                                                          .entries
-                                                                          .toList()[
-                                                                              i]
-                                                                          .value[
-                                                                              j]
-                                                                          .id)
-                                                                  .student!
-                                                                  .gradeResModel!
-                                                                  .name!]!
-                                                              .toPdfColorFromValue(),
+                                                                  .gradesColor[availableStudents
+                                                                      .firstWhere((element) =>
+                                                                          element
+                                                                              .classDeskID ==
+                                                                          classDeskCollection
+                                                                              .entries
+                                                                              .toList()[
+                                                                                  i]
+                                                                              .value[
+                                                                                  j]
+                                                                              .id)
+                                                                      .student!
+                                                                      .gradeResModel!
+                                                                      .name!]
+                                                                  ?.toPdfColorFromValue() ??
+                                                              ColorManager.white
+                                                                  .toPdfColorFromValue(),
                                                         ),
                                                         child: pw.Padding(
                                                           padding: pw.EdgeInsets
@@ -956,14 +1112,17 @@ class DistributeStudentsController extends GetxController {
                                                 width: 1.5,
                                               ),
                                               color: ColorManager
-                                                  .gradesColor[grades
-                                                      .firstWhere((element) =>
-                                                          element.iD
-                                                              .toString() ==
-                                                          countByGrade.keys
-                                                              .toList()[index])
-                                                      .name]!
-                                                  .toPdfColorFromValue(),
+                                                      .gradesColor[grades
+                                                          .firstWhere((element) =>
+                                                              element.iD
+                                                                  .toString() ==
+                                                              countByGrade.keys
+                                                                      .toList()[
+                                                                  index])
+                                                          .name]
+                                                      ?.toPdfColorFromValue() ??
+                                                  ColorManager.white
+                                                      .toPdfColorFromValue(),
                                             ),
                                             child: pw.Padding(
                                               padding:
