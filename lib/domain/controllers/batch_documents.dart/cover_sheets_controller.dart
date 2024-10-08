@@ -287,7 +287,7 @@ class CoversSheetsController extends GetxController {
     Either<Failure, ControlMissionsResModel> response =
         await responseHandler.getResponse(
       path:
-          "${ControlMissionLinks.controlMissionSchool}/$schoolId/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
+          "active/${ControlMissionLinks.controlMissionSchool}/$schoolId/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
       converter: ControlMissionsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
