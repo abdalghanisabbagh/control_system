@@ -699,21 +699,23 @@ class DistributeStudentsController extends GetxController {
                                                             width: 1.5,
                                                           ),
                                                           color: ColorManager
-                                                              .gradesColor[availableStudents
-                                                                  .firstWhere((element) =>
-                                                                      element
-                                                                          .classDeskID ==
-                                                                      classDeskCollection
-                                                                          .entries
-                                                                          .toList()[
-                                                                              i]
-                                                                          .value[
-                                                                              j]
-                                                                          .id)
-                                                                  .student!
-                                                                  .gradeResModel!
-                                                                  .name!]!
-                                                              .toPdfColorFromValue(),
+                                                                  .gradesColor[availableStudents
+                                                                      .firstWhere((element) =>
+                                                                          element
+                                                                              .classDeskID ==
+                                                                          classDeskCollection
+                                                                              .entries
+                                                                              .toList()[
+                                                                                  i]
+                                                                              .value[
+                                                                                  j]
+                                                                              .id)
+                                                                      .student!
+                                                                      .gradeResModel!
+                                                                      .name!]
+                                                                  ?.toPdfColorFromValue() ??
+                                                              ColorManager.white
+                                                                  .toPdfColorFromValue(),
                                                         ),
                                                         child: pw.Padding(
                                                           padding: pw.EdgeInsets
@@ -918,14 +920,17 @@ class DistributeStudentsController extends GetxController {
                                                 width: 1.5,
                                               ),
                                               color: ColorManager
-                                                  .gradesColor[grades
-                                                      .firstWhere((element) =>
-                                                          element.iD
-                                                              .toString() ==
-                                                          countByGrade.keys
-                                                              .toList()[index])
-                                                      .name]!
-                                                  .toPdfColorFromValue(),
+                                                      .gradesColor[grades
+                                                          .firstWhere((element) =>
+                                                              element.iD
+                                                                  .toString() ==
+                                                              countByGrade.keys
+                                                                      .toList()[
+                                                                  index])
+                                                          .name]
+                                                      ?.toPdfColorFromValue() ??
+                                                  ColorManager.white
+                                                      .toPdfColorFromValue(),
                                             ),
                                             child: pw.Padding(
                                               padding:
