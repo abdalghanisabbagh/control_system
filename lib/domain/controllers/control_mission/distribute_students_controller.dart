@@ -611,12 +611,14 @@ class DistributeStudentsController extends GetxController {
         desc: 'Couldn\'t generate for more than three grades',
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
+      return;
     } else {
       MyAwesomeDialogue(
         title: 'Error',
         desc: 'Couldn\'t generate one grade',
         dialogType: DialogType.error,
       ).showDialogue(Get.key.currentContext!);
+            return;
     }
 
     availableStudents.assignAll(reOrderedList);
