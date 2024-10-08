@@ -129,11 +129,26 @@ class DistributionScreen extends GetView<DistributionController> {
                           )
                         : SearchableList<ExamRoomResModel>(
                             initialList: controller.listExamRoom,
+                            filter: (query) => controller.listExamRoom
+                                .where(
+                                  (element) => element.name!
+                                      .toLowerCase()
+                                      .contains(query.toLowerCase()),
+                                )
+                                .toList(),
                             inputDecoration: const InputDecoration(
                               label: Text(
                                 'Search by name',
                               ),
                             ),
+                            emptyWidget: Center(
+                                child: Text(
+                              "No data found",
+                              style: nunitoBold.copyWith(
+                                color: ColorManager.bgSideMenu,
+                                fontSize: 20,
+                              ),
+                            )),
                             itemBuilder: (examRoom) {
                               return Container(
                                 decoration: BoxDecoration(
