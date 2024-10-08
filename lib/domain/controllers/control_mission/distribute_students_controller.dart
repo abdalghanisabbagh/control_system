@@ -50,6 +50,7 @@ class DistributeStudentsController extends GetxController {
   int selectedItemGradeId = -1;
   int selectedItemClassId = -1;
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
+  List<StudentSeatNumberResModel> studentsSettingNextToEachOther = [];
 
   void addStudentToDesk(
       {required int studentSeatNumberId, required int classDeskId}) async {
@@ -70,6 +71,65 @@ class DistributeStudentsController extends GetxController {
             .id,
       },
     );
+  }
+
+// Backtracking function
+  bool assign(
+      List<StudentSeatNumberResModel> students,
+      List<ClassDeskResModel> classDesks,
+      List<StudentSeatNumberResModel?> currentAssignments,
+      int index) {
+    if (index == students.length) {
+      if (checkStudentsSettingNextToEachOther()) {
+        availableStudents.assignAll(currentAssignments
+            .whereNot((student) => student == null)
+            .cast<StudentSeatNumberResModel>());
+        return true;
+      }
+      return false;
+    }
+
+    for (var classDesk in classDesks) {
+      if (currentAssignments
+          .map((studentSeatNumber) => studentSeatNumber?.classDeskID)
+          .contains(classDesk.id)) continue;
+
+      currentAssignments[index]!.classDeskID = classDesk.id;
+
+      if (assign(students, classDesks, currentAssignments, index + 1)) {
+        return true;
+      }
+
+      currentAssignments[index] = null;
+    }
+
+    return false;
+  }
+
+  void autoGenerate() {
+    for (var element in availableStudents) {
+      element.classDeskID = null;
+    }
+    availableStudents
+      ..sort((a, b) => a.gradesID!.compareTo(b.gradesID!))
+      ..sort((a, b) => a.seatNumber!.compareTo(b.seatNumber!));
+    classDesks.sort((a, b) => a.rowNum!.compareTo(b.rowNum!));
+
+    if (assign(availableStudents, classDesks,
+        List.filled(availableStudents.length, null), 0)) {
+      distributeStudentsUi();
+      distributeStudents();
+    } else {
+      distributeStudentsUi();
+      MyAwesomeDialogue(
+        title: 'Error',
+        desc:
+            'You can not automatically generate the students. Please manually distribute the students.',
+        dialogType: DialogType.error,
+        btnOkOnPressed: () {},
+        btnCancelOnPressed: () {},
+      ).showDialogue(Get.key.currentContext!);
+    }
   }
 
   void autoGenerateCross() {
@@ -166,40 +226,6 @@ class DistributeStudentsController extends GetxController {
           //         : reOrderedList.add(minStudents.removeAt(0));
           //   }
           // }
-
-          if ((row % 3 == 0 && i % 3 == 0) ||
-              (row % 3 == 1 && i % 3 == 1) ||
-              (row % 3 == 2 && i % 3 == 2)) {
-            maxStudents.isEmpty
-                ? secondMaxStudents.isEmpty
-                    ? minStudents.isEmpty
-                        ? null
-                        : reOrderedList.add(minStudents.removeAt(0))
-                    : reOrderedList.add(secondMaxStudents.removeAt(0))
-                : reOrderedList.add(maxStudents.removeAt(0));
-          } else if ((row % 3 == 0 && i % 3 == 1) ||
-              (row % 3 == 1 && i % 3 == 2) ||
-              (row % 3 == 2 && i % 3 == 0)) {
-            secondMaxStudents.isEmpty
-                ? maxStudents.length >= minStudents.length &&
-                        (maxStudents.isNotEmpty)
-                    ? reOrderedList.add(maxStudents.removeAt(0))
-                    : minStudents.isEmpty
-                        ? null
-                        : reOrderedList.add(minStudents.removeAt(0))
-                : reOrderedList.add(secondMaxStudents.removeAt(0));
-          } else if ((row % 3 == 0 && i % 3 == 2) ||
-              (row % 3 == 1 && i % 3 == 0) ||
-              (row % 3 == 2 && i % 3 == 1)) {
-            minStudents.isEmpty
-                ? maxStudents.length >= secondMaxStudents.length &&
-                        (maxStudents.isNotEmpty)
-                    ? reOrderedList.add(maxStudents.removeAt(0))
-                    : secondMaxStudents.isEmpty
-                        ? null
-                        : reOrderedList.add(secondMaxStudents.removeAt(0))
-                : reOrderedList.add(minStudents.removeAt(0));
-          }
         }
         row++;
       }
@@ -243,6 +269,17 @@ class DistributeStudentsController extends GetxController {
     distributeStudentsUi();
     if (checkStudentsSettingNextToEachOther()) {
       distributeStudents();
+    } else {
+      MyAwesomeDialogue(
+        title: 'Warning',
+        desc:
+            'Some students from the same grade will be setting next to each other. The following students will be setting next to each other: ${studentsSettingNextToEachOther.map((student) => 'name: ${student.student?.firstName} ${student.student?.secondName} ${student.student?.thirdName} grade: ${student.student?.gradeResModel?.name}').join(', ')} Are you sure you want to continue?',
+        dialogType: DialogType.warning,
+        btnOkOnPressed: () {
+          distributeStudents();
+        },
+        btnCancelOnPressed: () {},
+      ).showDialogue(Get.key.currentContext!);
     }
   }
 
@@ -306,6 +343,17 @@ class DistributeStudentsController extends GetxController {
     distributeStudentsUi();
     if (checkStudentsSettingNextToEachOther()) {
       distributeStudents();
+    } else {
+      MyAwesomeDialogue(
+        title: 'Warning',
+        desc:
+            'Some students from the same grade will be setting next to each other. The following students will be setting next to each other: ${studentsSettingNextToEachOther.map((student) => 'name: ${student.student?.firstName} ${student.student?.secondName} ${student.student?.thirdName} grade: ${student.student?.gradeResModel?.name}').join(', ')} Are you sure you want to continue?',
+        dialogType: DialogType.warning,
+        btnOkOnPressed: () {
+          distributeStudents();
+        },
+        btnCancelOnPressed: () {},
+      ).showDialogue(Get.key.currentContext!);
     }
 
 // ///// 1-   map of grades students
@@ -398,7 +446,7 @@ class DistributeStudentsController extends GetxController {
   }
 
   bool checkStudentsSettingNextToEachOther() {
-    List<StudentSeatNumberResModel> studentsSettingNextToEachOther = [];
+    studentsSettingNextToEachOther.clear();
 
     // ccheck there is no students from the sae grade setting next to each other
     // use the class desk rowNum and column
@@ -430,16 +478,6 @@ class DistributeStudentsController extends GetxController {
       }
     }
     if (studentsSettingNextToEachOther.isNotEmpty) {
-      MyAwesomeDialogue(
-        title: 'Warning',
-        desc:
-            'Some students from the same grade will be setting next to each other. The following students will be setting next to each other: ${studentsSettingNextToEachOther.map((student) => 'name: ${student.student?.firstName} ${student.student?.secondName} ${student.student?.thirdName} grade: ${student.student?.gradeResModel?.name}').join(', ')} Are you sure you want to continue?',
-        dialogType: DialogType.warning,
-        btnOkOnPressed: () {
-          distributeStudents();
-        },
-        btnCancelOnPressed: () {},
-      ).showDialogue(Get.key.currentContext!);
       return false;
     }
     return true;

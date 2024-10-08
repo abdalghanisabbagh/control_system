@@ -66,19 +66,32 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                FittedBox(
-                                  child: TextButton(
-                                    onPressed: () {
-                                      controller.autoGenerateCross();
-                                    },
-                                    child: const Text(
-                                      'Auto Generate (Cross)',
-                                    ),
-                                  ),
-                                ),
+                                // const SizedBox(
+                                //   height: 10,
+                                // ),
+                                // FittedBox(
+                                //   child: TextButton(
+                                //     onPressed: () {
+                                //       controller.autoGenerateCross();
+                                //     },
+                                //     child: const Text(
+                                //       'Auto Generate (Cross)',
+                                //     ),
+                                //   ),
+                                // ),
+                                // const SizedBox(
+                                //   height: 10,
+                                // ),
+                                // FittedBox(
+                                //   child: TextButton(
+                                //     onPressed: () {
+                                //       controller.autoGenerate();
+                                //     },
+                                //     child: const Text(
+                                //       'Auto Generate',
+                                //     ),
+                                //   ),
+                                // ),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -97,6 +110,9 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                           ],
                         ),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     Row(
                       children: [

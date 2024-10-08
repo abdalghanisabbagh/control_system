@@ -27,6 +27,68 @@ class ControlMissionOperationController extends GetxController {
   List<ValueItem>? selectedEducationYear;
   ValueItem? selectedItemEducationYear;
 
+  Future<bool> activeControlMission({
+    required int id,
+  }) async {
+    bool examMissionHasBeenDeleted = false;
+
+    ResponseHandler<void> responseHandler = ResponseHandler();
+
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${ControlMissionLinks.controlMissionActivate}/$id',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        examMissionHasBeenDeleted = false;
+      },
+      (r) {
+        examMissionHasBeenDeleted = true;
+        getControlMissionByEducationYear(selectedItemEducationYear!.value);
+      },
+    );
+    update();
+    return examMissionHasBeenDeleted;
+  }
+
+  Future<bool> deleteControlMission({
+    required int id,
+  }) async {
+    bool examMissionHasBeenDeleted = false;
+
+    ResponseHandler<void> responseHandler = ResponseHandler();
+
+    Either<Failure, void> response = await responseHandler.getResponse(
+      path: '${ControlMissionLinks.controlMissionDeactivate}/$id',
+      converter: (_) {},
+      type: ReqTypeEnum.PATCH,
+      body: {},
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+        examMissionHasBeenDeleted = false;
+      },
+      (r) {
+        examMissionHasBeenDeleted = true;
+        getControlMissionByEducationYear(selectedItemEducationYear!.value);
+      },
+    );
+    update();
+    return examMissionHasBeenDeleted;
+  }
+
   Future<bool> getControlMissionByEducationYear(int educationYearId) async {
     bool gotData = false;
     isLoading = true;
@@ -36,7 +98,7 @@ class ControlMissionOperationController extends GetxController {
     Either<Failure, ControlMissionsResModel> response =
         await responseHandler.getResponse(
       path:
-          "${ControlMissionLinks.controlMissionSchool}/${Hive.box('School').get('Id')}/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
+          "active/${ControlMissionLinks.controlMissionSchool}/${Hive.box('School').get('Id')}/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
       converter: ControlMissionsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
@@ -94,6 +156,15 @@ class ControlMissionOperationController extends GetxController {
     update();
   }
 
+  @override
+  void onInit() {
+    setSelectedItemEducationYear([]);
+
+    getEducationYears();
+
+    super.onInit();
+  }
+
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isEmpty) {
       selectedItemEducationYear = null;
@@ -117,76 +188,5 @@ class ControlMissionOperationController extends GetxController {
       }).toList();
     }
     update();
-  }
-
-  @override
-  void onInit() {
-    setSelectedItemEducationYear([]);
-
-    getEducationYears();
-
-    super.onInit();
-  }
-
-  Future<bool> deleteControlMission({
-    required int id,
-  }) async {
-    bool examMissionHasBeenDeleted = false;
-
-    ResponseHandler<void> responseHandler = ResponseHandler();
-
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${ControlMissionLinks.controlMissionDeactivate}/$id',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: {},
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        examMissionHasBeenDeleted = false;
-      },
-      (r) {
-        examMissionHasBeenDeleted = true;
-        getControlMissionByEducationYear(selectedItemEducationYear!.value);
-      },
-    );
-    update();
-    return examMissionHasBeenDeleted;
-  }
-
-  Future<bool> activeControlMission({
-    required int id,
-  }) async {
-    bool examMissionHasBeenDeleted = false;
-
-    ResponseHandler<void> responseHandler = ResponseHandler();
-
-    Either<Failure, void> response = await responseHandler.getResponse(
-      path: '${ControlMissionLinks.controlMissionActivate}/$id',
-      converter: (_) {},
-      type: ReqTypeEnum.PATCH,
-      body: {},
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-        examMissionHasBeenDeleted = false;
-      },
-      (r) {
-        examMissionHasBeenDeleted = true;
-        getControlMissionByEducationYear(selectedItemEducationYear!.value);
-      },
-    );
-    update();
-    return examMissionHasBeenDeleted;
   }
 }
