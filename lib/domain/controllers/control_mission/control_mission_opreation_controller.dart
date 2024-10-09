@@ -98,7 +98,7 @@ class ControlMissionOperationController extends GetxController {
     Either<Failure, ControlMissionsResModel> response =
         await responseHandler.getResponse(
       path:
-          "${ControlMissionLinks.controlMissionActiveSchool}/${Hive.box('School').get('Id')}/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
+          "${ControlMissionLinks.controlMissionSchool}/${Hive.box('School').get('Id')}/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
       converter: ControlMissionsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
