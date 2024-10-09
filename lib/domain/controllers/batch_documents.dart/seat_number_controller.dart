@@ -111,7 +111,7 @@ class SeatNumberController extends GetxController {
     Either<Failure, ControlMissionsResModel> response =
         await responseHandler.getResponse(
       path:
-          "active/${ControlMissionLinks.controlMissionSchool}/$schoolId/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
+          "${ControlMissionLinks.controlMissionActiveSchool}/$schoolId/${ControlMissionLinks.controlMissionEducationYear}/$educationYearId",
       converter: ControlMissionsResModel.fromJson,
       type: ReqTypeEnum.GET,
     );
