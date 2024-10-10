@@ -53,6 +53,7 @@ class ProctorScreen extends GetView<ProctorController> {
                       ),
                     ),
                     MultiSelectDropDownView(
+                      key: UniqueKey(),
                       hintText: "Select Education Year",
                       multiSelect: false,
                       showChipSelect: true,
