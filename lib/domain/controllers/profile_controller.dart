@@ -25,6 +25,7 @@ class ProfileController extends GetxController {
             ?.map((role) => role.screens
                 ?.map((screen) => screen.frontId)
                 .contains(widgetId))
+            .where((element) => (element ?? false))
             .firstOrNull ??
         false);
   }
