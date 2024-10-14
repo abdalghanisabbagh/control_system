@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,7 @@ class ProfileController extends GetxController {
             ?.map((role) => role.screens
                 ?.map((screen) => screen.frontId)
                 .contains(widgetId))
+            .where((element) => (element ?? false))
             .firstOrNull ??
         false);
   }
