@@ -128,6 +128,13 @@ class DistributionScreen extends GetView<DistributionController> {
                             ),
                           )
                         : SearchableList<ExamRoomResModel>(
+                            filter: (value) => controller.listExamRoom
+                                .where(
+                                  (element) => element.name!
+                                      .toLowerCase()
+                                      .contains(value),
+                                )
+                                .toList(),
                             initialList: controller.listExamRoom,
                             inputDecoration: const InputDecoration(
                               label: Text(
