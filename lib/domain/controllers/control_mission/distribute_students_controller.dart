@@ -52,6 +52,16 @@ class DistributeStudentsController extends GetxController {
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
   List<StudentSeatNumberResModel> studentsSettingNextToEachOther = [];
 
+  /// Adds a student to a desk in the database with the given [studentSeatNumberId]
+  /// and [classDeskId].
+  ///
+  /// The function will update the UI to show that the student has been added to
+  /// the desk.
+  ///
+  /// The function will also update the student's class desk ID in the database.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
   void addStudentToDesk(
       {required int studentSeatNumberId, required int classDeskId}) async {
     availableStudents
@@ -74,6 +84,15 @@ class DistributeStudentsController extends GetxController {
   }
 
 // Backtracking function
+  /// A function that assigns students to seats in the exam room with the given parameters and returns a boolean indicating whether the assignment was successful.
+  //
+  /// The function takes the following parameters:
+  //
+  /// - [availableStudents]: A list of students which are available to be assigned to seats in the exam room.
+  //
+  /// The function will return a boolean indicating whether the assignment was successful.
+  //
+  /// The function will also update the UI to show that the students have been assigned to seats in the exam room.
   bool assign() {
     for (var element in availableStudents) {
       element.classDeskID = null;
@@ -130,6 +149,15 @@ class DistributeStudentsController extends GetxController {
     return !checkStudentsSettingNextToEachOther(checkVertical: true);
   }
 
+  /// This function is used to automatically distribute the students to class desks.
+  /// The auto distribution is done in the following order:
+  /// 1. If there are only two grades, distribute the students in a row-column order.
+  /// 2. If there are three grades, distribute the students in a row-column order.
+  /// 3. If there are four grades, distribute the students in a row-column order.
+  /// 4. If there are more than four grades, distribute the students in a row-column order
+  ///    with a block size of one.
+  /// If the auto distribution is not possible, show an error message.
+  ///
   void autoGenerate() {
     // Create the reordered list
     List<StudentSeatNumberResModel> reOrderedList =
@@ -442,6 +470,19 @@ class DistributeStudentsController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  /// This function is used to generate the distribution of the students in
+  /// the classroom in a cross pattern. It takes the available students and
+  /// class desks as input and assigns the students to the class desks in
+  /// such a way that students from the same grade will not be sitting next
+  /// to each other. The function returns a list of students that are
+  /// assigned to the class desks. If the number of grades is greater than
+  /// 4, the function will return an error dialogue. If the number of grades
+  /// is 3, the function will return a warning dialogue if there are some
+  /// students from the same grade that will be sitting next to each other.
+  /// The user can choose to continue or cancel the distribution. If the
+  /// user chooses to continue, the function will distribute the students
+  /// in a cross pattern. If the user chooses to cancel, the function will
+  /// return and the distribution will not be done.
   void autoGenerateCross() {
     for (var element in availableStudents) {
       element.classDeskID = null;
@@ -607,6 +648,17 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
+  /// A simple algorithm to auto-generate the distribution of students in the exam room.
+  ///
+  /// This algorithm works by sorting the students in each grade in ascending order of their seat numbers.
+  /// It then assigns the students in each grade to the available class desks in order, filling the desks column by column.
+  /// The algorithm stops when it has assigned all the students to class desks, or when it runs out of class desks.
+  ///
+  /// The algorithm then calls [distributeStudentsUi] to update the UI, and checks if any students from the same grade are setting next to each other.
+  /// If they are, it shows a warning dialogue to the user asking if they want to continue. If the user chooses to continue, it calls [distributeStudents].
+  ///
+  /// This algorithm is much simpler than the other auto-generate algorithms, and does not guarantee to find the best solution.
+  /// It is intended for use when the other algorithms are too slow or are not finding a solution.
   void autoGenerateSimple() {
     for (var element in availableStudents) {
       element.classDeskID = null;
@@ -681,11 +733,32 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
+  /// Blocks a class desk from being used to seat a student.
+  ///
+  /// The [classDeskId] is the id of the class desk to be blocked.
+  ///
+  /// The function adds the [classDeskId] to the [blockedClassDesks] list and calls [update] to notify the UI of the change.
   void blockClassDesk({required int classDeskId}) {
     blockedClassDesks.add(classDeskId);
     update();
   }
 
+  /// Checks if the number of students to be added is valid.
+  ///
+  /// If [selectedItemClassId] is not -1, the function checks if the number of students
+  /// in the selected class and grade is greater or equal to the number of students to be
+  /// added. If the number is valid, the function also checks if the total number of students
+  /// in the exam room after adding the new students is less than or equal to the maximum
+  /// capacity of the exam room.
+  ///
+  /// If [selectedItemClassId] is -1, the function checks if the number of students
+  /// in the selected grade is greater or equal to the number of students to be
+  /// added. If the number is valid, the function also checks if the total number of students
+  /// in the exam room after adding the new students is less than or equal to the maximum
+  /// capacity of the exam room.
+  ///
+  /// The function returns true if the number of students to be added is valid, and false
+  /// otherwise.
   bool canAddStudents() {
     if (selectedItemClassId != -1) {
       return (studentsSeatNumbers
@@ -711,6 +784,20 @@ class DistributeStudentsController extends GetxController {
             int.parse(examRoomResModel.classRoomResModel!.maxCapacity!);
   }
 
+  /// Checks if the number of students to be removed is valid.
+  ///
+  /// If [selectedItemClassId] is not -1, the function checks if the number of students
+  /// in the selected class and grade is greater or equal to the number of students to be
+  /// removed. If the number is valid, the function also checks if the total number of students
+  /// in the exam room after removing the new students is greater than or equal to 0.
+  ///
+  /// If [selectedItemClassId] is -1, the function checks if the number of students
+  /// in the selected grade is greater or equal to the number of students to be
+  /// removed. If the number is valid, the function also checks if the total number of students
+  /// in the exam room after removing the new students is greater than or equal to 0.
+  ///
+  /// The function returns true if the number of students to be removed is valid, and false
+  /// otherwise.
   bool canRemoveStudents() {
     if (selectedItemClassId != -1) {
       return availableStudents
@@ -729,6 +816,13 @@ class DistributeStudentsController extends GetxController {
         0;
   }
 
+  /// This function checks if there are any students from the same grade setting next to each other in the exam room.
+  ///
+  /// The function takes an optional parameter [checkVertical] which is a boolean. If [checkVertical] is true, the function
+  /// will also check if there are any students from the same grade setting on top of each other in the exam room.
+  ///
+  /// The function will return true if there are any students from the same grade setting next to each other, and false
+  /// otherwise.
   bool checkStudentsSettingNextToEachOther({bool checkVertical = false}) {
     studentsSettingNextToEachOther.clear();
 
@@ -784,6 +878,14 @@ class DistributeStudentsController extends GetxController {
     return studentsSettingNextToEachOther.isNotEmpty;
   }
 
+  /// This function distributes the students in the exam room.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will make a PATCH request to the server to update the students in the exam room.
+  /// The request body will contain the list of students with their ids and class desk ids.
+  ///
+  /// The function will return a Future<void> that completes when the request is finished.
   Future<void> distributeStudents() async {
     ResponseHandler responseHandler = ResponseHandler();
     responseHandler.getResponse(
@@ -800,6 +902,24 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
+  /// This function assigns the students to the class desks in the exam room.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will assign the students to the class desks in the exam room.
+  /// The function will assign the students from the same grade to the class desks
+  /// in a round robin fashion. If the number of grades is greater than 4, the
+  /// function will show an error dialogue and will not assign the students to the
+  /// class desks. If the number of grades is 3, the function will show a warning
+  /// dialogue if there are some students from the same grade that will be sitting
+  /// next to each other. The user can choose to continue or cancel the
+  /// distribution. If the user chooses to continue, the function will assign the
+  /// students to the class desks. If the user chooses to cancel, the function will
+  /// return and will not assign the students to the class desks.
+  ///
+  /// The function will also update the UI to show the distribution of the
+  /// students in the exam room.
+  ///
   void distributeStudentsUi() {
     for (int i = 0; i < availableStudents.length; i++) {
       if (availableStudents[i].classDeskID == null) {
@@ -817,6 +937,23 @@ class DistributeStudentsController extends GetxController {
     update();
   }
 
+  /// Export the student distribution in the exam room to a PDF file.
+  ///
+  /// The function does not take any parameters.
+  ///
+  /// The function will create a PDF file that contains the student distribution
+  /// in the exam room. The PDF file will have the NIS logo at the top, and the
+  /// student distribution will be displayed as a table with the student's name,
+  /// grade, and class room. The table will have a header with the student's name,
+  /// grade, and class room. The table will also have a footer with the number of
+  /// students in each grade. The PDF file will be saved to the user's downloads
+  /// folder with the name "student distribute of [exam room name].pdf". The
+  /// function will also show a success message at the top of the screen.
+  ///
+  /// The function uses the [pdf] package to generate the PDF file. The function
+  /// uses the [html] package to save the PDF file to the user's downloads folder.
+  /// The function uses the [Get] package to show the success message at the top
+  /// of the screen.
   Future<void> exportToPdf() async {
     ByteData logoImage =
         await rootBundle.load(AssetsManager.assetsLogosNisLogo);
@@ -1319,11 +1456,21 @@ class DistributeStudentsController extends GetxController {
     ).show(Get.key.currentContext!);
   }
 
+  /// Finishes the distribution of students to the exam room
+  /// and returns true if successful.
   Future<bool> finish() async {
     distributeStudents();
     return true;
   }
 
+  /// Adds the selected students to the [availableStudents] list and removes them from the [studentsSeatNumbers] list.
+  /// It also updates the [availableStudentsCount] and [countByGrade] maps, and the [optionsGradesInExamRoom] list.
+  ///
+  /// If the selected grade does not have any more available students, it will be removed from the [optionsGradesInExamRoom] list.
+  ///
+  /// The function will also update the UI by calling [update()].
+  ///
+  /// The function takes no parameters.
   void getAvailableStudents() async {
     int? addedStudentsCount;
     if (selectedItemClassId == -1) {
@@ -1389,6 +1536,17 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
+  /// Gets all class desks from the API and updates the UI
+  ///
+  /// The function sends a GET request to the server and gets the response.
+  /// If the response is successful, the function will update the list of
+  /// class desks and the options for the class desk drop down.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the error message.
+  ///
+  /// The function will also update the UI to show or hide the loading indicator
+  /// based on the status of the request.
   Future<void> getClassDesks() async {
     ResponseHandler<ClassDesksResModel> responseHandler = ResponseHandler();
     Either<Failure, ClassDesksResModel> response =
@@ -1418,6 +1576,15 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
+  /// Gets the exam room from the local hive storage if it has been saved there
+  ///
+  /// The function checks if the exam room ID is null and if the exam room has
+  /// been saved in the local hive storage. If yes, it fetches the exam room
+  /// from the hive storage and updates the UI. If not, it creates a new
+  /// instance of the ExamRoomResModel.
+  ///
+  /// The function is used when the user navigates to the distribute students
+  /// page.
   Future<void> getExamRoom() async {
     examRoomResModel = examRoomResModel.id == null &&
             Hive.box('ExamRoom').containsKey('examRoomResModel')
@@ -1430,6 +1597,20 @@ class DistributeStudentsController extends GetxController {
     update();
   }
 
+  /// Gets all the grades from the API and sets the
+  /// [optionsGrades] with the grades returned by the API.
+  ///
+  /// It sets the [isLoadingGrades] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// The function is used when the user navigates to the distribute students
+  /// page.
+  ///
+  /// The function returns a boolean indicating whether the grades were retrieved
+  /// successfully.
   Future<bool> getGradesBySchoolId() async {
     bool gotData = false;
     ResponseHandler<GradesResModel> responseHandler = ResponseHandler();
@@ -1456,6 +1637,22 @@ class DistributeStudentsController extends GetxController {
     return gotData;
   }
 
+  /// Gets all the students seat numbers from the API and sets the
+  /// [studentsSeatNumbers], [availableStudents], [optionsGrades],
+  /// [optionsGradesInExamRoom], [availableStudentsCount], and
+  /// [countByGrade] with the students seat numbers returned by the API.
+  ///
+  /// It sets the [isLoading] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the
+  /// failure message.
+  ///
+  /// The function is used when the user navigates to the distribute
+  /// students page.
+  ///
+  /// The function returns a boolean indicating whether the students
+  /// seat numbers were retrieved successfully.
   Future<bool> getStudentsSeatNumbers() async {
     isLoading = true;
     update();
@@ -1543,6 +1740,19 @@ class DistributeStudentsController extends GetxController {
   }
 
   @override
+
+  /// Called when the widget is initialized, it sets up the data necessary for the
+  /// widget to work.
+  //
+  /// It first calls the superclass's [onInit], then sets [isLoading] to `true` and
+  /// calls [update] to show the loading indicator.
+  //
+  /// It then calls [getExamRoom], waits for it to finish, and then calls
+  /// [getGradesBySchoolId] and waits for it to finish. After that, it calls both
+  /// [getStudentsSeatNumbers] and [getClassDesks] and waits for both to finish.
+  //
+  /// Finally, it sets [isLoading] to `false` and calls [update] again to hide the
+  /// loading indicator and show the data in the UI.
   void onInit() async {
     super.onInit();
     isLoading = true;
@@ -1559,6 +1769,20 @@ class DistributeStudentsController extends GetxController {
     update();
   }
 
+  /// Removes all the students from the class desks in the database and in the UI.
+  ///
+  /// It first sets the [classDeskID] of each student in [availableStudents] to `null`.
+  ///
+  /// Then it creates a [ResponseHandler], and calls [getResponse] on it with the path
+  /// `${StudentsLinks.studentSeatNumbers}/many`, the converter as an empty function,
+  /// the request type as [ReqTypeEnum.PATCH], and the body as a list of maps.
+  ///
+  /// The list of maps is created by mapping each student in [availableStudents] to a
+  /// map with the student's ID and the student's class desk ID set to `null`.
+  ///
+  /// After the request is finished, it calls [update] to update the UI.
+  ///
+  /// The function returns nothing.
   void removeAllFromDesks() {
     for (var element in availableStudents) {
       element.classDeskID = null;
@@ -1582,6 +1806,22 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
+  /// Removes a student from a class desk in the database and in the UI.
+  ///
+  /// It first finds the student in the [availableStudents] list and sets the
+  /// [classDeskID] of the student to `null`.
+  ///
+  /// Then it creates a [ResponseHandler], and calls [getResponse] on it with the path
+  /// `${StudentsLinks.studentSeatNumbers}/$studentSeatNumberId`, the converter as an
+  /// empty function, the request type as [ReqTypeEnum.PATCH], and the body as a map
+  /// with the student's ID and the student's class desk ID set to `null`.
+  ///
+  /// After the request is finished, it calls [update] to update the UI.
+  ///
+  /// The function takes one required parameter, [studentSeatNumberId], which is the ID
+  /// of the student to be removed from the class desk.
+  ///
+  /// The function returns nothing.
   void removeStudentFromDesk({required int studentSeatNumberId}) {
     availableStudents
         .firstWhere((element) => element.iD == studentSeatNumberId)
@@ -1600,6 +1840,25 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
+  /// Removes a student from the exam room in the database and in the UI.
+  ///
+  /// It first finds the student in the [availableStudents] list, sets the
+  /// [examRoomID] of the student to `null`, adds the student to the
+  /// [studentsSeatNumbers] list, and increments the [availableStudentsCount].
+  ///
+  /// Then it increments the count of the student's grade in [countByGrade] by one.
+  ///
+  /// After that, it adds the student to the [removedStudentsFromExamRoom] list, and
+  /// removes the student from the [availableStudents] list.
+  ///
+  /// Finally, it checks if there are any students with the same grade in the
+  /// [availableStudents] list, and if not, removes the grade from the
+  /// [optionsGradesInExamRoom] list. It then calls [update] to update the UI.
+  ///
+  /// The function takes one required parameter, [studentSeatNumberId], which is the ID
+  /// of the student to be removed from the exam room.
+  ///
+  /// The function returns nothing.
   void removeStudentFromExamRoom({required int studentSeatNumberId}) {
     studentsSeatNumbers
       ..add(
@@ -1654,6 +1913,29 @@ class DistributeStudentsController extends GetxController {
     return;
   }
 
+  /// Removes multiple students from the exam room in the database and in the UI.
+  ///
+  /// If [selectedItemClassId] is -1, it removes the last [numberOfStudentsController.text]
+  /// students from the exam room. If [selectedItemClassId] is not -1, it removes the last
+  /// [numberOfStudentsController.text] students from the exam room with the same grade
+  /// and class room as [selectedItemClassId].
+  ///
+  /// It first creates a list of students to be removed, and adds them to the
+  /// [studentsSeatNumbers] list and the [removedStudentsFromExamRoom] list.
+  ///
+  /// Then it removes the students from the [availableStudents] list, and updates the
+  /// [availableStudentsCount] and the [countByGrade] map.
+  ///
+  /// After that, it checks if there are any students with the same grade in the
+  /// [availableStudents] list, and if not, removes the grade from the
+  /// [optionsGradesInExamRoom] list.
+  ///
+  /// Finally, it clears the [numberOfStudentsController], calls [update] to update the
+  /// UI, and sends a PATCH request to the server to update the students in the database.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function returns nothing.
   void removeStudentsFromExamRoom() {
     List<StudentSeatNumberResModel>? removedStudents;
     if (selectedItemClassId == -1) {
@@ -1713,6 +1995,16 @@ class DistributeStudentsController extends GetxController {
     );
   }
 
+  /// Saves the exam room model to the local storage.
+  //
+  /// This function takes an [ExamRoomResModel] as a parameter and
+  /// saves it to the local storage. It also updates the UI by calling
+  /// [update].
+  ///
+  /// The exam room model is saved in a Hive box called 'ExamRoom'.
+  /// The key of the box is 'examRoomResModel' and the value is the
+  /// JSON representation of the exam room model.
+
   Future<void> saveExamRoom(ExamRoomResModel examRoomResModel) async {
     this.examRoomResModel = examRoomResModel;
     update();
@@ -1720,6 +2012,11 @@ class DistributeStudentsController extends GetxController {
         .put('examRoomResModel', json.encode(examRoomResModel.toJson()));
   }
 
+  /// Unblocks a class desk from being used to seat a student.
+  ///
+  /// The [classDeskId] is the id of the class desk to be unblocked.
+  ///
+  /// The function removes the [classDeskId] from the [blockedClassDesks] list and calls [update] to notify the UI of the change.
   void unBlockClassDesk({required int classDeskId}) {
     blockedClassDesks.remove(classDeskId);
     update();
