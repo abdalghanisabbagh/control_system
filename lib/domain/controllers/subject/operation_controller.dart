@@ -14,6 +14,16 @@ class OperationController extends GetxController {
   bool getAllLoading = false;
   List<SubjectResModel> subjects = <SubjectResModel>[].obs;
 
+  /// Gets all subjects from the server and updates the UI
+  ///
+  /// This function sends a GET request to the server to get all subjects
+  /// and updates the [subjects] list with the subjects returned by the server.
+  ///
+  /// The function also updates the UI to show a loading indicator while
+  /// the request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog
+  /// with the failure message.
   Future getAllSubjects() async {
     getAllLoading = true;
     update();
@@ -43,6 +53,9 @@ class OperationController extends GetxController {
   }
 
   @override
+
+  /// Calls [getAllSubjects] to get all subjects from the server
+  /// and then calls [onInit] of the superclass.
   void onInit() {
     getAllSubjects();
     super.onInit();
