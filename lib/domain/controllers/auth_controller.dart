@@ -26,6 +26,13 @@ class AuthController extends GetxController {
   bool showPass = true;
   TokenService tokenService = Get.find<TokenService>();
 
+  /// Checks whether the user is still logged in by comparing the difference
+  /// between the current time and the time when the token was created to 17 hours.
+  /// If the difference is greater than 17 hours, the user is considered logged out,
+  /// else the user is considered logged in.
+  ///
+  /// The function sets the [isLogin] variable to true or false based on the
+  /// comparison and calls [update] to notify the UI of the change.
   Future<void> checkLoginStatus() async {
     if (tokenService.tokenModel == null) {
       isLogin = false;
@@ -39,6 +46,22 @@ class AuthController extends GetxController {
     return;
   }
 
+  /// Logs in the user to the server and saves the token to the local storage
+  /// using the [TokenService].
+  ///
+  /// The function takes the username and password from the text fields
+  /// [usernameController] and [passwordController] respectively.
+  ///
+  /// If the response is a failure, the function shows an error dialog with the
+  /// failure message.
+  ///
+  /// If the response is successful, the function saves the token and the user
+  /// profile to the local storage using the [TokenService] and
+  /// [ProfileController] respectively.
+  ///
+  /// The function returns a boolean indicating whether the login was successful.
+  ///
+  /// The function is used in the login screen.
   Future<bool> login() async {
     isLoading = true;
     update(['login_btn']);
@@ -80,6 +103,10 @@ class AuthController extends GetxController {
   }
 
   @override
+
+  /// Called when the controller is closed. Sets [isLogin] to false and
+  /// calls [update] to update the UI. Also calls [super.onClose] to
+  /// perform any other necessary cleanup.
   void onClose() async {
     isLogin = false;
     update();
@@ -87,6 +114,11 @@ class AuthController extends GetxController {
   }
 
   @override
+
+  /// Called when the controller is initialized. Checks the login status
+  /// using [checkLoginStatus], gets the package information using
+  /// [PackageInfo.fromPlatform], updates the UI using [update], and calls
+  /// [super.onInit].
   void onInit() async {
     await checkLoginStatus();
     packageInfo = await PackageInfo.fromPlatform();
@@ -94,11 +126,20 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-  setShowPass() {
+  /// Toggles the [showPass] variable which determines whether the password
+  /// should be shown or hidden in the login form. Calls [update] with the
+  /// argument `['pass_icon']` to update the UI.
+  void setShowPass() {
     showPass = !showPass;
     update(['pass_icon']);
   }
 
+  /// Signs the user out of the application. Deletes the token model from
+  /// the Hive box, deletes the profile from the Hive box, deletes the
+  /// school from the Hive box, clears the control mission box, clears the
+  /// exam room box, clears the side menu index box, and sends a DELETE
+  /// request to the logout endpoint with the refresh token. Sets [isLogin]
+  /// to false and calls [update] to update the UI.
   Future<void> signOut() async {
     isLogin = false;
     await Future.wait([
