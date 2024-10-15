@@ -20,12 +20,33 @@ class BarcodeController extends GetxController {
   final TextEditingController studentDegreeController = TextEditingController();
 
   @override
+
+  /// Releases the resources used by the [TextEditingController]s.
+  ///
+  /// This method is invoked when the [GetxController] is removed from the
+  /// widget tree.
+  ///
+  /// It is important to call [dispose] to prevent memory leaks.
+  ///
+  /// This method is automatically called when the [GetxController] is
+  /// removed from the widget tree.
   void dispose() {
     barcodeController.dispose();
     studentDegreeController.dispose();
     super.dispose();
   }
 
+  /// Gets student data from the barcode.
+  ///
+  /// This function sends a GET request to the server with the barcode
+  /// and updates the [barcodeResModel] with the result.
+  ///
+  /// If the request is successful, it updates the UI with the student's
+  /// data. If the request fails, it shows an error dialog with the
+  /// error message.
+  ///
+  /// This function is called when the user clicks the "Search" button.
+  ///
   Future<void> getDataFromBarcode() async {
     isLoading = true;
     update();
@@ -58,6 +79,17 @@ class BarcodeController extends GetxController {
     update();
   }
 
+  /// Sets the degree of the student based on the barcode and the given degree.
+  ///
+  /// This function sends a PATCH request to the server with the barcode
+  /// and the degree and updates the [barcodeResModel] with the result.
+  ///
+  /// If the request is successful, it updates the UI by clearing the
+  /// [barcodeController] and [studentDegreeController] and returns true.
+  ///
+  /// If the request fails, it returns false.
+  ///
+  /// This function is called when the user clicks the "Set Degree" button.
   Future<bool> setStudentDegree() async {
     isLoading = true;
     bool setDegreeSuccess = false;
