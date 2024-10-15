@@ -288,6 +288,9 @@ class TransferStudentController extends GetxController {
           }
         : {
             selectedItemSchool = value.first,
+            selectedItemGrade = null,
+            selectedItemCohort = null,
+            selectedItemClassRoom = null,
             getAllGradesSchoolId(),
             getCohortsBySchoolId(),
             getClassRoomsBySchoolId()
