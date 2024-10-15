@@ -65,6 +65,19 @@ class StudentController extends GetxController {
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
 
+  /// Adds many students to the server and updates the UI.
+  //
+  /// The function takes a list of students and returns a boolean indicating whether
+  /// the students have been added to the server.
+  //
+  /// If the response is a failure, the function shows an error dialog and returns
+  /// false.
+  //
+  /// The function will also update the UI to show that the students have been added
+  /// to the server.
+  //
+  /// The function will also call [onInit] after the students have been added to the
+  /// server.
   Future<bool> addManyStudents({
     required List<StudentResModel> students,
   }) async {
@@ -101,6 +114,14 @@ class StudentController extends GetxController {
     return addStudentsHasBeenAdded;
   }
 
+  /// Downloads the student template PDF file and saves it to the user's downloads folder.
+  ///
+  /// If an error occurs, a dialogue will be shown with the error message.
+  ///
+  /// The function is used when the user navigates to the add new student page and
+  /// presses the download template button.
+  ///
+  /// The function is asynchronous and returns a future of void.
   Future<void> downloadFile() async {
     try {
       final ByteData data = await rootBundle.load('assets/files/template.pdf');
@@ -121,6 +142,14 @@ class StudentController extends GetxController {
     }
   }
 
+  /// Downloads the student template PDF file from Google Drive and saves it to the user's downloads folder.
+  //
+  /// If an error occurs, a dialogue will be shown with the error message.
+  //
+  /// The function is used when the user navigates to the add new student page and
+  /// presses the download template button.
+  //
+  /// The function is asynchronous and returns a future of void.
   Future<void> downloadTemp() async {
     if (!await launchUrl(Uri.parse(
         "https://drive.google.com/file/d/1ihFseXC6QHb3FrfAYqz-qp1WlK_1PuYl/view?usp=sharing"))) {
@@ -128,6 +157,15 @@ class StudentController extends GetxController {
     }
   }
 
+  /// Exports the given [studentsRows] to a CSV file and downloads it.
+  ///
+  /// The file will be saved with a .csv extension and the name 'pluto_grid_export.csv'.
+  ///
+  /// If an error occurs, a dialogue will be shown with the error message.
+  ///
+  /// The UI will be updated to show a loading indicator while the request is being processed.
+  ///
+  /// The function will also show a success message at the top of the screen.
   void exportToCsv(BuildContext context, List<PlutoRow> studentsRows) {
     List<List<dynamic>> csvData = [];
 
@@ -174,6 +212,13 @@ class StudentController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  /// Exports the given [studentsRows] to a PDF file and downloads it.
+  //
+  /// The file will be saved with a .pdf extension and the name 'pluto_grid_export.pdf'.
+  //
+  /// If an error occurs, a dialogue will be shown with the error message.
+  //
+  /// The UI will be updated to show a loading indicator while the request is being processed.
   Future<void> exportToPdf(
       BuildContext context, List<PlutoRow> studentsRows) async {
     final pdf = pw.Document();
@@ -249,6 +294,15 @@ class StudentController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  /// Gets all the classes rooms from the API and sets the
+  /// [optionsClassRoom] with the classes rooms returned by the API.
+  //
+  /// The function will return a boolean indicating whether the classes rooms
+  /// were retrieved successfully.
+  //
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  //
+  /// If the response is a failure, the function will show an error dialog with the failure message.
   Future<bool> getClassRooms() async {
     bool gotData = false;
     update();
@@ -282,6 +336,15 @@ class StudentController extends GetxController {
     return gotData;
   }
 
+  /// Gets all the cohorts by school type from the API and sets the
+  /// [optionsCohort] with the cohorts returned by the API.
+  //
+  /// The function will return a boolean indicating whether the cohorts were
+  /// retrieved successfully.
+  //
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  //
+  /// If the response is a failure, the function will show an error dialog with the failure message.
   Future<bool> getCohorts() async {
     bool gotData = false;
     update();
@@ -316,6 +379,18 @@ class StudentController extends GetxController {
     return gotData;
   }
 
+  /// Gets all grades from the API and assigns them to [grades] and [optionsGrade].
+  //
+  /// It takes no parameters.
+  //
+  /// The function will return a boolean indicating whether the grades were
+  /// retrieved successfully.
+  //
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  //
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
   Future<bool> getGrades() async {
     bool gotData = false;
     update();
@@ -349,6 +424,18 @@ class StudentController extends GetxController {
     return gotData;
   }
 
+  /// Gets all students from the API and assigns them to [students] and [studentsRows].
+  ///
+  /// It takes no parameters.
+  ///
+  /// The function will return a boolean indicating whether the students were
+  /// retrieved successfully.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
   Future<bool> getStudents() async {
     bool gotData = false;
     update();
@@ -380,6 +467,21 @@ class StudentController extends GetxController {
   }
 
   @override
+
+  /// Called when the widget is initialized.
+  ///
+  /// The function sets the initial state of the controller and then calls the
+  /// [getCohorts], [getClassRooms], and [getGrades] functions to retrieve the
+  /// cohorts, class rooms, and grades from the API.
+  ///
+  /// After the retrieval of the data, the function calls [getStudents] to
+  /// retrieve the students from the API.
+  ///
+  /// The function also updates the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// When the function is finished, it calls the [super.onInit] method to
+  /// initialize the parent class.
   void onInit() async {
     isImportedNew = false;
     isImportedPromote = false;
@@ -398,6 +500,29 @@ class StudentController extends GetxController {
     super.onInit();
   }
 
+  /// Edits a student in the server and updates the UI.
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [studentid]: the id of the student to be edited
+  /// - [blbId]: the id of the student's blb
+  /// - [gradesId]: the id of the student's grade
+  /// - [cohortId]: the id of the student's cohort
+  /// - [schoolClassId]: the id of the student's school class
+  /// - [firstName]: the first name of the student
+  /// - [secondName]: the second name of the student
+  /// - [thirdName]: the third name of the student
+  /// - [secondLang]: the second language of the student
+  /// - [religion]: the religion of the student
+  /// - [citizenship]: the citizenship of the student
+  ///
+  /// The function will show an error dialog if the response is a failure.
+  ///
+  /// The function will also update the UI to show that the student has been edited
+  /// in the server.
+  ///
+  /// The function returns a boolean indicating whether the student was edited
+  /// successfully.
   Future<bool> patchEditStudent({
     required int studentid,
     required int blbId,
@@ -457,6 +582,13 @@ class StudentController extends GetxController {
     return editStudentHasBeenAdded;
   }
 
+  /// Allows the user to select a CSV file and processes it to add students to the server.
+  ///
+  /// The function shows an error dialog if the user does not select a file.
+  ///
+  /// The function will also update the UI to show that the file has been imported.
+  ///
+  /// The function will also update the UI to show that the students have been added to the server.
   Future<void> pickAndReadFile() async {
     FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -485,21 +617,41 @@ class StudentController extends GetxController {
     }
   }
 
+  /// Sets the [selectedItemClassRoom] to the first item in [items] if [items] is not empty.
+  ///
+  /// The function will also call [update] to update the UI.
   void setSelectedItemClassRoom(List<ValueItem> items) {
     selectedItemClassRoom = items.isEmpty ? null : items.first;
     update();
   }
 
+  /// Sets the [selectedItemCohort] to the first item in [items] if [items] is not empty.
+  ///
+  /// The function will also call [update] to update the UI.
   void setSelectedItemCohort(List<ValueItem> items) {
     selectedItemCohort = items.isEmpty ? null : items.first;
     update();
   }
 
+  /// Sets the [selectedItemGrade] to the first item in [items] if [items] is not empty.
+  ///
+  /// The function will also call [update] to update the UI.
   void setSelectedItemGrade(List<ValueItem> items) {
     selectedItemGrade = items.isEmpty ? null : items.first;
     update();
   }
 
+  /// Updates many students in the server.
+  ///
+  /// The function takes a list of [StudentResModel] as a parameter.
+  ///
+  /// The function will update the UI to show that the students are being updated.
+  ///
+  /// The function will also call [onInit] after the students have been updated to the
+  /// server.
+  ///
+  /// The function will return a boolean indicating whether the students were updated
+  /// successfully.
   Future<bool> updateManyStudents({
     required List<StudentResModel> students,
   }) async {
@@ -536,6 +688,41 @@ class StudentController extends GetxController {
     return updateStudentsHasBeenAdded;
   }
 
+  /// Processes a CSV file and updates the UI with the data from the file.
+  //
+  /// The function takes the following parameters:
+  //
+  /// - [fileBytes]: The bytes of the file to be processed.
+  /// - [students]: The list of students to check against.
+  /// - [cohorts]: The list of cohorts to check against.
+  /// - [classesRooms]: The list of class rooms to check against.
+  /// - [grades]: The list of grades to check against.
+  //
+  /// The function will first check if the file contains the required headers.
+  /// If the file does not contain the required headers, the function will show
+  /// an error dialogue with the missing headers.
+  //
+  /// If the file contains the required headers, the function will then check if
+  /// the file contains any rows. If the file does not contain any rows, the
+  /// function will show an error dialogue.
+  //
+  /// If the file contains rows, the function will then convert the rows to a
+  /// list of [StudentResModel] using the [StudentResModel.fromCsvWithHeaders]
+  /// constructor.
+  //
+  /// The function will then call the [convertFileStudentsToPluto] or
+  /// [convertPromoteFileStudentsToPluto] function depending on the value of
+  /// [isImportedNew] and [isImportedPromote] respectively.
+  //
+  /// If the response is a failure, the function will show an error dialogue with
+  /// the failure message.
+  //
+  /// If the response is a success, the function will update the UI with the
+  /// returned data.
+  //
+  /// The function will also update the UI with the errors returned by the
+  /// [convertFileStudentsToPluto] or [convertPromoteFileStudentsToPluto]
+  /// function.
   Future<void> _processCsvFile(
     Uint8List fileBytes, {
     required List<StudentResModel> students,
