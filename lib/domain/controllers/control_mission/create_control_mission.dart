@@ -45,6 +45,22 @@ class CreateControlMissionController extends GetxController {
   String? selectedStartDate;
   List<StudentResModel> students = [];
 
+  /// A function that adds a control mission to the database with the given parameters and returns a boolean indicating whether the add was successful.
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [selectedEducationYear]: The ID of the selected education year.
+  /// - [batchName]: The name of the batch.
+  /// - [selectedStartDate]: The start date of the mission.
+  /// - [selectedEndDate]: The end date of the mission.
+  ///
+  /// The function will return a boolean indicating whether the add was successful.
+  ///
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
+  ///
+  /// If the response is successful, the function will update the list of control missions in the [CoversSheetsController] and reset the UI to show that no file has been imported.
   Future<bool> addControlMission() async {
     bool success = false;
     isLoading = true;
@@ -133,6 +149,13 @@ class CreateControlMissionController extends GetxController {
     return success;
   }
 
+  /// Goes back to the previous step in the control mission creation process.
+  ///
+  /// This function checks if the current step is 1 and if so, decrements the
+  /// step by one. It then calls the [update] function to update the UI.
+  ///
+  /// This function is used when the user wants to go back to the previous step
+  /// while creating a control mission.
   void backToPreviousStep() {
     if (currentStep == 1) {
       currentStep--;
@@ -147,6 +170,13 @@ class CreateControlMissionController extends GetxController {
             : false);
   }
 
+  /// Goes to the next step in the control mission creation process.
+  ///
+  /// This function checks if the current step is 0 and if so, increments the
+  /// step by one. It then calls the [update] function to update the UI.
+  ///
+  /// This function is used when the user wants to go to the next step while
+  /// creating a control mission.
   void continueToNextStep() {
     if (currentStep == 0) {
       currentStep++;
@@ -154,6 +184,18 @@ class CreateControlMissionController extends GetxController {
     update();
   }
 
+  /// A function that creates student seat numbers in the database and returns a boolean indicating whether the operation was successful.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will show a loading indicator while the request is being processed.
+  ///
+  /// If the user has not selected any students, the function will show an error dialog with the message 'Please select students'.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
+  ///
+  /// If the response is successful, the function will return true.
+  ///
   Future<bool> createStudentSeatNumbers() async {
     bool success = false;
     isLoading = true;
@@ -212,6 +254,13 @@ class CreateControlMissionController extends GetxController {
     return success;
   }
 
+  /// This function excludes a student from the control mission.
+  ///
+  /// It takes a [PlutoColumnRendererContext] as a parameter.
+  ///
+  /// The function will remove the student from the [includedStudentsRows] and add it to the [excludedStudentsRows].
+  ///
+  /// It will also notify the listeners of the [includedStudentsStateManager] and [excludedStudentsStateManager] to update the UI.
   void excludeStudent(PlutoColumnRendererContext rendererContext) {
     excludedStudentsRows.add(includedStudentsRows.firstWhere((element) =>
         element.cells['BlbIdField']!.value ==
@@ -223,6 +272,15 @@ class CreateControlMissionController extends GetxController {
     excludedStudentsStateManager?.setPage(1);
   }
 
+  /// Gets all the education years from the API and sets the [optionsEducationYear] with the education years returned by the API.
+  ///
+  /// It sets the [isLoadingGetEducationYears] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// It will also update the UI to show a loading indicator while the request is being processed.
   Future<void> getEducationYears() async {
     isLoadingGetEducationYears = true;
     update();
@@ -257,6 +315,18 @@ class CreateControlMissionController extends GetxController {
     update();
   }
 
+  /// Gets all grades from the API and assigns them to [grades] and [optionsGrades].
+  ///
+  /// It takes no parameters.
+  ///
+  /// The function will return a boolean indicating whether the grades were
+  /// retrieved successfully.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
   Future<bool> getGrades() async {
     bool gotData = false;
     update();
@@ -290,6 +360,18 @@ class CreateControlMissionController extends GetxController {
     return gotData;
   }
 
+  /// Gets all students from the API and assigns them to [students].
+  ///
+  /// It takes no parameters.
+  ///
+  /// The function will return a boolean indicating whether the students were
+  /// retrieved successfully.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
   Future<bool> getStudents() async {
     bool gotData = false;
     update();
@@ -319,6 +401,19 @@ class CreateControlMissionController extends GetxController {
     return gotData;
   }
 
+  /// Adds a student to the list of included students and removes it from the list
+  /// of excluded students.
+  ///
+  /// It takes a [PlutoColumnRendererContext] as a parameter.
+  ///
+  /// The function will add the student whose ID is equal to the value of the
+  /// cell with the key 'BlbIdField' in the given [rendererContext] to the list
+  /// of included students and remove the same student from the list of excluded
+  /// students.
+  ///
+  /// The function will also set the page of the [includedStudentsStateManager] to
+  /// 1 and notify the listeners of the [excludedStudentsStateManager] to update
+  /// the UI.
   void includeStudent(PlutoColumnRendererContext rendererContext) {
     includedStudentsRows.add(excludedStudentsRows.firstWhere((element) =>
         element.cells['BlbIdField']!.value ==
@@ -331,6 +426,11 @@ class CreateControlMissionController extends GetxController {
   }
 
   @override
+
+  /// Called when the widget is initialized.
+  ///
+  /// It calls the [getEducationYears], [getGrades] and [getStudents] functions
+  /// and then calls the super class [onInit] function.
   void onInit() async {
     super.onInit();
     isLoading = true;
@@ -345,6 +445,17 @@ class CreateControlMissionController extends GetxController {
     update();
   }
 
+  /// Updates the included students based on the selected grades.
+  ///
+  /// It takes a list of [ValueItem] as a parameter.
+  ///
+  /// The function will update the [selectedGradesIds] with the IDs of the selected grades.
+  ///
+  /// The function will then update the [includedStudentsRows] with the students that have
+  /// the selected grades and clears the [excludedStudentsRows].
+  ///
+  /// The function will also notify the listeners of the [includedStudentsStateManager] and
+  /// [excludedStudentsStateManager] to update the UI.
   void updateSelectedGrades(List<ValueItem> selectedOptions) {
     selectedGradesIds = selectedOptions.map((e) => e.value as int).toList();
     includedStudentsRows.assignAll(
