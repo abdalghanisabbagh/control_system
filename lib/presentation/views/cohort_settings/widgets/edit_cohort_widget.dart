@@ -28,7 +28,7 @@ class EditCohortWidget extends GetView<OperationCohortController> {
       width: 450,
       child: GetBuilder<CohortsSettingsController>(
         builder: (cohortSettingsController) {
-          cohortSettingsController.slectedSchoolTypeId = controller
+          cohortSettingsController.selectedSchoolTypeId = controller
               .schoolsType!.data!
               .where((element) => element.iD == cohort.schoolTypeID)
               .map((element) => element.iD!)
@@ -84,7 +84,7 @@ class EditCohortWidget extends GetView<OperationCohortController> {
                         ValueItem(label: element.name!, value: element.iD))
                     .toList(),
                 onOptionSelected: (value) {
-                  cohortSettingsController.slectedSchoolTypeId =
+                  cohortSettingsController.selectedSchoolTypeId =
                       value.map((e) => e.value! as int).toList();
                 },
                 options: controller.schoolsType!.data!
@@ -111,7 +111,7 @@ class EditCohortWidget extends GetView<OperationCohortController> {
                             onPressed: () async {
                               if (editingController.text != "") {
                                 if (cohortSettingsController
-                                    .slectedSchoolTypeId.isEmpty) {
+                                    .selectedSchoolTypeId.isEmpty) {
                                   MyFlashBar.showError(
                                           "Please select School Type", "Error")
                                       .show(
@@ -124,7 +124,7 @@ class EditCohortWidget extends GetView<OperationCohortController> {
                                   cohort.iD!,
                                   editingController.text,
                                   cohortSettingsController
-                                      .slectedSchoolTypeId.firstOrNull,
+                                      .selectedSchoolTypeId.firstOrNull,
                                 )
                                     .then(
                                   (value) {
