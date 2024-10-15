@@ -76,9 +76,9 @@ class ExamRoom {
   ExamRoom.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
     name = json['Name'];
-    if (json['student_seat_numnbers'] != null) {
+    if (json['student_seat_numbers'] != null) {
       studentSeatNumbers = <StudentSeatNumbers>[];
-      json['student_seat_numnbers'].forEach((v) {
+      json['student_seat_numbers'].forEach((v) {
         studentSeatNumbers!.add(StudentSeatNumbers.fromJson(v));
       });
     }
@@ -89,7 +89,7 @@ class ExamRoom {
     data['ID'] = iD;
     data['Name'] = name;
     if (studentSeatNumbers != null) {
-      data['student_seat_numnbers'] =
+      data['student_seat_numbers'] =
           studentSeatNumbers!.map((v) => v.toJson()).toList();
     }
     return data;

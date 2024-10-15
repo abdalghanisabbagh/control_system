@@ -41,7 +41,7 @@ class BarcodeResModel {
     totalStudents = json['TotalStudents'];
     examMissionID = json['Exam_Mission_ID'];
     studentID = json['Student_ID'];
-    studentSeatNumnbersID = json['student_seat_numnbers_ID'];
+    studentSeatNumnbersID = json['student_seat_numbers_ID'];
     barcode = json['Barcode'];
     attendanceStatusId = json['AttendanceStatusId'];
     studentDegree = json['StudentDegree'];
@@ -64,7 +64,7 @@ class BarcodeResModel {
     data['TotalStudents'] = totalStudents;
     data['Exam_Mission_ID'] = examMissionID;
     data['Student_ID'] = studentID;
-    data['student_seat_numnbers_ID'] = studentSeatNumnbersID;
+    data['student_seat_numbers_ID'] = studentSeatNumnbersID;
     data['Barcode'] = barcode;
     data['AttendanceStatusId'] = attendanceStatusId;
     data['StudentDegree'] = studentDegree;
