@@ -10,6 +10,19 @@ class ResponseHandler<T> {
 
   ResponseHandler() : _dio = DioFactory().getDio();
 
+  /// A generic function to send a request to the server and get a response
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [path]: The path of the request
+  /// - [converter]: A function that takes the response data and converts it to
+  ///   the required type [T]
+  /// - [type]: The type of the request
+  /// - [params]: An optional map of parameters to be sent with the request
+  /// - [body]: An optional body to be sent with the request
+  ///
+  /// The function returns a [Future] that resolves to an [Either] of a
+  /// [Failure] or the required type [T]
   Future<Either<Failure, T>> getResponse({
     required String path,
     required T Function(dynamic) converter,
@@ -31,6 +44,18 @@ class ResponseHandler<T> {
     }
   }
 
+  /// A function to send a DELETE request to the server
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [path]: The path of the request
+  /// - [converter]: A function that takes the response data and converts it to
+  ///   the required type [T]
+  /// - [params]: An optional map of parameters to be sent with the request
+  /// - [body]: An optional body to be sent with the request
+  ///
+  /// The function returns a [Future] that resolves to an [Either] of a
+  /// [Failure] or the required type [T]
   Future<Either<Failure, T>> _delete(
     String path,
     T Function(dynamic) converter,
@@ -57,6 +82,18 @@ class ResponseHandler<T> {
     );
   }
 
+  /// A function to send a GET request to the server
+  //
+  /// The function takes the following parameters:
+  //
+  /// - [path]: The path of the request
+  /// - [converter]: A function that takes the response data and converts it to
+  ///   the required type [T]
+  /// - [params]: An optional map of parameters to be sent with the request
+  /// - [body]: An optional body to be sent with the request
+  //
+  /// The function returns a [Future] that resolves to an [Either] of a
+  /// [Failure] or the required type [T]
   Future<Either<Failure, T>> _get(
     String path,
     T Function(dynamic) converter,
@@ -83,6 +120,18 @@ class ResponseHandler<T> {
     );
   }
 
+  /// A function to send a PATCH request to the server
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [path]: The path of the request
+  /// - [converter]: A function that takes the response data and converts it to
+  ///   the required type [T]
+  /// - [params]: An optional map of parameters to be sent with the request
+  /// - [body]: An optional body to be sent with the request
+  ///
+  /// The function returns a [Future] that resolves to an [Either] of a
+  /// [Failure] or the required type [T]
   Future<Either<Failure, T>> _patch(
     String path,
     T Function(dynamic) converter,
@@ -109,6 +158,18 @@ class ResponseHandler<T> {
     );
   }
 
+  /// A function to send a POST request to the server
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [path]: The path of the request
+  /// - [converter]: A function that takes the response data and converts it to
+  ///   the required type [T]
+  /// - [params]: An optional map of parameters to be sent with the request
+  /// - [body]: An optional body to be sent with the request
+  ///
+  /// The function returns a [Future] that resolves to an [Either] of a
+  /// [Failure] or the required type [T]
   Future<Either<Failure, T>> _post(
     String path,
     T Function(dynamic) converter,
@@ -135,6 +196,18 @@ class ResponseHandler<T> {
     );
   }
 
+  /// A function to send a PUT request to the server
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [path]: The path of the request
+  /// - [converter]: A function that takes the response data and converts it to
+  ///   the required type [T]
+  /// - [params]: An optional map of parameters to be sent with the request
+  /// - [body]: An optional body to be sent with the request
+  ///
+  /// The function returns a [Future] that resolves to an [Either] of a
+  /// [Failure] or the required type [T]
   Future<Either<Failure, T>> _put(
     String path,
     T Function(dynamic) converter,
@@ -161,6 +234,30 @@ class ResponseHandler<T> {
     );
   }
 
+  /// A private function that makes the actual request to the server and handles
+  /// the response.
+  ///
+  /// The function takes two parameters:
+  ///
+  /// - [converter]: A function that takes the response data and converts it to
+  ///   the required type [T]
+  /// - [request]: A function that returns a [Future] of a [Response] instance
+  ///
+  /// The function will return a [Future] that resolves to an [Either] of a
+  /// [Failure] or the required type [T].
+  ///
+  /// The function will check the status code of the response and the value of
+  /// the 'status' key in the response data. If the status code is 200 or 201 and
+  /// the 'status' is true, the function will assume that the response is successful
+  /// and will try to convert the data to the required type [T] using the
+  /// [converter] function. If the conversion is successful, the function will
+  /// return a [Right] instance with the converted data. If the conversion fails,
+  /// the function will return a [Left] instance with a [Failure] instance with
+  /// code 2025 and a message 'error while convert $T from json'.
+  ///
+  /// If the status code is not 200 or 201 or the 'status' is not true, the
+  /// function will return a [Left] instance with a [Failure] instance with the
+  /// status code and the message from the response data.
   Future<Either<Failure, T>> _request(
     T Function(dynamic) converter,
     Future<Response> Function() request,
