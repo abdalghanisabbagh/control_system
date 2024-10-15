@@ -70,23 +70,13 @@ abstract class Validations {
     return null;
   }
 
-
-
-static String? validatorBlbId(String? value) {
-  if (value != null) {
-    if (value.isEmpty) {
-      return 'Field is required';
-    }
-    if (value.length < 8) {
-      return 'Field must contain at least 8 characters';
-    } else if (value.length > 12) {
-      return 'Field must contain no more than 12 characters';
-    }
-  } else {
-    return 'Field is required';
-  }
-  return null;
-}
+  /// Validator for fields that are required and without special characters
+  ///
+  /// check if value is null or empty
+  /// return `Field  Is Required` as a [String]
+  /// otherwise check if value contains special characters
+  /// return `No special characters allowed` as a [String]
+  /// otherwise return `null`
   static String? requiredWithoutSpecialCharacters(String? value) {
     if (value != null) {
       if (value.isEmpty) {
@@ -100,6 +90,13 @@ static String? validatorBlbId(String? value) {
     return null;
   }
 
+  /// Confirm Password Validator
+  ///
+  /// check if value is null or empty
+  /// return `Please confirm password` as a [String]
+  /// otherwise check if value does not match [password]
+  /// return `Passwords do not match` as a [String]
+  /// otherwise return `null`
   static String? validateConfirmPassword(String? value, String? password) {
     if (value!.isEmpty) {
       return 'Please confirm password';
@@ -198,6 +195,31 @@ static String? validatorBlbId(String? value) {
       return 'Username must be at most 20 characters long';
     } else if (value.contains(RegExp(r'[!@#$%^&*(),?":{}|<>]'))) {
       return 'Username must not contain special characters';
+    }
+    return null;
+  }
+
+  /// Validator for BLB ID
+  ///
+  /// check if value is null or empty
+  /// return `Field is required` as a [String]
+  /// otherwise check if value length is less than 8
+  /// return `Field must contain at least 8 characters`
+  /// otherwise check if value length is more than 12
+  /// return `Field must contain no more than 12 characters`
+  /// otherwise return `null`
+  static String? validatorBlbId(String? value) {
+    if (value != null) {
+      if (value.isEmpty) {
+        return 'Field is required';
+      }
+      if (value.length < 8) {
+        return 'Field must contain at least 8 characters';
+      } else if (value.length > 12) {
+        return 'Field must contain no more than 12 characters';
+      }
+    } else {
+      return 'Field is required';
     }
     return null;
   }

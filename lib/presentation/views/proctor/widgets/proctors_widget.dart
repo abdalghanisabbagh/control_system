@@ -19,6 +19,7 @@ class ProctorsWidget extends GetView<ProctorController> {
       builder: (controller) {
         return RepaintBoundary(
           child: ListView.builder(
+            padding: const EdgeInsets.all(8.0),
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: controller.proctors.length,

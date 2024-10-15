@@ -74,7 +74,7 @@ class AddCohortWidget extends StatelessWidget {
                   hintText: "Select School Type",
                   multiSelect: false,
                   onOptionSelected: (value) {
-                    controller.slectedSchoolTypeId =
+                    controller.selectedSchoolTypeId =
                         value.map((e) => e.value! as int).toList();
                   },
                   options: schoolTypes!.data!
@@ -102,7 +102,7 @@ class AddCohortWidget extends StatelessWidget {
                             onPressed: () async {
                               if (editingController.text != "") {
                                 if (isOperation &&
-                                    controller.slectedSchoolTypeId.isEmpty) {
+                                    controller.selectedSchoolTypeId.isEmpty) {
                                   MyFlashBar.showError(
                                           "Please select School Type", "Error")
                                       .show(
@@ -111,7 +111,7 @@ class AddCohortWidget extends StatelessWidget {
                                   return;
                                 }
                                 controller
-                                    .addnewCohort(editingController.text)
+                                    .addNewCohort(editingController.text)
                                     .then(
                                   (value) {
                                     value

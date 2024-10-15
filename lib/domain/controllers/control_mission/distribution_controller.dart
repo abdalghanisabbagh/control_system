@@ -33,6 +33,21 @@ class DistributionController extends GetxController {
   int totalStudents = 0;
   int unDistributedStudents = 0;
 
+  /// Adds a new exam room to the database with the given parameters and returns a boolean indicating whether the add was successful.
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [controlMissionId]: The ID of the control mission the exam room is being added to.
+  /// - [schoolClassId]: The ID of the school class the exam room is being added to.
+  /// - [name]: The name of the exam room.
+  /// - [stage]: The stage of the exam room.
+  ///
+  /// The function will return a boolean indicating whether the add was successful.
+  ///
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
+  ///
   Future<bool> addNewExamRoom({
     required int controlMissionId,
     required int schoolClassId,
@@ -79,6 +94,17 @@ class DistributionController extends GetxController {
     return addExamRoomHasBeenAdded;
   }
 
+  /// Deletes an exam room from the database with the given ID and returns a boolean indicating whether the delete was successful.
+  ///
+  /// The function takes the following parameter:
+  ///
+  /// - [idExamRoom]: The ID of the exam room to be deleted.
+  ///
+  /// The function will return a boolean indicating whether the delete was successful.
+  ///
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
   Future<bool> deleteExamRoom(int idExamRoom) async {
     isLoadingDeleteClassRoom = true;
     bool isSuccess = false;
@@ -111,6 +137,16 @@ class DistributionController extends GetxController {
     return isSuccess;
   }
 
+  /// Gets all the classes rooms from the API and sets the
+  /// [optionsClassRoom] with the classes rooms returned by the API.
+  ///
+  /// The function will return a boolean indicating whether the classes rooms
+  /// were retrieved successfully.
+  ///
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
+  ///
   Future<bool> getClassesRoomsBySchoolId() async {
     bool gotData = false;
     ResponseHandler<ClassesRoomsResModel> responseHandler = ResponseHandler();
@@ -143,16 +179,37 @@ class DistributionController extends GetxController {
     return gotData;
   }
 
+  /// Retrieves the control mission ID from the local storage and updates the UI.
+  ///
+  /// The function retrieves the control mission ID from the local storage using
+  /// Hive. If the ID is not found, it defaults to 0. The function then updates
+  /// the UI with the retrieved ID.
   Future<void> getControlMissionId() async {
     controlMissionId = Hive.box('ControlMission').get('Id') ?? 0;
     update();
   }
 
+  /// Retrieves the control mission name from the local storage and updates the UI.
+  ///
+  /// The function retrieves the control mission name from the local storage using
+  /// Hive. If the name is not found, it defaults to an empty string. The function
+  /// then updates the UI with the retrieved name.
   Future<void> getControlMissionName() async {
     controlMissionName = Hive.box('ControlMission').get('Name') ?? '';
     update();
   }
 
+  /// Retrieves the number of distributed and undistributed students and the total
+  /// number of students in the control mission from the API and updates the UI.
+  ///
+  /// The function will return a boolean indicating whether the response was
+  /// successful.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
   Future<void> getDistributedStudentsCounts() async {
     final ResponseHandler<DistributionStudentsResModel> responseHandler =
         ResponseHandler();
@@ -182,6 +239,17 @@ class DistributionController extends GetxController {
     update(['getDistributedStudentsCounts']);
   }
 
+  /// Retrieves the list of exam rooms from the API based on the control mission ID
+  /// and assigns the list to the [listExamRoom] variable.
+  ///
+  /// The function will return a boolean indicating whether the response was
+  /// successful.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
   Future<void> getExamRoomByControlMissionId() async {
     isLoadingGetExamRooms = true;
     update(['getExamRoomByControlMissionId']);
@@ -210,6 +278,17 @@ class DistributionController extends GetxController {
     update(['getExamRoomByControlMissionId']);
   }
 
+  /// Gets all stages from the API and assigns the list to the [optionsStage]
+  /// variable.
+  ///
+  /// The function will return a boolean indicating whether the response was
+  /// successful.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
   Future<bool> getStage() async {
     bool getData = false;
     ResponseHandler<StageResModel> responseHandler = ResponseHandler();
@@ -241,6 +320,16 @@ class DistributionController extends GetxController {
     return getData;
   }
 
+  /// Gets all stages and classes rooms by school id from the API and assigns the
+  /// lists to the [optionsStage] and [classesRooms] variables respectively.
+  ///
+  /// The function will return nothing.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
   void getStageAndClassRoom() async {
     isLoadingGetStageAndClassRoom = true;
     update();
@@ -250,6 +339,15 @@ class DistributionController extends GetxController {
   }
 
   @override
+
+  /// Called when the widget is initialized.
+  ///
+  /// Calls the [getControlMissionId] and [getControlMissionName] functions and
+  /// waits for them to complete.
+  ///
+  /// If the [controlMissionId] is not 0, then it calls the
+  /// [getDistributedStudentsCounts] and [getExamRoomByControlMissionId] functions
+  /// and waits for them to complete.
   void onInit() async {
     super.onInit();
     await Future.wait([
@@ -264,22 +362,61 @@ class DistributionController extends GetxController {
     }
   }
 
+  /// Saves the control mission ID in the local storage and calls
+  /// [getExamRoomByControlMissionId] to update the exam room.
+  ///
+  /// The function takes one parameter, [id], which is the ID of the control
+  /// mission that will be saved.
+  ///
+  /// The function will return nothing.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
   Future<void> saveControlMissionId(int id) async {
     controlMissionId = id;
     Hive.box('ControlMission').put('Id', id);
     getExamRoomByControlMissionId();
   }
 
+  /// Saves the control mission name in the local storage.
+  ///
+  /// The function takes one parameter, [name], which is the name of the control
+  /// mission that will be saved.
+  ///
+  /// The function will return nothing.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
   Future<void> saveControlMissionName(String name) async {
     controlMissionName = name;
     Hive.box('ControlMission').put('Name', name);
   }
 
+  /// Sets the selected item for the class room dropdown to the first item of
+  /// [items] and updates the UI.
+  ///
+  /// The function takes one parameter, [items], which is a list of [ValueItem]
+  /// objects representing the items in the class room dropdown.
+  ///
+  /// The function will return nothing.
   void setSelectedItemClassRoom(List<ValueItem> items) {
     selectedItemClassRoom = items.first;
     update();
   }
 
+  /// Sets the selected item for the stage dropdown to the first item of
+  /// [items] and updates the UI.
+  ///
+  /// The function takes one parameter, [items], which is a list of [ValueItem]
+  /// objects representing the items in the stage dropdown.
+  ///
+  /// The function will return nothing.
   void setSelectedItemStage(List<ValueItem> items) {
     selectedItemStage = items.first;
     update();

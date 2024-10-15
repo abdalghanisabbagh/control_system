@@ -27,68 +27,47 @@ class SystemLoggerController extends GetxController {
   List<SystemLoggerResModel> systemLogsList = [];
   List<PlutoRow> systemLogsRows = <PlutoRow>[];
 
-  @override
-  void onInit() {
-    getSystemLogs();
-    super.onInit();
+  /// Downloads a Excel file for the system logs.
+  ///
+  /// The file is downloaded with the name 'logs.xlsx'.
+  ///
+  /// If the file is not downloaded successfully, an error is shown in a dialog.
+  Future<void> exportExcel() async {
+    var dio = DioFactory().getDio();
+    try {
+      var response = await dio.get(
+        SystemLogLinks.systemLogExportExcel,
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      );
+      if (response.statusCode == 200) {
+        final bytes = Uint8List.fromList(response.data!);
+        final blob = html.Blob([bytes]);
+        final blobUrl = html.Url.createObjectUrlFromBlob(blob);
+
+        // Create an anchor element and trigger the download
+        html.AnchorElement(href: blobUrl)
+          ..setAttribute('download', 'logs.xlsx')
+          ..click();
+
+        // Revoke the object URL after download
+        html.Url.revokeObjectUrl(blobUrl);
+      } else {
+        throw Exception('Failed to download file');
+      }
+    } catch (e) {
+      MyAwesomeDialogue(
+              title: 'Error', desc: "$e", dialogType: DialogType.error)
+          .showDialogue(Get.key.currentContext!);
+    }
   }
 
-  Future<bool> getSystemLogs() async {
-    isLoadingGetSystemLogs = true;
-    update();
-    ResponseHandler<SystemLoggersResModel> responseHandler = ResponseHandler();
-    Either<Failure, SystemLoggersResModel> response =
-        await responseHandler.getResponse(
-      path: SystemLogLinks.systemLog,
-      converter: SystemLoggersResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      },
-      (r) {
-        systemLogsList = r.data!;
-        systemLogsRows = r.data!.convertSystemLogsToRows();
-      },
-    );
-    isLoadingGetSystemLogs = false;
-    update();
-    return true;
-  }
-
-  Future<void> getUserInfo(
-    String userId,
-  ) async {
-    isLoadingGetUserInfo = true;
-    update();
-    ResponseHandler<UserResModel> responseHandler = ResponseHandler();
-    Either<Failure, UserResModel> response = await responseHandler.getResponse(
-      path: '${SystemLogLinks.systemLogUser}?user-id=$userId',
-      converter: UserResModel.fromJson,
-      type: ReqTypeEnum.GET,
-    );
-    response.fold(
-      (l) {
-        MyAwesomeDialogue(
-          title: 'Error',
-          desc: l.message,
-          dialogType: DialogType.error,
-        ).showDialogue(Get.key.currentContext!);
-      },
-      (r) {
-        userName = r.userName;
-        fullName = r.fullName!;
-      },
-    );
-    isLoadingGetUserInfo = false;
-    update();
-  }
-
+  /// Downloads a text file for the system logs.
+  ///
+  /// The file is downloaded with the name 'logs.txt'.
+  ///
+  /// If the file is not downloaded successfully, an error is shown in a dialog.
   Future<void> exportText() async {
     var dio = DioFactory().getDio();
     try {
@@ -120,35 +99,89 @@ class SystemLoggerController extends GetxController {
     }
   }
 
-  Future<void> exportExcel() async {
-    var dio = DioFactory().getDio();
-    try {
-      var response = await dio.get(
-        SystemLogLinks.systemLogExportExcel,
-        options: Options(
-          responseType: ResponseType.bytes,
-        ),
-      );
-      if (response.statusCode == 200) {
-        final bytes = Uint8List.fromList(response.data!);
-        final blob = html.Blob([bytes]);
-        final blobUrl = html.Url.createObjectUrlFromBlob(blob);
+  /// A function that gets the system logs from the server and returns a boolean indicating whether the request was successful.
+  ///
+  /// The function will set [isLoadingGetSystemLogs] to true and then to false depending on the response of the server.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
+  ///
+  /// If the response is successful, the function will update [systemLogsList] and [systemLogsRows] with the system logs returned by the server.
+  ///
+  /// The function will then call [update] to update the UI.
+  Future<bool> getSystemLogs() async {
+    isLoadingGetSystemLogs = true;
+    update();
+    ResponseHandler<SystemLoggersResModel> responseHandler = ResponseHandler();
+    Either<Failure, SystemLoggersResModel> response =
+        await responseHandler.getResponse(
+      path: SystemLogLinks.systemLog,
+      converter: SystemLoggersResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        systemLogsList = r.data!;
+        systemLogsRows = r.data!.convertSystemLogsToRows();
+      },
+    );
+    isLoadingGetSystemLogs = false;
+    update();
+    return true;
+  }
 
-        // Create an anchor element and trigger the download
-        html.AnchorElement(href: blobUrl)
-          ..setAttribute('download', 'logs.xlsx')
-          ..click();
+  /// A function that gets the user information from the server and updates the UI with the user's full name and user name.
+  ///
+  /// The function takes a [userId] parameter which is the ID of the user whose information is to be retrieved.
+  ///
+  /// The function will set [isLoadingGetUserInfo] to true and then to false depending on the response of the server.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
+  ///
+  /// If the response is successful, the function will update [userName] and [fullName] with the user's full name and user name returned by the server.
+  ///
+  /// The function will then call [update] to update the UI.
+  Future<void> getUserInfo(
+    String userId,
+  ) async {
+    isLoadingGetUserInfo = true;
+    update();
+    ResponseHandler<UserResModel> responseHandler = ResponseHandler();
+    Either<Failure, UserResModel> response = await responseHandler.getResponse(
+      path: '${SystemLogLinks.systemLogUser}?user-id=$userId',
+      converter: UserResModel.fromJson,
+      type: ReqTypeEnum.GET,
+    );
+    response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) {
+        userName = r.userName;
+        fullName = r.fullName!;
+      },
+    );
+    isLoadingGetUserInfo = false;
+    update();
+  }
 
-        // Revoke the object URL after download
-        html.Url.revokeObjectUrl(blobUrl);
-      } else {
-        throw Exception('Failed to download file');
-      }
-    } catch (e) {
-      MyAwesomeDialogue(
-              title: 'Error', desc: "$e", dialogType: DialogType.error)
-          .showDialogue(Get.key.currentContext!);
-    }
+  @override
+
+  /// Called when the widget is initialized. It calls [getSystemLogs] to get
+  /// the system logs and then calls the parent's [onInit].
+  void onInit() {
+    getSystemLogs();
+    super.onInit();
   }
 
   ///

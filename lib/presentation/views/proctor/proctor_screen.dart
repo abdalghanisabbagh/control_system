@@ -53,9 +53,19 @@ class ProctorScreen extends GetView<ProctorController> {
                       ),
                     ),
                     MultiSelectDropDownView(
+                      key: ValueKey(controller.optionsEducationYear),
                       hintText: "Select Education Year",
                       multiSelect: false,
                       showChipSelect: true,
+                      optionSelected: controller.selectedEducationYearId != null
+                          ? [
+                              controller.optionsEducationYear.firstWhere(
+                                (element) =>
+                                    element.value ==
+                                    controller.selectedEducationYearId,
+                              ),
+                            ]
+                          : [],
                       onOptionSelected: controller.onEducationYearChange,
                       options: controller.optionsEducationYear,
                     ),

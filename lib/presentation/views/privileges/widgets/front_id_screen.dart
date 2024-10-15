@@ -53,7 +53,7 @@ class FrontIdScreen extends GetView<PrivilegesController> {
               : included
                   ? IconButton(
                       onPressed: () {
-                        controller.removedSreensIds.add(id);
+                        controller.removedScreensIds.add(id);
                         controller.deleteScreensFromRole().then(
                           (value) {
                             if (value) {
@@ -68,7 +68,7 @@ class FrontIdScreen extends GetView<PrivilegesController> {
                       icon: const Icon(Icons.delete))
                   : IconButton(
                       onPressed: () {
-                        controller.selectedSreensIds.add(id);
+                        controller.selectedScreensIds.add(id);
                         controller.addScreensToRole().then(
                           (value) {
                             if (value) {

@@ -1,5 +1,5 @@
 class ClassDeskResModel {
-  int? cloumnNum;
+  int? columnNum;
 
   int? id;
 
@@ -8,13 +8,13 @@ class ClassDeskResModel {
   ClassDeskResModel({
     this.id,
     this.schoolClassID,
-    this.cloumnNum,
+    this.columnNum,
     this.rowNum,
   });
   ClassDeskResModel.fromJson(json) {
     id = json['ID'];
     schoolClassID = json['School_Class_ID'];
-    cloumnNum = json['Cloumn_Num'];
+    columnNum = json['Cloumn_Num'];
     rowNum = json['Row_Num'];
   }
 
@@ -22,7 +22,7 @@ class ClassDeskResModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ID'] = id;
     data['School_Class_ID'] = schoolClassID;
-    data['Cloumn_Num'] = cloumnNum;
+    data['Cloumn_Num'] = columnNum;
     data['Row_Num'] = rowNum;
     return data;
   }

@@ -62,7 +62,7 @@ class ControlMissionReviewOperationWidget
                       FittedBox(
                         fit: BoxFit.contain,
                         child: Text(
-                          "Number Of Students: ${controlMission.count?['student_seat_numnbers']}",
+                          "Number Of Students: ${controlMission.count?['student_seat_numbers']}",
                           style: nunitoRegular.copyWith(
                               color: ColorManager.bgSideMenu, fontSize: 16),
                         ),

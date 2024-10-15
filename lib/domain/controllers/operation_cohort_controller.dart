@@ -13,10 +13,25 @@ import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class OperationCohortController extends GetxController {
   List<CohortResModel> cohorts = <CohortResModel>[];
-  bool loadindCohorts = false;
+  bool loadingCohorts = false;
   SchoolsTypeResModel? schoolsType;
   List<int> selectedSubjectsIds = <int>[];
 
+  /// Deletes a cohort from the server and updates the UI.
+  ///
+  /// The function takes the ID of the cohort to be deleted as a parameter.
+  ///
+  /// It makes a DELETE request to the server to delete the cohort with the given
+  /// [id].
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// If the response is a success, it calls [getAllCohorts] and updates the UI
+  /// to show that the cohort has been deleted from the server.
+  ///
+  /// The function returns a boolean indicating whether the cohort was deleted
+  /// successfully.
   Future<bool> deleteCohort(int id) async {
     bool cohortHasBeenDeleted = false;
     ResponseHandler<CohortResModel> responseHandler = ResponseHandler();
@@ -48,8 +63,22 @@ class OperationCohortController extends GetxController {
     return cohortHasBeenDeleted;
   }
 
+  /// Gets all cohorts from the server and updates the UI.
+  ///
+  /// The function is asynchronous and returns a future of void.
+  ///
+  /// The function makes a GET request to the server to get all cohorts.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// If the response is a success, it assigns the returned list of cohorts to
+  /// [cohorts] and updates the UI.
+  ///
+  /// The function also updates the UI to show a loading indicator while the
+  /// request is being processed.
   Future getAllCohorts() async {
-    loadindCohorts = true;
+    loadingCohorts = true;
     update();
     final response = await ResponseHandler<CohortsResModel>().getResponse(
       path: CohortLinks.cohort,
@@ -67,10 +96,21 @@ class OperationCohortController extends GetxController {
         update();
       },
     );
-    loadindCohorts = false;
+    loadingCohorts = false;
     update();
   }
 
+  /// Gets all school types from the server and updates the UI.
+  ///
+  /// The function is asynchronous and returns a future of void.
+  ///
+  /// The function makes a GET request to the server to get all school types.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// If the response is a success, it assigns the returned list of school types
+  /// to [schoolsType] and updates the UI.
   Future<void> getAllSchoolTypes() async {
     ResponseHandler<SchoolsTypeResModel> responseHandler = ResponseHandler();
 
@@ -97,6 +137,16 @@ class OperationCohortController extends GetxController {
   }
 
   @override
+
+  /// This function is called when the widget is initialized.
+  ///
+  /// It first calls the [onInit] function of the parent class.
+  ///
+  /// Then, it calls [getAllCohorts] to get all cohorts from the server
+  /// and updates the UI.
+  ///
+  /// Finally, it calls [getAllSchoolTypes] to get all school types from the
+  /// server and updates the UI.
   void onInit() async {
     super.onInit();
     getAllCohorts();

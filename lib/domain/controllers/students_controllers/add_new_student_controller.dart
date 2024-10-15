@@ -32,6 +32,25 @@ class AddNewStudentController extends GetxController {
   final UserProfileModel? _userProfile =
       Get.find<ProfileController>().cachedUserProfile;
 
+  /// Adds a new student to the server and updates the UI.
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [blbID]: the id of the student's blb
+  /// - [gradesId]: the id of the student's grade
+  /// - [cohortId]: the id of the student's cohort
+  /// - [schoolClassId]: the id of the student's school class
+  /// - [firstName]: the first name of the student
+  /// - [secondName]: the second name of the student
+  /// - [thirdName]: the third name of the student
+  /// - [secondLang]: the second language of the student
+  /// - [religion]: the religion of the student
+  /// - [citizenship]: the citizenship of the student
+  ///
+  /// The function will show an error dialog if the response is a failure.
+  ///
+  /// The function will also update the UI to show that the student has been added
+  /// to the server.
   Future<bool> addNewStudent({
     required int blbID,
     required int gradesId,
@@ -87,6 +106,20 @@ class AddNewStudentController extends GetxController {
     return addStudentHasBeenAdded;
   }
 
+  /// Gets all the cohorts by school type from the API and sets the
+  /// [optionsCohort] with the cohorts returned by the API.
+  ///
+  /// It sets the [isLoading] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the
+  /// failure message.
+  ///
+  /// The function is used when the user navigates to the add new student
+  /// page.
+  ///
+  /// The function returns a boolean indicating whether the cohorts were
+  /// retrieved successfully.
   Future<bool> getCohortBySchoolTypeId() async {
     update();
     bool cohortHasBeenAdded = false;
@@ -117,6 +150,20 @@ class AddNewStudentController extends GetxController {
     return cohortHasBeenAdded;
   }
 
+  /// Gets all grades from the API and sets the
+  /// [optionsGrades] with the grades returned by the API.
+  ///
+  /// It sets the [isLoadingGrades] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// The function is used when the user navigates to the add new student
+  /// page.
+  ///
+  /// The function returns a boolean indicating whether the grades were
+  /// retrieved successfully.
   Future<bool> getGradesBySchoolId() async {
     update();
     bool gradeHasBeenAdded = false;
@@ -147,6 +194,20 @@ class AddNewStudentController extends GetxController {
     return gradeHasBeenAdded;
   }
 
+  /// Gets all school classes by school id from the API and sets the
+  /// [optionsClassRoom] with the school classes returned by the API.
+  ///
+  /// It sets the [isLoading] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the
+  /// failure message.
+  ///
+  /// The function is used when the user navigates to the add new student
+  /// page.
+  ///
+  /// The function returns a boolean indicating whether the school classes
+  /// were retrieved successfully.
   Future<bool> getSchoolsClassBySchoolId() async {
     update();
     bool classRoomHasBeenAdded = false;
@@ -178,6 +239,20 @@ class AddNewStudentController extends GetxController {
   }
 
   @override
+
+  /// This function is called when the controller is initialized.
+  ///
+  /// It sets [isLoading] to true and then to false depending on the
+  /// response of the API.
+  ///
+  /// It calls [getGradesBySchoolId], [getCohortBySchoolTypeId], and
+  /// [getSchoolsClassBySchoolId] and waits for the three requests to
+  /// finish using [Future.wait].
+  ///
+  /// It then updates the UI with the retrieved data.
+  ///
+  /// The function is called when the user navigates to the add new
+  /// student page.
   void onInit() async {
     super.onInit();
     isLoading = true;
@@ -191,16 +266,38 @@ class AddNewStudentController extends GetxController {
     update();
   }
 
+  ///
+  /// Sets the selected item for the class room dropdown to the first item of
+  /// [items] and updates the UI.
+  ///
+  /// The function takes one parameter, [items], which is a list of [ValueItem]
+  /// objects representing the items in the class room dropdown.
+  ///
+  /// The function will return nothing.
   void setSelectedItemClassRoom(List<ValueItem> items) {
     selectedItemClassRoom = items.first;
     update();
   }
 
+  /// Sets the selected item for the cohort dropdown to the first item of
+  /// [items] and updates the UI.
+  ///
+  /// The function takes one parameter, [items], which is a list of [ValueItem]
+  /// objects representing the items in the cohort dropdown.
+  ///
+  /// The function will return nothing.
   void setSelectedItemCohort(List<ValueItem> items) {
     selectedItemCohort = items.first;
     update();
   }
 
+  /// Sets the selected item for the grade dropdown to the first item of
+  /// [items] and updates the UI.
+  ///
+  /// The function takes one parameter, [items], which is a list of [ValueItem]
+  /// objects representing the items in the grade dropdown.
+  ///
+  /// The function will return nothing.
   void setSelectedItemGrade(List<ValueItem> items) {
     selectedItemGrade = items.first;
     update();

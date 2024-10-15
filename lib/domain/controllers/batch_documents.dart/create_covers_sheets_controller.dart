@@ -58,6 +58,16 @@ class CreateCoversSheetsController extends GetxController {
   ValueItem? selectedItemSubject;
   List<SubjectResModel> subjectsList = <SubjectResModel>[];
 
+  /// Gets all subjects from the server and updates the UI
+  ///
+  /// This function sends a GET request to the server to get all subjects
+  /// for the current school type. The response is handled by the
+  /// [ResponseHandler]. If the response is successful, the subjects list
+  /// is updated and the UI is updated. If the response is not successful,
+  /// an error dialog is shown with the error message from the response.
+  ///
+  /// The function also updates the options for the subject dropdown
+  /// with the subjects from the response.
   Future<void> getAllSubjects() async {
     isLoadingGetSubject = true;
 
@@ -97,6 +107,19 @@ class CreateCoversSheetsController extends GetxController {
     );
   }
 
+  /// This function gets the control mission by education year and by school.
+  ///
+  /// It takes the education year id as a parameter.
+  ///
+  /// The function sends a GET request to the server and gets the response.
+  /// If the response is successful, the function will update the list of
+  /// control missions and the options for the control mission drop down.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the error message.
+  ///
+  /// The function will also update the UI to show or hide the loading indicator
+  /// based on the status of the request.
   Future<void> getControlMissionByEducationYearAndBySchool(
       int educationYearId) async {
     isLoadingGetControlMission = true;
@@ -136,6 +159,14 @@ class CreateCoversSheetsController extends GetxController {
     update();
   }
 
+  /// Gets all the education years from the API and sets the
+  /// [optionsEducationYear] with the education years returned by the API.
+  ///
+  /// It sets the [isLoadingGetEducationYear] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
   Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
@@ -166,6 +197,14 @@ class CreateCoversSheetsController extends GetxController {
     update();
   }
 
+  /// Gets all the grades from the API and sets the
+  /// [optionsGrades] with the grades returned by the API.
+  ///
+  /// It sets the [isLoadingGrades] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// code and message.
   Future<void> getGradesBySchoolId() async {
     isLoadingGrades = true;
 
@@ -201,6 +240,16 @@ class CreateCoversSheetsController extends GetxController {
   }
 
   @override
+
+  /// This is the onInit function of the CreateCoversSheetsController class.
+  ///
+  /// It is called when the GetX controller is initialized.
+  ///
+  /// The function calls the following functions in order to initialize the required data:
+  ///
+  /// - [getEducationYear] to get the list of education year.
+  /// - [getGradesBySchoolId] to get the list of grades for the selected school.
+  /// - [getAllSubjects] to get the list of subjects.
   void onInit() {
     super.onInit();
     getEducationYear();
@@ -208,6 +257,15 @@ class CreateCoversSheetsController extends GetxController {
     getAllSubjects();
   }
 
+  /// Sets the selected control mission based on the given [items].
+  ///
+  /// If [items] is not empty, it will find the first control mission in the
+  /// [controlMissionList] that matches the value of the first item in [items]
+  /// and set it as the [controlMissionResModel].
+  ///
+  /// If [items] is empty, it will set [selectedItemControlMission] to null.
+  ///
+  /// Finally, it will call [update] to notify the UI of the changes.
   void setSelectedItemControlMission(List<ValueItem> items) {
     if (items.isNotEmpty) {
       controlMissionResModel = controlMissionList.firstWhereOrNull(
@@ -220,6 +278,18 @@ class CreateCoversSheetsController extends GetxController {
     update();
   }
 
+  /// Sets the selected education year based on the given [items].
+  ///
+  /// If [items] is not empty, it will select the first education year in the
+  /// [educationYearList] that matches the value of the first item in [items]
+  /// and set it as the [selectedItemEducationYear].
+  ///
+  /// It will also call [getControlMissionByEducationYearAndBySchool] with the selected
+  /// [educationYearId] to get the list of control missions for the selected education year.
+  ///
+  /// If [items] is empty, it will set [selectedItemEducationYear] to null.
+  ///
+  /// Finally, it will call [update] to notify the UI of the changes.
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemEducationYear = items.first;
@@ -232,11 +302,23 @@ class CreateCoversSheetsController extends GetxController {
     update();
   }
 
+  /// Sets the selected grade based on the given [items].
+  ///
+  /// If [items] is not empty, it will select the first item in [items]
+  /// and set it as the [selectedItemGrade].
+  ///
+  /// Finally, it will call [update] to notify the UI of the changes.
   void setSelectedItemGrade(List<ValueItem> items) {
     selectedItemGrade = items.first;
     update();
   }
 
+  /// Sets the selected subject based on the given [items].
+  ///
+  /// If [items] is not empty, it will select the first item in [items]
+  /// and set it as the [selectedItemSubject].
+  ///
+  /// Finally, it will call [update] to notify the UI of the changes.
   void setSelectedItemSubject(List<ValueItem> items) {
     selectedItemSubject = items.first;
     update();

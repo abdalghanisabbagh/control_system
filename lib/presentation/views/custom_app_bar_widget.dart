@@ -20,7 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: nunitoBold.copyWith(color: ColorManager.white),
       ),
       backgroundColor: ColorManager.primary,
-      leading: GetBuilder<SideMenueGetController>(
+      leading: GetBuilder<SideMenuGetController>(
         builder: (sideMenueGetController) {
           return IconButton(
             icon: AnimatedIcon(

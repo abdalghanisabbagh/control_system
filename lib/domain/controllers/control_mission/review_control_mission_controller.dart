@@ -49,6 +49,19 @@ class DetailsAndReviewMissionController extends GetxController {
   List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
   TabController? tabController;
 
+  /// Activates a student in a control mission by its ID seat number.
+  ///
+  /// The function takes the ID seat number of the student to be activated as a parameter.
+  ///
+  /// The function performs the following actions:
+  ///
+  /// - Sends a PATCH request to the server to activate the student in the control mission.
+  /// - If the response is a success, calls [getStudentsSeatNumberByControlMissionId] to refresh
+  ///   the list of students in the control mission and sets [activateStudents] to true.
+  /// - If the response is a failure, shows an error dialogue with the failure message and
+  ///   sets [activateStudents] to false.
+  ///
+  /// Returns a boolean indicating whether the student was activated successfully.
   Future<bool> activeStudentInControlMission({required String idSeat}) async {
     bool activateStudents = false;
     update();
@@ -159,6 +172,17 @@ class DetailsAndReviewMissionController extends GetxController {
     return;
   }
 
+  /// Deactivate a student in the control mission with the given id seat.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure. If the response is a success, the function will
+  /// call [getStudentsSeatNumberByControlMissionId] to refresh the list of
+  /// students in the control mission.
+  ///
+  /// The function will return a boolean indicating whether the deactivation
+  /// was successful.
+  ///
+  /// [idSeat] is the ID of the student seat number to be deactivated.
   Future<bool> deActiveStudentInControlMission({required String idSeat}) async {
     bool deactivateStudents = false;
     update();
@@ -262,6 +286,23 @@ class DetailsAndReviewMissionController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  /// Export the students' degrees to a PDF file.
+  ///
+  /// The function does not take any parameters.
+  ///
+  /// The function will create a PDF file that contains the students' degrees.
+  /// The PDF file will have the NIS logo at the top, and the students' degrees
+  /// will be displayed as a table with the student's name, grade, class, exam
+  /// room, and subjects. The table will have a header with the student's name,
+  /// grade, class, exam room, and subjects. The table will also have a footer
+  /// with the number of students in each grade. The PDF file will be saved to
+  /// the user's downloads folder with the name "students_degrees.pdf". The
+  /// function will also show a success message at the top of the screen.
+  ///
+  /// The function uses the [pdf] package to generate the PDF file. The function
+  /// uses the [html] package to save the PDF file to the user's downloads folder.
+  /// The function uses the [Get] package to show the success message at the top
+  /// of the screen.
   void exportStudentDegreesToPdf(BuildContext context) async {
     final pdf = pw.Document();
 
@@ -365,6 +406,13 @@ class DetailsAndReviewMissionController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  /// Exports the given [studentsSeatsNumberRows] to a CSV file and downloads it.
+  ///
+  /// The file will be saved with a .csv extension and the name 'pluto_grid_export.csv'.
+  ///
+  /// If an error occurs, a dialogue will be shown with the error message.
+  ///
+  /// The UI will be updated to show a loading indicator while the request is being processed.
   void exportToCsv(
       BuildContext context, List<PlutoRow> studentsSeatsNumberRows) {
     List<List<dynamic>> csvData = [];
@@ -408,6 +456,13 @@ class DetailsAndReviewMissionController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  /// Exports the given [studentsSeatsNumberRows] to a PDF file and downloads it.
+  ///
+  /// The file will be saved with a .pdf extension and the name 'pluto_grid_export.pdf'.
+  ///
+  /// If an error occurs, a dialogue will be shown with the error message.
+  ///
+  /// The UI will be updated to show a loading indicator while the request is being processed.
   Future<void> exportToPdf(
       BuildContext context, List<PlutoRow> studentsSeatsNumberRows) async {
     final pdf = pw.Document();
@@ -479,16 +534,40 @@ class DetailsAndReviewMissionController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  /// Gets the control mission ID from Hive and updates the UI.
+  ///
+  /// The function will get the control mission ID from Hive and store it in the
+  /// [controlMissionId] variable. It will then call the [update] function to
+  /// update the UI. If the control mission ID is null, it will default to 0.
   Future<void> getControlMissionId() async {
     controlMissionId = Hive.box('ControlMission').get('Id') ?? 0;
     update();
   }
 
+  /// Gets the control mission name from Hive and updates the UI.
+  ///
+  /// The function will get the control mission name from Hive and store it in the
+  /// [controlMissionName] variable. It will then call the [update] function to
+  /// update the UI. If the control mission name is null, it will default to an
+  /// empty string.
   Future<void> getControlMissionName() async {
     controlMissionName = Hive.box('ControlMission').get('Name') ?? '';
     update();
   }
 
+  /// Gets the exam rooms of a control mission from the API and sets the
+  /// [listExamRoom] with the exam rooms returned by the API.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will show a loading indicator while the request is being
+  /// processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
+  ///
+  /// If the response is successful, the function will update the UI with the
+  /// exam rooms returned by the API.
   Future<void> getExamRoomByControlMissionId() async {
     isLoadingGetExamRooms = true;
     update();
@@ -517,6 +596,19 @@ class DetailsAndReviewMissionController extends GetxController {
     isLoadingGetExamRooms = false;
   }
 
+  /// Gets the grades of the students in the control mission from the API and
+  /// updates the [studentGradesResModel] with the grades returned by the API.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will show a loading indicator while the request is being
+  /// processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
+  ///
+  /// If the response is successful, the function will update the UI with the
+  /// grades returned by the API.
   Future<void> getStudentsGrades() async {
     isLoadingGetStudentsGrades = true;
     update();
@@ -548,6 +640,23 @@ class DetailsAndReviewMissionController extends GetxController {
     update();
   }
 
+  /// Gets the student seat numbers for a control mission from the API and sets the
+  /// [studentsSeatNumbers] and [studentsSeatNumbersRows] with the student seat
+  /// numbers returned by the API.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will show a loading indicator while the request is being
+  /// processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
+  ///
+  /// If the response is successful, the function will update the UI with the
+  /// student seat numbers returned by the API.
+  ///
+  /// The function returns a boolean indicating whether the students seat numbers
+  /// were retrieved successfully.
   Future<bool> getStudentsSeatNumberByControlMissionId() async {
     bool getData = false;
     isLoadingGetStudentsSeatNumbers = true;
@@ -584,6 +693,19 @@ class DetailsAndReviewMissionController extends GetxController {
     return getData;
   }
 
+  /// Gets the subjects for a control mission from the API and sets the
+  /// [listSubject] with the subjects returned by the API.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will show a loading indicator while the request is being
+  /// processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
+  ///
+  /// If the response is successful, the function will update the UI with the
+  /// subjects returned by the API.
   Future<void> getSubjectByControlMissionId() async {
     isLoadingGetSubjects = true;
     update();
@@ -614,6 +736,19 @@ class DetailsAndReviewMissionController extends GetxController {
   }
 
   @override
+
+  /// This function is called when the widget is initialized.
+  ///
+  /// The function calls the following functions in parallel:
+  /// - [getControlMissionId]
+  /// - [getControlMissionName]
+  ///
+  /// After the above functions are completed, the function calls the following
+  /// functions in series:
+  /// - [getExamRoomByControlMissionId]
+  /// - [getSubjectByControlMissionId]
+  /// - [getStudentsSeatNumberByControlMissionId]
+  /// - [getStudentsGrades] if [controlMissionId] is not zero.
   void onInit() async {
     super.onInit();
     await Future.wait([
@@ -626,6 +761,16 @@ class DetailsAndReviewMissionController extends GetxController {
     controlMissionId != 0 ? getStudentsGrades() : null;
   }
 
+  /// Saves the given [id] as the control mission ID in the hive box
+  /// 'ControlMission' and updates the UI. The function also calls the
+  /// following functions to update the exam room, subjects, and
+  /// student seat numbers in the UI:
+  /// - [getExamRoomByControlMissionId]
+  /// - [getSubjectByControlMissionId]
+  /// - [getStudentsSeatNumberByControlMissionId]
+  ///
+  /// The function is used when the user selects a control mission from the
+  /// dropdown menu.
   Future<void> saveControlMissionId(int id) async {
     controlMissionId = id;
     update();
@@ -635,6 +780,9 @@ class DetailsAndReviewMissionController extends GetxController {
     getStudentsSeatNumberByControlMissionId();
   }
 
+  /// Saves the given [name] as the control mission name in the hive box
+  /// 'ControlMission' and updates the UI. The function is used when the user
+  /// edits the name of the control mission in the text field.
   Future<void> saveControlMissionName(String name) async {
     controlMissionName = name;
     update();

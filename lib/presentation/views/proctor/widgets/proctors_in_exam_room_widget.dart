@@ -92,16 +92,20 @@ class ProctorsInExamRoomWidget extends GetView<ProctorController> {
                                             await controller
                                                 .unAssignProctorFromExamRoom(
                                               proctorId: proctors.id!,
+                                              period: false,
                                             )
-                                                .then((value) {
-                                              if (value) {
-                                                Get.back();
-                                                MyFlashBar.showSuccess(
-                                                  'Unassigned Successfully',
-                                                  'Success',
-                                                ).show(Get.key.currentContext!);
-                                              }
-                                            });
+                                                .then(
+                                              (value) {
+                                                if (value) {
+                                                  Get.back();
+                                                  MyFlashBar.showSuccess(
+                                                    'Unassigned Successfully',
+                                                    'Success',
+                                                  ).show(
+                                                      Get.key.currentContext!);
+                                                }
+                                              },
+                                            );
                                           },
                                           child: const Text('UnAssign'),
                                         ),
@@ -133,8 +137,35 @@ class ProctorsInExamRoomWidget extends GetView<ProctorController> {
                                 .map(
                                   (proctors) => Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      '${proctors.proctor!.userName} ',
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          '${proctors.proctor!.userName} ',
+                                        ),
+                                        const Spacer(),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            await controller
+                                                .unAssignProctorFromExamRoom(
+                                              proctorId: proctors.id!,
+                                              period: true,
+                                            )
+                                                .then(
+                                              (value) {
+                                                if (value) {
+                                                  Get.back();
+                                                  MyFlashBar.showSuccess(
+                                                    'Unassigned Successfully',
+                                                    'Success',
+                                                  ).show(
+                                                      Get.key.currentContext!);
+                                                }
+                                              },
+                                            );
+                                          },
+                                          child: const Text('UnAssign'),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 )

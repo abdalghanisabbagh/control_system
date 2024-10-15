@@ -31,6 +31,14 @@ class TransferStudentController extends GetxController {
   ValueItem? selectedItemSchool;
   bool transferLoading = false;
 
+  /// Gets all the grades for the given school id from the API and sets the
+  /// [gradesOptions] with the grades returned by the API.
+  ///
+  /// It sets the [isLoadingGrades] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
   Future<void> getAllGradesSchoolId() async {
     isLoadingGrades = true;
     update();
@@ -60,6 +68,14 @@ class TransferStudentController extends GetxController {
     update();
   }
 
+  /// Gets all the classes rooms for the given school id from the API and sets the
+  /// [classesOptions] with the classes rooms returned by the API.
+  ///
+  /// It sets the [isLoadingClassRooms] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
   Future<void> getClassRoomsBySchoolId() async {
     isLoadingClassRooms = true;
     update();
@@ -93,6 +109,14 @@ class TransferStudentController extends GetxController {
     update();
   }
 
+  /// Gets all the cohorts for the given school id from the API and sets the
+  /// [cohortsOptions] with the cohorts returned by the API.
+  ///
+  /// It sets the [isLoadingCohorts] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
   Future<void> getCohortsBySchoolId() async {
     isLoadingCohorts = true;
     update();
@@ -122,6 +146,20 @@ class TransferStudentController extends GetxController {
     update();
   }
 
+  /// Gets all schools from the API and sets the [schoolsOptions] with the
+  /// schools returned by the API.
+  ///
+  /// It sets the [isLoadingSchools] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the
+  /// failure message.
+  ///
+  /// The function is used when the user navigates to the transfer student
+  /// page.
+  ///
+  /// The function returns a boolean indicating whether the schools were
+  /// retrieved successfully.
   Future<void> getSchools() async {
     ResponseHandler<SchoolsResModel> responseHandler =
         ResponseHandler<SchoolsResModel>();
@@ -154,6 +192,13 @@ class TransferStudentController extends GetxController {
     update();
   }
 
+  /// Changes the selected class room when the user selects a different class room from the drop down.
+  ///
+  /// The function takes a [List<ValueItem>] as a parameter which is the list of the selected class rooms.
+  ///
+  /// If the list is empty, it sets [selectedItemClassRoom] to null. Otherwise, it sets [selectedItemClassRoom] to the first element of the list.
+  ///
+  /// The function then calls [update] to update the UI.
   void onClassRoomChanged(List<ValueItem> value) {
     value.isEmpty
         ? {
@@ -165,6 +210,13 @@ class TransferStudentController extends GetxController {
     update();
   }
 
+  /// Changes the selected cohort when the user selects a different cohort from the drop down.
+  ///
+  /// The function takes a [List<ValueItem>] as a parameter which is the list of the selected cohorts.
+  ///
+  /// If the list is empty, it sets [selectedItemCohort] to null. Otherwise, it sets [selectedItemCohort] to the first element of the list.
+  ///
+  /// The function then calls [update] to update the UI.
   void onCohortChanged(List<ValueItem> value) {
     value.isEmpty
         ? {
@@ -176,6 +228,13 @@ class TransferStudentController extends GetxController {
     update();
   }
 
+  /// Changes the selected grade when the user selects a different grade from the drop down.
+  ///
+  /// The function takes a [List<ValueItem>] as a parameter which is the list of the selected grades.
+  ///
+  /// If the list is empty, it sets [selectedItemGrade] to null. Otherwise, it sets [selectedItemGrade] to the first element of the list.
+  ///
+  /// The function then calls [update] to update the UI.
   void onGradeChanged(List<ValueItem> value) {
     value.isEmpty
         ? {
@@ -188,6 +247,19 @@ class TransferStudentController extends GetxController {
   }
 
   @override
+
+  /// The onInit function of the [TransferStudentController] class.
+  ///
+  /// The function is called when the controller is initialized.
+  ///
+  /// The function sets [isLoadingSchools] to true and updates the UI.
+  ///
+  /// Then, it waits for the [getSchools] function to finish and sets
+  /// [isLoadingSchools] to false.
+  ///
+  /// Finally, it updates the UI.
+  ///
+  /// The function is asynchronous and returns a [Future<void>].
   void onInit() async {
     super.onInit();
     isLoadingSchools = true;
@@ -199,6 +271,13 @@ class TransferStudentController extends GetxController {
     update();
   }
 
+  /// Changes the selected school when the user selects a different school from the drop down.
+  ///
+  /// The function takes a [List<ValueItem>] as a parameter which is the list of the selected schools.
+  ///
+  /// If the list is empty, it sets all the selected items to null. Otherwise, it sets [selectedItemSchool] to the first element of the list and calls the [getAllGradesSchoolId], [getCohortsBySchoolId], and [getClassRoomsBySchoolId] functions to get the grades, cohorts, and class rooms for the selected school.
+  ///
+  /// The function then calls [update] to update the UI.
   void onSchoolChanged(List<ValueItem> value) {
     value.isEmpty
         ? {
@@ -209,6 +288,9 @@ class TransferStudentController extends GetxController {
           }
         : {
             selectedItemSchool = value.first,
+            selectedItemGrade = null,
+            selectedItemCohort = null,
+            selectedItemClassRoom = null,
             getAllGradesSchoolId(),
             getCohortsBySchoolId(),
             getClassRoomsBySchoolId()
@@ -216,6 +298,20 @@ class TransferStudentController extends GetxController {
     update();
   }
 
+  /// Transfers the student with the given [studentId] to the selected school, grade, cohort, and class room.
+  ///
+  /// The function first checks if the selected school, grade, cohort, and class room are null.
+  /// If any of them are null, it shows an error dialog with the appropriate message.
+  ///
+  /// If all of them are not null, it makes a PATCH request to the server to transfer the student.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure message.
+  ///
+  /// If the response is a success, it shows a success flash bar with a message indicating that the student has been transferred successfully.
+  ///
+  /// The function also calls [update] to update the UI and [Get.find<StudentController>().onInit()] to update the students list.
+  ///
+  /// The function is asynchronous and returns a [Future<void>].
   Future<void> transferStudent(int studentId) async {
     transferLoading = true;
     update();
