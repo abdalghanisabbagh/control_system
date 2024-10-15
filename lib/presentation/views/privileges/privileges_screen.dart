@@ -84,7 +84,7 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                       title: 'Search Privileges',
                       controller: controller.searchRolesController,
                       onChanged: (value) {
-                        controller.serachInRoles(value!);
+                        controller.searchInRoles(value!);
                         return value;
                       },
                     ),
@@ -112,8 +112,8 @@ class PrivilegesScreen extends GetView<PrivilegesController> {
                               );
                             } else {
                               return PageStorage(
-                                bucket: controller.previlegesPageStorageBucket,
-                                key: controller.previlegesPageStorageKey,
+                                bucket: controller.privilegesPageStorageBucket,
+                                key: controller.privilegesPageStorageKey,
                                 child: ListView.builder(
                                   itemCount: controller.filteredRoles.length,
                                   itemBuilder: (context, index) {
