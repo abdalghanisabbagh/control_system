@@ -34,7 +34,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.loginScreenName,
         builder: (context, state) {
           AuthBindings().dependencies();
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           AuthBindings().dependencies();
           return const LoginScreen();
         },
@@ -47,7 +47,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.certificateScreenPath,
         name: AppRoutesNamesAndPaths.certificateScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           return const CertificatesScreen();
         },
         onExit: (context, state) {
@@ -58,7 +58,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.schoolsScreenPath,
         name: AppRoutesNamesAndPaths.schoolsScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           SchoolSettingBindings().dependencies();
           //  Get.find<SchoolController>();
 
@@ -72,7 +72,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.classRoomScreenPath,
         name: AppRoutesNamesAndPaths.classRoomScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           ClassRoomBindings().dependencies();
           return const ClassRoomsScreen();
         },
@@ -98,7 +98,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.cohortSettingScreenPath,
         name: AppRoutesNamesAndPaths.cohortSettingScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           CohortSettingsBindings().dependencies();
           return const CohortSettingsScreen();
         },
@@ -119,7 +119,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.controlBatchScreenPath,
         name: AppRoutesNamesAndPaths.controlBatchScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           ControlMissingBindings().dependencies();
           return const ControlMissionScreen();
         },
@@ -196,7 +196,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.dashBoardScreenPath,
         name: AppRoutesNamesAndPaths.dashBoardScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           DashBoardBindings().dependencies();
           return const DashboardScreen();
         },
@@ -208,7 +208,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.proctorScreenPath,
         name: AppRoutesNamesAndPaths.proctorScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           ProctorBindings().dependencies();
           return const ProctorScreen();
         },
@@ -220,7 +220,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.setDegreesScreenPath,
         name: AppRoutesNamesAndPaths.setDegreesScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           BarcodeBindings().dependencies();
           return SetDegreesScreen();
         },
@@ -233,7 +233,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.studentScreenPath,
         name: AppRoutesNamesAndPaths.studentScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           StudentsBindings().dependencies();
           return const StudentScreen();
         },
@@ -245,7 +245,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.subjectSettingScreenPath,
         name: AppRoutesNamesAndPaths.subjectSettingScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           SubjectSettingBindings().dependencies();
           return const SubjectSettingScreen();
         },
@@ -268,7 +268,7 @@ class AppGoRouter {
           name: AppRoutesNamesAndPaths.adminScreenName,
           builder: (context, state) {
             AdminBindings().dependencies();
-            Get.find<SideMenueGetController>().onRouteChange(state.name!);
+            Get.find<SideMenuGetController>().onRouteChange(state.name!);
             return const AdminScreen();
           },
           onExit: (context, state) {
@@ -302,7 +302,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.batchDocumentsScreenPath,
         name: AppRoutesNamesAndPaths.batchDocumentsScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           BatchDocumentsBindings().dependencies();
           return const BatchDocumentsScreen();
         },
@@ -314,9 +314,9 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.privilegesScreenPath,
         name: AppRoutesNamesAndPaths.privilegesScreenName,
         builder: (context, state) {
-          RolesBinidings().dependencies();
+          RolesBindings().dependencies();
 
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           return const PrivilegesScreen();
         },
         onExit: (context, state) {
@@ -328,7 +328,7 @@ class AppGoRouter {
         path: AppRoutesNamesAndPaths.profileScreenPath,
         name: AppRoutesNamesAndPaths.profileScreenName,
         builder: (context, state) {
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           return ProfileWidget();
         },
         onExit: (context, state) {
@@ -340,7 +340,7 @@ class AppGoRouter {
         name: AppRoutesNamesAndPaths.systemLoggerScreenName,
         builder: (context, state) {
           SystemLoggerBindings().dependencies();
-          Get.find<SideMenueGetController>().onRouteChange(state.name!);
+          Get.find<SideMenuGetController>().onRouteChange(state.name!);
           return const SystemLoggerScreen();
         },
         onExit: (context, state) {
