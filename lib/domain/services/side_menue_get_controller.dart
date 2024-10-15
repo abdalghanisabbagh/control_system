@@ -12,7 +12,7 @@ import '../../presentation/resource_manager/routes/index.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/profile_controller.dart';
 
-class SideMenueGetController extends GetxController
+class SideMenuGetController extends GetxController
     with GetSingleTickerProviderStateMixin {
   bool isSideMenuVisible = true;
   late AnimationController menuIconAnimationController;
