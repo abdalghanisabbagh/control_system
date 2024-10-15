@@ -8,6 +8,22 @@ import '../../Data/Models/student_seat/student_seat_res_model.dart';
 import '../../Data/Models/system_logger/system_logger_res_model.dart';
 
 extension PlutoRowExtension on List<StudentResModel> {
+  /// This function takes a list of students and returns a PlutoRow list based on each student's properties.
+  ///
+  /// The function will try to find the corresponding cohort, grade and class room for each student.
+  /// If the student's properties are not found in the given lists, the function will return an error in the
+  /// PlutoRow's cells.
+  ///
+  /// The function will also return a list of errors for each student that has an empty field.
+  ///
+  /// The return value is a map containing the list of PlutoRow, the list of students, and the errors.
+  ///
+  /// The function will return the following errors:
+  ///
+  /// - errorcohort: true if the function could not find a cohort for a student.
+  /// - errorgrade: true if the function could not find a grade for a student.
+  /// - errorclass: true if the function could not find a class room for a student.
+  /// - errors: a list of strings containing the errors for each student.
   Map<String, dynamic> convertFileStudentsToPluto({
     required List<StudentResModel>? students,
     required List<CohortResModel> cohorts,
@@ -122,6 +138,22 @@ extension PlutoRowExtension on List<StudentResModel> {
     };
   }
 
+  /// This function will convert the current list of [StudentPromoteFileResModel] to a list of [PlutoRow].
+  ///
+  /// The function will also return a map containing the list of PlutoRow, the list of students, and the errors.
+  ///
+  /// The return value is a map containing the list of PlutoRow, the list of students, and the errors.
+  ///
+  /// The function will return the following errors:
+  ///
+  /// - errorcohort: true if the function could not find a cohort for a student.
+  /// - errorgrade: true if the function could not find a grade for a student.
+  /// - errorclass: true if the function could not find a class room for a student.
+  /// - errorBlbID: true if the function could not find a student with the given BlbId.
+  ///
+  /// The function will also return a list of students.
+  ///
+  /// The function will return a list of errors.
   Map<String, dynamic> convertPromoteFileStudentsToPluto({
     required List<StudentResModel> students,
     required List<CohortResModel> cohorts,
@@ -215,6 +247,25 @@ extension PlutoRowExtension on List<StudentResModel> {
     };
   }
 
+  /// This function will convert the current list of [StudentResModel] to a list of [PlutoRow].
+  ///
+  /// The function will return a list of [PlutoRow] that can be used to display the data in a table.
+  ///
+  /// The function will return the following columns:
+  ///
+  /// - BlbIdField: the blbId of the student.
+  /// - FirstNameField: the first name of the student.
+  /// - SecondNameField: the second name of the student.
+  /// - ThirdNameField: the third name of the student.
+  /// - CohortField: the name of the cohort of the student.
+  /// - GradeField: the name of the grade of the student.
+  /// - ClassRoomField: the name of the class room of the student.
+  /// - LanguageField: the language of the student.
+  /// - ReligionField: the religion of the student.
+  /// - CitizenshipField: the citizenship of the student.
+  /// - ActionsField: the actions of the student.
+  ///
+  /// The function will return a list of [PlutoRow].
   List<PlutoRow> convertStudentsToRows() {
     List<PlutoRow> rows = [];
     for (var element in this) {
@@ -250,6 +301,20 @@ extension PlutoRowExtension on List<StudentResModel> {
 
 extension PlutoRowStudentSeatsNumbersExtansion
     on List<StudentSeatNumberResModel> {
+  /// This function will convert the current list of [StudentSeatNumberResModel] to a list of [PlutoRow].
+  ///
+  /// The function will return a list of [PlutoRow].
+  ///
+  /// The cells of the [PlutoRow] will contain the following values:
+  ///
+  /// - IdField: the id of the element.
+  /// - BlbIdField: the blb id of the student.
+  /// - StudentNameField: the name of the student.
+  /// - SeatNumberField: the seat number of the student.
+  /// - GradeField: the grade of the student.
+  /// - ClassRoomField: the class room of the student.
+  /// - CohortField: the cohort of the student.
+  /// - ActionsField: the actions of the student.
   List<PlutoRow> convertStudentsToRows() {
     List<PlutoRow> rows = [];
 
@@ -283,6 +348,22 @@ extension PlutoRowStudentSeatsNumbersExtansion
 }
 
 extension PlutoRowSystemLogsExtansion on List<SystemLoggerResModel> {
+  /// This function will convert the current list of [SystemLoggerResModel] to a list of [PlutoRow].
+  ///
+  /// The function will return a list of [PlutoRow].
+  ///
+  /// The cells of the [PlutoRow] will contain the following values:
+  ///
+  /// - Ip Field: the ip of the element.
+  /// - UserAgent Field: the user agent of the element.
+  /// - Body Field: the body of the element.
+  /// - Platform Field: the platform of the element.
+  /// - Url Field: the url of the element.
+  /// - Method Field: the method of the element.
+  /// - UserId Field: the user id of the element.
+  /// - CreatedAt Field: the created at of the element.
+  /// - Id Field: the id of the element.
+  /// - ActionsField: the actions of the element.
   List<PlutoRow> convertSystemLogsToRows() {
     List<PlutoRow> rows = [];
 
