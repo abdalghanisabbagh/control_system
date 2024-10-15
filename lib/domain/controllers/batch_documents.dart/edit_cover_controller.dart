@@ -40,6 +40,12 @@ class EditCoverSheetController extends GetxController {
   DateTime? selectedEndTime;
   ValueItem? selectedIExamDuration;
   DateTime? selectedStartTime;
+
+  /// A function that allows the user to select a PDF file and returns the selected file as a [Uint8List] and its name as a [String].
+  ///
+  /// The function will show an error dialog if the user does not select a file.
+  ///
+  /// The function will also update the UI to show that a file has been imported.
   Future<(Uint8List?, String?)> pickPdfFile() async {
     FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -68,6 +74,24 @@ class EditCoverSheetController extends GetxController {
     return (null, null);
   }
 
+  /// A function that updates an exam mission with the given parameters and returns a boolean indicating whether the update was successful.
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [id]: The ID of the exam mission to update.
+  /// - [startTime]: The start time of the exam mission.
+  /// - [endTime]: The end time of the exam mission.
+  /// - [duration]: The duration of the exam mission.
+  /// - [pdfUrl]: The URL of the PDF file for the exam mission.
+  /// - [period]: The period of the exam mission.
+  ///
+  /// The function will return a boolean indicating whether the update was successful.
+  ///
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
+  ///
+  /// If the response is successful, the function will update the list of exam missions in the [CoversSheetsController] and reset the UI to show that no file has been imported.
   Future<bool> updateExamMission({
     required int id,
     required String? startTime,
@@ -117,6 +141,20 @@ class EditCoverSheetController extends GetxController {
     return updateExamMission;
   }
 
+  /// Updates an exam mission by office.
+  ///
+  /// This function updates an exam mission by office by sending a PATCH request to the server.
+  /// It takes the following parameters:
+  ///
+  /// - [id]: The ID of the exam mission to update.
+  /// - [duration]: The new duration of the exam mission.
+  /// - [period]: The new period of the exam mission.
+  /// - [year]: The new year of the exam mission.
+  /// - [month]: The new month of the exam mission.
+  ///
+  /// The function will return a boolean indicating whether the exam mission was updated successfully.
+  ///
+  /// The function will also show an error dialog with the failure message if the request fails.
   Future<bool> updateExamMissionByOffice({
     required int id,
     required int? duration,
@@ -162,6 +200,15 @@ class EditCoverSheetController extends GetxController {
     return updateExamMission;
   }
 
+  /// A function that uploads a PDF file to the server and sets the [pdfUrl] with the returned URL.
+  ///
+  /// The function will return a boolean indicating whether the upload was successful.
+  ///
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure message.
+  ///
+  /// If the response is successful, the function will update the [pdfUrl] and reset the UI to show that no file has been imported.
   Future<bool> uploadPdfInExamMission() async {
     bool uploadPdfFile = false;
     ResponseHandler<PdfExamMissionResModel> responseHandler = ResponseHandler();
