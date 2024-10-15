@@ -8,7 +8,7 @@ import '../presentation/resource_manager/routes/app_go_router.dart';
 import 'configurations/scroll_configurations.dart';
 
 class MyApp extends StatefulWidget {
-  static const MyApp _instance = MyApp._internal(); // singlton instance
+  static const MyApp _instance = MyApp._internal(); // singleton instance
 
   factory MyApp() => _instance;
 
@@ -19,6 +19,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+
+  /// The main application widget.
+  ///
+  /// This widget is the root of the application. It is a [StatefulWidget] so that
+  /// it can manage the system chrome.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
