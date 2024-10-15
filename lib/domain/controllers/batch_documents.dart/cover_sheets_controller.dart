@@ -48,6 +48,22 @@ class CoversSheetsController extends GetxController {
   ValueItem? selectedItemGrade;
   ValueItem? selectedSubject;
 
+  /// This function adds a new exam mission to the database.
+  ///
+  /// It takes the following parameters:
+  ///
+  /// - [subjectId]: The ID of the subject.
+  /// - [controlMissionId]: The ID of the control mission.
+  /// - [gradeId]: The ID of the grade.
+  /// - [educationYearId]: The ID of the education year.
+  /// - [year]: The year of the exam mission.
+  /// - [month]: The month of the exam mission.
+  /// - [finalDegree]: The final degree of the exam mission.
+  /// - [duration]: The duration of the exam mission.
+  /// - [period]: The period of the exam mission.
+  /// - [createOnly]: Whether to create the exam mission only or also add it to the selected control mission.
+  ///
+  /// It returns a boolean indicating whether the exam mission was added successfully.
   Future<bool> addNewExamMission({
     required int subjectId,
     required int controlMissionId,
@@ -106,6 +122,14 @@ class CoversSheetsController extends GetxController {
     return addExamMissionHasBeenAdded;
   }
 
+  /// This function deletes an exam mission by its ID.
+  ///
+  /// It takes the following parameters:
+  ///
+  /// - [id]: The ID of the exam mission to be deleted.
+  ///
+  /// It returns a boolean indicating whether the exam mission was deleted successfully.
+  ///
   Future<bool> deleteExamMission({
     required int id,
   }) async {
@@ -138,6 +162,14 @@ class CoversSheetsController extends GetxController {
     return examMissionHasBeenDeleted;
   }
 
+  /// This function generates an AM cover sheet for the given exam mission ID.
+  ///
+  /// It takes the following parameters:
+  ///
+  /// - [controlMissionName]: The name of the control mission.
+  /// - [examMissionId]: The ID of the exam mission.
+  ///
+  /// It does not return any value.
   Future<void> generateAmCoverSheet({
     required String controlMissionName,
     required int examMissionId,
@@ -149,6 +181,14 @@ class CoversSheetsController extends GetxController {
     );
   }
 
+  /// This function generates a BR cover sheet for the given exam mission ID.
+  ///
+  /// It takes the following parameters:
+  ///
+  /// - [controlMissionName]: The name of the control mission.
+  /// - [examMissionId]: The ID of the exam mission.
+  ///
+  /// It does not return any value.
   Future<void> generateBrCoverSheet({
     required String controlMissionName,
     required int examMissionId,
@@ -160,6 +200,15 @@ class CoversSheetsController extends GetxController {
     );
   }
 
+  /// Generates a cover sheet for the given exam mission ID.
+  ///
+  /// It takes the following parameters:
+  ///
+  /// - [controlMissionName]: The name of the control mission.
+  /// - [examMissionId]: The ID of the exam mission.
+  /// - [path]: The path to the API endpoint that generates the cover sheet.
+  ///
+  /// It does not return any value.
   Future<void> generateCoverSheet({
     required String controlMissionName,
     required int examMissionId,
@@ -202,6 +251,14 @@ class CoversSheetsController extends GetxController {
     update([examMissionId]);
   }
 
+  /// Generates a cover sheet for the given exam mission ID in IB format.
+  ///
+  /// It takes the following parameters:
+  ///
+  /// - [controlMissionName]: The name of the control mission.
+  /// - [examMissionId]: The ID of the exam mission.
+  ///
+  /// It does not return any value.
   Future<void> generateIBCoverSheet({
     required String controlMissionName,
     required int examMissionId,
@@ -213,6 +270,13 @@ class CoversSheetsController extends GetxController {
     );
   }
 
+  /// Gets all the exam missions for the given control mission ID.
+  ///
+  /// It takes the following parameter:
+  ///
+  /// - [controlMissionId]: The ID of the control mission.
+  ///
+  /// It does not return any value.
   Future<void> getAllExamMissionsByControlMission(int controlMissionId) async {
     isLoadingGetExamMission = true;
 
@@ -243,6 +307,18 @@ class CoversSheetsController extends GetxController {
     );
   }
 
+  /// Gets all the subjects from the API.
+  ///
+  /// It does not take any parameters.
+  ///
+  /// It sets the [isLoadingGetSubject] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is successful, it updates the [optionsSubjects] list with
+  /// the subjects returned by the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
   Future<void> getAllSubjects() async {
     isLoadingGetSubject = true;
 
@@ -276,6 +352,20 @@ class CoversSheetsController extends GetxController {
     );
   }
 
+  /// Gets all the control missions for the selected education year and school.
+  ///
+  /// It sets the [isLoadingGetControlMission] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is successful, it updates the [controlMissionList] with
+  /// the control missions returned by the API and sets the [optionsControlMission]
+  /// with the control missions.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// [educationYearId] The id of the education year whose control missions are
+  /// being requested.
   Future<void> getControlMissionByEducationYearAndBySchool(
       int educationYearId) async {
     isLoadingGetControlMission = true;
@@ -313,6 +403,16 @@ class CoversSheetsController extends GetxController {
     update();
   }
 
+  /// Gets all the education years for the school.
+  ///
+  /// It sets the [isLoadingGetEducationYear] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is successful, it updates the [optionsEducationYear] with
+  /// the education years returned by the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
   Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
@@ -343,6 +443,16 @@ class CoversSheetsController extends GetxController {
     update();
   }
 
+  /// Gets all the grades for the selected school.
+  ///
+  /// It sets the [isLoadingGrades] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is successful, it updates the [optionsGrades] with
+  /// the grades returned by the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
   Future<void> getGradesBySchoolId() async {
     isLoadingGrades = true;
 
@@ -371,11 +481,31 @@ class CoversSheetsController extends GetxController {
   }
 
   @override
+
+  /// Calls [getEducationYear] when the controller is initialized.
+  /// This is necessary to load the education year as soon as the
+  /// controller is created.
+  ///
   void onInit() {
     getEducationYear();
     super.onInit();
   }
 
+  /// A function that makes a GET request to the server to preview an exam
+  /// mission.
+  ///
+  /// The function takes one parameter, [examMissionId], which is the id of the
+  /// exam mission to be previewed.
+  ///
+  /// The function returns a [Future] that resolves to an [Either] of a
+  /// [Failure] or a [PreviewExamResModel].
+  ///
+  /// If the response is successful, the function will try to launch the url
+  /// returned in the response. If the url cannot be launched, an error dialog
+  /// will be shown with the error message.
+  ///
+  /// If the response is a failure, an error dialog will be shown with the
+  /// failure message.
   Future<void> previewExamMission({
     required int examMissionId,
   }) async {
@@ -410,6 +540,20 @@ class CoversSheetsController extends GetxController {
     });
   }
 
+  /// Sets the [selectedItemControlMission] to the first item in [items] if it
+  /// is not empty. If it is empty, it sets the [selectedItemControlMission] to
+  /// null and clears the [examMissionsList] and [filteredExamMissionsList].
+  ///
+  /// If [items] is not empty, it also updates the [controlMissionObject] to the
+  /// first control mission in [controlMissionList] whose id is equal to the
+  /// value of the first item in [items].
+  ///
+  /// It then calls [getAllSubjects], [getGradesBySchoolId] and
+  /// [getAllExamMissionsByControlMission] and waits for all of them to complete
+  /// before setting [isLoading] to false and calling [update].
+  ///
+  /// Finally, it calls [updateFilteredList] with null arguments and [update]
+  /// again.
   void setSelectedItemControlMission(List<ValueItem> items) async {
     if (items.isNotEmpty) {
       selectedItemControlMission = items.first;
@@ -438,6 +582,15 @@ class CoversSheetsController extends GetxController {
     update();
   }
 
+  /// Sets the [selectedItemEducationYear] to the first item in [items] if it
+  /// is not empty. If it is empty, it sets the [selectedItemEducationYear] to
+  /// null and clears the [examMissionsList] and [filteredExamMissionsList] and
+  /// [selectedItemControlMission].
+  ///
+  /// It then calls [getControlMissionByEducationYearAndBySchool] with the value
+  /// of the first item in [items].
+  ///
+  /// Finally, it calls [update].
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemEducationYear = items.first;
@@ -453,6 +606,11 @@ class CoversSheetsController extends GetxController {
     update();
   }
 
+  /// Sets the [selectedItemGrade] to the first item in [items] if it is not
+  /// empty. If it is empty, it sets the [selectedItemGrade] to null and calls
+  /// [updateFilteredList] with null as arguments.
+  ///
+  /// Finally, it calls [update].
   void setSelectedItemGrade(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemGrade = items.first;
@@ -464,6 +622,11 @@ class CoversSheetsController extends GetxController {
     update();
   }
 
+  /// Sets the [selectedSubject] to the first item in [items] if it is not
+  /// empty. If it is empty, it sets the [selectedSubject] to null and calls
+  /// [updateFilteredList] with null as arguments.
+  ///
+  /// Finally, it calls [update].
   void setSelectedItemSubject(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedSubject = items.first;
@@ -474,6 +637,17 @@ class CoversSheetsController extends GetxController {
     }
   }
 
+  /// Updates the [filteredExamMissionsList] based on the selected grade and
+  /// subject.
+  ///
+  /// If both [selectedItemGrade] and [selectedItemSubject] are null, it sets
+  /// [filteredExamMissionsList] to the full [examMissionsList].
+  ///
+  /// Otherwise, it filters [examMissionsList] to only include exam missions
+  /// that match both the selected grade and subject and assigns the result to
+  /// [filteredExamMissionsList].
+  ///
+  /// Finally, it calls [update].
   Future<void> updateFilteredList(
       ValueItem? selectedItemGrade, ValueItem? selectedItemSubject) async {
     if (selectedItemGrade == null && selectedItemSubject == null) {
