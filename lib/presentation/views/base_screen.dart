@@ -6,7 +6,7 @@ import '../../domain/services/side_menue_get_controller.dart';
 import 'custom_app_bar_widget.dart';
 import 'side_menue/side_menue.dart';
 
-class BaseScreen extends GetView<SideMenueGetController> {
+class BaseScreen extends GetView<SideMenuGetController> {
   final PreferredSizeWidget? appbar;
 
   final Widget body;
@@ -22,7 +22,7 @@ class BaseScreen extends GetView<SideMenueGetController> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return GetBuilder<SideMenueGetController>(
+        return GetBuilder<SideMenuGetController>(
           builder: (controller) {
             return Scaffold(
               key: _scaffoldKey,
