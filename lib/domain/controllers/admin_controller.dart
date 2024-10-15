@@ -45,6 +45,21 @@ class AdminController extends GetxController {
   List<UserResModel> userInSchoolList = <UserResModel>[];
   final TextEditingController usernameController = TextEditingController();
 
+  /// A function that activates a user with the given [userId] and returns a boolean
+  /// indicating whether the user was activated successfully.
+  ///
+  /// The function takes one parameter [userId] which is the ID of the user to be
+  /// activated.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will call [onInit] to refresh the
+  /// UI and return true. If the response is a failure, the function will return
+  /// false.
   Future<bool> activateUser({required int userId}) async {
     bool activateUser = false;
     update();
@@ -73,6 +88,27 @@ class AdminController extends GetxController {
     return activateUser;
   }
 
+  /// A function that adds a new user to the server and returns a boolean
+  /// indicating whether the user was added successfully.
+  ///
+  /// The function takes the following parameters:
+  ///
+  /// - [School_Id]: The ID of the school to which the user will be added.
+  /// - [Full_Name]: The full name of the user to be added.
+  /// - [User_Name]: The username of the user to be added.
+  /// - [Password]: The password of the user to be added.
+  /// - [IsFloorManager]: The role of the user to be added.
+  /// - [Type]: The type of the user to be added.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will return true and clear the
+  /// fields of the form. If the response is a failure, the function will return
+  /// false.
   Future<bool> addNewUser() async {
     isLoading = true;
     update();
@@ -114,6 +150,20 @@ class AdminController extends GetxController {
     );
   }
 
+  /// Adds a reader user to the database and returns a boolean indicating
+  /// whether the add was successful.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will show a loading indicator while the request is being
+  /// processed.
+  ///
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
+  ///
+  /// If the response is successful, the function will clear the UI of any input
+  /// fields and notify the listeners of the [includedStudentsStateManager] to
+  /// update the UI.
   Future<bool> addReaderUser() async {
     isLoading = true;
     update();
@@ -155,6 +205,16 @@ class AdminController extends GetxController {
     );
   }
 
+  /// A function that deactivates a user with the given [userId] and returns a boolean
+  /// indicating whether the user was deactivated successfully.
+  ///
+  /// The function takes one parameter [userId] which is the ID of the user to be deactivated.
+  ///
+  /// The function will show an error dialog with the failure message if the response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  ///
+  /// If the response is successful, the function will call [onInit] to refresh the UI and return true. If the response is a failure, the function will return false.
   Future<bool> deactivateUser({required int userId}) async {
     bool deactivateUser = false;
     update();
@@ -183,6 +243,20 @@ class AdminController extends GetxController {
     return deactivateUser;
   }
 
+  /// A function that edits a user with the given [id] and [data] and returns a boolean
+  /// indicating whether the user was edited successfully.
+  ///
+  /// The function takes two parameters [id] and [data] which are the ID and data of the
+  /// user to be edited.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will call [onInit] to refresh the UI
+  /// and return true. If the response is a failure, the function will return false.
   Future<bool> editUser(Map<String, dynamic> data, int id) async {
     isLoadingEditUser = true;
     update();
@@ -221,6 +295,22 @@ class AdminController extends GetxController {
     );
   }
 
+  /// A function that edits the roles of the user with the given [roleId] and the
+  /// roles in [selectedRolesID] and returns a boolean indicating whether the
+  /// roles were edited successfully.
+  ///
+  /// The function takes one parameter [roleId] which is the ID of the user whose
+  /// roles are to be edited.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will call [onInit] to refresh the
+  /// UI and return true. If the response is a failure, the function will return
+  /// false.
   Future<bool> editUserRoles(int roleId) async {
     isLoadingEditUserRoles = true;
     update();
@@ -257,6 +347,22 @@ class AdminController extends GetxController {
     );
   }
 
+  /// A function that edits the schools of the user with the given [userId] and the
+  /// schools in [selectedSchoolID] and returns a boolean indicating whether the
+  /// schools were edited successfully.
+  ///
+  /// The function takes one parameter [userId] which is the ID of the user whose
+  /// schools are to be edited.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will call [onInit] to refresh the
+  /// UI and return true. If the response is a failure, the function will return
+  /// false.
   Future<bool> editUserSchool(int userId) async {
     isLoadingEditUserSchools = true;
     update();
@@ -293,6 +399,21 @@ class AdminController extends GetxController {
     );
   }
 
+  /// Gets all the roles from the server and sets the [rolesList] and [selectedRolesID]
+  /// with the roles returned by the server.
+  ///
+  /// The function takes a [UserResModel] as a parameter which is the user data
+  /// of the user whose roles are to be edited.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will set the [selectedRolesID]
+  /// with the roles of the user and the [rolesList] with all the roles returned
+  /// by the server.
   Future getAllRoles({required UserResModel userResModel}) async {
     isLoadingGetRoles = true;
     update();
@@ -321,6 +442,20 @@ class AdminController extends GetxController {
     update();
   }
 
+  /// Gets all schools from the server and updates the UI.
+  ///
+  /// The function takes a [UserResModel] as a parameter which is the user data
+  /// of the user whose schools are to be edited.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will set the [selectedSchoolID]
+  /// with the schools of the user and the [schoolsList] with all the schools
+  /// returned by the server.
   Future getAllSchool({required UserResModel userResModel}) async {
     isLoadingGetSchools = true;
     update();
@@ -351,6 +486,19 @@ class AdminController extends GetxController {
     update();
   }
 
+  /// Gets all the users from the server and sets the [allUsersList] with the
+  /// users returned by the server.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will set the [allUsersList] with
+  /// all the users returned by the server and update the UI with the users.
   Future<void> getAllUsers() async {
     isLoadingGetAllUsers = true;
     update();
@@ -382,6 +530,19 @@ class AdminController extends GetxController {
     update();
   }
 
+  /// Gets all the users created by the user from the server and sets the
+  /// [userCreatedList] with the users returned by the server.
+  ///
+  /// The function takes no parameters.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will set the [userCreatedList]
+  /// with all the users returned by the server and update the UI with the users.
   Future<void> getUserCreatedBy() async {
     isLoadingGetUsersCreatedBy = true;
     update();
@@ -413,6 +574,16 @@ class AdminController extends GetxController {
     update();
   }
 
+  /// Gets all users in the school and updates the UI.
+  ///
+  /// The function will show an error dialog with the failure message if the
+  /// response is a failure.
+  ///
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
+  ///
+  /// If the response is successful, the function will set the [userInSchoolList]
+  /// with all the users returned by the server and update the UI with the users.
   Future<void> getUserInSchool() async {
     isLoadingGetUsersInSchool = true;
     update();
@@ -444,6 +615,13 @@ class AdminController extends GetxController {
   }
 
   @override
+
+  /// This function is called when the widget is initialized.
+  ///
+  /// It calls the following functions to get the users created by the current
+  /// user, all users in the school and all users in the school.
+  ///
+  /// It then calls the onInit function of the super class.
   void onInit() {
     getUserCreatedBy();
     getAllUsers();
