@@ -40,6 +40,11 @@ class SeatNumberController extends GetxController {
   ValueItem? selectedItemEducationYear;
   ValueItem? selectedItemGrade;
 
+  /// Downloads a file from the given url and saves it with the given name.
+  ///
+  /// The file will be saved with a .pdf extension.
+  ///
+  /// If an error occurs, a dialogue will be shown with the error message.
   Future<void> downloadFilePdf(String url, String controlMissionName) async {
     try {
       await FileSaver.instance.saveFile(
@@ -57,6 +62,13 @@ class SeatNumberController extends GetxController {
     }
   }
 
+  /// Generates a PDF file for the given control mission and grade and downloads it.
+  ///
+  /// The file will be saved with a .pdf extension and the name 'seat-number.pdf'.
+  ///
+  /// If an error occurs, a dialogue will be shown with the error message.
+  ///
+  /// The UI will be updated to show a loading indicator while the request is being processed.
   Future<void> generatePdfSeatNumber(
       {required String controlMissionName,
       required int controlMissionId,
@@ -100,6 +112,20 @@ class SeatNumberController extends GetxController {
     update([gradeId]);
   }
 
+  /// Gets all control missions for the given education year and school ID.
+  //
+  /// It takes the education year ID as a parameter.
+  //
+  /// The function will return a list of [ControlMissionResModel] objects
+  /// and update the [optionsControlMission] with the control missions returned by the API.
+  //
+  /// If the response is a failure, the function will show an error dialog with the failure
+  /// message.
+  //
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  //
+  /// [isLoadingGetControlMission] will be set to true while the request is being processed and
+  /// set to false when the request is finished.
   Future<void> getControlMissionByEducationYearAndBySchool(
       int educationYearId) async {
     isLoadingGetControlMission = true;
@@ -135,6 +161,15 @@ class SeatNumberController extends GetxController {
     update();
   }
 
+  /// Gets all the education years from the API and sets the
+  /// [optionsEducationYear] with the education years returned by the API.
+  ///
+  /// It sets the [isLoadingGetEducationYear] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
   Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
@@ -165,6 +200,21 @@ class SeatNumberController extends GetxController {
     update();
   }
 
+  /// Gets all grades for the given control mission ID from the API and sets the
+  /// [gradesList] with the grades returned by the API.
+  ///
+  /// It takes the control mission ID as a parameter.
+  ///
+  /// The function will return a list of [GradesResModel] objects
+  /// and update the [gradesList] with the grades returned by the API.
+  ///
+  /// If the response is a failure, the function will show an error dialog with the failure
+  /// message.
+  ///
+  /// The function will also update the UI to show a loading indicator while the request is being processed.
+  ///
+  /// [isLoadingGrades] will be set to true while the request is being processed and
+  /// set to false when the request is finished.
   Future<void> getGradesByControlMission(int controlMissionId) async {
     isLoadingGrades = true;
     update();
@@ -191,6 +241,14 @@ class SeatNumberController extends GetxController {
     isLoadingGrades = false;
   }
 
+  /// Gets all the grades from the API and sets the
+  /// [optionsGrades] with the grades returned by the API.
+  ///
+  /// It sets the [isLoadingGrades] variable to true and then to false
+  /// depending on the response of the API.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
   Future<void> getGradesBySchoolId() async {
     isLoadingGrades = true;
 
@@ -219,11 +277,35 @@ class SeatNumberController extends GetxController {
   }
 
   @override
+
+  ///
+  /// This is the onInit function of the SeatNumberController class.
+  ///
+  /// It calls the [getEducationYear] function and then calls the [onInit]
+  /// function of the super class.
+  ///
   void onInit() {
     getEducationYear();
     super.onInit();
   }
 
+  ///
+  /// Sets the selected item for the control mission dropdown.
+  ///
+  /// It takes a list of [ValueItem] as a parameter and checks if the list is not empty.
+  /// If the list is not empty, it sets the [selectedItemControlMission] to the first item in the list.
+  /// It then gets the control mission object from the list of control missions and sets it to the
+  /// [controlMissionObject].
+  ///
+  /// It then sets the [isLoading] variable to true and updates the UI.
+  /// It then waits for the [getGradesBySchoolId] and [getGradesByControlMission] functions to complete.
+  /// After they complete, it sets the [isLoading] variable to false and updates the UI.
+  /// It then calls the [updateFilteredList] function and passes the current value of [selectedItemControlMission]
+  /// as a parameter.
+  /// If the list is empty, it sets the [selectedItemControlMission] to null and clears the [gradesList] and
+  /// [filteredGradesList].
+  ///
+  /// Finally, it updates the UI.
   void setSelectedItemControlMission(List<ValueItem> items) async {
     if (items.isNotEmpty) {
       selectedItemControlMission = items.first;
@@ -250,6 +332,14 @@ class SeatNumberController extends GetxController {
     update();
   }
 
+  /// It takes a list of [ValueItem] as a parameter and checks if the list is not empty.
+  /// If the list is not empty, it sets the [selectedItemEducationYear] to the first item in the list.
+  /// It then gets the education year id from the [selectedItemEducationYear] and calls the
+  /// [getControlMissionByEducationYearAndBySchool] function with the education year id as a parameter.
+  /// If the list is empty, it sets the [selectedItemEducationYear] to null, clears the [gradesList],
+  /// and clears the [filteredGradesList].
+  /// It also sets the [selectedItemControlMission] to null.
+  /// Finally, it updates the UI.
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemEducationYear = items.first;
@@ -266,6 +356,12 @@ class SeatNumberController extends GetxController {
     update();
   }
 
+  /// It takes a list of [ValueItem] as a parameter and checks if the list is not empty.
+  /// If the list is not empty, it sets the [selectedItemGrade] to the first item in the list.
+  /// It then calls the [updateFilteredList] function with the [selectedItemGrade] as a parameter.
+  /// If the list is empty, it sets the [selectedItemGrade] to null and calls the
+  /// [updateFilteredList] function with null as a parameter.
+  /// Finally, it updates the UI.
   void setSelectedItemGrade(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemGrade = items.first;
@@ -277,6 +373,16 @@ class SeatNumberController extends GetxController {
     update();
   }
 
+  /// This function updates the [filteredGradesList] based on the selected grade.
+  ///
+  /// If [selectedItemGrade] is null, it sets the [filteredGradesList] to the
+  /// [gradesList].
+  ///
+  /// If [selectedItemGrade] is not null, it filters the [gradesList] and sets the
+  /// [filteredGradesList] to the filtered list. The filtered list contains only
+  /// the grades that match the selected grade.
+  ///
+  /// Finally, it calls the [update] function to update the UI.
   Future<void> updateFilteredList(ValueItem? selectedItemGrade) async {
     if (selectedItemGrade == null) {
       filteredGradesList = gradesList;
