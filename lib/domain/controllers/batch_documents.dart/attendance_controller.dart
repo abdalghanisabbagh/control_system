@@ -31,6 +31,13 @@ class AttendanceController extends GetxController {
   ValueItem? selectedItemEducationYear;
   ValueItem? selectedItemExamRoom;
 
+  /// Downloads a PDF file for the attendance in the room with the given room id
+  ///
+  /// The file is downloaded with the name 'attendance.pdf'.
+  ///
+  /// If the file is not downloaded successfully, an error is shown in a dialog.
+  ///
+  /// [roomId] The id of the room whose attendance is being downloaded.
   Future<void> generatePdfAttendance({required int roomId}) async {
     isLoadingGeneratePdf = true;
     update();
@@ -68,6 +75,19 @@ class AttendanceController extends GetxController {
     update();
   }
 
+  /// Gets all the exam rooms by control mission id
+  ///
+  /// Updates the isLoadingGetExamRoom variable to true at the start of the
+  /// function and to false at the end of it.
+  ///
+  /// If the response is successful, it updates the optionsExamRoom list with
+  /// the exam rooms returned by the server.
+  ///
+  /// If the response is a failure, it shows an error dialog with the failure
+  /// message.
+  ///
+  /// [controlMissionId] The id of the control mission whose exam rooms are
+  /// being requested.
   Future<void> getAllExamMissionsByControlMission(int controlMissionId) async {
     isLoadingGetExamRoom = true;
 
@@ -102,6 +122,12 @@ class AttendanceController extends GetxController {
     );
   }
 
+  /// Gets all the control missions for the selected education year and school.
+  ///
+  /// Shows an error dialog if the response is a failure.
+  ///
+  /// [educationYearId] The id of the education year whose control missions are
+  /// being requested.
   Future<void> getControlMissionByEducationYearAndBySchool(
       int educationYearId) async {
     isLoadingGetControlMission = true;
@@ -136,6 +162,11 @@ class AttendanceController extends GetxController {
     update();
   }
 
+  /// Gets all the education years for the school.
+  ///
+  /// Shows an error dialog if the response is a failure.
+  ///
+  /// Updates the [optionsEducationYear] list with the education years.
   Future<void> getEducationYear() async {
     isLoadingGetEducationYear = true;
     update();
@@ -167,11 +198,27 @@ class AttendanceController extends GetxController {
   }
 
   @override
+
+  /// Called when the widget is initialized.
+  ///
+  /// It calls the [getEducationYear] function and then calls the super class
+  /// [onInit] function.
   void onInit() {
     getEducationYear();
     super.onInit();
   }
 
+  /// Sets the [selectedItemControlMission] with the first item of [items] if
+  /// [items] is not empty.
+  ///
+  /// If [items] is not empty, it calls the [getAllExamMissionsByControlMission]
+  /// function with the value of [selectedItemControlMission] as argument.
+  ///
+  /// If [items] is empty, it sets [selectedItemControlMission] and
+  /// [selectedItemExamRoom] to null.
+  ///
+  /// Finally, it calls the [update] function to notify the widgets that depend
+  /// on this controller to rebuild.
   void setSelectedItemControlMission(List<ValueItem> items) async {
     if (items.isNotEmpty) {
       selectedItemControlMission = items.first;
@@ -185,6 +232,17 @@ class AttendanceController extends GetxController {
     }
   }
 
+  /// Sets the [selectedItemEducationYear] with the first item of [items] if
+  /// [items] is not empty.
+  ///
+  /// If [items] is not empty, it calls the [getControlMissionByEducationYearAndBySchool]
+  /// function with the value of [selectedItemEducationYear] as argument.
+  ///
+  /// If [items] is empty, it sets [selectedItemEducationYear],
+  /// [selectedItemControlMission] and [selectedItemExamRoom] to null.
+  ///
+  /// Finally, it calls the [update] function to notify the widgets that depend
+  /// on this controller to rebuild.
   void setSelectedItemEducationYear(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemEducationYear = items.first;
@@ -199,6 +257,13 @@ class AttendanceController extends GetxController {
     update();
   }
 
+  /// Sets the [selectedItemExamRoom] with the first item of [items] if
+  /// [items] is not empty.
+  ///
+  /// If [items] is not empty, it updates the UI by calling the [update] function.
+  ///
+  /// If [items] is empty, it does nothing.
+  ///
   void setSelectedItemExamRoom(List<ValueItem> items) async {
     if (items.isNotEmpty) {
       selectedItemExamRoom = items.first;
