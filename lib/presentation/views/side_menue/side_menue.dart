@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../domain/services/side_menue_get_controller.dart';
 
-class SideMenueWidget extends GetView<SideMenueGetController> {
+class SideMenueWidget extends GetView<SideMenuGetController> {
   final bool isMobile;
 
   const SideMenueWidget({
