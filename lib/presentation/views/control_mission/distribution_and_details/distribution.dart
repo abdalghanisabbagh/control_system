@@ -136,13 +136,6 @@ class DistributionScreen extends GetView<DistributionController> {
                                 )
                                 .toList(),
                             initialList: controller.listExamRoom,
-                            filter: (query) => controller.listExamRoom
-                                .where(
-                                  (element) => element.name!
-                                      .toLowerCase()
-                                      .contains(query.toLowerCase()),
-                                )
-                                .toList(),
                             inputDecoration: const InputDecoration(
                               label: Text(
                                 'Search by name',
