@@ -669,17 +669,20 @@ class ProctorController extends GetxController {
   ///
   /// The function returns a boolean indicating whether the proctor was unassigned
   /// successfully.
-  Future<bool> unAssignProctorFromExamRoom({required int proctorId}) async {
+  Future<bool> unAssignProctorFromExamRoom(
+      {required int proctorId, required bool period}) async {
     bool success = false;
     isLoading = true;
     update();
 
     final response = await ResponseHandler<void>().getResponse(
-      path: "${ProctorsLinks.proctor}/unassign-from-exam-room/$proctorId",
-      converter: (_) {},
-      type: ReqTypeEnum.DELETE,
-      body: {},
-    );
+        path: "${ProctorsLinks.proctor}/unassign-from-exam-room/$proctorId",
+        converter: (_) {},
+        type: ReqTypeEnum.DELETE,
+        body: {},
+        params: {
+          'period': period,
+        });
 
     response.fold(
       (l) {
