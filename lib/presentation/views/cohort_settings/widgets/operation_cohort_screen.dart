@@ -27,7 +27,7 @@ class OperationCohortScreen extends GetView<OperationCohortController> {
             backgroundColor: ColorManager.bgColor,
             elevation: 0,
           ),
-          body: controller.loadindCohorts
+          body: controller.loadingCohorts
               ? Center(
                   child: LoadingIndicators.getLoadingIndicator(),
                 )
