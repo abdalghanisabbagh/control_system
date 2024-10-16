@@ -59,6 +59,7 @@ class EditProctorWidget extends GetView<ProctorController> {
                     myValidation: Validations.requiredValidator,
                     obscureText: proctorController.showPassword,
                     suffixIcon: IconButton(
+                      tooltip: "Show Password",
                       icon: Icon(
                         proctorController.showPassword
                             ? Icons.visibility
@@ -84,6 +85,7 @@ class EditProctorWidget extends GetView<ProctorController> {
                     controller: proctorController.confirmPasswordController,
                     obscureText: proctorController.showConfirmPassword,
                     suffixIcon: IconButton(
+                      tooltip: "Show Password",
                       icon: Icon(
                         proctorController.showConfirmPassword
                             ? Icons.visibility

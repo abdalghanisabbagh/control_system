@@ -356,6 +356,7 @@ class StudentWidget extends GetView<StudentController> {
                                   widgetId: '1800',
                                 ),
                                 child: IconButton(
+                                  tooltip: "Edit Student",
                                   onPressed: () {
                                     var student =
                                         controller.students.firstWhereOrNull(
@@ -384,6 +385,7 @@ class StudentWidget extends GetView<StudentController> {
                                   widgetId: '1900',
                                 ),
                                 child: IconButton(
+                                  tooltip: "Transfer Student",
                                   onPressed: () {
                                     MyDialogs.showDialog(
                                       context,

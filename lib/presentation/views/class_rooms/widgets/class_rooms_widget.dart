@@ -45,6 +45,7 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
                       )
                     : SearchableList(
                         secondaryWidget: PopupMenuButton(
+                          tooltip: "Sort",
                           icon: const Icon(Icons.sort),
                           itemBuilder: (_) {
                             return [

@@ -40,6 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
+          tooltip: 'Edit Profile',
           icon: const Icon(
             Icons.account_circle,
             size: 30,

@@ -189,6 +189,7 @@ class UserInSchoolWidget extends GetView<AdminController> {
                                               .canAccessWidget(
                                                   widgetId: '9600'),
                                           child: IconButton(
+                                            tooltip: "Add role to user",
                                             icon: const Icon(Icons.add,
                                                 color:
                                                     ColorManager.glodenColor),
@@ -210,6 +211,7 @@ class UserInSchoolWidget extends GetView<AdminController> {
                                               .canAccessWidget(
                                                   widgetId: '9400'),
                                           child: IconButton(
+                                            tooltip: "Edit user",
                                             icon: const Icon(Icons.edit,
                                                 color:
                                                     ColorManager.glodenColor),
@@ -224,6 +226,7 @@ class UserInSchoolWidget extends GetView<AdminController> {
                                           ),
                                         ),
                                         IconButton(
+                                          tooltip: "Delete user",
                                           icon: const Icon(Icons.delete,
                                               color: Colors.red),
                                           onPressed: () {

@@ -63,6 +63,7 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
                   Align(
                     alignment: AlignmentDirectional.topEnd,
                     child: IconButton(
+                      tooltip: 'Close',
                       alignment: AlignmentDirectional.topEnd,
                       color: Colors.black,
                       icon: const Icon(Icons.close),

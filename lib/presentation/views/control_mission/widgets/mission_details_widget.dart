@@ -392,6 +392,9 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                                   widgetId: '2303',
                                                 ),
                                                 child: IconButton(
+                                                  tooltip: isActive
+                                                      ? 'Deactivate Student'
+                                                      : 'Activate Student',
                                                   onPressed: () {
                                                     if (isActive) {
                                                       MyAwesomeDialogue(

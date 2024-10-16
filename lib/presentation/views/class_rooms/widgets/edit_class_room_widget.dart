@@ -61,6 +61,7 @@ class EditClassRoomWidget extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: IconButton(
+                                    tooltip: "Close",
                                     alignment: AlignmentDirectional.topEnd,
                                     color: Colors.black,
                                     icon: const Icon(Icons.close),

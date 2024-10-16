@@ -34,6 +34,7 @@ class TransferStudentWidget extends GetView<TransferStudentController> {
                           ),
                         ),
                         IconButton(
+                          tooltip: 'Close',
                           icon: const Icon(Icons.close),
                           onPressed: () {
                             Get.back();
@@ -59,6 +60,7 @@ class TransferStudentWidget extends GetView<TransferStudentController> {
                           ),
                         ),
                         IconButton(
+                          tooltip: 'Close',
                           icon: const Icon(Icons.close),
                           onPressed: () {
                             Get.back();

@@ -36,6 +36,7 @@ class SubjectsWidget extends GetView<SubjectsController> {
                 )
               : SearchableList<SubjectResModel>(
                   secondaryWidget: PopupMenuButton(
+                    tooltip: "Sort",
                     icon: const Icon(Icons.sort),
                     itemBuilder: (_) {
                       return [
@@ -91,7 +92,7 @@ class SubjectsWidget extends GetView<SubjectsController> {
                           .contains(value.toLowerCase()))
                       .toList(),
                   itemBuilder: (SubjectResModel item) {
-                  //  bool inExam = true;
+                    //  bool inExam = true;
                     var schoolTypes = item
                         .schoolTypeHasSubjectsResModel!.schooltypeHasSubjects!
                         .map((e) => e.schoolType!.name)
@@ -151,8 +152,8 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                         ),
                                         item.inExam == 1
                                             ? const Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 8.0),
+                                                padding:
+                                                    EdgeInsets.only(left: 8.0),
                                                 child: Icon(
                                                   Icons.check_circle,
                                                   color: ColorManager.green,
@@ -160,8 +161,8 @@ class SubjectsWidget extends GetView<SubjectsController> {
                                                 ),
                                               )
                                             : const Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 8.0),
+                                                padding:
+                                                    EdgeInsets.only(left: 8.0),
                                                 child: Icon(
                                                   Icons.cancel,
                                                   color: ColorManager.red,
