@@ -66,6 +66,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                             widgetId: '3303',
                           ),
                       child: IconButton(
+                        tooltip: "Preview Exam ",
                         onPressed: () {
                           controller.previewExamMission(
                               examMissionId: examMissionObject.iD!);
@@ -85,6 +86,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         widgetId: '3302',
                       ),
                       child: IconButton(
+                        tooltip: "Acadimc Dean Edit ",
                         onPressed: () {
                           MyDialogs.showDialog(
                               context,
@@ -104,6 +106,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         widgetId: '3301',
                       ),
                       child: IconButton(
+                        tooltip: "Control Officer Edit ",
                         onPressed: () {
                           MyDialogs.showDialog(
                               context,
@@ -126,6 +129,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         widgetId: '3200',
                       ),
                       child: IconButton(
+                          tooltip: "Delete",
                           onPressed: () {
                             MyAwesomeDialogue(
                               title: 'Delete Exam Cover Sheet',
