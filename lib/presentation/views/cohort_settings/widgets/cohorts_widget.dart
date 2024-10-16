@@ -42,6 +42,7 @@ class CohortsWidget extends GetView<CohortsSettingsController> {
                     )
                   : SearchableList<CohortResModel>(
                       secondaryWidget: PopupMenuButton(
+                        tooltip: "Sort",
                         icon: const Icon(Icons.sort),
                         itemBuilder: (_) {
                           return [

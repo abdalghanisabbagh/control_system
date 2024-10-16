@@ -138,6 +138,7 @@ class AdminWidget extends GetView<AdminController> {
                                     visible: Get.find<ProfileController>()
                                         .canAccessWidget(widgetId: '9600'),
                                     child: IconButton(
+                                      tooltip: "Add Role To User",
                                       icon: const Icon(Icons.add,
                                           color: ColorManager.glodenColor),
                                       onPressed: () {
@@ -156,6 +157,7 @@ class AdminWidget extends GetView<AdminController> {
                                     visible: Get.find<ProfileController>()
                                         .canAccessWidget(widgetId: '9400'),
                                     child: IconButton(
+                                      tooltip: "Edit User",
                                       icon: const Icon(
                                         Icons.edit,
                                         color: ColorManager.glodenColor,
@@ -174,6 +176,7 @@ class AdminWidget extends GetView<AdminController> {
                                     visible: Get.find<ProfileController>()
                                         .canAccessWidget(widgetId: '9500'),
                                     child: IconButton(
+                                      tooltip: "Delete User",
                                       icon: const Icon(Icons.delete,
                                           color: Colors.red),
                                       onPressed: () {

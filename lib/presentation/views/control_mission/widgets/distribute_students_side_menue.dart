@@ -63,6 +63,7 @@ class DistributeStudentsSideMenue
                     FittedBox(
                       fit: BoxFit.fill,
                       child: IconButton(
+                        tooltip: "Remove Students From Exam Room",
                         onPressed: () {
                           MyDialogs.showDialog(
                             context,
@@ -78,6 +79,7 @@ class DistributeStudentsSideMenue
                     FittedBox(
                       fit: BoxFit.fill,
                       child: IconButton(
+                        tooltip: "Add Students To Exam Room",
                         onPressed: () {
                           MyDialogs.showDialog(
                             context,

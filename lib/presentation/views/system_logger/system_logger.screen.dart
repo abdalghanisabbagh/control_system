@@ -228,6 +228,7 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                               renderer: (rendererContext) {
                                 return Center(
                                   child: IconButton(
+                                    tooltip: "User Info",
                                     icon: const Icon(
                                       Icons.person_search_rounded,
                                       color: ColorManager.newStatus,

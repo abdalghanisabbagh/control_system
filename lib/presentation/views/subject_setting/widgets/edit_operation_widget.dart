@@ -206,6 +206,7 @@ class EditOperationWidget extends GetView<EditSubjectsController> {
                                             color: Colors.black),
                                       ),
                                       IconButton(
+                                        tooltip: "Delete",
                                         onPressed: () async {
                                           controller
                                               .deleteSchoolTypeInSubject(

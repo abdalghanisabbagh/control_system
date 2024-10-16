@@ -547,6 +547,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                       return Row(
                         children: [
                           IconButton(
+                            tooltip: "Exclude Student",
                             onPressed: () {
                               controller.excludeStudent(rendererContext);
                             },
@@ -691,6 +692,7 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
                       return Row(
                         children: [
                           IconButton(
+                            tooltip: "Add To Included Students",
                             onPressed: () {
                               controller.includeStudent(rendererContext);
                             },

@@ -53,6 +53,7 @@ class RenderStudentsInEaxmRoom extends GetView<DistributeStudentsController> {
                                                 color: ColorManager.yellow,
                                               ),
                                               child: IconButton(
+                                                tooltip: 'Unblock class desk',
                                                 onPressed: () {
                                                   controller.unBlockClassDesk(
                                                       classDeskId: controller
@@ -260,6 +261,7 @@ class RenderStudentsInEaxmRoom extends GetView<DistributeStudentsController> {
                                                           ColorManager.yellow,
                                                     ),
                                                     child: IconButton(
+                                                      tooltip: 'Block Class Desk',
                                                       onPressed: () {
                                                         controller.blockClassDesk(
                                                             classDeskId: controller

@@ -178,6 +178,7 @@ class AddStudentsToControlMissionScreen
                                   return Row(
                                     children: [
                                       IconButton(
+                                        tooltip: 'Exclude Student',
                                         onPressed: () {
                                           controller
                                               .excludeStudent(rendererContext);
@@ -324,6 +325,7 @@ class AddStudentsToControlMissionScreen
                                   return Row(
                                     children: [
                                       IconButton(
+                                        tooltip: "Include Student",
                                         onPressed: () {
                                           controller
                                               .includeStudent(rendererContext);

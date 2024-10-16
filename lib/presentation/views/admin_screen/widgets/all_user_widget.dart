@@ -238,6 +238,7 @@ class AllUserWidget extends GetView<AdminController> {
                                               .canAccessWidget(
                                                   widgetId: '9700'),
                                           child: IconButton(
+                                            tooltip: "Add School To User",
                                             icon: const Icon(Icons.school,
                                                 color: ColorManager.bgSideMenu),
                                             onPressed: () {
@@ -258,6 +259,7 @@ class AllUserWidget extends GetView<AdminController> {
                                               .canAccessWidget(
                                                   widgetId: '9600'),
                                           child: IconButton(
+                                            tooltip: "Add Role To User",
                                             icon: const Icon(Icons.add,
                                                 color:
                                                     ColorManager.glodenColor),
@@ -279,6 +281,7 @@ class AllUserWidget extends GetView<AdminController> {
                                               .canAccessWidget(
                                                   widgetId: '9400'),
                                           child: IconButton(
+                                            tooltip: "Edit User",
                                             icon: const Icon(Icons.edit,
                                                 color:
                                                     ColorManager.glodenColor),
@@ -292,6 +295,7 @@ class AllUserWidget extends GetView<AdminController> {
                                           ),
                                         ),
                                         IconButton(
+                                          tooltip: "Delete User",
                                           icon: const Icon(Icons.delete,
                                               color: Colors.red),
                                           onPressed: () {

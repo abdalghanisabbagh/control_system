@@ -48,6 +48,7 @@ class ExamRoomsAssignedToProctorWidget extends GetView<ProctorController> {
                                 ),
                               ),
                               IconButton(
+                                tooltip: 'Close',
                                 onPressed: () {
                                   Get.back();
                                 },
