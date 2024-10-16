@@ -200,7 +200,7 @@ class RenderStudentsInEaxmRoom extends GetView<DistributeStudentsController> {
                                                       FittedBox(
                                                         fit: BoxFit.fill,
                                                         child: Text(
-                                                          'Class: ${controller.availableStudents[i].student?.classRoomResModel?.name}',
+                                                          'Class: ${controller.availableStudents.firstWhere((element) => element.classDeskID == controller.classDeskCollection.entries.toList()[i].value[j].id).student?.classRoomResModel?.name}',
                                                           style: nunitoBold
                                                               .copyWith(
                                                             fontSize: 15,
