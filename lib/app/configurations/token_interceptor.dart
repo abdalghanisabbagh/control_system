@@ -33,7 +33,7 @@ class TokenInterceptor extends Interceptor {
       /// create a new dio instance to send the request to refresh token endpoint
       var dio = Dio(
         BaseOptions(
-          baseUrl: AppLinks.baseUrlProd,
+          baseUrl: AppLinks.baseUrlStaging,
         ),
       );
 
