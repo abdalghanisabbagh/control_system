@@ -9,7 +9,7 @@ import '../../../resource_manager/ReusableWidget/loading_indicators.dart';
 
 // ignore: must_be_immutable
 class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
-  FocusNode searchFoucs = FocusNode();
+  FocusNode searchFocus = FocusNode();
 
   ReviewWidget({super.key});
 
@@ -34,6 +34,7 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                           child: LoadingIndicators.getLoadingIndicator(),
                         )
                       : PlutoGrid(
+                          key: const ValueKey('review_widget'),
                           configuration: PlutoGridConfiguration(
                             enterKeyAction:
                                 PlutoGridEnterKeyAction.toggleEditing,
@@ -82,45 +83,12 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                               type: PlutoColumnType.text(),
                             ),
                             ...List.generate(
-                              controller.studentGradesResModel!.examRoom!
-                                  .map(
-                                    (element) =>
-                                        element.studentSeatNumbers!.map(
-                                      (element) => element
-                                          .student!.cohort!.cohortHasSubjects!
-                                          .map(
-                                        (element) => (
-                                          element.subjects!.name,
-                                          element.subjects!.iD
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .expand((element) => element)
-                                  .expand((element) => element)
-                                  .toSet()
-                                  .toList()
-                                  .length,
+                              controller.subjects.length,
                               (index) {
-                                final ({String? name, int? id}) subject =
-                                    controller.studentGradesResModel!.examRoom!
-                                        .map(
-                                          (element) =>
-                                              element.studentSeatNumbers!.map(
-                                            (element) => element.student!
-                                                .cohort!.cohortHasSubjects!
-                                                .map(
-                                              (element) => (
-                                                name: element.subjects!.name,
-                                                id: element.subjects!.iD
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                        .expand((element) => element)
-                                        .expand((element) => element)
-                                        .toSet()
-                                        .toList()[index];
+                                final ({String? name, int? id}) subject = (
+                                  name: controller.subjects[index].$1,
+                                  id: controller.subjects[index].$2
+                                );
                                 return PlutoColumn(
                                   readOnly: true,
                                   enableEditingMode: false,
@@ -128,33 +96,7 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                                   field: "${subject.name}_${subject.id}",
                                   type: PlutoColumnType.text(),
                                   footerRenderer: index ==
-                                          completeMissionsController
-                                                  .studentGradesResModel!
-                                                  .examRoom!
-                                                  .map(
-                                                    (element) => element
-                                                        .studentSeatNumbers!
-                                                        .map(
-                                                      (element) => (
-                                                        element.student!.cohort!
-                                                            .cohortHasSubjects!
-                                                            .map(
-                                                          (element) => (
-                                                            element
-                                                                .subjects?.name,
-                                                            element.subjects?.iD
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                  .expand((element) => element)
-                                                  .expand(
-                                                      (element) => element.$1)
-                                                  .toSet()
-                                                  .toList()
-                                                  .length -
-                                              1
+                                          controller.subjects.length - 1
                                       ? (footerRenderer) {
                                           return PlutoAggregateColumnFooter(
                                             rendererContext: footerRenderer,
@@ -195,8 +137,6 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                             completeMissionsController
                                     .studentsGradesPlutoGridStateManager =
                                 event.stateManager;
-                            completeMissionsController
-                                .convertStudentsGradesToPlutoGridRows();
                           },
                         ),
             ),
@@ -230,29 +170,6 @@ class _HeaderState extends State<_Header> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: InkWell(
-                onTap: () => Get.find<DetailsAndReviewMissionController>()
-                    .exportStudentDegreesToPdf(context),
-                child: Container(
-                  height: 55,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: ColorManager.red),
-                  child: const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "Export to PDF",
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
             Expanded(
               child: InkWell(
                 onTap: () => Get.find<DetailsAndReviewMissionController>()
