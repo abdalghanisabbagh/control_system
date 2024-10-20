@@ -131,14 +131,15 @@ class DetailsAndReviewMissionController extends GetxController {
                                     value: studentSeatNumber
                                             .student!.cohort!.cohortHasSubjects!
                                             .map((element) =>
-                                                element.subjects!.name)
-                                            .contains(subject.name)
+                                                element.subjects!.iD)
+                                            .contains(subject.id)
                                         ? studentSeatNumber.student?.barcode
                                                     ?.firstWhereOrNull(
                                                         (barcode) =>
                                                             barcode.examMission!
                                                                 .subjectsID ==
-                                                            subject.id) ==
+                                                            subject.id)
+                                                    ?.studentDegree ==
                                                 null
                                             ? 'Need to scan'
                                             : '${studentSeatNumber.student?.barcode?.firstWhere((barcode) => barcode.examMission!.subjectsID == subject.id).studentDegree}'

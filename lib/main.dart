@@ -18,7 +18,7 @@ import 'domain/bindings/bindings.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await checkForUpdates();
-  workerManager.log = true;
+  // workerManager.log = true;
   await workerManager.init();
 
   await Hive.initFlutter();
