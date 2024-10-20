@@ -1,18 +1,28 @@
+import 'package:control_system/Data/Models/exam_mission/exam_mission_res_model.dart';
+
 class Barcode {
   int? id;
 
   String? studentDegree;
 
+  ExamMissionResModel? examMission;
+
   Barcode({this.id, this.studentDegree});
   Barcode.fromJson(Map<String, dynamic> json) {
     id = json['ID'];
     studentDegree = json['StudentDegree'];
+    if (json['exam_mission'] != null) {
+      examMission = ExamMissionResModel.fromJson(json['exam_mission']);
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['ID'] = id;
     data['StudentDegree'] = studentDegree;
+    if (examMission != null) {
+      data['exam_mission'] = examMission!.toJson();
+    }
     return data;
   }
 }
@@ -135,7 +145,7 @@ class SchoolClass {
 }
 
 class Student {
-  Barcode? barcode;
+  List<Barcode>? barcode;
 
   Cohort? cohort;
 
@@ -164,9 +174,9 @@ class Student {
     cohort = json['cohort'] != null ? Cohort.fromJson(json['cohort']) : null;
     if (json['student_barcode'] != null &&
         (json['student_barcode'] as List).isNotEmpty) {
-      barcode = Barcode.fromJson(json['student_barcode'][0]);
-    } else {
-      barcode = null;
+      barcode = List<Barcode>.from(
+        json['student_barcode'].map((barcode) => Barcode.fromJson(barcode)),
+      );
     }
   }
 
@@ -185,7 +195,7 @@ class Student {
       data['cohort'] = cohort!.toJson();
     }
     if (barcode != null) {
-      data['student_barcode'] = barcode!.toJson();
+      data['student_barcode'] = List.from(barcode!.map((v) => v.toJson()));
     }
     return data;
   }
