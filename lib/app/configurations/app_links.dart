@@ -116,6 +116,15 @@ class SubjectsLinks {
   static const subjectsDeactivate = '$subjects/deactivate';
 }
 
+class SystemLogLinks {
+  static const systemLog = 'system-logger';
+  static const systemLogUser = '$systemLog/user';
+  static const systemLogExportText = '$systemLog/export-text';
+  static const systemLogExportExcel = '$systemLog/export-excel';
+  static const systemLogResetAndExportToText =
+      '$systemLog/reset-and-export-text';
+}
+
 class UserLinks {
   static const activateUser = 'users/activate';
   static const deactivateUser = '/$users/deactivate';
@@ -141,13 +150,4 @@ class UserRolesSystemsLink {
 
   static const userRolesSystemsDisconnectRolesFromScreens =
       'user-roles-systems/disconnect-roles-from-screens';
-}
-
-class SystemLogLinks {
-  static const systemLog = 'system-logger';
-  static const systemLogUser = '$systemLog/user';
-  static const systemLogExportText = '$systemLog/export-text';
-  static const systemLogExportExcel = '$systemLog/export-excel';
-  static const systemLogResetAndExportToText =
-      '$systemLog/reset-and-export-text';
 }
