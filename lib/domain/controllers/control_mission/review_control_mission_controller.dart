@@ -757,10 +757,14 @@ class DetailsAndReviewMissionController extends GetxController {
         getData = false;
       },
       (r) {
-        studentsSeatNumbers = r.studentSeatNumbers!;
-        studentsSeatNumbersRows = r.studentSeatNumbers!.convertStudentsToRows();
-
-        getData = true;
+        workerManager.execute(
+          () {
+            studentsSeatNumbers = r.studentSeatNumbers!;
+            studentsSeatNumbersRows =
+                r.studentSeatNumbers!.convertStudentsToRows();
+            getData = true;
+          },
+        );
       },
     );
 
