@@ -53,64 +53,8 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                               scrollbarThicknessWhileDragging: 10,
                             ),
                           ),
-                          columns: [
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: 'Name',
-                              field: 'name_field',
-                              type: PlutoColumnType.text(),
-                            ),
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: 'Grade',
-                              field: 'grade_field',
-                              type: PlutoColumnType.text(),
-                            ),
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: 'Class',
-                              field: 'class_field',
-                              type: PlutoColumnType.text(),
-                            ),
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: 'Exam Room',
-                              field: 'exam_room_field',
-                              type: PlutoColumnType.text(),
-                            ),
-                            ...List.generate(
-                              controller.subjects.length,
-                              (index) {
-                                final ({String? name, int? id}) subject = (
-                                  name: controller.subjects[index].$1,
-                                  id: controller.subjects[index].$2
-                                );
-                                return PlutoColumn(
-                                  readOnly: true,
-                                  enableEditingMode: false,
-                                  title: subject.name ?? '',
-                                  field: "${subject.name}_${subject.id}",
-                                  type: PlutoColumnType.text(),
-                                  footerRenderer: index ==
-                                          controller.subjects.length - 1
-                                      ? (footerRenderer) {
-                                          return PlutoAggregateColumnFooter(
-                                            rendererContext: footerRenderer,
-                                            type:
-                                                PlutoAggregateColumnType.count,
-                                            format: 'count : #,###',
-                                            alignment: Alignment.center,
-                                          );
-                                        }
-                                      : null,
-                                );
-                              },
-                            ),
-                          ],
+                          columns:
+                              completeMissionsController.studentsGradesColumns,
                           rows: completeMissionsController.studentsGradesRows,
                           onChanged: (PlutoGridOnChangedEvent event) {
                             // completeMissionsController
