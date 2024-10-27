@@ -9,22 +9,28 @@ import '../../Data/Models/student_seat/student_seat_res_model.dart';
 import '../../Data/Models/system_logger/system_logger_res_model.dart';
 
 extension PlutoRowExtension on List<StudentResModel> {
-  /// This function takes a list of students and returns a PlutoRow list based on each student's properties.
+  /// Converts a list of [StudentResModel] to a map containing a list of [PlutoRow] and error information.
   ///
-  /// The function will try to find the corresponding cohort, grade and class room for each student.
-  /// If the student's properties are not found in the given lists, the function will return an error in the
-  /// PlutoRow's cells.
+  /// This function attempts to find the corresponding cohort, grade, and class room for each student
+  /// from the provided [cohorts], [grades], and [classesRooms] lists.
   ///
-  /// The function will also return a list of errors for each student that has an empty field.
+  /// Parameters:
+  /// - [students]: A list of student models to be converted.
+  /// - [cohorts]: A list of cohort models used to find the cohort for each student.
+  /// - [classesRooms]: A list of class room models used to find the class room for each student.
+  /// - [grades]: A list of grade models used to find the grade for each student.
   ///
-  /// The return value is a map containing the list of PlutoRow, the list of students, and the errors.
+  /// Returns a map containing:
+  /// - 'rows': A list of [PlutoRow] representing the students' data.
+  /// - 'students': The original list of [StudentResModel].
+  /// - 'errorcohort': A boolean indicating if any cohort errors occurred.
+  /// - 'errorgrade': A boolean indicating if any grade errors occurred.
+  /// - 'errorclass': A boolean indicating if any class room errors occurred.
+  /// - 'errors': A list of strings with error messages for students with empty fields.
   ///
-  /// The function will return the following errors:
-  ///
-  /// - errorcohort: true if the function could not find a cohort for a student.
-  /// - errorgrade: true if the function could not find a grade for a student.
-  /// - errorclass: true if the function could not find a class room for a student.
-  /// - errors: a list of strings containing the errors for each student.
+  /// If a student's properties are not found in the provided lists, an error message is included in
+  /// the 'errors' list. Each [PlutoRow] contains cells for the student's ID, names, cohort, grade,
+  /// class room, language, religion, and citizenship.
   Map<String, dynamic> convertFileStudentsToPluto({
     required List<StudentResModel>? students,
     required List<CohortResModel> cohorts,
@@ -144,22 +150,16 @@ extension PlutoRowExtension on List<StudentResModel> {
     };
   }
 
-  /// This function will convert the current list of [StudentPromoteFileResModel] to a list of [PlutoRow].
+  /// Converts the students to a Pluto Grid rows with the given cohorts, classes rooms, and grades.
   ///
-  /// The function will also return a map containing the list of PlutoRow, the list of students, and the errors.
+  /// The function will return a map with the following keys:
   ///
-  /// The return value is a map containing the list of PlutoRow, the list of students, and the errors.
-  ///
-  /// The function will return the following errors:
-  ///
-  /// - errorcohort: true if the function could not find a cohort for a student.
-  /// - errorgrade: true if the function could not find a grade for a student.
-  /// - errorclass: true if the function could not find a class room for a student.
-  /// - errorBlbID: true if the function could not find a student with the given BlbId.
-  ///
-  /// The function will also return a list of students.
-  ///
-  /// The function will return a list of errors.
+  /// - 'rows': A list of PlutoRow objects that represent the students in the grid.
+  /// - 'students': The list of StudentResModel objects that the function was called on.
+  /// - 'errorcohort': A boolean indicating if there were any errors when converting the cohort.
+  /// - 'errorgrade': A boolean indicating if there were any errors when converting the grade.
+  /// - 'errorclass': A boolean indicating if there were any errors when converting the class room.
+  /// - 'errorBlbID': A boolean indicating if there were any errors when converting the Blb ID.
   Map<String, dynamic> convertPromoteFileStudentsToPluto({
     required List<StudentResModel> students,
     required List<CohortResModel> cohorts,
@@ -260,17 +260,15 @@ extension PlutoRowExtension on List<StudentResModel> {
 
   /// This function will convert the current list of [StudentResModel] to a list of [PlutoRow].
   ///
-  /// The function will return a list of [PlutoRow] that can be used to display the data in a table.
+  /// The cells of the [PlutoRow] will contain the following values:
   ///
-  /// The function will return the following columns:
-  ///
-  /// - BlbIdField: the blbId of the student.
+  /// - BlbIdField: the blb id of the student.
   /// - FirstNameField: the first name of the student.
   /// - SecondNameField: the second name of the student.
   /// - ThirdNameField: the third name of the student.
-  /// - CohortField: the name of the cohort of the student.
-  /// - GradeField: the name of the grade of the student.
-  /// - ClassRoomField: the name of the class room of the student.
+  /// - CohortField: the cohort of the student.
+  /// - GradeField: the grade of the student.
+  /// - ClassRoomField: the class room of the student.
   /// - LanguageField: the language of the student.
   /// - ReligionField: the religion of the student.
   /// - CitizenshipField: the citizenship of the student.
