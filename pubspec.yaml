@@ -35,7 +35,6 @@ dependencies:
   url_launcher: ^6.3.0
   loading_indicator: ^3.1.1
   lottie: ^3.1.2
-  transformable_list_view: ^0.6.0
   custom_theme:
     git:
       url: https://github.com/Mahmoud-Saeed-Mahmoud/custom_theme.git
