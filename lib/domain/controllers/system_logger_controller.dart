@@ -11,6 +11,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:worker_manager/worker_manager.dart';
 
 import '../../Data/Models/system_logger/system_logger_res_model.dart';
 import '../../Data/Network/response_handler.dart';
@@ -127,8 +128,12 @@ class SystemLoggerController extends GetxController {
         ).showDialogue(Get.key.currentContext!);
       },
       (r) {
-        systemLogsList = r.data!;
-        systemLogsRows = r.data!.convertSystemLogsToRows();
+        workerManager.execute(
+          () {
+            systemLogsList = r.data!;
+            systemLogsRows = r.data!.convertSystemLogsToRows();
+          },
+        );
       },
     );
     isLoadingGetSystemLogs = false;
