@@ -100,15 +100,17 @@ class SystemLoggerController extends GetxController {
     }
   }
 
-  /// A function that gets the system logs from the server and returns a boolean indicating whether the request was successful.
+  /// Gets the system logs from the server and sets the [systemLogsList] and
+  /// [systemLogsRows] with the logs returned by the server.
   ///
-  /// The function will set [isLoadingGetSystemLogs] to true and then to false depending on the response of the server.
+  /// The function will return a boolean indicating whether the system logs were
+  /// retrieved successfully.
   ///
-  /// If the response is a failure, the function will show an error dialog with the failure message.
+  /// The function will also update the UI to show a loading indicator while the
+  /// request is being processed.
   ///
-  /// If the response is successful, the function will update [systemLogsList] and [systemLogsRows] with the system logs returned by the server.
-  ///
-  /// The function will then call [update] to update the UI.
+  /// If the response is a failure, the function will show an error dialog with
+  /// the failure message.
   Future<bool> getSystemLogs() async {
     isLoadingGetSystemLogs = true;
     update();
