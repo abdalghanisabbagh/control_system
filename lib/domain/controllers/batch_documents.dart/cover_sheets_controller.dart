@@ -614,9 +614,9 @@ class CoversSheetsController extends GetxController {
   void setSelectedItemGrade(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedItemGrade = items.first;
-      updateFilteredList(selectedItemGrade, null);
+      updateFilteredList(selectedItemGrade, selectedSubject);
     } else {
-      updateFilteredList(null, null);
+      updateFilteredList(null, selectedSubject);
       selectedItemGrade = null;
     }
     update();
@@ -630,9 +630,9 @@ class CoversSheetsController extends GetxController {
   void setSelectedItemSubject(List<ValueItem> items) {
     if (items.isNotEmpty) {
       selectedSubject = items.first;
-      updateFilteredList(null, selectedSubject);
+      updateFilteredList(selectedItemGrade, selectedSubject);
     } else {
-      updateFilteredList(null, null);
+      updateFilteredList(selectedItemGrade, null);
       selectedItemGrade = null;
     }
   }
