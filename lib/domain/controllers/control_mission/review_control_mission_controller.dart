@@ -42,13 +42,16 @@ class DetailsAndReviewMissionController extends GetxController {
     Tab(text: 'Review Students Grades'),
   ];
 
+  List<PlutoColumn> studentsGradesColumns = [];
+
   StudentGradesResModel? studentGradesResModel;
+
   PlutoGridStateManager? studentsGradesPlutoGridStateManager;
   List<PlutoRow> studentsGradesRows = <PlutoRow>[];
   List<StudentSeatNumberResModel> studentsSeatNumbers =
       <StudentSeatNumberResModel>[];
-
   List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
+
   TabController? tabController;
 
   /// Activates a student in a control mission by its ID seat number.
@@ -95,7 +98,7 @@ class DetailsAndReviewMissionController extends GetxController {
   Future<void> convertStudentsGradesToPlutoGridRows() async {
     studentsGradesRows.clear();
     if (studentGradesResModel != null) {
-      await workerManager.execute(
+      workerManager.execute(
         () {
           for (int i = 0; i < studentGradesResModel!.examRoom!.length; i++) {
             var examRoom = studentGradesResModel!.examRoom![i];
@@ -525,6 +528,68 @@ class DetailsAndReviewMissionController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  void generateStudentsGradesColumns() async {
+    await workerManager.execute(
+      () {
+        studentsGradesColumns = [
+          PlutoColumn(
+            readOnly: true,
+            enableEditingMode: false,
+            title: 'Name',
+            field: 'name_field',
+            type: PlutoColumnType.text(),
+          ),
+          PlutoColumn(
+            readOnly: true,
+            enableEditingMode: false,
+            title: 'Grade',
+            field: 'grade_field',
+            type: PlutoColumnType.text(),
+          ),
+          PlutoColumn(
+            readOnly: true,
+            enableEditingMode: false,
+            title: 'Class',
+            field: 'class_field',
+            type: PlutoColumnType.text(),
+          ),
+          PlutoColumn(
+            readOnly: true,
+            enableEditingMode: false,
+            title: 'Exam Room',
+            field: 'exam_room_field',
+            type: PlutoColumnType.text(),
+          ),
+          ...List.generate(
+            subjects.length,
+            (index) {
+              final ({String? name, int? id}) subject =
+                  (name: subjects[index].$1, id: subjects[index].$2);
+              return PlutoColumn(
+                readOnly: true,
+                enableEditingMode: false,
+                title: subject.name ?? '',
+                field: "${subject.name}_${subject.id}",
+                type: PlutoColumnType.text(),
+                footerRenderer: index == subjects.length - 1
+                    ? (footerRenderer) {
+                        return PlutoAggregateColumnFooter(
+                          rendererContext: footerRenderer,
+                          type: PlutoAggregateColumnType.count,
+                          format: 'count : #,###',
+                          alignment: Alignment.center,
+                        );
+                      }
+                    : null,
+              );
+            },
+          ),
+        ];
+      },
+    );
+    return;
+  }
+
   /// Gets the control mission ID from Hive and updates the UI.
   ///
   /// The function will get the control mission ID from Hive and store it in the
@@ -612,7 +677,7 @@ class DetailsAndReviewMissionController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    await response.fold(
+    response.fold(
       (l) {
         MyAwesomeDialogue(
           title: 'Error',
@@ -643,6 +708,7 @@ class DetailsAndReviewMissionController extends GetxController {
             convertStudentsGradesToPlutoGridRows();
           },
         );
+        generateStudentsGradesColumns();
       },
     );
 
