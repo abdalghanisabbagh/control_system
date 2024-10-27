@@ -384,28 +384,24 @@ extension PlutoRowSystemLogsExtansion on List<SystemLoggerResModel> {
   List<PlutoRow> convertSystemLogsToRows() {
     List<PlutoRow> rows = [];
 
-    workerManager.execute(
-      () {
-        for (var element in this) {
-          rows.add(
-            PlutoRow(
-              cells: {
-                'Ip Field': PlutoCell(value: element.ip),
-                'UserAgent Field': PlutoCell(value: element.userAgent),
-                'Body Field': PlutoCell(value: element.body),
-                'Platform Field': PlutoCell(value: element.platform),
-                'Url Field': PlutoCell(value: element.url),
-                'Method Field': PlutoCell(value: element.method),
-                'UserId Field': PlutoCell(value: element.userId),
-                'CreatedAt Field': PlutoCell(value: element.createdAt),
-                'Id Field': PlutoCell(value: element.id.toString()),
-                'ActionsField': PlutoCell(value: "Actions"),
-              },
-            ),
-          );
-        }
-      },
-    );
+    for (var element in this) {
+      rows.add(
+        PlutoRow(
+          cells: {
+            'Ip Field': PlutoCell(value: element.ip),
+            'UserAgent Field': PlutoCell(value: element.userAgent),
+            'Body Field': PlutoCell(value: element.body),
+            'Platform Field': PlutoCell(value: element.platform),
+            'Url Field': PlutoCell(value: element.url),
+            'Method Field': PlutoCell(value: element.method),
+            'UserId Field': PlutoCell(value: element.userId),
+            'CreatedAt Field': PlutoCell(value: element.createdAt),
+            'Id Field': PlutoCell(value: element.id.toString()),
+            'ActionsField': PlutoCell(value: "Actions"),
+          },
+        ),
+      );
+    }
     return rows;
   }
 }
