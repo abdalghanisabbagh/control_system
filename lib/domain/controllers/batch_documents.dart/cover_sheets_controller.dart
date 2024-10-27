@@ -637,15 +637,16 @@ class CoversSheetsController extends GetxController {
     }
   }
 
-  /// Updates the [filteredExamMissionsList] based on the selected grade and
-  /// subject.
+  /// Updates the [filteredExamMissionsList] based on the values of
+  /// [selectedItemGrade] and [selectedItemSubject].
   ///
-  /// If both [selectedItemGrade] and [selectedItemSubject] are null, it sets
-  /// [filteredExamMissionsList] to the full [examMissionsList].
+  /// If [selectedItemGrade] and [selectedItemSubject] are both null, it sets
+  /// [filteredExamMissionsList] to [examMissionsList].
   ///
-  /// Otherwise, it filters [examMissionsList] to only include exam missions
-  /// that match both the selected grade and subject and assigns the result to
-  /// [filteredExamMissionsList].
+  /// If either [selectedItemGrade] or [selectedItemSubject] is not null, it
+  /// filters [examMissionsList] and sets [filteredExamMissionsList] to the
+  /// filtered list. The filtered list contains only the exam missions that
+  /// match both the selected grade and the selected subject.
   ///
   /// Finally, it calls [update].
   Future<void> updateFilteredList(
