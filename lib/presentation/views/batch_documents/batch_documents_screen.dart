@@ -17,16 +17,18 @@ class BatchDocumentsScreen extends GetView<BatchDocumentsController> {
       key: key,
       body: Container(
         color: ColorManager.ligthBlue,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
         child: GetBuilder<BatchDocumentsController>(
           builder: (controller) => DefaultTabController(
             length: 3,
             child: Column(
               children: [
                 Container(
+                  clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: ColorManager.primary),
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorManager.primary,
+                  ),
                   child: TabBar(
                     overlayColor: WidgetStateProperty.all(ColorManager.primary),
                     labelStyle: nunitoSemiBoldStyle(),
