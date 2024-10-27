@@ -86,7 +86,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         widgetId: '3302',
                       ),
                       child: IconButton(
-                        tooltip: "Acadimc Dean Edit ",
+                        tooltip: "Academic Dean Edit ",
                         onPressed: () {
                           MyDialogs.showDialog(
                               context,
