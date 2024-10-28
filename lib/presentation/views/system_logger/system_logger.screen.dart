@@ -1,13 +1,13 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/views/system_logger/widget/user_info_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../domain/controllers/system_logger_controller.dart';
+import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../base_screen.dart';
+import 'widget/user_info_widget.dart';
 
 class SystemLoggerScreen extends GetView<SystemLoggerController> {
   const SystemLoggerScreen({super.key});
@@ -124,10 +124,10 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                     Expanded(
                       child: RepaintBoundary(
                         child: PlutoGrid(
-                          key: UniqueKey(),
+                          key: const ValueKey('systemLogsTable'),
                           onLoaded: (PlutoGridOnLoadedEvent event) {
                             controller.stateManager = event.stateManager
-                              ..setPageSize(100);
+                              ..setPageSize(30);
                           },
                           createFooter: (stateManager) {
                             return PlutoInfinityScrollRows(
@@ -139,8 +139,7 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                               fetchWithSorting: true,
                             );
                           },
-                          configuration: const PlutoGridConfiguration(
-                              /* 
+                          configuration: PlutoGridConfiguration(
                             style: PlutoGridStyleConfig(
                               enableGridBorderShadow: true,
                               iconColor: ColorManager.bgSideMenu,
@@ -154,15 +153,14 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                               autoSizeMode: PlutoAutoSizeMode.scale,
                             ),
                             columnFilter: const PlutoGridColumnFilterConfig(
-                              filters: FilterHelper.defaultFilters,
+                              filters: [],
                             ),
                             scrollbar: const PlutoGridScrollbarConfig(
                               isAlwaysShown: false,
                               scrollbarThickness: 8,
                               scrollbarThicknessWhileDragging: 10,
                             ),
-                           */
-                              ),
+                          ),
                           columns: [
                             PlutoColumn(
                               readOnly: true,
@@ -236,7 +234,9 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                                     ),
                                     onPressed: () {
                                       MyDialogs.showDialog(
-                                          context, const UserInfoWidget());
+                                        context,
+                                        const UserInfoWidget(),
+                                      );
                                       controller.getUserInfo(rendererContext
                                           .row.cells['UserId Field']?.value);
                                     },
