@@ -399,7 +399,7 @@ extension PlutoRowSystemLogsExtansion on List<SystemLoggerResModel> {
             'Id Field': PlutoCell(value: element.id.toString()),
             "FullName Field": PlutoCell(value: element.fullName),
             "User Type Field": PlutoCell(value: element.userType),
-            'ActionsField': PlutoCell(value: "Actions"),
+            // 'ActionsField': PlutoCell(value: "Actions"),
           },
         ),
       );

@@ -4,10 +4,8 @@ import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../../domain/controllers/system_logger_controller.dart';
-import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/ReusableWidget/loading_indicators.dart';
 import '../base_screen.dart';
-import 'widget/user_info_widget.dart';
 
 class SystemLoggerScreen extends GetView<SystemLoggerController> {
   const SystemLoggerScreen({super.key});
@@ -231,32 +229,32 @@ PlutoColumn(
                               field: "CreatedAt Field",
                               type: PlutoColumnType.text(),
                             ),
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: "Actions",
-                              field: "ActionsField",
-                              type: PlutoColumnType.text(),
-                              renderer: (rendererContext) {
-                                return Center(
-                                  child: IconButton(
-                                    tooltip: "User Info",
-                                    icon: const Icon(
-                                      Icons.person_search_rounded,
-                                      color: ColorManager.newStatus,
-                                    ),
-                                    onPressed: () {
-                                      MyDialogs.showDialog(
-                                        context,
-                                        const UserInfoWidget(),
-                                      );
-                                      controller.getUserInfo(rendererContext
-                                          .row.cells['UserId Field']?.value);
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
+                            // PlutoColumn(
+                            //   readOnly: true,
+                            //   enableEditingMode: false,
+                            //   title: "Actions",
+                            //   field: "ActionsField",
+                            //   type: PlutoColumnType.text(),
+                            //   renderer: (rendererContext) {
+                            //     return Center(
+                            //       child: IconButton(
+                            //         tooltip: "User Info",
+                            //         icon: const Icon(
+                            //           Icons.person_search_rounded,
+                            //           color: ColorManager.newStatus,
+                            //         ),
+                            //         onPressed: () {
+                            //           MyDialogs.showDialog(
+                            //             context,
+                            //             const UserInfoWidget(),
+                            //           );
+                            //           controller.getUserInfo(rendererContext
+                            //               .row.cells['UserId Field']?.value);
+                            //         },
+                            //       ),
+                            //     );
+                            //   },
+                            // ),
                           ],
                           rows: controller.systemLogsRows,
                         ),
