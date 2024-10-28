@@ -74,8 +74,10 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                       builder: (_) {
                                         if (controller.isLoadingGetExamRooms) {
                                           return Center(
-                                            child: LoadingIndicators
-                                                .getLoadingIndicator(),
+                                            child: RepaintBoundary(
+                                              child: LoadingIndicators
+                                                  .getLoadingIndicator(),
+                                            ),
                                           );
                                         } else if (controller
                                             .listExamRoom.isEmpty) {
@@ -164,8 +166,10 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                       builder: (_) => controller
                                               .isLoadingGetExamRooms
                                           ? Center(
-                                              child: LoadingIndicators
-                                                  .getLoadingIndicator(),
+                                              child: RepaintBoundary(
+                                                child: LoadingIndicators
+                                                    .getLoadingIndicator(),
+                                              ),
                                             )
                                           : controller.listExamRoom.isEmpty
                                               ? Center(
@@ -224,41 +228,44 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                       },
                     ),
                   ),
-                  GestureDetector(
-                    onVerticalDragUpdate: (DragUpdateDetails details) =>
-                        controller.onDragUpdate(details),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: ColorManager.grey,
-                            borderRadius: BorderRadius.circular(10),
+                  MouseRegion(
+                    cursor: SystemMouseCursors.resizeUpDown,
+                    child: GestureDetector(
+                      onVerticalDragUpdate: (DragUpdateDetails details) =>
+                          controller.onDragUpdate(details),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: ColorManager.grey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            height: 5,
+                            width: double.infinity,
+                            margin: const EdgeInsets.all(10),
                           ),
-                          height: 5,
-                          width: double.infinity,
-                          margin: const EdgeInsets.all(10),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          height: 10,
-                          width: 20,
-                          decoration: const BoxDecoration(
-                            color: ColorManager.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 10,
+                            width: 20,
+                            decoration: const BoxDecoration(
+                              color: ColorManager.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            child: const FittedBox(
+                              fit: BoxFit.fill,
+                              child: Text(
+                                ':::',
+                                style: TextStyle(color: Colors.black),
+                              ),
                             ),
                           ),
-                          child: const FittedBox(
-                            fit: BoxFit.fill,
-                            child: Text(
-                              ':::',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -352,8 +359,10 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                             builder: (_) => controller
                                     .isLoadingGetStudentsSeatNumbers
                                 ? Center(
-                                    child:
-                                        LoadingIndicators.getLoadingIndicator(),
+                                    child: RepaintBoundary(
+                                      child: LoadingIndicators
+                                          .getLoadingIndicator(),
+                                    ),
                                   )
                                 : controller.studentsSeatNumbers.isEmpty
                                     ? Center(
