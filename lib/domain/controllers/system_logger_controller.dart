@@ -161,7 +161,7 @@ class SystemLoggerController extends GetxController {
       type: ReqTypeEnum.GET,
       params: {
         'start': systemLogsList.length,
-        'limit': 100,
+        'limit': 30,
       },
     );
     await response.fold(
@@ -175,7 +175,7 @@ class SystemLoggerController extends GetxController {
       (r) async {
         await workerManager.execute(
           () {
-            if (r.data!.length < 100) {
+            if (r.data!.length < 30) {
               isLast = true;
             }
             systemLogsList.addAll(r.data!);
@@ -204,6 +204,8 @@ class SystemLoggerController extends GetxController {
   Future<void> getUserInfo(
     String userId,
   ) async {
+    userName = '';
+    fullName = '';
     isLoadingGetUserInfo = true;
     update();
     ResponseHandler<UserResModel> responseHandler = ResponseHandler();
