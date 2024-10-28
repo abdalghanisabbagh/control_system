@@ -28,6 +28,8 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class DetailsAndReviewMissionController extends GetxController {
+  double height = 0;
+
   final List<(String?, int?)> subjects = [];
   int controlMissionId = 0;
   String controlMissionName = '';
@@ -47,11 +49,11 @@ class DetailsAndReviewMissionController extends GetxController {
   StudentGradesResModel? studentGradesResModel;
 
   PlutoGridStateManager? studentsGradesPlutoGridStateManager;
+
   List<PlutoRow> studentsGradesRows = <PlutoRow>[];
   List<StudentSeatNumberResModel> studentsSeatNumbers =
       <StudentSeatNumberResModel>[];
   List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
-
   TabController? tabController;
 
   /// Activates a student in a control mission by its ID seat number.
@@ -837,6 +839,11 @@ class DetailsAndReviewMissionController extends GetxController {
       },
     );
     isLoadingGetSubjects = false;
+  }
+
+  void onDragUpdate(DragUpdateDetails details) {
+    height = details.globalPosition.dy;
+    update();
   }
 
   @override
