@@ -36,6 +36,7 @@ class ExamRoomsWidget extends GetView<ProctorController> {
               : RepaintBoundary(
                   child: GridView.builder(
                     shrinkWrap: true,
+                    padding: const EdgeInsets.only(right: 20),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 6,
