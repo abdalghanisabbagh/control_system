@@ -397,6 +397,8 @@ extension PlutoRowSystemLogsExtansion on List<SystemLoggerResModel> {
             'UserId Field': PlutoCell(value: element.userId),
             'CreatedAt Field': PlutoCell(value: element.createdAt),
             'Id Field': PlutoCell(value: element.id.toString()),
+            "FullName Field": PlutoCell(value: element.fullName),
+            "User Type Field": PlutoCell(value: element.userType),
             'ActionsField': PlutoCell(value: "Actions"),
           },
         ),
