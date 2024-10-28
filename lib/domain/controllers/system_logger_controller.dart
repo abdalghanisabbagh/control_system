@@ -164,7 +164,7 @@ class SystemLoggerController extends GetxController {
         'limit': 30,
       },
     );
-    await response.fold(
+    response.fold(
       (l) {
         MyAwesomeDialogue(
           title: 'Error',
@@ -172,8 +172,8 @@ class SystemLoggerController extends GetxController {
           dialogType: DialogType.error,
         ).showDialogue(Get.key.currentContext!);
       },
-      (r) async {
-        await workerManager.execute(
+      (r) {
+        workerManager.execute(
           () {
             if (r.data!.length < 30) {
               isLast = true;
