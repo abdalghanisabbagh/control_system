@@ -148,7 +148,7 @@ class DistributeStudents extends GetView<DistributeStudentsController> {
                                     ),
                                   ),
                                 ),
-                                const RenderStudentsInEaxmRoom()
+                                const RenderStudentsInExamRoom()
                                     .paddingOnly(top: 10),
                               ],
                             ),
