@@ -25,6 +25,8 @@ class SystemLoggerController extends GetxController {
   String? userName;
   String? fullName;
 
+  PlutoGridStateManager? stateManager;
+
   List<SystemLoggerResModel> systemLogsList = [];
   List<PlutoRow> systemLogsRows = <PlutoRow>[];
 
@@ -111,6 +113,7 @@ class SystemLoggerController extends GetxController {
   ///
   /// If the response is a failure, the function will show an error dialog with
   /// the failure message.
+  /* 
   Future<bool> getSystemLogs() async {
     isLoadingGetSystemLogs = true;
     update();
@@ -141,6 +144,50 @@ class SystemLoggerController extends GetxController {
     isLoadingGetSystemLogs = false;
     update();
     return true;
+  }
+   */
+
+  Future<PlutoInfinityScrollRowsResponse>
+      getSystemLogsRowsWithPaginationFromServer(
+    PlutoInfinityScrollRowsRequest request,
+  ) async {
+    final List<PlutoRow> rows = [];
+    bool isLast = false;
+    ResponseHandler<SystemLoggersResModel> responseHandler = ResponseHandler();
+    Either<Failure, SystemLoggersResModel> response =
+        await responseHandler.getResponse(
+      path: SystemLogLinks.systemLog,
+      converter: SystemLoggersResModel.fromJson,
+      type: ReqTypeEnum.GET,
+      params: {
+        'start': systemLogsList.length,
+        'limit': 100,
+      },
+    );
+    await response.fold(
+      (l) {
+        MyAwesomeDialogue(
+          title: 'Error',
+          desc: l.message,
+          dialogType: DialogType.error,
+        ).showDialogue(Get.key.currentContext!);
+      },
+      (r) async {
+        await workerManager.execute(
+          () {
+            if (r.data!.length < 100) {
+              isLast = true;
+            }
+            systemLogsList.addAll(r.data!);
+            rows.assignAll(r.data!.convertSystemLogsToRows());
+          },
+        );
+      },
+    );
+    return PlutoInfinityScrollRowsResponse(
+      isLast: isLast,
+      rows: rows.toList(),
+    );
   }
 
   /// A function that gets the user information from the server and updates the UI with the user's full name and user name.
@@ -187,7 +234,7 @@ class SystemLoggerController extends GetxController {
   /// Called when the widget is initialized. It calls [getSystemLogs] to get
   /// the system logs and then calls the parent's [onInit].
   void onInit() {
-    getSystemLogs();
+    // getSystemLogs();
     super.onInit();
   }
 
@@ -217,7 +264,7 @@ class SystemLoggerController extends GetxController {
 
         // Revoke the object URL after download
         html.Url.revokeObjectUrl(blobUrl);
-        getSystemLogs();
+        // getSystemLogs();
       } else {
         throw Exception('Failed to download file');
       }

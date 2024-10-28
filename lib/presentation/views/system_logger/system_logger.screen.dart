@@ -23,14 +23,6 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
               child: LoadingIndicators.getLoadingIndicator(),
             );
           }
-          if (controller.systemLogsRows.isEmpty) {
-            return Center(
-              child: Text(
-                "No Data Found",
-                style: nunitoBoldStyle(),
-              ),
-            );
-          }
           return Padding(
             padding: const EdgeInsets.all(15.0),
             child: LayoutBuilder(
@@ -133,14 +125,22 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                       child: RepaintBoundary(
                         child: PlutoGrid(
                           key: UniqueKey(),
+                          onLoaded: (PlutoGridOnLoadedEvent event) {
+                            controller.stateManager = event.stateManager
+                              ..setPageSize(100);
+                          },
                           createFooter: (stateManager) {
-                            stateManager.setPageSize(50, notify: false);
-                            return PlutoPagination(
-                              stateManager,
-                              pageSizeToMove: 1,
+                            return PlutoInfinityScrollRows(
+                              fetch: controller
+                                  .getSystemLogsRowsWithPaginationFromServer,
+                              initialFetch: true,
+                              stateManager: stateManager,
+                              fetchWithFiltering: true,
+                              fetchWithSorting: true,
                             );
                           },
-                          configuration: PlutoGridConfiguration(
+                          configuration: const PlutoGridConfiguration(
+                              /* 
                             style: PlutoGridStyleConfig(
                               enableGridBorderShadow: true,
                               iconColor: ColorManager.bgSideMenu,
@@ -161,7 +161,8 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                               scrollbarThickness: 8,
                               scrollbarThicknessWhileDragging: 10,
                             ),
-                          ),
+                           */
+                              ),
                           columns: [
                             PlutoColumn(
                               readOnly: true,
