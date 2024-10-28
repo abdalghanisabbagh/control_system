@@ -559,7 +559,7 @@ class DetailsAndReviewMissionController extends GetxController {
   /// [workerManager] to avoid blocking the UI thread. The function returns
   /// nothing.
   void generateStudentsGradesColumns() async {
-    await workerManager.execute(
+    workerManager.execute(
       () {
         studentsGradesColumns = [
           PlutoColumn(
