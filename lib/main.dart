@@ -20,10 +20,13 @@ Future<void> main() async {
 
   // workerManager.log = true;
 
-  final numberOfCores = window.navigator.hardwareConcurrency!;
+  final int numberOfCores = window.navigator.hardwareConcurrency!;
+
+  final int numberOfWorkers =
+      (numberOfCores / 5).round() > 2 ? (numberOfCores / 5).round() : 2;
 
   await workerManager.init(
-      isolatesCount: (numberOfCores / 5).round(), dynamicSpawning: true);
+      isolatesCount: numberOfWorkers, dynamicSpawning: true);
 
   await Hive.initFlutter();
   await Future.wait([
