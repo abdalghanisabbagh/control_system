@@ -1,4 +1,3 @@
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
 
 import 'package:flutter/material.dart';
@@ -18,8 +17,13 @@ import 'domain/bindings/bindings.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await checkForUpdates();
+
   // workerManager.log = true;
-  await workerManager.init();
+
+  final numberOfCores = window.navigator.hardwareConcurrency!;
+
+  await workerManager.init(
+      isolatesCount: (numberOfCores / 5).round(), dynamicSpawning: true);
 
   await Hive.initFlutter();
   await Future.wait([
