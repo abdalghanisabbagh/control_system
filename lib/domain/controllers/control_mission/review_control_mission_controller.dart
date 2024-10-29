@@ -717,7 +717,7 @@ class DetailsAndReviewMissionController extends GetxController {
         );
       },
       (r) async {
-        await workerManager.execute(
+        workerManager.execute(
           () {
             studentGradesResModel = r;
             subjects.assignAll(studentGradesResModel!.examRoom!
