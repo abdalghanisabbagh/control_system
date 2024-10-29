@@ -372,7 +372,9 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
                           width: 20,
                           style: BorderStyle.solid,
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
                       ),
                       suffixIcon: const Icon(
                         Icons.date_range_outlined,
@@ -404,32 +406,37 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Exams Versions :", style: nunitoRegularStyle()),
-              GetBuilder<CreateCoversSheetsController>(builder: (controller) {
-                return Row(
-                  children: [
-                    Text(
-                      '1 Version',
-                      style: TextStyle(
+              GetBuilder<CreateCoversSheetsController>(
+                builder: (controller) {
+                  return Row(
+                    children: [
+                      Text(
+                        '1 Version',
+                        style: TextStyle(
                           color: !controller.is2Version
                               ? Colors.black
-                              : Colors.grey),
-                    ),
-                    Switch.adaptive(
+                              : Colors.grey,
+                        ),
+                      ),
+                      Switch.adaptive(
                         value: controller.is2Version,
                         onChanged: (newValue) {
                           controller.is2Version = newValue;
                           controller.update();
-                        }),
-                    Text(
-                      '2 Versions',
-                      style: TextStyle(
+                        },
+                      ),
+                      Text(
+                        '2 Versions',
+                        style: TextStyle(
                           color: controller.is2Version
                               ? Colors.black
-                              : Colors.grey),
-                    ),
-                  ],
-                );
-              }),
+                              : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
           const SizedBox(
@@ -439,31 +446,34 @@ class AddNewCoverWidget extends GetView<CreateCoversSheetsController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Exams Period :", style: nunitoRegularStyle()),
-              GetBuilder<CreateCoversSheetsController>(builder: (controller) {
-                return Row(
-                  children: [
-                    Text(
-                      'Session One Exams',
-                      style: TextStyle(
-                          color: !controller.isPeriod
-                              ? Colors.black
-                              : Colors.grey),
-                    ),
-                    Switch.adaptive(
-                        value: controller.isPeriod,
-                        onChanged: (newValue) {
-                          controller.isPeriod = newValue;
-                          controller.update();
-                        }),
-                    Text(
-                      'Session Two Exams',
-                      style: TextStyle(
+              GetBuilder<CreateCoversSheetsController>(
+                builder: (controller) {
+                  return Row(
+                    children: [
+                      Text(
+                        'Session One Exams',
+                        style: TextStyle(
                           color:
-                              controller.isPeriod ? Colors.black : Colors.grey),
-                    ),
-                  ],
-                );
-              }),
+                              !controller.isPeriod ? Colors.black : Colors.grey,
+                        ),
+                      ),
+                      Switch.adaptive(
+                          value: controller.isPeriod,
+                          onChanged: (newValue) {
+                            controller.isPeriod = newValue;
+                            controller.update();
+                          }),
+                      Text(
+                        'Session Two Exams',
+                        style: TextStyle(
+                          color:
+                              controller.isPeriod ? Colors.black : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
           GetBuilder<CoversSheetsController>(builder: (controllerCovers) {

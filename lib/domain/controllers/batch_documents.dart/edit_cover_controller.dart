@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 import '../../../Data/Models/exam_mission/exam_mission_res_model.dart';
@@ -103,6 +104,8 @@ class EditCoverSheetController extends GetxController {
     isLoadingUpdateExamMission = true;
 
     update();
+
+    final DateTime start = DateTime.parse(startTime!);
     bool updateExamMission = false;
     ResponseHandler<ExamMissionResModel> responseHandler = ResponseHandler();
 
@@ -112,6 +115,8 @@ class EditCoverSheetController extends GetxController {
       pdf: pdfUrl,
       period: period,
       endTime: endTime,
+      month: '${start.day} ${DateFormat.MMMM().format(start).toString()}',
+      year: start.year.toString(),
     );
 
     var response = await responseHandler.getResponse(
