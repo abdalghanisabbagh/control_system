@@ -1,11 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:control_system/Data/Models/system_logger/system_loggers_res_model.dart';
-import 'package:control_system/Data/Models/user/users_res/user_res_model.dart';
-import 'package:control_system/Data/Network/tools/dio_factory.dart';
-import 'package:control_system/Data/Network/tools/failure_model.dart';
-import 'package:control_system/app/extensions/pluto_row_extension.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -14,9 +9,14 @@ import 'package:universal_html/html.dart' as html;
 import 'package:worker_manager/worker_manager.dart';
 
 import '../../Data/Models/system_logger/system_logger_res_model.dart';
+import '../../Data/Models/system_logger/system_loggers_res_model.dart';
+import '../../Data/Models/user/users_res/user_res_model.dart';
 import '../../Data/Network/response_handler.dart';
+import '../../Data/Network/tools/dio_factory.dart';
+import '../../Data/Network/tools/failure_model.dart';
 import '../../Data/enums/req_type_enum.dart';
 import '../../app/configurations/app_links.dart';
+import '../../app/extensions/pluto_row_extension.dart';
 import '../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class SystemLoggerController extends GetxController {

@@ -1,4 +1,3 @@
-import 'package:control_system/presentation/views/admin_screen/widgets/add_reader_user_widget%20.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +9,7 @@ import '../../resource_manager/ReusableWidget/app_dialogs.dart';
 import '../../resource_manager/routes/app_routes_names_and_paths.dart';
 import '../base_screen.dart';
 import 'widgets/add_new_user_widget.dart';
+import 'widgets/add_reader_user_widget%20.dart';
 import 'widgets/admin_widget.dart';
 
 class AdminScreen extends GetView<AdminController> {
