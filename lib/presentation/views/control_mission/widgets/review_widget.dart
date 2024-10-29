@@ -35,6 +35,12 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                         )
                       : PlutoGrid(
                           key: const ValueKey('review_widget'),
+                          noRowsWidget: Center(
+                            child: Text(
+                              "No data found",
+                              style: nunitoBold,
+                            ),
+                          ),
                           configuration: PlutoGridConfiguration(
                             enterKeyAction:
                                 PlutoGridEnterKeyAction.toggleEditing,

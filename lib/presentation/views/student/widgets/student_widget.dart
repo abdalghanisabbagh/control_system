@@ -34,6 +34,12 @@ class StudentWidget extends GetView<StudentController> {
               : RepaintBoundary(
                   child: PlutoGrid(
                     key: UniqueKey(),
+                    noRowsWidget: Center(
+                      child: Text(
+                        "No data found",
+                        style: nunitoBold,
+                      ),
+                    ),
                     createFooter: (stateManager) {
                       stateManager
                         ..setPageSize(50, notify: false)

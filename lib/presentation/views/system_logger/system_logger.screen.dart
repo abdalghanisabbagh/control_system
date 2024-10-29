@@ -123,6 +123,12 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                       child: RepaintBoundary(
                         child: PlutoGrid(
                           key: const ValueKey('systemLogsTable'),
+                          noRowsWidget: Center(
+                            child: Text(
+                              "No data found",
+                              style: nunitoBold,
+                            ),
+                          ),
                           onLoaded: (PlutoGridOnLoadedEvent event) {
                             controller.stateManager = event.stateManager
                               ..setPageSize(30)
