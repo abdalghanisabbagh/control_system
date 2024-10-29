@@ -72,12 +72,8 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                               _Header(stateManager: stateManager),
                           onLoaded: (PlutoGridOnLoadedEvent event) {
                             event.stateManager
-                                .setSelectingMode(PlutoGridSelectingMode.cell);
-                            completeMissionsController
-                                    .studentsGradesPlutoGridStateManager =
-                                event.stateManager;
-                            event.stateManager
-                                .setSelectingMode(PlutoGridSelectingMode.cell);
+                              ..setSelectingMode(PlutoGridSelectingMode.cell)
+                              ..setShowColumnFilter(true);
                             completeMissionsController
                                     .studentsGradesPlutoGridStateManager =
                                 event.stateManager;

@@ -67,7 +67,9 @@ class AddStudentsToControlMissionScreen
                           height: 400,
                           child: PlutoGrid(
                             createFooter: (stateManager) {
-                              stateManager.setPageSize(50, notify: false);
+                              stateManager
+                                ..setPageSize(50, notify: false)
+                                ..setShowColumnFilter(true);
                               return PlutoPagination(
                                 stateManager,
                                 pageSizeToMove: 1,
@@ -214,7 +216,9 @@ class AddStudentsToControlMissionScreen
                           height: 400,
                           child: PlutoGrid(
                             createFooter: (stateManager) {
-                              stateManager.setPageSize(50, notify: false);
+                              stateManager
+                                ..setPageSize(50, notify: false)
+                                ..setShowColumnFilter(true);
                               return PlutoPagination(
                                 stateManager,
                                 pageSizeToMove: 1,
