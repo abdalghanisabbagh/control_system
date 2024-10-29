@@ -28,10 +28,12 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
   ExamMissionResModel examMissionObject;
 
   late TextEditingController startTimeController = TextEditingController(
-      text: examMissionObject.startTime == null
-          ? "${examMissionObject.month} ${examMissionObject.year}"
-          : DateFormat('yyyy-MM-dd HH:mm')
-              .format(DateTime.parse(examMissionObject.startTime!)));
+    text: examMissionObject.startTime == null
+        ? "${examMissionObject.month} ${examMissionObject.year}"
+        : DateFormat('yyyy-MM-dd HH:mm').format(
+            DateTime.parse(examMissionObject.startTime!),
+          ),
+  );
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   EditCoverAdWidget(
@@ -74,68 +76,73 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
             height: 20,
           ),
           GetBuilder<EditCoverSheetController>(
-              init: EditCoverSheetController(),
-              dispose: (_) {
-                Get.delete<EditCoverSheetController>();
-              },
-              builder: (_) {
-                if (controller.isLoadingUploadPdf == true) {
-                  return SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: FittedBox(
-                      child: LoadingIndicators.getLoadingIndicator(),
-                    ),
-                  );
-                }
-                return InkWell(
-                  onTap: () {
-                    controller.uploadPdfInExamMission().then((value) {
+            init: EditCoverSheetController(),
+            dispose: (_) {
+              Get.delete<EditCoverSheetController>();
+            },
+            builder: (_) {
+              if (controller.isLoadingUploadPdf == true) {
+                return SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                );
+              }
+              return InkWell(
+                onTap: () {
+                  controller.uploadPdfInExamMission().then(
+                    (value) {
                       if (value == true) {
                         MyFlashBar.showSuccess(
                           "Uploaded Successfully",
                           "Success",
                         ).show(Get.key.currentContext!);
                       }
-                    });
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(11),
-                          ),
-                          color: ColorManager.glodenColor,
+                    },
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 50,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(11),
                         ),
-                        child: Center(
-                          child: Text(
-                            "Upload Exam Version A",
-                            style: nunitoRegular.copyWith(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
+                        color: ColorManager.glodenColor,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Upload Exam Version A",
+                          style: nunitoRegular.copyWith(
+                            color: Colors.white,
+                            fontSize: 18,
                           ),
                         ),
                       ),
-                      if (examMissionObject.pdf != null)
-                        SizedBox(
-                          width: Get.width * 0.3,
-                          child: Text("Old Exam :'${examMissionObject.pdf}' ",
-                              style: nunitoRegularStyle()),
+                    ),
+                    if (examMissionObject.pdf != null)
+                      SizedBox(
+                        width: Get.width * 0.3,
+                        child: Text("Old Exam :'${examMissionObject.pdf}' ",
+                            style: nunitoRegularStyle()),
+                      ),
+                    if (controller.isImportedFile == true)
+                      SizedBox(
+                        width: Get.width * 0.3,
+                        child: Text(
+                          "New Exam :'${controller.pdfName}' ",
+                          style: nunitoRegularStyle(),
                         ),
-                      if (controller.isImportedFile == true)
-                        SizedBox(
-                          width: Get.width * 0.3,
-                          child: Text("New Exam :'${controller.pdfName}' ",
-                              style: nunitoRegularStyle()),
-                        )
-                    ],
-                  ),
-                );
-              }),
+                      )
+                  ],
+                ),
+              );
+            },
+          ),
           Form(
             key: _formKey,
             child: Column(
@@ -204,51 +211,53 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
                 const SizedBox(
                   height: 10,
                 ),
-                GetBuilder<EditCoverSheetController>(builder: (_) {
-                  if (controller.selectedStartTime == null) {
-                    return const SizedBox.shrink();
-                  }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("End Time:", style: nunitoRegularStyle()),
-                      InkWell(
-                        onTap: () async {
-                          await selectDate(context, isStart: false);
-                          if (controller.selectedEndTime != null) {
-                            endTimeController.text =
-                                DateFormat('yyyy-MM-dd HH:mm')
-                                    .format(controller.selectedEndTime!);
-                            controller.update();
-                          }
-                        },
-                        child: TextFormField(
-                          validator: Validations.requiredValidator,
-                          cursorColor: ColorManager.bgSideMenu,
-                          enabled: false,
-                          style: nunitoRegularStyle(),
-                          controller: endTimeController,
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ColorManager.bgSideMenu,
-                                width: 20,
-                                style: BorderStyle.solid,
+                GetBuilder<EditCoverSheetController>(
+                  builder: (_) {
+                    if (controller.selectedStartTime == null) {
+                      return const SizedBox.shrink();
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("End Time:", style: nunitoRegularStyle()),
+                        InkWell(
+                          onTap: () async {
+                            await selectDate(context, isStart: false);
+                            if (controller.selectedEndTime != null) {
+                              endTimeController.text =
+                                  DateFormat('yyyy-MM-dd HH:mm')
+                                      .format(controller.selectedEndTime!);
+                              controller.update();
+                            }
+                          },
+                          child: TextFormField(
+                            validator: Validations.requiredValidator,
+                            cursorColor: ColorManager.bgSideMenu,
+                            enabled: false,
+                            style: nunitoRegularStyle(),
+                            controller: endTimeController,
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ColorManager.bgSideMenu,
+                                  width: 20,
+                                  style: BorderStyle.solid,
+                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
                               ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                              suffixIcon: const Icon(
+                                Icons.date_range_outlined,
+                                color: Colors.black,
+                              ),
+                              hintStyle: nunitoRegularStyle(),
                             ),
-                            suffixIcon: const Icon(
-                              Icons.date_range_outlined,
-                              color: Colors.black,
-                            ),
-                            hintStyle: nunitoRegularStyle(),
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                }),
+                      ],
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -259,99 +268,108 @@ class EditCoverAdWidget extends GetView<EditCoverSheetController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Exams Period :", style: nunitoRegularStyle()),
-              GetBuilder<EditCoverSheetController>(builder: (controller) {
-                return Row(
-                  children: [
-                    Text(
-                      'Session One Exams',
-                      style: TextStyle(
+              GetBuilder<EditCoverSheetController>(
+                builder: (controller) {
+                  return Row(
+                    children: [
+                      Text(
+                        'Session One Exams',
+                        style: TextStyle(
                           color: examMissionObject.period!
                               ? Colors.black
-                              : Colors.grey),
-                    ),
-                    Switch.adaptive(
+                              : Colors.grey,
+                        ),
+                      ),
+                      Switch.adaptive(
                         value: examMissionObject.period!,
                         onChanged: (newValue) {
                           examMissionObject.period = newValue;
                           controller.update();
-                        }),
-                    Text(
-                      'Session Two Exams',
-                      style: TextStyle(
+                        },
+                      ),
+                      Text(
+                        'Session Two Exams',
+                        style: TextStyle(
                           color: examMissionObject.period!
                               ? Colors.black
-                              : Colors.grey),
-                    ),
-                  ],
-                );
-              }),
+                              : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ],
           ),
-          GetBuilder<EditCoverSheetController>(builder: (_) {
-            if (controller.isLoadingUpdateExamMission ||
-                controller.isLoadingUploadPdf) {
-              return SizedBox(
-                width: 50,
-                height: 50,
-                child: FittedBox(
-                  child: LoadingIndicators.getLoadingIndicator(),
+          GetBuilder<EditCoverSheetController>(
+            builder: (_) {
+              if (controller.isLoadingUpdateExamMission ||
+                  controller.isLoadingUploadPdf) {
+                return SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                );
+              }
+              return InkWell(
+                onTap: () {
+                  if (controller.selectedEndTime != null &&
+                      controller.selectedStartTime != null) {
+                    if (controller.selectedEndTime!
+                        .isBefore(controller.selectedStartTime!)) {
+                      MyFlashBar.showError(
+                        "End Time cannot be before Start Time",
+                        "Error",
+                      ).show(Get.key.currentContext!);
+                      return;
+                    }
+                  }
+
+                  if (_formKey.currentState!.validate()) {
+                    controller
+                        .updateExamMission(
+                      endTime: controller.selectedEndTime == null
+                          ? null
+                          : endTimeController.text
+                              .convertDateStringToIso8601String(),
+                      period: examMissionObject.period,
+                      id: examMissionObject.iD!,
+                      startTime: controller.selectedStartTime == null
+                          ? null
+                          : startTimeController.text
+                              .convertDateStringToIso8601String(),
+                      duration: controller.selectedIExamDuration?.value,
+                      pdfUrl: controller.pdfUrl,
+                    )
+                        .then(
+                      (value) {
+                        if (value) {
+                          Get.back();
+                          controller.onClose();
+                          MyFlashBar.showSuccess(
+                            "Exam Cover Sheet Updated Successfully",
+                            "Success",
+                          ).show(Get.key.currentContext!);
+                        }
+                      },
+                    );
+                  }
+                },
+                child: Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: ColorManager.bgSideMenu,
+                      borderRadius: BorderRadius.circular(11)),
+                  child: Center(
+                    child: Text("Update", style: nunitoSemiBoldStyle()),
+                  ),
                 ),
               );
-            }
-            return InkWell(
-              onTap: () {
-                if (controller.selectedEndTime != null &&
-                    controller.selectedStartTime != null) {
-                  if (controller.selectedEndTime!
-                      .isBefore(controller.selectedStartTime!)) {
-                    MyFlashBar.showError(
-                      "End Time cannot be before Start Time",
-                      "Error",
-                    ).show(Get.key.currentContext!);
-                    return;
-                  }
-                }
-
-                if (_formKey.currentState!.validate()) {
-                  controller
-                      .updateExamMission(
-                    endTime: controller.selectedEndTime == null
-                        ? null
-                        : endTimeController.text
-                            .convertDateStringToIso8601String(),
-                    period: examMissionObject.period,
-                    id: examMissionObject.iD!,
-                    startTime: controller.selectedStartTime == null
-                        ? null
-                        : startTimeController.text
-                            .convertDateStringToIso8601String(),
-                    duration: controller.selectedIExamDuration?.value,
-                    pdfUrl: controller.pdfUrl,
-                  )
-                      .then((value) {
-                    if (value) {
-                      Get.back();
-                      controller.onClose();
-                      MyFlashBar.showSuccess(
-                        "Exam Cover Sheet Updated Successfully",
-                        "Success",
-                      ).show(Get.key.currentContext!);
-                    }
-                  });
-                }
-              },
-              child: Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: ColorManager.bgSideMenu,
-                    borderRadius: BorderRadius.circular(11)),
-                child: Center(
-                  child: Text("Update", style: nunitoSemiBoldStyle()),
-                ),
-              ),
-            );
-          })
+            },
+          )
         ],
       ),
     );

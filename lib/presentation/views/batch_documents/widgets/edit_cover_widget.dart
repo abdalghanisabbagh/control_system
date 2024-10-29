@@ -178,53 +178,59 @@ class EditCoverWidget extends GetView<EditCoverSheetController> {
               }),
             ],
           ),
-          GetBuilder<EditCoverSheetController>(builder: (_) {
-            if (controller.isLoadingUpdateExamMission ||
-                controller.isLoadingUploadPdf) {
-              return SizedBox(
-                width: 50,
-                height: 50,
-                child: FittedBox(
-                  child: LoadingIndicators.getLoadingIndicator(),
+          GetBuilder<EditCoverSheetController>(
+            builder: (_) {
+              if (controller.isLoadingUpdateExamMission ||
+                  controller.isLoadingUploadPdf) {
+                return SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: FittedBox(
+                    child: LoadingIndicators.getLoadingIndicator(),
+                  ),
+                );
+              }
+              return InkWell(
+                onTap: () {
+                  controller
+                      .updateExamMissionByOffice(
+                    year: selectedYear == null
+                        ? examMissionObject.year!
+                        : selectedYear!,
+                    month: selectedMonth == null
+                        ? examMissionObject.month!
+                        : '${selectedDay!} ${selectedMonth!}',
+                    period: examMissionObject.period,
+                    id: examMissionObject.iD!,
+                    duration: controller.selectedIExamDuration?.value,
+                  )
+                      .then((value) {
+                    if (value) {
+                      Get.back();
+                      MyFlashBar.showSuccess(
+                        "Exam Cover Sheet Updated Successfully",
+                        "Success",
+                      ).show(Get.key.currentContext!);
+                    }
+                  });
+                },
+                child: Container(
+                  height: 50,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: ColorManager.bgSideMenu,
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Update",
+                      style: nunitoSemiBoldStyle(),
+                    ),
+                  ),
                 ),
               );
-            }
-            return InkWell(
-              onTap: () {
-                controller
-                    .updateExamMissionByOffice(
-                  year: selectedYear == null
-                      ? examMissionObject.year!
-                      : selectedYear!,
-                  month: selectedMonth == null
-                      ? examMissionObject.month!
-                      : '${selectedDay!} ${selectedMonth!}',
-                  period: examMissionObject.period,
-                  id: examMissionObject.iD!,
-                  duration: controller.selectedIExamDuration?.value,
-                )
-                    .then((value) {
-                  if (value) {
-                    Get.back();
-                    MyFlashBar.showSuccess(
-                      "Exam Cover Sheet Updated Successfully",
-                      "Success",
-                    ).show(Get.key.currentContext!);
-                  }
-                });
-              },
-              child: Container(
-                height: 50,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: ColorManager.bgSideMenu,
-                    borderRadius: BorderRadius.circular(11)),
-                child: Center(
-                  child: Text("Update", style: nunitoSemiBoldStyle()),
-                ),
-              ),
-            );
-          })
+            },
+          )
         ],
       ),
     );
