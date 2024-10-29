@@ -44,8 +44,6 @@ class CoverSheetsScreen extends GetView<CoversSheetsController> {
                 label: const Text("Add New Cover"),
                 icon: const Icon(Icons.add),
               ),
-
-            
             ),
           ],
         ),

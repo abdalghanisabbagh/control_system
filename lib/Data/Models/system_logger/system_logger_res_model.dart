@@ -1,18 +1,19 @@
 import 'package:intl/intl.dart';
 
 class SystemLoggerResModel {
+  String? body;
+
+  String? createdAt;
+
+  String? fullName;
   int? id;
   String? ip;
   String? method;
-  String? url;
   String? platform;
+  String? url;
   String? userAgent;
-  String? body;
   String? userId;
-  String? createdAt;
-  String? fullName;
   String? userType;
-
   SystemLoggerResModel({
     this.id,
     this.userAgent,

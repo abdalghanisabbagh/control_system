@@ -15,9 +15,9 @@ import '../../class_room_seats/widgets/render_seat_widget.dart';
 final _formKey = GlobalKey<FormState>();
 
 class EditClassRoomWidget extends StatelessWidget {
-  final TextEditingController classNumberController = TextEditingController();
-
   final TextEditingController classNameController = TextEditingController();
+
+  final TextEditingController classNumberController = TextEditingController();
   final ClassRoomResModel classRoom;
   final TextEditingController columnNumber = TextEditingController();
   final TextEditingController floorNameController = TextEditingController();

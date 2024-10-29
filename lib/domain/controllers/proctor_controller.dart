@@ -53,8 +53,8 @@ class ProctorController extends GetxController {
   int? selectedEducationYearId;
   ExamRoomResModel? selectedExamRoom;
   ProctorResModel? selectedProctor;
-  bool showPassword = true;
   bool showConfirmPassword = true;
+  bool showPassword = true;
   final TextEditingController usernameController = TextEditingController();
 
   /// Assign a proctor to an exam room.

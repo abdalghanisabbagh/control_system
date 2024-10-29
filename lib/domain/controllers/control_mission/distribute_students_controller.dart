@@ -30,7 +30,6 @@ import '../../../presentation/resource_manager/ReusableWidget/my_snack_bar.dart'
 import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class DistributeStudentsController extends GetxController {
-  Map<String, int> numberOfStudentsInClasses = {};
   List<StudentSeatNumberResModel> availableStudents = [];
   int availableStudentsCount = 0;
   List<int> blockedClassDesks = [];
@@ -43,12 +42,13 @@ class DistributeStudentsController extends GetxController {
   bool isLoadingStudents = false;
   int numberOfRows = 0;
   TextEditingController numberOfStudentsController = TextEditingController();
-  List<ValueItem> optionsGrades = [];
+  Map<String, int> numberOfStudentsInClasses = {};
   List<ValueItem> optionsClasses = [];
+  List<ValueItem> optionsGrades = [];
   List<ValueItem> optionsGradesInExamRoom = [];
   List<StudentSeatNumberResModel> removedStudentsFromExamRoom = [];
-  int selectedItemGradeId = -1;
   int selectedItemClassId = -1;
+  int selectedItemGradeId = -1;
   List<StudentSeatNumberResModel> studentsSeatNumbers = [];
   List<StudentSeatNumberResModel> studentsSettingNextToEachOther = [];
 
@@ -83,7 +83,6 @@ class DistributeStudentsController extends GetxController {
     );
   }
 
-// Backtracking function
   /// A function that assigns students to seats in the exam room with the given parameters and returns a boolean indicating whether the assignment was successful.
   //
   /// The function takes the following parameters:
@@ -149,6 +148,7 @@ class DistributeStudentsController extends GetxController {
     return !checkStudentsSettingNextToEachOther(checkVertical: true);
   }
 
+// Backtracking function
   /// This function is used to automatically distribute the students to class desks.
   /// The auto distribution is done in the following order:
   /// 1. If there are only two grades, distribute the students in a row-column order.
