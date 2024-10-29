@@ -377,7 +377,7 @@ class DistributionController extends GetxController {
   /// the failure message.
   Future<void> saveControlMissionId(int id) async {
     controlMissionId = id;
-    Hive.box('ControlMission').put('Id', id);
+    await Hive.box('ControlMission').put('Id', id);
     getExamRoomByControlMissionId();
   }
 
@@ -395,7 +395,7 @@ class DistributionController extends GetxController {
   /// the failure message.
   Future<void> saveControlMissionName(String name) async {
     controlMissionName = name;
-    Hive.box('ControlMission').put('Name', name);
+    await Hive.box('ControlMission').put('Name', name);
   }
 
   /// Sets the selected item for the class room dropdown to the first item of
