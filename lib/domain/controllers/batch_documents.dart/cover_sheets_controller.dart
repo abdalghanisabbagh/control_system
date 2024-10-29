@@ -616,8 +616,8 @@ class CoversSheetsController extends GetxController {
       selectedItemGrade = items.first;
       updateFilteredList(selectedItemGrade, selectedSubject);
     } else {
-      updateFilteredList(null, selectedSubject);
       selectedItemGrade = null;
+      updateFilteredList(null, selectedSubject);
     }
     update();
   }
@@ -632,8 +632,8 @@ class CoversSheetsController extends GetxController {
       selectedSubject = items.first;
       updateFilteredList(selectedItemGrade, selectedSubject);
     } else {
+      selectedSubject = null;
       updateFilteredList(selectedItemGrade, null);
-      selectedItemGrade = null;
     }
   }
 
