@@ -10,6 +10,7 @@ class MultiSelectDropDownView extends StatelessWidget {
   final List<ValueItem<dynamic>> options;
   final bool searchEnabled;
   final bool showChipSelect;
+  final double dropdownHeight;
   const MultiSelectDropDownView({
     super.key,
     this.onOptionSelected,
@@ -19,6 +20,7 @@ class MultiSelectDropDownView extends StatelessWidget {
     this.showChipSelect = false,
     this.hintText = "Search",
     this.optionSelected = const [],
+    this.dropdownHeight = 200,
   });
 
   @override
@@ -39,6 +41,7 @@ class MultiSelectDropDownView extends StatelessWidget {
         wrapType: WrapType.scroll,
         autoScroll: true,
       ),
+      dropdownHeight: dropdownHeight,
       optionTextStyle: const TextStyle(fontSize: 16),
       selectedOptionIcon: const Icon(Icons.check_circle),
       searchEnabled: searchEnabled,
