@@ -225,6 +225,16 @@ class DetailsAndReviewMissionController extends GetxController {
     return deactivateStudents;
   }
 
+  /// Exports the students' degrees to an Excel (CSV) file and downloads it.
+  ///
+  /// The function generates a CSV file containing students' information such as
+  /// name, grade, class, exam room, and subjects. The subjects' headers are dynamically
+  /// generated based on the subjects associated with the students. The CSV file is
+  /// saved with the name 'students_degrees.csv' in the user's downloads folder.
+  ///
+  /// A success dialog is displayed upon successful export.
+  ///
+  /// [context] is the build context used to show dialogs.
   void exportStudentDegreesToExcel(BuildContext context) {
     List<List<dynamic>> csvData = [];
 
