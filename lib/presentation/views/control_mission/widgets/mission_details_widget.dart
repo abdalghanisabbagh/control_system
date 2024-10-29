@@ -377,8 +377,9 @@ class MissionDetailsWidget extends GetView<DetailsAndReviewMissionController> {
                                     : PlutoGrid(
                                         key: UniqueKey(),
                                         createFooter: (stateManager) {
-                                          stateManager.setPageSize(50,
-                                              notify: false);
+                                          stateManager
+                                            ..setPageSize(50, notify: false)
+                                            ..setShowColumnFilter(true);
                                           return PlutoPagination(
                                             stateManager,
                                             pageSizeToMove: 1,
