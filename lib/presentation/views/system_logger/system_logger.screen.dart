@@ -125,7 +125,8 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                           key: const ValueKey('systemLogsTable'),
                           onLoaded: (PlutoGridOnLoadedEvent event) {
                             controller.stateManager = event.stateManager
-                              ..setPageSize(30);
+                              ..setPageSize(30)
+                              ..setShowColumnFilter(true);
                           },
                           createFooter: (stateManager) {
                             return PlutoInfinityScrollRows(
@@ -133,8 +134,8 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                                   .getSystemLogsRowsWithPaginationFromServer,
                               initialFetch: true,
                               stateManager: stateManager,
-                              fetchWithFiltering: true,
-                              fetchWithSorting: true,
+                              fetchWithFiltering: false,
+                              fetchWithSorting: false,
                             );
                           },
                           configuration: PlutoGridConfiguration(
