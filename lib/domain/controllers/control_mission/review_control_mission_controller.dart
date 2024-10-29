@@ -28,11 +28,10 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class DetailsAndReviewMissionController extends GetxController {
-  double height = 0;
-
   final List<(String?, int?)> subjects = [];
   int controlMissionId = 0;
   String controlMissionName = '';
+  double height = 0;
   bool isLoadingGetExamRooms = false;
   bool isLoadingGetStudentsGrades = false;
   bool isLoadingGetStudentsSeatNumbers = false;
@@ -44,15 +43,13 @@ class DetailsAndReviewMissionController extends GetxController {
     Tab(text: 'Review Students Grades'),
   ];
 
-  List<PlutoColumn> studentsGradesColumns = [];
-
   StudentGradesResModel? studentGradesResModel;
-
+  List<PlutoColumn> studentsGradesColumns = [];
   PlutoGridStateManager? studentsGradesPlutoGridStateManager;
-
   List<PlutoRow> studentsGradesRows = <PlutoRow>[];
   List<StudentSeatNumberResModel> studentsSeatNumbers =
       <StudentSeatNumberResModel>[];
+
   List<PlutoRow> studentsSeatNumbersRows = <PlutoRow>[];
   TabController? tabController;
 

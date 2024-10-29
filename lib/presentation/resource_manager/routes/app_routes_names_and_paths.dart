@@ -71,10 +71,8 @@ class AppRoutesNamesAndPaths {
 
   static const String operationCohortScreenName = 'Cohort Operations';
   static const String operationCohortScreenPath = 'cohort-operations';
-
-   static const String operationControlScreenName = 'Control Operations';
+  static const String operationControlScreenName = 'Control Operations';
   static const String operationControlScreenPath = 'Control-operations';
-
   static const String oprerationsScreenName = 'Operations';
   // oprerationsScreen
   static const String oprerationsScreenPath = 'operations';

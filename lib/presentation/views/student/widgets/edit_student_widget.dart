@@ -28,10 +28,10 @@ class EditStudentWidgetState extends State<EditStudentWidget> {
   late TextEditingController blbIdController;
   late TextEditingController citizenshipController;
   late TextEditingController firstNameController;
-  late TextEditingController thirdNameController;
-  late TextEditingController secondNameController;
   late TextEditingController religionController;
   late TextEditingController sLangController;
+  late TextEditingController secondNameController;
+  late TextEditingController thirdNameController;
 
   @override
   Widget build(BuildContext context) {

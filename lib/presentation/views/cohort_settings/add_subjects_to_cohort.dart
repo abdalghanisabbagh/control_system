@@ -145,7 +145,7 @@ class AddSubjectsToCohort extends GetView<CohortsSettingsController> {
                                           ),
                                         )
                                       : IconButton(
-                                        tooltip: "Delete",
+                                          tooltip: "Delete",
                                           onPressed: () async {
                                             await controller
                                                 .deleteSubjectFromCohort(

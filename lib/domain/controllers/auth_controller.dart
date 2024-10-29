@@ -17,14 +17,14 @@ import 'profile_controller.dart';
 import 'school_controller.dart';
 
 class AuthController extends GetxController {
-  final passwordController = TextEditingController();
-  final usernameController = TextEditingController();
   bool isLoading = false;
   bool isLogin = false;
   PackageInfo? packageInfo;
+  final passwordController = TextEditingController();
   ProfileController profileController = Get.find<ProfileController>();
   bool showPass = true;
   TokenService tokenService = Get.find<TokenService>();
+  final usernameController = TextEditingController();
 
   /// Checks whether the user is still logged in by comparing the difference
   /// between the current time and the time when the token was created to 17 hours.

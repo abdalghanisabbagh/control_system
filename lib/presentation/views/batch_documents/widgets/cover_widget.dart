@@ -311,7 +311,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
     }
   }
 
-// Helper function to determine the button text based on school type
+  // Helper function to determine the button text based on school type
   String _getSchoolCoverSheetText(String? schoolType) {
     switch (schoolType) {
       case 'american':

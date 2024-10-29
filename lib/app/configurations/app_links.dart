@@ -26,12 +26,11 @@ class CohortLinks {
 
 class ControlMissionLinks {
   static const controlMission = 'control-mission';
-  static const controlMissionEducationYear = 'education-year';
-  static const controlMissionSchool = '$controlMission/school';
+  static const controlMissionActivate = '$controlMission/activate';
   static const controlMissionActiveSchool = '$controlMission/active/school';
   static const controlMissionDeactivate = '$controlMission/deactivate';
-  static const controlMissionActivate = '$controlMission/activate';
-
+  static const controlMissionEducationYear = 'education-year';
+  static const controlMissionSchool = '$controlMission/school';
   static const distributedStudents = '$controlMission/distribution';
   static const getGradesByControlMission = '$controlMission/grades';
   static const getSubjectsByControlMission = 'subjects/controlMission';
@@ -118,15 +117,17 @@ class SubjectsLinks {
 
 class SystemLogLinks {
   static const systemLog = 'system-logger';
-  static const systemLogUser = '$systemLog/user';
-  static const systemLogExportText = '$systemLog/export-text';
   static const systemLogExportExcel = '$systemLog/export-excel';
+  static const systemLogExportText = '$systemLog/export-text';
   static const systemLogResetAndExportToText =
       '$systemLog/reset-and-export-text';
+
+  static const systemLogUser = '$systemLog/user';
 }
 
 class UserLinks {
   static const activateUser = 'users/activate';
+  static const createUsersReader = '/$users/create-reader-user';
   static const deactivateUser = '/$users/deactivate';
   static const String getNewAccessToken = 'auth/get-new-access-token';
   static const getUsersByCreated = '$users/created-by';
@@ -139,7 +140,6 @@ class UserLinks {
   static const users = 'users';
   static const usersAddSchools = '$users/add-schools';
   static const usersInSchool = '/$users/school';
-  static const createUsersReader = '/$users/create-reader-user';
 }
 
 class UserRolesSystemsLink {

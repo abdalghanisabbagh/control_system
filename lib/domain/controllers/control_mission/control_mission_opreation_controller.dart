@@ -15,14 +15,14 @@ import '../../../app/configurations/app_links.dart';
 import '../../../presentation/resource_manager/ReusableWidget/show_dialogue.dart';
 
 class ControlMissionOperationController extends GetxController {
-  bool isLoading = false;
-  bool isLoadingGetEducationYears = false;
   List<ControlMissionResModel> controlMissionList = <ControlMissionResModel>[];
   List<EducationYearModel> educationYearList = [];
   List<ControlMissionResModel> filteredControlMissionList =
       <ControlMissionResModel>[];
-  List<ValueItem> optionsEducationYear = <ValueItem>[];
 
+  bool isLoading = false;
+  bool isLoadingGetEducationYears = false;
+  List<ValueItem> optionsEducationYear = <ValueItem>[];
   String searchQuery = '';
   List<ValueItem>? selectedEducationYear;
   ValueItem? selectedItemEducationYear;

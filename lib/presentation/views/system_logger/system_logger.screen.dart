@@ -209,19 +209,20 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                               field: "UserId Field",
                               type: PlutoColumnType.text(),
                             ),
-PlutoColumn(
+                            PlutoColumn(
                               readOnly: true,
                               enableEditingMode: false,
                               title: "Full Name",
                               field: "FullName Field",
                               type: PlutoColumnType.text(),
-                            ),PlutoColumn(
+                            ),
+                            PlutoColumn(
                               readOnly: true,
                               enableEditingMode: false,
                               title: "User Type",
                               field: "User Type Field",
                               type: PlutoColumnType.text(),
-                            ),                            
+                            ),
                             PlutoColumn(
                               readOnly: true,
                               enableEditingMode: false,

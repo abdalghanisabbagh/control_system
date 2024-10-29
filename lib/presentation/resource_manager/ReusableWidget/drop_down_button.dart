@@ -4,13 +4,13 @@ import 'package:multi_dropdown/multiselect_dropdown.dart';
 class MultiSelectDropDownView extends StatelessWidget {
   final void Function(List<ValueItem<dynamic>>)? onOptionSelected;
 
+  final double dropdownHeight;
   final String hintText;
   final bool multiSelect;
   final List<ValueItem<dynamic>> optionSelected;
   final List<ValueItem<dynamic>> options;
   final bool searchEnabled;
   final bool showChipSelect;
-  final double dropdownHeight;
   const MultiSelectDropDownView({
     super.key,
     this.onOptionSelected,

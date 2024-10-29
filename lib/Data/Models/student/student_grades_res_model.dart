@@ -1,12 +1,11 @@
 import '../exam_mission/exam_mission_res_model.dart';
 
 class Barcode {
+  ExamMissionResModel? examMission;
+
   int? id;
 
   String? studentDegree;
-
-  ExamMissionResModel? examMission;
-
   Barcode({this.id, this.studentDegree});
   Barcode.fromJson(Map<String, dynamic> json) {
     id = json['ID'];

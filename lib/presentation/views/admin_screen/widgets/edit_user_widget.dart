@@ -177,6 +177,17 @@ class EditUserWidget extends GetView<AdminController> {
     );
   }
 
+  Widget _buildNameTextField(String title, TextEditingController controller) {
+    return SizedBox(
+      width: 450,
+      child: MyTextFormFiled(
+        title: title,
+        controller: controller,
+        myValidation: Validations.validateName,
+      ),
+    );
+  }
+
   Widget _buildNewPasswordField() {
     return SizedBox(
       width: 450,
@@ -240,17 +251,6 @@ class EditUserWidget extends GetView<AdminController> {
           }
           return null;
         },
-      ),
-    );
-  }
-
-  Widget _buildNameTextField(String title, TextEditingController controller) {
-    return SizedBox(
-      width: 450,
-      child: MyTextFormFiled(
-        title: title,
-        controller: controller,
-        myValidation: Validations.validateName,
       ),
     );
   }
