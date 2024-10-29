@@ -179,6 +179,7 @@ class TransferStudentWidget extends GetView<TransferStudentController> {
                                     ),
                                   )
                                 : MultiSelectDropDownView(
+                                    dropdownHeight: 100,
                                     searchEnabled: true,
                                     options: controller.cohortsOptions,
                                     onOptionSelected:
