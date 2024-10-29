@@ -237,6 +237,8 @@ class ControlMissionReviewWidget extends GetView<ControlMissionController> {
                               distributionController
                                   .saveControlMissionName(controlMission.name!),
                             ]);
+                            distributionController
+                                .getDistributedStudentsCounts();
                             context.mounted
                                 ? context.goNamed(
                                     AppRoutesNamesAndPaths
