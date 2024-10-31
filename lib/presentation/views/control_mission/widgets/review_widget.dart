@@ -77,6 +77,7 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                           createHeader: (stateManager) =>
                               _Header(stateManager: stateManager),
                           onLoaded: (PlutoGridOnLoadedEvent event) {
+                            completeMissionsController.applyDefaultSorting();
                             event.stateManager
                               ..setSelectingMode(PlutoGridSelectingMode.cell)
                               ..setShowColumnFilter(true);
