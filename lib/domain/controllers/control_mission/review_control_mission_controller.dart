@@ -94,6 +94,42 @@ class DetailsAndReviewMissionController extends GetxController {
     return activateStudents;
   }
 
+  void applyDefaultSorting() {
+    studentsGradesRows.sort(
+      (a, b) {
+        final regex = RegExp(r'(\d+)|(\D+)');
+        final aMatches = regex
+            .allMatches(a.cells['grade_field']!.value.toString())
+            .map((m) => m[0])
+            .toList();
+        final bMatches = regex
+            .allMatches(b.cells['grade_field']!.value.toString())
+            .map((m) => m[0])
+            .toList();
+
+        for (int i = 0; i < aMatches.length && i < bMatches.length; i++) {
+          final aPart = aMatches[i]!;
+          final bPart = bMatches[i]!;
+          final isANumeric = int.tryParse(aPart) != null;
+          final isBNumeric = int.tryParse(bPart) != null;
+
+          if (isANumeric && isBNumeric) {
+            final compareNumeric = int.parse(aPart).compareTo(int.parse(bPart));
+            if (compareNumeric != 0) {
+              return compareNumeric;
+            }
+          } else {
+            final compareAlpha = aPart.compareTo(bPart);
+            if (compareAlpha != 0) return compareAlpha;
+          }
+        }
+        return a.cells['name_field']!.value
+            .toString()
+            .compareTo(b.cells['name_field']!.value.toString());
+      },
+    );
+  }
+
   /// Converts student grades to PlutoGrid rows.
   ///
   /// This function clears the existing `studentsGradesRows` and then populates it with new rows
@@ -113,7 +149,6 @@ class DetailsAndReviewMissionController extends GetxController {
             for (var studentSeatNumber in examRoom.studentSeatNumbers!) {
               // Execute task immediately for each student seat number.
               workerManager.execute(
-                priority: WorkPriority.immediately,
                 () {
                   // Add a new PlutoRow to studentsGradesRows.
                   studentsGradesRows.add(
@@ -726,10 +761,11 @@ class DetailsAndReviewMissionController extends GetxController {
           Get.key.currentContext!,
         );
       },
-      (r) async {
+      (r) {
+        studentGradesResModel = r;
         workerManager.execute(
           () {
-            studentGradesResModel = r;
+            generateStudentsGradesColumns();
             subjects.assignAll(studentGradesResModel!.examRoom!
                 .map(
                   (element) => element.studentSeatNumbers!.map(
@@ -747,7 +783,6 @@ class DetailsAndReviewMissionController extends GetxController {
             convertStudentsGradesToPlutoGridRows();
           },
         );
-        generateStudentsGradesColumns();
       },
     );
 
