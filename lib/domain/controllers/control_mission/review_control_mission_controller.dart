@@ -128,6 +128,7 @@ class DetailsAndReviewMissionController extends GetxController {
             .compareTo(b.cells['name_field']!.value.toString());
       },
     );
+    update();
   }
 
   /// Converts student grades to PlutoGrid rows.
