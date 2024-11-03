@@ -27,7 +27,7 @@ class SetDegreesScreen extends GetView<BarcodeController> {
         builder: (_) {
           return Column(
             children: [
-              const HeaderWidget(text: "Student Degrees"),
+              const HeaderWidget(text: "Student Grades"),
               const SizedBox(
                 height: 20,
               ),

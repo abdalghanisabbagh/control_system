@@ -50,7 +50,7 @@ class EditClassRoomWidget extends StatelessWidget {
                                 Expanded(
                                   child: Center(
                                     child: Text(
-                                      "Edit Class Room",
+                                      "Edit ClassRoom",
                                       style: nunitoBold.copyWith(
                                         color: ColorManager.primary,
                                         fontSize: 20,
