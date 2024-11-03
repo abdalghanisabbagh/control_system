@@ -23,6 +23,28 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
           const SizedBox(
             height: 20,
           ),
+          Align(
+            alignment: Alignment.topRight,
+            child: InkWell(
+              onTap: () {
+                controller.applyDefaultSorting();
+              },
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: ColorManager.bgSideMenu,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  "Apply default sorting",
+                  style: nunitoRegular.copyWith(
+                    color: ColorManager.white,
+                    fontSize: 20,
+                  ),
+                ).paddingSymmetric(horizontal: 20),
+              ),
+            ),
+          ),
           const SizedBox(
             height: 20,
           ),
