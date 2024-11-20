@@ -24,7 +24,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
             Row(
               children: [
                 const Expanded(
-                  child: HeaderWidget(text: "ClassRooms"),
+                  child: HeaderWidget(text: "Classrooms"),
                 ),
                 Visibility(
                   visible: Get.find<ProfileController>().canAccessWidget(
@@ -44,7 +44,7 @@ class ClassRoomsScreen extends GetView<ClassRoomController> {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
-                            "Add ClassRoom",
+                            "Add Classroom",
                             style: nunitoBold.copyWith(
                               color: ColorManager.white,
                               fontSize: 16,

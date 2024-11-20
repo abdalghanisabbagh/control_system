@@ -18,7 +18,7 @@ class AppRoutesNamesAndPaths {
   // certificateScreen
   static const String certificateScreenPath = '/certificates';
 
-  static const String classRoomScreenName = 'ClassRooms';
+  static const String classRoomScreenName = 'Classrooms';
   // classRoomScreen
   static const String classRoomScreenPath = '/class-rooms';
 

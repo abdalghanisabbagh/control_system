@@ -26,7 +26,7 @@ class ClassRoomsWidget extends GetView<ClassRoomController> {
             : controller.classesRooms.isEmpty
                 ? Center(
                     child: Text(
-                      "No ClassRooms",
+                      "No Classrooms",
                       style: nunitoBlack.copyWith(
                         color: ColorManager.bgSideMenu,
                         fontSize: 30,
