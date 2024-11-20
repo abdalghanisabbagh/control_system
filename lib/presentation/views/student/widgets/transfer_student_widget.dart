@@ -140,7 +140,7 @@ class TransferStudentWidget extends GetView<TransferStudentController> {
                             : controller.classesOptions.isEmpty
                                 ? Center(
                                     child: Text(
-                                      'No class rooms found',
+                                      'No classrooms found',
                                       style: nunitoBlack,
                                     ),
                                   )
