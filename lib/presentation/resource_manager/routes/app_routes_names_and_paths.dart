@@ -105,9 +105,9 @@ class AppRoutesNamesAndPaths {
   // schoolsScreen
   static const String schoolsScreenPath = '/schools';
 
-  static const String setDegreesScreenName = 'Set Degrees';
+  static const String setDegreesScreenName = 'Set Grades';
   // setDegreesScreen
-  static const String setDegreesScreenPath = '/set-degrees';
+  static const String setDegreesScreenPath = '/set-Grades';
 
   static const String studentScreenName = 'Students';
   // studentScreen
