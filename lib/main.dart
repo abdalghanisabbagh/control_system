@@ -18,8 +18,16 @@ import 'domain/bindings/bindings.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await checkForUpdates();
+
   // workerManager.log = true;
-  await workerManager.init();
+
+  final int numberOfCores = window.navigator.hardwareConcurrency!;
+
+  final int numberOfWorkers = (numberOfCores / 5).round();
+
+  await workerManager.init(
+      isolatesCount: numberOfWorkers > 2 ? numberOfWorkers : 2,
+      dynamicSpawning: true);
 
   await Hive.initFlutter();
   await Future.wait([

@@ -435,8 +435,16 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
             SizedBox(
               height: 400,
               child: PlutoGrid(
+                noRowsWidget: Center(
+                  child: Text(
+                    "No data found",
+                    style: nunitoBold,
+                  ),
+                ),
                 createFooter: (stateManager) {
-                  stateManager.setPageSize(50, notify: false);
+                  stateManager
+                    ..setPageSize(50, notify: false)
+                    ..setShowColumnFilter(true);
                   return PlutoPagination(
                     stateManager,
                     pageSizeToMove: 1,
@@ -580,8 +588,16 @@ class CreateMissionScreen extends GetView<CreateControlMissionController> {
             SizedBox(
               height: 400,
               child: PlutoGrid(
+                noRowsWidget: Center(
+                  child: Text(
+                    "No data found",
+                    style: nunitoBold,
+                  ),
+                ),
                 createFooter: (stateManager) {
-                  stateManager.setPageSize(50, notify: false);
+                  stateManager
+                    ..setPageSize(50, notify: false)
+                    ..setShowColumnFilter(true);
                   return PlutoPagination(
                     stateManager,
                     pageSizeToMove: 1,

@@ -198,6 +198,7 @@ class ProctorScreen extends GetView<ProctorController> {
                                   Expanded(
                                     flex: 1,
                                     child: Container(
+                                      clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
                                         color: Colors.lightBlueAccent,
                                         border: Border.all(
@@ -212,6 +213,8 @@ class ProctorScreen extends GetView<ProctorController> {
                                         children: [
                                           Expanded(
                                             child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
                                               children: [
                                                 Padding(
                                                   padding:

@@ -18,8 +18,8 @@ class CohortsSettingsController extends GetxController {
   List<CohortResModel> cohorts = <CohortResModel>[];
   bool deleteSubjectLoading = false;
   bool getAllLoading = false;
-  List<int> selectedSubjectsIds = <int>[];
   List<int> selectedSchoolTypeId = <int>[];
+  List<int> selectedSubjectsIds = <int>[];
 
   /// Adds a new cohort to the server and updates the UI.
   ///

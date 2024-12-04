@@ -11,6 +11,8 @@ class StudentResModel {
 
   int? blbId;
 
+  String? citizenship;
+
   ClassRoomResModel? classRoomResModel;
   int? cohortID;
   String? cohortName;
@@ -28,7 +30,6 @@ class StudentResModel {
   String? schoolClassName;
   int? schoolsID;
   String? secondLang;
-  String? citizenship;
   String? secondName;
   String? thirdName;
   String? updatedAt;

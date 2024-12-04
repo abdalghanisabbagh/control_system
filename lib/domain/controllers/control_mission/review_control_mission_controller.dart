@@ -31,6 +31,7 @@ class DetailsAndReviewMissionController extends GetxController {
   final List<(String?, int?)> subjects = [];
   int controlMissionId = 0;
   String controlMissionName = '';
+  double height = 0;
   bool isLoadingGetExamRooms = false;
   bool isLoadingGetStudentsGrades = false;
   bool isLoadingGetStudentsSeatNumbers = false;
@@ -43,6 +44,7 @@ class DetailsAndReviewMissionController extends GetxController {
   ];
 
   StudentGradesResModel? studentGradesResModel;
+  List<PlutoColumn> studentsGradesColumns = [];
   PlutoGridStateManager? studentsGradesPlutoGridStateManager;
   List<PlutoRow> studentsGradesRows = <PlutoRow>[];
   List<StudentSeatNumberResModel> studentsSeatNumbers =
@@ -92,58 +94,115 @@ class DetailsAndReviewMissionController extends GetxController {
     return activateStudents;
   }
 
+  void applyDefaultSorting() {
+    studentsGradesRows.sort(
+      (a, b) {
+        final regex = RegExp(r'(\d+)|(\D+)');
+        final aMatches = regex
+            .allMatches(a.cells['grade_field']!.value.toString())
+            .map((m) => m[0])
+            .toList();
+        final bMatches = regex
+            .allMatches(b.cells['grade_field']!.value.toString())
+            .map((m) => m[0])
+            .toList();
+
+        for (int i = 0; i < aMatches.length && i < bMatches.length; i++) {
+          final aPart = aMatches[i]!;
+          final bPart = bMatches[i]!;
+          final isANumeric = int.tryParse(aPart) != null;
+          final isBNumeric = int.tryParse(bPart) != null;
+
+          if (isANumeric && isBNumeric) {
+            final compareNumeric = int.parse(aPart).compareTo(int.parse(bPart));
+            if (compareNumeric != 0) {
+              return compareNumeric;
+            }
+          } else {
+            final compareAlpha = aPart.compareTo(bPart);
+            if (compareAlpha != 0) return compareAlpha;
+          }
+        }
+        return a.cells['name_field']!.value
+            .toString()
+            .compareTo(b.cells['name_field']!.value.toString());
+      },
+    );
+    update();
+  }
+
+  /// Converts student grades to PlutoGrid rows.
+  ///
+  /// This function clears the existing `studentsGradesRows` and then populates it with new rows
+  /// containing student information from the `studentGradesResModel`. It uses the `workerManager`
+  /// to execute tasks for each student in the exam room.
   Future<void> convertStudentsGradesToPlutoGridRows() async {
     studentsGradesRows.clear();
+
+    // Check if the studentGradesResModel is not null.
     if (studentGradesResModel != null) {
-      await workerManager.execute(
+      // Execute the task using workerManager.
+      workerManager.execute(
         () {
-          for (int i = 0; i < studentGradesResModel!.examRoom!.length; i++) {
-            var examRoom = studentGradesResModel!.examRoom![i];
-            for (int j = 0; j < examRoom.studentSeatNumbers!.length; j++) {
-              var studentSeatNumber = examRoom.studentSeatNumbers![j];
+          // Iterate over each exam room.
+          for (var examRoom in studentGradesResModel!.examRoom!) {
+            // Iterate over each student seat number.
+            for (var studentSeatNumber in examRoom.studentSeatNumbers!) {
+              // Execute task immediately for each student seat number.
               workerManager.execute(
-                priority: WorkPriority.immediately,
                 () {
+                  // Add a new PlutoRow to studentsGradesRows.
                   studentsGradesRows.add(
                     PlutoRow(
                       cells: {
+                        // Add student name to the row.
                         'name_field': PlutoCell(
-                            value:
-                                '${studentSeatNumber.student?.firstName} ${studentSeatNumber.student?.secondName} ${studentSeatNumber.student?.thirdName}'),
+                          value:
+                              '${studentSeatNumber.student?.firstName} ${studentSeatNumber.student?.secondName} ${studentSeatNumber.student?.thirdName}',
+                        ),
+                        // Add student grade to the row.
                         'grade_field': PlutoCell(
-                            value:
-                                '${studentSeatNumber.student?.grades?.name}'),
+                          value: '${studentSeatNumber.student?.grades?.name}',
+                        ),
+                        // Add student class to the row.
                         'class_field': PlutoCell(
-                            value:
-                                '${studentSeatNumber.student?.schoolClass?.name}'),
+                          value:
+                              '${studentSeatNumber.student?.schoolClass?.name}',
+                        ),
+                        // Add exam room name to the row.
                         'exam_room_field': PlutoCell(value: '${examRoom.name}'),
+
+                        // Add subject-specific information to the row.
                         ...Map.fromEntries(
                           List.generate(
                             subjects.length,
                             (index) {
                               final ({String? name, int? id}) subject = (
                                 name: subjects[index].$1,
-                                id: subjects[index].$2
+                                id: subjects[index].$2,
                               );
+
+                              // Determine the student's status for the subject.
                               return MapEntry(
                                 "${subject.name}_${subject.id}",
                                 PlutoCell(
-                                    value: studentSeatNumber
-                                            .student!.cohort!.cohortHasSubjects!
-                                            .map((element) =>
-                                                element.subjects!.iD)
-                                            .contains(subject.id)
-                                        ? studentSeatNumber.student?.barcode
-                                                    ?.firstWhereOrNull(
-                                                        (barcode) =>
-                                                            barcode.examMission!
-                                                                .subjectsID ==
-                                                            subject.id)
-                                                    ?.studentDegree ==
-                                                null
-                                            ? 'Need to scan'
-                                            : '${studentSeatNumber.student?.barcode?.firstWhere((barcode) => barcode.examMission!.subjectsID == subject.id).studentDegree}'
-                                        : 'Exempt'),
+                                  value: studentSeatNumber
+                                          .student!.cohort!.cohortHasSubjects!
+                                          .map(
+                                              (element) => element.subjects!.iD)
+                                          .contains(subject.id)
+                                      ? studentSeatNumber.student?.barcode
+                                                  ?.firstWhereOrNull(
+                                                      (barcode) =>
+                                                          barcode.examMission!
+                                                              .subjectsID ==
+                                                          subject.id)
+                                                  ?.studentDegree ==
+                                              null
+                                          ? 'Need to scan'
+                                          : '${studentSeatNumber.student?.barcode?.firstWhere((barcode) => barcode.examMission!.subjectsID == subject.id).studentDegree}'
+                                      : 'Exempt',
+                                ),
                               );
                             },
                           ),
@@ -202,6 +261,16 @@ class DetailsAndReviewMissionController extends GetxController {
     return deactivateStudents;
   }
 
+  /// Exports the students' degrees to an Excel (CSV) file and downloads it.
+  ///
+  /// The function generates a CSV file containing students' information such as
+  /// name, grade, class, exam room, and subjects. The subjects' headers are dynamically
+  /// generated based on the subjects associated with the students. The CSV file is
+  /// saved with the name 'students_degrees.csv' in the user's downloads folder.
+  ///
+  /// A success dialog is displayed upon successful export.
+  ///
+  /// [context] is the build context used to show dialogs.
   void exportStudentDegreesToExcel(BuildContext context) {
     List<List<dynamic>> csvData = [];
 
@@ -525,6 +594,77 @@ class DetailsAndReviewMissionController extends GetxController {
     ).showDialogue(Get.key.currentContext!);
   }
 
+  /// Generates the columns for the PlutoGrid that shows the grades of the students
+  /// in the control mission.
+  ///
+  /// The function generates columns for the name, grade, class, and exam room of
+  /// the students. It also generates a column for each subject in the
+  /// [subjects] list. The footer of the last column is a count of the number of
+  /// students. The function is executed in the background using the
+  /// [workerManager] to avoid blocking the UI thread. The function returns
+  /// nothing.
+  void generateStudentsGradesColumns() async {
+    workerManager.execute(
+      () {
+        studentsGradesColumns = [
+          PlutoColumn(
+            readOnly: true,
+            enableEditingMode: false,
+            title: 'Name',
+            field: 'name_field',
+            type: PlutoColumnType.text(),
+          ),
+          PlutoColumn(
+            readOnly: true,
+            enableEditingMode: false,
+            title: 'Grade',
+            field: 'grade_field',
+            type: PlutoColumnType.text(),
+          ),
+          PlutoColumn(
+            readOnly: true,
+            enableEditingMode: false,
+            title: 'Class',
+            field: 'class_field',
+            type: PlutoColumnType.text(),
+          ),
+          PlutoColumn(
+            readOnly: true,
+            enableEditingMode: false,
+            title: 'Exam Room',
+            field: 'exam_room_field',
+            type: PlutoColumnType.text(),
+          ),
+          ...List.generate(
+            subjects.length,
+            (index) {
+              final ({String? name, int? id}) subject =
+                  (name: subjects[index].$1, id: subjects[index].$2);
+              return PlutoColumn(
+                readOnly: true,
+                enableEditingMode: false,
+                title: subject.name ?? '',
+                field: "${subject.name}_${subject.id}",
+                type: PlutoColumnType.text(),
+                footerRenderer: index == subjects.length - 1
+                    ? (footerRenderer) {
+                        return PlutoAggregateColumnFooter(
+                          rendererContext: footerRenderer,
+                          type: PlutoAggregateColumnType.count,
+                          format: 'count : #,###',
+                          alignment: Alignment.center,
+                        );
+                      }
+                    : null,
+              );
+            },
+          ),
+        ];
+      },
+    );
+    return;
+  }
+
   /// Gets the control mission ID from Hive and updates the UI.
   ///
   /// The function will get the control mission ID from Hive and store it in the
@@ -587,19 +727,19 @@ class DetailsAndReviewMissionController extends GetxController {
     isLoadingGetExamRooms = false;
   }
 
-  /// Gets the grades of the students in the control mission from the API and
-  /// updates the [studentGradesResModel] with the grades returned by the API.
+  /// Gets all students grades for the given control mission ID from the API and assigns them to [studentGradesResModel].
   ///
   /// The function takes no parameters.
   ///
-  /// The function will show a loading indicator while the request is being
-  /// processed.
+  /// The function will show a loading indicator while the request is being processed.
   ///
-  /// If the response is a failure, the function will show an error dialog with
-  /// the failure message.
+  /// If the response is a failure, the function will show an error dialog with the failure message.
   ///
-  /// If the response is successful, the function will update the UI with the
-  /// grades returned by the API.
+  /// If the response is successful, the function will update the UI with the students grades returned by the API.
+  ///
+  /// The function will also call [convertStudentsGradesToPlutoGridRows] to convert the students grades to a list of [PlutoRow] objects and update the UI.
+  ///
+  /// The function will also call [generateStudentsGradesColumns] to generate the columns for the students grades table.
   Future<void> getStudentsGrades() async {
     isLoadingGetStudentsGrades = true;
     update();
@@ -612,7 +752,7 @@ class DetailsAndReviewMissionController extends GetxController {
       type: ReqTypeEnum.GET,
     );
 
-    await response.fold(
+    response.fold(
       (l) {
         MyAwesomeDialogue(
           title: 'Error',
@@ -622,10 +762,11 @@ class DetailsAndReviewMissionController extends GetxController {
           Get.key.currentContext!,
         );
       },
-      (r) async {
-        await workerManager.execute(
+      (r) {
+        studentGradesResModel = r;
+        workerManager.execute(
           () {
-            studentGradesResModel = r;
+            generateStudentsGradesColumns();
             subjects.assignAll(studentGradesResModel!.examRoom!
                 .map(
                   (element) => element.studentSeatNumbers!.map(
@@ -650,23 +791,17 @@ class DetailsAndReviewMissionController extends GetxController {
     update();
   }
 
-  /// Gets the student seat numbers for a control mission from the API and sets the
-  /// [studentsSeatNumbers] and [studentsSeatNumbersRows] with the student seat
-  /// numbers returned by the API.
+  /// Gets the students seat numbers for the given control mission ID from the API and assigns them to [studentsSeatNumbersRows].
   ///
   /// The function takes no parameters.
   ///
-  /// The function will show a loading indicator while the request is being
-  /// processed.
+  /// The function will show a loading indicator while the request is being processed.
   ///
-  /// If the response is a failure, the function will show an error dialog with
-  /// the failure message.
+  /// If the response is a failure, the function will show an error dialog with the failure message.
   ///
-  /// If the response is successful, the function will update the UI with the
-  /// student seat numbers returned by the API.
+  /// If the response is successful, the function will update the UI with the students seat numbers returned by the API and return true.
   ///
-  /// The function returns a boolean indicating whether the students seat numbers
-  /// were retrieved successfully.
+  /// The function will also call [convertStudentsSeatNumbersToPlutoGridRows] to convert the students seat numbers to a list of [PlutoRow] objects and update the UI.
   Future<bool> getStudentsSeatNumberByControlMissionId() async {
     bool getData = false;
     isLoadingGetStudentsSeatNumbers = true;
@@ -691,10 +826,14 @@ class DetailsAndReviewMissionController extends GetxController {
         getData = false;
       },
       (r) {
-        studentsSeatNumbers = r.studentSeatNumbers!;
-        studentsSeatNumbersRows = r.studentSeatNumbers!.convertStudentsToRows();
-
-        getData = true;
+        workerManager.execute(
+          () {
+            studentsSeatNumbers = r.studentSeatNumbers!;
+            studentsSeatNumbersRows =
+                r.studentSeatNumbers!.convertStudentsToRows();
+            getData = true;
+          },
+        );
       },
     );
 
@@ -743,6 +882,11 @@ class DetailsAndReviewMissionController extends GetxController {
       },
     );
     isLoadingGetSubjects = false;
+  }
+
+  void onDragUpdate(DragUpdateDetails details) {
+    height = details.globalPosition.dy;
+    update();
   }
 
   @override

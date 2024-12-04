@@ -17,6 +17,7 @@ import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:worker_manager/worker_manager.dart';
 
 import '../../../Data/Models/class_room/class_room_res_model.dart';
 import '../../../Data/Models/class_room/classes_rooms_res_model.dart';
@@ -457,9 +458,13 @@ class StudentController extends GetxController {
         gotData = false;
       },
       (r) {
-        students = r.students!;
-        studentsRows = r.students!.convertStudentsToRows();
-        gotData = true;
+        workerManager.execute(
+          () {
+            students = r.students!;
+            studentsRows = r.students!.convertStudentsToRows();
+            gotData = true;
+          },
+        );
       },
     );
     update();

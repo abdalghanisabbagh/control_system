@@ -1,5 +1,3 @@
-import 'package:control_system/presentation/resource_manager/ReusableWidget/app_dialogs.dart';
-import 'package:control_system/presentation/views/system_logger/widget/user_info_widget.dart';
 import 'package:custom_theme/lib.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,14 +19,6 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
           if (controller.isLoadingGetSystemLogs) {
             return Center(
               child: LoadingIndicators.getLoadingIndicator(),
-            );
-          }
-          if (controller.systemLogsRows.isEmpty) {
-            return Center(
-              child: Text(
-                "No Data Found",
-                style: nunitoBoldStyle(),
-              ),
             );
           }
           return Padding(
@@ -132,12 +122,26 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                     Expanded(
                       child: RepaintBoundary(
                         child: PlutoGrid(
-                          key: UniqueKey(),
+                          key: const ValueKey('systemLogsTable'),
+                          noRowsWidget: Center(
+                            child: Text(
+                              "No data found",
+                              style: nunitoBold,
+                            ),
+                          ),
+                          onLoaded: (PlutoGridOnLoadedEvent event) {
+                            controller.stateManager = event.stateManager
+                              ..setPageSize(30)
+                              ..setShowColumnFilter(true);
+                          },
                           createFooter: (stateManager) {
-                            stateManager.setPageSize(50, notify: false);
-                            return PlutoPagination(
-                              stateManager,
-                              pageSizeToMove: 1,
+                            return PlutoInfinityScrollRows(
+                              fetch: controller
+                                  .getSystemLogsRowsWithPaginationFromServer,
+                              initialFetch: true,
+                              stateManager: stateManager,
+                              fetchWithFiltering: false,
+                              fetchWithSorting: false,
                             );
                           },
                           configuration: PlutoGridConfiguration(
@@ -154,7 +158,7 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                               autoSizeMode: PlutoAutoSizeMode.scale,
                             ),
                             columnFilter: const PlutoGridColumnFilterConfig(
-                              filters: FilterHelper.defaultFilters,
+                              filters: [],
                             ),
                             scrollbar: const PlutoGridScrollbarConfig(
                               isAlwaysShown: false,
@@ -215,34 +219,50 @@ class SystemLoggerScreen extends GetView<SystemLoggerController> {
                             PlutoColumn(
                               readOnly: true,
                               enableEditingMode: false,
-                              title: "Created At",
-                              field: "CreatedAt Field",
+                              title: "Full Name",
+                              field: "FullName Field",
                               type: PlutoColumnType.text(),
                             ),
                             PlutoColumn(
                               readOnly: true,
                               enableEditingMode: false,
-                              title: "Actions",
-                              field: "ActionsField",
+                              title: "User Type",
+                              field: "User Type Field",
                               type: PlutoColumnType.text(),
-                              renderer: (rendererContext) {
-                                return Center(
-                                  child: IconButton(
-                                    tooltip: "User Info",
-                                    icon: const Icon(
-                                      Icons.person_search_rounded,
-                                      color: ColorManager.newStatus,
-                                    ),
-                                    onPressed: () {
-                                      MyDialogs.showDialog(
-                                          context, const UserInfoWidget());
-                                      controller.getUserInfo(rendererContext
-                                          .row.cells['UserId Field']?.value);
-                                    },
-                                  ),
-                                );
-                              },
                             ),
+                            PlutoColumn(
+                              readOnly: true,
+                              enableEditingMode: false,
+                              title: "Created At",
+                              field: "CreatedAt Field",
+                              type: PlutoColumnType.text(),
+                            ),
+                            // PlutoColumn(
+                            //   readOnly: true,
+                            //   enableEditingMode: false,
+                            //   title: "Actions",
+                            //   field: "ActionsField",
+                            //   type: PlutoColumnType.text(),
+                            //   renderer: (rendererContext) {
+                            //     return Center(
+                            //       child: IconButton(
+                            //         tooltip: "User Info",
+                            //         icon: const Icon(
+                            //           Icons.person_search_rounded,
+                            //           color: ColorManager.newStatus,
+                            //         ),
+                            //         onPressed: () {
+                            //           MyDialogs.showDialog(
+                            //             context,
+                            //             const UserInfoWidget(),
+                            //           );
+                            //           controller.getUserInfo(rendererContext
+                            //               .row.cells['UserId Field']?.value);
+                            //         },
+                            //       ),
+                            //     );
+                            //   },
+                            // ),
                           ],
                           rows: controller.systemLogsRows,
                         ),

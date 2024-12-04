@@ -35,6 +35,7 @@ class CreateCoversSheetsController extends GetxController {
   List<ValueItem> optionsExamDurations = [
     const ValueItem(value: 15, label: '15 Mins'),
     const ValueItem(value: 25, label: '25 Mins'),
+    const ValueItem(value: 30, label: '30 Mins'),
     const ValueItem(value: 45, label: '45 Mins'),
     const ValueItem(value: 60, label: '60 Mins'),
     const ValueItem(value: 70, label: '70 Mins'),

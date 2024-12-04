@@ -23,6 +23,28 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
           const SizedBox(
             height: 20,
           ),
+          Align(
+            alignment: Alignment.topRight,
+            child: InkWell(
+              onTap: () {
+                controller.applyDefaultSorting();
+              },
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: ColorManager.bgSideMenu,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  "Apply default sorting",
+                  style: nunitoRegular.copyWith(
+                    color: ColorManager.white,
+                    fontSize: 20,
+                  ),
+                ).paddingSymmetric(horizontal: 20),
+              ),
+            ),
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -35,6 +57,12 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                         )
                       : PlutoGrid(
                           key: const ValueKey('review_widget'),
+                          noRowsWidget: Center(
+                            child: Text(
+                              "No data found",
+                              style: nunitoBold,
+                            ),
+                          ),
                           configuration: PlutoGridConfiguration(
                             enterKeyAction:
                                 PlutoGridEnterKeyAction.toggleEditing,
@@ -53,64 +81,8 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                               scrollbarThicknessWhileDragging: 10,
                             ),
                           ),
-                          columns: [
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: 'Name',
-                              field: 'name_field',
-                              type: PlutoColumnType.text(),
-                            ),
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: 'Grade',
-                              field: 'grade_field',
-                              type: PlutoColumnType.text(),
-                            ),
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: 'Class',
-                              field: 'class_field',
-                              type: PlutoColumnType.text(),
-                            ),
-                            PlutoColumn(
-                              readOnly: true,
-                              enableEditingMode: false,
-                              title: 'Exam Room',
-                              field: 'exam_room_field',
-                              type: PlutoColumnType.text(),
-                            ),
-                            ...List.generate(
-                              controller.subjects.length,
-                              (index) {
-                                final ({String? name, int? id}) subject = (
-                                  name: controller.subjects[index].$1,
-                                  id: controller.subjects[index].$2
-                                );
-                                return PlutoColumn(
-                                  readOnly: true,
-                                  enableEditingMode: false,
-                                  title: subject.name ?? '',
-                                  field: "${subject.name}_${subject.id}",
-                                  type: PlutoColumnType.text(),
-                                  footerRenderer: index ==
-                                          controller.subjects.length - 1
-                                      ? (footerRenderer) {
-                                          return PlutoAggregateColumnFooter(
-                                            rendererContext: footerRenderer,
-                                            type:
-                                                PlutoAggregateColumnType.count,
-                                            format: 'count : #,###',
-                                            alignment: Alignment.center,
-                                          );
-                                        }
-                                      : null,
-                                );
-                              },
-                            ),
-                          ],
+                          columns:
+                              completeMissionsController.studentsGradesColumns,
                           rows: completeMissionsController.studentsGradesRows,
                           onChanged: (PlutoGridOnChangedEvent event) {
                             // completeMissionsController
@@ -127,13 +99,10 @@ class ReviewWidget extends GetView<DetailsAndReviewMissionController> {
                           createHeader: (stateManager) =>
                               _Header(stateManager: stateManager),
                           onLoaded: (PlutoGridOnLoadedEvent event) {
+                            completeMissionsController.applyDefaultSorting();
                             event.stateManager
-                                .setSelectingMode(PlutoGridSelectingMode.cell);
-                            completeMissionsController
-                                    .studentsGradesPlutoGridStateManager =
-                                event.stateManager;
-                            event.stateManager
-                                .setSelectingMode(PlutoGridSelectingMode.cell);
+                              ..setSelectingMode(PlutoGridSelectingMode.cell)
+                              ..setShowColumnFilter(true);
                             completeMissionsController
                                     .studentsGradesPlutoGridStateManager =
                                 event.stateManager;

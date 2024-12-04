@@ -69,12 +69,15 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         tooltip: "Preview Exam ",
                         onPressed: () {
                           controller.previewExamMission(
-                              examMissionId: examMissionObject.iD!);
+                            examMissionId: examMissionObject.iD!,
+                          );
                         },
                         icon: const CircleAvatar(
                           backgroundColor: ColorManager.glodenColor,
-                          child: Icon(Icons.picture_as_pdf_rounded,
-                              color: ColorManager.white),
+                          child: Icon(
+                            Icons.picture_as_pdf_rounded,
+                            color: ColorManager.white,
+                          ),
                         ),
                       ),
                     ),
@@ -86,18 +89,22 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         widgetId: '3302',
                       ),
                       child: IconButton(
-                        tooltip: "Acadimc Dean Edit ",
+                        tooltip: "Academic Dean Edit ",
                         onPressed: () {
                           MyDialogs.showDialog(
-                              context,
-                              EditCoverAdWidget(
-                                examMissionObject: examMissionObject,
-                                controlMissionObject: controlMissionObject,
-                              ));
+                            context,
+                            EditCoverAdWidget(
+                              examMissionObject: examMissionObject,
+                              controlMissionObject: controlMissionObject,
+                            ),
+                          );
                         },
                         icon: const CircleAvatar(
                           backgroundColor: ColorManager.primary,
-                          child: Icon(Icons.edit, color: ColorManager.white),
+                          child: Icon(
+                            Icons.edit,
+                            color: ColorManager.white,
+                          ),
                         ),
                       ),
                     ),
@@ -109,11 +116,12 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         tooltip: "Control Officer Edit ",
                         onPressed: () {
                           MyDialogs.showDialog(
-                              context,
-                              EditCoverWidget(
-                                examMissionObject: examMissionObject,
-                                controlMissionObject: controlMissionObject,
-                              ));
+                            context,
+                            EditCoverWidget(
+                              examMissionObject: examMissionObject,
+                              controlMissionObject: controlMissionObject,
+                            ),
+                          );
                         },
                         icon: const CircleAvatar(
                           backgroundColor: ColorManager.primary,
@@ -129,19 +137,19 @@ class CoverWidget extends GetView<CoversSheetsController> {
                         widgetId: '3200',
                       ),
                       child: IconButton(
-                          tooltip: "Delete",
-                          onPressed: () {
-                            MyAwesomeDialogue(
-                              title: 'Delete Exam Cover Sheet',
-                              desc:
-                                  'Are you sure you want to delete this mission?',
-                              dialogType: DialogType.warning,
-                              btnCancelOnPressed: () {},
-                              btnOkOnPressed: () {
-                                controller
-                                    .deleteExamMission(
-                                        id: examMissionObject.iD!)
-                                    .then((value) {
+                        tooltip: "Delete",
+                        onPressed: () {
+                          MyAwesomeDialogue(
+                            title: 'Delete Exam Cover Sheet',
+                            desc:
+                                'Are you sure you want to delete this mission?',
+                            dialogType: DialogType.warning,
+                            btnCancelOnPressed: () {},
+                            btnOkOnPressed: () {
+                              controller
+                                  .deleteExamMission(id: examMissionObject.iD!)
+                                  .then(
+                                (value) {
                                   if (value) {
                                     MyFlashBar.showSuccess(
                                       'Success',
@@ -150,16 +158,19 @@ class CoverWidget extends GetView<CoversSheetsController> {
                                         ? context
                                         : Get.key.currentContext!);
                                   }
-                                });
-                              },
-                            ).showDialogue(context);
-                          },
-                          icon: const CircleAvatar(
-                              backgroundColor: ColorManager.red,
-                              child: Icon(
-                                Icons.delete_forever,
-                                color: ColorManager.white,
-                              ))),
+                                },
+                              );
+                            },
+                          ).showDialogue(context);
+                        },
+                        icon: const CircleAvatar(
+                          backgroundColor: ColorManager.red,
+                          child: Icon(
+                            Icons.delete_forever,
+                            color: ColorManager.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -201,10 +212,12 @@ class CoverWidget extends GetView<CoversSheetsController> {
                     SizedBox(
                       width: Get.width * 0.35,
                     ),
-                    Text("Exam Duration :${examMissionObject.duration} min",
-                        style: nunitoRegularStyle().copyWith(
-                          color: ColorManager.primary,
-                        )),
+                    Text(
+                      "Exam Duration :${examMissionObject.duration} min",
+                      style: nunitoRegularStyle().copyWith(
+                        color: ColorManager.primary,
+                      ),
+                    ),
                   ],
                 )
               ],
@@ -298,7 +311,7 @@ class CoverWidget extends GetView<CoversSheetsController> {
     }
   }
 
-// Helper function to determine the button text based on school type
+  // Helper function to determine the button text based on school type
   String _getSchoolCoverSheetText(String? schoolType) {
     switch (schoolType) {
       case 'american':

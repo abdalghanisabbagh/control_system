@@ -140,7 +140,7 @@ class TransferStudentWidget extends GetView<TransferStudentController> {
                             : controller.classesOptions.isEmpty
                                 ? Center(
                                     child: Text(
-                                      'No classrooms found',
+                                      'No ClassRooms Found',
                                       style: nunitoBlack,
                                     ),
                                   )
@@ -179,6 +179,7 @@ class TransferStudentWidget extends GetView<TransferStudentController> {
                                     ),
                                   )
                                 : MultiSelectDropDownView(
+                                    dropdownHeight: 100,
                                     searchEnabled: true,
                                     options: controller.cohortsOptions,
                                     onOptionSelected:

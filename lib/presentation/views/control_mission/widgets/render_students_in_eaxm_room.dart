@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import '../../../../Data/Models/student_seat/student_seat_res_model.dart';
 import '../../../../domain/controllers/control_mission/distribute_students_controller.dart';
 
-class RenderStudentsInEaxmRoom extends GetView<DistributeStudentsController> {
-  const RenderStudentsInEaxmRoom({super.key});
+class RenderStudentsInExamRoom extends GetView<DistributeStudentsController> {
+  const RenderStudentsInExamRoom({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +261,8 @@ class RenderStudentsInEaxmRoom extends GetView<DistributeStudentsController> {
                                                           ColorManager.yellow,
                                                     ),
                                                     child: IconButton(
-                                                      tooltip: 'Block Class Desk',
+                                                      tooltip:
+                                                          'Block Class Desk',
                                                       onPressed: () {
                                                         controller.blockClassDesk(
                                                             classDeskId: controller

@@ -67,7 +67,7 @@ class FrontIdScreen extends GetView<PrivilegesController> {
                       },
                       icon: const Icon(Icons.delete))
                   : IconButton(
-                    tooltip: "Add To Role",
+                      tooltip: "Add To Role",
                       onPressed: () {
                         controller.selectedScreensIds.add(id);
                         controller.addScreensToRole().then(

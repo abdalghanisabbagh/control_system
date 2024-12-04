@@ -12,4 +12,3 @@ class Failure {
   /// [message] is the error message
   const Failure(this.code, this.message);
 }
-

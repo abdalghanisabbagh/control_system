@@ -4,6 +4,7 @@ import 'package:multi_dropdown/multiselect_dropdown.dart';
 class MultiSelectDropDownView extends StatelessWidget {
   final void Function(List<ValueItem<dynamic>>)? onOptionSelected;
 
+  final double dropdownHeight;
   final String hintText;
   final bool multiSelect;
   final List<ValueItem<dynamic>> optionSelected;
@@ -19,6 +20,7 @@ class MultiSelectDropDownView extends StatelessWidget {
     this.showChipSelect = false,
     this.hintText = "Search",
     this.optionSelected = const [],
+    this.dropdownHeight = 200,
   });
 
   @override
@@ -39,6 +41,7 @@ class MultiSelectDropDownView extends StatelessWidget {
         wrapType: WrapType.scroll,
         autoScroll: true,
       ),
+      dropdownHeight: dropdownHeight,
       optionTextStyle: const TextStyle(fontSize: 16),
       selectedOptionIcon: const Icon(Icons.check_circle),
       searchEnabled: searchEnabled,

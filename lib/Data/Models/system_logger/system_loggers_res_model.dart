@@ -1,4 +1,3 @@
-
 import 'system_logger_res_model.dart';
 
 class SystemLoggersResModel {

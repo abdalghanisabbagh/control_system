@@ -1,26 +1,32 @@
 import 'package:intl/intl.dart';
 
 class SystemLoggerResModel {
+  String? body;
+
+  String? createdAt;
+
+  String? fullName;
   int? id;
   String? ip;
   String? method;
-  String? url;
   String? platform;
+  String? url;
   String? userAgent;
-  String? body;
   String? userId;
-  String? createdAt;
-
-  SystemLoggerResModel(
-      {this.id,
-      this.userAgent,
-      this.ip,
-      this.body,
-      this.platform,
-      this.userId,
-      this.createdAt,
-      this.url,
-      this.method});
+  String? userType;
+  SystemLoggerResModel({
+    this.id,
+    this.userAgent,
+    this.ip,
+    this.body,
+    this.platform,
+    this.userId,
+    this.createdAt,
+    this.url,
+    this.fullName,
+    this.userType,
+    this.method,
+  });
   SystemLoggerResModel.fromJson(json) {
     id = json['ID'];
     userAgent = json['userAgent'];
@@ -30,6 +36,8 @@ class SystemLoggerResModel {
     url = json['url'];
     method = json['method'];
     userId = json['userId'];
+    fullName = json['fullName'];
+    userType = json['userType'];
     createdAt = DateFormat('yyyy,MM,dd (HH:mm)')
         .format(DateTime.parse(json['Created_At']));
   }
@@ -43,6 +51,8 @@ class SystemLoggerResModel {
     data['Record_Before'] = platform;
     data['Record_After'] = url;
     data['Created_At'] = method;
+    data['fullName'] = fullName;
+    data['userType'] = userType;
     data['userId'] = userId;
     data['Created_At'] = createdAt;
 
