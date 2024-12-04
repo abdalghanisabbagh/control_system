@@ -53,7 +53,7 @@ class DioFactory {
       if (token != null || tokenModel?.aToken != null)
         AUTHORIZATION: "Bearer ${token?.aToken ?? tokenModel?.aToken}",
     };
-
+    print(headers);
     // Set the dio options
     dio.options = BaseOptions(
       baseUrl: AppLinks.baseUrlStaging,
